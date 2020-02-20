@@ -13,7 +13,7 @@ export default ({
       {allSimplePages.map(page => {
         return (
           <li key={page.slug}>
-            <Link href={`/de/${page.slug}`}>
+            <Link href="/[locale]/[slug]" as={`/de/${page.slug}`}>
               <a>{page.title}</a>
             </Link>
           </li>
