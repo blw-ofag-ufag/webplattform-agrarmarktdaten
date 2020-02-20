@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "build": "NODE_OPTIONS=--max_old_space_size=2048 yarn next build",
+    "build": "next build && next export -o build",
     "start": "next start -p $PORT",
     "lint": "tsc --noEmit -p ./src",
     "locales:extract": "lingui extract",

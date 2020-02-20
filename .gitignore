@@ -6,3 +6,4 @@
 /src/locales/_build
 /src/locales/**/*.js
 /public/dist/**/*.js
+/build
