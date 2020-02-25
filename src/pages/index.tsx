@@ -3,6 +3,7 @@ import React from "react";
 import { default as NextLink } from "next/link";
 import { fetchCMS } from "../lib/cms-api";
 import { Box, Card, Heading, Grid, Link } from "theme-ui";
+import { Icon } from "../components/Icon";
 
 export default ({
   allSimplePages,
@@ -29,17 +30,18 @@ export default ({
       sx={{ listStyle: "none", m: 0, p: 0 }}
       width={[200, null, 192]}
     >
-      {allMarketAreas.map(page => {
+      {allMarketAreas.map(area => {
         return (
-          <Box as="li" key={page.slug}>
+          <Box as="li" key={area.slug}>
             <NextLink
               href="/[locale]/area/[slug]"
-              as={`/de/area/${page.slug}`}
+              as={`/de/area/${area.slug}`}
               passHref
             >
               <Link>
                 <Card>
-                  <Heading>{page.title}</Heading>
+                  <Icon icon={area.icon} />
+                  <Heading>{area.title}</Heading>
                 </Card>
               </Link>
             </NextLink>

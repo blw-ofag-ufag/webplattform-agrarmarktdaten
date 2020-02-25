@@ -4,8 +4,8 @@ export const theme = {
   ...swiss,
   cards: {
     primary: {
-      padding: 2,
-      borderRadius: 4,
+      padding: 3,
+      borderRadius: 5,
       boxShadow: "0 0 8px rgba(0, 0, 0, 0.125)"
     },
     compact: {
