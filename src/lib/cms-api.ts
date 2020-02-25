@@ -2,6 +2,7 @@ import "isomorphic-unfetch";
 
 const API_URL = "https://graphql.datocms.com";
 const API_TOKEN = "880654d6951b0e08722848ff6881c9";
+const DEV = process.env.NODE_ENV ==="development";
 
 export async function fetchCMS(
   query: string,
@@ -10,8 +11,7 @@ export async function fetchCMS(
     preview
   }: { variables?: { [k: string]: $FixMe }; preview?: boolean } = {}
 ) {
-  console.log(preview)
-  const res = await fetch(API_URL + (preview ? "/preview" : ""), {
+  const res = await fetch(API_URL + (preview || DEV ? "/preview" : ""), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
