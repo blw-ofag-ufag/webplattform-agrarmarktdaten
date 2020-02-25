@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { fetchCMS } from "../../../lib/cms-api";
 
 export default ({
@@ -9,9 +10,14 @@ export default ({
     title: string;
     icon: string;
     reports: { title: string; url: string }[];
+    children: { title: string; icon: string; slug: string }[];
     _allSlugLocales: { locale: string; value: string }[];
   };
 }) => {
+  const {
+    query: { locale }
+  } = useRouter();
+
   return marketArea ? (
     <div>
       <ul>
@@ -37,6 +43,18 @@ export default ({
         {marketArea.reports.map(report => (
           <div key={report.title}>{report.title}</div>
         ))}
+        <h2>Sub-Areas</h2>
+        {marketArea.children.map(area => (
+          <Link
+            key={area.slug}
+            href="/[locale]/area/[slug]"
+            as={`/${locale}/area/${area.slug}`}
+          >
+            <a>
+              <div>{area.title}</div>
+            </a>
+          </Link>
+        ))}
       </article>
     </div>
   ) : (
@@ -54,6 +72,11 @@ export const unstable_getStaticProps = async (context: $FixMe) => {
       reports {
         title
         url
+      }
+      children {
+        title
+        icon
+        slug
       }
       _allSlugLocales {
         locale
