@@ -27,6 +27,7 @@
     "@next/bundle-analyzer": "^9.2.2",
     "@next/mdx": "^9.2.2",
     "@theme-ui/components": "^0.3.1",
+    "@theme-ui/presets": "^0.3.0",
     "catalog": "^4.0.1-canary.2",
     "clipboard-polyfill": "^2.8.6",
     "d3-array": "^2.3.3",

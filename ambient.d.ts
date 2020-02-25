@@ -10,6 +10,11 @@ type $IntentionalAny = any; // eslint-disable-line @typescript-eslint/no-explici
 /** TS cannot express the proper type atm */
 type $Unexpressable = any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
+declare module "@theme-ui/presets" {
+  export const deep: $FixMe;
+  export const swiss: $FixMe;
+}
+
 // -----------------------------------------------------------------------------
 // MDX stuff
 
@@ -27,9 +32,9 @@ declare module "@mdx-js/react" {
 }
 
 // GraphQL
-declare module '*.graphql' {
-  import { DocumentNode } from 'graphql'
-  const Schema: DocumentNode
+declare module "*.graphql" {
+  import { DocumentNode } from "graphql";
+  const Schema: DocumentNode;
 
-  export = Schema
+  export = Schema;
 }
