@@ -1,6 +1,6 @@
-import "isomorphic-unfetch";
 import React from "react";
 import Link from "next/link";
+import { fetchCMS } from "../../lib/cms-api";
 
 export default ({
   simplePage
@@ -39,8 +39,8 @@ export default ({
 export const unstable_getStaticProps = async (context: $FixMe) => {
   console.log(context);
   const query = `
-  query {
-    simplePage(locale: ${context.params.locale}, filter: {slug: {eq: "${context.params.slug}"}}) {
+  query PageQuery($locale: SiteLocale!, $slug: String!){
+    simplePage(locale: $locale, filter: {slug: {eq: $slug}}) {
       title
       body
       _allSlugLocales {
@@ -51,21 +51,9 @@ export const unstable_getStaticProps = async (context: $FixMe) => {
   }
   `;
 
-  const token = "880654d6951b0e08722848ff6881c9";
+  const result = await fetchCMS(query, { variables: context.params });
 
-  const result = await fetch("https://graphql.datocms.com/preview", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query
-    })
-  }).then(res => res.json());
-
-  return { props: { simplePage: result.data.simplePage } };
+  return { props: { simplePage: result.simplePage } };
 };
 
 export const unstable_getStaticPaths = async (context: $FixMe) => {
@@ -80,21 +68,9 @@ export const unstable_getStaticPaths = async (context: $FixMe) => {
   }
   `;
 
-  const token = "880654d6951b0e08722848ff6881c9";
+  const result = await fetchCMS(query);
 
-  const result = await fetch("https://graphql.datocms.com/preview", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query
-    })
-  }).then(res => res.json());
-
-  const paths = result.data.allSimplePages.flatMap((page: $FixMe) => {
+  const paths = result.allSimplePages.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
       params: { locale: loc.locale, slug: loc.value }
     }));

@@ -1,6 +1,7 @@
 import "isomorphic-unfetch";
 import React from "react";
 import Link from "next/link";
+import { fetchCMS } from "../lib/cms-api";
 
 export default ({
   allSimplePages
@@ -33,19 +34,7 @@ export const unstable_getStaticProps = async (context: $FixMe) => {
   }
   `;
 
-  const token = "880654d6951b0e08722848ff6881c9";
+  const result = await fetchCMS(query, { preview: context.preview });
 
-  const result = await fetch("https://graphql.datocms.com/preview", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      query
-    })
-  }).then(res => res.json());
-
-  return { props: { allSimplePages: result.data.allSimplePages } };
+  return { props: { allSimplePages: result.allSimplePages } };
 };
