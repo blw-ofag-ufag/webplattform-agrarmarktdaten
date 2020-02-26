@@ -12,7 +12,8 @@ export const Icon = ({ icon }: { icon: string }) => {
         alignItems: "center",
         justifyContent: "center",
         fontSize: 5,
-        textDecoration: "none"
+        textDecoration: "none",
+        ":hover": { textDecoration: "none" }
       }}
     >
       {icon.substr(0, 1).toLocaleUpperCase()}

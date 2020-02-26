@@ -1,6 +1,8 @@
-import React from "react";
-import Link from "next/link";
+import { default as NextLink } from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
+import { Box, Card, Heading, Link, Grid } from "theme-ui";
+import { Icon } from "../../../components/Icon";
 import { fetchCMS } from "../../../lib/cms-api";
 
 export default ({
@@ -24,14 +26,14 @@ export default ({
         {marketArea._allSlugLocales.map(loc => {
           return (
             <li key={loc.locale}>
-              <Link
+              <NextLink
                 href="/[locale]/area/[slug]"
                 as={`/${loc.locale}/area/${loc.value}`}
               >
-                <a rel="alternate" hrefLang={loc.locale}>
+                <Link rel="alternate" hrefLang={loc.locale}>
                   {loc.locale}
-                </a>
-              </Link>
+                </Link>
+              </NextLink>
             </li>
           );
         })}
@@ -44,17 +46,28 @@ export default ({
           <div key={report.title}>{report.title}</div>
         ))}
         <h2>Sub-Areas</h2>
-        {marketArea.children.map(area => (
-          <Link
-            key={area.slug}
-            href="/[locale]/area/[slug]"
-            as={`/${locale}/area/${area.slug}`}
-          >
-            <a>
-              <div>{area.title}</div>
-            </a>
-          </Link>
-        ))}
+        <Grid
+          as="ul"
+          sx={{ listStyle: "none", m: 0, p: 0 }}
+          width={[200, null, 192]}
+        >
+          {marketArea.children.map(area => (
+            <Box as="li" key={area.slug}>
+              <NextLink
+                href="/[locale]/area/[slug]"
+                as={`/${locale}/area/${area.slug}`}
+                passHref
+              >
+                <Card>
+                  <Icon icon={area.icon} />
+                  <Heading>
+                    <Link>{area.title}</Link>
+                  </Heading>
+                </Card>
+              </NextLink>
+            </Box>
+          ))}
+        </Grid>
       </article>
     </div>
   ) : (

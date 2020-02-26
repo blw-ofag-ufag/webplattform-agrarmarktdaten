@@ -24,7 +24,7 @@ export default ({
         );
       })}
     </ul>
-    Market Areas
+    <h2>Market Areas</h2>
     <Grid
       as="ul"
       sx={{ listStyle: "none", m: 0, p: 0 }}
@@ -38,12 +38,12 @@ export default ({
               as={`/de/area/${area.slug}`}
               passHref
             >
-              <Link>
-                <Card>
-                  <Icon icon={area.icon} />
-                  <Heading>{area.title}</Heading>
-                </Card>
-              </Link>
+              <Card>
+                <Icon icon={area.icon} />
+                <Heading>
+                  <Link>{area.title}</Link>
+                </Heading>
+              </Card>
             </NextLink>
           </Box>
         );
