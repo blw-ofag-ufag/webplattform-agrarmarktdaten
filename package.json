@@ -21,6 +21,7 @@
   "dependencies": {
     "@babel/standalone": "^7.8.4",
     "@emotion/core": "^10.0.27",
+    "@interactivethings/visualize-app": "^0.4.2",
     "@juggle/resize-observer": "^3.0.2",
     "@lingui/react": "^2.8.3",
     "@mdx-js/react": "^1.5.2",
@@ -51,7 +52,7 @@
     "io-ts": "^2.1.1",
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
-    "next": "^9.2.3-canary.12",
+    "next": "^9.2.3-canary.13",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "theme-ui": "^0.3.1",

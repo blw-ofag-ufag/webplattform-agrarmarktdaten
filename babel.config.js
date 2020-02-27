@@ -6,7 +6,7 @@ module.exports = {
       {
         "preset-env": {
           useBuiltIns: "usage",
-          corejs: 2 // Next.js comes with v2
+          corejs: 3
         }
       }
     ]
