@@ -77,6 +77,7 @@ export const getStaticPaths = async (context: $FixMe) => {
   });
 
   return {
+    fallback: false,
     paths
   };
 };
