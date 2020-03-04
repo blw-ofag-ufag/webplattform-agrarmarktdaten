@@ -7,3 +7,4 @@
 /src/locales/**/*.js
 /public/dist/**/*.js
 /build
+.now
