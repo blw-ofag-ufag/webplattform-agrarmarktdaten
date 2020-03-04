@@ -75,7 +75,7 @@ export default ({
   );
 };
 
-export const unstable_getStaticProps = async (context: $FixMe) => {
+export const getStaticProps = async (context: $FixMe) => {
   console.log(context);
   const query = `
   query PageQuery($locale: SiteLocale!, $slug: String!){
@@ -104,7 +104,7 @@ export const unstable_getStaticProps = async (context: $FixMe) => {
   return { props: { marketArea: result.marketArea } };
 };
 
-export const unstable_getStaticPaths = async (context: $FixMe) => {
+export const getStaticPaths = async (context: $FixMe) => {
   const query = `
   query {
     allMarketAreas {

@@ -52,7 +52,7 @@ export default ({
   </Box>
 );
 
-export const unstable_getStaticProps = async (context: $FixMe) => {
+export const getStaticProps = async (context: $FixMe) => {
   const query = `
   query {
     allSimplePages {
