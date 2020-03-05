@@ -4,22 +4,37 @@ import {
   LocaleProvider,
   I18nProvider,
   catalogs,
-  parseLocaleString
+  parseLocaleString,
+  useLocale
 } from "@interactivethings/visualize-app";
 import { ThemeProvider } from "theme-ui";
 import { editorTheme } from "../../../theme-editor";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { Header } from "../../../components/layout";
 
 export default () => {
   const { query } = useRouter();
 
-  const locale = parseLocaleString(query.locale as string);
-
+  const locale = useLocale();
   const chartId = query.chartId as string;
 
   return (
-    <LocaleProvider value={locale}>
+    <>
+      <Header
+        alternates={[
+          {
+            href: "/[locale]/create/[chartId]",
+            as: "/de/create/new",
+            label: "de"
+          },
+          {
+            href: "/[locale]/create/[chartId]",
+            as: "/en/create/new",
+            label: "en"
+          }
+        ]}
+      ></Header>
       <I18nProvider catalogs={catalogs} language={locale}>
         <ThemeProvider theme={editorTheme}>
           <ConfiguratorStateProvider chartId={chartId}>
@@ -27,7 +42,7 @@ export default () => {
           </ConfiguratorStateProvider>
         </ThemeProvider>
       </I18nProvider>
-    </LocaleProvider>
+    </>
   );
 };
 
