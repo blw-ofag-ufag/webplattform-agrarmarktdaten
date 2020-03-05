@@ -1781,10 +1781,10 @@
   resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-9.2.2.tgz#ee49199691f6c74dd28e9968f127b33edc1dbfdd"
   integrity sha512-TB7YJhYIu8DnpWYIkp4N7yaYTh92MGQ3tfeMOB/wLgB5y+W3ozgg5rA2y1RUTK4MQfUk4Ll7cm+4xhVpvrXMlA==
 
-"@next/polyfill-nomodule@9.2.3-canary.22":
-  version "9.2.3-canary.22"
-  resolved "https://registry.yarnpkg.com/@next/polyfill-nomodule/-/polyfill-nomodule-9.2.3-canary.22.tgz#2642f403d0c509da05bb794547783f2fd87799b2"
-  integrity sha512-K1CvO9aNWUBPQVIYr/Qjq3sRbSfv0xO5+6DzL2+s/V0dGN4A1q/xeWHfNxLaw/GDCBrIMiEsA2eYjdPUmaCvHg==
+"@next/polyfill-nomodule@9.2.3-canary.25":
+  version "9.2.3-canary.25"
+  resolved "https://registry.yarnpkg.com/@next/polyfill-nomodule/-/polyfill-nomodule-9.2.3-canary.25.tgz#eaafc29b72fe32c3d55c80ea609977fb5b101e46"
+  integrity sha512-lSkejD/Tsh/6vLxnXle27UuZVwj/vDX8f6hWUoIO4vDuEO27PT6qYbCSKtEHq6FIWIrfzCsuVvRnAjUcT1x75Q==
 
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
@@ -8553,10 +8553,10 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next@^9.2.3-canary.13:
-  version "9.2.3-canary.22"
-  resolved "https://registry.yarnpkg.com/next/-/next-9.2.3-canary.22.tgz#14f162f3248fbe240dc019e9241a946e411e46b0"
-  integrity sha512-B2YXRcTxORsO+Wvq5OdxmXfs6qLSr0fVDWZkTVQxaomDYI7maZ8be+DQ5RbhkXcYS7MdGasm/4OdKOlwg+0iAg==
+next@^9.2.3-canary.25:
+  version "9.2.3-canary.25"
+  resolved "https://registry.yarnpkg.com/next/-/next-9.2.3-canary.25.tgz#cf9062ec89786bbb625ad08a854a3fd6854f60ab"
+  integrity sha512-zzbihP+xawCqHBmVZZnOIUvptw3gbDe7f6GaYS5wnjy9vDJleKPbda5Yo0eC6JV0DTOZQKKKfNHw5m71epEEWg==
   dependencies:
     "@ampproject/toolbox-optimizer" "2.0.0"
     "@babel/core" "7.7.2"
@@ -8574,7 +8574,7 @@ next@^9.2.3-canary.13:
     "@babel/preset-typescript" "7.7.2"
     "@babel/runtime" "7.7.2"
     "@babel/types" "7.7.4"
-    "@next/polyfill-nomodule" "9.2.3-canary.22"
+    "@next/polyfill-nomodule" "9.2.3-canary.25"
     amphtml-validator "1.0.30"
     async-retry "1.2.3"
     async-sema "3.0.0"
