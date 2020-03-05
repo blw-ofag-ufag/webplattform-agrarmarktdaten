@@ -1,9 +1,9 @@
-import "isomorphic-unfetch";
-import React from "react";
 import { default as NextLink } from "next/link";
-import { fetchCMS } from "../lib/cms-api";
-import { Box, Card, Heading, Grid, Link } from "theme-ui";
+import React from "react";
+import { Box, Card, Grid, Heading, Link } from "theme-ui";
 import { Icon } from "../components/Icon";
+import { AppLayout } from "../components/layout";
+import { fetchCMS } from "../lib/cms-api";
 
 export default ({
   allSimplePages,
@@ -12,7 +12,7 @@ export default ({
   allSimplePages: { slug: string; title: string }[];
   allMarketAreas: { slug: string; title: string; icon: string }[];
 }) => (
-  <Box>
+  <AppLayout>
     <ul>
       {allSimplePages.map(page => {
         return (
@@ -49,7 +49,7 @@ export default ({
         );
       })}
     </Grid>
-  </Box>
+  </AppLayout>
 );
 
 export const getStaticProps = async (context: $FixMe) => {

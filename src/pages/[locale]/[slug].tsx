@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { fetchCMS } from "../../lib/cms-api";
+import { AppLayout } from "../../components/layout";
 
 export default ({
   simplePage
@@ -11,28 +12,35 @@ export default ({
     _allSlugLocales: { locale: string; value: string }[];
   };
 }) => {
-  return simplePage ? (
-    <div>
-      <ul>
-        {simplePage._allSlugLocales.map(loc => {
-          return (
-            <li key={loc.locale}>
-              <Link href="/[locale]/[slug]" as={`/${loc.locale}/${loc.value}`}>
-                <a rel="alternate" hrefLang={loc.locale}>
-                  {loc.locale}
-                </a>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      <article>
-        <h1>{simplePage.title}</h1>
-        {simplePage.body}
-      </article>
-    </div>
-  ) : (
-    <div>NOT FOUND</div>
+  return (
+    <AppLayout>
+      {simplePage ? (
+        <div>
+          <ul>
+            {simplePage._allSlugLocales.map(loc => {
+              return (
+                <li key={loc.locale}>
+                  <Link
+                    href="/[locale]/[slug]"
+                    as={`/${loc.locale}/${loc.value}`}
+                  >
+                    <a rel="alternate" hrefLang={loc.locale}>
+                      {loc.locale}
+                    </a>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <article>
+            <h1>{simplePage.title}</h1>
+            {simplePage.body}
+          </article>
+        </div>
+      ) : (
+        <div>NOT FOUND</div>
+      )}
+    </AppLayout>
   );
 };
 

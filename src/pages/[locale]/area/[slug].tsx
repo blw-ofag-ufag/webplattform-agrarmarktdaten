@@ -1,8 +1,9 @@
 import { default as NextLink } from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { Box, Card, Heading, Link, Grid } from "theme-ui";
+import { Box, Card, Grid, Heading, Link } from "theme-ui";
 import { Icon } from "../../../components/Icon";
+import { AppLayout } from "../../../components/layout";
 import { fetchCMS } from "../../../lib/cms-api";
 
 export default ({
@@ -20,58 +21,62 @@ export default ({
     query: { locale }
   } = useRouter();
 
-  return marketArea ? (
-    <div>
-      <ul>
-        {marketArea._allSlugLocales.map(loc => {
-          return (
-            <li key={loc.locale}>
-              <NextLink
-                href="/[locale]/area/[slug]"
-                as={`/${loc.locale}/area/${loc.value}`}
-              >
-                <Link rel="alternate" hrefLang={loc.locale}>
-                  {loc.locale}
-                </Link>
-              </NextLink>
-            </li>
-          );
-        })}
-      </ul>
-      <article>
-        <h1>{marketArea.title}</h1>
-        {marketArea.icon}
-        <h2>Reports</h2>
-        {marketArea.reports.map(report => (
-          <div key={report.title}>{report.title}</div>
-        ))}
-        <h2>Sub-Areas</h2>
-        <Grid
-          as="ul"
-          sx={{ listStyle: "none", m: 0, p: 0 }}
-          width={[200, null, 192]}
-        >
-          {marketArea.children.map(area => (
-            <Box as="li" key={area.slug}>
-              <NextLink
-                href="/[locale]/area/[slug]"
-                as={`/${locale}/area/${area.slug}`}
-                passHref
-              >
-                <Card>
-                  <Icon icon={area.icon} />
-                  <Heading>
-                    <Link>{area.title}</Link>
-                  </Heading>
-                </Card>
-              </NextLink>
-            </Box>
-          ))}
-        </Grid>
-      </article>
-    </div>
-  ) : (
-    <div>NOT FOUND</div>
+  return (
+    <AppLayout>
+      {marketArea ? (
+        <div>
+          <ul>
+            {marketArea._allSlugLocales.map(loc => {
+              return (
+                <li key={loc.locale}>
+                  <NextLink
+                    href="/[locale]/area/[slug]"
+                    as={`/${loc.locale}/area/${loc.value}`}
+                  >
+                    <Link rel="alternate" hrefLang={loc.locale}>
+                      {loc.locale}
+                    </Link>
+                  </NextLink>
+                </li>
+              );
+            })}
+          </ul>
+          <article>
+            <h1>{marketArea.title}</h1>
+            {marketArea.icon}
+            <h2>Reports</h2>
+            {marketArea.reports.map(report => (
+              <div key={report.title}>{report.title}</div>
+            ))}
+            <h2>Sub-Areas</h2>
+            <Grid
+              as="ul"
+              sx={{ listStyle: "none", m: 0, p: 0 }}
+              width={[200, null, 192]}
+            >
+              {marketArea.children.map(area => (
+                <Box as="li" key={area.slug}>
+                  <NextLink
+                    href="/[locale]/area/[slug]"
+                    as={`/${locale}/area/${area.slug}`}
+                    passHref
+                  >
+                    <Card>
+                      <Icon icon={area.icon} />
+                      <Heading>
+                        <Link>{area.title}</Link>
+                      </Heading>
+                    </Card>
+                  </NextLink>
+                </Box>
+              ))}
+            </Grid>
+          </article>
+        </div>
+      ) : (
+        <div>NOT FOUND</div>
+      )}
+    </AppLayout>
   );
 };
 

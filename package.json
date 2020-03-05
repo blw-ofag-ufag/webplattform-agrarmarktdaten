@@ -21,7 +21,7 @@
   "dependencies": {
     "@babel/standalone": "^7.8.4",
     "@emotion/core": "^10.0.27",
-    "@interactivethings/visualize-app": "^0.4.2",
+    "@interactivethings/visualize-app": "^0.4.6",
     "@juggle/resize-observer": "^3.0.2",
     "@lingui/react": "^2.8.3",
     "@mdx-js/react": "^1.5.2",
