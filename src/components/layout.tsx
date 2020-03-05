@@ -1,5 +1,77 @@
-import { Box } from "theme-ui";
+import { Box, Flex, Link } from "theme-ui";
+import NextLink from "next/link";
+import { useLocale } from "@interactivethings/visualize-app";
 
-export const AppLayout = ({ children }: { children: React.ReactNode }) => (
-  <Box sx={{ maxWidth: "64rem", mx: "auto" }}>{children}</Box>
+export const Header = ({
+  alternates
+}: {
+  alternates?: { href: string; as: string; label: string }[];
+}) => {
+  const locale = useLocale();
+  return (
+    <Flex
+      sx={{
+        height: "96px",
+        px: 3,
+        alignItems: "center",
+        justifyContent: "space-between"
+      }}
+    >
+      <NextLink href="/">
+        <Flex
+          sx={{
+            bg: "primary",
+            color: "background",
+            borderRadius: 5,
+            height: "4rem",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 5,
+            textDecoration: "none",
+            px: 5,
+            cursor: "pointer",
+            ":hover": { textDecoration: "none" }
+          }}
+        >
+          Logo
+        </Flex>
+      </NextLink>
+      <Flex>
+        <NextLink
+          href="/[locale]/create/[chartId]"
+          as={`/${locale}/create/new`}
+          passHref
+        >
+          <Link>Get Data</Link>
+        </NextLink>
+
+        {alternates && (
+          <Flex ml={3} sx={{ borderLeft: "1px solid #999" }}>
+            {alternates.map(({ href, label, as }) => {
+              return (
+                <Box ml={3} key={as}>
+                  <NextLink href={href} as={as} passHref>
+                    <Link>{label}</Link>
+                  </NextLink>
+                </Box>
+              );
+            })}
+          </Flex>
+        )}
+      </Flex>
+    </Flex>
+  );
+};
+
+export const AppLayout = ({
+  children,
+  alternates
+}: {
+  children: React.ReactNode;
+  alternates?: { href: string; as: string; label: string }[];
+}) => (
+  <>
+    <Header alternates={alternates} />
+    <Box sx={{ maxWidth: "64rem", mx: "auto", px: 3 }}>{children}</Box>
+  </>
 );

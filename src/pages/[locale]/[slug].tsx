@@ -12,26 +12,21 @@ export default ({
     _allSlugLocales: { locale: string; value: string }[];
   };
 }) => {
+  const alternates = simplePage
+    ? simplePage._allSlugLocales.map(loc => {
+        return {
+          href: "/[locale]/[slug]",
+          as: `/${loc.locale}/${loc.value}`,
+          label: loc.locale
+        };
+      })
+    : undefined;
+
   return (
-    <AppLayout>
+    <AppLayout alternates={alternates}>
       {simplePage ? (
         <div>
-          <ul>
-            {simplePage._allSlugLocales.map(loc => {
-              return (
-                <li key={loc.locale}>
-                  <Link
-                    href="/[locale]/[slug]"
-                    as={`/${loc.locale}/${loc.value}`}
-                  >
-                    <a rel="alternate" hrefLang={loc.locale}>
-                      {loc.locale}
-                    </a>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <ul></ul>
           <article>
             <h1>{simplePage.title}</h1>
             {simplePage.body}

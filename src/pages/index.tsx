@@ -13,7 +13,7 @@ export default ({
   allMarketAreas: { slug: string; title: string; icon: string }[];
 }) => (
   <AppLayout>
-    <ul>
+    {/* <ul>
       {allSimplePages.map(page => {
         return (
           <li key={page.slug}>
@@ -23,7 +23,7 @@ export default ({
           </li>
         );
       })}
-    </ul>
+    </ul> */}
     <h2>Market Areas</h2>
     <Grid
       as="ul"

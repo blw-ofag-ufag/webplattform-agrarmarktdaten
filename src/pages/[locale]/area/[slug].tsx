@@ -21,26 +21,20 @@ export default ({
     query: { locale }
   } = useRouter();
 
+  const alternates = marketArea
+    ? marketArea._allSlugLocales.map(loc => {
+        return {
+          href: "/[locale]/area/[slug]",
+          as: `/${loc.locale}/area/${loc.value}`,
+          label: loc.locale
+        };
+      })
+    : undefined;
+
   return (
-    <AppLayout>
+    <AppLayout alternates={alternates}>
       {marketArea ? (
         <div>
-          <ul>
-            {marketArea._allSlugLocales.map(loc => {
-              return (
-                <li key={loc.locale}>
-                  <NextLink
-                    href="/[locale]/area/[slug]"
-                    as={`/${loc.locale}/area/${loc.value}`}
-                  >
-                    <Link rel="alternate" hrefLang={loc.locale}>
-                      {loc.locale}
-                    </Link>
-                  </NextLink>
-                </li>
-              );
-            })}
-          </ul>
           <article>
             <h1>{marketArea.title}</h1>
             {marketArea.icon}

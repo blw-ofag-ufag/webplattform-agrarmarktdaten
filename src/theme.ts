@@ -6,7 +6,8 @@ export const theme = {
     primary: {
       padding: 3,
       borderRadius: 5,
-      boxShadow: "0 0 8px rgba(0, 0, 0, 0.125)"
+      boxShadow: "0 0 8px rgba(0, 0, 0, 0.125)",
+      cursor: "pointer"
     },
     compact: {
       padding: 1,
