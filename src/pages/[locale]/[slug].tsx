@@ -54,7 +54,10 @@ export const getStaticProps = async (context: $FixMe) => {
   }
   `;
 
-  const result = await fetchCMS(query, { variables: context.params });
+  const result = await fetchCMS(query, {
+    variables: context.params,
+    preview: context.preview
+  });
 
   return { props: { simplePage: result.simplePage } };
 };

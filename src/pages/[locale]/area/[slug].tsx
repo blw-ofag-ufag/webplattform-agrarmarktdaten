@@ -1,3 +1,4 @@
+import { GetStaticPaths, GetStaticProps } from "next";
 import { default as NextLink } from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -74,8 +75,9 @@ export default ({
   );
 };
 
-export const getStaticProps = async (context: $FixMe) => {
-  console.log(context);
+export const getStaticProps: GetStaticProps = async context => {
+  console.log("GSP", context);
+
   const query = `
   query PageQuery($locale: SiteLocale!, $slug: String!){
     marketArea(locale: $locale, filter: {slug: {eq: $slug}}) {
@@ -98,12 +100,17 @@ export const getStaticProps = async (context: $FixMe) => {
   }
   `;
 
-  const result = await fetchCMS(query, { variables: context.params });
+  const result = await fetchCMS(query, {
+    variables: context.params,
+    preview: context.preview
+  });
+
+  console.log(result.marketArea);
 
   return { props: { marketArea: result.marketArea } };
 };
 
-export const getStaticPaths = async (context: $FixMe) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
   query {
     allMarketAreas {
