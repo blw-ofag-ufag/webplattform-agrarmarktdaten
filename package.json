@@ -45,6 +45,7 @@
     "downshift": "^5.0.3",
     "file-saver": "^2.0.2",
     "fp-ts": "^2.5.0",
+    "framer-motion": "^1.9.1",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.3",
     "graphql-type-json": "^0.3.1",
@@ -56,6 +57,7 @@
     "next": "^9.2.3-canary.26",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-intersection-observer": "^8.26.1",
     "theme-ui": "^0.3.1",
     "urql": "^1.9.0",
     "use-immer": "^0.3.3"

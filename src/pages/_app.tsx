@@ -1,19 +1,26 @@
 import { AppProps } from "next/app";
-import { ThemeProvider } from "theme-ui";
+import { ThemeProvider, Box } from "theme-ui";
+import { css, Global } from "@emotion/core";
+
+import { theme, globalStyles } from "../theme";
+
 import { GraphqlProvider } from "../graphql";
-import { theme } from "../theme";
-import {
-  LocaleProvider,
-} from "@interactivethings/visualize-app";
+
+import { LocaleProvider } from "@interactivethings/visualize-app";
 import { useRouter } from "next/router";
 
 export default ({ Component, pageProps }: AppProps) => {
   const { query } = useRouter();
-  const locale = query.locale as $FixMe || "de";
+  const locale = (query.locale as $FixMe) || "de";
   return (
     <LocaleProvider value={locale}>
       <GraphqlProvider>
         <ThemeProvider theme={theme}>
+          <Global
+            styles={css`
+              ${globalStyles}
+            `}
+          />
           <Component {...pageProps} />
         </ThemeProvider>
       </GraphqlProvider>
