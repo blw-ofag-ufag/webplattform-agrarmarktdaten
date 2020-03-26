@@ -99,7 +99,8 @@ const LanguageListItem = ({
       textDecoration: "none",
       transition: "font-weight .2s",
 
-      color: disabled ? "monochrome600" : "text",
+      color: "text",
+      opacity: disabled ? 0.65 : 1,
       pointerEvents: disabled ? "none" : "inherit",
       cursor: disabled ? "inherit" : "pointer",
 
