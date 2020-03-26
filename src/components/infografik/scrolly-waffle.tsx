@@ -121,11 +121,15 @@ export const ScrollyWaffleDataFetcher = ({
     fetchData();
   }, [dataUrl]);
 
-  return (
-    <ScrollyWaffle
-      sectionIds={sectionIds}
-      sections={sections}
-      squaresData={squares}
-    />
-  );
+  if (squares.length > 1) {
+    return (
+      <ScrollyWaffle
+        sectionIds={sectionIds}
+        sections={sections}
+        squaresData={squares}
+      />
+    );
+  } else {
+    return <div>Loading</div>;
+  }
 };
