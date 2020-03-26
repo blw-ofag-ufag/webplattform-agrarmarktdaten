@@ -1,0 +1,38 @@
+{
+  "homepage.section.market.area": {
+    "defaults": "Märkte",
+    "origin": [
+      [
+        "src/pages/[locale]/index.tsx",
+        34
+      ]
+    ]
+  },
+  "homepage.section.newsfeed": {
+    "defaults": "Aktuell",
+    "origin": [
+      [
+        "src/pages/[locale]/index.tsx",
+        41
+      ]
+    ]
+  },
+  "button.show.all": {
+    "defaults": "Alle Anzeigen",
+    "origin": [
+      [
+        "src/pages/[locale]/index.tsx",
+        47
+      ]
+    ]
+  },
+  "homepage.section.newest.infografic": {
+    "defaults": "Neueste Infografik",
+    "origin": [
+      [
+        "src/pages/[locale]/index.tsx",
+        51
+      ]
+    ]
+  }
+}

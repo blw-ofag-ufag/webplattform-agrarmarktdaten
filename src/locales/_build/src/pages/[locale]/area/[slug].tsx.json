@@ -1,0 +1,65 @@
+{
+  "article.section.infografic": {
+    "defaults": "Infografik",
+    "origin": [
+      [
+        "src/pages/[locale]/area/[slug].tsx",
+        47
+      ]
+    ]
+  },
+  "article.section.data": {
+    "defaults": "Daten",
+    "origin": [
+      [
+        "src/pages/[locale]/area/[slug].tsx",
+        51
+      ]
+    ]
+  },
+  "article.teaser.data.title": {
+    "defaults": "Daten zum Kartoffelmarkt",
+    "origin": [
+      [
+        "src/pages/[locale]/area/[slug].tsx",
+        62
+      ]
+    ]
+  },
+  "article.section.trade": {
+    "defaults": "Handelsstufen",
+    "origin": [
+      [
+        "src/pages/[locale]/area/[slug].tsx",
+        68
+      ]
+    ]
+  },
+  "article.section.news": {
+    "defaults": "Neuigkeiten",
+    "origin": [
+      [
+        "src/pages/[locale]/area/[slug].tsx",
+        75
+      ]
+    ]
+  },
+  "button.show.all": {
+    "defaults": "Alle Anzeigen",
+    "origin": [
+      [
+        "src/pages/[locale]/area/[slug].tsx",
+        81
+      ]
+    ]
+  },
+  "article.section.link": {
+    "defaults": "Links",
+    "origin": [
+      [
+        "src/pages/[locale]/area/[slug].tsx",
+        86
+      ]
+    ]
+  }
+}

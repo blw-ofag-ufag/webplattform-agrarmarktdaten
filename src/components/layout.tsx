@@ -1,8 +1,11 @@
-import { Box, Flex, Link } from "theme-ui";
-import NextLink from "next/link";
 import { useLocale } from "@interactivethings/visualize-app";
+import NextLink from "next/link";
+import { Box, Flex, Link } from "theme-ui";
+import { MarketArea } from "../domain/types";
+import { Footer } from "./footer";
+import { Header } from "./header";
 
-export const Header = ({
+export const HeaderOld = ({
   alternates
 }: {
   alternates?: { href: string; as: string; label: string }[];
@@ -45,7 +48,7 @@ export const Header = ({
           <Link>Get Data</Link>
         </NextLink>
 
-        {alternates && (
+        {/* {alternates && (
           <Flex ml={3} sx={{ borderLeft: "1px solid #999" }}>
             {alternates.map(({ href, label, as }) => {
               return (
@@ -57,7 +60,7 @@ export const Header = ({
               );
             })}
           </Flex>
-        )}
+        )} */}
       </Flex>
     </Flex>
   );
@@ -65,13 +68,17 @@ export const Header = ({
 
 export const AppLayout = ({
   children,
+  allMarketAreas,
   alternates
 }: {
   children: React.ReactNode;
+  allMarketAreas?: MarketArea[];
   alternates?: { href: string; as: string; label: string }[];
 }) => (
   <>
-    <Header alternates={alternates} />
-    <Box sx={{ maxWidth: "64rem", mx: "auto", px: 3 }}>{children}</Box>
+    <Header alternates={alternates} allMarketAreas={allMarketAreas} />
+    {/* <Header alternates={alternates} /> */}
+    <Box sx={{ mx: "auto" }}>{children}</Box>
+    <Footer />
   </>
 );

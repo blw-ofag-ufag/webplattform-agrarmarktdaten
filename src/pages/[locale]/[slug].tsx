@@ -2,15 +2,18 @@ import React from "react";
 import Link from "next/link";
 import { fetchCMS } from "../../lib/cms-api";
 import { AppLayout } from "../../components/layout";
+import { MarketArea } from "../../domain/types";
 
 export default ({
-  simplePage
+  simplePage,
+  allMarketAreas
 }: {
   simplePage?: {
     title: string;
     body: string;
     _allSlugLocales: { locale: string; value: string }[];
   };
+  allMarketAreas: MarketArea[];
 }) => {
   const alternates = simplePage
     ? simplePage._allSlugLocales.map(loc => {
@@ -23,7 +26,7 @@ export default ({
     : undefined;
 
   return (
-    <AppLayout alternates={alternates}>
+    <AppLayout alternates={alternates} allMarketAreas={allMarketAreas}>
       {simplePage ? (
         <div>
           <ul></ul>
@@ -50,6 +53,11 @@ export const getStaticProps = async (context: $FixMe) => {
         locale
         value
       }
+    }
+    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
+      title
+      icon
+      slug
     }
   }
   `;

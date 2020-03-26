@@ -11,7 +11,8 @@ import { ThemeProvider } from "theme-ui";
 import { editorTheme } from "../../../theme-editor";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { Header } from "../../../components/layout";
+import { Header } from "../../../components/header";
+// import { Header } from "../../../components/layout";
 
 export default () => {
   const { query } = useRouter();
@@ -21,7 +22,7 @@ export default () => {
 
   return (
     <>
-      <Header
+      {/* <Header
         alternates={[
           {
             href: "/[locale]/create/[chartId]",
@@ -34,7 +35,8 @@ export default () => {
             label: "en"
           }
         ]}
-      ></Header>
+      ></Header> */}
+      <Header />
       <I18nProvider catalogs={catalogs} language={locale}>
         <ThemeProvider theme={editorTheme}>
           <ConfiguratorStateProvider chartId={chartId}>
