@@ -7,27 +7,10 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 const VERSION = `v${pkg.version}`;
 
-const publicRuntimeConfig = {
-  // SPARQL_ENDPOINT: "https://ld.stadt-zuerich.ch/query"
-  SPARQL_ENDPOINT:
-  process.env.SPARQL_ENDPOINT ||
-  "https://trifid-lindas.prod.cluster.ldbar.ch/query",
-  GRAPHQL_ENDPOINT:
-  process.env.GRAPHQL_ENDPOINT ||
-  "https://dev.visualize.admin.ch/api/graphql",
-  PUBLIC_URL: process.env.PUBLIC_URL
-  ? process.env.PUBLIC_URL.replace(/\/$/, "")
-  : "",
-  GA_TRACKING_ID: process.env.GA_TRACKING_ID
-};
-
-console.log("Starting with publicRuntimeConfig\n", publicRuntimeConfig);
 console.log("Version", VERSION);
 
 module.exports = withBundleAnalyzer(
   withMDX({
-    publicRuntimeConfig,
-
     // Build-time env variables
     env: {
       VERSION
