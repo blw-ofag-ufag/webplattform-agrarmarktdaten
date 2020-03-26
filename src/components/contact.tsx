@@ -29,7 +29,7 @@ export const Contact = () => {
             <Trans id="contact.contact">Kontakt</Trans>
           </ContactSection>
           <AddressLine>Bundesamt für Landwirtschaft BLW</AddressLine>
-          <AddressLine>Fachbereich Marktanalysen</AddressLine>
+          <AddressLine>Fachbereich Marktanalyse</AddressLine>
           <AddressLine>3003 Bern</AddressLine>
           <AddressLine>
             <Link href="https://www.blw.admin.ch/blw/de/home.html">

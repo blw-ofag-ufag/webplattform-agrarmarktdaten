@@ -1,4 +1,4 @@
-import { Flex, Card, Text, Link } from "theme-ui";
+import { Card, Flex, Text } from "theme-ui";
 import { Icon, IconName } from "../icons";
 
 export const MarketCard = ({
@@ -20,7 +20,7 @@ export const MarketCard = ({
           textAlign: "center"
         }}
       >
-        <Link>{title}</Link>
+        {title}
       </Text>
     </Card>
   );

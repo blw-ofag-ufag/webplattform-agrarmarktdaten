@@ -70,7 +70,11 @@ export const HomeLink = (
   }
 ) => {
   const locale = useLocale();
-  return <Link {...props} href={`/${locale}`} as={`/${locale}`} />;
+  return (
+    <Link {...props} href={`/${locale}`} as={`/${locale}`}>
+      {props.children}
+    </Link>
+  );
 };
 
 export const CurrentPageLink = ({

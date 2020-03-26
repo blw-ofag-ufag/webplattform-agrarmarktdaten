@@ -14,9 +14,9 @@ export const ChapterHeader = ({
       id={id}
       as="h2"
       sx={{
-        backgroundColor: colors.brown,
-        backgroundBlendMode: "soft-light",
-        backgroundImage: `url("/img/${id}.png")`,
+        // backgroundColor: colors.brown,
+        // backgroundBlendMode: "soft-light",
+        backgroundImage: `url("/img/${id}-brown.png")`,
         backgroundSize: "cover",
         width: [`calc(100% + 1.5rem)`, `calc(100% + 2rem)`],
         marginLeft: [-3, -4],

@@ -103,7 +103,7 @@ export const ReportCard = ({
               as={`/${locale}/create/new`}
               passHref
             >
-              <Link variant="primary">
+              <Link variant="primary" as="div">
                 <Trans id="article.link.data.explore">Daten abfragen</Trans>
               </Link>
             </NextLink>

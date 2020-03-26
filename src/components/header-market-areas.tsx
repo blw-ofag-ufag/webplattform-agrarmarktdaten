@@ -6,8 +6,12 @@ import { useLocale } from "@interactivethings/visualize-app";
 import { IconName, Icon } from "../icons";
 
 export const MarketAreaHeader = ({
+  marketMenuexpanded,
+  toggleMarketMenu,
   allMarketAreas
 }: {
+  marketMenuexpanded: boolean;
+  toggleMarketMenu: (x: boolean) => void;
   allMarketAreas: MarketArea[];
 }) => {
   const locale = useLocale();
@@ -24,7 +28,8 @@ export const MarketAreaHeader = ({
         justifyContent: ["flex-start", "flex-start", "space-between"],
         alignItems: ["center", "center", "flex-start"],
         flex: "1 1 0px",
-        flexFlow: ["none", "none", "row wrap"]
+        flexFlow: ["none", "none", "row wrap"],
+        zIndex: 30
       }}
     >
       {allMarketAreas.map(area => {
@@ -35,7 +40,10 @@ export const MarketAreaHeader = ({
               as={`/${locale}/area/${area.slug}`}
               passHref
             >
-              <Link sx={{ textDecoration: "none" }}>
+              <Link
+                sx={{ textDecoration: "none" }}
+                onClick={() => toggleMarketMenu(false)}
+              >
                 <MarketCard title={area.title} icon={area.icon}></MarketCard>
               </Link>
             </NextLink>
@@ -75,7 +83,7 @@ export const MarketCard = ({
           }
         }}
       >
-        <Link>{title}</Link>
+        {title}
       </Text>
     </Card>
   );

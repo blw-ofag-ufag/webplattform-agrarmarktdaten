@@ -19,7 +19,7 @@ export const ScrollySection = ({
 
   return (
     <div ref={ref}>
-      <Box sx={{ minHeight: id === "one" ? "1vh" : "100vh" }}>{children}</Box>
+      <Box sx={{ minHeight: "110vh" }}>{children}</Box>
     </div>
   );
 };
@@ -108,27 +108,32 @@ export const ScrollyWaffleDataFetcher = ({
   dataUrl: string;
 }) => {
   const [squares, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       csv(dataUrl).then((data: $FixMe[]) => {
         const betriebe = getBetriebeSquaresData(data);
         // @ts-ignore
         setData(betriebe);
+        setIsLoading(false);
       });
     };
     fetchData();
   }, [dataUrl]);
 
-  if (squares.length > 1) {
-    return (
-      <ScrollyWaffle
-        sectionIds={sectionIds}
-        sections={sections}
-        squaresData={squares}
-      />
-    );
-  } else {
-    return <div>Loading</div>;
-  }
+  return (
+    <>
+      {isLoading ? (
+        <div>Loading ...</div>
+      ) : (
+        <ScrollyWaffle
+          sectionIds={sectionIds}
+          sections={sections}
+          squaresData={squares}
+        />
+      )}
+    </>
+  );
 };

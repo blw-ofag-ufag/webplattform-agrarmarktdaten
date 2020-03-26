@@ -1,20 +1,20 @@
 import {
+  catalogs,
   ChartEditor,
   ConfiguratorStateProvider,
-  LocaleProvider,
   I18nProvider,
-  catalogs,
-  parseLocaleString,
   useLocale
 } from "@interactivethings/visualize-app";
-import { ThemeProvider } from "theme-ui";
-import { editorTheme } from "../../../theme-editor";
-import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { useRouter } from "next/router";
+import { ThemeProvider } from "theme-ui";
 import { Header } from "../../../components/header";
+import { MarketArea } from "../../../domain/types";
+import { fetchCMS } from "../../../lib/cms-api";
+import { editorTheme } from "../../../theme-editor";
 // import { Header } from "../../../components/layout";
 
-export default () => {
+export default ({ allMarketAreas }: { allMarketAreas: MarketArea[] }) => {
   const { query } = useRouter();
 
   const locale = useLocale();
@@ -36,7 +36,7 @@ export default () => {
           }
         ]}
       ></Header> */}
-      <Header />
+      <Header allMarketAreas={allMarketAreas} />
       <I18nProvider catalogs={catalogs} language={locale}>
         <ThemeProvider theme={editorTheme}>
           <ConfiguratorStateProvider chartId={chartId}>
@@ -48,23 +48,38 @@ export default () => {
   );
 };
 
+export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
+  const query = `
+  query PageQuery($locale: SiteLocale!){
+    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
+      title
+      icon
+      slug
+    }
+  }
+  `;
+  const result = await fetchCMS(query, {
+    variables: context.params,
+    preview: context.preview
+  });
+
+  return {
+    props: {
+      locale: context.params?.locale || "en",
+      chartId: context.params?.chartId || "new",
+      ...result
+    }
+  };
+};
+
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     fallback: true,
     paths: [
       "/de/create/new",
-      "/en/create/new",
-      "/fr/create/new",
       "/en/create/new"
+      // "/fr/create/new",
+      // "/en/create/new"
     ]
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  return {
-    props: {
-      locale: params?.locale || "en",
-      chartId: params?.chartId || "new"
-    }
   };
 };

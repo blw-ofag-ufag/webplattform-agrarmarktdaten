@@ -67,7 +67,11 @@ export const Header = ({
       )}
       <Box sx={{ display: ["none", "none", "block"] }}>
         {marketMenuexpanded && allMarketAreas && (
-          <MarketAreaHeader allMarketAreas={allMarketAreas} />
+          <MarketAreaHeader
+            marketMenuexpanded={marketMenuexpanded}
+            toggleMarketMenu={toggleMarketMenu}
+            allMarketAreas={allMarketAreas}
+          />
         )}
       </Box>
     </Box>
@@ -127,7 +131,11 @@ const MobileMenuExpanded = ({
         <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
       </Link>
       {marketMenuexpanded && allMarketAreas && (
-        <MarketAreaHeader allMarketAreas={allMarketAreas} />
+        <MarketAreaHeader
+          marketMenuexpanded={marketMenuexpanded}
+          toggleMarketMenu={toggleMarketMenu}
+          allMarketAreas={allMarketAreas}
+        />
       )}
       <NextLink
         href="/[locale]/create/[chartId]"
@@ -157,7 +165,7 @@ const DesktopMenu = ({
 }) => {
   const locale = useLocale();
   return (
-    <Box sx={{ display: ["none", "none", "block"], order: 2, mx: "auto" }}>
+    <Box sx={{ display: ["none", "none", "flex"], order: 2, mx: "auto" }}>
       <Link
         variant="menu"
         onClick={() => toggleMarketMenu(!marketMenuexpanded)}
@@ -166,9 +174,8 @@ const DesktopMenu = ({
           position: "relative",
           mr: 5,
           svg: {
-            display: "inline",
+            display: "inline-block",
             fontSize: 3,
-            mt: 4,
             ml: 1
           }
         }}
@@ -195,7 +202,7 @@ const DesktopMenu = ({
 };
 const Logo = () => (
   <HomeLink passHref>
-    <>
+    <Flex sx={{ alignItems: ["center", "center", "flex-start"] }}>
       <Box
         role="figure"
         aria-labelledby="logo"
@@ -231,7 +238,7 @@ const Logo = () => (
       >
         <Trans id="title.agricultural.market.data">Agrarmarktdaten</Trans>
       </Text>
-    </>
+    </Flex>
   </HomeLink>
 );
 export const MobileMenu = ({
