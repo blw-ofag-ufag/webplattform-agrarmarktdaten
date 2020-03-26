@@ -30,7 +30,6 @@ export default ({
 }: {
   potatoInfographic: PotatoInfographic;
 }) => {
-  console.log(potatoInfographic.dataProduktionBetriebsstruktur.url);
   return (
     <>
       <Box

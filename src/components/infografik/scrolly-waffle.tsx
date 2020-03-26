@@ -91,7 +91,6 @@ export const ScrollyWaffle = ({
   sections: Section;
   squaresData: $FixMe[];
 }) => {
-  console.log({ squaresData });
   return (
     <ScrollyProvider sections={sectionIds}>
       <StickyWaffle squaresData={squaresData} sections={sections} />
