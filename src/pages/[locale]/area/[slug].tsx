@@ -25,7 +25,7 @@ export default ({
     slug: string;
     icon: IconName;
     infographic: { title: string; year: string };
-    reports: { title: string; url: string }[];
+    reports: { title: string; reportid: string }[];
     links?: { label: string; url: string }[];
     tradeLevels?: { title: string; icon: IconName }[];
     children: { title: string; icon: IconName; slug: string }[];
@@ -211,7 +211,7 @@ export const getStaticProps: GetStaticProps = async context => {
       }
       reports {
         title
-        url
+        reportid
       }
       children {
         title
