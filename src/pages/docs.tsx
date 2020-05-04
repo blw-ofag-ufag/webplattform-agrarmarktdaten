@@ -18,7 +18,9 @@ import { MDXProvider } from "@mdx-js/react";
 import { useEffect, useState } from "react";
 
 const pages: ConfigPageOrGroup[] = [
-  { path: "/", title: "Introduction", content: require("../docs/index.mdx") }
+  { path: "/", title: "Introduction", content: require("../docs/index.mdx") },
+  { path: "/design", title: "Design", content: require("../docs/design.mdx") },
+  { path: "/technology", title: "Technology", content: require("../docs/technology.mdx") }
 ];
 
 const mdxComponents = {
@@ -76,7 +78,7 @@ export default () => {
   return mounted ? (
     <MDXProvider components={mdxComponents}>
       <Catalog
-        title="Visualization Tool"
+        title="Market Data Platform Prototype"
         pages={pages}
         theme={{
           brandColor: "#333",

@@ -1,84 +1,30 @@
-# Documentation
 
-# Introduction
+> Documentation for the **BLW Agricultural Market Data Platform Prototype**
 
-…
+This documentation contains the following parts:
 
+[Design Concept](/design)
+- Overall Market Data Platform
+- Design for Infographics
 
-# Disclaimer
+[Technological Evaluation](/technology)
+- Platform Architecture and CMS
+- Integration of BLW Open Data
+- Integration of BLW PowerBI Reports
 
-Icons and illustrations are not licensed.
+### Disclaimer
 
-# Design Concept
-## Market Data Platform
+<HintSpecimen warning>
 
-The Agriculture Market Data Platform serves as the communication central hub of the Market Analyzing Unit of the Federal Office for Agriculture (FOAG). It provides access to the latest news, general information, reports and customized data queries for each of the different market areas.
+Icons and illustrations used in the design concept and prototype are **not licensed** and must not be shared freely on other media. Access to this prototype should therefore only be provided to a limited group of people.
 
-**Backlog (Feedback)**
+</HintSpecimen>
 
-- **ID-1:** Both scenarios should be possible: Embedding a PowerBI report within a page of the Market Data Platform or adding just a link to an external PowerBI report.
-- **ID-2:** The newest version of the prototype already includes the language selection also on mobile.
-- **ID-4:** An adaptation of the Visualization-Tool was not part of the prototype phase and as such the introduction of a infobox or user-guide will be evaluated during the implementation phase.
-- **ID-5:** The hierarchical structure of the header-navigation will be revisited during the implementation phase and depends on the final information architecture (sitemap) of the market data platform. In general, it would be possible to add an additional sub-level to the «Data» section, if necessary.
-- **ID-6:** The size and design of individual icons can easily be adjusted during the implementation phase. The current design should be viewed as a preliminary design concept and does not necessarily represent the final design.
-- **ID-7:** Technically, it would be possible to give direct access to sub-pages from the homepage. A potential design solution heavily depends on the exact requirements resp. use-cases for this a feature, which shall be defined during the implementation phase.
-- **ID-8:** A basic version of the logo has already been implemented. Additional animations or behaviors of the header element, will be explored during the implementation phase.
-- **ID-11:** The order can easily be changed — currently the position is hard coded.
-- **ID-12:** The integration of a blog is possible. Its requirements need to be further defined during the implementation phase.
-- **ID-15:** It is currently not possible to view scripts or HTML/CSS code within the CMS.
-- **ID-16:** The current prototype is not optimized for printing. As printing of web-content is a complex topic, more precise requirements need to be defined, in order for us to improve upon the current state during the implementation phase.
-- **ID-17:** Updating the data for the infographics is possible, as described in the current prototype.
-- **ID-18:** As the current design is not to be considered final, all icons, the infographic, as well as all other illustrative assets should not be shared or re-used outside of the context of the prototype.
-## Infographic Prototype
+#### Authors
 
-Currently, the Market Analyzing Unit of the Federal Office for Agriculture (FOAG) already publishes a set of infographics, in the form of static PDFs, which cover selected agricultural markets in order to communicate the most relevant figures along their individual value chains. 
-As part of this project, this information was made available in the form of a dynamic, interactive and user-friendly website. 
+This project and documentation was created by [Interactive Things](https://www.interactivethings.com).
 
-**Design Concept**
-Eventually each agricultural market will have its own infographic, explaining the most important figures and information about each of them.
-
-In order to achieve this vision, we aimed to create a simple design system that would allow us to create a consistent user experience across the different markets, while also allowing enough room for the individual expression of the different markets. This is to be achieved by defining a holistic, reusable content structure, as well as a simple and intuitive navigation pattern. 
-
-Each infographic will be based on a multi-step structure, detailing the market value chain, as well as the option to drill-down into individual aspects for each step in the value chain. Furthermore, we suggest that there should be a finite set of chart-types used across the different market infographics, in order to reduce implementation complexity and thus increasing the consistency and reproducibility of the individual infographics.
-
-For the prototype we chose to follow a «mobile-first» approach, focusing on the best possible user experience, while considering their unique and intuitive interaction patterns, as well as their inherent limitations in regards to their screen-size and readability.
-
-**Technical Implementation**
-As part of the technical prototype, the data powering the infographic, as well as the titles and other textual content of the infographic, can be updated independently by the team at the BLW using the content management system.
-
-# Technology
-## Prüfung Schnittstellen-Alternative
-
-…
-
-## Integration of the Webplatform prototype in  DatoCMS
-
-[DatoCMS](https://www.datocms.com/) allows to separate the webplatform content from its presentation.
-
-- The front-end elements have been designed and implemented by IXT using JavaScript, and are hosted on Github. The Webplatform is built as a “universal” application (i.e. the same application code runs server-side to pre-render HTML views and on the client to enable interactivity). To achieve this, the application is written in JavaScript using React and Next.js as the application framework.
-- The content displayed in the platform can be edited through the [CMS dashboard](https://blw-agricultural-market-data-platform.admin.datocms.com/editor), which doesn’t require any technical knowledge of the application setup.
-
-Compared to other CMS, DatoCMS offers several advantages, among them:
-
-- **Localization**: It has a simple interface to support multiple languages. By now, only German and English are available, but it would be simple to add other languages.
-- **Revision history**: It is straightforward to revert an unwanted change and go back to a previous version of the webplatform content.
-- **Scheduled publication**: A content update can be published instantly, or scheduled for a planned future release.
-- **GraphQL API**: The connection between content items and their presentational components occurs thanks to a GraphQL API, which is convenient to use with React and Next.js, the technologies used to build the front-end.
-
-**Pricing: 99€/month**
-
-**Editing content**
-Editing content occurs through the CMS dashboard. The content must be edited in all languages. The CMS is organized according to the structure of the Webplatform. There are 5 top-level sections:
-**Homepage**: content displayed on the landing page.
-**About Page**: content used in the page "Über uns"
-**Newsfeed**: list of news items displayed in the "Aktuell" section of the homepage.
-**Market Area**: This section has a subsection per market area (potatoes, milk, etc.), in which the content can be edited for each specific market area.
-**Potato Infografic**: contains the data and texts used in the infografic.
-
-**Editing Infografic Data**
-The data driving the Swiss potato market infografic can be stored as a CSV file in a structure that is convenient for its visualization. There is one file per visualization. As a proof of concept, the data visualized in the section labeled "Betriebstruktur" is read from the CMS. To update the data, the CSV file must be edited and uploaded again as a replacement of the current data file. 
-The textual elements of the infografic can be edited like any other textual content.
-
-**Publishing changes** 
-The process of translating the data coming from the API into static files occurs thanks to a Continuous Deployment service anytime an editor request a new build by pressing a Publish changes button on the web interface of DatoCMS. The publication can be immediate or scheduled.
-
+- [Jan Wächter](jan@interactivethings.com)
+- [Jeremy Stucki](jeremy@interactivethings.com)
+- [Luc Guillemot](luc@interactivethings.com)
+- [Solange Vogt](solange@interactivethings.com)
