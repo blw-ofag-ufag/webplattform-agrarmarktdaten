@@ -4,3 +4,15 @@
 
 [build.environment]
   NODE_VERSION = "12"
+
+[[redirect]]
+  from = "/"
+  to = "/de"
+  status = 302
+
+# Proxy to Vercel
+[[redirect]]
+  from = "/*"
+  to = "https://blw-agricultural-market-data-platform.now.sh/:splat"
+  force = true
+  status = 200
