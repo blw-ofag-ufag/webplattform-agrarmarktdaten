@@ -3,14 +3,14 @@ import { Icon, IconName } from "../icons";
 
 export const TradeLevelsGrid = ({
   tradeLevels,
-  color
+  color,
 }: {
   tradeLevels: { title: string; icon: IconName }[];
   color: string;
 }) => (
   <Flex sx={{ justifyContent: "space-between", flexFlow: "row wrap" }}>
-    {tradeLevels.map(tl => (
-      <TradeCard title={tl.title} icon={tl.icon} color={color} />
+    {tradeLevels.map((tl) => (
+      <TradeCard key={tl.title} title={tl.title} icon={tl.icon} color={color} />
     ))}
   </Flex>
 );
@@ -18,7 +18,7 @@ export const TradeLevelsGrid = ({
 const TradeCard = ({
   title,
   icon,
-  color
+  color,
 }: {
   title: string;
   icon: IconName;
@@ -33,7 +33,7 @@ const TradeCard = ({
           fontSize: 5,
           fontWeight: "bold",
           lineHeight: "heading",
-          textAlign: "center"
+          textAlign: "center",
         }}
       >
         <Link>{title}</Link>
@@ -44,7 +44,7 @@ const TradeCard = ({
 
 export const TradeIcon = ({
   icon,
-  color
+  color,
 }: {
   icon: IconName;
   color: string;
@@ -60,7 +60,7 @@ export const TradeIcon = ({
         alignItems: "center",
         mb: 2,
         fontSize: "3rem",
-        "&:hover": { bg: `${color}LightHover` }
+        "&:hover": { bg: `${color}LightHover` },
       }}
     >
       <Icon name={icon} size={50} />

@@ -59,6 +59,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "lodash": "^4.17.15",
     "next": "9.3.2",
+    "powerbi-client": "^2.11.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-intersection-observer": "^8.26.1",

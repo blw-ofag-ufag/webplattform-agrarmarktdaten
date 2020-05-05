@@ -17,7 +17,7 @@ import { InfografikTeaserLarge } from "../../../components/homepage/infografik-t
 export default ({
   marketArea,
   allMarketAreas,
-  allNewsfeeds
+  allNewsfeeds,
 }: {
   marketArea?: {
     title: string;
@@ -35,14 +35,14 @@ export default ({
   allNewsfeeds: Newsfeed[];
 }) => {
   const {
-    query: { locale }
+    query: { locale },
   } = useRouter();
   const alternates = marketArea
-    ? marketArea._allSlugLocales.map(loc => {
+    ? marketArea._allSlugLocales.map((loc) => {
         return {
           href: "/[locale]/area/[slug]",
           as: `/${loc.locale}/area/${loc.value}`,
-          label: loc.locale
+          label: loc.locale,
         };
       })
     : undefined;
@@ -64,7 +64,7 @@ export default ({
                 maxWidth: "77rem",
                 mx: "auto",
                 px: [4, 4, 0],
-                py: 4
+                py: 4,
               }}
             >
               <Box sx={{ width: ["100%", "100%", "65%"] }}>
@@ -82,11 +82,11 @@ export default ({
                     justifyContent: [
                       "flex-start",
                       "flex-start",
-                      "space-between"
-                    ]
+                      "space-between",
+                    ],
                   }}
                 >
-                  {marketArea.reports.length > 1 && (
+                  {marketArea.reports.length > 0 && (
                     <ReportCard
                       type="report"
                       title={marketArea.reports[0].title}
@@ -120,7 +120,7 @@ export default ({
                   <Trans id="article.section.news">Neuigkeiten</Trans>
                 </h2>
                 <div>
-                  {allNewsfeeds.map(news => (
+                  {allNewsfeeds.map((news) => (
                     <NewsfeedEntry
                       key={news.title}
                       title={news.title}
@@ -137,8 +137,8 @@ export default ({
                     <h2>
                       <Trans id="article.section.link">Links</Trans>
                     </h2>
-                    {marketArea.links.map(link => (
-                      <Box sx={{ mb: 3 }}>
+                    {marketArea.links.map((link) => (
+                      <Box key={link.label} sx={{ mb: 3 }}>
                         <Link variant="primary" href={link.url}>
                           > {link.label}
                         </Link>
@@ -190,7 +190,7 @@ export default ({
   );
 };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context) => {
   console.log("GSP", context);
 
   const query = `
@@ -237,15 +237,15 @@ export const getStaticProps: GetStaticProps = async context => {
 
   const result = await fetchCMS(query, {
     variables: context.params,
-    preview: context.preview
+    preview: context.preview,
   });
 
   return {
     props: {
       marketArea: result.marketArea,
       allMarketAreas: result.allMarketAreas,
-      allNewsfeeds: result.allNewsfeeds
-    }
+      allNewsfeeds: result.allNewsfeeds,
+    },
   };
 };
 
@@ -265,12 +265,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = result.allMarketAreas.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
-      params: { locale: loc.locale, slug: loc.value }
+      params: { locale: loc.locale, slug: loc.value },
     }));
   });
 
   return {
     fallback: false,
-    paths
+    paths,
   };
 };

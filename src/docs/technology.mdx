@@ -15,6 +15,7 @@ Compared to other CMS, DatoCMS offers several advantages, among them:
 ### Editing content
 
 Editing content occurs through the CMS dashboard. The content must be edited in all languages. The CMS is organized according to the structure of the Webplatform. There are 5 top-level sections:
+
 - **Homepage**: content displayed on the landing page.
 - **About Page**: content used in the page "Über uns"
 - **Newsfeed**: list of news items displayed in the "Aktuell" section of the homepage.
@@ -22,10 +23,12 @@ Editing content occurs through the CMS dashboard. The content must be edited in 
 - **Potato Infografic**: contains the data and texts used in the infografic.
 
 ### Editing Infografic Data
-The data driving the Swiss potato market infografic can be stored as a CSV file in a structure that is convenient for its visualization. There is one file per visualization. As a proof of concept, the data visualized in the section labeled "Betriebstruktur" is read from the CMS. To update the data, the CSV file must be edited and uploaded again as a replacement of the current data file. 
+
+The data driving the Swiss potato market infografic can be stored as a CSV file in a structure that is convenient for its visualization. There is one file per visualization. As a proof of concept, the data visualized in the section labeled "Betriebstruktur" is read from the CMS. To update the data, the CSV file must be edited and uploaded again as a replacement of the current data file.
 The textual elements of the infografic can be edited like any other textual content.
 
 ### Publishing changes
+
 The process of translating the data coming from the API into static files occurs thanks to a Continuous Deployment service anytime an editor request a new build by pressing a Publish changes button on the web interface of DatoCMS. The publication can be immediate or scheduled.
 
 ## Integration of Data from the Linked Data Platform
@@ -33,6 +36,7 @@ The process of translating the data coming from the API into static files occurs
 In this prototype, the integration of the Linked Data Platform data is demonstrated through re-using the editor component of the [BAFU visualization tool](https://visualize.admin.ch). With the visualization tool, end users can access any dataset from the Linked Data Platform and create custom data visualizations (and the corresponding data downloads) that can be shared freely.
 
 For a productive release by BLW, following adjustments would have to be made:
+
 - Reduce the dataset selection to datasets _only_ from BLW
 - Consider if individual features of the visualization tool need to be removed or replaced by features more suited to BLW's requirements. This would be purely an adaptation of the User Interface, data would still be accessed in the same manner as through the BAFU version of the tool.
 
@@ -42,4 +46,8 @@ More in-depth technical documentation for the visualization tool can be found at
 
 ## Integration of Power BI Reports
 
-tbd
+The integration of a Power BI report curated by IT-Logix is demonstrated with the example of the report named "Auswertung Durchschnittspreis Früchte und Gemüse 2006-2019". The report is linked from the market area pages "Potatoes" and "Fruits & Vegetables". The embedded report opens as a separate page within the platform.
+
+Currently, there is only one report available. In a future iteration, it will be possible to customize the power BI report displayed for a specific market area, by defining its ID in the CMS Dashboard.
+
+The library [PowerBI-JavaScript](https://github.com/microsoft/PowerBI-JavaScript), maintained by Microsoft, is used to embed the report in the app.

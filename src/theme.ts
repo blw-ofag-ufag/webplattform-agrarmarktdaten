@@ -54,7 +54,7 @@ export const theme = {
     monochrome600: "#757575",
     monochrome700: "#454545",
     monochrome800: "#333333",
-    monochrome900: "#000000"
+    monochrome900: "#000000",
   },
   space: [
     "0",
@@ -65,13 +65,13 @@ export const theme = {
     "1.5rem",
     "2rem",
     "4rem",
-    "4.5rem"
+    "4.5rem",
   ],
   fonts: {
     body:
       'Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading: "inherit",
-    monospace: "Menlo, monospace"
+    monospace: "Menlo, monospace",
   },
   fontSizes: [
     "0rem",
@@ -85,7 +85,7 @@ export const theme = {
     "2.5rem",
     "3rem",
     "4.5rem",
-    "5.5rem"
+    "5.5rem",
   ],
   fontWeights: {
     light: 300,
@@ -93,68 +93,68 @@ export const theme = {
     medium: 500,
     heading: 700,
     bold: 700,
-    extraBold: 900
+    extraBold: 900,
   },
   lineHeights: {
     heading: 1.2,
-    body: 1.5
+    body: 1.5,
   },
   radii: {
-    default: "1px"
+    default: "1px",
   },
   textStyles: {
     heading: {
       fontFamily: "heading",
       fontWeight: "heading",
       lineHeight: "heading",
-      color: "text"
+      color: "text",
     },
     display: {
       variant: "textStyles.heading",
       fontSize: [5, 6],
       fontWeight: "display",
       letterSpacing: "-0.03em",
-      mt: 3
-    }
+      mt: 3,
+    },
   },
   styles: {
     Container: {
       p: 3,
-      maxWidth: 1024
+      maxWidth: 1024,
     },
     root: {
       fontFamily: "body",
       lineHeight: "body",
-      fontWeight: "body"
+      fontWeight: "body",
     },
     h1: {
-      variant: "textStyles.display"
+      variant: "textStyles.display",
     },
     h2: {
       variant: "textStyles.heading",
-      fontSize: 5
+      fontSize: 5,
     },
     h3: {
       variant: "textStyles.heading",
-      fontSize: 4
+      fontSize: 4,
     },
     h4: {
       variant: "textStyles.heading",
-      fontSize: 3
+      fontSize: 3,
     },
     h5: {
       variant: "textStyles.heading",
-      fontSize: 2
+      fontSize: 2,
     },
     h6: {
       variant: "textStyles.heading",
-      fontSize: 1
+      fontSize: 1,
     },
     a: {
       color: "text",
       "&:hover": {
-        color: "text"
-      }
+        color: "text",
+      },
     },
     pre: {
       variant: "prism",
@@ -165,18 +165,18 @@ export const theme = {
       bg: "muted",
       overflow: "auto",
       code: {
-        color: "inherit"
-      }
+        color: "inherit",
+      },
     },
     code: {
       fontFamily: "monospace",
       color: "secondary",
-      fontSize: 1
+      fontSize: 1,
     },
     inlineCode: {
       fontFamily: "monospace",
       color: "secondary",
-      bg: "muted"
+      bg: "muted",
     },
     table: {
       width: "100%",
@@ -189,42 +189,42 @@ export const theme = {
         pr: "4px",
         pl: 0,
         borderColor: "muted",
-        borderBottomStyle: "solid"
-      }
+        borderBottomStyle: "solid",
+      },
     },
     th: {
       verticalAlign: "bottom",
-      borderBottomWidth: "2px"
+      borderBottomWidth: "2px",
     },
     td: {
       verticalAlign: "top",
-      borderBottomWidth: "1px"
+      borderBottomWidth: "1px",
     },
     hr: {
       border: 0,
       borderBottom: "1px solid",
-      borderColor: "muted"
+      borderColor: "muted",
     },
     img: {
-      maxWidth: "100%"
-    }
+      maxWidth: "100%",
+    },
   },
   prism: {
     ".comment,.prolog,.doctype,.cdata,.punctuation,.operator,.entity,.url": {
-      color: "gray"
+      color: "gray",
     },
     ".comment": {
-      fontStyle: "italic"
+      fontStyle: "italic",
     },
     ".property,.tag,.boolean,.number,.constant,.symbol,.deleted,.function,.class-name,.regex,.important,.variable": {
-      color: "purple"
+      color: "purple",
     },
     ".atrule,.attr-value,.keyword": {
-      color: "primary"
+      color: "primary",
     },
     ".selector,.attr-name,.string,.char,.builtin,.inserted": {
-      color: "secondary"
-    }
+      color: "secondary",
+    },
   },
   buttons: {
     reset: {
@@ -232,7 +232,7 @@ export const theme = {
       color: "text",
       p: 0,
       m: 0,
-      border: "none"
+      border: "none",
     },
     primary: {
       bg: "primary",
@@ -246,15 +246,15 @@ export const theme = {
       transition: "background-color .2s",
       cursor: "pointer",
       ":hover": {
-        bg: "primaryHover"
+        bg: "primaryHover",
       },
       ":active": {
-        bg: "primaryHover"
+        bg: "primaryHover",
       },
       ":disabled": {
         cursor: "initial",
-        bg: "primaryDisabled"
-      }
+        bg: "primaryDisabled",
+      },
     },
     inline: {
       background: "transparent",
@@ -268,12 +268,12 @@ export const theme = {
       mb: 4,
       p: 0,
       ":hover": {
-        color: "primaryHover"
+        color: "primaryHover",
       },
       ":disabled": {
         cursor: "initial",
-        color: "monochrome500"
-      }
+        color: "monochrome500",
+      },
     },
     invisible: {
       fontFamily: "Manrope",
@@ -285,19 +285,19 @@ export const theme = {
       padding: "0.625rem",
       background: "transparent",
       border: "none",
-      color: "#343534"
-    }
+      color: "#343534",
+    },
   },
   links: {
     primary: {
       color: "link",
       textDecoration: "none",
       "&:hover": {
-        filter: "brightness(65%)"
+        filter: "brightness(65%)",
       },
       "&:active": {
-        filter: "brightness(45%)"
-      }
+        filter: "brightness(45%)",
+      },
     },
     menu: {
       fontSize: 6,
@@ -311,9 +311,9 @@ export const theme = {
       borderBottomStyle: ["solid", "solid", "none"],
       borderBottomColor: ["monochrome300", "monochrome300", "none"],
       "&:hover": {
-        textDecoration: "underline"
-      }
-    }
+        textDecoration: "underline",
+      },
+    },
   },
   cards: {
     primary: {
@@ -321,15 +321,15 @@ export const theme = {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      cursor: "pointer"
+      cursor: "pointer",
     },
     compact: {
       padding: 1,
       borderRadius: 2,
       border: "1px solid",
-      borderColor: "muted"
-    }
-  }
+      borderColor: "muted",
+    },
+  },
 };
 
 /**
@@ -339,7 +339,7 @@ export const theme = {
 export const preloadFonts = [
   "/fonts/Manrope-Bold.woff2",
   "/fonts/Manrope-Regular.woff2",
-  "/fonts/Manrope-Light.woff2"
+  "/fonts/Manrope-Light.woff2",
 ];
 
 /**
