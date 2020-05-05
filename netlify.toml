@@ -14,5 +14,5 @@
 [[redirects]]
   from = "/*"
   to = "https://blw-agricultural-market-data-platform.now.sh/:splat"
-  force = true
+  force = false
   status = 200
