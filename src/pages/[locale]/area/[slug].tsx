@@ -78,7 +78,7 @@ export default ({
                 </h2>
                 <Flex
                   sx={{
-                    flexDirection: ["column", "column", "row"],
+                    flexDirection: ["column", "column", "column"],
                     justifyContent: [
                       "flex-start",
                       "flex-start",
@@ -86,13 +86,6 @@ export default ({
                     ],
                   }}
                 >
-                  {marketArea.reports.length > 0 && (
-                    <ReportCard
-                      type="report"
-                      title={marketArea.reports[0].title}
-                      url=""
-                    />
-                  )}
                   <ReportCard
                     type="data"
                     title={
@@ -102,6 +95,13 @@ export default ({
                     }
                     url=""
                   />
+                  {marketArea.reports.length > 0 && (
+                    <ReportCard
+                      type="report"
+                      title={marketArea.reports[0].title}
+                      url=""
+                    />
+                  )}
                 </Flex>
                 {marketArea.tradeLevels && (
                   <>

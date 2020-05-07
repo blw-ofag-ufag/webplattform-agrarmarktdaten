@@ -4,7 +4,7 @@ import * as pbi from "powerbi-client";
 export const GROUP_ID = "c1cfad5e-d2bc-4ec0-a2d3-159a0042b43c";
 export const REPORT_ID = "cf816279-d5f4-46be-a838-2770dc61793b";
 
-const Report = () => {
+const ReportTeaser = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   const powerbi = useMemo(() => {
@@ -36,11 +36,11 @@ const Report = () => {
 
   return (
     <div
-      style={{ height: "50vw", maxHeight: "58rem" }}
+      style={{ height: "100%" }}
       ref={ref}
       powerbi-settings-nav-content-pane-enabled="false"
+      powerbi-settings-filter-pane-enabled="false"
     ></div>
   );
 };
-
-export default Report;
+export default ReportTeaser;

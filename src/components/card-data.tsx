@@ -1,10 +1,18 @@
+import { useLocale } from "@interactivethings/visualize-app";
 import { Trans } from "@lingui/macro";
+import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import { ReactNode } from "react";
 import { Box, Flex, Link, Text } from "theme-ui";
-import { Icon } from "../icons";
-import { useLocale } from "@interactivethings/visualize-app";
 
+// Dynamic import to escape SSR:
+// The "window" object needs to be available to embed powerBI report
+const DynamicReportTeaser = dynamic(
+  () => import("../components/powerbi-teaser"),
+  {
+    ssr: false,
+  }
+);
 export const ReportCard = ({
   type,
   title,
@@ -19,118 +27,166 @@ export const ReportCard = ({
   const isReport = type === "report";
   return (
     <Box
-      sx={{ width: ["100%", "100%", "49.5%"], mb: 4, display: "inline-block" }}
+      sx={{
+        width: ["100%", "100%", "100%"],
+        mb: 4,
+        // display: "inline-block"
+      }}
     >
-      <Box
-        sx={{
-          bg: isReport ? "primary" : "primaryLighter",
-          px: 4,
-          pt: 4,
-          pb: 6,
-        }}
-      >
-        <Flex
-          sx={{
-            justifyContent: "space-between",
-            color: isReport ? "monochrome100" : "text",
-            svg: {
-              fontSize: "5rem",
-              fill: "monochrome100",
-            },
-          }}
-        >
-          <Box>
-            <Text
-              sx={{
-                textTransform: "uppercase",
-                fontSize: 4,
-                fontWeight: "bold",
-                lineHeight: "heading",
-                textAlign: "left",
-                color: isReport ? "monochrome100" : "text",
-                opacity: 0.4,
-                mb: 1,
-              }}
-            >
-              {isReport ? (
-                <Trans id="article.card.report.month">Grafik des Monats</Trans>
-              ) : (
-                <Trans id="article.card.data">Datenbankabfrage</Trans>
-              )}
-            </Text>
-            <Text
-              sx={{
-                fontSize: 6,
-                fontWeight: "extraBold",
-                lineHeight: "heading",
-                textAlign: "left",
-                color: isReport ? "monochrome100" : "text",
-                minHeight: 75,
-              }}
-            >
-              {title}
-            </Text>
-          </Box>
-          {isReport && <Icon name="powerbi" />}
-        </Flex>
-      </Box>
-      <Link
-        href={url}
-        sx={{
-          textDecoration: "none",
-        }}
-      >
+      {isReport ? (
         <Box
           sx={{
-            bg: isReport ? "primary" : "primaryLighter",
-            borderTopWidth: "1px",
-            borderTopColor: "monochrome100",
-            borderTopStyle: "solid",
-            py: 4,
-            color: isReport ? "monochrome100" : "primary",
-            fontWeight: "bold",
-            textAlign: "center",
-            "&:hover": isReport
-              ? { bg: "primaryHover" }
-              : { filter: "brightness(0.95)" },
+            borderStyle: "solid",
+            borderWidth: "1px",
+            borderColor: "muted",
           }}
         >
-          {isReport ? (
-            <NextLink href="/[locale]/report" as={`/${locale}/report`} passHref>
-              <Link
-                as="a"
+          <Box
+            sx={{
+              height: [200, 350, 550],
+              p: 4,
+              iframe: {
+                border: 0,
+              },
+            }}
+          >
+            <DynamicReportTeaser />
+          </Box>
+          <NextLink href="/[locale]/report" as={`/${locale}/report`} passHref>
+            <Link
+              as="a"
+              sx={{
+                textDecoration: "none",
+                color: "primary",
+                ":hover": {
+                  color: "primary",
+                  filter: "brightness(0.97)",
+                },
+              }}
+            >
+              <Box
                 sx={{
-                  textDecoration: "none",
-                  color: "monochrome100",
-                  "&:hover": { color: "monochrome100" },
+                  bg: "primaryLighter",
+                  borderTopWidth: "1px",
+                  borderTopColor: "monochrome100",
+                  borderTopStyle: "solid",
+                  py: 4,
+                  color: "primary",
+                  fontWeight: "bold",
+                  textAlign: "center",
                 }}
               >
                 <Trans id="article.link.open.report">Report öffnen</Trans>
-              </Link>
-            </NextLink>
-          ) : (
-            <NextLink
-              href="/[locale]/create/[chartId]"
-              as={`/${locale}/create/new`}
-              passHref
-            >
-              <Link
-                as="a"
+              </Box>
+            </Link>
+          </NextLink>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            borderStyle: "solid",
+            borderWidth: "1px",
+            borderColor: "muted",
+          }}
+        >
+          <Flex
+            sx={{
+              // bg: isReport ? "primary" : "primaryLighter",
+              // height: 175,
+              justifyContent: "center",
+              // px: 4,
+              // pt: 4,
+              // pb: 6,
+              p: 2,
+            }}
+          >
+            <iframe
+              title="iframe"
+              src="https://visualize.admin.ch/de/embed/snX1MN6MKTsy"
+              style={{ border: "0px #ffffff none" }}
+              name="visualize.admin.ch"
+              scrolling="no"
+              frameBorder="1"
+              marginHeight={0}
+              marginWidth={0}
+              height="620px"
+              width="600px"
+              allowFullScreen
+            ></iframe>
+            {/* <Flex
+            sx={{
+              justifyContent: "space-between",
+              color: isReport ? "monochrome100" : "text",
+              svg: {
+                fontSize: "5rem",
+                fill: "monochrome100",
+              },
+            }}
+          >
+            <Box>
+              <Text
                 sx={{
-                  textDecoration: "none",
+                  textTransform: "uppercase",
+                  fontSize: 4,
+                  fontWeight: "bold",
+                  lineHeight: "heading",
+                  textAlign: "left",
+                  color: isReport ? "monochrome100" : "text",
+                  opacity: 0.4,
+                  mb: 1,
+                }}
+              >
+                <Trans id="article.card.data">Datenbankabfrage</Trans>
+              </Text>
+              <Text
+                sx={{
+                  fontSize: 6,
+                  fontWeight: "extraBold",
+                  lineHeight: "heading",
+                  textAlign: "left",
+                  color: isReport ? "monochrome100" : "text",
+                  minHeight: 75,
+                }}
+              >
+                {title}
+              </Text>
+            </Box>
+          </Flex> */}
+          </Flex>
+          <NextLink
+            href="/[locale]/create/[chartId]"
+            as={`/${locale}/create/new`}
+            passHref
+          >
+            <Link
+              as="a"
+              sx={{
+                textDecoration: "none",
+                color: "primary",
+                ":hover": {
                   color: "primary",
-                  ":hover": {
-                    color: "primary",
-                    filter: "brightness(0.97)",
-                  },
+                  filter: "brightness(0.97)",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  bg: "primaryLighter",
+                  borderTopWidth: "1px",
+                  borderTopColor: "monochrome100",
+                  borderTopStyle: "solid",
+                  py: 4,
+                  color: "primary",
+                  fontWeight: "bold",
+                  textAlign: "center",
                 }}
               >
                 <Trans id="article.link.data.explore">Daten abfragen</Trans>
-              </Link>
-            </NextLink>
-          )}
+              </Box>
+            </Link>
+          </NextLink>
         </Box>
-      </Link>
+      )}
     </Box>
   );
 };
