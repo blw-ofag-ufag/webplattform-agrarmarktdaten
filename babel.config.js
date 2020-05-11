@@ -5,7 +5,7 @@ module.exports = {
       "next/babel",
       {
         "preset-env": {
-          useBuiltIns: "usage",
+          useBuiltIns: "entry",
           corejs: 3
         }
       }
