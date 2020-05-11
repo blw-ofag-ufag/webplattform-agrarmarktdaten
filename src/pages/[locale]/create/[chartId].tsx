@@ -14,6 +14,9 @@ import { fetchCMS } from "../../../lib/cms-api";
 import { editorTheme } from "../../../theme-editor";
 // import { Header } from "../../../components/layout";
 
+import "core-js/modules/es.array.flat"
+import "core-js/modules/es.array.flat-map"
+
 export default ({ allMarketAreas }: { allMarketAreas: MarketArea[] }) => {
   const { query } = useRouter();
 
