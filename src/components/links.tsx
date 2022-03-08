@@ -57,8 +57,9 @@ export const LocalizedLink = ({
       {...rest}
       {...createDynamicRouteProps({
         pathname,
-        query: query ? { ...query, locale } : { locale },
+        query: query || {},
       })}
+      locale={locale}
     />
   );
 };
@@ -70,7 +71,7 @@ export const HomeLink = (
 ) => {
   const locale = useLocale();
   return (
-    <Link {...props} href={`/${locale}`} as={`/${locale}`}>
+    <Link {...props} href="/" locale={locale}>
       {props.children}
     </Link>
   );
@@ -89,25 +90,27 @@ export const CurrentPageLink = ({
   /**
    * Hack for static content pages
    * */
-  if (/^\/(en|de|fr|it)/.test(pathname)) {
-    return (
-      <Link
-        {...rest}
-        {...createDynamicRouteProps({
-          pathname: pathname.replace(/^\/(en|de|fr|it)/, `/${locale}`),
-          query,
-        })}
-      />
-    );
-  }
+  //  if (/^\/(en|de|fr|it)/.test(pathname)) {
+  //   return (
+  //     <Link
+  //       {...rest}
+  //       {...createDynamicRouteProps({
+  //         pathname: pathname.replace(/^\/(en|de|fr|it)/, `/${locale}`),
+  //         query,
+  //       })}
+  //     />
+  //   );
+  // }
 
-  return (
-    <Link
-      {...rest}
-      {...createDynamicRouteProps({
-        pathname,
-        query: { ...query, locale },
-      })}
-    />
-  );
+  // return (
+  //   <Link
+  //     {...rest}
+  //     {...createDynamicRouteProps({
+  //       pathname,
+  //       query: { ...query, locale },
+  //     })}
+  //   />
+  // );
+
+  return <Link {...rest} href={{ pathname, query }} locale={locale} />;
 };

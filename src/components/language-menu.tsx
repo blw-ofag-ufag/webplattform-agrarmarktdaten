@@ -1,18 +1,18 @@
 import { Box, Link } from "@theme-ui/components";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { CurrentPageLink } from "./links";
 import { ReactNode } from "react";
+import { useLocale } from "../lib/use-locale";
+import { CurrentPageLink } from "./links";
 
 const localesOrder = ["de", "en"];
 
 export const LanguageMenu = ({
-  alternates
+  alternates,
 }: {
   alternates?: { href: string; as: string; label: string }[];
 }) => {
-  const { query } = useRouter();
-  const currentLocale = (query.locale as $FixMe) || "de";
+  const locale = useLocale();
+
   return (
     <Box
       as="ul"
@@ -26,7 +26,7 @@ export const LanguageMenu = ({
         mt: [0, 0, "-9px"],
         width: "auto",
         bg: "transparent",
-        justifyContent: ["flex-start", "flex-start", "flex-end"]
+        justifyContent: ["flex-start", "flex-start", "flex-end"],
       }}
     >
       {alternates
@@ -34,7 +34,7 @@ export const LanguageMenu = ({
             return (
               <LanguageListItem
                 key={label}
-                active={label === currentLocale}
+                active={label === locale}
                 disabled={false}
               >
                 <NextLink href={href} as={as} passHref>
@@ -49,19 +49,15 @@ export const LanguageMenu = ({
               </LanguageListItem>
             );
           })
-        : localesOrder.map(locale => (
-            <LanguageListItem
-              key={locale}
-              active={locale === currentLocale}
-              disabled={false}
-            >
-              <CurrentPageLink locale={locale} passHref>
+        : localesOrder.map((d) => (
+            <LanguageListItem key={d} active={d === locale} disabled={false}>
+              <CurrentPageLink locale={d} passHref>
                 <Link
                   rel="alternate"
-                  hrefLang={locale}
+                  hrefLang={d}
                   sx={{ textDecoration: "none", color: "currentColor" }}
                 >
-                  {locale}
+                  {d}
                 </Link>
               </CurrentPageLink>
             </LanguageListItem>
@@ -79,7 +75,7 @@ export const LanguageMenu = ({
 const LanguageListItem = ({
   active,
   disabled,
-  children
+  children,
 }: {
   active: boolean;
   disabled: boolean;
@@ -105,8 +101,8 @@ const LanguageListItem = ({
       cursor: disabled ? "inherit" : "pointer",
 
       "&:hover": {
-        fontWeight: disabled ? "light" : "extraBold"
-      }
+        fontWeight: disabled ? "light" : "extraBold",
+      },
     }}
   >
     {children}

@@ -12,10 +12,10 @@ import {
 // import timeFormatEn from "d3-time-format/locale/en-GB.json";
 // import timeFormatFr from "d3-time-format/locale/fr-FR.json";
 // import timeFormatIt from "d3-time-format/locale/it-IT.json";
-import catalogDe from "./de/messages.js";
-import catalogEn from "./en/messages.js";
-import catalogFr from "./fr/messages.js";
-import catalogIt from "./it/messages.js";
+import { messages as catalogDe } from "./de/messages.js";
+import { messages as catalogEn } from "./en/messages.js";
+import { messages as catalogFr } from "./fr/messages.js";
+import { messages as catalogIt } from "./it/messages.js";
 
 export const defaultLocale = "de";
 
@@ -31,10 +31,10 @@ i18n.loadLocaleData({
   en: { plurals: pluralsEn },
 });
 i18n.load({
-  de: catalogDe as any,
-  fr: catalogFr as any,
-  it: catalogIt as any,
-  en: catalogEn as any,
+  de: catalogDe,
+  fr: catalogFr,
+  it: catalogIt,
+  en: catalogEn,
 });
 i18n.activate(defaultLocale);
 

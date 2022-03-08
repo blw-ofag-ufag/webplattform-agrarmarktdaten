@@ -21,114 +21,117 @@ msgstr ""
 #~ msgid "article.card.report.month"
 #~ msgstr ""
 
-#: src/components/card-data.tsx:64
-#~ msgid "article.link.data.explore"
-#~ msgstr ""
+#: src/components/card-data.tsx:177
+msgid "article.link.data.explore"
+msgstr ""
 
-#: src/components/card-data.tsx:64
-#~ msgid "article.link.open.report"
-#~ msgstr ""
+#: src/components/card-data.tsx:76
+msgid "article.link.open.report"
+msgstr ""
 
-#: src/pages/area/[slug].tsx:51
-#~ msgid "article.section.data"
-#~ msgstr ""
-
-#: src/pages/area/[slug].tsx:47
-#~ msgid "article.section.infografic"
-#~ msgstr ""
-
-#: src/pages/area/[slug].tsx:86
-#~ msgid "article.section.link"
-#~ msgstr ""
-
-#: src/pages/area/[slug].tsx:75
-#~ msgid "article.section.news"
-#~ msgstr ""
+#: src/pages/area/[slug].tsx:73
+msgid "article.section.data"
+msgstr ""
 
 #: src/pages/area/[slug].tsx:68
-#~ msgid "article.section.trade"
-#~ msgstr ""
+msgid "article.section.infografic"
+msgstr ""
 
-#: src/pages/area/[slug].tsx:62
-#~ msgid "article.teaser.data.title"
-#~ msgstr ""
+#: src/pages/area/[slug].tsx:134
+msgid "article.section.link"
+msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:49
-#: src/components/homepage/infografik-teaser.tsx:117
-#~ msgid "button.infografic.teaser"
-#~ msgstr ""
+#: src/pages/area/[slug].tsx:116
+msgid "article.section.news"
+msgstr ""
 
-#: src/pages/area/[slug].tsx:81
-#: src/pages/index.tsx:47
-#~ msgid "button.show.all"
-#~ msgstr ""
+#: src/pages/area/[slug].tsx:105
+msgid "article.section.trade"
+msgstr ""
 
-#: src/components/contact.tsx:23
-#~ msgid "contact.contact"
-#~ msgstr ""
+#: src/pages/area/[slug].tsx:88
+msgid "article.teaser.data.title"
+msgstr ""
 
-#: src/components/contact.tsx:36
-#~ msgid "contact.follow.us"
-#~ msgstr ""
+#: src/components/homepage/infografik-teaser.tsx:61
+#: src/components/homepage/infografik-teaser.tsx:143
+msgid "button.infografic.teaser"
+msgstr ""
 
-#: src/components/footer.tsx:24
-#~ msgid "footer.dataprotection"
-#~ msgstr ""
+#: src/pages/area/[slug].tsx:128
+#: src/pages/index.tsx:67
+msgid "button.show.all"
+msgstr ""
 
-#: src/components/footer.tsx:18
-#~ msgid "footer.impressum"
-#~ msgstr ""
+#: src/components/contact.tsx:35
+msgid "contact.contact"
+msgstr ""
 
-#: src/components/footer.tsx:21
-#~ msgid "footer.legal"
-#~ msgstr ""
+#: src/components/contact.tsx:48
+msgid "contact.follow.us"
+msgstr ""
 
-#: src/pages/index.tsx:34
-#~ msgid "homepage.section.market.area"
-#~ msgstr ""
+#: src/components/footer.tsx:28
+msgid "footer.dataprotection"
+msgstr ""
 
-#: src/pages/index.tsx:51
-#~ msgid "homepage.section.newest.infografic"
-#~ msgstr ""
+#: src/components/footer.tsx:22
+msgid "footer.impressum"
+msgstr ""
 
-#: src/pages/index.tsx:41
-#~ msgid "homepage.section.newsfeed"
-#~ msgstr ""
+#: src/components/footer.tsx:25
+msgid "footer.legal"
+msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:26
-#~ msgid "infografic"
-#~ msgstr ""
+#: src/pages/index.tsx:48
+msgid "homepage.section.market.area"
+msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:73
-#~ msgid "infografic.date"
-#~ msgstr ""
+#: src/pages/index.tsx:71
+msgid "homepage.section.newest.infografic"
+msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:92
-#~ msgid "infografik.teaser"
-#~ msgstr ""
+#: src/pages/index.tsx:55
+msgid "homepage.section.newsfeed"
+msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:36
-#: src/components/homepage/infografik-teaser.tsx:83
-#~ msgid "infografik.title"
-#~ msgstr ""
+#: src/components/homepage/infografik-teaser.tsx:33
+msgid "infografic"
+msgstr ""
 
-#: src/components/header.tsx:109
-#: src/components/header.tsx:120
-#~ msgid "logo.swiss.confederation"
-#~ msgstr ""
+#: src/components/homepage/infografik-teaser.tsx:91
+msgid "infografic.date"
+msgstr ""
 
-#: src/components/header.tsx:67
-#~ msgid "menu.about"
-#~ msgstr ""
+#: src/components/homepage/infografik-teaser.tsx:114
+msgid "infografik.teaser"
+msgstr ""
 
-#: src/components/header.tsx:62
-#~ msgid "menu.data"
-#~ msgstr ""
+#: src/components/homepage/infografik-teaser.tsx:45
+#: src/components/homepage/infografik-teaser.tsx:103
+msgid "infografik.title"
+msgstr ""
 
-#: src/components/header.tsx:57
-#~ msgid "menu.markets"
-#~ msgstr ""
+#: src/components/header.tsx:266
+#: src/components/header.tsx:285
+msgid "logo.swiss.confederation"
+msgstr ""
 
-#: src/components/header.tsx:102
-#~ msgid "title.agricultural.market.data"
-#~ msgstr ""
+#: src/components/header.tsx:147
+#: src/components/header.tsx:189
+msgid "menu.about"
+msgstr ""
+
+#: src/components/header.tsx:142
+#: src/components/header.tsx:184
+msgid "menu.data"
+msgstr ""
+
+#: src/components/header.tsx:130
+#: src/components/header.tsx:179
+msgid "menu.markets"
+msgstr ""
+
+#: src/components/header.tsx:231
+msgid "title.agricultural.market.data"
+msgstr ""

@@ -21,114 +21,117 @@ msgstr ""
 #~ msgid "article.card.report.month"
 #~ msgstr "Chart of the Month"
 
-#: src/components/card-data.tsx:64
-#~ msgid "article.link.data.explore"
-#~ msgstr "Explore Data"
+#: src/components/card-data.tsx:177
+msgid "article.link.data.explore"
+msgstr "Explore Data"
 
-#: src/components/card-data.tsx:64
-#~ msgid "article.link.open.report"
-#~ msgstr "Open Report"
+#: src/components/card-data.tsx:76
+msgid "article.link.open.report"
+msgstr "Open Report"
 
-#: src/pages/area/[slug].tsx:51
-#~ msgid "article.section.data"
-#~ msgstr "Data"
-
-#: src/pages/area/[slug].tsx:47
-#~ msgid "article.section.infografic"
-#~ msgstr "Infografik"
-
-#: src/pages/area/[slug].tsx:86
-#~ msgid "article.section.link"
-#~ msgstr "Links"
-
-#: src/pages/area/[slug].tsx:75
-#~ msgid "article.section.news"
-#~ msgstr "Latest"
+#: src/pages/area/[slug].tsx:73
+msgid "article.section.data"
+msgstr "Data"
 
 #: src/pages/area/[slug].tsx:68
-#~ msgid "article.section.trade"
-#~ msgstr "Trade Levels"
+msgid "article.section.infografic"
+msgstr "Infografik"
 
-#: src/pages/area/[slug].tsx:62
-#~ msgid "article.teaser.data.title"
-#~ msgstr "Data about the Potatoe Market"
+#: src/pages/area/[slug].tsx:134
+msgid "article.section.link"
+msgstr "Links"
 
-#: src/components/homepage/infografik-teaser.tsx:49
-#: src/components/homepage/infografik-teaser.tsx:117
-#~ msgid "button.infografic.teaser"
-#~ msgstr "See Infografics"
+#: src/pages/area/[slug].tsx:116
+msgid "article.section.news"
+msgstr "Latest"
 
-#: src/pages/area/[slug].tsx:81
-#: src/pages/index.tsx:47
-#~ msgid "button.show.all"
-#~ msgstr "Show All"
+#: src/pages/area/[slug].tsx:105
+msgid "article.section.trade"
+msgstr "Trade Levels"
 
-#: src/components/contact.tsx:23
-#~ msgid "contact.contact"
-#~ msgstr "Contact"
+#: src/pages/area/[slug].tsx:88
+msgid "article.teaser.data.title"
+msgstr "Data about the Potatoe Market"
 
-#: src/components/contact.tsx:36
-#~ msgid "contact.follow.us"
-#~ msgstr "Follow Us"
+#: src/components/homepage/infografik-teaser.tsx:61
+#: src/components/homepage/infografik-teaser.tsx:143
+msgid "button.infografic.teaser"
+msgstr "See Infografics"
 
-#: src/components/footer.tsx:24
-#~ msgid "footer.dataprotection"
-#~ msgstr "Data Protection"
+#: src/pages/area/[slug].tsx:128
+#: src/pages/index.tsx:67
+msgid "button.show.all"
+msgstr "Show All"
 
-#: src/components/footer.tsx:18
-#~ msgid "footer.impressum"
-#~ msgstr "Imprint"
+#: src/components/contact.tsx:35
+msgid "contact.contact"
+msgstr "Contact"
 
-#: src/components/footer.tsx:21
-#~ msgid "footer.legal"
-#~ msgstr "Legal"
+#: src/components/contact.tsx:48
+msgid "contact.follow.us"
+msgstr "Follow Us"
 
-#: src/pages/index.tsx:34
-#~ msgid "homepage.section.market.area"
-#~ msgstr "Market Areas"
+#: src/components/footer.tsx:28
+msgid "footer.dataprotection"
+msgstr "Data Protection"
 
-#: src/pages/index.tsx:51
-#~ msgid "homepage.section.newest.infografic"
-#~ msgstr "Newest Infografics"
+#: src/components/footer.tsx:22
+msgid "footer.impressum"
+msgstr "Imprint"
 
-#: src/pages/index.tsx:41
-#~ msgid "homepage.section.newsfeed"
-#~ msgstr "Latest"
+#: src/components/footer.tsx:25
+msgid "footer.legal"
+msgstr "Legal"
 
-#: src/components/homepage/infografik-teaser.tsx:26
-#~ msgid "infografic"
-#~ msgstr "Infografic"
+#: src/pages/index.tsx:48
+msgid "homepage.section.market.area"
+msgstr "Market Areas"
 
-#: src/components/homepage/infografik-teaser.tsx:73
-#~ msgid "infografic.date"
-#~ msgstr "2018"
+#: src/pages/index.tsx:71
+msgid "homepage.section.newest.infografic"
+msgstr "Newest Infografics"
 
-#: src/components/homepage/infografik-teaser.tsx:92
-#~ msgid "infografik.teaser"
-#~ msgstr "In Switzerland, potatoes grow on more than 10,000 hectares. That's around 14,000 football fields full of great tubers. The harvested 400,000 tonnes end up on our plate all year round."
+#: src/pages/index.tsx:55
+msgid "homepage.section.newsfeed"
+msgstr "Latest"
 
-#: src/components/homepage/infografik-teaser.tsx:36
-#: src/components/homepage/infografik-teaser.tsx:83
-#~ msgid "infografik.title"
-#~ msgstr "Swiss Potato Market"
+#: src/components/homepage/infografik-teaser.tsx:33
+msgid "infografic"
+msgstr "Infografic"
 
-#: src/components/header.tsx:109
-#: src/components/header.tsx:120
-#~ msgid "logo.swiss.confederation"
-#~ msgstr "Logo of the Swiss Confederation"
+#: src/components/homepage/infografik-teaser.tsx:91
+msgid "infografic.date"
+msgstr "2018"
 
-#: src/components/header.tsx:67
-#~ msgid "menu.about"
-#~ msgstr "About Us"
+#: src/components/homepage/infografik-teaser.tsx:114
+msgid "infografik.teaser"
+msgstr "In Switzerland, potatoes grow on more than 10,000 hectares. That's around 14,000 football fields full of great tubers. The harvested 400,000 tonnes end up on our plate all year round."
 
-#: src/components/header.tsx:62
-#~ msgid "menu.data"
-#~ msgstr "Data"
+#: src/components/homepage/infografik-teaser.tsx:45
+#: src/components/homepage/infografik-teaser.tsx:103
+msgid "infografik.title"
+msgstr "Swiss Potato Market"
 
-#: src/components/header.tsx:57
-#~ msgid "menu.markets"
-#~ msgstr "Markets"
+#: src/components/header.tsx:266
+#: src/components/header.tsx:285
+msgid "logo.swiss.confederation"
+msgstr "Logo of the Swiss Confederation"
 
-#: src/components/header.tsx:102
-#~ msgid "title.agricultural.market.data"
-#~ msgstr "Agricultural Market Data"
+#: src/components/header.tsx:147
+#: src/components/header.tsx:189
+msgid "menu.about"
+msgstr "About Us"
+
+#: src/components/header.tsx:142
+#: src/components/header.tsx:184
+msgid "menu.data"
+msgstr "Data"
+
+#: src/components/header.tsx:130
+#: src/components/header.tsx:179
+msgid "menu.markets"
+msgstr "Markets"
+
+#: src/components/header.tsx:231
+msgid "title.agricultural.market.data"
+msgstr "Agricultural Market Data"

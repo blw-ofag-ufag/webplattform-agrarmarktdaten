@@ -1,4 +1,3 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import { Trans } from "@lingui/macro";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
@@ -13,6 +12,7 @@ const DynamicReportTeaser = dynamic(
     ssr: false,
   }
 );
+
 export const ReportCard = ({
   type,
   title,
@@ -22,8 +22,6 @@ export const ReportCard = ({
   title: string | ReactNode;
   url: string;
 }) => {
-  const locale = useLocale();
-
   const isReport = type === "report";
   return (
     <Box

@@ -188,7 +188,7 @@ export default function Area({
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const query = `
-  query PageQuery($locale: SiteLocale!, $slug: String!){
+  query PageQuery($locale: SiteLocale!, $slug: String!) {
     marketArea(locale: $locale, filter: {slug: {eq: $slug}}) {
       title
       introduction
