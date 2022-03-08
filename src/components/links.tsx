@@ -1,13 +1,12 @@
-import React from "react";
-import Link, { LinkProps } from "next/link";
-
-import * as qs from "querystring";
-import { useRouter } from "next/router";
 import { useLocale } from "@interactivethings/visualize-app";
+import Link, { LinkProps } from "next/link";
+import { useRouter } from "next/router";
+import * as qs from "querystring";
+import React from "react";
 
 const createDynamicRouteProps = ({
   pathname,
-  query
+  query,
 }: {
   pathname: string;
   query: qs.ParsedUrlQuery;
@@ -25,7 +24,7 @@ const createDynamicRouteProps = ({
 
   // Replace dynamic route params in `asPath`
   for (const [k, v] of Object.entries(query)) {
-    if (dynamicParams.has(k)) {
+    if (dynamicParams.has(k) && v !== undefined) {
       asPath = asPath.replace(`[${k}]`, v.toString());
     } else {
       regularQueryParams[k] = v;
@@ -39,7 +38,7 @@ const createDynamicRouteProps = ({
 
   return {
     href: { pathname, query },
-    as: asPath
+    as: asPath,
   };
 };
 
@@ -58,7 +57,7 @@ export const LocalizedLink = ({
       {...rest}
       {...createDynamicRouteProps({
         pathname,
-        query: query ? { ...query, locale } : { locale }
+        query: query ? { ...query, locale } : { locale },
       })}
     />
   );
@@ -96,7 +95,7 @@ export const CurrentPageLink = ({
         {...rest}
         {...createDynamicRouteProps({
           pathname: pathname.replace(/^\/(en|de|fr|it)/, `/${locale}`),
-          query
+          query,
         })}
       />
     );
@@ -107,7 +106,7 @@ export const CurrentPageLink = ({
       {...rest}
       {...createDynamicRouteProps({
         pathname,
-        query: { ...query, locale }
+        query: { ...query, locale },
       })}
     />
   );

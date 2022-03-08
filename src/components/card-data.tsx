@@ -3,7 +3,7 @@ import { Trans } from "@lingui/macro";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import { ReactNode } from "react";
-import { Box, Flex, Link, Text } from "theme-ui";
+import { Box, Flex, Link } from "theme-ui";
 
 // Dynamic import to escape SSR:
 // The "window" object needs to be available to embed powerBI report
@@ -153,11 +153,7 @@ export const ReportCard = ({
             </Box>
           </Flex> */}
           </Flex>
-          <NextLink
-            href="/[locale]/create/[chartId]"
-            as={`/${locale}/create/new`}
-            passHref
-          >
+          <NextLink href="/create/[chartId]" as={`/create/new`} passHref>
             <Link
               as="a"
               sx={{

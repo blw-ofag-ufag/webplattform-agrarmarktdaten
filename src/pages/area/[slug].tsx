@@ -1,20 +1,20 @@
+import { Trans } from "@lingui/macro";
+import { Box, Button, Flex, Link } from "@theme-ui/components";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import React from "react";
-import { Banner } from "../../../components/banner";
-import { AppLayout } from "../../../components/layout";
-import { MarketArea, Newsfeed } from "../../../domain/types";
-import { IconName } from "../../../icons";
-import { fetchCMS } from "../../../lib/cms-api";
-import { Box, Flex, Button, Link } from "@theme-ui/components";
-import { Trans } from "@lingui/macro";
-import { NewsfeedEntry } from "../../../components/newsfeed";
-import { TradeLevelsGrid } from "../../../components/card-trade";
-import { getMarketAreaColor } from "../../../domain/colors";
-import { ReportCard } from "../../../components/card-data";
-import { InfografikTeaserLarge } from "../../../components/homepage/infografik-teaser";
+import { Banner } from "../../components/banner";
+import { ReportCard } from "../../components/card-data";
+import { TradeLevelsGrid } from "../../components/card-trade";
+import { InfografikTeaserLarge } from "../../components/homepage/infografik-teaser";
+import { AppLayout } from "../../components/layout";
+import { NewsfeedEntry } from "../../components/newsfeed";
+import { getMarketAreaColor } from "../../domain/colors";
+import { MarketArea, Newsfeed } from "../../domain/types";
+import { IconName } from "../../icons";
+import { fetchCMS } from "../../lib/cms-api";
 
-export default ({
+export default function Area({
   marketArea,
   allMarketAreas,
   allNewsfeeds,
@@ -33,7 +33,7 @@ export default ({
   };
   allMarketAreas: MarketArea[];
   allNewsfeeds: Newsfeed[];
-}) => {
+}) {
   const {
     query: { locale },
   } = useRouter();
@@ -140,7 +140,7 @@ export default ({
                     {marketArea.links.map((link) => (
                       <Box key={link.label} sx={{ mb: 3 }}>
                         <Link variant="primary" href={link.url}>
-                          > {link.label}
+                          {">"} {link.label}
                         </Link>
                       </Box>
                     ))}
@@ -188,7 +188,7 @@ export default ({
       )}
     </AppLayout>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async (context) => {
   console.log("GSP", context);

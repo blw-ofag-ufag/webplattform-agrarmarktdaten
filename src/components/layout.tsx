@@ -6,7 +6,7 @@ import { Footer } from "./footer";
 import { Header } from "./header";
 
 export const HeaderOld = ({
-  alternates
+  alternates,
 }: {
   alternates?: { href: string; as: string; label: string }[];
 }) => {
@@ -17,7 +17,7 @@ export const HeaderOld = ({
         height: "96px",
         px: 3,
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
       }}
     >
       <NextLink href="/">
@@ -33,18 +33,14 @@ export const HeaderOld = ({
             textDecoration: "none",
             px: 5,
             cursor: "pointer",
-            ":hover": { textDecoration: "none" }
+            ":hover": { textDecoration: "none" },
           }}
         >
           Logo
         </Flex>
       </NextLink>
       <Flex>
-        <NextLink
-          href="/[locale]/create/[chartId]"
-          as={`/${locale}/create/new`}
-          passHref
-        >
+        <NextLink href="/create/[chartId]" as={`/create/new`} passHref>
           <Link>Get Data</Link>
         </NextLink>
 
@@ -69,7 +65,7 @@ export const HeaderOld = ({
 export const AppLayout = ({
   children,
   allMarketAreas,
-  alternates
+  alternates,
 }: {
   children: React.ReactNode;
   allMarketAreas?: MarketArea[];
