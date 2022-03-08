@@ -69,13 +69,13 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   }
   `;
   const result = await fetchCMS(query, {
-    variables: context.params,
+    variables: { locale: context.locale },
     preview: context.preview,
   });
 
   return {
     props: {
-      locale: context.params?.locale || "en",
+      locale: context.locale,
       chartId: context.params?.chartId || "new",
       ...result,
     },

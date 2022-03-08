@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Flex, Link } from "@theme-ui/components";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
 import React from "react";
 import { Banner } from "../../components/banner";
 import { ReportCard } from "../../components/card-data";
@@ -34,9 +33,6 @@ export default function Area({
   allMarketAreas: MarketArea[];
   allNewsfeeds: Newsfeed[];
 }) {
-  const {
-    query: { locale },
-  } = useRouter();
   const alternates = marketArea
     ? marketArea._allSlugLocales.map((loc) => {
         return {
@@ -190,7 +186,7 @@ export default function Area({
   );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const query = `
   query PageQuery($locale: SiteLocale!, $slug: String!){
     marketArea(locale: $locale, filter: {slug: {eq: $slug}}) {
@@ -234,7 +230,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   `;
 
   const result = await fetchCMS(query, {
-    variables: context.params,
+    variables: { locale: context.locale, slug: context.params.slug },
     preview: context.preview,
   });
 

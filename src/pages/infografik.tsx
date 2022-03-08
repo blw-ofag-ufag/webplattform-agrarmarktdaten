@@ -134,7 +134,7 @@ export const getStaticProps = async (context: $FixMe) => {
   `;
 
   const result = await fetchCMS(query, {
-    variables: context.params,
+    variables: { locale: context.locale },
     preview: context.preview,
   });
 

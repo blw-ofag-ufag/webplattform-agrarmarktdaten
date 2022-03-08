@@ -42,7 +42,6 @@ export default function Page({
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  console.log(context);
   const query = `
   query PageQuery($locale: SiteLocale!, $slug: String!){
     simplePage(locale: $locale, filter: {slug: {eq: $slug}}) {
@@ -62,7 +61,7 @@ export const getStaticProps = async (context: $FixMe) => {
   `;
 
   const result = await fetchCMS(query, {
-    variables: context.params,
+    variables: { locale: context.locale, slug: context.params.slug },
     preview: context.preview,
   });
 
