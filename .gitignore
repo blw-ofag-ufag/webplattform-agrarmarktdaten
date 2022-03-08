@@ -6,3 +6,5 @@
 /public/dist/**/*.js
 /build
 .now
+
+src/locales/**/messages.js
