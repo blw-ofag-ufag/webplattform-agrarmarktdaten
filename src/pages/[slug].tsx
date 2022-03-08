@@ -1,3 +1,4 @@
+import { GetStaticPaths } from "next";
 import React from "react";
 import { AppLayout } from "../components/layout";
 import { MarketArea } from "../domain/types";
@@ -18,7 +19,7 @@ export default function Page({
     ? simplePage._allSlugLocales.map((loc) => {
         return {
           href: "/[slug]",
-          as: `/${loc.value}`,
+          as: `${loc.locale}/${loc.value}`,
           label: loc.locale,
         };
       })
@@ -68,7 +69,7 @@ export const getStaticProps = async (context: $FixMe) => {
   return { props: { simplePage: result.simplePage } };
 };
 
-export const getStaticPaths = async (context: $FixMe) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
   query {
     allSimplePages {
@@ -84,7 +85,8 @@ export const getStaticPaths = async (context: $FixMe) => {
 
   const paths = result.allSimplePages.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
-      params: { locale: loc.locale, slug: loc.value },
+      locale: loc.locale,
+      params: { slug: loc.value },
     }));
   });
 

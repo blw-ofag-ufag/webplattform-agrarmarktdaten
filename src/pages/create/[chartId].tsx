@@ -2,7 +2,6 @@ import {
   ChartEditor,
   ConfiguratorStateProvider,
   I18nProvider,
-  useLocale,
 } from "@interactivethings/visualize-app";
 // import { Header } from "../../../components/layout";
 import "core-js/modules/es.array.flat";
@@ -13,6 +12,7 @@ import { ThemeProvider } from "theme-ui";
 import { Header } from "../../components/header";
 import { MarketArea } from "../../domain/types";
 import { fetchCMS } from "../../lib/cms-api";
+import { useLocale } from "../../lib/use-locale";
 import { i18n } from "../../locales/locales";
 import { editorTheme } from "../../theme-editor";
 
@@ -86,7 +86,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     fallback: true,
     paths: [
-      "/de/create/new",
+      "/create/new",
       "/en/create/new",
       // "/fr/create/new",
       // "/en/create/new"

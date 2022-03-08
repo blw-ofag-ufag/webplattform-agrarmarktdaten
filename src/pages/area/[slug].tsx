@@ -259,7 +259,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = result.allMarketAreas.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
-      params: { locale: loc.locale, slug: loc.value },
+      locale: loc.locale,
+      params: { slug: loc.value },
     }));
   });
 
