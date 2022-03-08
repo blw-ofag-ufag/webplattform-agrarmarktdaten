@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { Flex, Text, Box } from "@theme-ui/components";
 import { Trans } from "@lingui/macro";
+import { Box, Flex, Text } from "@theme-ui/components";
+import React, { ReactNode } from "react";
 import { Contact } from "./contact";
 
 export const Footer = () => {
@@ -15,7 +15,7 @@ export const Footer = () => {
           px: 4,
           py: 4,
           bg: "monochrome300",
-          color: "monochrome800"
+          color: "monochrome800",
         }}
       >
         <FooterItem>

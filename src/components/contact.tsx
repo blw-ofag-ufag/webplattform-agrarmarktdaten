@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { Flex, Text, Box, Link } from "@theme-ui/components";
 import { Trans } from "@lingui/macro";
+import { Box, Flex, Link, Text } from "@theme-ui/components";
+import React, { ReactNode } from "react";
 import { Icon, IconName } from "../icons";
 
 export const Contact = () => {
@@ -11,7 +11,7 @@ export const Contact = () => {
         m: 0,
         py: 6,
         bg: "monochrome200",
-        color: "monochrome800"
+        color: "monochrome800",
       }}
     >
       <Flex
@@ -21,10 +21,16 @@ export const Contact = () => {
           flexFlow: [null, null, "row wrap"],
           maxWidth: "77rem",
           mx: "auto",
-          px: [4, 4, 0]
+          px: [4, 4, 0],
         }}
       >
-        <Box sx={{ width: ["100%", "100%", "65%"], mb: [6, 6, 0] }}>
+        <Flex
+          sx={{
+            flexDirection: "column",
+            width: ["100%", "100%", "65%"],
+            mb: [6, 6, 0],
+          }}
+        >
           <ContactSection>
             <Trans id="contact.contact">Kontakt</Trans>
           </ContactSection>
@@ -36,8 +42,8 @@ export const Contact = () => {
               www.blw.admin.ch
             </Link>
           </AddressLine>
-        </Box>
-        <Box sx={{ width: ["100%", "100%", "30%"] }}>
+        </Flex>
+        <Flex sx={{ flexDirection: "column", width: ["100%", "100%", "30%"] }}>
           <ContactSection>
             <Trans id="contact.follow.us">Folgen Sie Uns</Trans>
           </ContactSection>
@@ -46,7 +52,7 @@ export const Contact = () => {
             <SocialIcon name="twitter" />
             <SocialIcon name="youtube" />
           </Box>
-        </Box>
+        </Flex>
       </Flex>
     </Box>
   );
