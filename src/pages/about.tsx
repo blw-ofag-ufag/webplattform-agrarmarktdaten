@@ -40,28 +40,3 @@ export const getStaticProps = async (context: $FixMe) => {
 
   return { props: result };
 };
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const query = `
-//   query {
-//     aboutPage {
-//       _allTitleLocales {
-//         locale
-//       }
-//     }
-//   }
-//   `;
-
-//   const result = await fetchCMS(query);
-
-//   const paths = result.aboutPage._allTitleLocales.map(
-//     (loc: { locale: "de" | "en" }) => ({
-//       params: { locale: loc.locale },
-//     })
-//   );
-
-//   return {
-//     fallback: false,
-//     paths,
-//   };
-// };

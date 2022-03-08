@@ -59,30 +59,3 @@ export const getStaticProps = async (context: $FixMe) => {
 
   return { props: result };
 };
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   // FIXME
-//   const query = `
-//   query {
-//     allMarketAreas {
-//       _allSlugLocales {
-//         locale
-//         value
-//       }
-//     }
-//   }
-//   `;
-
-//   const result = await fetchCMS(query);
-
-//   const paths = result.allMarketAreas.flatMap((page: $FixMe) => {
-//     return page._allSlugLocales.map((loc: $FixMe) => ({
-//       params: { locale: loc.locale, slug: loc.value },
-//     }));
-//   });
-
-//   return {
-//     fallback: false,
-//     paths,
-//   };
-// };
