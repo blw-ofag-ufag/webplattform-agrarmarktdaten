@@ -1,7 +1,7 @@
 /**
  * Theme conforming to the Swiss Federal CD guidelines
  */
-export const editorTheme = {
+export const editorTheme: any = {
   breakpoints: ["48em", "62em", "75em"],
   space: [
     "0",
@@ -12,7 +12,7 @@ export const editorTheme = {
     "1.5rem",
     "2rem",
     "4rem",
-    "4.5rem"
+    "4.5rem",
   ],
   colors: {
     text: "monochrome900",
@@ -68,12 +68,11 @@ export const editorTheme = {
     missing: "#EFEFEF",
 
     alert: "#DC0018",
-    alertLight: "#ffe6e1"
+    alertLight: "#ffe6e1",
   },
   fonts: {
-    body:
-      "FrutigerNeue, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol",
-    monospace: "Menlo, monospace"
+    body: "FrutigerNeue, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol",
+    monospace: "Menlo, monospace",
   },
   fontSizes: [
     "0rem",
@@ -87,13 +86,13 @@ export const editorTheme = {
     "2.5rem",
     "3rem",
     "4.5rem",
-    "5.5rem"
+    "5.5rem",
   ],
   fontWeights: {
     light: 300,
     regular: 400,
     heading: 700,
-    bold: 700
+    bold: 700,
   },
   // FIXME: should it be relative values? 1.5, etc.
   lineHeights: [
@@ -107,75 +106,75 @@ export const editorTheme = {
     "2.250rem",
     "3rem",
     "4rem",
-    "4.5rem"
+    "4.5rem",
   ],
   sizes: {
-    avatar: 48
+    avatar: 48,
   },
   radii: {
     default: 3,
     bigger: 4,
-    circle: 99999
+    circle: 99999,
   },
   shadows: {
     primary: "0 3px 5px 0 rgba(0,0,0,0.10)",
     rightSide: "2px 0 4px 0 rgba(0,0,0,0.05)",
-    leftSide: "-2px 0 2px 0 rgba(0,0,0,0.05)"
+    leftSide: "-2px 0 2px 0 rgba(0,0,0,0.05)",
   },
   text: {
     giga: {
       fontFamily: "body",
       lineHeight: [9, 10, 10],
       fontWeight: "light",
-      fontSize: [8, 9, 9]
+      fontSize: [8, 9, 9],
     },
     heading1: {
       fontFamily: "body",
       lineHeight: [7, 8, 8],
       fontWeight: "bold",
-      fontSize: [6, 7, 7]
+      fontSize: [6, 7, 7],
     },
     heading2: {
       fontFamily: "body",
       lineHeight: [6, 7, 7],
       fontWeight: "regular",
-      fontSize: [5, 6, 6]
+      fontSize: [5, 6, 6],
     },
     heading3: {
       fontFamily: "body",
       lineHeight: [5, 6, 6],
       fontWeight: "bold",
-      fontSize: [4, 5, 5]
+      fontSize: [4, 5, 5],
     },
     lead: {
       fontFamily: "body",
       lineHeight: [4, 5, 5],
       fontWeight: "bold",
-      fontSize: [3, 4, 4]
+      fontSize: [3, 4, 4],
     },
     paragraph1: {
       fontFamily: "body",
       lineHeight: [4, 5, 5],
       fontWeight: "regular",
-      fontSize: [3, 4, 4]
+      fontSize: [3, 4, 4],
     },
     paragraph2: {
       fontFamily: "body",
       lineHeight: [2, 4, 3],
       fontWeight: "regular",
-      fontSize: [2, 3, 3]
+      fontSize: [2, 3, 3],
     },
     table: {
       fontFamily: "body",
       lineHeight: [2, 4, 4],
       fontWeight: "regular",
-      fontSize: [2, 3, 3]
+      fontSize: [2, 3, 3],
     },
     meta: {
       fontFamily: "body",
       lineHeight: [1, 2, 2],
       fontWeight: "regular",
-      fontSize: [1, 2, 2]
+      fontSize: [1, 2, 2],
     },
     // Custom
     toolTitle: {
@@ -183,7 +182,7 @@ export const editorTheme = {
       lineHeight: 1.2,
       fontWeight: "bold",
       fontSize: [8, "3.5rem", "3.5rem"],
-      mb: [4]
+      mb: [4],
     },
     homepageSection: {
       fontFamily: "body",
@@ -192,33 +191,33 @@ export const editorTheme = {
       fontSize: [6, 7, 7],
       color: "monochrome800",
       mb: 6,
-      textAlign: "center"
+      textAlign: "center",
     },
     homepageTutorialStep: {
       fontSize: 5,
       fontFamily: "body",
       mt: 4,
-      mb: 2
+      mb: 2,
     },
     homepageExampleHeadline: {
       fontSize: [5, 5, 6],
       lineHeight: 1.5,
       fontFamily: "body",
-      mb: [2, 2, 4]
+      mb: [2, 2, 4],
     },
     homepageExampleDescription: {
       fontSize: 4,
       lineHeight: 1.5,
       fontFamily: "body",
       mt: 4,
-      mb: [2, 2, 0]
+      mb: [2, 2, 0],
     },
     homepageContribute: {
       fontSize: [6, 6, 7],
       lineHeight: 1.25,
       fontFamily: "body",
-      mb: 3
-    }
+      mb: 3,
+    },
   },
   buttons: {
     primary: {
@@ -234,29 +233,29 @@ export const editorTheme = {
       transition: "background-color .2s",
       cursor: "pointer",
       ":hover": {
-        bg: "primaryHover"
+        bg: "primaryHover",
       },
       ":active": {
-        bg: "primaryHover"
+        bg: "primaryHover",
       },
       ":disabled": {
         cursor: "initial",
-        bg: "primaryDisabled"
-      }
+        bg: "primaryDisabled",
+      },
     },
     success: {
       variant: "buttons.primary",
       bg: "successBase",
       ":hover": {
-        bg: "successHover"
+        bg: "successHover",
       },
       ":active": {
-        bg: "successHover"
+        bg: "successHover",
       },
       ":disabled": {
         cursor: "initial",
-        bg: "successDisabled"
-      }
+        bg: "successDisabled",
+      },
     },
     outline: {
       variant: "buttons.primary",
@@ -267,29 +266,29 @@ export const editorTheme = {
       borderStyle: "solid",
       borderColor: "primary",
       ":hover": {
-        bg: "muted"
+        bg: "muted",
       },
       ":active": {
-        bg: "muted"
+        bg: "muted",
       },
       ":disabled": {
         cursor: "initial",
-        bg: "muted"
-      }
+        bg: "muted",
+      },
     },
     secondary: {
       variant: "buttons.primary",
       bg: "secondary",
       ":hover": {
-        bg: "secondaryHover"
+        bg: "secondaryHover",
       },
       ":active": {
-        bg: "secondaryHover"
+        bg: "secondaryHover",
       },
       ":disabled": {
         cursor: "initial",
-        bg: "secondaryDisabled"
-      }
+        bg: "secondaryDisabled",
+      },
     },
     inverted: {
       bg: "monochrome100",
@@ -304,16 +303,16 @@ export const editorTheme = {
       transition: "background-color .2s",
       cursor: "pointer",
       ":hover": {
-        bg: "monochrome300"
+        bg: "monochrome300",
       },
       ":active": {
-        bg: "monochrome400"
+        bg: "monochrome400",
       },
       ":disabled": {
         cursor: "initial",
         color: "monochrome600",
-        bg: "monochrome300"
-      }
+        bg: "monochrome300",
+      },
     },
     datasetButton: {
       normal: {
@@ -331,19 +330,19 @@ export const editorTheme = {
         "&:first-of-type": {
           borderTopWidth: "1px",
           borderTopStyle: "solid",
-          borderTopColor: "monochrome300"
+          borderTopColor: "monochrome300",
         },
         ":hover": {
-          bg: "blueGreyDarker"
+          bg: "blueGreyDarker",
         },
         ":active": {
-          bg: "blueGreyDarker"
-        }
+          bg: "blueGreyDarker",
+        },
       },
       selected: {
         variant: "buttons.datasetButton.normal",
-        bg: "blueGreyDarker"
-      }
+        bg: "blueGreyDarker",
+      },
     },
     step: {
       bg: "transparent",
@@ -352,7 +351,7 @@ export const editorTheme = {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
     },
     palette: {
       variant: "buttons.primary",
@@ -367,15 +366,15 @@ export const editorTheme = {
       borderStyle: "solid",
       borderColor: "monochrome500",
       ":hover": {
-        bg: "monochrome100"
+        bg: "monochrome100",
       },
       ":active": {
-        bg: "monochrome100"
+        bg: "monochrome100",
       },
       ":disabled": {
         cursor: "initial",
-        bg: "muted"
-      }
+        bg: "muted",
+      },
     },
     control: {
       color: "monochrome700",
@@ -392,15 +391,15 @@ export const editorTheme = {
       transition: "background-color .2s",
       cursor: "pointer",
       ":hover": {
-        bg: "blueGreyDarker"
+        bg: "blueGreyDarker",
       },
       ":active": {
-        bg: "blueGreyDarker"
+        bg: "blueGreyDarker",
       },
       ":disabled": {
         cursor: "initial",
-        bg: "muted"
-      }
+        bg: "muted",
+      },
     },
     publishAction: {
       display: "flex",
@@ -419,15 +418,15 @@ export const editorTheme = {
       transition: "background-color .2s",
       cursor: "pointer",
       ":hover": {
-        color: "primaryHover"
+        color: "primaryHover",
       },
       ":active": {
-        color: "primaryActive"
+        color: "primaryActive",
       },
       ":disabled": {
         cursor: "initial",
-        color: "primaryDisabled"
-      }
+        color: "primaryDisabled",
+      },
     },
     iconButton: {
       background: "transparent",
@@ -437,16 +436,16 @@ export const editorTheme = {
       cursor: "pointer",
       ":hover": {
         bg: "monochrome300",
-        color: "monochrome700"
+        color: "monochrome700",
       },
       ":active": {
         bg: "monochrome400",
-        color: "monochrome800"
+        color: "monochrome800",
       },
       ":disabled": {
         cursor: "initial",
-        color: "monochrome300"
-      }
+        color: "monochrome300",
+      },
     },
     chartTypeRadio: {
       width: "86px",
@@ -454,7 +453,7 @@ export const editorTheme = {
       mx: 4,
       my: 6,
       transition: "all .2s",
-      borderRadius: "default"
+      borderRadius: "default",
     },
     linkButton: {
       background: "transparent",
@@ -468,12 +467,12 @@ export const editorTheme = {
       mb: 4,
       p: 0,
       ":hover": {
-        color: "primaryHover"
+        color: "primaryHover",
       },
       ":disabled": {
         cursor: "initial",
-        color: "monochrome500"
-      }
+        color: "monochrome500",
+      },
     },
     downloadButton: {
       background: "transparent",
@@ -489,27 +488,27 @@ export const editorTheme = {
       p: 0,
       ":disabled": {
         cursor: "initial",
-        color: "monochrome500"
-      }
-    }
+        color: "monochrome500",
+      },
+    },
   },
   links: {
     iconLink: {
       ml: 4,
       color: "primary",
       "&:disabled": {
-        color: "primaryDisabled"
+        color: "primaryDisabled",
       },
       "&:hover": {
-        color: "primaryHover"
+        color: "primaryHover",
       },
       "&:active": {
-        color: "primaryActive"
+        color: "primaryActive",
       },
       "&:visited": {
-        color: "primary"
-      }
-    }
+        color: "primary",
+      },
+    },
   },
   // All variants except ^ buttons ^
   variants: {
@@ -531,7 +530,7 @@ export const editorTheme = {
         width: "100%",
         bg: "monochrome100",
         overflowY: "hidden",
-        zIndex: 13
+        zIndex: 13,
       },
       content: {
         px: [0, 4, 4],
@@ -541,7 +540,7 @@ export const editorTheme = {
         borderBottomStyle: "solid",
         borderBottomColor: "brand",
         color: "monochrome700",
-        flexDirection: ["column", "row"]
+        flexDirection: ["column", "row"],
       },
       logo: {
         order: [2, 1],
@@ -551,21 +550,21 @@ export const editorTheme = {
         "& > h1": {
           pl: [0, 6],
           textDecoration: "none",
-          color: "monochrome700"
-        }
+          color: "monochrome700",
+        },
       },
       logoImgMobile: {
         display: ["block", "none"],
         mx: 4,
         my: 4,
-        width: 24
+        width: 24,
       },
       logoImgDesktop: {
         display: ["none", "block"],
         pr: 6,
         borderRightWidth: "1px",
         borderRightStyle: "solid",
-        borderRightColor: "monochrome300"
+        borderRightColor: "monochrome300",
       },
       languageList: {
         listStyle: "none",
@@ -575,7 +574,7 @@ export const editorTheme = {
         // flexGrow: 1,
         bg: ["monochrome300", "transparent"],
         order: [1, 2],
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
       },
       languageListItem: { ml: 1, p: 0 },
       languageLink: {
@@ -587,13 +586,13 @@ export const editorTheme = {
           textTransform: "uppercase",
           textDecoration: "none",
           color: "monochrome700",
-          bg: "transparent"
+          bg: "transparent",
         },
         active: {
           variant: "variants.header.languageLink.normal",
-          bg: ["monochrome500", "monochrome300"]
-        }
-      }
+          bg: ["monochrome500", "monochrome300"],
+        },
+      },
     },
 
     stepper: {
@@ -604,7 +603,7 @@ export const editorTheme = {
         borderBottomWidth: "1px",
         borderBottomStyle: "solid",
         borderBottomColor: "monochrome500",
-        overflow: "hidden"
+        overflow: "hidden",
       },
       line: {
         position: "absolute",
@@ -615,8 +614,8 @@ export const editorTheme = {
         borderBottomWidth: "1px",
         borderBottomStyle: "solid",
         borderBottomColor: "monochrome300",
-        zIndex: 3
-      }
+        zIndex: 3,
+      },
     },
     step: {
       basic: {
@@ -625,25 +624,25 @@ export const editorTheme = {
         mb: 1,
         borderRadius: "circle",
         fontSize: 3,
-        fontFamily: "body"
+        fontFamily: "body",
       },
       past: {
         variant: "variants.step.basic",
-        bg: "monochrome800"
+        bg: "monochrome800",
       },
       current: {
         variant: "variants.step.basic",
-        bg: "brand"
+        bg: "brand",
       },
       future: {
         variant: "variants.step.basic",
-        bg: "monochrome600"
-      }
+        bg: "monochrome600",
+      },
     },
     container: {
       root: {
         overflowX: "hidden",
-        overflowY: "auto"
+        overflowY: "auto",
       },
       left: {
         bg: "monochrome100",
@@ -652,12 +651,12 @@ export const editorTheme = {
         borderRightColor: "monochrome500",
         borderRightWidth: "1px",
         borderRightStyle: "solid",
-        gridArea: "left"
+        gridArea: "left",
       },
       middle: {
         variant: "variants.container.root",
         p: 4,
-        gridArea: "middle"
+        gridArea: "middle",
       },
       chart: {
         bg: "monochrome100",
@@ -666,7 +665,7 @@ export const editorTheme = {
         minHeight: [50, 100, 500],
         borderWidth: "1px",
         borderStyle: "solid",
-        borderColor: "monochrome300"
+        borderColor: "monochrome300",
       },
       right: {
         bg: "blueGrey",
@@ -675,26 +674,26 @@ export const editorTheme = {
         borderLeftColor: "monochrome500",
         borderLeftWidth: "1px",
         borderLeftStyle: "solid",
-        gridArea: "right"
-      }
+        gridArea: "right",
+      },
     },
     actionBar: { my: 5 },
     label: {
       color: "monochrome700",
       fontSize: [4, 4, 4],
-      pb: 0
+      pb: 0,
     },
     labelSmaller: {
       fontSize: [2, 2, 2],
-      pb: 1
+      pb: 1,
     },
     controlSection: {
       borderTopColor: "monochrome500",
       borderTopWidth: "1px",
       borderTopStyle: "solid",
       "&:first-of-type": {
-        borderTopWidth: 0
-      }
+        borderTopWidth: 0,
+      },
     },
     controlSectionTitle: {
       variant: "text.table",
@@ -703,30 +702,30 @@ export const editorTheme = {
       bg: "transparent",
       appearance: "none",
       width: "100%",
-      border: "none"
+      border: "none",
     },
     leftControlSectionContent: {
       px: 2,
-      pb: 4
+      pb: 4,
     },
     rightControlSectionContent: {
       px: 4,
-      pb: 4
+      pb: 4,
     },
 
     hint: {
       width: "100%",
       height: "100%",
       color: "hint",
-      textAlign: "center"
+      textAlign: "center",
     },
     error: {
       variant: "variants.hint",
       color: "error",
-      borderColor: "error"
+      borderColor: "error",
     },
     loading: {
-      variant: "variants.hint"
+      variant: "variants.hint",
     },
     success: {
       variant: "variants.hint",
@@ -735,7 +734,7 @@ export const editorTheme = {
       p: 4,
       color: "successBase",
       bg: "successLight",
-      height: "auto"
+      height: "auto",
     },
     info: {
       variant: "variants.hint",
@@ -745,7 +744,7 @@ export const editorTheme = {
       p: 4,
       color: "primary",
       bg: "primaryLight",
-      height: "auto"
+      height: "auto",
     },
     alert: {
       variant: "variants.hint",
@@ -753,11 +752,11 @@ export const editorTheme = {
       p: 5,
       color: "alert",
       bg: "alertLight",
-      height: "auto"
+      height: "auto",
     },
     palette: {
       menu: {
-        bg: "monochrome100"
+        bg: "monochrome100",
       },
       row: { bg: "monochrome100" },
       color: {
@@ -771,13 +770,13 @@ export const editorTheme = {
         borderStyle: "solid",
         "&:first-of-type": {
           borderTopLeftRadius: "bigger",
-          borderBottomLeftRadius: "bigger"
+          borderBottomLeftRadius: "bigger",
         },
         "&:last-of-type": {
           borderTopRightRadius: "bigger",
-          borderBottomRightRadius: "bigger"
-        }
-      }
+          borderBottomRightRadius: "bigger",
+        },
+      },
     },
     datatable: {
       headerRow: {
@@ -787,7 +786,7 @@ export const editorTheme = {
         color: "monochrome700",
         borderBottomColor: "monochrome700",
         borderBottomWidth: "1px",
-        borderBottomStyle: "solid"
+        borderBottomStyle: "solid",
       },
       headerCell: { px: 2, py: 3, minWidth: 128 },
       row: {
@@ -796,9 +795,9 @@ export const editorTheme = {
         color: "monochrome800",
         borderBottomColor: "monochrome400",
         borderBottomWidth: "1px",
-        borderBottomStyle: "solid"
+        borderBottomStyle: "solid",
       },
-      cell: { px: 2, py: 3, minWidth: 128 }
+      cell: { px: 2, py: 3, minWidth: 128 },
     },
 
     publishActionOverlay: {
@@ -811,7 +810,7 @@ export const editorTheme = {
       position: "fixed",
       top: 0,
       left: 0,
-      pointerEvents: "none"
+      pointerEvents: "none",
     },
     publishActionModal: {
       position: "fixed",
@@ -835,8 +834,8 @@ export const editorTheme = {
         // maxWidth: 340,
         borderWidth: "1px",
         borderStyle: "solid",
-        borderColor: "monochrome500"
-      }
+        borderColor: "monochrome500",
+      },
     },
     iFrameCode: {
       color: "monochrome700",
@@ -846,7 +845,7 @@ export const editorTheme = {
       borderRadius: 0,
       borderWidth: "1px",
       borderStyle: "solid",
-      borderColor: "monochrome500"
+      borderColor: "monochrome500",
     },
     fieldSetLegend: {
       fontFamily: "body",
@@ -854,14 +853,14 @@ export const editorTheme = {
       fontWeight: "regular",
       fontSize: [1, 2, 2],
       mb: 1,
-      color: "monochrome600"
+      color: "monochrome600",
     },
     footer: {
       institution: {
         width: ["100%", "auto"],
         px: 4,
         py: 5,
-        color: ["monochrome900", "monochrome700"]
+        color: ["monochrome900", "monochrome700"],
       },
       logo: {
         width: "100vw",
@@ -873,7 +872,7 @@ export const editorTheme = {
         borderTopStyle: "solid",
         borderBottomStyle: "solid",
         borderTopColor: "monochrome500",
-        borderBottomColor: "monochrome500"
+        borderBottomColor: "monochrome500",
       },
       link: {
         width: ["100%", "auto"],
@@ -884,15 +883,15 @@ export const editorTheme = {
         fontFamily: "body",
         cursor: "pointer",
         ":hover": {
-          color: "primaryHover"
+          color: "primaryHover",
         },
         ":active": {
-          color: "primaryHover"
+          color: "primaryHover",
         },
         ":disabled": {
           cursor: "initial",
-          color: "primaryDisabled"
-        }
+          color: "primaryDisabled",
+        },
       },
       linkBottom: {
         px: [4, 5],
@@ -905,16 +904,16 @@ export const editorTheme = {
         borderLeftColor: "monochrome500",
         cursor: "pointer",
         ":hover": {
-          color: "primaryHover"
+          color: "primaryHover",
         },
         ":active": {
-          color: "primaryHover"
+          color: "primaryHover",
         },
         ":disabled": {
           cursor: "initial",
-          color: "primaryDisabled"
-        }
-      }
+          color: "primaryDisabled",
+        },
+      },
     },
     dataSetMetadata: {
       title: {
@@ -922,7 +921,7 @@ export const editorTheme = {
         lineHeight: [1, 2, 2],
         fontWeight: "regular",
         fontSize: [1, 2, 2],
-        color: "monochrome600"
+        color: "monochrome600",
       },
       body: {
         fontFamily: "body",
@@ -930,12 +929,11 @@ export const editorTheme = {
         fontWeight: "regular",
         fontSize: [3, 4, 4],
         color: "monochrome900",
-        mb: 3
-      }
-    }
-  }
+        mb: 3,
+      },
+    },
+  },
 };
-
 
 /**
  * Load these fonts early using <link rel="preload" />
@@ -944,7 +942,7 @@ export const editorTheme = {
 export const preloadFonts = [
   "/static/fonts/FrutigerNeueW02-Bd.woff2",
   "/static/fonts/FrutigerNeueW02-Regular.woff2",
-  "/static/fonts/FrutigerNeueW02-Light.woff2"
+  "/static/fonts/FrutigerNeueW02-Light.woff2",
 ];
 
 /**
