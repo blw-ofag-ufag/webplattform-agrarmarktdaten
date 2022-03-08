@@ -1,9 +1,9 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import { default as NextLink } from "next/link";
 import React from "react";
 import { Box, Card, Flex, Link, Text } from "theme-ui";
 import { MarketArea } from "../domain/types";
 import { Icon, IconName } from "../icons";
+import { useLocale } from "../lib/use-locale";
 
 export const MarketAreaHeader = ({
   marketMenuexpanded,
@@ -35,7 +35,12 @@ export const MarketAreaHeader = ({
       {allMarketAreas.map((area) => {
         return (
           <Box as="li" key={area.slug} sx={{ width: ["100%", "100%", "auto"] }}>
-            <NextLink href="/area/[slug]" as={`/area/${area.slug}`} passHref>
+            <NextLink
+              href="/area/[slug]"
+              as={`/area/${area.slug}`}
+              locale={locale}
+              passHref
+            >
               <Link
                 sx={{ textDecoration: "none" }}
                 onClick={() => toggleMarketMenu(false)}

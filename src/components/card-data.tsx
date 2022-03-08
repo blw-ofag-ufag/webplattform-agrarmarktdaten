@@ -151,7 +151,7 @@ export const ReportCard = ({
             </Box>
           </Flex> */}
           </Flex>
-          <NextLink href="/create/[chartId]" as={`/create/new`} passHref>
+          <NextLink href="/create/[chartId]" as="/create/new" passHref>
             <Link
               as="a"
               sx={{

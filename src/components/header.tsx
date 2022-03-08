@@ -1,4 +1,3 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import { Trans } from "@lingui/macro";
 import { Box, Button, Flex, Link, Text } from "@theme-ui/components";
 import NextLink from "next/link";
@@ -15,7 +14,7 @@ export const Header = ({
   alternates,
 }: {
   allMarketAreas?: MarketArea[];
-  alternates?: { href: string; as: string; label: string }[];
+  alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const [expanded, toggleMenu] = useState(false); // mobile
   const [marketMenuexpanded, toggleMarketMenu] = useState(false);
@@ -108,9 +107,8 @@ const MobileMenuExpanded = ({
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
   allMarketAreas?: MarketArea[];
-  alternates?: { href: string; as: string; label: string }[];
+  alternates?: { href: string; as: string; locale: string }[];
 }) => {
-  const locale = useLocale();
   return (
     <Box sx={{ display: ["flex", "flex", "none"], flexDirection: "column" }}>
       <Link
@@ -137,7 +135,7 @@ const MobileMenuExpanded = ({
           allMarketAreas={allMarketAreas}
         />
       )}
-      <NextLink href="/create/[chartId]" as={`/create/new`} passHref>
+      <NextLink href="/create/[chartId]" as="/create/new" passHref>
         <Link variant="menu">
           <Trans id="menu.data">Daten</Trans>
         </Link>
@@ -159,7 +157,6 @@ const DesktopMenu = ({
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
 }) => {
-  const locale = useLocale();
   return (
     <Box sx={{ display: ["none", "none", "flex"], order: 2, mx: "auto" }}>
       <Link
@@ -179,12 +176,12 @@ const DesktopMenu = ({
         <Trans id="menu.markets">Märkte</Trans>
         <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
       </Link>
-      <NextLink href="/create/[chartId]" as={`/create/new`} passHref>
+      <NextLink href="/create/[chartId]" as="/create/new" passHref>
         <Link variant="menu">
           <Trans id="menu.data">Daten</Trans>
         </Link>
       </NextLink>
-      <NextLink href="/about" as={`/about`} passHref>
+      <NextLink href="/about" as="/about" passHref>
         <Link variant="menu">
           <Trans id="menu.about">Über uns</Trans>
         </Link>

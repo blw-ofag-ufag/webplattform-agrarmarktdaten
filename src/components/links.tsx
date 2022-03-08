@@ -1,8 +1,8 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 import * as qs from "querystring";
 import React from "react";
+import { useLocale } from "../lib/use-locale";
 
 const createDynamicRouteProps = ({
   pathname,

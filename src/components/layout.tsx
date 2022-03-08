@@ -1,4 +1,3 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import NextLink from "next/link";
 import { Box, Flex, Link } from "theme-ui";
 import { MarketArea } from "../domain/types";
@@ -10,7 +9,6 @@ export const HeaderOld = ({
 }: {
   alternates?: { href: string; as: string; label: string }[];
 }) => {
-  const locale = useLocale();
   return (
     <Flex
       sx={{
@@ -40,7 +38,7 @@ export const HeaderOld = ({
         </Flex>
       </NextLink>
       <Flex>
-        <NextLink href="/create/[chartId]" as={`/create/new`} passHref>
+        <NextLink href="/create/[chartId]" as="/create/new" passHref>
           <Link>Get Data</Link>
         </NextLink>
 
@@ -69,7 +67,7 @@ export const AppLayout = ({
 }: {
   children: React.ReactNode;
   allMarketAreas?: MarketArea[];
-  alternates?: { href: string; as: string; label: string }[];
+  alternates?: { href: string; as: string; locale: string }[];
 }) => (
   <>
     <Header alternates={alternates} allMarketAreas={allMarketAreas} />

@@ -38,7 +38,7 @@ export default function Area({
         return {
           href: "/area/[slug]",
           as: `/area/${loc.value}`,
-          label: loc.locale,
+          locale: loc.locale,
         };
       })
     : undefined;

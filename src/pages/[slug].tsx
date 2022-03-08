@@ -20,7 +20,7 @@ export default function Page({
         return {
           href: "/[slug]",
           as: `${loc.locale}/${loc.value}`,
-          label: loc.locale,
+          locale: loc.locale,
         };
       })
     : undefined;

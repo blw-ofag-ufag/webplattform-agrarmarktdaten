@@ -9,7 +9,7 @@ const localesOrder = ["de", "en"];
 export const LanguageMenu = ({
   alternates,
 }: {
-  alternates?: { href: string; as: string; label: string }[];
+  alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const locale = useLocale();
 
@@ -30,20 +30,20 @@ export const LanguageMenu = ({
       }}
     >
       {alternates
-        ? alternates.map(({ href, label, as }) => {
+        ? alternates.map((d) => {
             return (
               <LanguageListItem
-                key={label}
-                active={label === locale}
+                key={d.locale}
+                active={d.locale === locale}
                 disabled={false}
               >
-                <NextLink href={href} as={as} passHref>
+                <NextLink href={d.href} as={d.as} locale={d.locale} passHref>
                   <Link
                     rel="alternate"
-                    hrefLang={label}
+                    hrefLang={d.locale}
                     sx={{ textDecoration: "none", color: "currentColor" }}
                   >
-                    {label}
+                    {d.locale}
                   </Link>
                 </NextLink>
               </LanguageListItem>
