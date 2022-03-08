@@ -14,121 +14,121 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/card-data.tsx:32
-msgid "article.card.data"
-msgstr "Query Database"
+#~ msgid "article.card.data"
+#~ msgstr "Query Database"
 
 #: src/components/card-data.tsx:32
-msgid "article.card.report.month"
-msgstr "Chart of the Month"
+#~ msgid "article.card.report.month"
+#~ msgstr "Chart of the Month"
 
 #: src/components/card-data.tsx:64
-msgid "article.link.data.explore"
-msgstr "Explore Data"
+#~ msgid "article.link.data.explore"
+#~ msgstr "Explore Data"
 
 #: src/components/card-data.tsx:64
-msgid "article.link.open.report"
-msgstr "Open Report"
+#~ msgid "article.link.open.report"
+#~ msgstr "Open Report"
 
 #: src/pages/[locale]/area/[slug].tsx:51
-msgid "article.section.data"
-msgstr "Data"
+#~ msgid "article.section.data"
+#~ msgstr "Data"
 
 #: src/pages/[locale]/area/[slug].tsx:47
-msgid "article.section.infografic"
-msgstr "Infografik"
+#~ msgid "article.section.infografic"
+#~ msgstr "Infografik"
 
 #: src/pages/[locale]/area/[slug].tsx:86
-msgid "article.section.link"
-msgstr "Links"
+#~ msgid "article.section.link"
+#~ msgstr "Links"
 
 #: src/pages/[locale]/area/[slug].tsx:75
-msgid "article.section.news"
-msgstr "Latest"
+#~ msgid "article.section.news"
+#~ msgstr "Latest"
 
 #: src/pages/[locale]/area/[slug].tsx:68
-msgid "article.section.trade"
-msgstr "Trade Levels"
+#~ msgid "article.section.trade"
+#~ msgstr "Trade Levels"
 
 #: src/pages/[locale]/area/[slug].tsx:62
-msgid "article.teaser.data.title"
-msgstr "Data about the Potatoe Market"
+#~ msgid "article.teaser.data.title"
+#~ msgstr "Data about the Potatoe Market"
 
 #: src/components/homepage/infografik-teaser.tsx:49
 #: src/components/homepage/infografik-teaser.tsx:117
-msgid "button.infografic.teaser"
-msgstr "See Infografics"
+#~ msgid "button.infografic.teaser"
+#~ msgstr "See Infografics"
 
 #: src/pages/[locale]/area/[slug].tsx:81
 #: src/pages/[locale]/index.tsx:47
-msgid "button.show.all"
-msgstr "Show All"
+#~ msgid "button.show.all"
+#~ msgstr "Show All"
 
 #: src/components/contact.tsx:23
-msgid "contact.contact"
-msgstr "Contact"
+#~ msgid "contact.contact"
+#~ msgstr "Contact"
 
 #: src/components/contact.tsx:36
-msgid "contact.follow.us"
-msgstr "Follow Us"
+#~ msgid "contact.follow.us"
+#~ msgstr "Follow Us"
 
 #: src/components/footer.tsx:24
-msgid "footer.dataprotection"
-msgstr "Data Protection"
+#~ msgid "footer.dataprotection"
+#~ msgstr "Data Protection"
 
 #: src/components/footer.tsx:18
-msgid "footer.impressum"
-msgstr "Imprint"
+#~ msgid "footer.impressum"
+#~ msgstr "Imprint"
 
 #: src/components/footer.tsx:21
-msgid "footer.legal"
-msgstr "Legal"
+#~ msgid "footer.legal"
+#~ msgstr "Legal"
 
 #: src/pages/[locale]/index.tsx:34
-msgid "homepage.section.market.area"
-msgstr "Market Areas"
+#~ msgid "homepage.section.market.area"
+#~ msgstr "Market Areas"
 
 #: src/pages/[locale]/index.tsx:51
-msgid "homepage.section.newest.infografic"
-msgstr "Newest Infografics"
+#~ msgid "homepage.section.newest.infografic"
+#~ msgstr "Newest Infografics"
 
 #: src/pages/[locale]/index.tsx:41
-msgid "homepage.section.newsfeed"
-msgstr "Latest"
+#~ msgid "homepage.section.newsfeed"
+#~ msgstr "Latest"
 
 #: src/components/homepage/infografik-teaser.tsx:26
-msgid "infografic"
-msgstr "Infografic"
+#~ msgid "infografic"
+#~ msgstr "Infografic"
 
 #: src/components/homepage/infografik-teaser.tsx:73
-msgid "infografic.date"
-msgstr "2018"
+#~ msgid "infografic.date"
+#~ msgstr "2018"
 
 #: src/components/homepage/infografik-teaser.tsx:92
-msgid "infografik.teaser"
-msgstr "In Switzerland, potatoes grow on more than 10,000 hectares. That's around 14,000 football fields full of great tubers. The harvested 400,000 tonnes end up on our plate all year round."
+#~ msgid "infografik.teaser"
+#~ msgstr "In Switzerland, potatoes grow on more than 10,000 hectares. That's around 14,000 football fields full of great tubers. The harvested 400,000 tonnes end up on our plate all year round."
 
 #: src/components/homepage/infografik-teaser.tsx:36
 #: src/components/homepage/infografik-teaser.tsx:83
-msgid "infografik.title"
-msgstr "Swiss Potato Market"
+#~ msgid "infografik.title"
+#~ msgstr "Swiss Potato Market"
 
 #: src/components/header.tsx:109
 #: src/components/header.tsx:120
-msgid "logo.swiss.confederation"
-msgstr "Logo of the Swiss Confederation"
+#~ msgid "logo.swiss.confederation"
+#~ msgstr "Logo of the Swiss Confederation"
 
 #: src/components/header.tsx:67
-msgid "menu.about"
-msgstr "About Us"
+#~ msgid "menu.about"
+#~ msgstr "About Us"
 
 #: src/components/header.tsx:62
-msgid "menu.data"
-msgstr "Data"
+#~ msgid "menu.data"
+#~ msgstr "Data"
 
 #: src/components/header.tsx:57
-msgid "menu.markets"
-msgstr "Markets"
+#~ msgid "menu.markets"
+#~ msgstr "Markets"
 
 #: src/components/header.tsx:102
-msgid "title.agricultural.market.data"
-msgstr "Agricultural Market Data"
+#~ msgid "title.agricultural.market.data"
+#~ msgstr "Agricultural Market Data"
