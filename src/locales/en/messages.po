@@ -29,27 +29,27 @@ msgstr ""
 #~ msgid "article.link.open.report"
 #~ msgstr "Open Report"
 
-#: src/pages/[locale]/area/[slug].tsx:51
+#: src/pages/area/[slug].tsx:51
 #~ msgid "article.section.data"
 #~ msgstr "Data"
 
-#: src/pages/[locale]/area/[slug].tsx:47
+#: src/pages/area/[slug].tsx:47
 #~ msgid "article.section.infografic"
 #~ msgstr "Infografik"
 
-#: src/pages/[locale]/area/[slug].tsx:86
+#: src/pages/area/[slug].tsx:86
 #~ msgid "article.section.link"
 #~ msgstr "Links"
 
-#: src/pages/[locale]/area/[slug].tsx:75
+#: src/pages/area/[slug].tsx:75
 #~ msgid "article.section.news"
 #~ msgstr "Latest"
 
-#: src/pages/[locale]/area/[slug].tsx:68
+#: src/pages/area/[slug].tsx:68
 #~ msgid "article.section.trade"
 #~ msgstr "Trade Levels"
 
-#: src/pages/[locale]/area/[slug].tsx:62
+#: src/pages/area/[slug].tsx:62
 #~ msgid "article.teaser.data.title"
 #~ msgstr "Data about the Potatoe Market"
 
@@ -58,8 +58,8 @@ msgstr ""
 #~ msgid "button.infografic.teaser"
 #~ msgstr "See Infografics"
 
-#: src/pages/[locale]/area/[slug].tsx:81
-#: src/pages/[locale]/index.tsx:47
+#: src/pages/area/[slug].tsx:81
+#: src/pages/index.tsx:47
 #~ msgid "button.show.all"
 #~ msgstr "Show All"
 
@@ -83,15 +83,15 @@ msgstr ""
 #~ msgid "footer.legal"
 #~ msgstr "Legal"
 
-#: src/pages/[locale]/index.tsx:34
+#: src/pages/index.tsx:34
 #~ msgid "homepage.section.market.area"
 #~ msgstr "Market Areas"
 
-#: src/pages/[locale]/index.tsx:51
+#: src/pages/index.tsx:51
 #~ msgid "homepage.section.newest.infografic"
 #~ msgstr "Newest Infografics"
 
-#: src/pages/[locale]/index.tsx:41
+#: src/pages/index.tsx:41
 #~ msgid "homepage.section.newsfeed"
 #~ msgstr "Latest"
 

@@ -25,7 +25,7 @@ export default function HomePage({
       {allSimplePages.map(page => {
         return (
           <li key={page.slug}>
-            <NextLink href="/[locale]/[slug]" as={`/de/${page.slug}`} passHref>
+            <NextLink href="/[slug]" as={`/${page.slug}`} passHref>
               <Link>{page.title}</Link>
             </NextLink>
           </li>

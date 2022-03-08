@@ -142,7 +142,7 @@ const MobileMenuExpanded = ({
           <Trans id="menu.data">Daten</Trans>
         </Link>
       </NextLink>
-      <NextLink href="/[locale]/about" as={`/${locale}/about`} passHref>
+      <NextLink href="/about" passHref>
         <Link variant="menu">
           <Trans id="menu.about">Über uns</Trans>
         </Link>
@@ -184,7 +184,7 @@ const DesktopMenu = ({
           <Trans id="menu.data">Daten</Trans>
         </Link>
       </NextLink>
-      <NextLink href="/[locale]/about" as={`/${locale}/about`} passHref>
+      <NextLink href="/about" as={`/about`} passHref>
         <Link variant="menu">
           <Trans id="menu.about">Über uns</Trans>
         </Link>

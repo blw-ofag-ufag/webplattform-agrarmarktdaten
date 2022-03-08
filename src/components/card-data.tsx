@@ -52,7 +52,7 @@ export const ReportCard = ({
           >
             <DynamicReportTeaser />
           </Box>
-          <NextLink href="/[locale]/report" as={`/${locale}/report`} passHref>
+          <NextLink href="/report" passHref>
             <Link
               as="a"
               sx={{

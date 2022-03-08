@@ -40,8 +40,8 @@ export default function Area({
   const alternates = marketArea
     ? marketArea._allSlugLocales.map((loc) => {
         return {
-          href: "/[locale]/area/[slug]",
-          as: `/${loc.locale}/area/${loc.value}`,
+          href: "/area/[slug]",
+          as: `/area/${loc.value}`,
           label: loc.locale,
         };
       })
@@ -168,8 +168,8 @@ export default function Area({
         //       {marketArea.children.map(area => (
         //         <Box as="li" key={area.slug}>
         //           <NextLink
-        //             href="/[locale]/area/[slug]"
-        //             as={`/${locale}/area/${area.slug}`}
+        //             href="/area/[slug]"
+        //             as={`/area/${area.slug}`}
         //             passHref
         //           >
         //             <Card>
@@ -191,8 +191,6 @@ export default function Area({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  console.log("GSP", context);
-
   const query = `
   query PageQuery($locale: SiteLocale!, $slug: String!){
     marketArea(locale: $locale, filter: {slug: {eq: $slug}}) {

@@ -17,8 +17,8 @@ export default function Page({
   const alternates = simplePage
     ? simplePage._allSlugLocales.map((loc) => {
         return {
-          href: "/[locale]/[slug]",
-          as: `/${loc.locale}/${loc.value}`,
+          href: "/[slug]",
+          as: `/${loc.value}`,
           label: loc.locale,
         };
       })

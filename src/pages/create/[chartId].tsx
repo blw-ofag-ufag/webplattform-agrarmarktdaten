@@ -35,13 +35,13 @@ export default function Create({
       {/* <Header
         alternates={[
           {
-            href: "/[locale]/create/[chartId]",
-            as: "/de/create/new",
+            href: "/create/[chartId]",
+            as: "/create/new",
             label: "de"
           },
           {
-            href: "/[locale]/create/[chartId]",
-            as: "/en/create/new",
+            href: "/create/[chartId]",
+            as: "/create/new",
             label: "en"
           }
         ]}

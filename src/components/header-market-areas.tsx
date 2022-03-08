@@ -1,14 +1,14 @@
+import { useLocale } from "@interactivethings/visualize-app";
 import { default as NextLink } from "next/link";
 import React from "react";
-import { Box, Flex, Link, Card, Text } from "theme-ui";
+import { Box, Card, Flex, Link, Text } from "theme-ui";
 import { MarketArea } from "../domain/types";
-import { useLocale } from "@interactivethings/visualize-app";
-import { IconName, Icon } from "../icons";
+import { Icon, IconName } from "../icons";
 
 export const MarketAreaHeader = ({
   marketMenuexpanded,
   toggleMarketMenu,
-  allMarketAreas
+  allMarketAreas,
 }: {
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
@@ -29,17 +29,13 @@ export const MarketAreaHeader = ({
         alignItems: ["center", "center", "flex-start"],
         flex: "1 1 0px",
         flexFlow: ["none", "none", "row wrap"],
-        zIndex: 30
+        zIndex: 30,
       }}
     >
-      {allMarketAreas.map(area => {
+      {allMarketAreas.map((area) => {
         return (
           <Box as="li" key={area.slug} sx={{ width: ["100%", "100%", "auto"] }}>
-            <NextLink
-              href="/[locale]/area/[slug]"
-              as={`/${locale}/area/${area.slug}`}
-              passHref
-            >
+            <NextLink href="/area/[slug]" as={`/area/${area.slug}`} passHref>
               <Link
                 sx={{ textDecoration: "none" }}
                 onClick={() => toggleMarketMenu(false)}
@@ -56,7 +52,7 @@ export const MarketAreaHeader = ({
 
 export const MarketCard = ({
   title,
-  icon
+  icon,
 }: {
   title: string;
   icon: IconName;
@@ -67,7 +63,7 @@ export const MarketCard = ({
       sx={{
         width: ["100%", "100%", 150],
         flexDirection: ["row", "row", "column"],
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
       }}
     >
       <MarketIcon icon={icon} />
@@ -79,8 +75,8 @@ export const MarketCard = ({
           lineHeight: "heading",
           textAlign: "center",
           "&:hover": {
-            textDecoration: "underline"
-          }
+            textDecoration: "underline",
+          },
         }}
       >
         {title}
@@ -103,7 +99,7 @@ export const MarketIcon = ({ icon }: { icon: IconName }) => {
         mb: [4, 4, 2],
         mr: [4, 4, 0],
         fontSize: ["1.5rem", "1.5rem", "3rem"],
-        "&:hover": { bg: `${icon}LightHover` }
+        "&:hover": { bg: `${icon}LightHover` },
       }}
     >
       <Icon name={icon} size={50} />
