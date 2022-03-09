@@ -4,7 +4,7 @@ import { colors } from "./colors";
 
 export const ChapterHeader = ({
   id,
-  children
+  children,
 }: {
   id: string;
   children: ReactNode;
@@ -27,7 +27,7 @@ export const ChapterHeader = ({
         height: 150,
         color: "white",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
 
         // "::after": {
         //   content: "''",

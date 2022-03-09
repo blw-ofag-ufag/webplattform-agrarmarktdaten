@@ -4,7 +4,7 @@ import React, {
   useContext,
   useEffect,
   useRef,
-  useState
+  useState,
 } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -18,7 +18,7 @@ const ScrollyContext = createContext<{
 
 export const ScrollyProvider = ({
   children,
-  sections
+  sections,
 }: {
   children: React.ReactNode;
   sections: Set<string>;
@@ -71,7 +71,7 @@ export const useScrolly = (id: string) => {
     isActive: id === activeSection,
     inView,
     intersectionRatio,
-    sections
+    sections,
   };
 };
 

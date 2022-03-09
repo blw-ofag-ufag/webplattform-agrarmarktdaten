@@ -1,20 +1,10 @@
 {
   "contact.contact": {
     "defaults": "Kontakt",
-    "origin": [
-      [
-        "src/components/contact.tsx",
-        23
-      ]
-    ]
+    "origin": [["src/components/contact.tsx", 23]]
   },
   "contact.follow.us": {
     "defaults": "Folgen Sie Uns",
-    "origin": [
-      [
-        "src/components/contact.tsx",
-        36
-      ]
-    ]
+    "origin": [["src/components/contact.tsx", 36]]
   }
 }

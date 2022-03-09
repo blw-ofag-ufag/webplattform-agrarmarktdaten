@@ -22,13 +22,13 @@ export const backgroundStyle = (color: string) => {
       backgroundColor: color,
       border: `2px solid ${color}`,
       backgroundImage: "none",
-      backgroundSize: "none"
+      backgroundSize: "none",
     },
     two: {
       backgroundColor: color,
       border: `2px solid ${color}`,
       backgroundImage: `linear-gradient(135deg, ${color} 33.33%, #f1d58f 33.33%, #f1d58f 50%, ${color} 50%, ${color} 83.33%, #f1d58f 83.33%, #f1d58f 100%)`,
-      backgroundSize: "12.73px 12.73px"
+      backgroundSize: "12.73px 12.73px",
     },
     three: {
       backgroundColor: color,
@@ -36,7 +36,7 @@ export const backgroundStyle = (color: string) => {
       backgroundImage: `radial-gradient(${colors.yellow} 20%, transparent 0),
       radial-gradient(${colors.yellow} 20%, transparent 0)`,
       backgroundSize: "16px 16px",
-      backgroundPosition: "4px 4px, 12px 12px"
+      backgroundPosition: "4px 4px, 12px 12px",
     },
     // four: {
     //   backgroundColor: color,
@@ -48,8 +48,8 @@ export const backgroundStyle = (color: string) => {
       backgroundColor: "none",
       border: `2px solid ${color}`,
       backgroundImage: "none",
-      backgroundSize: "none"
-    }
+      backgroundSize: "none",
+    },
   };
 };
 
@@ -57,7 +57,7 @@ export const backgroundStyle = (color: string) => {
 export type KartoffelTyp = "Frischkartoffeln" | "Pflanzkartoffeln";
 export const kartoffelTypen: KartoffelTyp[] = [
   "Frischkartoffeln",
-  "Pflanzkartoffeln"
+  "Pflanzkartoffeln",
 ];
 
 export type KartoffelTypBio =
@@ -69,7 +69,7 @@ export const kartoffelTypenBio: KartoffelTypBio[] = [
   "Frischkartoffeln-Bio",
   "Frischkartoffeln-Nicht-Bio",
   "Pflanzkartoffeln-Bio",
-  "Pflanzkartoffeln-Nicht-Bio"
+  "Pflanzkartoffeln-Nicht-Bio",
 ];
 
 export type KochTyp =
@@ -83,7 +83,7 @@ export const kochTypen: KochTyp[] = [
   "Festkochend",
   "Mehligkochend",
   "Frites",
-  "Chips"
+  "Chips",
   // "Diverse"
 ];
 
@@ -98,7 +98,7 @@ export const betriebsgrössenkategorie: Betriebsgrössenkategorie[] = [
   "< 1 ha",
   "1 - 5 ha",
   "5 - 10 ha",
-  ">10 ha"
+  ">10 ha",
 ];
 export const betriebsgrössenkategorieBio = [
   "< 1 ha-bio",
@@ -108,7 +108,7 @@ export const betriebsgrössenkategorieBio = [
   "5 - 10 ha-bio",
   "5 - 10 ha-Nicht-bio",
   ">10 ha-bio",
-  ">10 ha-Nicht-bio"
+  ">10 ha-Nicht-bio",
 ];
 
 // Gradient scales

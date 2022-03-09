@@ -40,7 +40,7 @@ export const Waffle = ({
   getOpacityCategory,
   opacityScale,
   bioColored,
-  bioPrefix
+  bioPrefix,
 }: Props) => {
   const [resizeRef, width] = useResizeObserver<HTMLDivElement>();
 
@@ -58,7 +58,7 @@ export const Waffle = ({
             height: width,
             zIndex: 2,
             margin: "40px 0",
-            color: "white"
+            color: "white",
           }}
         >
           {label}
@@ -78,7 +78,7 @@ export const Waffle = ({
                 margin: activeSection === "one" ? 0 : "0.5%",
                 ...bg,
                 transition: "all .2s linear",
-                opacity: bioColored ? bioOpacityScale(getColor(d)) : 1
+                opacity: bioColored ? bioOpacityScale(getColor(d)) : 1,
               }}
             ></Box>
           );
@@ -90,11 +90,11 @@ export const Waffle = ({
           justifyContent: "flex-start",
           alignItems: "flex-start",
           flexWrap: "wrap",
-          minHeight: "20px"
+          minHeight: "20px",
         }}
       >
         {dimensions &&
-          dimensions.map(c => {
+          dimensions.map((c) => {
             const color = bioColored ? colors.green : colors.brown;
             const bg = (backgroundStyle(color) as any)[backgroundScale(c)];
             return (
@@ -133,8 +133,8 @@ export const LegendItem = ({ item, bg }: { item: string; bg: $FixMe }) => (
         left: -2,
         width: "1rem",
         height: `1rem`,
-        ...bg
-      }
+        ...bg,
+      },
     }}
   >
     {item}

@@ -1,38 +1,18 @@
 {
   "article.card.report.month": {
     "defaults": "Grafik des Monats",
-    "origin": [
-      [
-        "src/components/card-data.tsx",
-        32
-      ]
-    ]
+    "origin": [["src/components/card-data.tsx", 32]]
   },
   "article.card.data": {
     "defaults": "Datenbankabfrage",
-    "origin": [
-      [
-        "src/components/card-data.tsx",
-        32
-      ]
-    ]
+    "origin": [["src/components/card-data.tsx", 32]]
   },
   "article.link.open.report": {
     "defaults": "Report öffnen",
-    "origin": [
-      [
-        "src/components/card-data.tsx",
-        64
-      ]
-    ]
+    "origin": [["src/components/card-data.tsx", 64]]
   },
   "article.link.data.explore": {
     "defaults": "Daten abfragen",
-    "origin": [
-      [
-        "src/components/card-data.tsx",
-        64
-      ]
-    ]
+    "origin": [["src/components/card-data.tsx", 64]]
   }
 }

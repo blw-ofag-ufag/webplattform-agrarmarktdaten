@@ -10,7 +10,7 @@ import { Waffle } from "./waffle";
 
 export const ScrollySection = ({
   id,
-  children
+  children,
 }: {
   id: string;
   children?: ReactNode;
@@ -25,13 +25,13 @@ export const ScrollySection = ({
 };
 
 export const ScrollySections = ({
-  sectionIds
+  sectionIds,
 }: {
   sectionIds: Set<string>;
 }) => {
   return (
     <>
-      {[...sectionIds].map(step => (
+      {[...sectionIds].map((step) => (
         <ScrollySection key={step} id={step}></ScrollySection>
       ))}
     </>
@@ -54,7 +54,7 @@ export const StickyWaffle = memo(
                     ? colors.green
                     : colors.brown,
                   fontWeight: "bold",
-                  fontSize: "24px"
+                  fontSize: "24px",
                 }}
               >
                 {sections[activeSection].title}
@@ -63,14 +63,14 @@ export const StickyWaffle = memo(
                 activeSection={activeSection}
                 label={sections[activeSection].label}
                 squares={squaresData}
-                getColor={d => d[sections[activeSection].colorDimension]}
+                getColor={(d) => d[sections[activeSection].colorDimension]}
                 colorScale={sections[activeSection].colorScale}
-                getBackground={d =>
+                getBackground={(d) =>
                   d[sections[activeSection].backgroundDimension]
                 }
                 backgroundScale={sections[activeSection].backgroundScale}
                 dimensions={sections[activeSection].dimensions}
-                getCategory={d => d[sections[activeSection].dimension]}
+                getCategory={(d) => d[sections[activeSection].dimension]}
                 colors={sections[activeSection].colorScale}
                 bioColored={sections[activeSection].bioColored}
                 bioPrefix={sections[activeSection].bioPrefix}
@@ -85,7 +85,7 @@ export const StickyWaffle = memo(
 export const ScrollyWaffle = ({
   sectionIds,
   sections,
-  squaresData
+  squaresData,
 }: {
   sectionIds: Set<string>;
   sections: Section;
@@ -101,7 +101,7 @@ export const ScrollyWaffle = ({
 export const ScrollyWaffleDataFetcher = ({
   sectionIds,
   sections,
-  dataUrl
+  dataUrl,
 }: {
   sectionIds: Set<string>;
   sections: Section;

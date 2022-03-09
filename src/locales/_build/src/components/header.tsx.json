@@ -1,51 +1,25 @@
 {
   "menu.markets": {
     "defaults": "Märkte",
-    "origin": [
-      [
-        "src/components/header.tsx",
-        57
-      ]
-    ]
+    "origin": [["src/components/header.tsx", 57]]
   },
   "menu.data": {
     "defaults": "Daten",
-    "origin": [
-      [
-        "src/components/header.tsx",
-        62
-      ]
-    ]
+    "origin": [["src/components/header.tsx", 62]]
   },
   "menu.about": {
     "defaults": "Über uns",
-    "origin": [
-      [
-        "src/components/header.tsx",
-        67
-      ]
-    ]
+    "origin": [["src/components/header.tsx", 67]]
   },
   "title.agricultural.market.data": {
     "defaults": "Agrarmarktdaten",
-    "origin": [
-      [
-        "src/components/header.tsx",
-        102
-      ]
-    ]
+    "origin": [["src/components/header.tsx", 102]]
   },
   "logo.swiss.confederation": {
     "defaults": "Logo of the Swiss Confederation",
     "origin": [
-      [
-        "src/components/header.tsx",
-        109
-      ],
-      [
-        "src/components/header.tsx",
-        120
-      ]
+      ["src/components/header.tsx", 109],
+      ["src/components/header.tsx", 120]
     ]
   }
 }

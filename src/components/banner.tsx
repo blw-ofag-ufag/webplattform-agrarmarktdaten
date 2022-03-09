@@ -5,7 +5,7 @@ import { getMarketAreaColor } from "../domain/colors";
 export const Banner = ({
   title,
   intro,
-  slug
+  slug,
 }: {
   title: string | ReactNode;
   intro?: string | ReactNode;
@@ -16,7 +16,7 @@ export const Banner = ({
       sx={{
         position: "relative",
         width: "100vw",
-        mt: [0, 0, "92px"]
+        mt: [0, 0, "92px"],
       }}
     >
       <BannerBackground bgColor={`${getMarketAreaColor(slug)}Light`} />
@@ -24,7 +24,7 @@ export const Banner = ({
         sx={{
           mt: "-150px",
           maxWidth: "77rem",
-          mx: "auto"
+          mx: "auto",
         }}
       >
         <BannerTitle color={getMarketAreaColor(slug)}>{title}</BannerTitle>
@@ -37,7 +37,7 @@ export const Banner = ({
 };
 
 const BannerBackground = ({
-  bgColor = "primaryLight"
+  bgColor = "primaryLight",
 }: {
   bgColor?: string;
 }) => (
@@ -46,14 +46,14 @@ const BannerBackground = ({
       bg: bgColor,
       position: "relative",
       height: "256px",
-      zIndex: -1
+      zIndex: -1,
     }}
   ></Box>
 );
 
 const BannerTitle = ({
   color = "primary",
-  children
+  children,
 }: {
   color?: string;
   children: ReactNode;
@@ -69,7 +69,7 @@ const BannerTitle = ({
       px: [4, 6],
       pt: [4, 5],
       pb: [6, 4],
-      maxWidth: ["unset", "unset", "65%"]
+      maxWidth: ["unset", "unset", "65%"],
     }}
   >
     {children}
@@ -77,7 +77,7 @@ const BannerTitle = ({
 );
 const BannerIntro = ({
   color,
-  children
+  children,
 }: {
   color: string;
   children: ReactNode;
@@ -92,7 +92,7 @@ const BannerIntro = ({
       px: [4, 6],
       pt: 4,
       pb: [4, 7],
-      maxWidth: ["unset", "unset", "65%"]
+      maxWidth: ["unset", "unset", "65%"],
     }}
   >
     {children}

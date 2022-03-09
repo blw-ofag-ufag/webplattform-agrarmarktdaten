@@ -7,7 +7,7 @@ export const StickySection = ({ children }: { children: ReactNode }) => {
       sx={{
         position: "sticky",
         top: 100,
-        padding: "20px 0"
+        padding: "20px 0",
       }}
     >
       {children}

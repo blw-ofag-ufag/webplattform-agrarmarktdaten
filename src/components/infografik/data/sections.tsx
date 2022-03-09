@@ -7,7 +7,7 @@ import {
   kartoffelTypen,
   kartoffelTypenBackgroundScale,
   kochTypen,
-  kochTypenBackgroundScale
+  kochTypenBackgroundScale,
 } from "./type";
 
 export const sectionIds_flachen = new Set(["one", "two", "three", "four"]);
@@ -29,7 +29,7 @@ export const sections_flachen = {
     colorScale: bioColorScale,
     backgroundScale: undefined,
     bioColored: false,
-    bioPrefix: "Bio-"
+    bioPrefix: "Bio-",
   },
   two: {
     title: "Alle Kartoffelarten",
@@ -41,7 +41,7 @@ export const sections_flachen = {
     colorScale: bioColorScale,
     backgroundScale: kartoffelTypenBackgroundScale,
     bioColored: false,
-    bioPrefix: "Bio-"
+    bioPrefix: "Bio-",
   },
 
   three: {
@@ -54,7 +54,7 @@ export const sections_flachen = {
     colorScale: bioColorScale,
     backgroundScale: kartoffelTypenBackgroundScale,
     bioColored: true,
-    bioPrefix: "Bio-"
+    bioPrefix: "Bio-",
   },
   four: {
     title: "Kochtypen",
@@ -66,8 +66,8 @@ export const sections_flachen = {
     colorScale: bioColorScale,
     backgroundScale: kochTypenBackgroundScale,
     bioColored: false,
-    bioPrefix: "Bio-"
-  }
+    bioPrefix: "Bio-",
+  },
 };
 
 export const sectionIds_betriebe = new Set(["one", "two", "three"]);
@@ -87,7 +87,7 @@ export const sections_betriebe = {
     colorScale: bioColorScale,
     backgroundScale: undefined,
     bioColored: false,
-    bioPrefix: "Bio-betriebe: "
+    bioPrefix: "Bio-betriebe: ",
   },
   two: {
     title: "Alle Betriebe",
@@ -99,7 +99,7 @@ export const sections_betriebe = {
     colorScale: bioColorScale,
     backgroundScale: betriebsgrössenkategorieBackgroundScale,
     bioColored: false,
-    bioPrefix: "Bio-betriebe: "
+    bioPrefix: "Bio-betriebe: ",
   },
 
   three: {
@@ -112,6 +112,6 @@ export const sections_betriebe = {
     colorScale: bioColorScale,
     backgroundScale: betriebsgrössenkategorieBackgroundScale,
     bioColored: true,
-    bioPrefix: "Bio-betriebe: "
-  }
+    bioPrefix: "Bio-betriebe: ",
+  },
 };

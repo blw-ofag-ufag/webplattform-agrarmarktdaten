@@ -13,7 +13,7 @@ export const useResizeObserver = <T extends Element>() => {
     }
 
     if (!roRef.current) {
-      roRef.current = new ResizeObserver(entries => {
+      roRef.current = new ResizeObserver((entries) => {
         // Since we only observe the one element, we don't need to loop over the
         // array
         if (!entries.length) {
@@ -22,10 +22,8 @@ export const useResizeObserver = <T extends Element>() => {
 
         const entry = entries[0];
 
-        const {
-          inlineSize: width,
-          blockSize: height
-        } = entry.contentBoxSize[0];
+        const { inlineSize: width, blockSize: height } =
+          entry.contentBoxSize[0];
 
         changeWidth(width);
         changeHeight(height);

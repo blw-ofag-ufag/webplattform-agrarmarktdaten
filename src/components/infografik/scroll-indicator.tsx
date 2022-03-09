@@ -3,7 +3,7 @@ import {
   motion,
   useSpring,
   useTransform,
-  useViewportScroll
+  useViewportScroll,
 } from "framer-motion";
 import { colors } from "./colors";
 
@@ -23,7 +23,7 @@ export const ScrollIndicator = () => {
           bg: colors.brown,
           opacity: 0.2,
           width: "100%",
-          zIndex: 10
+          zIndex: 10,
         }}
       ></Box>
       <motion.div
@@ -34,7 +34,7 @@ export const ScrollIndicator = () => {
           left: 0,
           height: 8,
           backgroundColor: colors.brown,
-          zIndex: 11
+          zIndex: 11,
         }}
       />
     </>

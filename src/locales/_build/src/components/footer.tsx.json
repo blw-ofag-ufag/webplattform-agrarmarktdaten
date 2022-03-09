@@ -1,29 +1,14 @@
 {
   "footer.impressum": {
     "defaults": "Impressum",
-    "origin": [
-      [
-        "src/components/footer.tsx",
-        18
-      ]
-    ]
+    "origin": [["src/components/footer.tsx", 18]]
   },
   "footer.legal": {
     "defaults": "Rechtliche Grundlagen",
-    "origin": [
-      [
-        "src/components/footer.tsx",
-        21
-      ]
-    ]
+    "origin": [["src/components/footer.tsx", 21]]
   },
   "footer.dataprotection": {
     "defaults": "Datenschutzverordnung",
-    "origin": [
-      [
-        "src/components/footer.tsx",
-        24
-      ]
-    ]
+    "origin": [["src/components/footer.tsx", 24]]
   }
 }

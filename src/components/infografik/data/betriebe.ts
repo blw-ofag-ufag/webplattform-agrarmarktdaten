@@ -9,17 +9,17 @@ const betriebeOrder = {
   "5 - 10 ha-bio": 5,
   "5 - 10 ha-Nicht-bio": 6,
   ">10 ha-bio": 7,
-  ">10 ha-Nicht-bio": 8
+  ">10 ha-Nicht-bio": 8,
 };
 
 export const getBetriebeSquaresData = (betriebe: Betriebe[]) => {
   const filteredData = betriebe
-    .filter(d => d.Betriebsgrössenkategorie !== "Alle")
-    .filter(d => d.Kartoffeltyp !== "Beide")
-    .filter(d => d["Bio"] !== "Beide")
-    .map(d => ({
+    .filter((d) => d.Betriebsgrössenkategorie !== "Alle")
+    .filter((d) => d.Kartoffeltyp !== "Beide")
+    .filter((d) => d["Bio"] !== "Beide")
+    .map((d) => ({
       BetriebsgrössenkategorieBio: `${d.Betriebsgrössenkategorie}-${d["Bio"]}`,
-      ...d
+      ...d,
     }))
     .sort((a, b) =>
       ascending(
@@ -30,10 +30,10 @@ export const getBetriebeSquaresData = (betriebe: Betriebe[]) => {
 
   const squares: $FixMe[] = [];
   for (const element of filteredData) {
-    range(0, Math.round(element["perc.alle.Betriebe"] * 100)).map(x =>
+    range(0, Math.round(element["perc.alle.Betriebe"] * 100)).map((x) =>
       squares.push({
         ...element,
-        BetriebsgrössenkategorieBio: `${element.Betriebsgrössenkategorie}-${element["Bio"]}`
+        BetriebsgrössenkategorieBio: `${element.Betriebsgrössenkategorie}-${element["Bio"]}`,
       })
     );
   }

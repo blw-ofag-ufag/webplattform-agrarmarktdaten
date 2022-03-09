@@ -3,7 +3,7 @@ import { Icon, IconName } from "../icons";
 
 export const MarketCard = ({
   title,
-  icon
+  icon,
 }: {
   title: string;
   icon: IconName;
@@ -17,7 +17,7 @@ export const MarketCard = ({
           fontSize: 5,
           fontWeight: "bold",
           lineHeight: "heading",
-          textAlign: "center"
+          textAlign: "center",
         }}
       >
         {title}
@@ -39,7 +39,7 @@ export const MarketIcon = ({ icon }: { icon: IconName }) => {
         alignItems: "center",
         mb: 2,
         fontSize: "3rem",
-        "&:hover": { bg: `${icon}LightHover` }
+        "&:hover": { bg: `${icon}LightHover` },
       }}
     >
       <Icon name={icon} size={50} />

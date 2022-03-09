@@ -3,7 +3,7 @@ import { colors } from "./colors";
 
 export const SquareLabel = ({
   title,
-  subtitle
+  subtitle,
 }: {
   title: string;
   subtitle: string;
@@ -15,7 +15,7 @@ export const SquareLabel = ({
         backgroundColor: colors.brown,
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       <Box sx={{ fontWeight: "bold", fontSize: "28px", textAlign: "center" }}>

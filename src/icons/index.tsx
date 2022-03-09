@@ -43,7 +43,7 @@ export const Icons = {
   basket: SvgIcTradeBasket,
   delivery: SvgIcTradeDelivery,
   tractor: SvgIcTradeTractor,
-  trade: SvgIcTradeTrade
+  trade: SvgIcTradeTrade,
 };
 
 export type IconName = keyof typeof Icons;

@@ -14,7 +14,7 @@ export const StickyHeader = ({ children }: { children: ReactNode }) => {
         color: colors.almostBlack,
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       {children}
