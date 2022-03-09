@@ -86,31 +86,5 @@ export const CurrentPageLink = ({
   children: React.ReactNode;
 }) => {
   const { pathname, query } = useRouter();
-
-  /**
-   * Hack for static content pages
-   * */
-  //  if (/^\/(en|de|fr|it)/.test(pathname)) {
-  //   return (
-  //     <Link
-  //       {...rest}
-  //       {...createDynamicRouteProps({
-  //         pathname: pathname.replace(/^\/(en|de|fr|it)/, `/${locale}`),
-  //         query,
-  //       })}
-  //     />
-  //   );
-  // }
-
-  // return (
-  //   <Link
-  //     {...rest}
-  //     {...createDynamicRouteProps({
-  //       pathname,
-  //       query: { ...query, locale },
-  //     })}
-  //   />
-  // );
-
   return <Link {...rest} href={{ pathname, query }} locale={locale} />;
 };

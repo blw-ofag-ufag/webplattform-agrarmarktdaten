@@ -1,6 +1,5 @@
 import { Flex } from "@theme-ui/components";
 import { ReactNode } from "react";
-import { colors } from "./colors";
 
 export const ChapterHeader = ({
   id,
