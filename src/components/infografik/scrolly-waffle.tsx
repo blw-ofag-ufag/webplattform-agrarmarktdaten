@@ -1,4 +1,4 @@
-import { csv } from "d3-fetch";
+import { csv } from "d3";
 import { memo, ReactNode, useEffect, useState } from "react";
 import { Box } from "theme-ui";
 import { colors } from "./colors";

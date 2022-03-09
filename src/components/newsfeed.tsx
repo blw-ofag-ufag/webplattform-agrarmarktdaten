@@ -1,4 +1,4 @@
-import { timeFormat, timeParse } from "d3-time-format";
+import { timeFormat, timeParse } from "d3";
 import { Flex, Text } from "theme-ui";
 import { Newsfeed } from "../domain/types";
 

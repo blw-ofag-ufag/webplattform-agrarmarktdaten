@@ -1,14 +1,14 @@
-import { ScaleOrdinal } from "d3-scale";
+import { ScaleOrdinal } from "d3";
+import { ReactNode } from "react";
 import { Box, Flex } from "theme-ui";
+import { useResizeObserver } from "../../lib/use-resize-observer";
+import { colors } from "./colors";
 import { Betriebe } from "./data/betriebe";
 import { Flachen } from "./data/flachen";
 import { FlachenPerKochtyp } from "./data/kochtyp";
-import { useResizeObserver } from "../../lib/use-resize-observer";
 import { Section } from "./data/sections";
-
-import { ReactNode } from "react";
 import { backgroundStyle, bioOpacityScale } from "./data/type";
-import { colors } from "./colors";
+
 type DataType = Flachen | Betriebe | FlachenPerKochtyp | $FixMe;
 interface Props {
   activeSection: Section;

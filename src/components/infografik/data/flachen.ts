@@ -1,6 +1,6 @@
-import { Betriebsgrössenkategorie, BioOderNicht } from "./type";
-import { range } from "d3-array";
+import { range } from "d3";
 import { flachenPerKochtyp } from "./kochtyp";
+import { Betriebsgrössenkategorie, BioOderNicht } from "./type";
 
 export const getFlachenSquaresData = () => {
   const squares_kartoffeltypen: $FixMe[] = [];
