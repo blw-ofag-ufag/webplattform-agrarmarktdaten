@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { Box } from "theme-ui";
 import { getMarketAreaColor } from "../domain/colors";
 
@@ -11,6 +11,8 @@ export const Banner = ({
   intro?: string | ReactNode;
   slug?: string;
 }) => {
+  const baseBgColor = useMemo(() => getMarketAreaColor(slug), [slug]);
+
   return (
     <Box
       sx={{
@@ -19,7 +21,7 @@ export const Banner = ({
         mt: [0, 0, "92px"],
       }}
     >
-      <BannerBackground bgColor={`${getMarketAreaColor(slug)}Light`} />
+      <BannerBackground bgColor={`${baseBgColor}Light`} />
       <Box
         sx={{
           mt: "-150px",
@@ -27,10 +29,8 @@ export const Banner = ({
           mx: "auto",
         }}
       >
-        <BannerTitle color={getMarketAreaColor(slug)}>{title}</BannerTitle>
-        {intro && (
-          <BannerIntro color={getMarketAreaColor(slug)}>{intro}</BannerIntro>
-        )}
+        <BannerTitle color={baseBgColor}>{title}</BannerTitle>
+        {intro && <BannerIntro color={baseBgColor}>{intro}</BannerIntro>}
       </Box>
     </Box>
   );
