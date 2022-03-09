@@ -1,24 +1,23 @@
 import { Trans } from "@lingui/macro";
 import React from "react";
 import { Box, Button, Flex } from "theme-ui";
-import { Banner } from "../../components/banner";
-import { InfografikTeaser } from "../../components/homepage/infografik-teaser";
-import { MarketAreasGrid } from "../../components/homepage/market-areas-grid";
-import { AppLayout } from "../../components/layout";
-import { NewsfeedEntry } from "../../components/newsfeed";
-import { MarketArea, Newsfeed } from "../../domain/types";
-import { fetchCMS } from "../../lib/cms-api";
-import { GetStaticPaths } from "next";
+import { Banner } from "../components/banner";
+import { InfografikTeaser } from "../components/homepage/infografik-teaser";
+import { MarketAreasGrid } from "../components/homepage/market-areas-grid";
+import { AppLayout } from "../components/layout";
+import { NewsfeedEntry } from "../components/newsfeed";
+import { MarketArea, Newsfeed } from "../domain/types";
+import { fetchCMS } from "../lib/cms-api";
 
-export default ({
+export default function HomePage({
   homePage,
   allMarketAreas,
-  allNewsfeeds
+  allNewsfeeds,
 }: {
   homePage: { title: string; intro: string };
   allMarketAreas: MarketArea[];
   allNewsfeeds: Newsfeed[];
-}) => {
+}) {
   return (
     <AppLayout allMarketAreas={allMarketAreas}>
       <Banner title={homePage.title} intro={homePage.intro} />
@@ -26,7 +25,7 @@ export default ({
       {allSimplePages.map(page => {
         return (
           <li key={page.slug}>
-            <NextLink href="/[locale]/[slug]" as={`/de/${page.slug}`} passHref>
+            <NextLink href="/[slug]" as={`/${page.slug}`} passHref>
               <Link>{page.title}</Link>
             </NextLink>
           </li>
@@ -41,7 +40,7 @@ export default ({
             maxWidth: "77rem",
             mx: "auto",
             px: [4, 4, 0],
-            py: 4
+            py: 4,
           }}
         >
           <Box sx={{ width: ["100%", "100%", "65%"] }}>
@@ -56,7 +55,7 @@ export default ({
               <Trans id="homepage.section.newsfeed">Aktuell</Trans>
             </h2>
             <div>
-              {allNewsfeeds.map(news => (
+              {allNewsfeeds.map((news) => (
                 <NewsfeedEntry
                   key={news.title}
                   title={news.title}
@@ -79,7 +78,7 @@ export default ({
       </Box>
     </AppLayout>
   );
-};
+}
 
 export const getStaticProps = async (context: $FixMe) => {
   const query = `
@@ -105,34 +104,9 @@ export const getStaticProps = async (context: $FixMe) => {
   `;
 
   const result = await fetchCMS(query, {
-    variables: context.params,
-    preview: context.preview
+    variables: { locale: context.locale },
+    preview: context.preview,
   });
 
   return { props: result };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const query = `
-  query {
-    homePage {
-      _allTitleLocales {
-        locale
-      }
-    }
-  }
-  `;
-
-  const result = await fetchCMS(query);
-
-  const paths = result.homePage._allTitleLocales.map(
-    (loc: { locale: "de" | "en" }) => ({
-      params: { locale: loc.locale }
-    })
-  );
-
-  return {
-    fallback: false,
-    paths
-  };
 };

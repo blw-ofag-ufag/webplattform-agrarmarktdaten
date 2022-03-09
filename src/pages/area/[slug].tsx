@@ -1,20 +1,19 @@
-import { GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
-import React from "react";
-import { Banner } from "../../../components/banner";
-import { AppLayout } from "../../../components/layout";
-import { MarketArea, Newsfeed } from "../../../domain/types";
-import { IconName } from "../../../icons";
-import { fetchCMS } from "../../../lib/cms-api";
-import { Box, Flex, Button, Link } from "@theme-ui/components";
 import { Trans } from "@lingui/macro";
-import { NewsfeedEntry } from "../../../components/newsfeed";
-import { TradeLevelsGrid } from "../../../components/card-trade";
-import { getMarketAreaColor } from "../../../domain/colors";
-import { ReportCard } from "../../../components/card-data";
-import { InfografikTeaserLarge } from "../../../components/homepage/infografik-teaser";
+import { Box, Button, Flex, Link } from "@theme-ui/components";
+import { GetStaticPaths, GetStaticProps } from "next";
+import React from "react";
+import { Banner } from "../../components/banner";
+import { ReportCard } from "../../components/card-data";
+import { TradeLevelsGrid } from "../../components/card-trade";
+import { InfografikTeaserLarge } from "../../components/homepage/infografik-teaser";
+import { AppLayout } from "../../components/layout";
+import { NewsfeedEntry } from "../../components/newsfeed";
+import { getMarketAreaColor } from "../../domain/colors";
+import { MarketArea, Newsfeed } from "../../domain/types";
+import { IconName } from "../../icons";
+import { fetchCMS } from "../../lib/cms-api";
 
-export default ({
+export default function Area({
   marketArea,
   allMarketAreas,
   allNewsfeeds,
@@ -33,16 +32,13 @@ export default ({
   };
   allMarketAreas: MarketArea[];
   allNewsfeeds: Newsfeed[];
-}) => {
-  const {
-    query: { locale },
-  } = useRouter();
+}) {
   const alternates = marketArea
     ? marketArea._allSlugLocales.map((loc) => {
         return {
-          href: "/[locale]/area/[slug]",
-          as: `/${loc.locale}/area/${loc.value}`,
-          label: loc.locale,
+          href: "/area/[slug]",
+          as: `/area/${loc.value}`,
+          locale: loc.locale,
         };
       })
     : undefined;
@@ -140,7 +136,7 @@ export default ({
                     {marketArea.links.map((link) => (
                       <Box key={link.label} sx={{ mb: 3 }}>
                         <Link variant="primary" href={link.url}>
-                          > {link.label}
+                          {">"} {link.label}
                         </Link>
                       </Box>
                     ))}
@@ -168,8 +164,8 @@ export default ({
         //       {marketArea.children.map(area => (
         //         <Box as="li" key={area.slug}>
         //           <NextLink
-        //             href="/[locale]/area/[slug]"
-        //             as={`/${locale}/area/${area.slug}`}
+        //             href="/area/[slug]"
+        //             as={`/area/${area.slug}`}
         //             passHref
         //           >
         //             <Card>
@@ -188,13 +184,11 @@ export default ({
       )}
     </AppLayout>
   );
-};
+}
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  console.log("GSP", context);
-
+export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const query = `
-  query PageQuery($locale: SiteLocale!, $slug: String!){
+  query PageQuery($locale: SiteLocale!, $slug: String!) {
     marketArea(locale: $locale, filter: {slug: {eq: $slug}}) {
       title
       introduction
@@ -236,7 +230,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   `;
 
   const result = await fetchCMS(query, {
-    variables: context.params,
+    variables: { locale: context.locale, slug: context.params.slug },
     preview: context.preview,
   });
 
@@ -265,7 +259,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = result.allMarketAreas.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
-      params: { locale: loc.locale, slug: loc.value },
+      locale: loc.locale,
+      params: { slug: loc.value },
     }));
   });
 

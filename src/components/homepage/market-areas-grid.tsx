@@ -1,12 +1,12 @@
 import { default as NextLink } from "next/link";
 import React from "react";
 import { Box, Grid, Link } from "theme-ui";
-import { MarketCard } from "../market-icon";
 import { MarketArea } from "../../domain/types";
-import { useLocale } from "@interactivethings/visualize-app";
+import { useLocale } from "../../lib/use-locale";
+import { MarketCard } from "../market-icon";
 
 export const MarketAreasGrid = ({
-  allMarketAreas
+  allMarketAreas,
 }: {
   allMarketAreas: MarketArea[];
 }) => {
@@ -18,12 +18,13 @@ export const MarketAreasGrid = ({
       sx={{ listStyle: "none", m: 0, p: 0 }}
       width={[150, null, 150]}
     >
-      {allMarketAreas.map(area => {
+      {allMarketAreas.map((area) => {
         return (
           <Box as="li" key={area.slug} sx={{ mb: 8 }}>
             <NextLink
-              href="/[locale]/area/[slug]"
-              as={`/${locale}/area/${area.slug}`}
+              href={`/area/${area.slug}`}
+              as={`/area/${area.slug}`}
+              locale={locale}
               passHref
             >
               <Link sx={{ textDecoration: "none" }}>

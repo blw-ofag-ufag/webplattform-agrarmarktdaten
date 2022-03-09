@@ -1,12 +1,12 @@
+import { GetStaticPaths } from "next";
 import React from "react";
-import Link from "next/link";
-import { fetchCMS } from "../../lib/cms-api";
-import { AppLayout } from "../../components/layout";
-import { MarketArea } from "../../domain/types";
+import { AppLayout } from "../components/layout";
+import { MarketArea } from "../domain/types";
+import { fetchCMS } from "../lib/cms-api";
 
-export default ({
+export default function Page({
   simplePage,
-  allMarketAreas
+  allMarketAreas,
 }: {
   simplePage?: {
     title: string;
@@ -14,13 +14,13 @@ export default ({
     _allSlugLocales: { locale: string; value: string }[];
   };
   allMarketAreas: MarketArea[];
-}) => {
+}) {
   const alternates = simplePage
-    ? simplePage._allSlugLocales.map(loc => {
+    ? simplePage._allSlugLocales.map((loc) => {
         return {
-          href: "/[locale]/[slug]",
-          as: `/${loc.locale}/${loc.value}`,
-          label: loc.locale
+          href: "/[slug]",
+          as: `${loc.locale}/${loc.value}`,
+          locale: loc.locale,
         };
       })
     : undefined;
@@ -40,10 +40,9 @@ export default ({
       )}
     </AppLayout>
   );
-};
+}
 
 export const getStaticProps = async (context: $FixMe) => {
-  console.log(context);
   const query = `
   query PageQuery($locale: SiteLocale!, $slug: String!){
     simplePage(locale: $locale, filter: {slug: {eq: $slug}}) {
@@ -63,14 +62,14 @@ export const getStaticProps = async (context: $FixMe) => {
   `;
 
   const result = await fetchCMS(query, {
-    variables: context.params,
-    preview: context.preview
+    variables: { locale: context.locale, slug: context.params.slug },
+    preview: context.preview,
   });
 
   return { props: { simplePage: result.simplePage } };
 };
 
-export const getStaticPaths = async (context: $FixMe) => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
   query {
     allSimplePages {
@@ -86,12 +85,13 @@ export const getStaticPaths = async (context: $FixMe) => {
 
   const paths = result.allSimplePages.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
-      params: { locale: loc.locale, slug: loc.value }
+      locale: loc.locale,
+      params: { slug: loc.value },
     }));
   });
 
   return {
     fallback: false,
-    paths
+    paths,
   };
 };

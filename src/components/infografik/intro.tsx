@@ -1,9 +1,8 @@
 import { keyframes } from "@emotion/core";
-import { Box, Flex, Button } from "@theme-ui/components";
-
+import { Box, Button, Flex } from "@theme-ui/components";
 import { smoothScroll } from "../../lib/smooth-scroll";
+import { PotatoInfographic } from "../../pages/infografik";
 import { colors } from "./colors";
-import { PotatoInfographic } from "../../pages/[locale]/infografik";
 
 export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
   return (
@@ -14,7 +13,7 @@ export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
         color: colors.almostBlack,
         flexDirection: "column",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
       }}
     >
       <Box sx={{ marginTop: "3.8rem" }}>
@@ -25,7 +24,7 @@ export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
             fontSize: "40px",
             fontWeight: 900,
             lineHeight: 1.2,
-            color: colors.almostBlack
+            color: colors.almostBlack,
           }}
         >
           {title}
@@ -35,7 +34,7 @@ export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
             fontSize: "40px",
             fontWeight: 400,
             opacity: 0.5,
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
           2018
@@ -45,7 +44,7 @@ export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
         sx={{
           flexDirection: ["column", "row"],
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <Button variant="invisible" onClick={() => smoothScroll(`#produktion`)}>
@@ -66,14 +65,14 @@ export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
           marginBottom: "0.5rem",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <Box
           sx={{
             fontSize: "0.875rem",
             fontWeight: 700,
-            opacity: 0.75
+            opacity: 0.75,
           }}
         >
           Scrollen

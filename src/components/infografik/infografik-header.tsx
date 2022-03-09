@@ -1,14 +1,11 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import { default as NextLink } from "next/link";
 import React from "react";
 import { Flex, Link } from "theme-ui";
 import { Icon } from "../../icons";
-import { colors } from "./colors";
 import { LanguageMenu } from "../language-menu";
+import { colors } from "./colors";
 
 export const InfografikHeader = () => {
-  const locale = useLocale() || "de";
-
   return (
     <Flex
       sx={{
@@ -22,10 +19,10 @@ export const InfografikHeader = () => {
         justifyContent: "space-between",
         alignItems: "center",
         flex: "1 1 0px",
-        borderBottom: "1px solid rgba(0,0,0,0.15)"
+        borderBottom: "1px solid rgba(0,0,0,0.15)",
       }}
     >
-      <NextLink href="/[locale]" as={`/${locale}`} passHref>
+      <NextLink href="/" passHref>
         <Link sx={{ textDecoration: "none" }}>
           <Icon name="arrowLeft" />
         </Link>

@@ -1,4 +1,4 @@
-export const theme = {
+export const theme: any = {
   breakpoints: ["48em", "62em", "75em"],
 
   colors: {
@@ -68,8 +68,7 @@ export const theme = {
     "4.5rem",
   ],
   fonts: {
-    body:
-      'Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+    body: 'Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
     heading: "inherit",
     monospace: "Menlo, monospace",
   },
@@ -216,9 +215,10 @@ export const theme = {
     ".comment": {
       fontStyle: "italic",
     },
-    ".property,.tag,.boolean,.number,.constant,.symbol,.deleted,.function,.class-name,.regex,.important,.variable": {
-      color: "purple",
-    },
+    ".property,.tag,.boolean,.number,.constant,.symbol,.deleted,.function,.class-name,.regex,.important,.variable":
+      {
+        color: "purple",
+      },
     ".atrule,.attr-value,.keyword": {
       color: "primary",
     },

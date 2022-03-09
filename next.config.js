@@ -1,19 +1,24 @@
 const pkg = require("./package.json");
 const withMDX = require("@next/mdx")();
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true"
+  enabled: process.env.ANALYZE === "true",
 });
-
 
 const VERSION = `v${pkg.version}`;
 
 console.log("Version", VERSION);
 
+const { locales, defaultLocale } = require("./src/locales/locales.json");
+
 module.exports = withBundleAnalyzer(
   withMDX({
     // Build-time env variables
     env: {
-      VERSION
+      VERSION,
+    },
+    i18n: {
+      locales,
+      defaultLocale,
     },
 
     pageExtensions: ["js", "ts", "tsx", "mdx"],
@@ -22,7 +27,7 @@ module.exports = withBundleAnalyzer(
       config.module.rules.push({
         test: /\.(graphql|gql)$/,
         exclude: /node_modules/,
-        loader: "graphql-tag/loader"
+        loader: "graphql-tag/loader",
       });
 
       /* Enable source maps in production */
@@ -47,6 +52,6 @@ module.exports = withBundleAnalyzer(
       }
 
       return config;
-    }
+    },
   })
 );

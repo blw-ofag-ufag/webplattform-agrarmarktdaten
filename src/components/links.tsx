@@ -1,13 +1,12 @@
-import React from "react";
 import Link, { LinkProps } from "next/link";
-
-import * as qs from "querystring";
 import { useRouter } from "next/router";
-import { useLocale } from "@interactivethings/visualize-app";
+import * as qs from "querystring";
+import React from "react";
+import { useLocale } from "../lib/use-locale";
 
 const createDynamicRouteProps = ({
   pathname,
-  query
+  query,
 }: {
   pathname: string;
   query: qs.ParsedUrlQuery;
@@ -25,7 +24,7 @@ const createDynamicRouteProps = ({
 
   // Replace dynamic route params in `asPath`
   for (const [k, v] of Object.entries(query)) {
-    if (dynamicParams.has(k)) {
+    if (dynamicParams.has(k) && v !== undefined) {
       asPath = asPath.replace(`[${k}]`, v.toString());
     } else {
       regularQueryParams[k] = v;
@@ -39,7 +38,7 @@ const createDynamicRouteProps = ({
 
   return {
     href: { pathname, query },
-    as: asPath
+    as: asPath,
   };
 };
 
@@ -58,8 +57,9 @@ export const LocalizedLink = ({
       {...rest}
       {...createDynamicRouteProps({
         pathname,
-        query: query ? { ...query, locale } : { locale }
+        query: query || {},
       })}
+      locale={locale}
     />
   );
 };
@@ -71,7 +71,7 @@ export const HomeLink = (
 ) => {
   const locale = useLocale();
   return (
-    <Link {...props} href={`/${locale}`} as={`/${locale}`}>
+    <Link {...props} href="/" locale={locale}>
       {props.children}
     </Link>
   );
@@ -90,25 +90,27 @@ export const CurrentPageLink = ({
   /**
    * Hack for static content pages
    * */
-  if (/^\/(en|de|fr|it)/.test(pathname)) {
-    return (
-      <Link
-        {...rest}
-        {...createDynamicRouteProps({
-          pathname: pathname.replace(/^\/(en|de|fr|it)/, `/${locale}`),
-          query
-        })}
-      />
-    );
-  }
+  //  if (/^\/(en|de|fr|it)/.test(pathname)) {
+  //   return (
+  //     <Link
+  //       {...rest}
+  //       {...createDynamicRouteProps({
+  //         pathname: pathname.replace(/^\/(en|de|fr|it)/, `/${locale}`),
+  //         query,
+  //       })}
+  //     />
+  //   );
+  // }
 
-  return (
-    <Link
-      {...rest}
-      {...createDynamicRouteProps({
-        pathname,
-        query: { ...query, locale }
-      })}
-    />
-  );
+  // return (
+  //   <Link
+  //     {...rest}
+  //     {...createDynamicRouteProps({
+  //       pathname,
+  //       query: { ...query, locale },
+  //     })}
+  //   />
+  // );
+
+  return <Link {...rest} href={{ pathname, query }} locale={locale} />;
 };

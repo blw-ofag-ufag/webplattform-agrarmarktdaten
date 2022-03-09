@@ -1,21 +1,20 @@
 import { Trans } from "@lingui/macro";
+import { Box, Button, Flex, Link, Text } from "@theme-ui/components";
+import NextLink from "next/link";
 import * as React from "react";
-import { Box, Flex, Text, Link, Button } from "@theme-ui/components";
+import { useState } from "react";
+import { MarketArea } from "../domain/types";
+import { Icon } from "../icons";
+import { MarketAreaHeader } from "./header-market-areas";
 import { LanguageMenu } from "./language-menu";
 import { HomeLink } from "./links";
-import NextLink from "next/link";
-import { useLocale } from "@interactivethings/visualize-app";
-import { MarketArea } from "../domain/types";
-import { MarketAreaHeader } from "./header-market-areas";
-import { Icon } from "../icons";
-import { useState } from "react";
 
 export const Header = ({
   allMarketAreas,
-  alternates
+  alternates,
 }: {
   allMarketAreas?: MarketArea[];
-  alternates?: { href: string; as: string; label: string }[];
+  alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const [expanded, toggleMenu] = useState(false); // mobile
   const [marketMenuexpanded, toggleMarketMenu] = useState(false);
@@ -34,7 +33,7 @@ export const Header = ({
         bg: "monochrome100",
         overflowY: "hidden",
         zIndex: 13,
-        boxShadow: "0 3px 5px 0 rgba(0,0,0,0.10)"
+        boxShadow: "0 3px 5px 0 rgba(0,0,0,0.10)",
       }}
     >
       <Flex
@@ -45,7 +44,7 @@ export const Header = ({
           borderBottomColor: "monochrome200",
           px: [0, 0, 4],
           pt: [0, 0, 3],
-          pb: [0, 0, 5]
+          pb: [0, 0, 5],
         }}
       >
         <DesktopMenu
@@ -79,7 +78,7 @@ export const Header = ({
 };
 const MobileHamburger = ({
   expanded,
-  toggleMenu
+  toggleMenu,
 }: {
   expanded: boolean;
   toggleMenu: (x: boolean) => void;
@@ -92,7 +91,7 @@ const MobileHamburger = ({
         display: ["block", "block", "none"],
         ml: "auto",
         mr: 4,
-        fontSize: 5
+        fontSize: 5,
       }}
     >
       <Icon name={expanded ? "close" : "menu"} />
@@ -103,14 +102,13 @@ const MobileMenuExpanded = ({
   marketMenuexpanded,
   toggleMarketMenu,
   allMarketAreas,
-  alternates
+  alternates,
 }: {
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
   allMarketAreas?: MarketArea[];
-  alternates?: { href: string; as: string; label: string }[];
+  alternates?: { href: string; as: string; locale: string }[];
 }) => {
-  const locale = useLocale();
   return (
     <Box sx={{ display: ["flex", "flex", "none"], flexDirection: "column" }}>
       <Link
@@ -123,8 +121,8 @@ const MobileMenuExpanded = ({
           svg: {
             display: "inline",
             fontSize: 3,
-            ml: 3
-          }
+            ml: 3,
+          },
         }}
       >
         <Trans id="menu.markets">Märkte</Trans>
@@ -137,16 +135,12 @@ const MobileMenuExpanded = ({
           allMarketAreas={allMarketAreas}
         />
       )}
-      <NextLink
-        href="/[locale]/create/[chartId]"
-        as={`/${locale}/create/new`}
-        passHref
-      >
+      <NextLink href="/create/[chartId]" as="/create/new" passHref>
         <Link variant="menu">
           <Trans id="menu.data">Daten</Trans>
         </Link>
       </NextLink>
-      <NextLink href="/[locale]/about" as={`/${locale}/about`} passHref>
+      <NextLink href="/about" passHref>
         <Link variant="menu">
           <Trans id="menu.about">Über uns</Trans>
         </Link>
@@ -158,12 +152,11 @@ const MobileMenuExpanded = ({
 
 const DesktopMenu = ({
   marketMenuexpanded,
-  toggleMarketMenu
+  toggleMarketMenu,
 }: {
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
 }) => {
-  const locale = useLocale();
   return (
     <Box sx={{ display: ["none", "none", "flex"], order: 2, mx: "auto" }}>
       <Link
@@ -176,23 +169,19 @@ const DesktopMenu = ({
           svg: {
             display: "inline-block",
             fontSize: 3,
-            ml: 1
-          }
+            ml: 1,
+          },
         }}
       >
         <Trans id="menu.markets">Märkte</Trans>
         <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
       </Link>
-      <NextLink
-        href="/[locale]/create/[chartId]"
-        as={`/${locale}/create/new`}
-        passHref
-      >
+      <NextLink href="/create/[chartId]" as="/create/new" passHref>
         <Link variant="menu">
           <Trans id="menu.data">Daten</Trans>
         </Link>
       </NextLink>
-      <NextLink href="/[locale]/about" as={`/${locale}/about`} passHref>
+      <NextLink href="/about" as="/about" passHref>
         <Link variant="menu">
           <Trans id="menu.about">Über uns</Trans>
         </Link>
@@ -219,7 +208,7 @@ const Logo = () => (
           borderRightWidth: "1px",
           borderRightStyle: "solid",
           borderRightColor: "monochrome300",
-          color: "monochrome900"
+          color: "monochrome900",
         }}
       >
         <LogoDesktop />
@@ -233,7 +222,7 @@ const Logo = () => (
           color: "text",
           fontSize: 6,
           lineHeight: "heading",
-          fontWeight: "extraBold"
+          fontWeight: "extraBold",
         }}
       >
         <Trans id="title.agricultural.market.data">Agrarmarktdaten</Trans>
@@ -243,7 +232,7 @@ const Logo = () => (
 );
 export const MobileMenu = ({
   expanded,
-  toggleMenu
+  toggleMenu,
 }: {
   expanded: boolean;
   toggleMenu: (x: boolean) => void;
@@ -256,7 +245,7 @@ export const MobileMenu = ({
         alignItems: ["center", "center", "flex-start"],
         cursor: "pointer",
         textDecoration: "none",
-        color: "monochrome900"
+        color: "monochrome900",
       }}
     >
       <Logo />

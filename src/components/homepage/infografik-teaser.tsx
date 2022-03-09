@@ -1,14 +1,11 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import { Trans } from "@lingui/macro";
 import { Box, Button, Flex, Link, Text } from "@theme-ui/components";
 import { default as NextLink } from "next/link";
 import React from "react";
 
 export const InfografikTeaser = () => {
-  const locale = useLocale();
-
   return (
-    <NextLink href="/[locale]/infografik" as={`/${locale}/infografik`} passHref>
+    <NextLink href="/infografik" passHref>
       <Flex
         as="a"
         sx={{
@@ -21,7 +18,7 @@ export const InfografikTeaser = () => {
           backgroundSize: "cover",
           cursor: "pointer",
           color: "text",
-          textDecoration: "none"
+          textDecoration: "none",
         }}
       >
         <Text
@@ -30,7 +27,7 @@ export const InfografikTeaser = () => {
             fontWeight: "bold",
             lineHeight: "body",
             textTransform: "uppercase",
-            opacity: 0.6
+            opacity: 0.6,
           }}
         >
           <Trans id="infografic">Infografik</Trans>
@@ -42,7 +39,7 @@ export const InfografikTeaser = () => {
             lineHeight: "body",
             textAlign: "center",
             textTransform: "capitalize",
-            mb: 4
+            mb: 4,
           }}
         >
           <Trans id="infografik.title">Schweizer Kartoffelmarkt</Trans>
@@ -54,11 +51,11 @@ export const InfografikTeaser = () => {
             fontSize: 4,
             fontWeight: "bold",
             "&:hover": {
-              bg: "potatoHover"
+              bg: "potatoHover",
             },
             "&:active": {
-              bg: "potatoActive"
-            }
+              bg: "potatoActive",
+            },
           }}
         >
           <Trans id="button.infografic.teaser">Infografik Ansehen</Trans>
@@ -69,8 +66,6 @@ export const InfografikTeaser = () => {
 };
 
 export const InfografikTeaserLarge = () => {
-  const locale = useLocale();
-
   return (
     <Flex
       sx={{
@@ -80,7 +75,7 @@ export const InfografikTeaserLarge = () => {
         p: [5, 5, 6],
         backgroundImage: `url("/img/infografik-teaser-large-bg.png")`,
         backgroundSize: "cover",
-        color: "text"
+        color: "text",
       }}
     >
       <Box sx={{ order: [2, 2, 1], width: ["100%", "100%", "50%"] }}>
@@ -90,7 +85,7 @@ export const InfografikTeaserLarge = () => {
             fontWeight: "bold",
             lineHeight: "body",
             textTransform: "uppercase",
-            opacity: 0.6
+            opacity: 0.6,
           }}
         >
           <Trans id="infografic.date">2018</Trans>
@@ -102,7 +97,7 @@ export const InfografikTeaserLarge = () => {
             lineHeight: "heading",
             textAlign: "left",
             textTransform: "capitalize",
-            mb: 4
+            mb: 4,
           }}
         >
           <Trans id="infografik.title">Schweizer Kartoffelmarkt</Trans>
@@ -113,7 +108,7 @@ export const InfografikTeaserLarge = () => {
             fontWeight: "regular",
             lineHeight: "body",
             textAlign: "left",
-            mb: 6
+            mb: 6,
           }}
         >
           <Trans id="infografik.teaser">
@@ -123,11 +118,7 @@ export const InfografikTeaserLarge = () => {
             hindurch auf unserem Teller.
           </Trans>
         </Text>
-        <NextLink
-          href="/[locale]/infografik"
-          as={`/${locale}/infografik`}
-          passHref
-        >
+        <NextLink href="/infografik" passHref>
           <Link
             variant="primary"
             sx={{
@@ -141,12 +132,12 @@ export const InfografikTeaserLarge = () => {
               color: "monochrome100",
               "&:hover": {
                 bg: "potatoHover",
-                filter: "brightness(100%)"
+                filter: "brightness(100%)",
               },
               "&:active": {
                 bg: "potatoActive",
-                filter: "brightness(100%)"
-              }
+                filter: "brightness(100%)",
+              },
             }}
           >
             <Trans id="button.infografic.teaser">Infografik Ansehen</Trans>

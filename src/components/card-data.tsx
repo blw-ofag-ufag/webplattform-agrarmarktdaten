@@ -1,9 +1,8 @@
-import { useLocale } from "@interactivethings/visualize-app";
 import { Trans } from "@lingui/macro";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import { ReactNode } from "react";
-import { Box, Flex, Link, Text } from "theme-ui";
+import { Box, Flex, Link } from "theme-ui";
 
 // Dynamic import to escape SSR:
 // The "window" object needs to be available to embed powerBI report
@@ -13,6 +12,7 @@ const DynamicReportTeaser = dynamic(
     ssr: false,
   }
 );
+
 export const ReportCard = ({
   type,
   title,
@@ -22,8 +22,6 @@ export const ReportCard = ({
   title: string | ReactNode;
   url: string;
 }) => {
-  const locale = useLocale();
-
   const isReport = type === "report";
   return (
     <Box
@@ -52,7 +50,7 @@ export const ReportCard = ({
           >
             <DynamicReportTeaser />
           </Box>
-          <NextLink href="/[locale]/report" as={`/${locale}/report`} passHref>
+          <NextLink href="/report" passHref>
             <Link
               as="a"
               sx={{
@@ -153,11 +151,7 @@ export const ReportCard = ({
             </Box>
           </Flex> */}
           </Flex>
-          <NextLink
-            href="/[locale]/create/[chartId]"
-            as={`/${locale}/create/new`}
-            passHref
-          >
+          <NextLink href="/create/[chartId]" as="/create/new" passHref>
             <Link
               as="a"
               sx={{

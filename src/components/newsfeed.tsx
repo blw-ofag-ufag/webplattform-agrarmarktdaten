@@ -1,5 +1,5 @@
 import { timeFormat, timeParse } from "d3-time-format";
-import { Box, Text } from "theme-ui";
+import { Flex, Text } from "theme-ui";
 import { Newsfeed } from "../domain/types";
 
 const parseTime = timeParse("%Y-%m-%d");
@@ -8,8 +8,9 @@ const formatTime = timeFormat("%d.%m.%Y");
 export const NewsfeedEntry = ({ title, publicationDate }: Newsfeed) => {
   const date = formatTime(parseTime(publicationDate)!);
   return (
-    <Box
+    <Flex
       sx={{
+        flexDirection: "column",
         color: "text",
         cursor: "pointer",
         borderBottomWidth: "1px",
@@ -18,8 +19,8 @@ export const NewsfeedEntry = ({ title, publicationDate }: Newsfeed) => {
         py: 4,
 
         "&:last-of-type": {
-          borderBottom: "none"
-        }
+          borderBottom: "none",
+        },
       }}
     >
       <Text sx={{ fontSize: 4, lineHeight: "body", fontWeight: "bold", pb: 1 }}>
@@ -28,6 +29,6 @@ export const NewsfeedEntry = ({ title, publicationDate }: Newsfeed) => {
       <Text sx={{ fontSize: 4, lineHeight: "body", fontWeight: "regular" }}>
         {date}
       </Text>
-    </Box>
+    </Flex>
   );
 };

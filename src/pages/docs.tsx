@@ -1,26 +1,30 @@
+import { MDXProvider } from "@mdx-js/react";
 import {
-  Catalog,
-  ConfigPageOrGroup,
-  ImageSpecimen,
   AudioSpecimen,
+  Catalog,
   CodeSpecimen,
-  ColorSpecimen,
   ColorPaletteSpecimen,
-  HtmlSpecimen,
+  ColorSpecimen,
+  ConfigPageOrGroup,
+  DownloadSpecimen,
   HintSpecimen,
+  HtmlSpecimen,
+  ImageSpecimen,
+  Markdown,
+  Page,
   TableSpecimen,
   TypeSpecimen,
-  DownloadSpecimen,
-  Page,
-  Markdown
 } from "catalog";
-import { MDXProvider } from "@mdx-js/react";
 import { useEffect, useState } from "react";
 
 const pages: ConfigPageOrGroup[] = [
   { path: "/", title: "Introduction", content: require("../docs/index.mdx") },
   { path: "/design", title: "Design", content: require("../docs/design.mdx") },
-  { path: "/technology", title: "Technology", content: require("../docs/technology.mdx") }
+  {
+    path: "/technology",
+    title: "Technology",
+    content: require("../docs/technology.mdx"),
+  },
 ];
 
 const mdxComponents = {
@@ -66,10 +70,10 @@ const mdxComponents = {
   HintSpecimen,
   TableSpecimen,
   TypeSpecimen,
-  DownloadSpecimen
+  DownloadSpecimen,
 };
 
-export default () => {
+export default function Docs() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -89,9 +93,9 @@ export default () => {
           linkColor: "rgb(255,95,85)",
           sidebarColorTextActive: "rgb(255,95,85)",
           background: "#F5F5F5",
-          pageHeadingBackground: "#156896"
+          pageHeadingBackground: "#156896",
         }}
       />
     </MDXProvider>
   ) : null;
-};
+}

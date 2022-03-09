@@ -14,121 +14,124 @@ msgstr ""
 "Plural-Forms: \n"
 
 #: src/components/card-data.tsx:32
-msgid "article.card.data"
-msgstr "Datenbankabfrage"
+#~ msgid "article.card.data"
+#~ msgstr "Datenbankabfrage"
 
 #: src/components/card-data.tsx:32
-msgid "article.card.report.month"
-msgstr "Grafik des Monats"
+#~ msgid "article.card.report.month"
+#~ msgstr "Grafik des Monats"
 
-#: src/components/card-data.tsx:64
+#: src/components/card-data.tsx:177
 msgid "article.link.data.explore"
 msgstr "Daten abfragen"
 
-#: src/components/card-data.tsx:64
+#: src/components/card-data.tsx:76
 msgid "article.link.open.report"
 msgstr "Report öffnen"
 
-#: src/pages/[locale]/area/[slug].tsx:51
+#: src/pages/area/[slug].tsx:73
 msgid "article.section.data"
 msgstr "Daten"
 
-#: src/pages/[locale]/area/[slug].tsx:47
+#: src/pages/area/[slug].tsx:68
 msgid "article.section.infografic"
 msgstr "Infografik"
 
-#: src/pages/[locale]/area/[slug].tsx:86
+#: src/pages/area/[slug].tsx:134
 msgid "article.section.link"
 msgstr "Links"
 
-#: src/pages/[locale]/area/[slug].tsx:75
+#: src/pages/area/[slug].tsx:116
 msgid "article.section.news"
 msgstr "Neuigkeiten"
 
-#: src/pages/[locale]/area/[slug].tsx:68
+#: src/pages/area/[slug].tsx:105
 msgid "article.section.trade"
 msgstr "Handelsstufen"
 
-#: src/pages/[locale]/area/[slug].tsx:62
+#: src/pages/area/[slug].tsx:88
 msgid "article.teaser.data.title"
 msgstr "Daten zum Kartoffelmarkt"
 
-#: src/components/homepage/infografik-teaser.tsx:49
-#: src/components/homepage/infografik-teaser.tsx:117
+#: src/components/homepage/infografik-teaser.tsx:61
+#: src/components/homepage/infografik-teaser.tsx:143
 msgid "button.infografic.teaser"
 msgstr "Infografik Ansehen"
 
-#: src/pages/[locale]/area/[slug].tsx:81
-#: src/pages/[locale]/index.tsx:47
+#: src/pages/area/[slug].tsx:128
+#: src/pages/index.tsx:67
 msgid "button.show.all"
 msgstr "Alle Anzeigen"
 
-#: src/components/contact.tsx:23
+#: src/components/contact.tsx:35
 msgid "contact.contact"
 msgstr "Kontakt"
 
-#: src/components/contact.tsx:36
+#: src/components/contact.tsx:48
 msgid "contact.follow.us"
 msgstr "Folgen Sie Uns"
 
-#: src/components/footer.tsx:24
+#: src/components/footer.tsx:28
 msgid "footer.dataprotection"
 msgstr "Datenschutzverordnung"
 
-#: src/components/footer.tsx:18
+#: src/components/footer.tsx:22
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: src/components/footer.tsx:21
+#: src/components/footer.tsx:25
 msgid "footer.legal"
 msgstr "Rechtliche Grundlagen"
 
-#: src/pages/[locale]/index.tsx:34
+#: src/pages/index.tsx:48
 msgid "homepage.section.market.area"
 msgstr "Märkte"
 
-#: src/pages/[locale]/index.tsx:51
+#: src/pages/index.tsx:71
 msgid "homepage.section.newest.infografic"
 msgstr "Neueste Infografik"
 
-#: src/pages/[locale]/index.tsx:41
+#: src/pages/index.tsx:55
 msgid "homepage.section.newsfeed"
 msgstr "Aktuell"
 
-#: src/components/homepage/infografik-teaser.tsx:26
+#: src/components/homepage/infografik-teaser.tsx:33
 msgid "infografic"
 msgstr "Infografik"
 
-#: src/components/homepage/infografik-teaser.tsx:73
+#: src/components/homepage/infografik-teaser.tsx:91
 msgid "infografic.date"
 msgstr "2018"
 
-#: src/components/homepage/infografik-teaser.tsx:92
+#: src/components/homepage/infografik-teaser.tsx:114
 msgid "infografik.teaser"
 msgstr "In der Schweiz wachsen auf mehr als 10'000 Hektaren Kartoffeln. Das sind etwa 14'000 Fussballfelder voller toller Knollen. Die geernteten 400'000 Tonnen landen schliesslich über das ganze Jahr hindurch auf unserem Teller."
 
-#: src/components/homepage/infografik-teaser.tsx:36
-#: src/components/homepage/infografik-teaser.tsx:83
+#: src/components/homepage/infografik-teaser.tsx:45
+#: src/components/homepage/infografik-teaser.tsx:103
 msgid "infografik.title"
 msgstr "Schweizer Kartoffelmarkt"
 
-#: src/components/header.tsx:109
-#: src/components/header.tsx:120
+#: src/components/header.tsx:266
+#: src/components/header.tsx:285
 msgid "logo.swiss.confederation"
 msgstr "Logo of the Swiss Confederation"
 
-#: src/components/header.tsx:67
+#: src/components/header.tsx:147
+#: src/components/header.tsx:189
 msgid "menu.about"
 msgstr "Über uns"
 
-#: src/components/header.tsx:62
+#: src/components/header.tsx:142
+#: src/components/header.tsx:184
 msgid "menu.data"
 msgstr "Daten"
 
-#: src/components/header.tsx:57
+#: src/components/header.tsx:130
+#: src/components/header.tsx:179
 msgid "menu.markets"
 msgstr "Märkte"
 
-#: src/components/header.tsx:102
+#: src/components/header.tsx:231
 msgid "title.agricultural.market.data"
 msgstr "Agrarmarktdaten"
