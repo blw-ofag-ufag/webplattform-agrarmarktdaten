@@ -61,12 +61,6 @@ export const LanguageMenu = ({
               </CurrentPageLink>
             </LanguageListItem>
           ))}
-      <LanguageListItem key={"fr"} active={false} disabled={true}>
-        fr
-      </LanguageListItem>
-      <LanguageListItem key={"it"} active={false} disabled={true}>
-        it
-      </LanguageListItem>
     </Box>
   );
 };
