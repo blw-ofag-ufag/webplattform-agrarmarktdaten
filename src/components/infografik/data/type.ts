@@ -1,4 +1,4 @@
-import { scaleOrdinal } from "d3-scale";
+import { scaleOrdinal } from "d3";
 import { colors } from "../colors";
 
 export type BioOderNicht = "bio" | "Nicht-bio" | "Beide";
