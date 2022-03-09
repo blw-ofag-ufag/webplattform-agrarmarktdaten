@@ -1,7 +1,10 @@
 import "isomorphic-unfetch";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function Report(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const ACCESS_TOKEN_URL =
     "https://login.windows.net/504534b7-7806-4629-b58a-be8ac1787473/oauth2/v2.0/token";
   const API_URL =
@@ -55,4 +58,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.error(e);
     res.status(500).json({ message: "Something went wrong!" });
   }
-};
+}
