@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next",
     "build": "lingui compile && next build",
-    "export": "next build && next export -o build",
+    "export": "lingui compile && next build && next export -o build",
     "start": "next start -p $PORT",
     "lint": "tsc --noEmit -p ./src",
     "locales:extract": "NODE_ENV=development lingui extract",
