@@ -6,5 +6,6 @@
 /public/dist/**/*.js
 /build
 .now
+tsconfig.tsbuildinfo
 
 src/locales/**/messages.js

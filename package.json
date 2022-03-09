@@ -11,6 +11,7 @@
     "export": "lingui compile && next build && next export -o build",
     "start": "next start -p $PORT",
     "lint": "eslint .",
+    "typecheck": "tsc",
     "locales:extract": "NODE_ENV=development lingui extract",
     "locales:compile": "lingui compile",
     "graphql:codegen": "graphql-codegen --config codegen.yml",
