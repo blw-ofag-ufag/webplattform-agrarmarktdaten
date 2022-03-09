@@ -2,9 +2,8 @@ import { Box, Link } from "@theme-ui/components";
 import NextLink from "next/link";
 import { ReactNode } from "react";
 import { useLocale } from "../lib/use-locale";
+import { locales } from "../locales/locales";
 import { CurrentPageLink } from "./links";
-
-const localesOrder = ["de", "en"];
 
 export const LanguageMenu = ({
   alternates,
@@ -49,7 +48,7 @@ export const LanguageMenu = ({
               </LanguageListItem>
             );
           })
-        : localesOrder.map((d) => (
+        : locales.map((d) => (
             <LanguageListItem key={d} active={d === locale} disabled={false}>
               <CurrentPageLink locale={d} passHref>
                 <Link

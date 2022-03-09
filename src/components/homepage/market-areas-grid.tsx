@@ -13,16 +13,12 @@ export const MarketAreasGrid = ({
   const locale = useLocale();
 
   return (
-    <Grid
-      as="ul"
-      sx={{ listStyle: "none", m: 0, p: 0 }}
-      width={[150, null, 150]}
-    >
+    <Grid as="ul" sx={{ listStyle: "none", p: 0 }} width={[150, null, 150]}>
       {allMarketAreas.map((area) => {
         return (
           <Box as="li" key={area.slug} sx={{ mb: 8 }}>
             <NextLink
-              href={`/area/${area.slug}`}
+              href="/area/[slug]"
               as={`/area/${area.slug}`}
               locale={locale}
               passHref

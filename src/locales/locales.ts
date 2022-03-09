@@ -1,12 +1,6 @@
 // If translations get too big, we should load them dynamically. But for now it's fine.
 import { i18n } from "@lingui/core";
 import { de as pluralsDe, en as pluralsEn } from "make-plural/plurals";
-// Use the same number format in each language
-// import numberFormatCh from "d3-format/locale/de-CH.json";
-// import timeFormatDe from "d3-time-format/locale/de-CH.json";
-// import timeFormatEn from "d3-time-format/locale/en-GB.json";
-// import timeFormatFr from "d3-time-format/locale/fr-FR.json";
-// import timeFormatIt from "d3-time-format/locale/it-IT.json";
 import { messages as catalogDe } from "./de/messages.js";
 import { messages as catalogEn } from "./en/messages.js";
 // import { messages as catalogFr } from "./fr/messages.js";
@@ -45,17 +39,3 @@ export const parseLocaleString = (localeString: string): Locale => {
   const result = /^(de|fr|it|en)/.exec(localeString);
   return result ? (result[1] as Locale) : defaultLocale;
 };
-
-// export const d3TimeFormatLocales = {
-//   de: timeFormatDe,
-//   fr: timeFormatFr,
-//   it: timeFormatIt,
-//   en: timeFormatEn,
-// } as const;
-
-// export const d3FormatLocales = {
-//   de: numberFormatCh,
-//   fr: numberFormatCh,
-//   it: numberFormatCh,
-//   en: numberFormatCh,
-// } as const;
