@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
-import { Box, Flex, Link, Text } from "@theme-ui/components";
+import { Box, Link, Typography } from "@mui/material";
+import Flex from "../components/flex";
 import React, { ReactNode } from "react";
 import { Icon, IconName } from "../icons";
 
@@ -10,8 +11,8 @@ export const Contact = () => {
         width: "100vw",
         m: 0,
         py: 6,
-        bg: "monochrome200",
-        color: "monochrome800",
+        backgroundColor: "grey.200",
+        color: "grey.800",
       }}
     >
       <Flex
@@ -59,17 +60,19 @@ export const Contact = () => {
 };
 
 const ContactSection = ({ children }: { children: ReactNode }) => (
-  <Text sx={{ fontSize: 6, lineHeight: "heading", fontWeight: "bold", mb: 4 }}>
+  <Typography
+    sx={{ fontSize: 6, lineHeight: "heading", fontWeight: "bold", mb: 4 }}
+  >
     {children}
-  </Text>
+  </Typography>
 );
 const AddressLine = ({ children }: { children: ReactNode }) => (
-  <Text sx={{ fontSize: 4, lineHeight: "body", fontWeight: "regular" }}>
+  <Typography sx={{ fontSize: 4, lineHeight: "body", fontWeight: "regular" }}>
     {children}
-  </Text>
+  </Typography>
 );
 const SocialIcon = ({ name }: { name: IconName }) => (
-  <Box sx={{ display: "inline-block", fontSize: 5, mr: 6, opacity: 0.6 }}>
+  <Box sx={{ display: "inline-block", fontSize: 18, mr: 6, opacity: 0.6 }}>
     <Icon name={name} />
   </Box>
 );

@@ -1,5 +1,6 @@
-import { Flex, Card, Text, Link } from "theme-ui";
+import { Card, Typography, Link } from "@mui/material";
 import { Icon, IconName } from "../icons";
+import Flex from "../components/flex";
 
 export const TradeLevelsGrid = ({
   tradeLevels,
@@ -27,8 +28,8 @@ const TradeCard = ({
   return (
     <Card variant="primary" sx={{ width: ["49%", "24%"], mb: 4 }}>
       <TradeIcon icon={icon} color={color} />
-      <Text
-        as="h2"
+      <Typography
+        component="h2"
         sx={{
           fontSize: 5,
           fontWeight: "bold",
@@ -37,7 +38,7 @@ const TradeCard = ({
         }}
       >
         <Link>{title}</Link>
-      </Text>
+      </Typography>
     </Card>
   );
 };
@@ -52,7 +53,7 @@ export const TradeIcon = ({
   return (
     <Flex
       sx={{
-        bg: `${color}Light`,
+        backgroundColor: `${color}Light`,
         color: color,
         width: "100%",
         height: "5.5rem",
@@ -60,7 +61,7 @@ export const TradeIcon = ({
         alignItems: "center",
         mb: 2,
         fontSize: "3rem",
-        "&:hover": { bg: `${color}LightHover` },
+        "&:hover": { backgroundColor: `${color}LightHover` },
       }}
     >
       <Icon name={icon} size={50} />

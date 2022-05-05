@@ -1,6 +1,6 @@
 import { csv } from "d3";
 import { memo, ReactNode, useEffect, useState } from "react";
-import { Box } from "theme-ui";
+import { Box } from "@mui/material";
 import { colors } from "./colors";
 import { getBetriebeSquaresData } from "./data/betriebe";
 import { Section } from "./data/sections";

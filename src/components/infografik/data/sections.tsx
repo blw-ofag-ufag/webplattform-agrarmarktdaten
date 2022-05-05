@@ -1,4 +1,4 @@
-import { Box } from "@theme-ui/components";
+import { Box } from "@mui/material";
 import { SquareLabel } from "../square-label";
 import {
   betriebsgrössenkategorie,

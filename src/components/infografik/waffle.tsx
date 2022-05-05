@@ -1,6 +1,8 @@
 import { ScaleOrdinal } from "d3";
 import { ReactNode } from "react";
-import { Box, Flex } from "theme-ui";
+import { Box } from "@mui/material";
+
+import Flex from "../../components/flex";
 import { useResizeObserver } from "../../lib/use-resize-observer";
 import { colors } from "./colors";
 import { Betriebe } from "./data/betriebe";
@@ -110,7 +112,7 @@ export const Waffle = ({
   );
 };
 
-export const LegendItem = ({ item, bg }: { item: string; bg: $FixMe }) => (
+export const LegendItem = ({ item, bg }: { item: string; backgroundColor: $FixMe }) => (
   <Flex
     sx={{
       position: "relative",
@@ -123,7 +125,7 @@ export const LegendItem = ({ item, bg }: { item: string; bg: $FixMe }) => (
       lineHeight: [1, 2, 2],
       fontWeight: "regular",
       fontSize: [1, 2, 2],
-      color: "monochrome700",
+      color: "grey.700",
       minWidth: 120,
 
       "&::before": {

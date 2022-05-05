@@ -1,9 +1,10 @@
 import { default as NextLink } from "next/link";
 import React from "react";
-import { Flex, Link } from "theme-ui";
+import { Link } from "@mui/material";
 import { Icon } from "../../icons";
 import { LanguageMenu } from "../language-menu";
 import { colors } from "./colors";
+import Flex from "../../components/flex";
 
 export const InfografikHeader = () => {
   return (
@@ -15,7 +16,7 @@ export const InfografikHeader = () => {
         flexDirection: "row",
         px: [4, 4, "40px"],
         py: [0, 0, 4],
-        bg: colors.yellow,
+        backgroundColor: colors.yellow,
         justifyContent: "space-between",
         alignItems: "center",
         flex: "1 1 0px",

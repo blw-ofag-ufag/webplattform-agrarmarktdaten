@@ -1,4 +1,4 @@
-import { Box } from "@theme-ui/components";
+import { Box } from "@mui/material";
 import {
   motion,
   useSpring,
@@ -20,7 +20,7 @@ export const ScrollIndicator = () => {
           top: 0,
           left: 0,
           height: 8,
-          bg: colors.brown,
+          backgroundColor: colors.brown,
           opacity: 0.2,
           width: "100%",
           zIndex: 10,

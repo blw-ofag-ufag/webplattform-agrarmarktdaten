@@ -1,4 +1,4 @@
-import { Flex } from "@theme-ui/components";
+import { Flex } from "@mui/material";
 import { ReactNode } from "react";
 
 export const ChapterHeader = ({
@@ -11,7 +11,7 @@ export const ChapterHeader = ({
   return (
     <Flex
       id={id}
-      as="h2"
+      component="h2"
       sx={{
         // backgroundColor: colors.brown,
         // backgroundBlendMode: "soft-light",

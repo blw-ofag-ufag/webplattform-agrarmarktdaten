@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
-import { Box, Button, Flex, Link } from "@theme-ui/components";
+import { Box, Button, Link, Stack, Typography } from "@mui/material";
+import Flex from "../../components/flex";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { Banner } from "../../components/banner";
@@ -52,7 +53,7 @@ export default function Area({
             title={marketArea.title}
             intro={marketArea.introduction}
           />
-          <Box as="article">
+          <Box component="article">
             <Flex
               sx={{
                 flexDirection: ["column", "column", "row"],
@@ -64,14 +65,14 @@ export default function Area({
               }}
             >
               <Box sx={{ width: ["100%", "100%", "65%"] }}>
-                <h2>
+                <Typography variant="h2">
                   <Trans id="article.section.infografic">Infografik</Trans>
-                </h2>
+                </Typography>
                 {(marketArea.slug === "kartoffeln" ||
                   marketArea.slug === "potatoes") && <InfografikTeaserLarge />}
-                <h2>
+                <Typography variant="h2">
                   <Trans id="article.section.data">Daten</Trans>
-                </h2>
+                </Typography>
                 <Flex
                   sx={{
                     flexDirection: ["column", "column", "column"],
@@ -101,9 +102,9 @@ export default function Area({
                 </Flex>
                 {marketArea.tradeLevels && (
                   <>
-                    <h2>
+                    <Typography variant="h2">
                       <Trans id="article.section.trade">Handelsstufen</Trans>
-                    </h2>
+                    </Typography>
                     <TradeLevelsGrid
                       tradeLevels={marketArea.tradeLevels}
                       color={getMarketAreaColor(marketArea.slug)}
@@ -112,36 +113,41 @@ export default function Area({
                 )}
               </Box>
               <Box sx={{ width: ["100%", "100%", "30%"] }}>
-                <h2>
-                  <Trans id="article.section.news">Neuigkeiten</Trans>
-                </h2>
-                <div>
-                  {allNewsfeeds.map((news) => (
-                    <NewsfeedEntry
-                      key={news.title}
-                      title={news.title}
-                      publicationDate={news.publicationDate}
-                    />
-                  ))}
-                </div>
-                <Button variant="inline">
-                  <Trans id="button.show.all">Alle Anzeigen</Trans>
-                </Button>
-
-                {marketArea.links && (
-                  <>
-                    <h2>
-                      <Trans id="article.section.link">Links</Trans>
-                    </h2>
-                    {marketArea.links.map((link) => (
-                      <Box key={link.label} sx={{ mb: 3 }}>
-                        <Link variant="primary" href={link.url}>
-                          {">"} {link.label}
-                        </Link>
-                      </Box>
-                    ))}
-                  </>
-                )}
+                <Stack spacing={5}>
+                  <div>
+                    <Typography variant="h2">
+                      <Trans id="article.section.news">Neuigkeiten</Trans>
+                    </Typography>
+                    <div>
+                      {allNewsfeeds.map((news) => (
+                        <NewsfeedEntry
+                          key={news.title}
+                          title={news.title}
+                          publicationDate={news.publicationDate}
+                        />
+                      ))}
+                    </div>
+                    <Button variant="text" sx={{ ml: -2 }}>
+                      <Trans id="button.show.all">Alle Anzeigen</Trans>
+                    </Button>
+                  </div>
+                  <div>
+                    {marketArea.links && (
+                      <>
+                        <Typography variant="h2">
+                          <Trans id="article.section.link">Links</Trans>
+                        </Typography>
+                        {marketArea.links.map((link) => (
+                          <Box key={link.label} sx={{ mb: 3 }}>
+                            <Link href={link.url}>
+                              {">"} {link.label}
+                            </Link>
+                          </Box>
+                        ))}
+                      </>
+                    )}
+                  </div>
+                </Stack>
               </Box>
             </Flex>
           </Box>
@@ -151,18 +157,18 @@ export default function Area({
         //   <article>
         //     <h1>{marketArea.title}</h1>
         //     {marketArea.icon}
-        //     <h2>Reports</h2>
+        //     <Typography variant="h2">Reports</Typography>
         //     {marketArea.reports.map(report => (
         //       <div key={report.title}>{report.title}</div>
         //     ))}
-        //     <h2>Sub-Areas</h2>
+        //     <Typography variant="h2">Sub-Areas</Typography>
         //     <Grid
-        //       as="ul"
+        //       component="ul"
         //       sx={{ listStyle: "none", m: 0, p: 0 }}
         //       width={[200, null, 192]}
         //     >
         //       {marketArea.children.map(area => (
-        //         <Box as="li" key={area.slug}>
+        //         <Box component="li" key={area.slug}>
         //           <NextLink
         //             href="/area/[slug]"
         //             as={`/area/${area.slug}`}

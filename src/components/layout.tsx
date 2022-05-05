@@ -1,5 +1,6 @@
 import NextLink from "next/link";
-import { Box, Flex, Link } from "theme-ui";
+import { Box, Link } from "@mui/material";
+import Flex from "../components/flex";
 import { MarketArea } from "../domain/types";
 import { Footer } from "./footer";
 import { Header } from "./header";
@@ -21,7 +22,7 @@ export const HeaderOld = ({
       <NextLink href="/">
         <Flex
           sx={{
-            bg: "primary",
+            backgroundColor: "primary",
             color: "background",
             borderRadius: 5,
             height: "4rem",

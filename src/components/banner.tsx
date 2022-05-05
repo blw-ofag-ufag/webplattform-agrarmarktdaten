@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from "react";
-import { Box } from "theme-ui";
+import { Box, Typography } from "@mui/material";
 import { getMarketAreaColor } from "../domain/colors";
 
 export const Banner = ({
@@ -19,9 +19,10 @@ export const Banner = ({
         position: "relative",
         width: "100vw",
         mt: [0, 0, "92px"],
+        mb: [0, 0, 6],
       }}
     >
-      <BannerBackground bgColor={`${baseBgColor}Light`} />
+      <BannerBackground bgColor={`${baseBgColor}.light`} />
       <Box
         sx={{
           mt: "-150px",
@@ -37,13 +38,13 @@ export const Banner = ({
 };
 
 const BannerBackground = ({
-  bgColor = "primaryLight",
+  bgColor = "primary.light",
 }: {
   bgColor?: string;
 }) => (
   <Box
     sx={{
-      bg: bgColor,
+      backgroundColor: bgColor,
       position: "relative",
       height: "256px",
       zIndex: -1,
@@ -59,13 +60,12 @@ const BannerTitle = ({
   children: ReactNode;
 }) => (
   <Box
-    as="h1"
     sx={{
-      bg: color,
-      color: "monochrome100",
-      fontWeight: "regular",
-      fontSize: [8, 9],
-      lineHeight: "heading",
+      color: "grey.100",
+      fontWeight: "light",
+      fontSize: "3.5rem",
+      lineHeight: 1,
+      backgroundColor: `${color}.main`,
       px: [4, 6],
       pt: [4, 5],
       pb: [6, 4],
@@ -83,12 +83,10 @@ const BannerIntro = ({
   children: ReactNode;
 }) => (
   <Box
+    typography="body1"
     sx={{
-      bg: ["monochrome100", color],
-      color: ["text", "monochrome100"],
-      fontWeight: "regular",
-      fontSize: 5,
-      lineHeight: "body",
+      backgroundColor: ["grey.100", `${color}.main`],
+      color: ["text", "grey.100"],
       px: [4, 6],
       pt: 4,
       pb: [4, 7],

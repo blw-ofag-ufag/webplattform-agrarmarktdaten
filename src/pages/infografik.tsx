@@ -1,4 +1,5 @@
-import { Box, Flex } from "theme-ui";
+import { Box } from "@mui/material";
+import Flex from "../components/flex";
 import { ChapterHeader } from "../components/infografik/chapter-header";
 import { colors } from "../components/infografik/colors";
 import { getFlachenSquaresData } from "../components/infografik/data/flachen";
@@ -46,10 +47,10 @@ export default function Infografik({
           <Box>
             <ChapterHeader id="produktion">Produktion</ChapterHeader>
             <StickyHeader>
-              <Box as="small" sx={{ opacity: 0.7 }}>
+              <Box component="small" sx={{ opacity: 0.7 }}>
                 PRODUKTION
               </Box>
-              <Box as="h2">Flächenstruktur</Box>
+              <Box component="h2">Flächenstruktur</Box>
             </StickyHeader>
             <Box
               sx={{
@@ -66,10 +67,10 @@ export default function Infografik({
           </Box>
           <Box>
             <StickyHeader>
-              <Box as="small" sx={{ opacity: 0.7 }}>
+              <Box component="small" sx={{ opacity: 0.7 }}>
                 PRODUKTION
               </Box>
-              <Box as="h2">Betriebstruktur</Box>
+              <Box component="h2">Betriebstruktur</Box>
             </StickyHeader>
             <Box
               sx={{

@@ -1,4 +1,4 @@
-import { Box } from "@theme-ui/components";
+import { Box } from "@mui/material";
 import "isomorphic-unfetch";
 import dynamic from "next/dynamic";
 import React from "react";

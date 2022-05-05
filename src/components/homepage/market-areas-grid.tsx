@@ -1,6 +1,6 @@
 import { default as NextLink } from "next/link";
 import React from "react";
-import { Box, Grid, Link } from "theme-ui";
+import { Box, Grid, Link } from "@mui/material";
 import { MarketArea } from "../../domain/types";
 import { useLocale } from "../../lib/use-locale";
 import { MarketCard } from "../market-icon";
@@ -13,10 +13,24 @@ export const MarketAreasGrid = ({
   const locale = useLocale();
 
   return (
-    <Grid as="ul" sx={{ listStyle: "none", p: 0 }} width={[150, null, 150]}>
+    <Box
+      display="grid"
+      component="ul"
+      sx={{
+        listStyle: "none",
+        p: 0,
+        pl: 0,
+        gridGap: "0.75rem",
+        gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+      }}
+    >
       {allMarketAreas.map((area) => {
         return (
-          <Box as="li" key={area.slug} sx={{ mb: 8 }}>
+          <Box
+            component="li"
+            key={area.slug}
+            sx={{ mb: 4, listStyleType: "none" }}
+          >
             <NextLink
               href="/area/[slug]"
               as={`/area/${area.slug}`}
@@ -30,6 +44,6 @@ export const MarketAreasGrid = ({
           </Box>
         );
       })}
-    </Grid>
+    </Box>
   );
 };

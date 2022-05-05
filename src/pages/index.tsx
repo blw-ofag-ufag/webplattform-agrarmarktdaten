@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 import React from "react";
-import { Box, Button, Flex } from "theme-ui";
+import { Box, Button, Typography, Stack } from "@mui/material";
+import Flex from "../components/flex";
 import { Banner } from "../components/banner";
 import { InfografikTeaser } from "../components/homepage/infografik-teaser";
 import { MarketAreasGrid } from "../components/homepage/market-areas-grid";
@@ -32,7 +33,7 @@ export default function HomePage({
         );
       })}
     </ul> */}
-      <Box as="main">
+      <Box component="main">
         <Flex
           sx={{
             flexDirection: ["column", "column", "row"],
@@ -44,35 +45,40 @@ export default function HomePage({
           }}
         >
           <Box sx={{ width: ["100%", "100%", "65%"] }}>
-            <h2>
+            <Typography variant="h2">
               <Trans id="homepage.section.market.area">Märkte</Trans>
-            </h2>
+            </Typography>
             <MarketAreasGrid allMarketAreas={allMarketAreas} />
           </Box>
 
           <Box sx={{ width: ["100%", "100%", "30%"] }}>
-            <h2>
-              <Trans id="homepage.section.newsfeed">Aktuell</Trans>
-            </h2>
-            <div>
-              {allNewsfeeds.map((news) => (
-                <NewsfeedEntry
-                  key={news.title}
-                  title={news.title}
-                  publicationDate={news.publicationDate}
-                />
-              ))}
-            </div>
-            <Button variant="inline">
-              <Trans id="button.show.all">Alle Anzeigen</Trans>
-            </Button>
-
-            <h2>
-              <Trans id="homepage.section.newest.infografic">
-                Neueste Infografik
-              </Trans>
-            </h2>
-            <InfografikTeaser />
+            <Stack flexDirection="column" spacing={8}>
+              <div>
+                <Typography variant="h2">
+                  <Trans id="homepage.section.newsfeed">Aktuell</Trans>
+                </Typography>
+                <div>
+                  {allNewsfeeds.map((news) => (
+                    <NewsfeedEntry
+                      key={news.title}
+                      title={news.title}
+                      publicationDate={news.publicationDate}
+                    />
+                  ))}
+                </div>
+                <Button variant="text" sx={{ ml: -2 }}>
+                  <Trans id="button.show.all">Alle Anzeigen</Trans>
+                </Button>
+              </div>
+              <div>
+                <Typography variant="h2">
+                  <Trans id="homepage.section.newest.infografic">
+                    Neueste Infografik
+                  </Trans>
+                </Typography>
+                <InfografikTeaser />
+              </div>
+            </Stack>
           </Box>
         </Flex>
       </Box>

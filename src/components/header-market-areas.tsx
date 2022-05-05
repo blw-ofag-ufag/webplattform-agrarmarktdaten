@@ -1,6 +1,7 @@
 import { default as NextLink } from "next/link";
 import React from "react";
-import { Box, Card, Flex, Link, Text } from "theme-ui";
+import { Box, Card, Link, Typography } from "@mui/material";
+import Flex from "../components/flex";
 import { MarketArea } from "../domain/types";
 import { Icon, IconName } from "../icons";
 import { useLocale } from "../lib/use-locale";
@@ -18,7 +19,7 @@ export const MarketAreaHeader = ({
 
   return (
     <Flex
-      as="ul"
+      component="ul"
       sx={{
         flexDirection: ["column", "column", "row"],
         listStyle: "none",
@@ -34,7 +35,11 @@ export const MarketAreaHeader = ({
     >
       {allMarketAreas.map((area) => {
         return (
-          <Box as="li" key={area.slug} sx={{ width: ["100%", "100%", "auto"] }}>
+          <Box
+            component="li"
+            key={area.slug}
+            sx={{ width: ["100%", "100%", "auto"] }}
+          >
             <NextLink
               href="/area/[slug]"
               as={`/area/${area.slug}`}
@@ -64,16 +69,18 @@ export const MarketCard = ({
 }) => {
   return (
     <Card
-      variant="primary"
+      elevation={0}
       sx={{
+        display: "flex",
         width: ["100%", "100%", 150],
         flexDirection: ["row", "row", "column"],
         justifyContent: "flex-start",
+        alignItems: "center",
       }}
     >
       <MarketIcon icon={icon} />
-      <Text
-        as="h2"
+      <Typography
+        component="h2"
         sx={{
           fontSize: 5,
           fontWeight: "bold",
@@ -85,7 +92,7 @@ export const MarketCard = ({
         }}
       >
         {title}
-      </Text>
+      </Typography>
     </Card>
   );
 };
@@ -94,8 +101,8 @@ export const MarketIcon = ({ icon }: { icon: IconName }) => {
   return (
     <Flex
       sx={{
-        bg: `${icon}Light`,
-        color: icon,
+        backgroundColor: `${icon}.light`,
+        color: `${icon}.main`,
         borderRadius: "100%",
         width: ["3rem", "3rem", "5.5rem"],
         height: ["3rem", "3rem", "5.5rem"],
@@ -104,7 +111,8 @@ export const MarketIcon = ({ icon }: { icon: IconName }) => {
         mb: [4, 4, 2],
         mr: [4, 4, 0],
         fontSize: ["1.5rem", "1.5rem", "3rem"],
-        "&:hover": { bg: `${icon}LightHover` },
+        transition: "background-color 0.125s ease",
+        "&:hover": { backgroundColor: `${icon}.lightHover` },
       }}
     >
       <Icon name={icon} size={50} />

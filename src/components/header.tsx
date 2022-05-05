@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
-import { Box, Button, Flex, Link, Text } from "@theme-ui/components";
+import { Box, Button, Link, Typography, Stack } from "@mui/material";
+import Flex from "../components/flex";
 import NextLink from "next/link";
 import * as React from "react";
 import { useState } from "react";
@@ -21,7 +22,7 @@ export const Header = ({
 
   return (
     <Box
-      as="header"
+      component="header"
       sx={{
         color: "text",
         // Needs to be "fixed" to prevent
@@ -30,7 +31,7 @@ export const Header = ({
         top: 0,
         left: 0,
         width: "100%",
-        bg: "monochrome100",
+        backgroundColor: "grey.100",
         overflowY: "hidden",
         zIndex: 13,
         boxShadow: "0 3px 5px 0 rgba(0,0,0,0.10)",
@@ -41,7 +42,7 @@ export const Header = ({
           flexDirection: ["column", "column", "row"],
           borderBottomWidth: "1px",
           borderBottomStyle: "solid",
-          borderBottomColor: "monochrome200",
+          borderBottomColor: "grey.200",
           px: [0, 0, 4],
           pt: [0, 0, 3],
           pb: [0, 0, 5],
@@ -85,13 +86,12 @@ const MobileHamburger = ({
 }) => {
   return (
     <Button
-      variant="reset"
+      variant="text"
       onClick={() => toggleMenu(!expanded)}
       sx={{
+        minWidth: "auto",
         display: ["block", "block", "none"],
-        ml: "auto",
-        mr: 4,
-        fontSize: 5,
+        fontSize: 16,
       }}
     >
       <Icon name={expanded ? "close" : "menu"} />
@@ -110,9 +110,10 @@ const MobileMenuExpanded = ({
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   return (
-    <Box sx={{ display: ["flex", "flex", "none"], flexDirection: "column" }}>
+    <Box
+      sx={{ display: ["flex", "flex", "none"], flexDirection: "column", m: 4 }}
+    >
       <Link
-        variant="menu"
         onClick={() => toggleMarketMenu(!marketMenuexpanded)}
         sx={{
           cursor: "pointer",
@@ -120,7 +121,7 @@ const MobileMenuExpanded = ({
           mr: 5,
           svg: {
             display: "inline",
-            fontSize: 3,
+            fontSize: 16,
             ml: 3,
           },
         }}
@@ -135,13 +136,8 @@ const MobileMenuExpanded = ({
           allMarketAreas={allMarketAreas}
         />
       )}
-      <NextLink href="/create/[chartId]" as="/create/new" passHref>
-        <Link variant="menu">
-          <Trans id="menu.data">Daten</Trans>
-        </Link>
-      </NextLink>
       <NextLink href="/about" passHref>
-        <Link variant="menu">
+        <Link>
           <Trans id="menu.about">Über uns</Trans>
         </Link>
       </NextLink>
@@ -159,36 +155,40 @@ const DesktopMenu = ({
 }) => {
   return (
     <Box sx={{ display: ["none", "none", "flex"], order: 2, mx: "auto" }}>
-      <Link
-        variant="menu"
-        onClick={() => toggleMarketMenu(!marketMenuexpanded)}
-        sx={{
-          cursor: "pointer",
-          position: "relative",
-          mr: 5,
-          svg: {
-            display: "inline-block",
-            fontSize: 3,
-            ml: 1,
-          },
-        }}
-      >
-        <Trans id="menu.markets">Märkte</Trans>
-        <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
-      </Link>
-      <NextLink href="/create/[chartId]" as="/create/new" passHref>
-        <Link variant="menu">
-          <Trans id="menu.data">Daten</Trans>
+      <Stack direction="row" spacing={6}>
+        <Link
+          typography="h3"
+          fontWeight="light"
+          onClick={() => toggleMarketMenu(!marketMenuexpanded)}
+          sx={{
+            cursor: "pointer",
+            position: "relative",
+            svg: {
+              display: "inline-block",
+              fontSize: 16,
+              opacity: 0.75,
+              ml: 1,
+            },
+          }}
+        >
+          <Trans id="menu.markets">Märkte</Trans>
+          <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
         </Link>
-      </NextLink>
-      <NextLink href="/about" as="/about" passHref>
-        <Link variant="menu">
-          <Trans id="menu.about">Über uns</Trans>
-        </Link>
-      </NextLink>
+        <NextLink href="/create/[chartId]" as="/create/new" passHref>
+          <Link typography="h3" fontWeight="light">
+            <Trans id="menu.data">Daten</Trans>
+          </Link>
+        </NextLink>
+        <NextLink href="/about" as="/about" passHref>
+          <Link typography="h3" fontWeight="light">
+            <Trans id="menu.about">Über uns</Trans>
+          </Link>
+        </NextLink>
+      </Stack>
     </Box>
   );
 };
+
 const Logo = () => (
   <HomeLink passHref>
     <Flex sx={{ alignItems: ["center", "center", "flex-start"] }}>
@@ -207,26 +207,25 @@ const Logo = () => (
           pr: 6,
           borderRightWidth: "1px",
           borderRightStyle: "solid",
-          borderRightColor: "monochrome300",
-          color: "monochrome900",
+          borderRightColor: "grey.300",
+          color: "grey.900",
         }}
       >
         <LogoDesktop />
       </Box>
-      <Text
-        as="h1"
-        variant="lead"
+      <Typography
+        component="h1"
+        variant="h2"
         sx={{
           pl: [0, 0, 6],
           textDecoration: "none",
           color: "text",
-          fontSize: 6,
           lineHeight: "heading",
           fontWeight: "extraBold",
         }}
       >
         <Trans id="title.agricultural.market.data">Agrarmarktdaten</Trans>
-      </Text>
+      </Typography>
     </Flex>
   </HomeLink>
 );
@@ -239,13 +238,15 @@ export const MobileMenu = ({
 }) => {
   return (
     <Flex
-      as="a"
+      component="a"
       sx={{
         order: [2, 2, 1],
         alignItems: ["center", "center", "flex-start"],
         cursor: "pointer",
         textDecoration: "none",
-        color: "monochrome900",
+        color: "grey.900",
+        justifyContent: "space-between",
+        pr: 2,
       }}
     >
       <Logo />
@@ -276,6 +277,7 @@ const LogoMobile = () => (
     </g>
   </svg>
 );
+
 const LogoDesktop = () => (
   <svg width={224} height={56}>
     <title id="logo">

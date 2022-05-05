@@ -1,4 +1,4 @@
-import { Box, Link } from "@theme-ui/components";
+import { Box, Link } from "@mui/material";
 import NextLink from "next/link";
 import { ReactNode } from "react";
 import { useLocale } from "../lib/use-locale";
@@ -14,17 +14,16 @@ export const LanguageMenu = ({
 
   return (
     <Box
-      as="ul"
+      component="ul"
       sx={{
         display: "flex",
-
         listStyle: "none",
         px: [4, 4, 0],
         py: [5, 5, 0],
         ml: [0, "auto"],
         mt: [0, 0, "-9px"],
         width: "auto",
-        bg: "transparent",
+        backgroundColor: "transparent",
         justifyContent: ["flex-start", "flex-start", "flex-end"],
       }}
     >
@@ -75,18 +74,15 @@ const LanguageListItem = ({
   children: ReactNode;
 }) => (
   <Box
-    as="li"
+    component="li"
+    typography="body2"
     sx={{
       ml: 1,
-
       width: "32px",
-      fontSize: [4, 4, 3],
-      lineHeight: [1, 1, 3],
-      fontWeight: active ? "extraBold" : "light",
+      fontWeight: active ? "bold" : "normal",
       p: [0, 0, 1],
       textTransform: "uppercase",
       textDecoration: "none",
-      transition: "font-weight .2s",
 
       color: "text",
       opacity: disabled ? 0.65 : 1,
@@ -94,7 +90,7 @@ const LanguageListItem = ({
       cursor: disabled ? "inherit" : "pointer",
 
       "&:hover": {
-        fontWeight: disabled ? "light" : "extraBold",
+        fontWeight: disabled ? "normal" : "bold",
       },
     }}
   >

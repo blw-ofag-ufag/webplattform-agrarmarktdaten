@@ -2,7 +2,8 @@ import { Trans } from "@lingui/macro";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import { ReactNode } from "react";
-import { Box, Flex, Link } from "theme-ui";
+import { Box, Link, Typography } from "@mui/material";
+import Flex from "../components/flex";
 
 // Dynamic import to escape SSR:
 // The "window" object needs to be available to embed powerBI report
@@ -52,7 +53,7 @@ export const ReportCard = ({
           </Box>
           <NextLink href="/report" passHref>
             <Link
-              as="a"
+              component="a"
               sx={{
                 textDecoration: "none",
                 color: "primary",
@@ -64,9 +65,9 @@ export const ReportCard = ({
             >
               <Box
                 sx={{
-                  bg: "primaryLighter",
+                  backgroundColor: "primaryLighter",
                   borderTopWidth: "1px",
-                  borderTopColor: "monochrome100",
+                  borderTopColor: "grey.100",
                   borderTopStyle: "solid",
                   py: 4,
                   color: "primary",
@@ -84,12 +85,12 @@ export const ReportCard = ({
           sx={{
             borderStyle: "solid",
             borderWidth: "1px",
-            borderColor: "muted",
+            borderColor: "divider",
           }}
         >
           <Flex
             sx={{
-              // bg: isReport ? "primary" : "primaryLighter",
+              // backgroundColor: isReport ? "primary" : "primaryLighter",
               // height: 175,
               justifyContent: "center",
               // px: 4,
@@ -114,46 +115,46 @@ export const ReportCard = ({
             {/* <Flex
             sx={{
               justifyContent: "space-between",
-              color: isReport ? "monochrome100" : "text",
+              color: isReport ? "grey.100" : "text",
               svg: {
                 fontSize: "5rem",
-                fill: "monochrome100",
+                fill: "grey.100",
               },
             }}
           >
             <Box>
-              <Text
+              <Typography
                 sx={{
                   textTransform: "uppercase",
                   fontSize: 4,
                   fontWeight: "bold",
                   lineHeight: "heading",
                   textAlign: "left",
-                  color: isReport ? "monochrome100" : "text",
+                  color: isReport ? "grey.100" : "text",
                   opacity: 0.4,
                   mb: 1,
                 }}
               >
                 <Trans id="article.card.data">Datenbankabfrage</Trans>
-              </Text>
-              <Text
+              </Typography>
+              <Typography
                 sx={{
                   fontSize: 6,
                   fontWeight: "extraBold",
                   lineHeight: "heading",
                   textAlign: "left",
-                  color: isReport ? "monochrome100" : "text",
+                  color: isReport ? "grey.100" : "text",
                   minHeight: 75,
                 }}
               >
                 {title}
-              </Text>
+              </Typography>
             </Box>
           </Flex> */}
           </Flex>
           <NextLink href="/create/[chartId]" as="/create/new" passHref>
             <Link
-              as="a"
+              component="a"
               sx={{
                 textDecoration: "none",
                 color: "primary",
@@ -163,20 +164,20 @@ export const ReportCard = ({
                 },
               }}
             >
-              <Box
+              <Typography
+                variant="h4"
                 sx={{
-                  bg: "primaryLighter",
+                  backgroundColor: "primary.light",
                   borderTopWidth: "1px",
-                  borderTopColor: "monochrome100",
+                  borderTopColor: "grey.100",
                   borderTopStyle: "solid",
                   py: 4,
-                  color: "primary",
-                  fontWeight: "bold",
+                  color: "primary.main",
                   textAlign: "center",
                 }}
               >
                 <Trans id="article.link.data.explore">Daten abfragen</Trans>
-              </Box>
+              </Typography>
             </Link>
           </NextLink>
         </Box>

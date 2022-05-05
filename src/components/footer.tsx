@@ -1,11 +1,12 @@
 import { Trans } from "@lingui/macro";
-import { Box, Flex, Text } from "@theme-ui/components";
+import { Box, Typography } from "@mui/material";
+import Flex from "../components/flex";
 import React, { ReactNode } from "react";
 import { Contact } from "./contact";
 
 export const Footer = () => {
   return (
-    <Box as="footer" sx={{ mt: 8 }}>
+    <Box component="footer" sx={{ mt: 8 }}>
       <Contact />
       <Flex
         sx={{
@@ -14,8 +15,8 @@ export const Footer = () => {
           width: "100vw",
           px: 4,
           py: 4,
-          bg: "monochrome300",
-          color: "monochrome800",
+          backgroundColor: "grey.300",
+          color: "grey.800",
         }}
       >
         <FooterItem>
@@ -33,7 +34,7 @@ export const Footer = () => {
 };
 
 const FooterItem = ({ children }: { children: ReactNode }) => (
-  <Text sx={{ fontSize: 4, fontWeight: "medium", mx: 4, my: 2 }}>
+  <Typography sx={{ fontSize: 4, fontWeight: "medium", mx: 4, my: 2 }}>
     {children}
-  </Text>
+  </Typography>
 );

@@ -1,4 +1,4 @@
-import { Flex } from "@theme-ui/components";
+import Flex from "../components/flex";
 import { ReactNode } from "react";
 import { colors } from "./colors";
 

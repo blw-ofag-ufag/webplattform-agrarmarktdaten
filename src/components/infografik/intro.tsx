@@ -1,8 +1,9 @@
 import { keyframes } from "@emotion/core";
-import { Box, Button, Flex } from "@theme-ui/components";
+import { Box, Button } from "@mui/material";
 import { smoothScroll } from "../../lib/smooth-scroll";
 import { PotatoInfographic } from "../../pages/infografik";
 import { colors } from "./colors";
+import Flex from "../../components/flex";
 
 export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
   return (
@@ -18,7 +19,7 @@ export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
     >
       <Box sx={{ marginTop: "3.8rem" }}>
         <Box
-          as="h1"
+          component="h1"
           sx={{
             textAlign: "center",
             fontSize: "40px",

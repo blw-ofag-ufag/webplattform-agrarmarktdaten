@@ -1,4 +1,4 @@
-import { Box } from "@theme-ui/components";
+import { Box } from "@mui/material";
 import { ReactNode } from "react";
 
 export const StickySection = ({ children }: { children: ReactNode }) => {

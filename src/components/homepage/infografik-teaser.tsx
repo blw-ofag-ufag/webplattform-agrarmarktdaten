@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
-import { Box, Button, Flex, Link, Text } from "@theme-ui/components";
+import { Box, Button, Link, Typography } from "@mui/material";
+import Flex from "../../components/flex";
 import { default as NextLink } from "next/link";
 import React from "react";
 
@@ -7,7 +8,7 @@ export const InfografikTeaser = () => {
   return (
     <NextLink href="/infografik" passHref>
       <Flex
-        as="a"
+        component="a"
         sx={{
           flexDirection: "column",
           justifyContent: "center",
@@ -21,7 +22,7 @@ export const InfografikTeaser = () => {
           textDecoration: "none",
         }}
       >
-        <Text
+        <Typography
           sx={{
             fontSize: 4,
             fontWeight: "bold",
@@ -31,8 +32,8 @@ export const InfografikTeaser = () => {
           }}
         >
           <Trans id="infografic">Infografik</Trans>
-        </Text>
-        <Text
+        </Typography>
+        <Typography
           sx={{
             fontSize: 6,
             fontWeight: "extraBold",
@@ -43,18 +44,18 @@ export const InfografikTeaser = () => {
           }}
         >
           <Trans id="infografik.title">Schweizer Kartoffelmarkt</Trans>
-        </Text>
+        </Typography>
         <Button
           variant="primary"
           sx={{
-            bg: "potato",
+            backgroundColor: "potato",
             fontSize: 4,
             fontWeight: "bold",
             "&:hover": {
-              bg: "potatoHover",
+              backgroundColor: "potatoHover",
             },
             "&:active": {
-              bg: "potatoActive",
+              backgroundColor: "potatoActive",
             },
           }}
         >
@@ -79,7 +80,7 @@ export const InfografikTeaserLarge = () => {
       }}
     >
       <Box sx={{ order: [2, 2, 1], width: ["100%", "100%", "50%"] }}>
-        <Text
+        <Typography
           sx={{
             fontSize: 4,
             fontWeight: "bold",
@@ -89,8 +90,8 @@ export const InfografikTeaserLarge = () => {
           }}
         >
           <Trans id="infografic.date">2018</Trans>
-        </Text>
-        <Text
+        </Typography>
+        <Typography
           sx={{
             fontSize: 6,
             fontWeight: "extraBold",
@@ -101,8 +102,8 @@ export const InfografikTeaserLarge = () => {
           }}
         >
           <Trans id="infografik.title">Schweizer Kartoffelmarkt</Trans>
-        </Text>
-        <Text
+        </Typography>
+        <Typography
           sx={{
             fontSize: 5,
             fontWeight: "regular",
@@ -117,25 +118,25 @@ export const InfografikTeaserLarge = () => {
             geernteten 400'000 Tonnen landen schliesslich über das ganze Jahr
             hindurch auf unserem Teller.
           </Trans>
-        </Text>
+        </Typography>
         <NextLink href="/infografik" passHref>
           <Link
             variant="primary"
             sx={{
-              bg: "potato",
+              backgroundColor: "potato",
               fontSize: 4,
               fontWeight: "bold",
               textDecoration: "none",
               width: ["100%", "100%", "auto"],
               px: [3, 4, 7],
               py: 3,
-              color: "monochrome100",
+              color: "grey.100",
               "&:hover": {
-                bg: "potatoHover",
+                backgroundColor: "potatoHover",
                 filter: "brightness(100%)",
               },
               "&:active": {
-                bg: "potatoActive",
+                backgroundColor: "potatoActive",
                 filter: "brightness(100%)",
               },
             }}

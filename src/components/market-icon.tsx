@@ -1,4 +1,5 @@
-import { Card, Flex, Text } from "theme-ui";
+import { Card, Typography } from "@mui/material";
+import Flex from "../components/flex";
 import { Icon, IconName } from "../icons";
 
 export const MarketCard = ({
@@ -9,10 +10,18 @@ export const MarketCard = ({
   icon: IconName;
 }) => {
   return (
-    <Card variant="primary" sx={{ width: 150 }}>
+    <Card
+      sx={{
+        width: 150,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+      elevation={0}
+    >
       <MarketIcon icon={icon} />
-      <Text
-        as="h2"
+      <Typography
+        component="h2"
         sx={{
           fontSize: 5,
           fontWeight: "bold",
@@ -21,7 +30,7 @@ export const MarketCard = ({
         }}
       >
         {title}
-      </Text>
+      </Typography>
     </Card>
   );
 };
@@ -30,8 +39,8 @@ export const MarketIcon = ({ icon }: { icon: IconName }) => {
   return (
     <Flex
       sx={{
-        bg: `${icon}Light`,
-        color: icon,
+        backgroundColor: `${icon}.light`,
+        color: `${icon}.main`,
         borderRadius: "100%",
         width: "5.5rem",
         height: "5.5rem",
@@ -39,7 +48,7 @@ export const MarketIcon = ({ icon }: { icon: IconName }) => {
         alignItems: "center",
         mb: 2,
         fontSize: "3rem",
-        "&:hover": { bg: `${icon}LightHover` },
+        "&:hover": { backgroundColor: `${icon}.lightHover` },
       }}
     >
       <Icon name={icon} size={50} />

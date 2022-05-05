@@ -1,5 +1,7 @@
-import { Box, Flex } from "@theme-ui/components";
+import { Box } from "@mui/material";
 import { colors } from "./colors";
+
+import Flex from "../../components/flex";
 
 export const SquareLabel = ({
   title,
