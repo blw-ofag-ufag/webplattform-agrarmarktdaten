@@ -1,5 +1,6 @@
 import { createTheme } from "@mui/material/styles";
-import federalTheme from "./federal";
+
+import federalTheme from "@/theme/federal";
 
 const blwTheme = createTheme(federalTheme, {
   palette: {

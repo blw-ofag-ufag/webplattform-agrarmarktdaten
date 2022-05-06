@@ -1,14 +1,15 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Link, Typography, Stack } from "@mui/material";
-import Flex from "../components/flex";
 import NextLink from "next/link";
 import * as React from "react";
 import { useState } from "react";
-import { MarketArea } from "../domain/types";
-import { Icon } from "../icons";
-import { MarketAreaHeader } from "./header-market-areas";
-import { LanguageMenu } from "./language-menu";
-import { HomeLink } from "./links";
+
+import Flex from "@/components/flex";
+import { MarketAreaHeader } from "@/components/header-market-areas";
+import { LanguageMenu } from "@/components/language-menu";
+import { HomeLink } from "@/components/links";
+import { MarketArea } from "@/domain/types";
+import { Icon } from "@/icons";
 
 export const Header = ({
   allMarketAreas,

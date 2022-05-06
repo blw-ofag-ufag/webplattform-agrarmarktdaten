@@ -1,9 +1,10 @@
+import { Box, Link } from "@mui/material";
 import { default as NextLink } from "next/link";
 import React from "react";
-import { Box, Grid, Link } from "@mui/material";
-import { MarketArea } from "../../domain/types";
-import { useLocale } from "../../lib/use-locale";
-import { MarketCard } from "../market-icon";
+
+import { MarketCard } from "@/components/market-icon";
+import { MarketArea } from "@/domain/types";
+import { useLocale } from "@/lib/use-locale";
 
 export const MarketAreasGrid = ({
   allMarketAreas,

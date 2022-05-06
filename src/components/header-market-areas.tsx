@@ -1,10 +1,11 @@
+import { Box, Card, Link, Typography } from "@mui/material";
 import { default as NextLink } from "next/link";
 import React from "react";
-import { Box, Card, Link, Typography } from "@mui/material";
-import Flex from "../components/flex";
-import { MarketArea } from "../domain/types";
-import { Icon, IconName } from "../icons";
-import { useLocale } from "../lib/use-locale";
+
+import Flex from "@/components/flex";
+import { MarketArea } from "@/domain/types";
+import { Icon, IconName } from "@/icons";
+import { useLocale } from "@/lib/use-locale";
 
 export const MarketAreaHeader = ({
   marketMenuexpanded,

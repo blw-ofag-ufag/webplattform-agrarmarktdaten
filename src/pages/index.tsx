@@ -1,14 +1,15 @@
 import { Trans } from "@lingui/macro";
-import React from "react";
 import { Box, Button, Typography, Stack } from "@mui/material";
-import Flex from "../components/flex";
-import { Banner } from "../components/banner";
-import { InfografikTeaser } from "../components/homepage/infografik-teaser";
-import { MarketAreasGrid } from "../components/homepage/market-areas-grid";
-import { AppLayout } from "../components/layout";
-import { NewsfeedEntry } from "../components/newsfeed";
-import { MarketArea, Newsfeed } from "../domain/types";
-import { fetchCMS } from "../lib/cms-api";
+import React from "react";
+
+import { Banner } from "@/components/banner";
+import Flex from "@/components/flex";
+import { InfografikTeaser } from "@/components/homepage/infografik-teaser";
+import { MarketAreasGrid } from "@/components/homepage/market-areas-grid";
+import { AppLayout } from "@/components/layout";
+import { NewsfeedEntry } from "@/components/newsfeed";
+import { MarketArea, Newsfeed } from "@/domain/types";
+import { fetchCMS } from "@/lib/cms-api";
 
 export default function HomePage({
   homePage,

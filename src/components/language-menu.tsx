@@ -1,9 +1,11 @@
 import { Box, Link } from "@mui/material";
 import NextLink from "next/link";
 import { ReactNode } from "react";
-import { useLocale } from "../lib/use-locale";
-import { locales } from "../locales/locales";
-import { CurrentPageLink } from "./links";
+
+import { CurrentPageLink } from "@/components/links";
+import { useLocale } from "@/lib/use-locale";
+import { locales } from "@/locales/locales";
+
 
 export const LanguageMenu = ({
   alternates,

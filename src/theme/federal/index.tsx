@@ -4,10 +4,10 @@
 import { Fade, Grow } from "@mui/material";
 import { Breakpoint, createTheme, Theme } from "@mui/material/styles";
 import { merge, omit } from "lodash";
-import SvgIcCheckboxActive from "./icons/IcCheckboxActive";
-import SvgIcCheckboxDefault from "./icons/IcCheckboxDefault";
 
-import shadows from "./shadows";
+import SvgIcCheckboxActive from "@/theme/federal/icons/IcCheckboxActive";
+import SvgIcCheckboxDefault from "@/theme/federal/icons/IcCheckboxDefault";
+import shadows from "@/theme/federal/shadows";
 
 declare module "@mui/material" {
   interface PaletteColorOptions {

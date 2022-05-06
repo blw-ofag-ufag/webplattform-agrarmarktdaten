@@ -1,8 +1,10 @@
+import * as qs from "querystring";
+
 import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/router";
-import * as qs from "querystring";
 import React from "react";
-import { useLocale } from "../lib/use-locale";
+
+import { useLocale } from "@/lib/use-locale";
 
 const createDynamicRouteProps = ({
   pathname,

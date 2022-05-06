@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
-import { colors } from "./colors";
 
-import Flex from "../../components/flex";
+import Flex from "@/components/flex";
+import { colors } from "@/components/infografik/colors";
+
 
 export const SquareLabel = ({
   title,

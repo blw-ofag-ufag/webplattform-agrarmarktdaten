@@ -1,8 +1,9 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Link, Typography } from "@mui/material";
-import Flex from "../../components/flex";
 import { default as NextLink } from "next/link";
 import React from "react";
+
+import Flex from "@/components/flex";
 
 export const InfografikTeaser = () => {
   return (
@@ -46,7 +47,8 @@ export const InfografikTeaser = () => {
           <Trans id="infografik.title">Schweizer Kartoffelmarkt</Trans>
         </Typography>
         <Button
-          variant="primary"
+          variant="contained"
+          color="primary"
           sx={{
             backgroundColor: "potato",
             fontSize: 4,
@@ -113,15 +115,15 @@ export const InfografikTeaserLarge = () => {
           }}
         >
           <Trans id="infografik.teaser">
-            In der Schweiz wachsen auf mehr als 10'000 Hektaren Kartoffeln. Das
-            sind etwa 14'000 Fussballfelder voller toller Knollen. Die
-            geernteten 400'000 Tonnen landen schliesslich über das ganze Jahr
-            hindurch auf unserem Teller.
+            In der Schweiz wachsen auf mehr als 10&apos;000 Hektaren Kartoffeln.
+            Das sind etwa 14&apos;000 Fussballfelder voller toller Knollen. Die
+            geernteten 400&apos;000 Tonnen landen schliesslich über das ganze
+            Jahr hindurch auf unserem Teller.
           </Trans>
         </Typography>
         <NextLink href="/infografik" passHref>
           <Link
-            variant="primary"
+            color="primary"
             sx={{
               backgroundColor: "potato",
               fontSize: 4,

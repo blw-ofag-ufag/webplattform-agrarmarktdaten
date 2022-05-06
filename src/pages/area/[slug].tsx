@@ -1,18 +1,19 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Link, Stack, Typography } from "@mui/material";
-import Flex from "../../components/flex";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
-import { Banner } from "../../components/banner";
-import { ReportCard } from "../../components/card-data";
-import { TradeLevelsGrid } from "../../components/card-trade";
-import { InfografikTeaserLarge } from "../../components/homepage/infografik-teaser";
-import { AppLayout } from "../../components/layout";
-import { NewsfeedEntry } from "../../components/newsfeed";
-import { getMarketAreaColor } from "../../domain/colors";
-import { MarketArea, Newsfeed } from "../../domain/types";
-import { IconName } from "../../icons";
-import { fetchCMS } from "../../lib/cms-api";
+
+import { Banner } from "@/components/banner";
+import { ReportCard } from "@/components/card-data";
+import { TradeLevelsGrid } from "@/components/card-trade";
+import Flex from "@/components/flex";
+import { InfografikTeaserLarge } from "@/components/homepage/infografik-teaser";
+import { AppLayout } from "@/components/layout";
+import { NewsfeedEntry } from "@/components/newsfeed";
+import { getMarketAreaColor } from "@/domain/colors";
+import { MarketArea, Newsfeed } from "@/domain/types";
+import { IconName } from "@/icons";
+import { fetchCMS } from "@/lib/cms-api";
 
 export default function Area({
   marketArea,

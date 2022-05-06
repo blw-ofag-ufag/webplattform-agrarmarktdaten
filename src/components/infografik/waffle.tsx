@@ -1,15 +1,15 @@
+import { Box } from "@mui/material";
 import { ScaleOrdinal } from "d3";
 import { ReactNode } from "react";
-import { Box } from "@mui/material";
 
-import Flex from "../../components/flex";
-import { useResizeObserver } from "../../lib/use-resize-observer";
-import { colors } from "./colors";
-import { Betriebe } from "./data/betriebe";
-import { Flachen } from "./data/flachen";
-import { FlachenPerKochtyp } from "./data/kochtyp";
-import { Section } from "./data/sections";
-import { backgroundStyle, bioOpacityScale } from "./data/type";
+import Flex from "@/components/flex";
+import { colors } from "@/components/infografik/colors";
+import { Betriebe } from "@/components/infografik/data/betriebe";
+import { Flachen } from "@/components/infografik/data/flachen";
+import { FlachenPerKochtyp } from "@/components/infografik/data/kochtyp";
+import { Section } from "@/components/infografik/data/sections";
+import { backgroundStyle, bioOpacityScale } from "@/components/infografik/data/type";
+import { useResizeObserver } from "@/lib/use-resize-observer";
 
 type DataType = Flachen | Betriebe | FlachenPerKochtyp | $FixMe;
 interface Props {

@@ -1,8 +1,9 @@
 import { Trans } from "@lingui/macro";
 import { Box, Link, Typography } from "@mui/material";
-import Flex from "../components/flex";
 import React, { ReactNode } from "react";
-import { Icon, IconName } from "../icons";
+
+import Flex from "@/components/flex";
+import { Icon, IconName } from "@/icons";
 
 export const Contact = () => {
   return (

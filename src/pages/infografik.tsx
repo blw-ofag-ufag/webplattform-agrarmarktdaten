@@ -1,23 +1,24 @@
 import { Box } from "@mui/material";
-import Flex from "../components/flex";
-import { ChapterHeader } from "../components/infografik/chapter-header";
-import { colors } from "../components/infografik/colors";
-import { getFlachenSquaresData } from "../components/infografik/data/flachen";
+
+import Flex from "@/components/flex";
+import { ChapterHeader } from "@/components/infografik/chapter-header";
+import { colors } from "@/components/infografik/colors";
+import { getFlachenSquaresData } from "@/components/infografik/data/flachen";
 import {
   sectionIds_betriebe,
   sectionIds_flachen,
   sections_betriebe,
   sections_flachen,
-} from "../components/infografik/data/sections";
-import { InfografikHeader } from "../components/infografik/infografik-header";
-import { Intro } from "../components/infografik/intro";
-import { ScrollIndicator } from "../components/infografik/scroll-indicator";
+} from "@/components/infografik/data/sections";
+import { InfografikHeader } from "@/components/infografik/infografik-header";
+import { Intro } from "@/components/infografik/intro";
+import { ScrollIndicator } from "@/components/infografik/scroll-indicator";
 import {
   ScrollyWaffle,
   ScrollyWaffleDataFetcher,
-} from "../components/infografik/scrolly-waffle";
-import { StickyHeader } from "../components/infografik/sticky-header.tsx";
-import { fetchCMS } from "../lib/cms-api";
+} from "@/components/infografik/scrolly-waffle";
+import { StickyHeader } from "@/components/infografik/sticky-header.tsx";
+import { fetchCMS } from "@/lib/cms-api";
 
 export interface PotatoInfographic {
   title: string;

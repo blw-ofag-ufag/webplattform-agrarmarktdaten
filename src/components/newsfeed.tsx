@@ -1,7 +1,8 @@
-import { timeFormat, timeParse } from "d3";
 import { Typography } from "@mui/material";
-import { Newsfeed } from "../domain/types";
-import Flex from "../components/flex";
+import { timeFormat, timeParse } from "d3";
+
+import Flex from "@/components/flex";
+import { Newsfeed } from "@/domain/types";
 
 const parseTime = timeParse("%Y-%m-%d");
 const formatTime = timeFormat("%d.%m.%Y");

@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { SquareLabel } from "../square-label";
+
 import {
   betriebsgrössenkategorie,
   betriebsgrössenkategorieBackgroundScale,
@@ -8,7 +8,9 @@ import {
   kartoffelTypenBackgroundScale,
   kochTypen,
   kochTypenBackgroundScale,
-} from "./type";
+} from "@/components/infografik/data/type";
+import { SquareLabel } from "@/components/infografik/square-label";
+
 
 export const sectionIds_flachen = new Set(["one", "two", "three", "four"]);
 

@@ -1,4 +1,4 @@
-import { IconName } from "../icons";
+import { IconName } from "@/icons";
 
 export interface MarketArea {
   slug: string;

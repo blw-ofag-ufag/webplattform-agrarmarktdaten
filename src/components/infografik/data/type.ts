@@ -1,5 +1,6 @@
 import { scaleOrdinal } from "d3";
-import { colors } from "../colors";
+
+import { colors } from "@/components/infografik/colors";
 
 export type BioOderNicht = "bio" | "Nicht-bio" | "Beide";
 export const bioOderNicht: BioOderNicht[] = ["bio", "Nicht-bio"];

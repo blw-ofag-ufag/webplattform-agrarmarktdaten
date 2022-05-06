@@ -1,6 +1,7 @@
 import { Card, Typography } from "@mui/material";
-import Flex from "../components/flex";
-import { Icon, IconName } from "../icons";
+
+import Flex from "@/components/flex";
+import { Icon, IconName } from "@/icons";
 
 export const MarketCard = ({
   title,

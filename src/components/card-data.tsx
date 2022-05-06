@@ -1,9 +1,10 @@
 import { Trans } from "@lingui/macro";
+import { Box, Link, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import { ReactNode } from "react";
-import { Box, Link, Typography } from "@mui/material";
-import Flex from "../components/flex";
+
+import Flex from "@/components/flex";
 
 // Dynamic import to escape SSR:
 // The "window" object needs to be available to embed powerBI report

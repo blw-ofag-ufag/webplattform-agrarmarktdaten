@@ -1,6 +1,7 @@
+import { Box } from "@mui/material";
 import React, { ReactNode, useMemo } from "react";
-import { Box, Typography } from "@mui/material";
-import { getMarketAreaColor } from "../domain/colors";
+
+import { getMarketAreaColor } from "@/domain/colors";
 
 export const Banner = ({
   title,

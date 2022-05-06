@@ -1,8 +1,10 @@
 import { Trans } from "@lingui/macro";
 import { Box, Typography } from "@mui/material";
-import Flex from "../components/flex";
 import React, { ReactNode } from "react";
-import { Contact } from "./contact";
+
+import { Contact } from "@/components/contact";
+import Flex from "@/components/flex";
+
 
 export const Footer = () => {
   return (

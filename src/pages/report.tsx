@@ -2,10 +2,11 @@ import { Box } from "@mui/material";
 import "isomorphic-unfetch";
 import dynamic from "next/dynamic";
 import React from "react";
-import { Banner } from "../components/banner";
-import { AppLayout } from "../components/layout";
-import { MarketArea } from "../domain/types";
-import { fetchCMS } from "../lib/cms-api";
+
+import { Banner } from "@/components/banner";
+import { AppLayout } from "@/components/layout";
+import { MarketArea } from "@/domain/types";
+import { fetchCMS } from "@/lib/cms-api";
 
 // Dynamic import to escape SSR:
 // The "window" object needs to be available to embed powerBI report

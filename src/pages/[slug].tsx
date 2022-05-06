@@ -1,8 +1,9 @@
 import { GetStaticPaths } from "next";
 import React from "react";
-import { AppLayout } from "../components/layout";
-import { MarketArea } from "../domain/types";
-import { fetchCMS } from "../lib/cms-api";
+
+import { AppLayout } from "@/components/layout";
+import { MarketArea } from "@/domain/types";
+import { fetchCMS } from "@/lib/cms-api";
 
 export default function Page({
   simplePage,

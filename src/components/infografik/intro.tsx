@@ -1,9 +1,11 @@
 import { keyframes } from "@emotion/core";
 import { Box, Button } from "@mui/material";
-import { smoothScroll } from "../../lib/smooth-scroll";
-import { PotatoInfographic } from "../../pages/infografik";
-import { colors } from "./colors";
-import Flex from "../../components/flex";
+
+import Flex from "@/components/flex";
+import { colors } from "@/components/infografik/colors";
+import { smoothScroll } from "@/lib/smooth-scroll";
+import { PotatoInfographic } from "@/pages/infografik";
+
 
 export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
   return (

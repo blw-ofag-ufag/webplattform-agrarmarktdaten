@@ -1,12 +1,13 @@
+import { Box } from "@mui/material";
 import { csv } from "d3";
 import { memo, ReactNode, useEffect, useState } from "react";
-import { Box } from "@mui/material";
-import { colors } from "./colors";
-import { getBetriebeSquaresData } from "./data/betriebe";
-import { Section } from "./data/sections";
-import { ScrollyProvider, useReadScrolly, useScrolly } from "./scrolly";
-import { StickySection } from "./sticky-section";
-import { Waffle } from "./waffle";
+
+import { colors } from "@/components/infografik/colors";
+import { getBetriebeSquaresData } from "@/components/infografik/data/betriebe";
+import { Section } from "@/components/infografik/data/sections";
+import { ScrollyProvider, useReadScrolly, useScrolly } from "@/components/infografik/scrolly";
+import { StickySection } from "@/components/infografik/sticky-section";
+import { Waffle } from "@/components/infografik/waffle";
 
 export const ScrollySection = ({
   id,

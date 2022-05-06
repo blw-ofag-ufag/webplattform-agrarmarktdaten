@@ -6,10 +6,11 @@ import {
   fr as pluralsFr,
   it as pluralsIt,
 } from "make-plural/plurals";
-import { messages as catalogDe } from "./de/messages.js";
-import { messages as catalogEn } from "./en/messages.js";
-import { messages as catalogFr } from "./fr/messages.js";
-import { messages as catalogIt } from "./it/messages.js";
+
+import { messages as catalogDe } from "@/locales/de/messages.js";
+import { messages as catalogEn } from "@/locales/en/messages.js";
+import { messages as catalogFr } from "@/locales/fr/messages.js";
+import { messages as catalogIt } from "@/locales/it/messages.js";
 
 export const defaultLocale = "de";
 

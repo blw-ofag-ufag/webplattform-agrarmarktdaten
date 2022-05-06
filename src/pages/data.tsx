@@ -1,3 +1,4 @@
+import { ExpandMore } from "@material-ui/icons";
 import {
   Accordion,
   AccordionDetails,
@@ -16,9 +17,10 @@ import {
   ChipProps,
   SliderProps,
 } from "@mui/material";
-import { AppLayout } from "../components/layout";
-import theme from "../theme";
-import { ExpandMore } from "@material-ui/icons";
+import { useAtom, WritableAtom } from "jotai";
+import React, { useMemo, useState } from "react";
+
+import { AppLayout } from "@/components/layout";
 import {
   addedValueValuesAtom,
   CheckboxValue,
@@ -28,10 +30,9 @@ import {
   monthsAtom,
   productionSystemsAtom,
   yearAtom,
-} from "../domain/data";
-import React, { useMemo, useState } from "react";
-import { useAtom, WritableAtom } from "jotai";
-import useEvent from "../lib/use-event";
+} from "@/domain/data";
+import useEvent from "@/lib/use-event";
+import theme from "@/theme";
 
 const blackAndWhiteTheme = createTheme(theme, {
   palette: {
@@ -65,6 +66,7 @@ const MultiCheckbox = ({
     <>
       {values.map((value, i) => (
         <FormControlLabel
+          key={value.name}
           disableTypography
           sx={{
             justifyContent: "flex-start",
@@ -423,7 +425,6 @@ const DebugCard = ({
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const StorageDebug = () => {
   const [indicators] = useAtom(indicatorsAtom);
   const [markets] = useAtom(marketsAtom);

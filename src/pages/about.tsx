@@ -1,8 +1,9 @@
 import React from "react";
-import { Banner } from "../components/banner";
-import { AppLayout } from "../components/layout";
-import { MarketArea } from "../domain/types";
-import { fetchCMS } from "../lib/cms-api";
+
+import { Banner } from "@/components/banner";
+import { AppLayout } from "@/components/layout";
+import { MarketArea } from "@/domain/types";
+import { fetchCMS } from "@/lib/cms-api";
 
 export default function About({
   aboutPage,

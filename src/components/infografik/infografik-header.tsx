@@ -1,10 +1,13 @@
+import { Link } from "@mui/material";
 import { default as NextLink } from "next/link";
 import React from "react";
-import { Link } from "@mui/material";
-import { Icon } from "../../icons";
-import { LanguageMenu } from "../language-menu";
-import { colors } from "./colors";
-import Flex from "../../components/flex";
+
+import Flex from "@/components/flex";
+import { colors } from "@/components/infografik/colors";
+import { LanguageMenu } from "@/components/language-menu";
+import { Icon } from "@/icons";
+
+
 
 export const InfografikHeader = () => {
   return (

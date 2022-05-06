@@ -1,9 +1,10 @@
-import NextLink from "next/link";
 import { Box, Link } from "@mui/material";
-import Flex from "../components/flex";
-import { MarketArea } from "../domain/types";
-import { Footer } from "./footer";
-import { Header } from "./header";
+import NextLink from "next/link";
+
+import Flex from "@/components/flex";
+import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
+import { MarketArea } from "@/domain/types";
 
 export const HeaderOld = ({
   alternates,

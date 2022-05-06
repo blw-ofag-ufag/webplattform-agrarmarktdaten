@@ -5,7 +5,8 @@ import {
   useTransform,
   useViewportScroll,
 } from "framer-motion";
-import { colors } from "./colors";
+
+import { colors } from "@/components/infografik/colors";
 
 export const ScrollIndicator = () => {
   const { scrollYProgress } = useViewportScroll();

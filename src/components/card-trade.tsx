@@ -1,6 +1,7 @@
 import { Card, Typography, Link } from "@mui/material";
-import { Icon, IconName } from "../icons";
-import Flex from "../components/flex";
+
+import Flex from "@/components/flex";
+import { Icon, IconName } from "@/icons";
 
 export const TradeLevelsGrid = ({
   tradeLevels,
