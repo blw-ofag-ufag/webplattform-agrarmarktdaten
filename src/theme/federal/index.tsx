@@ -4,10 +4,10 @@
 import { Fade, Grow } from "@mui/material";
 import { Breakpoint, createTheme, Theme } from "@mui/material/styles";
 import { merge, omit } from "lodash";
+import SvgIcCheckboxActive from "./icons/IcCheckboxActive";
+import SvgIcCheckboxDefault from "./icons/IcCheckboxDefault";
 
 import shadows from "./shadows";
-
-const Icon = () => {};
 
 const isSafari15 =
   typeof navigator !== "undefined" && navigator.vendor.indexOf("Apple") >= 0
@@ -211,6 +211,13 @@ theme.components = {
       color: "inherit",
     },
     styleOverrides: {},
+  },
+  MuiAccordionSummary: {
+    styleOverrides: {
+      root: {
+        alignItems: "center",
+      },
+    },
   },
   MuiInputLabel: {
     styleOverrides: {
@@ -462,8 +469,8 @@ theme.components = {
   },
   MuiCheckbox: {
     defaultProps: {
-      checkedIcon: <Icon name="checkboxActive" size={20} />,
-      icon: <Icon name="checkboxDefault" size={20} />,
+      checkedIcon: <SvgIcCheckboxActive width={20} />,
+      icon: <SvgIcCheckboxDefault width={20} />,
     },
     styleOverrides: {
       root: {
