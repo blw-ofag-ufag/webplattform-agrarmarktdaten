@@ -27,7 +27,7 @@ const TradeCard = ({
   color: string;
 }) => {
   return (
-    <Card variant="primary" sx={{ width: ["49%", "24%"], mb: 4 }}>
+    <Card sx={{ width: ["49%", "24%"], mb: 4 }}>
       <TradeIcon icon={icon} color={color} />
       <Typography
         component="h2"

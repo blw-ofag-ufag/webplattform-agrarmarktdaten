@@ -1,5 +1,6 @@
-import { Flex } from "@mui/material";
 import { ReactNode } from "react";
+
+import Flex from "@/components/flex";
 
 export const ChapterHeader = ({
   id,

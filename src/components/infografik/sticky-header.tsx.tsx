@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import Flex from "@/components/components/flex";
+import Flex from "@/components/flex";
 import { colors } from "@/components/infografik/colors";
 
 export const StickyHeader = ({ children }: { children: ReactNode }) => {

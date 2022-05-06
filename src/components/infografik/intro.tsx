@@ -6,7 +6,6 @@ import { colors } from "@/components/infografik/colors";
 import { smoothScroll } from "@/lib/smooth-scroll";
 import { PotatoInfographic } from "@/pages/infografik";
 
-
 export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
   return (
     <Flex
@@ -50,18 +49,10 @@ export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
           alignItems: "center",
         }}
       >
-        <Button variant="invisible" onClick={() => smoothScroll(`#produktion`)}>
-          PRODUKTION
-        </Button>
-        <Button variant="invisible" onClick={() => smoothScroll(`#angebot`)}>
-          ANGEBOT
-        </Button>
-        <Button variant="invisible" onClick={() => smoothScroll(`#konsum`)}>
-          KONSUM
-        </Button>
-        <Button variant="invisible" onClick={() => smoothScroll(`#preise`)}>
-          PREISE
-        </Button>
+        <Button onClick={() => smoothScroll(`#produktion`)}>PRODUKTION</Button>
+        <Button onClick={() => smoothScroll(`#angebot`)}>ANGEBOT</Button>
+        <Button onClick={() => smoothScroll(`#konsum`)}>KONSUM</Button>
+        <Button onClick={() => smoothScroll(`#preise`)}>PREISE</Button>
       </Flex>
       <Flex
         sx={{
