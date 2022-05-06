@@ -9,6 +9,37 @@ import SvgIcCheckboxDefault from "./icons/IcCheckboxDefault";
 
 import shadows from "./shadows";
 
+declare module "@mui/material" {
+  interface PaletteColorOptions {
+    light?: string;
+    main: string;
+    hover?: string;
+    active?: string;
+    disabled?: string;
+    colored?: string;
+    dark?: string;
+  }
+
+  interface PaletteOptions {
+    muted?: PaletteColorOptions;
+    alert?: PaletteColorOptions;
+    organization?: PaletteColorOptions;
+    category?: PaletteColorOptions;
+    brand?: PaletteColorOptions;
+    hint?: PaletteColorOptions;
+  }
+
+  interface TypographyPropsVariantOverrides {
+    tag: true;
+  }
+
+  interface ButtonPropsVariantOverrides {
+    selectColorPicker: true;
+    inline: true;
+    inverted: true;
+  }
+}
+
 const isSafari15 =
   typeof navigator !== "undefined" && navigator.vendor.indexOf("Apple") >= 0
     ? navigator.userAgent
@@ -18,7 +49,10 @@ const isSafari15 =
 
 const breakpoints = ["xs", "md"] as Breakpoint[];
 
-const createTypographyVariant = (theme: Theme, spec: Record<string, any>) => {
+const createTypographyVariant = (
+  theme: Theme,
+  spec: Record<string, $IntentionalAny>
+) => {
   const res = omit(spec, ["lineHeight", "fontSize"]);
   for (let i = 0; i < spec.fontSize.length; i++) {
     const lineHeight = `${spec.lineHeight[i]}px`;
@@ -486,6 +520,7 @@ theme.components = {
       checked: {},
     },
   },
+  // @ts-ignore
   MuiCalendarPicker: {
     styleOverrides: {
       root: {
