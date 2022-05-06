@@ -174,7 +174,7 @@ const DesktopMenu = ({
           <Trans id="menu.markets">Märkte</Trans>
           <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
         </Link>
-        <NextLink href="/create/[chartId]" as="/create/new" passHref>
+        <NextLink href="/data" passHref>
           <Link typography="h3" fontWeight="light">
             <Trans id="menu.data">Daten</Trans>
           </Link>
