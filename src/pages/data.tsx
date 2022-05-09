@@ -23,7 +23,7 @@ import {
   styled,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
-import React, { useMemo, useState } from "react";
+import React, { SyntheticEvent, useMemo, useState } from "react";
 
 import { AppLayout } from "@/components/layout";
 import {
@@ -373,7 +373,7 @@ const MultiCheckboxAutocomplete = <T extends CheckboxValue>({
   values: T[];
   onChange: (newValues: T[]) => void;
   placeholder: string;
-  groupBy?: (item: T) => unknown;
+  groupBy?: (item: T) => string;
 }) => {
   const selected = useMemo(() => {
     return values.filter((x) => x.value);
@@ -519,6 +519,7 @@ const StorageDebug = () => {
   const [productionSystems] = useAtom(productionSystemsAtom);
   const [monthOptions] = useAtom(monthsAtom);
   const [countriesOptions] = useAtom(countriesAtom);
+  const [products] = useAtom(countriesAtom);
   return (
     <Box
       display="grid"
@@ -536,12 +537,12 @@ const StorageDebug = () => {
   );
 };
 
-const StateChip = ({
+const StateChip = <T extends CheckboxValue>({
   label,
   atom,
 }: {
   label: string;
-  atom: WritableAtom<CheckboxValue[], CheckboxValue[]>;
+  atom: WritableAtom<T[], T[]>;
 }) => {
   const [values, setValues] = useAtom(atom);
   const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
