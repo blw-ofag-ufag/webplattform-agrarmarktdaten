@@ -544,12 +544,13 @@ const StorageDebug = () => {
       mx={4}
       sx={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
     >
-      {/* <DebugCard title="Indicators" value={indicators} />
+      <DebugCard title="Indicators" value={indicators} />
       <DebugCard title="Markets" value={markets} />
       <DebugCard title="Added value" value={addedValueValues} />
       <DebugCard title="Production systems" value={productionSystems} />
-      <DebugCard title="Month options" value={monthOptions} /> */}
+      <DebugCard title="Month options" value={monthOptions} />
       <DebugCard title="Countries options" value={countriesOptions} />
+      <DebugCard title="Products" value={products} />
     </Box>
   );
 };
@@ -656,7 +657,7 @@ export default function DataBrowser() {
               />
               <StateChip label="Countries" atom={countriesAtom} />
             </Box>
-            <StorageDebug />
+            {/* <StorageDebug /> */}
           </Box>
         </Box>
       </AppLayout>
