@@ -466,52 +466,33 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
   );
 };
 
+const useExclusiveAccordion = (defaultState: string) => {
+  const [expanded, setExpanded] = useState<string | undefined>(defaultState);
+  const onChange = useEvent((ev: SyntheticEvent<Element>) => {
+    const name = (ev.currentTarget.parentNode as HTMLElement).dataset["name"];
+    setExpanded((expanded) => (expanded === name ? undefined : name));
+  });
+  const getAccordionProps = (key: string) => {
+    return {
+      expanded: expanded === key,
+      onChange,
+      "data-name": key,
+    };
+  };
+  return { getAccordionProps };
+};
+
 const MenuContent = () => {
-  const [expanded, setExpanded] = useState<string | undefined>("indicator");
+  const { getAccordionProps } = useExclusiveAccordion("accordion");
   return (
     <>
-      <IndicatorAccordion
-        expanded={expanded === "indicator"}
-        onChange={(e, isExpanded) =>
-          setExpanded(isExpanded ? "indicator" : undefined)
-        }
-      />
-      <TimeAccordion
-        expanded={expanded === "time"}
-        onChange={(e, isExpanded) =>
-          setExpanded(isExpanded ? "time" : undefined)
-        }
-      />
-      <MarketsAccordion
-        expanded={expanded === "markets"}
-        onChange={(e, isExpanded) =>
-          setExpanded(isExpanded ? "markets" : undefined)
-        }
-      />
-      <AddedValueAccordion
-        expanded={expanded === "addedvalue"}
-        onChange={(e, isExpanded) =>
-          setExpanded(isExpanded ? "addedvalue" : undefined)
-        }
-      />
-      <ProductionSystemsAccordion
-        expanded={expanded === "productionsystems"}
-        onChange={(e, isExpanded) =>
-          setExpanded(isExpanded ? "productionsystems" : undefined)
-        }
-      />
-      <ProductsAccordion
-        expanded={expanded === "products"}
-        onChange={(e, isExpanded) =>
-          setExpanded(isExpanded ? "products" : undefined)
-        }
-      />
-      <CountriesAccordion
-        expanded={expanded === "countries"}
-        onChange={(e, isExpanded) =>
-          setExpanded(isExpanded ? "countries" : undefined)
-        }
-      />
+      <IndicatorAccordion {...getAccordionProps("indicator")} />
+      <TimeAccordion {...getAccordionProps("time")} />
+      <MarketsAccordion {...getAccordionProps("markets")} />
+      <AddedValueAccordion {...getAccordionProps("addedvalue")} />
+      <ProductionSystemsAccordion {...getAccordionProps("productionsystems")} />
+      <ProductsAccordion {...getAccordionProps("products")} />
+      <CountriesAccordion {...getAccordionProps("countries")} />
     </>
   );
 };
