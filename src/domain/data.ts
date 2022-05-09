@@ -110,6 +110,21 @@ export const months: CheckboxValue[] = [
   { label: "Dec", name: "dec", value: true },
 ];
 
+export const products: (CheckboxValue & {
+  group: string;
+})[] = [
+  { label: "Hatching eggs", name: "hatchingeggs", group: "eggs", value: false },
+  {
+    label: "Hatchings NWD",
+    name: "hatchingeggs-nwd",
+    group: "eggs",
+    value: false,
+  },
+  { label: "Eggs < 50", name: "eggs<50", group: "eggs", value: true },
+  { label: "Brie Camembert", name: "brie", group: "milk", value: true },
+  { label: "Emmentaler", name: "emmentaler", group: "milk", value: true },
+];
+
 export const marketsAtom = atom(markets);
 export const addedValueValuesAtom = atom(addedValueValues);
 export const productionSystemsAtom = atom(productionSystems);
@@ -117,3 +132,4 @@ export const indicatorsAtom = atom(indicators);
 export const countriesAtom = atom(countries);
 export const yearAtom = atom(year);
 export const monthsAtom = atom(months);
+export const productsAtom = atom(products);

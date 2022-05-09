@@ -1,4 +1,6 @@
 import { ExpandMore } from "@material-ui/icons";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import {
   Accordion,
   AccordionDetails,
@@ -16,6 +18,9 @@ import {
   Grow,
   ChipProps,
   SliderProps,
+  Autocomplete,
+  TextField,
+  styled,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
 import React, { useMemo, useState } from "react";
@@ -29,10 +34,14 @@ import {
   marketsAtom,
   monthsAtom,
   productionSystemsAtom,
+  productsAtom,
   yearAtom,
 } from "@/domain/data";
 import useEvent from "@/lib/use-event";
 import theme from "@/theme";
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const blackAndWhiteTheme = createTheme(theme, {
   palette: {
@@ -78,12 +87,7 @@ const MultiCheckbox = ({
           }}
           label={<Typography variant="body2">{value.label}</Typography>}
           name={value.name}
-          control={
-            <Checkbox
-              checked={value.value}
-              disabled={value.value && trueValues.length === 1}
-            />
-          }
+          control={<Checkbox checked={value.value} />}
           onChange={(_, checked: boolean) => {
             handleChange(i, checked);
           }}
@@ -126,6 +130,8 @@ const FilterAccordionDetails = (props: AccordionDetailsProps) => {
     <AccordionDetails
       {...props}
       sx={{
+        display: "flex",
+        flexDirection: "column",
         mx: "4px",
         mt: "-8px",
         px: "1rem",
@@ -141,7 +147,7 @@ const FilterAccordion = (props: AccordionProps) => {
     <Accordion
       {...props}
       sx={{
-        paddingBottom: 16,
+        paddingBottom: 1,
         "&.Mui-expanded": {
           marginTop: 0,
           marginBottom: 0,
@@ -162,7 +168,8 @@ const CountTrue = ({
   show: boolean;
 }) => {
   const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
-  return trueValues.length === values.length ? null : (
+  return trueValues.length === values.length ||
+    trueValues.length === 0 ? null : (
     <Grow in={show}>
       <Chip sx={{ color: "grey.700" }} size="small" label={trueValues.length} />
     </Grow>
@@ -185,7 +192,7 @@ const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
         <AccordionTitle>Indicators</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
       </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ display: "flex", flexDirection: "column" }}>
+      <FilterAccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
       </FilterAccordionDetails>
     </FilterAccordion>
@@ -263,7 +270,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
       <FilterAccordionSummary>
         <AccordionTitle>Time</AccordionTitle>
       </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ display: "flex", flexDirection: "column" }}>
+      <FilterAccordionDetails>
         <AccordionTitle>Year</AccordionTitle>
         <FilterSlider
           disableSwap
@@ -312,7 +319,7 @@ const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
         <AccordionTitle>Markets</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
       </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ display: "flex", flexDirection: "column" }}>
+      <FilterAccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
       </FilterAccordionDetails>
     </FilterAccordion>
@@ -327,7 +334,7 @@ const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
         <AccordionTitle>Added value</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
       </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ display: "flex", flexDirection: "column" }}>
+      <FilterAccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
       </FilterAccordionDetails>
     </FilterAccordion>
@@ -344,10 +351,79 @@ const ProductionSystemsAccordion = (
         <AccordionTitle>Production systems</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
       </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ display: "flex", flexDirection: "column" }}>
+      <FilterAccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
       </FilterAccordionDetails>
     </FilterAccordion>
+  );
+};
+
+const StyledTextField = styled(TextField)({
+  "& input": {
+    minWidth: "100% !important",
+  },
+});
+
+const MultiCheckboxAutocomplete = <T extends CheckboxValue>({
+  values,
+  onChange,
+  placeholder,
+  groupBy,
+}: {
+  values: T[];
+  onChange: (newValues: T[]) => void;
+  placeholder: string;
+  groupBy?: (item: T) => unknown;
+}) => {
+  const selected = useMemo(() => {
+    return values.filter((x) => x.value);
+  }, [values]);
+  const handleChange = useEvent((_, selectedValues: T[], _2) => {
+    const selectedByName = new Set(selectedValues.map((s) => s.name));
+    const newValues = values.map((v) => ({
+      ...v,
+      value: selectedByName.has(v.name),
+    }));
+    onChange(newValues);
+  });
+  return (
+    <Autocomplete
+      multiple
+      id="checkboxes-tags-demo"
+      value={selected}
+      options={values}
+      disableCloseOnSelect
+      onChange={handleChange}
+      sx={{
+        "& .MuiOutlinedInput-root .MuiAutocomplete-endAdornment": {
+          top: "7px",
+        },
+      }}
+      disableClearable
+      getOptionLabel={(option) => option.label}
+      renderOption={(props, option, { selected }) => (
+        <li {...props}>
+          <Checkbox
+            icon={icon}
+            checkedIcon={checkedIcon}
+            style={{ marginRight: 8 }}
+            checked={selected}
+          />
+          {option.label}
+        </li>
+      )}
+      style={{ width: "100%" }}
+      ChipProps={{ size: "small" }}
+      groupBy={groupBy}
+      renderInput={(params) => (
+        <StyledTextField
+          {...params}
+          placeholder={placeholder}
+          size="small"
+          sx={{ display: "block", minWidth: "100% !important" }}
+        />
+      )}
+    />
   );
 };
 
@@ -359,8 +435,32 @@ const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
         <AccordionTitle>Countries</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
       </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ display: "flex", flexDirection: "column" }}>
-        <MultiCheckbox values={values} onChange={setValues} />
+      <FilterAccordionDetails sx={{ mx: "-2px" }}>
+        <MultiCheckboxAutocomplete
+          values={values}
+          onChange={setValues}
+          placeholder="Choose countries"
+        />
+      </FilterAccordionDetails>
+    </FilterAccordion>
+  );
+};
+
+const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
+  const [values, setValues] = useAtom(productsAtom);
+  return (
+    <FilterAccordion {...props}>
+      <FilterAccordionSummary>
+        <AccordionTitle>Products</AccordionTitle>
+        <CountTrue values={values} show={!props.expanded} />
+      </FilterAccordionSummary>
+      <FilterAccordionDetails sx={{ mx: "-2px" }}>
+        <MultiCheckboxAutocomplete
+          values={values}
+          onChange={setValues}
+          groupBy={(x) => x.group}
+          placeholder="Choose products"
+        />
       </FilterAccordionDetails>
     </FilterAccordion>
   );
@@ -400,6 +500,12 @@ const MenuContent = () => {
           setExpanded(isExpanded ? "productionsystems" : undefined)
         }
       />
+      <ProductsAccordion
+        expanded={expanded === "products"}
+        onChange={(e, isExpanded) =>
+          setExpanded(isExpanded ? "products" : undefined)
+        }
+      />
       <CountriesAccordion
         expanded={expanded === "countries"}
         onChange={(e, isExpanded) =>
@@ -431,17 +537,19 @@ const StorageDebug = () => {
   const [addedValueValues] = useAtom(addedValueValuesAtom);
   const [productionSystems] = useAtom(productionSystemsAtom);
   const [monthOptions] = useAtom(monthsAtom);
+  const [countriesOptions] = useAtom(countriesAtom);
   return (
     <Box
       display="grid"
       mx={4}
       sx={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
     >
-      <DebugCard title="Indicators" value={indicators} />
+      {/* <DebugCard title="Indicators" value={indicators} />
       <DebugCard title="Markets" value={markets} />
       <DebugCard title="Added value" value={addedValueValues} />
       <DebugCard title="Production systems" value={productionSystems} />
-      <DebugCard title="Month options" value={monthOptions} />
+      <DebugCard title="Month options" value={monthOptions} /> */}
+      <DebugCard title="Countries options" value={countriesOptions} />
     </Box>
   );
 };
@@ -455,14 +563,14 @@ const StateChip = ({
 }) => {
   const [values, setValues] = useAtom(atom);
   const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
-  if (values.length === trueValues.length) {
+  if (values.length === trueValues.length || trueValues.length === 0) {
     return null;
   }
   return (
     <Grow in>
       <Chip
         onDelete={() => {
-          setValues(values.map((x) => ({ ...x, value: true })));
+          setValues(values.map((x) => ({ ...x, value: false })));
         }}
         title={values.map((x) => x.label).join(", ")}
         label={
@@ -473,6 +581,45 @@ const StateChip = ({
               .map((x) => x.label)
               .join(", ")}
             {trueValues.length > 2 ? "..." : null}
+          </>
+        }
+      />
+    </Grow>
+  );
+};
+
+const TimeStateChip = () => {
+  const [months, setMonths] = useAtom(monthsAtom);
+  const [yearRange, setYearRange] = useAtom(yearAtom);
+  const trueMonths = useMemo(() => months.filter((v) => v.value), [months]);
+
+  const handleDelete = useEvent(() => {
+    setYearRange({ ...yearRange, value: [yearRange.min, yearRange.max] });
+    setMonths(months.map((x) => ({ ...x, value: true })));
+  });
+
+  const displayMonths =
+    trueMonths.length !== months.length && trueMonths.length !== 0;
+  const displayYears =
+    yearRange.value[0] !== yearRange.min ||
+    yearRange.value[1] !== yearRange.max;
+
+  if (!displayMonths && !displayYears) {
+    return null;
+  }
+
+  return (
+    <Grow in>
+      <Chip
+        onDelete={handleDelete}
+        label={
+          <>
+            Time:{" "}
+            {displayMonths ? trueMonths.map((x) => x.name).join(", ") : null}
+            {displayMonths && displayYears ? ", " : null}
+            {displayYears
+              ? `${yearRange.value[0]}-${yearRange.value[1]}`
+              : null}
           </>
         }
       />
@@ -499,15 +646,17 @@ export default function DataBrowser() {
           <Box bgcolor="#eee" flexGrow={1}>
             <Box display="flex" flexWrap="wrap" sx={{ gap: 1 }} m={4}>
               <StateChip label="Indicators" atom={indicatorsAtom} />
+              <TimeStateChip />
               <StateChip label="Markets" atom={marketsAtom} />
               <StateChip label="Added value" atom={addedValueValuesAtom} />
+              <StateChip label="Products" atom={productsAtom} />
               <StateChip
                 label="Production systems"
                 atom={productionSystemsAtom}
               />
               <StateChip label="Countries" atom={countriesAtom} />
             </Box>
-            {/* <StorageDebug /> */}
+            <StorageDebug />
           </Box>
         </Box>
       </AppLayout>
