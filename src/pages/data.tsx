@@ -555,7 +555,7 @@ const StateChip = <T extends CheckboxValue>({
         onDelete={() => {
           setValues(values.map((x) => ({ ...x, value: false })));
         }}
-        title={values.map((x) => x.label).join(", ")}
+        title={trueValues.map((x) => x.label).join(", ")}
         label={
           <>
             {label}:{" "}
