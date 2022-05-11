@@ -106,7 +106,8 @@ export const indicators: (CheckboxValue & {
     label: "Index",
     name: "index",
     value: false,
-    dimensionIri: "<http://schema.org/index>",
+    dimensionIri:
+      "<https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/priceIndex>",
   },
 ];
 
