@@ -81,11 +81,33 @@ export const year: RangeOptions = {
   value: [2010, 2015],
 };
 
-export const indicators: CheckboxValue[] = [
-  { label: "Prices", name: "prices", value: true },
-  { label: "Amounts", name: "amounts", value: false },
-  { label: "Areas", name: "areas", value: false },
-  { label: "Index", name: "index", value: true },
+export const indicators: (CheckboxValue & {
+  dimensionIri: string;
+})[] = [
+  {
+    label: "Prices",
+    name: "prices",
+    value: true,
+    dimensionIri: "<http://schema.org/price>",
+  },
+  {
+    label: "Amounts",
+    name: "amounts",
+    value: false,
+    dimensionIri: "<http://schema.org/amount>",
+  },
+  {
+    label: "Areas",
+    name: "areas",
+    value: false,
+    dimensionIri: "<http://schema.org/areas>",
+  },
+  {
+    label: "Index",
+    name: "index",
+    value: false,
+    dimensionIri: "<http://schema.org/index>",
+  },
 ];
 
 export const countries: CheckboxValue[] = [
