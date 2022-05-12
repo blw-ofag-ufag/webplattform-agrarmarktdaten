@@ -1,15 +1,19 @@
+import { Locale } from "@/locales/locales";
+
 export type Observation = {
-  observation: string;
   fullDate: string;
-  measure: string;
-  productOrigin?: string;
-  valueCreationStage?: string;
   product?: string;
+  valueCreationStage?: string;
+  productList?: string;
+  productionStage?: string;
+  productOrigin?: string;
+  measure: string;
 };
 
 export const queryObservations = (
   cubes: { cube: string }[] | undefined,
-  indicator: string
+  indicator: string,
+  locale: Locale
 ) => {
   if (cubes?.length) {
     const unionCubesQuery = cubes
@@ -32,7 +36,7 @@ export const queryObservations = (
       PREFIX schema: <http://schema.org/>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-      SELECT ?observation ?fullDate ?measure ?productOrigin ?valueCreationStage ?product
+      SELECT ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin ?measure
       WHERE {
         ${unionCubesQuery}
 
@@ -41,23 +45,38 @@ export const queryObservations = (
           <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/date> ?date .
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist> ?productList .
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/product> ?productIri .
+          ?productIri schema:name ?product .
+
+          FILTER(LANG(?product) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem> ?productionSystem .
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/valuecreationstage> ?valueCreationStageIri .
+          ?valueCreationStageIri schema:name ?valueCreationStage .
+
+          FILTER(LANG(?valueCreationStage) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productorigin> ?productOrigin .
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist> ?productListIri .
+          ?productListIri schema:name ?productList .
+
+          FILTER(LANG(?productList) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/valuecreationstage> ?valueCreationStage .
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem> ?productionSystemIri .
+          ?productionSystemIri schema:name ?productionSystem .
+
+          FILTER(LANG(?productionSystem) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/product> ?product .
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productorigin> ?productOriginIri .
+          ?productOriginIri schema:name ?productOrigin .
+
+          FILTER(LANG(?productOrigin) = "${locale}")
         }
 
         BIND(
@@ -74,6 +93,7 @@ export const queryObservations = (
 
         FILTER(YEAR(?fullDate) >= 2017 && YEAR(?fullDate) <= 2020)
       }
+      ORDER BY ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin
       LIMIT 100
     `;
   }

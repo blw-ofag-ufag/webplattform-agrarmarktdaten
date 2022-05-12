@@ -44,6 +44,7 @@ import {
   queryPossibleCubesForIndicator,
 } from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
+import { useLocale } from "@/lib/use-locale";
 import theme from "@/theme";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -653,24 +654,28 @@ const useSparql = <T extends unknown>(options: Record<string, unknown>) => {
 };
 
 const Results = () => {
+  const locale = useLocale();
   const [indicators] = useAtom(indicatorsAtom);
   const indicator = indicators.find((x) => x.value);
-  const { data: cubes } = useSparql<{ cube: string }>({
+  const { data: cubes, fetching: fetchingCubes } = useSparql<{ cube: string }>({
     query: queryPossibleCubesForIndicator(indicator?.dimensionIri!),
     enabled: indicator?.dimensionIri,
   });
-  const { data: observations } = useSparql<Observation>({
-    query: queryObservations(cubes, indicator?.dimensionIri!),
-    enabled: indicator?.dimensionIri,
+  const { data: observations, fetching: fetchingObservations } =
+    useSparql<Observation>({
+      query: queryObservations(cubes, indicator?.dimensionIri!, locale),
+      enabled: !fetchingCubes,
   });
 
   return (
     <Box m={4}>
       <h2>Available observations</h2>
-      {observations &&
-        observations.map((d) => (
-          <Box component="p" my={0} key={d.observation}>
-            {d.observation}
+      {!fetchingCubes &&
+        !fetchingObservations &&
+        observations &&
+        observations.map((d, i) => (
+          <Box component="p" my={0} key={i}>
+            {d.fullDate} {d.measure}
           </Box>
         ))}
     </Box>
