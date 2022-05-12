@@ -11,7 +11,7 @@ export type Observation = {
 };
 
 export const queryObservations = (
-  cubes: { cube: string }[] | undefined,
+  cubes: Cube[] | undefined,
   indicator: string,
   locale: Locale
 ) => {
@@ -97,6 +97,10 @@ export const queryObservations = (
       LIMIT 100
     `;
   }
+};
+
+export type Cube = {
+  cube: string;
 };
 
 export const queryPossibleCubesForIndicator = (dimension: string) => {

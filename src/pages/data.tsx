@@ -39,6 +39,7 @@ import {
   yearAtom,
 } from "@/domain/data";
 import {
+  Cube,
   Observation,
   queryObservations,
   queryPossibleCubesForIndicator,
@@ -657,7 +658,7 @@ const Results = () => {
   const locale = useLocale();
   const [indicators] = useAtom(indicatorsAtom);
   const indicator = indicators.find((x) => x.value);
-  const { data: cubes, fetching: fetchingCubes } = useSparql<{ cube: string }>({
+  const { data: cubes, fetching: fetchingCubes } = useSparql<Cube>({
     query: queryPossibleCubesForIndicator(indicator?.dimensionIri!),
     enabled: indicator?.dimensionIri,
   });
