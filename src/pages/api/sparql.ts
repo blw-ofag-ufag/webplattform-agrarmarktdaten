@@ -15,7 +15,7 @@ const parseRdf = (obj: Record<string, Literal | NamedNode>) => {
     const raw = obj[k];
 
     // @ts-ignore
-    res[k] = raw?.value || raw;
+    res[k] = raw?.value !== undefined ? raw.value : raw;
   }
   return res;
 };
