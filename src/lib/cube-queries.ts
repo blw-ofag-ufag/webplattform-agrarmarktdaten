@@ -2,8 +2,8 @@ export type Observation = {
   observation: string;
   fullDate: string;
   measure: string;
-  productOrigin: string;
-  valueCreationStage: string;
+  productOrigin?: string;
+  valueCreationStage?: string;
   product?: string;
 };
 
@@ -38,11 +38,23 @@ export const queryObservations = (
 
         ?observation
           ${indicator} ?measure ;
-          <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/date> ?date ;
-          <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist> ?productList ;
-          <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem> ?productionSystem ;
-          <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productorigin> ?productOrigin ;
-          <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/valuecreationstage> ?valueCreationStage .
+          <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/date> ?date .
+
+        OPTIONAL {
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist> ?productList .
+        }
+
+        OPTIONAL {
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem> ?productionSystem .
+        }
+
+        OPTIONAL {
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productorigin> ?productOrigin .
+        }
+
+        OPTIONAL {
+          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/valuecreationstage> ?valueCreationStage .
+        }
 
         OPTIONAL {
           ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/product> ?product .
