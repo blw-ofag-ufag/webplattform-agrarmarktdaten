@@ -1,13 +1,16 @@
 export type Observation = {
   observation: string;
   fullDate: string;
-  price: string;
+  measure: string;
   productOrigin: string;
   valueCreationStage: string;
   product?: string;
 };
 
-export const queryObservations = (cubes: { cube: string }[] | undefined) => {
+export const queryObservations = (
+  cubes: { cube: string }[] | undefined,
+  indicator: string
+) => {
   if (cubes?.length) {
     const unionCubesQuery = cubes
       .map(({ cube }) => {
@@ -29,12 +32,12 @@ export const queryObservations = (cubes: { cube: string }[] | undefined) => {
       PREFIX schema: <http://schema.org/>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-      SELECT ?observation ?fullDate ?price ?productOrigin ?valueCreationStage ?product
+      SELECT ?observation ?fullDate ?measure ?productOrigin ?valueCreationStage ?product
       WHERE {
         ${unionCubesQuery}
 
         ?observation
-          schema:price ?price ;
+          ${indicator} ?measure ;
           <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/date> ?date ;
           <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist> ?productList ;
           <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem> ?productionSystem ;

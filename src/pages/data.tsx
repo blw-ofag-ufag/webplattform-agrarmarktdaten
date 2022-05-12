@@ -660,7 +660,7 @@ const Results = () => {
     enabled: indicator?.dimensionIri,
   });
   const { data: observations } = useSparql<Observation>({
-    query: queryObservations(cubes),
+    query: queryObservations(cubes, indicator?.dimensionIri!),
     enabled: indicator?.dimensionIri,
   });
 
