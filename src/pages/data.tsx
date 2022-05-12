@@ -22,6 +22,12 @@ import {
   TextField,
   styled,
   Radio,
+  Table,
+  TableRow,
+  TableBody,
+  TableHead,
+  TableCell,
+  CircularProgress,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
 import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
@@ -666,19 +672,40 @@ const Results = () => {
     useSparql<Observation>({
       query: queryObservations(cubes, indicator?.dimensionIri!, locale),
       enabled: !fetchingCubes,
-  });
+    });
 
   return (
     <Box m={4}>
-      <h2>Available observations</h2>
-      {!fetchingCubes &&
-        !fetchingObservations &&
-        observations &&
-        observations.map((d, i) => (
-          <Box component="p" my={0} key={i}>
-            {d.fullDate} {d.measure}
-          </Box>
-        ))}
+      {fetchingCubes || fetchingObservations ? (
+        <CircularProgress />
+      ) : (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Product</TableCell>
+              <TableCell>Value Creation Stage</TableCell>
+              <TableCell>Product List</TableCell>
+              <TableCell>Production Stage</TableCell>
+              <TableCell>Origin</TableCell>
+              <TableCell>Value</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {observations?.map((d, i) => (
+              <TableRow key={i}>
+                <TableCell>{d.fullDate}</TableCell>
+                <TableCell>{d.product}</TableCell>
+                <TableCell>{d.valueCreationStage}</TableCell>
+                <TableCell>{d.productList}</TableCell>
+                <TableCell>{d.productionStage}</TableCell>
+                <TableCell>{d.productOrigin}</TableCell>
+                <TableCell>{d.measure}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </Box>
   );
 };
