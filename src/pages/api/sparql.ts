@@ -38,7 +38,9 @@ const streamAsPromise = (s: Stream) => {
 };
 
 const select = async (query: string) => {
-  const stream = await client.query.select(query);
+  const stream = await client.query.select(query, {
+    operation: "postUrlencoded",
+  });
   const res = await streamAsPromise(stream);
   return res;
 };
