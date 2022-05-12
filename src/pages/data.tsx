@@ -38,7 +38,11 @@ import {
   productsAtom,
   yearAtom,
 } from "@/domain/data";
-import { queryPossibleCubesForIndicator } from "@/lib/cube-queries";
+import {
+  Observation,
+  queryObservations,
+  queryPossibleCubesForIndicator,
+} from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
 import theme from "@/theme";
 
@@ -655,14 +659,18 @@ const Results = () => {
     query: queryPossibleCubesForIndicator(indicator?.dimensionIri!),
     enabled: indicator?.dimensionIri,
   });
+  const { data: observations } = useSparql<Observation>({
+    query: queryObservations(cubes),
+    enabled: indicator?.dimensionIri,
+  });
 
   return (
     <Box m={4}>
-      <h2>Available cubes</h2>
-      {cubes &&
-        cubes.map((c) => (
-          <Box component="p" my={0} key={c.cube}>
-            {c.cube}
+      <h2>Available observations</h2>
+      {observations &&
+        observations.map((d) => (
+          <Box component="p" my={0} key={d.observation}>
+            {d.observation}
           </Box>
         ))}
     </Box>
