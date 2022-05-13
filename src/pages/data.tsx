@@ -30,7 +30,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
-import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
+import React, { SyntheticEvent, useMemo, useState } from "react";
 
 import DebugQuery from "@/components/debug-query";
 import { AppLayout } from "@/components/layout";
@@ -48,8 +48,9 @@ import {
 import {
   Cube,
   Observation,
+  queryDateExtent,
   queryObservations,
-  queryPossibleCubesForIndicator,
+  queryPossibleCubes,
 } from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
@@ -72,10 +73,10 @@ const blackAndWhiteTheme = createTheme(theme, {
 });
 
 const renderCheckbox = ({ value }: { value: CheckboxValue }) => (
-  <Checkbox value={value.value} />
+  <Checkbox value={value.value} checked={value.value || false} />
 );
 const renderRadio = ({ value }: { value: CheckboxValue }) => (
-  <Radio sx={{ mt: "-6px" }} size="small" checked={value.value} />
+  <Radio sx={{ mt: "-6px" }} size="small" checked={value.value || false} />
 );
 
 const MultiCheckbox = <T extends CheckboxValue>({
@@ -101,7 +102,7 @@ const MultiCheckbox = <T extends CheckboxValue>({
     onChange(newValues);
   };
   const control = radio ? renderRadio : renderCheckbox;
-  const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
+
   return (
     <>
       {values.map((value, i) => (
@@ -600,27 +601,43 @@ const TimeStateChip = () => {
     </Grow>
   );
 };
-
-};
-
-const Results = () => {
-  const locale = useLocale();
+const useCurrentIndicator = () => {
   const [indicators] = useAtom(indicatorsAtom);
   const indicator = indicators.find((x) => x.value);
-  const { data: cubes, fetching: fetchingCubes } = useSparql<Cube>({
-    query: queryPossibleCubesForIndicator(indicator?.dimensionIri!),
-    enabled: indicator?.dimensionIri,
+  return indicator;
+};
+
+const useFilters = () => {
+  const [years] = useAtom(yearAtom);
+  return {
+    years,
+  };
+};
+
+const Results = ({
+  cubesQuery,
+  yearsQuery,
+}: {
+  cubesQuery: SparqlQueryResult<Cube[]>;
+  yearsQuery: SparqlQueryResult<{ min: string; max: string }[]>;
+}) => {
+  const locale = useLocale();
+  const indicator = useCurrentIndicator();
+  const { data: cubes, fetching: fetchingCubes } = cubesQuery;
+  const filters = useFilters();
+  const observationsQuery = useSparql<Observation[]>({
+    query: queryObservations(cubes!, indicator?.dimensionIri!, locale, filters),
+    enabled: !fetchingCubes,
   });
   const { data: observations, fetching: fetchingObservations } =
-    useSparql<Observation>({
-      query: queryObservations(cubes, indicator?.dimensionIri!, locale),
-      enabled: !fetchingCubes,
-    });
+    observationsQuery;
 
   return (
     <Box m={4} overflow="hidden">
       <Box mb={4}>
         <DebugQuery name="cubes" query={cubesQuery} showData />
+        <DebugQuery name="observations" query={observationsQuery} />
+        <DebugQuery name="years" query={yearsQuery} />
       </Box>
       {fetchingObservations ? (
         <CircularProgress />
@@ -629,6 +646,7 @@ const Results = () => {
           <TableHead>
             <TableRow>
               <TableCell>Date</TableCell>
+              <TableCell>Cube</TableCell>
               <TableCell>Product</TableCell>
               <TableCell>Value Creation Stage</TableCell>
               <TableCell>Product List</TableCell>
@@ -641,6 +659,7 @@ const Results = () => {
             {observations?.map((d, i) => (
               <TableRow key={i}>
                 <TableCell>{d.fullDate}</TableCell>
+                <TableCell>{d.cube}</TableCell>
                 <TableCell>{d.product}</TableCell>
                 <TableCell>{d.valueCreationStage}</TableCell>
                 <TableCell>{d.productList}</TableCell>
@@ -661,6 +680,35 @@ const SafeHydrate = ({ children }: { children: React.ReactElement }) => {
 };
 
 export default function DataBrowser() {
+  const indicator = useCurrentIndicator();
+  const [years, setYearsAtom] = useAtom(yearAtom);
+  const [markets] = useAtom(marketsAtom);
+  const cubesQuery = useSparql<Cube[]>({
+    query: queryPossibleCubes({
+      indicator: indicator?.dimensionIri!,
+      markets: markets.filter((m) => m.value).map((m) => m.name),
+    }),
+    enabled: !!indicator?.dimensionIri,
+  });
+
+  const yearsQuery = useSparql<{ min: string; max: string }[]>({
+    query: queryDateExtent(cubesQuery.data),
+    enabled: !!(cubesQuery?.data && cubesQuery.data.length > 0),
+    onSuccess: (data) => {
+      if (data.length === 0) {
+        return;
+      }
+      const { min, max } = data[0];
+      const minYear = parseInt(min.slice(0, 4));
+      const maxYear = parseInt(max.slice(0, 4));
+      setYearsAtom({
+        min: minYear,
+        max: maxYear,
+        value: [minYear, maxYear],
+      });
+    },
+  });
+
   return (
     <SafeHydrate>
       <ThemeProvider theme={blackAndWhiteTheme}>
@@ -691,7 +739,7 @@ export default function DataBrowser() {
                 <StateChip label="Countries" atom={countriesAtom} />
               </Box>
               {/* <DataBrowserDebug /> */}
-              <Results />
+              <Results cubesQuery={cubesQuery} yearsQuery={yearsQuery} />
             </Box>
           </Box>
         </AppLayout>

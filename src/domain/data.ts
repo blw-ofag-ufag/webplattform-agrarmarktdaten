@@ -5,7 +5,7 @@ export type CheckboxValue = { label: string; name: string; value: boolean };
 export const markets: CheckboxValue[] = [
   {
     label: "Eggs",
-    name: "eggs",
+    name: "egg",
     value: true,
   },
   {
@@ -20,7 +20,7 @@ export const markets: CheckboxValue[] = [
   },
   {
     label: "Animal feed",
-    name: "animalfeed",
+    name: "animal",
     value: false,
   },
   {

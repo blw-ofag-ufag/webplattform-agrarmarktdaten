@@ -1,3 +1,6 @@
+import { ExtractAtomValue } from "jotai";
+
+import { yearAtom } from "@/domain/data";
 import { Locale } from "@/locales/locales";
 
 export type Observation = {
@@ -8,6 +11,13 @@ export type Observation = {
   productionStage?: string;
   productOrigin?: string;
   measure: string;
+  cube?: string;
+};
+
+export type Filter = { value: string };
+
+export type Cube = {
+  cube: string;
 };
 
 const makeUnionCubesQuery = (cubes: Cube[]) => {
@@ -35,7 +45,10 @@ const agDataDim =
 export const queryObservations = (
   cubes: Cube[] | undefined,
   indicator: string,
-  locale: Locale
+  locale: Locale,
+  filters: {
+    years: ExtractAtomValue<typeof yearAtom>;
+  }
 ) => {
   if (cubes?.length) {
     const unionCubesQuery = makeUnionCubesQuery(cubes);
@@ -45,14 +58,15 @@ export const queryObservations = (
       PREFIX schema: <http://schema.org/>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-      SELECT ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin ?measure
+      SELECT ?cube ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin ?measure
       WHERE {
-        ${unionCubesQuery}
-
+        FILTER(YEAR(?fullDate) >= ${filters.years.value[0]} && YEAR(?fullDate) <= ${filters.years.value[1]})
         ?observation
           ${indicator} ?measure ;
           <${agDataDim}/date> ?date .
 
+
+        ${unionCubesQuery}
         OPTIONAL {
           ?observation <${agDataDim}/product> ?productIri .
           ?productIri schema:name ?product .
@@ -100,7 +114,6 @@ export const queryObservations = (
           ) as ?fullDate
         )
 
-        FILTER(YEAR(?fullDate) >= 2017 && YEAR(?fullDate) <= 2020)
       }
       ORDER BY ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin
       LIMIT 100
@@ -108,11 +121,13 @@ export const queryObservations = (
   }
 };
 
-export type Cube = {
-  cube: string;
-};
-
-export const queryPossibleCubesForIndicator = (dimension: string) => {
+export const queryPossibleCubes = ({
+  indicator,
+  markets,
+}: {
+  indicator: string;
+  markets: string[];
+}) => {
   const res = `
     PREFIX cube: <https://cube.link/>
     PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -124,11 +139,64 @@ export const queryPossibleCubesForIndicator = (dimension: string) => {
         a cube:Cube ;
         cube:observationConstraint ?shape .
       ?shape ?p ?blankNode .
-      ?blankNode sh:path ?dimension .
+      ?blankNode sh:path ${indicator} .
 
-      FILTER(?dimension = ${dimension})
+      FILTER (
+        ${markets
+          .map((m) => `contains(str(?cube), "${m}")`)
+          .join(" || \n     ")}
+      )
     }
   `;
 
   return res;
+};
+
+export const queryDistinctDimensionValues = (
+  cubes: Cube[] | undefined,
+  dimension: string
+) => {
+  if (!cubes || cubes.length === 0) {
+    return undefined;
+  }
+
+  const unionCubesQuery = makeUnionCubesQuery(cubes);
+  const res = `
+    PREFIX cube: <https://cube.link/>
+    PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+    SELECT DISTINCT ?value
+    FROM <https://lindas.admin.ch/foag/agricultural-market-data>
+    WHERE {
+      ${unionCubesQuery}
+      ?observation <${dimension}> ?value .
+    }
+  `;
+
+  return res;
+};
+
+export const queryDateExtent = (cubes: Cube[] | undefined) => {
+  if (!cubes || cubes.length === 0) {
+    return undefined;
+  }
+
+  const unionCubesQuery = makeUnionCubesQuery(cubes);
+  const res = `
+    PREFIX cube: <https://cube.link/>
+    PREFIX sh: <http://www.w3.org/ns/shacl#>
+
+    SELECT (MIN(?date) as ?min) (MAX(?date) as ?max)
+    FROM <https://lindas.admin.ch/foag/agricultural-market-data>
+    WHERE {
+      ${unionCubesQuery}
+      ?observation <${dimensions.date}> ?date .
+    }
+  `;
+
+  return res;
+};
+
+export const dimensions = {
+  date: `${agDataDim}/date`,
 };
