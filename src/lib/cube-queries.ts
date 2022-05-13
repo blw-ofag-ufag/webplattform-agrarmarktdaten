@@ -10,26 +10,32 @@ export type Observation = {
   measure: string;
 };
 
+const makeUnionCubesQuery = (cubes: Cube[]) => {
+  const unionCubesQuery = cubes
+    .map(({ cube }) => {
+      const cubeQuery = `
+        SELECT *
+        WHERE {
+          <${cube}> cube:observationSet ?observationSet .
+          ?cube cube:observationSet ?observationSet .
+          ?observationSet cube:observation ?observation .
+        }
+      `;
+
+      return `{ ${cubeQuery} }`;
+    })
+    .join(" UNION ");
+
+  return unionCubesQuery;
+};
+
 export const queryObservations = (
   cubes: Cube[] | undefined,
   indicator: string,
   locale: Locale
 ) => {
   if (cubes?.length) {
-    const unionCubesQuery = cubes
-      .map(({ cube }) => {
-        const cubeQuery = `
-          SELECT *
-          WHERE {
-            <${cube}> cube:observationSet ?observationSet .
-            ?observationSet cube:observation ?observation .
-          }
-        `;
-
-        return `{ ${cubeQuery} }`;
-      })
-      .join(" UNION ");
-
+    const unionCubesQuery = makeUnionCubesQuery(cubes);
     return `
       PREFIX cube: <https://cube.link/>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
