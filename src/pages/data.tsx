@@ -55,6 +55,8 @@ import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
 import theme from "@/theme";
 
+import useSparql, { SparqlQueryResult } from "./api/use-sparql";
+
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -599,26 +601,6 @@ const TimeStateChip = () => {
   );
 };
 
-const useSparql = <T extends unknown>(options: Record<string, unknown>) => {
-  const [data, setData] = useState<T[]>();
-  const [fetching, setFetching] = useState(false);
-  const body = JSON.stringify(options);
-  useEffect(() => {
-    if (options.enabled === false) {
-      return;
-    }
-    setFetching(true);
-    const run = async () => {
-      const res = await fetch("/api/sparql", {
-        method: "post",
-        body,
-      }).then((resp) => resp.json());
-      setData(res);
-      setFetching(false);
-    };
-    run();
-  }, [body, options.enabled]);
-  return { data, fetching };
 };
 
 const Results = () => {
