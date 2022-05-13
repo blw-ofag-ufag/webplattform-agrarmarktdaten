@@ -21,9 +21,16 @@ import {
   Autocomplete,
   TextField,
   styled,
+  Radio,
+  Table,
+  TableRow,
+  TableBody,
+  TableHead,
+  TableCell,
+  CircularProgress,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
-import React, { SyntheticEvent, useMemo, useState } from "react";
+import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
 
 import { AppLayout } from "@/components/layout";
 import {
@@ -37,7 +44,14 @@ import {
   productsAtom,
   yearAtom,
 } from "@/domain/data";
+import {
+  Cube,
+  Observation,
+  queryObservations,
+  queryPossibleCubesForIndicator,
+} from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
+import { useLocale } from "@/lib/use-locale";
 import theme from "@/theme";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -54,22 +68,36 @@ const blackAndWhiteTheme = createTheme(theme, {
   },
 });
 
-const MultiCheckbox = ({
+const renderCheckbox = ({ value }: { value: CheckboxValue }) => (
+  <Checkbox value={value.value} />
+);
+const renderRadio = ({ value }: { value: CheckboxValue }) => (
+  <Radio sx={{ mt: "-6px" }} size="small" checked={value.value} />
+);
+
+const MultiCheckbox = <T extends CheckboxValue>({
   values,
   onChange,
+  radio,
 }: {
-  values: CheckboxValue[];
-  onChange: (v: CheckboxValue[]) => void;
+  values: T[];
+  onChange: (v: T[]) => void;
+  radio?: boolean;
 }) => {
   const handleChange = (i: number, value: boolean) => {
-    const newValues = [
-      ...values.slice(0, i),
-      { ...values[i], value },
-      ...values.slice(i + 1),
-    ];
-    console.log(newValues);
+    let newValues;
+    if (radio) {
+      newValues = values.map((v, j) => ({ ...v, value: i === j }));
+    } else {
+      newValues = [
+        ...values.slice(0, i),
+        { ...values[i], value },
+        ...values.slice(i + 1),
+      ];
+    }
     onChange(newValues);
   };
+  const control = radio ? renderRadio : renderCheckbox;
   const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
   return (
     <>
@@ -87,7 +115,7 @@ const MultiCheckbox = ({
           }}
           label={<Typography variant="body2">{value.label}</Typography>}
           name={value.name}
-          control={<Checkbox checked={value.value} />}
+          control={control({ value })}
           onChange={(_, checked: boolean) => {
             handleChange(i, checked);
           }}
@@ -193,7 +221,7 @@ const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
         <CountTrue show={!props.expanded} values={values} />
       </FilterAccordionSummary>
       <FilterAccordionDetails>
-        <MultiCheckbox values={values} onChange={setValues} />
+        <MultiCheckbox radio values={values} onChange={setValues} />
       </FilterAccordionDetails>
     </FilterAccordion>
   );
@@ -610,6 +638,78 @@ const TimeStateChip = () => {
   );
 };
 
+const useSparql = <T extends unknown>(options: Record<string, unknown>) => {
+  const [data, setData] = useState<T[]>();
+  const [fetching, setFetching] = useState(false);
+  const body = JSON.stringify(options);
+  useEffect(() => {
+    if (options.enabled === false) {
+      return;
+    }
+    setFetching(true);
+    const run = async () => {
+      const res = await fetch("/api/sparql", {
+        method: "post",
+        body,
+      }).then((resp) => resp.json());
+      setData(res);
+      setFetching(false);
+    };
+    run();
+  }, [body, options.enabled]);
+  return { data, fetching };
+};
+
+const Results = () => {
+  const locale = useLocale();
+  const [indicators] = useAtom(indicatorsAtom);
+  const indicator = indicators.find((x) => x.value);
+  const { data: cubes, fetching: fetchingCubes } = useSparql<Cube>({
+    query: queryPossibleCubesForIndicator(indicator?.dimensionIri!),
+    enabled: indicator?.dimensionIri,
+  });
+  const { data: observations, fetching: fetchingObservations } =
+    useSparql<Observation>({
+      query: queryObservations(cubes, indicator?.dimensionIri!, locale),
+      enabled: !fetchingCubes,
+    });
+
+  return (
+    <Box m={4}>
+      {fetchingCubes || fetchingObservations ? (
+        <CircularProgress />
+      ) : (
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Product</TableCell>
+              <TableCell>Value Creation Stage</TableCell>
+              <TableCell>Product List</TableCell>
+              <TableCell>Production Stage</TableCell>
+              <TableCell>Origin</TableCell>
+              <TableCell>Value</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {observations?.map((d, i) => (
+              <TableRow key={i}>
+                <TableCell>{d.fullDate}</TableCell>
+                <TableCell>{d.product}</TableCell>
+                <TableCell>{d.valueCreationStage}</TableCell>
+                <TableCell>{d.productList}</TableCell>
+                <TableCell>{d.productionStage}</TableCell>
+                <TableCell>{d.productOrigin}</TableCell>
+                <TableCell>{d.measure}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </Box>
+  );
+};
+
 export default function DataBrowser() {
   return (
     <ThemeProvider theme={blackAndWhiteTheme}>
@@ -640,10 +740,10 @@ export default function DataBrowser() {
               <StateChip label="Countries" atom={countriesAtom} />
             </Box>
             {/* <StorageDebug /> */}
+            <Results />
           </Box>
         </Box>
       </AppLayout>
-      ;
     </ThemeProvider>
   );
 }

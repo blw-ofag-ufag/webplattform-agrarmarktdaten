@@ -459,13 +459,13 @@ theme.components = {
         borderRadius: (theme.shape.borderRadius as number) * 2,
         padding: "0 6px",
         minHeight: 48,
+        "&.Mui-focused": {
+          outline: "3px solid #333333",
+        },
       },
       sizeSmall: {
         height: 40,
         minHeight: 40,
-      },
-      focused: {
-        outline: "3px solid #333333",
       },
     },
   },
@@ -510,11 +510,11 @@ theme.components = {
       root: {
         padding: 4,
         color: "primary.main",
-      },
-      disabled: {
-        color: "grey.500",
-        "&$checked": {
-          color: "primary.disabled",
+        "&.Mui-disabled": {
+          color: "grey.500",
+          "&.Mui-checked": {
+            color: "primary.disabled",
+          },
         },
       },
       checked: {},
@@ -536,10 +536,10 @@ theme.components = {
       root: {
         justifyContent: "center",
         alignItems: "center",
-      },
-      selected: {
-        color: "white",
-        "&.Mui-disabled": {
+        "&.Mui-selected": {
+          color: "white",
+        },
+        "&.Mui-disabled.Mui-selected": {
           color: "rgba(255, 255, 255, 0.5)",
         },
       },

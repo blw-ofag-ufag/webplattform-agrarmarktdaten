@@ -39,6 +39,8 @@
     "@next/mdx": "12.1.0",
     "@theme-ui/components": "^0.13.1",
     "@theme-ui/presets": "^0.13.1",
+    "@tpluscode/sparql-builder": "^0.3.21",
+    "@zazuko/rdf-vocabularies": "^2021.9.22-3",
     "catalog": "^4.0.1-canary.2",
     "clipboard-polyfill": "^4.0.0-rc1",
     "core-js": "^3.6.5",
@@ -61,6 +63,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intersection-observer": "^8.26.1",
+    "sparql-http-client": "^2.4.0",
     "urql": "^2.2.0",
     "use-immer": "^0.6.0"
   },
