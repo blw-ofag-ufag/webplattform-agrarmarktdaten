@@ -674,40 +674,46 @@ const Results = () => {
   );
 };
 
+const SafeHydrate = ({ children }: { children: React.ReactElement }) => {
+  return typeof window === "undefined" ? null : children;
+};
+
 export default function DataBrowser() {
   return (
-    <ThemeProvider theme={blackAndWhiteTheme}>
-      <AppLayout>
-        <Box
-          mt="92px"
-          py={16}
-          mb={-8}
-          zIndex={0}
-          display="flex"
-          justifyContent="stretch"
-          minHeight="80vh"
-        >
-          <Box width="236px" flexGrow={0} flexShrink={0}>
-            <MenuContent />
-          </Box>
-          <Box bgcolor="#eee" flexGrow={1}>
-            <Box display="flex" flexWrap="wrap" sx={{ gap: 1 }} m={4}>
-              <StateChip label="Indicators" atom={indicatorsAtom} />
-              <TimeStateChip />
-              <StateChip label="Markets" atom={marketsAtom} />
-              <StateChip label="Added value" atom={addedValueValuesAtom} />
-              <StateChip label="Products" atom={productsAtom} />
-              <StateChip
-                label="Production systems"
-                atom={productionSystemsAtom}
-              />
-              <StateChip label="Countries" atom={countriesAtom} />
+    <SafeHydrate>
+      <ThemeProvider theme={blackAndWhiteTheme}>
+        <AppLayout>
+          <Box
+            mt="92px"
+            py={4}
+            mb={-8}
+            zIndex={0}
+            display="flex"
+            justifyContent="stretch"
+            minHeight="80vh"
+          >
+            <Box width="236px" flexGrow={0} flexShrink={0}>
+              <MenuContent />
             </Box>
-            {/* <StorageDebug /> */}
-            <Results />
+            <Box bgcolor="#eee" flexGrow={1}>
+              <Box display="flex" flexWrap="wrap" sx={{ gap: 1 }} m={4}>
+                <StateChip label="Indicators" atom={indicatorsAtom} />
+                <TimeStateChip />
+                <StateChip label="Markets" atom={marketsAtom} />
+                <StateChip label="Added value" atom={addedValueValuesAtom} />
+                <StateChip label="Products" atom={productsAtom} />
+                <StateChip
+                  label="Production systems"
+                  atom={productionSystemsAtom}
+                />
+                <StateChip label="Countries" atom={countriesAtom} />
+              </Box>
+              {/* <DataBrowserDebug /> */}
+              <Results />
+            </Box>
           </Box>
-        </Box>
-      </AppLayout>
-    </ThemeProvider>
+        </AppLayout>
+      </ThemeProvider>
+    </SafeHydrate>
   );
 }
