@@ -29,6 +29,9 @@ const makeUnionCubesQuery = (cubes: Cube[]) => {
   return unionCubesQuery;
 };
 
+const agDataDim =
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension";
+
 export const queryObservations = (
   cubes: Cube[] | undefined,
   indicator: string,
@@ -48,38 +51,38 @@ export const queryObservations = (
 
         ?observation
           ${indicator} ?measure ;
-          <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/date> ?date .
+          <${agDataDim}/date> ?date .
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/product> ?productIri .
+          ?observation <${agDataDim}/product> ?productIri .
           ?productIri schema:name ?product .
 
           FILTER(LANG(?product) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/valuecreationstage> ?valueCreationStageIri .
+          ?observation <${agDataDim}/valuecreationstage> ?valueCreationStageIri .
           ?valueCreationStageIri schema:name ?valueCreationStage .
 
           FILTER(LANG(?valueCreationStage) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist> ?productListIri .
+          ?observation <${agDataDim}/productlist> ?productListIri .
           ?productListIri schema:name ?productList .
 
           FILTER(LANG(?productList) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem> ?productionSystemIri .
+          ?observation <${agDataDim}/productionsystem> ?productionSystemIri .
           ?productionSystemIri schema:name ?productionSystem .
 
           FILTER(LANG(?productionSystem) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productorigin> ?productOriginIri .
+          ?observation <${agDataDim}/productorigin> ?productOriginIri .
           ?productOriginIri schema:name ?productOrigin .
 
           FILTER(LANG(?productOrigin) = "${locale}")
