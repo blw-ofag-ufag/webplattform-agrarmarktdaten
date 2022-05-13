@@ -32,6 +32,7 @@ import {
 import { useAtom, WritableAtom } from "jotai";
 import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
 
+import DebugQuery from "@/components/debug-query";
 import { AppLayout } from "@/components/layout";
 import {
   addedValueValuesAtom,
@@ -525,46 +526,6 @@ const MenuContent = () => {
   );
 };
 
-const DebugCard = ({
-  title,
-  value,
-}: {
-  title: string;
-  value: $IntentionalAny;
-}) => {
-  return (
-    <div>
-      <Typography variant="h5">{title}</Typography>
-      <pre style={{ fontSize: "small" }}>{JSON.stringify(value, null, 2)}</pre>
-    </div>
-  );
-};
-
-const StorageDebug = () => {
-  const [indicators] = useAtom(indicatorsAtom);
-  const [markets] = useAtom(marketsAtom);
-  const [addedValueValues] = useAtom(addedValueValuesAtom);
-  const [productionSystems] = useAtom(productionSystemsAtom);
-  const [monthOptions] = useAtom(monthsAtom);
-  const [countriesOptions] = useAtom(countriesAtom);
-  const [products] = useAtom(countriesAtom);
-  return (
-    <Box
-      display="grid"
-      mx={4}
-      sx={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
-    >
-      <DebugCard title="Indicators" value={indicators} />
-      <DebugCard title="Markets" value={markets} />
-      <DebugCard title="Added value" value={addedValueValues} />
-      <DebugCard title="Production systems" value={productionSystems} />
-      <DebugCard title="Month options" value={monthOptions} />
-      <DebugCard title="Countries options" value={countriesOptions} />
-      <DebugCard title="Products" value={products} />
-    </Box>
-  );
-};
-
 const StateChip = <T extends CheckboxValue>({
   label,
   atom,
@@ -675,8 +636,11 @@ const Results = () => {
     });
 
   return (
-    <Box m={4}>
-      {fetchingCubes || fetchingObservations ? (
+    <Box m={4} overflow="hidden">
+      <Box mb={4}>
+        <DebugQuery name="cubes" query={cubesQuery} showData />
+      </Box>
+      {fetchingObservations ? (
         <CircularProgress />
       ) : (
         <Table>
