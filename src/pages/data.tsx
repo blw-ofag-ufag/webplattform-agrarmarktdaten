@@ -519,8 +519,8 @@ const MenuContent = () => {
   return (
     <>
       <IndicatorAccordion {...getAccordionProps("indicator")} />
-      <TimeAccordion {...getAccordionProps("time")} />
       <MarketsAccordion {...getAccordionProps("markets")} />
+      <TimeAccordion {...getAccordionProps("time")} />
       <AddedValueAccordion {...getAccordionProps("addedvalue")} />
       <ProductionSystemsAccordion {...getAccordionProps("productionsystems")} />
       <ProductsAccordion {...getAccordionProps("products")} />
