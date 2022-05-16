@@ -20,27 +20,14 @@ export type Cube = {
   cube: string;
 };
 
-const makeUnionCubesQuery = (cubes: Cube[]) => {
-  const unionCubesQuery = cubes
-    .map(({ cube }) => {
-      const cubeQuery = `
-        SELECT *
-        WHERE {
-          <${cube}> cube:observationSet ?observationSet .
-          ?cube cube:observationSet ?observationSet .
-          ?observationSet cube:observation ?observation .
-        }
-      `;
-
-      return `{ ${cubeQuery} }`;
-    })
-    .join(" UNION ");
-
-  return unionCubesQuery;
-};
-
 const agDataDim =
   "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension";
+
+const getCubesObservations = (cubes: Cube[]) => {
+  return `VALUES (?cube) { ${cubes.map((d) => `(<${d.cube}>)\n`).join("")} }
+  ?cube cube:observationSet ?observationSet .
+  ?observationSet cube:observation ?observation .`;
+};
 
 export const queryObservations = (
   cubes: Cube[] | undefined,
@@ -50,9 +37,11 @@ export const queryObservations = (
     years: ExtractAtomValue<typeof yearAtom>;
   }
 ) => {
-  if (cubes?.length) {
-    const unionCubesQuery = makeUnionCubesQuery(cubes);
-    return `
+  if (!cubes || cubes.length === 0) {
+    return undefined;
+  }
+
+  return `
       PREFIX cube: <https://cube.link/>
       PREFIX sh: <http://www.w3.org/ns/shacl#>
       PREFIX schema: <http://schema.org/>
@@ -60,13 +49,15 @@ export const queryObservations = (
 
       SELECT ?cube ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin ?measure
       WHERE {
-        FILTER(YEAR(?fullDate) >= ${filters.years.value[0]} && YEAR(?fullDate) <= ${filters.years.value[1]})
+        FILTER(YEAR(?fullDate) >= ${
+          filters.years.value[0]
+        } && YEAR(?fullDate) <= ${filters.years.value[1]})
+
+        ${getCubesObservations(cubes)}
         ?observation
           ${indicator} ?measure ;
           <${agDataDim}/date> ?date .
 
-
-        ${unionCubesQuery}
         OPTIONAL {
           ?observation <${agDataDim}/product> ?productIri .
           ?productIri schema:name ?product .
@@ -113,12 +104,10 @@ export const queryObservations = (
             )
           ) as ?fullDate
         )
-
       }
       ORDER BY ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin
       LIMIT 100
     `;
-  }
 };
 
 export const queryPossibleCubes = ({
@@ -160,7 +149,6 @@ export const queryDistinctDimensionValues = (
     return undefined;
   }
 
-  const unionCubesQuery = makeUnionCubesQuery(cubes);
   const res = `
     PREFIX cube: <https://cube.link/>
     PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -168,7 +156,7 @@ export const queryDistinctDimensionValues = (
     SELECT DISTINCT ?value
     FROM <https://lindas.admin.ch/foag/agricultural-market-data>
     WHERE {
-      ${unionCubesQuery}
+      ${getCubesObservations(cubes)}
       ?observation <${dimension}> ?value .
     }
   `;
@@ -181,7 +169,6 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
     return undefined;
   }
 
-  const unionCubesQuery = makeUnionCubesQuery(cubes);
   const res = `
     PREFIX cube: <https://cube.link/>
     PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -189,7 +176,7 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
     SELECT (MIN(?date) as ?min) (MAX(?date) as ?max)
     FROM <https://lindas.admin.ch/foag/agricultural-market-data>
     WHERE {
-      ${unionCubesQuery}
+      ${getCubesObservations(cubes)}
       ?observation <${dimensions.date}> ?date .
     }
   `;
