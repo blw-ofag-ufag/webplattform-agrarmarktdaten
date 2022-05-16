@@ -4,7 +4,6 @@ import { useAtom } from "jotai";
 import {
   addedValueValuesAtom,
   countriesAtom,
-  countriesAtom,
   indicatorsAtom,
   marketsAtom,
   monthsAtom,
