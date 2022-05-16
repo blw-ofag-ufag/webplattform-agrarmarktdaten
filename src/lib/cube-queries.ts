@@ -23,6 +23,28 @@ export type Cube = {
 const agDataBase = "https://lindas.admin.ch/foag/agricultural-market-data";
 const agDataDim =
   "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension";
+export const dimensions = {
+  date: `<${agDataDim}/date>`,
+  product: `<${agDataDim}/product>`,
+  productList: `<${agDataDim}/productlist>`,
+  productOrigin: `<${agDataDim}/productorigin>`,
+  productionSystem: `<${agDataDim}/productionsystem>`,
+  valueCreationStage: `<${agDataDim}/valuecreationstage>`,
+};
+
+const getOptionalDimension = (
+  dimensionName: keyof typeof dimensions,
+  locale: Locale
+) => {
+  const dimensionIri = dimensions[dimensionName];
+
+  return `OPTIONAL {
+    ?observation ${dimensionIri} ?${dimensionName}Iri .
+    ?${dimensionName}Iri schema:name ?${dimensionName} .
+
+    FILTER(LANG(?${dimensionName}) = "${locale}")
+  }`;
+};
 
 const getCubesObservations = (cubes: Cube[]) => {
   return `VALUES (?cube) { ${cubes.map((d) => `(<${d.cube}>)\n`).join("")} }
@@ -42,73 +64,54 @@ export const queryObservations = (
     return undefined;
   }
 
+  const optionalDimensionsToFetch: (keyof typeof dimensions)[] = [
+    "product",
+    "valueCreationStage",
+    "productList",
+    "productionSystem",
+    "productOrigin",
+  ];
+
+  const sparqlOptionalDimensions = optionalDimensionsToFetch
+    .map((d) => `?${d}`)
+    .join(" ");
+
   return `
-      PREFIX cube: <https://cube.link/>
-      PREFIX sh: <http://www.w3.org/ns/shacl#>
-      PREFIX schema: <http://schema.org/>
-      PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX cube: <https://cube.link/>
+    PREFIX sh: <http://www.w3.org/ns/shacl#>
+    PREFIX schema: <http://schema.org/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-      SELECT ?cube ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin ?measure
-      WHERE {
-        FILTER(YEAR(?fullDate) >= ${
-          filters.years.value[0]
-        } && YEAR(?fullDate) <= ${filters.years.value[1]})
+    SELECT ?cube ?fullDate ?measure ${sparqlOptionalDimensions}
+    WHERE {
+      FILTER(YEAR(?fullDate) >= ${
+        filters.years.value[0]
+      } && YEAR(?fullDate) <= ${filters.years.value[1]})
 
-        ${getCubesObservations(cubes)}
-        ?observation
-          ${indicator} ?measure ;
-          ${dimensions.date} ?date .
+      ${getCubesObservations(cubes)}
+      ?observation
+        ${indicator} ?measure ;
+        ${dimensions.date} ?date .
 
-        OPTIONAL {
-          ?observation ${dimensions.product} ?productIri .
-          ?productIri schema:name ?product .
+      ${optionalDimensionsToFetch
+        .map((d) => getOptionalDimension(d, locale))
+        .join("\n")}
 
-          FILTER(LANG(?product) = "${locale}")
-        }
-
-        OPTIONAL {
-          ?observation ${dimensions.valueCreationStage} ?valueCreationStageIri .
-          ?valueCreationStageIri schema:name ?valueCreationStage .
-
-          FILTER(LANG(?valueCreationStage) = "${locale}")
-        }
-
-        OPTIONAL {
-          ?observation ${dimensions.productList} ?productListIri .
-          ?productListIri schema:name ?productList .
-
-          FILTER(LANG(?productList) = "${locale}")
-        }
-
-        OPTIONAL {
-          ?observation ${dimensions.productionSystem} ?productionSystemIri .
-          ?productionSystemIri schema:name ?productionSystem .
-
-          FILTER(LANG(?productionSystem) = "${locale}")
-        }
-
-        OPTIONAL {
-          ?observation ${dimensions.productOrigin} ?productOriginIri .
-          ?productOriginIri schema:name ?productOrigin .
-
-          FILTER(LANG(?productOrigin) = "${locale}")
-        }
-
-        BIND(
+      BIND(
+        IF(
+          STRLEN(STR(?date)) = 4,
+          xsd:dateTime(CONCAT(STR(?date), "-01-01")),
           IF(
-            STRLEN(STR(?date)) = 4,
-            xsd:dateTime(CONCAT(STR(?date), "-01-01")),
-            IF(
-              STRLEN(STR(?date)) = 7,
-              xsd:dateTime(CONCAT(STR(?date), "-01")),
-              xsd:dateTime(STR(?date))
-            )
-          ) as ?fullDate
-        )
-      }
-      ORDER BY ?fullDate ?product ?valueCreationStage ?productList ?productionSystem ?productOrigin
-      LIMIT 100
-    `;
+            STRLEN(STR(?date)) = 7,
+            xsd:dateTime(CONCAT(STR(?date), "-01")),
+            xsd:dateTime(STR(?date))
+          )
+        ) as ?fullDate
+      )
+    }
+    ORDER BY ?fullDate ${sparqlOptionalDimensions}
+    LIMIT 100
+  `;
 };
 
 export const queryPossibleCubes = ({
@@ -183,13 +186,4 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
   `;
 
   return res;
-};
-
-export const dimensions = {
-  date: `<${agDataDim}/date>`,
-  product: `<${agDataDim}/product>`,
-  productList: `<${agDataDim}/productlist>`,
-  productOrigin: `<${agDataDim}/productorigin>`,
-  productionSystem: `<${agDataDim}/productionsystem>`,
-  valueCreationStage: `<${agDataDim}/valuecreationstage>`,
 };
