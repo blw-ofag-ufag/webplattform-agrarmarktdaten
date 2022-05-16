@@ -20,6 +20,7 @@ export type Cube = {
   cube: string;
 };
 
+const agDataBase = "https://lindas.admin.ch/foag/agricultural-market-data";
 const agDataDim =
   "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension";
 
@@ -56,38 +57,38 @@ export const queryObservations = (
         ${getCubesObservations(cubes)}
         ?observation
           ${indicator} ?measure ;
-          <${agDataDim}/date> ?date .
+          ${dimensions.date} ?date .
 
         OPTIONAL {
-          ?observation <${agDataDim}/product> ?productIri .
+          ?observation ${dimensions.product} ?productIri .
           ?productIri schema:name ?product .
 
           FILTER(LANG(?product) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <${agDataDim}/valuecreationstage> ?valueCreationStageIri .
+          ?observation ${dimensions.valueCreationStage} ?valueCreationStageIri .
           ?valueCreationStageIri schema:name ?valueCreationStage .
 
           FILTER(LANG(?valueCreationStage) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <${agDataDim}/productlist> ?productListIri .
+          ?observation ${dimensions.productList} ?productListIri .
           ?productListIri schema:name ?productList .
 
           FILTER(LANG(?productList) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <${agDataDim}/productionsystem> ?productionSystemIri .
+          ?observation ${dimensions.productionSystem} ?productionSystemIri .
           ?productionSystemIri schema:name ?productionSystem .
 
           FILTER(LANG(?productionSystem) = "${locale}")
         }
 
         OPTIONAL {
-          ?observation <${agDataDim}/productorigin> ?productOriginIri .
+          ?observation ${dimensions.productOrigin} ?productOriginIri .
           ?productOriginIri schema:name ?productOrigin .
 
           FILTER(LANG(?productOrigin) = "${locale}")
@@ -122,7 +123,7 @@ export const queryPossibleCubes = ({
     PREFIX sh: <http://www.w3.org/ns/shacl#>
 
     SELECT ?cube
-    FROM <https://lindas.admin.ch/foag/agricultural-market-data>
+    FROM <${agDataBase}>
     WHERE {
       ?cube
         a cube:Cube ;
@@ -154,7 +155,7 @@ export const queryDistinctDimensionValues = (
     PREFIX sh: <http://www.w3.org/ns/shacl#>
 
     SELECT DISTINCT ?value
-    FROM <https://lindas.admin.ch/foag/agricultural-market-data>
+    FROM <${agDataBase}>
     WHERE {
       ${getCubesObservations(cubes)}
       ?observation <${dimension}> ?value .
@@ -174,10 +175,10 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
     PREFIX sh: <http://www.w3.org/ns/shacl#>
 
     SELECT (MIN(?date) as ?min) (MAX(?date) as ?max)
-    FROM <https://lindas.admin.ch/foag/agricultural-market-data>
+    FROM <${agDataBase}>
     WHERE {
       ${getCubesObservations(cubes)}
-      ?observation <${dimensions.date}> ?date .
+      ?observation ${dimensions.date} ?date .
     }
   `;
 
@@ -185,5 +186,10 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
 };
 
 export const dimensions = {
-  date: `${agDataDim}/date`,
+  date: `<${agDataDim}/date>`,
+  product: `<${agDataDim}/product>`,
+  productList: `<${agDataDim}/productlist>`,
+  productOrigin: `<${agDataDim}/productorigin>`,
+  productionSystem: `<${agDataDim}/productionsystem>`,
+  valueCreationStage: `<${agDataDim}/valuecreationstage>`,
 };
