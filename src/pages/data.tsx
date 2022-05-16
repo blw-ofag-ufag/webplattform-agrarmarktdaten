@@ -27,7 +27,6 @@ import {
   TableBody,
   TableHead,
   TableCell,
-  CircularProgress,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
 import React, { SyntheticEvent, useMemo, useState } from "react";
@@ -49,8 +48,12 @@ import {
   Cube,
   Observation,
   queryDateExtent,
-  queryObservations,
   queryPossibleCubes,
+  queryObservations,
+  Dimension,
+  agDataDimensions,
+  AgDataDimension,
+  queryDimensions,
 } from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
@@ -616,56 +619,63 @@ const useFilters = () => {
 
 const Results = ({
   cubesQuery,
+  dimensionsQuery,
   yearsQuery,
 }: {
   cubesQuery: SparqlQueryResult<Cube[]>;
+  dimensionsQuery: SparqlQueryResult<Dimension[]>;
   yearsQuery: SparqlQueryResult<{ min: string; max: string }[]>;
 }) => {
   const locale = useLocale();
   const indicator = useCurrentIndicator();
-  const { data: cubes, fetching: fetchingCubes } = cubesQuery;
+  const { data: cubes } = cubesQuery;
+  const { data: dimensions, fetching: fetchingDimensions } = dimensionsQuery;
   const filters = useFilters();
   const observationsQuery = useSparql<Observation[]>({
-    query: queryObservations(cubes!, indicator?.dimensionIri!, locale, filters),
-    enabled: !fetchingCubes,
+    query: queryObservations(
+      cubes!,
+      dimensions?.filter((d) => +d.count === cubes?.length),
+      indicator?.dimensionIri!,
+      locale,
+      filters
+    ),
+    enabled: !fetchingDimensions,
   });
   const { data: observations, fetching: fetchingObservations } =
     observationsQuery;
+
+  const dimensionsToRender: AgDataDimension[] | undefined = useMemo(
+    () => dimensions?.map((d) => agDataDimensions[d.dimension]).filter(Boolean),
+    [dimensions]
+  );
 
   return (
     <Box m={4} overflow="hidden">
       <Box mb={4}>
         <DebugQuery name="cubes" query={cubesQuery} showData />
+        <DebugQuery name="dimensions" query={dimensionsQuery} showData />
+        <DebugQuery name="years" query={yearsQuery} showData />
         <DebugQuery name="observations" query={observationsQuery} />
-        <DebugQuery name="years" query={yearsQuery} />
       </Box>
-      {fetchingObservations ? (
-        <CircularProgress />
-      ) : (
+      {fetchingObservations ? null : (
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Cube</TableCell>
-              <TableCell>Product</TableCell>
-              <TableCell>Value Creation Stage</TableCell>
-              <TableCell>Product List</TableCell>
-              <TableCell>Production Stage</TableCell>
-              <TableCell>Origin</TableCell>
-              <TableCell>Value</TableCell>
+              {dimensionsToRender?.map((d) => (
+                <TableCell key={d.iri}>{d.name}</TableCell>
+              ))}
+              <TableCell>{indicator?.label}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {observations?.map((d, i) => (
+            {observations?.map((o, i) => (
               <TableRow key={i}>
-                <TableCell>{d.fullDate}</TableCell>
-                <TableCell>{d.cube}</TableCell>
-                <TableCell>{d.product}</TableCell>
-                <TableCell>{d.valueCreationStage}</TableCell>
-                <TableCell>{d.productList}</TableCell>
-                <TableCell>{d.productionStage}</TableCell>
-                <TableCell>{d.productOrigin}</TableCell>
-                <TableCell>{d.measure}</TableCell>
+                {dimensionsToRender?.map((d, j) => (
+                  <TableCell key={`${i}_${j}`}>
+                    {o[d.name as keyof Observation]}
+                  </TableCell>
+                ))}
+                <TableCell>{o.measure}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -683,6 +693,7 @@ export default function DataBrowser() {
   const indicator = useCurrentIndicator();
   const [years, setYearsAtom] = useAtom(yearAtom);
   const [markets] = useAtom(marketsAtom);
+
   const cubesQuery = useSparql<Cube[]>({
     query: queryPossibleCubes({
       indicator: indicator?.dimensionIri!,
@@ -690,10 +701,13 @@ export default function DataBrowser() {
     }),
     enabled: !!indicator?.dimensionIri,
   });
-
+  const dimensionsQuery = useSparql<Dimension[]>({
+    query: queryDimensions(cubesQuery.data),
+    enabled: !!(cubesQuery?.data && cubesQuery.data.length > 0),
+  });
   const yearsQuery = useSparql<{ min: string; max: string }[]>({
     query: queryDateExtent(cubesQuery.data),
-    enabled: !!(cubesQuery?.data && cubesQuery.data.length > 0),
+    enabled: !!(dimensionsQuery?.data && dimensionsQuery.data.length > 0),
     onSuccess: (data) => {
       if (data.length === 0) {
         return;
@@ -739,7 +753,11 @@ export default function DataBrowser() {
                 <StateChip label="Countries" atom={countriesAtom} />
               </Box>
               {/* <DataBrowserDebug /> */}
-              <Results cubesQuery={cubesQuery} yearsQuery={yearsQuery} />
+              <Results
+                cubesQuery={cubesQuery}
+                dimensionsQuery={dimensionsQuery}
+                yearsQuery={yearsQuery}
+              />
             </Box>
           </Box>
         </AppLayout>
