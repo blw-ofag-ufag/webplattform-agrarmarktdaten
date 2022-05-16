@@ -54,6 +54,8 @@ import {
   agDataDimensions,
   AgDataDimension,
   queryDimensions,
+  ObservationIri,
+  queryObservationIris,
 } from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
@@ -631,15 +633,21 @@ const Results = ({
   const { data: cubes } = cubesQuery;
   const { data: dimensions, fetching: fetchingDimensions } = dimensionsQuery;
   const filters = useFilters();
+  const observationIrisQuery = useSparql<ObservationIri[]>({
+    query: queryObservationIris(cubes, filters),
+    enabled: !fetchingDimensions,
+  });
+  const { data: observationIris, fetching: fetchingObservationIris } =
+    observationIrisQuery;
   const observationsQuery = useSparql<Observation[]>({
     query: queryObservations(
-      cubes!,
-      dimensions?.filter((d) => +d.count === cubes?.length),
+      cubes?.length!,
+      observationIris!,
+      dimensions,
       indicator?.dimensionIri!,
-      locale,
-      filters
+      locale
     ),
-    enabled: !fetchingDimensions,
+    enabled: !fetchingObservationIris,
   });
   const { data: observations, fetching: fetchingObservations } =
     observationsQuery;
@@ -654,6 +662,11 @@ const Results = ({
       <Box mb={4}>
         <DebugQuery name="cubes" query={cubesQuery} showData />
         <DebugQuery name="dimensions" query={dimensionsQuery} showData />
+        <DebugQuery
+          name="observationIris"
+          query={observationIrisQuery}
+          showData
+        />
         <DebugQuery name="years" query={yearsQuery} showData />
         <DebugQuery name="observations" query={observationsQuery} />
       </Box>
@@ -664,6 +677,11 @@ const Results = ({
               {dimensionsToRender?.map((d) => (
                 <TableCell key={d.iri}>{d.name}</TableCell>
               ))}
+              {/*
+              TODO: Do we even need this indicator here? It is needed to select
+              the cubes for merging, but at this point we probably should just add
+              measures to the agDataDimensions object and generate this automatically.
+              */}
               <TableCell>{indicator?.label}</TableCell>
             </TableRow>
           </TableHead>

@@ -3,15 +3,30 @@ import { ExtractAtomValue } from "jotai";
 import { yearAtom } from "@/domain/data";
 import { Locale } from "@/locales/locales";
 
+export type ObservationIri = {
+  observation: string;
+};
+
+// TODO: generate based on agDataDimensions keys
 export type Observation = {
-  fullDate: string;
-  product?: string;
-  valueCreationStage?: string;
-  productList?: string;
-  productionStage?: string;
-  productOrigin?: string;
+  date: string;
   measure: string;
-  cube?: string;
+  bundle?: string;
+  confection?: string;
+  dataType?: string;
+  dataSource?: string;
+  foreignTrade?: string;
+  labelShare?: string;
+  priceSegment?: string;
+  productionStage?: string;
+  product?: string;
+  productList?: string;
+  productFeatures?: string;
+  productOrigin?: string;
+  salesRegion?: string;
+  typeOfUse?: string;
+  unit?: string;
+  valueCreationStage?: string;
 };
 
 export type Filter = { value: string };
@@ -29,6 +44,7 @@ export type AgDataDimension = {
   name: string;
   label: string;
   iri: string;
+  // Optional dimension can contain empty values.
   isOptional: boolean;
 };
 
@@ -43,60 +59,18 @@ export const agDataDimensions: { [key: string]: AgDataDimension } = {
       iri: `<${agDataDim}/date>`,
       isOptional: false,
     },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/product":
-    {
-      name: "product",
-      label: "Product",
-      iri: `<${agDataDim}/product>`,
-      isOptional: true,
-    },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist":
-    {
-      name: "productList",
-      label: "Product List",
-      iri: `<${agDataDim}/productlist>`,
-      isOptional: true,
-    },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productfeatures":
-    {
-      name: "productFeatures",
-      label: "Product Features",
-      iri: `<${agDataDim}/productfeatures>`,
-      isOptional: true,
-    },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productorigin":
-    {
-      name: "productOrigin",
-      label: "Product Origin",
-      iri: `<${agDataDim}/productorigin>`,
-      isOptional: true,
-    },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem":
-    {
-      name: "productionSystem",
-      label: "Production System",
-      iri: `<${agDataDim}/productionsystem>`,
-      isOptional: true,
-    },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/valuecreationstage":
-    {
-      name: "valueCreationStage",
-      label: "Value Creation Stage",
-      iri: `<${agDataDim}/valuecreationstage>`,
-      isOptional: true,
-    },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/unit":
-    {
-      name: "unit",
-      label: "Unit",
-      iri: `<${agDataDim}/unit>`,
-      isOptional: true,
-    },
   "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/bundle":
     {
       name: "bundle",
       label: "Bundle",
       iri: `<${agDataDim}/bundle>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/confecion":
+    {
+      name: "confecion",
+      label: "Confecion",
+      iri: `<${agDataDim}/confecion>`,
       isOptional: true,
     },
   "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/datatype":
@@ -113,13 +87,6 @@ export const agDataDimensions: { [key: string]: AgDataDimension } = {
       iri: `<${agDataDim}/datasource>`,
       isOptional: true,
     },
-  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/salesregion":
-    {
-      name: "salesRegion",
-      label: "Sales Region",
-      iri: `<${agDataDim}/salesregion>`,
-      isOptional: true,
-    },
   "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/foreigntrade":
     {
       name: "foreignTrade",
@@ -127,10 +94,110 @@ export const agDataDimensions: { [key: string]: AgDataDimension } = {
       iri: `<${agDataDim}/foreigntrade>`,
       isOptional: true,
     },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/labelShare":
+    {
+      name: "labelShare",
+      label: "Label Share",
+      iri: `<${agDataDim}/labelShare>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/pricesegment":
+    {
+      name: "priceSegment",
+      label: "Price Segment",
+      iri: `<${agDataDim}/pricesegment>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productionsystem":
+    {
+      name: "productionSystem",
+      label: "Production System",
+      iri: `<${agDataDim}/productionsystem>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/product":
+    {
+      name: "product",
+      label: "Product",
+      iri: `<${agDataDim}/product>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productfeatures":
+    {
+      name: "productFeatures",
+      label: "Product Features",
+      iri: `<${agDataDim}/productfeatures>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productlist":
+    {
+      name: "productList",
+      label: "Product List",
+      iri: `<${agDataDim}/productlist>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/productorigin":
+    {
+      name: "productOrigin",
+      label: "Product Origin",
+      iri: `<${agDataDim}/productorigin>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/salesregion":
+    {
+      name: "salesRegion",
+      label: "Sales Region",
+      iri: `<${agDataDim}/salesregion>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/typeofuse":
+    {
+      name: "typeOfUse",
+      label: "Type of Use",
+      iri: `<${agDataDim}/typeofuse>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/unit":
+    {
+      name: "unit",
+      label: "Unit",
+      iri: `<${agDataDim}/unit>`,
+      isOptional: true,
+    },
+  "https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/valuecreationstage":
+    {
+      name: "valueCreationStage",
+      label: "Value Creation Stage",
+      iri: `<${agDataDim}/valuecreationstage>`,
+      isOptional: true,
+    },
 };
 
-const getOptionalDimension = (name: string, locale: Locale) => {
+// Below separation of logic makes queries much faster. A getUnsafeOptionalDimension
+// could be used in all cases, but it is way slower compared to getSafeOptionalDimension.
+
+/**
+ * Generates SPARQL logic to retrieve **safe** optional dimension (dimension that is
+ * present in all cubes that were merged together) that can contains empty values.
+ */
+const getSafeOptionalDimension = (name: string, locale: Locale) => {
   return `OPTIONAL {
+    ?${name}Iri schema:name ?${name} .
+    FILTER(LANGMATCHES(LANG(?${name}), "${locale}"))
+  }`;
+};
+
+/**
+ * Generates SPARQL logic to retrieve **unsafe** optional dimension (dimension that is
+ * not present in some cubes that were merged together) that can contain empty values.
+ */
+const getUnsafeOptionalDimension = (
+  name: string,
+  iri: string,
+  locale: Locale
+) => {
+  return `OPTIONAL {
+    ?observation ${iri} ?${name}Iri .
     ?${name}Iri schema:name ?${name} .
     FILTER(LANGMATCHES(LANG(?${name}), "${locale}"))
   }`;
@@ -144,45 +211,33 @@ const getCubesObservations = (cubes: Cube[]) => {
 
 const selectDimensions = (dims: AgDataDimension[]) => {
   return `${dims
-    .map((d) => `${d.iri} ?${`${d.isOptional ? `${d.name}Iri` : d.name}`} `)
+    .map((d) => `${d.iri} ?${d.name}${`${d.isOptional ? "Iri" : ""}`} `)
     .join("; \n")} .`;
 };
 
-export const queryObservations = (
+export const queryObservationIris = (
   cubes: Cube[] | undefined,
-  dimensions: Dimension[] | undefined,
-  indicator: string,
-  locale: Locale,
   filters: {
     years: ExtractAtomValue<typeof yearAtom>;
   }
 ) => {
-  if (!cubes || cubes.length === 0 || !dimensions || dimensions.length === 0) {
+  if (!cubes || cubes.length === 0) {
     return undefined;
   }
 
-  const dimensionsToFetch = dimensions
-    .map((d) => agDataDimensions[d.dimension])
-    .filter(Boolean);
-  const sparqlDimensions = dimensionsToFetch.map((d) => `?${d.name}`).join(" ");
-
+  // TODO: Improve ORDER BY, currently 2000 will be before 1999.
+  // Coverting to string makes it WAY faster than when sorting by date.
+  // Retrieve date iri in more elegant way?
   return `
     PREFIX cube: <https://cube.link/>
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     PREFIX schema: <http://schema.org/>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    SELECT ?cube ?fullDate ?measure ${sparqlDimensions}
+    SELECT ?observation
     WHERE {
       ${getCubesObservations(cubes)}
-      ?observation
-        ${indicator} ?measure ;
-        ${selectDimensions(dimensionsToFetch)}
-
-      ${dimensionsToFetch
-        .filter((d) => d.isOptional)
-        .map((d) => getOptionalDimension(d.name, locale))
-        .join("\n")}
+      ?observation ${agDataDimensions[`${agDataDim}/date`].iri} ?date .
 
       BIND(
         IF(
@@ -202,6 +257,67 @@ export const queryObservations = (
     }
     ORDER BY STR(?date)
     LIMIT 100
+  `;
+};
+
+export const queryObservations = (
+  nOfCubes: number,
+  observationIris: ObservationIri[] | undefined,
+  dimensions: Dimension[] | undefined,
+  indicator: string,
+  locale: Locale
+) => {
+  if (
+    !observationIris ||
+    observationIris.length === 0 ||
+    !dimensions ||
+    dimensions.length === 0
+  ) {
+    return undefined;
+  }
+
+  // TODO: This probably can be done better :)
+  const safeDimensions = dimensions
+    .filter((d) => +d.count === nOfCubes)
+    .map((d) => agDataDimensions[d.dimension])
+    .filter(Boolean);
+  const unsafeDimensions = dimensions
+    .filter((d) => +d.count !== nOfCubes)
+    .map((d) => agDataDimensions[d.dimension])
+    .filter(Boolean);
+  const sparqlDimensions = [...safeDimensions, ...unsafeDimensions]
+    .map((d) => `?${d.name}`)
+    .join(" ");
+
+  // TODO: Think about filtering by isOptional (currently only
+  // date is availabe in all cubes).
+  return `
+    PREFIX cube: <https://cube.link/>
+    PREFIX sh: <http://www.w3.org/ns/shacl#>
+    PREFIX schema: <http://schema.org/>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+    SELECT ${sparqlDimensions} ?measure
+    WHERE {
+      VALUES (?observation) { ${observationIris
+        .map((d) => `(<${d.observation}>)`)
+        .join("\n")} }
+
+      ?observation
+        ${indicator} ?measure ;
+        ${selectDimensions(safeDimensions)}
+
+      ${safeDimensions
+        .filter((d) => d.isOptional)
+        .map((d) => getSafeOptionalDimension(d.name, locale))
+        .join("\n")}
+
+      ${unsafeDimensions
+        .filter((d) => d.isOptional)
+        .map((d) => getUnsafeOptionalDimension(d.name, d.iri, locale))
+        .join("\n")}
+    }
+    ORDER BY STR(?date)
   `;
 };
 
@@ -251,7 +367,7 @@ export const queryDimensions = (cubes: Cube[] | undefined) => {
     SELECT DISTINCT ?dimension (COUNT(?dimension) as ?count)
     FROM <https://lindas.admin.ch/foag/agricultural-market-data>
     WHERE {
-      VALUES (?cube) { ${cubes.map((d) => `(<${d.cube}>)\n`).join("")} }
+      VALUES (?cube) { ${cubes.map((d) => `(<${d.cube}>)`).join("\n")} }
 
       ?cube cube:observationConstraint ?shape .
       ?shape ?prop ?blankNode .
@@ -291,6 +407,7 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
     return undefined;
   }
 
+  // TODO: Retrieve date in more elegant way?
   const res = `
     PREFIX cube: <https://cube.link/>
     PREFIX sh: <http://www.w3.org/ns/shacl#>
