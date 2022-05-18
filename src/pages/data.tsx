@@ -1,11 +1,9 @@
-import { ExpandMore } from "@material-ui/icons";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
-  Accordion,
   AccordionDetails,
   AccordionProps,
-  AccordionSummary,
   Box,
   Checkbox,
   Chip,
@@ -14,7 +12,6 @@ import {
   Slider,
   ThemeProvider,
   Typography,
-  AccordionDetailsProps,
   Grow,
   ChipProps,
   SliderProps,
@@ -27,11 +24,13 @@ import {
   TableBody,
   TableHead,
   TableCell,
+  AccordionSummary,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
 import React, { SyntheticEvent, useMemo, useState } from "react";
 
 import DebugQuery from "@/components/debug-query";
+import FilterAccordion from "@/components/filter-accordion";
 import { AppLayout } from "@/components/layout";
 import {
   addedValueValuesAtom,
@@ -134,69 +133,6 @@ const MultiCheckbox = <T extends CheckboxValue>({
   );
 };
 
-const FilterAccordionSummary = ({ ...props }) => {
-  return (
-    <AccordionSummary
-      {...props}
-      expandIcon={<ExpandMore />}
-      sx={{
-        paddingTop: "6px",
-        paddingBottom: "6px",
-        paddingLeft: "1rem",
-        "&.Mui-expanded": {
-          minHeight: "48px",
-          paddingTop: "6px",
-          paddingBottom: "6px",
-        },
-        "& .MuiAccordionSummary-content": {
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 0,
-          ".Mui-expanded &": {
-            margin: 0,
-          },
-        },
-      }}
-    />
-  );
-};
-
-const FilterAccordionDetails = (props: AccordionDetailsProps) => {
-  return (
-    <AccordionDetails
-      {...props}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        mx: "4px",
-        mt: "-8px",
-        px: "1rem",
-        pb: 5,
-        ...props.sx,
-      }}
-    />
-  );
-};
-
-const FilterAccordion = (props: AccordionProps) => {
-  return (
-    <Accordion
-      {...props}
-      sx={{
-        paddingBottom: 1,
-        "&.Mui-expanded": {
-          marginTop: 0,
-          marginBottom: 0,
-          "&::before": {
-            opacity: 1,
-          },
-        },
-      }}
-    />
-  );
-};
-
 const CountTrue = ({
   values,
   show,
@@ -225,13 +161,13 @@ const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(indicatorsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Indicators</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox radio values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -272,6 +208,7 @@ const MonthChip = (props: ChipProps) => {
 
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   const [yearOptions, setYearOptions] = useAtom(yearAtom);
+  const [yearState, setYearState] = useState(yearOptions);
   const handleYearSlideChange = useEvent((ev, value: number[] | number) => {
     if (!Array.isArray(value)) {
       return;
@@ -304,10 +241,10 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   });
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Time</AccordionTitle>
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <AccordionTitle>Year</AccordionTitle>
         <FilterSlider
           disableSwap
@@ -343,7 +280,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
             />
           ))}
         </Box>
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -352,13 +289,13 @@ const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(marketsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Markets</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -367,13 +304,13 @@ const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(addedValueValuesAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Added value</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -384,13 +321,13 @@ const ProductionSystemsAccordion = (
   const [values, setValues] = useAtom(productionSystemsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Production systems</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -468,17 +405,17 @@ const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(countriesAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Countries</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ mx: "-2px" }}>
+      </AccordionSummary>
+      <AccordionDetails sx={{ mx: "-2px" }}>
         <MultiCheckboxAutocomplete
           values={values}
           onChange={setValues}
           placeholder="Choose countries"
         />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -487,18 +424,18 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(productsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Products</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ mx: "-2px" }}>
+      </AccordionSummary>
+      <AccordionDetails sx={{ mx: "-2px" }}>
         <MultiCheckboxAutocomplete
           values={values}
           onChange={setValues}
           groupBy={(x) => x.group}
           placeholder="Choose products"
         />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
