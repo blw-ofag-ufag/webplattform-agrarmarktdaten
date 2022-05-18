@@ -251,9 +251,9 @@ export const queryObservationIris = (
         ) as ?fullDate
       )
 
-      FILTER(YEAR(?fullDate) >= ${filters.years.min} && YEAR(?fullDate) <= ${
-    filters.years.max
-  })
+      FILTER(YEAR(?fullDate) >= ${
+        filters.years.value[0]
+      } && YEAR(?fullDate) <= ${filters.years.value[1]})
     }
     ORDER BY STR(?date)
     LIMIT 100
