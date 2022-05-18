@@ -687,7 +687,7 @@ const Results = ({
         <DebugQuery name="observations" query={observationsQuery} />
       </Box>
       {fetchingObservations ? null : (
-        <Table>
+        <Table sx={{ overflowX: "auto" }}>
           <TableHead>
             <TableRow>
               {dimensionsToRender?.map((d) => (
@@ -773,7 +773,7 @@ export default function DataBrowser() {
             <Box width="236px" flexGrow={0} flexShrink={0}>
               <MenuContent />
             </Box>
-            <Box bgcolor="#eee" flexGrow={1}>
+            <Box bgcolor="#eee" flexGrow={1} overflow="hidden">
               <Box display="flex" flexWrap="wrap" sx={{ gap: 1 }} m={4}>
                 <StateChip label="Indicators" atom={indicatorsAtom} />
                 <TimeStateChip />
