@@ -24,6 +24,7 @@ import {
   TableHead,
   TableCell,
   AccordionSummary,
+  Paper,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
 import React, { SyntheticEvent, useMemo, useState } from "react";
@@ -608,7 +609,38 @@ const Results = ({
 
   return (
     <Box m={4} overflow="hidden">
-      <Box mb={4}>
+      <Paper sx={{ maxHeight: 500, overflow: "auto", mb: 2 }}>
+        {fetchingObservations ? null : (
+          <Table>
+            <TableHead>
+              <TableRow>
+                {dimensionsToRender?.map((d) => (
+                  <TableCell key={d.iri}>{d.name}</TableCell>
+                ))}
+                {/*
+              TODO: Do we even need this indicator here? It is needed to select
+              the cubes for merging, but at this point we probably should just add
+              measures to the agDataDimensions object and generate this automatically.
+              */}
+                <TableCell>{indicator?.label}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {observations?.map((o, i) => (
+                <TableRow key={i}>
+                  {dimensionsToRender?.map((d, j) => (
+                    <TableCell key={`${i}_${j}`}>
+                      {o[d.name as keyof Observation]}
+                    </TableCell>
+                  ))}
+                  <TableCell>{o.measure}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </Paper>
+      <Box>
         <DebugQuery
           name="cubes"
           query={cubesQuery}
@@ -635,35 +667,6 @@ const Results = ({
         <DebugQuery name="years" query={yearsQuery} renderData />
         <DebugQuery name="observations" query={observationsQuery} />
       </Box>
-      {fetchingObservations ? null : (
-        <Table sx={{ overflowX: "auto" }}>
-          <TableHead>
-            <TableRow>
-              {dimensionsToRender?.map((d) => (
-                <TableCell key={d.iri}>{d.name}</TableCell>
-              ))}
-              {/*
-              TODO: Do we even need this indicator here? It is needed to select
-              the cubes for merging, but at this point we probably should just add
-              measures to the agDataDimensions object and generate this automatically.
-              */}
-              <TableCell>{indicator?.label}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {observations?.map((o, i) => (
-              <TableRow key={i}>
-                {dimensionsToRender?.map((d, j) => (
-                  <TableCell key={`${i}_${j}`}>
-                    {o[d.name as keyof Observation]}
-                  </TableCell>
-                ))}
-                <TableCell>{o.measure}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
     </Box>
   );
 };
