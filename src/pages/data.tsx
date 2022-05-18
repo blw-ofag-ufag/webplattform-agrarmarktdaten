@@ -660,14 +660,30 @@ const Results = ({
   return (
     <Box m={4} overflow="hidden">
       <Box mb={4}>
-        <DebugQuery name="cubes" query={cubesQuery} showData />
-        <DebugQuery name="dimensions" query={dimensionsQuery} showData />
+        <DebugQuery
+          name="cubes"
+          query={cubesQuery}
+          renderData={(cubes) =>
+            cubes.map((cube) => <div key={cube.cube}>{cube.cube}</div>)
+          }
+        />
+        <DebugQuery
+          name="dimensions"
+          query={dimensionsQuery}
+          renderData={(dims) =>
+            dims.map((dim) => (
+              <div key={dim.dimension}>
+                {dim.dimension}: {dim.count}
+              </div>
+            ))
+          }
+        />
         <DebugQuery
           name="observationIris"
           query={observationIrisQuery}
-          showData
+          renderData
         />
-        <DebugQuery name="years" query={yearsQuery} showData />
+        <DebugQuery name="years" query={yearsQuery} renderData />
         <DebugQuery name="observations" query={observationsQuery} />
       </Box>
       {fetchingObservations ? null : (
