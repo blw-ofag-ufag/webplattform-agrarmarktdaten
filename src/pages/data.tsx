@@ -14,7 +14,6 @@ import {
   Typography,
   Grow,
   ChipProps,
-  SliderProps,
   Autocomplete,
   TextField,
   styled,
@@ -32,6 +31,7 @@ import React, { SyntheticEvent, useMemo, useState } from "react";
 import DebugQuery from "@/components/debug-query";
 import FilterAccordion from "@/components/filter-accordion";
 import { AppLayout } from "@/components/layout";
+import { withStyles } from "@/components/style-utils";
 import {
   addedValueValuesAtom,
   CheckboxValue,
@@ -172,18 +172,22 @@ const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
   );
 };
 
-const FilterSlider = (props: SliderProps) => {
-  return (
-    <Slider
-      {...props}
-      sx={{
-        "& .MuiSlider-markLabel": {
-          fontSize: "0.75rem",
-        },
-      }}
-    />
-  );
-};
+const FilterSlider = withStyles(Slider, (theme) => ({
+  root: {
+    marginBottom: theme.spacing(6),
+    "& .MuiSlider-valueLabel": {
+      top: "3.25rem",
+      padding: "2px 4px",
+      backgroundColor: theme.palette.grey[300],
+      color: theme.palette.text.primary,
+      fontSize: "0.75rem",
+      "&:before": {
+        bottom: "auto",
+        top: "-8px",
+      },
+    },
+  },
+}));
 
 const MonthChip = (props: ChipProps) => {
   return (
@@ -409,7 +413,7 @@ const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
         <AccordionTitle>Countries</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
       </AccordionSummary>
-      <AccordionDetails sx={{ mx: "-2px" }}>
+      <AccordionDetails>
         <MultiCheckboxAutocomplete
           values={values}
           onChange={setValues}
@@ -699,7 +703,7 @@ export default function DataBrowser() {
       <ThemeProvider theme={blackAndWhiteTheme}>
         <AppLayout>
           <Box
-            mt="92px"
+            mt="76px"
             py={4}
             mb={-8}
             zIndex={0}
