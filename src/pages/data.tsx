@@ -212,15 +212,26 @@ const MonthChip = (props: ChipProps) => {
 
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   const [yearOptions, setYearOptions] = useAtom(yearAtom);
-  const [yearState, setYearState] = useState(yearOptions);
+  const [yearSliderValue, setYearSliderValue] = useState(() => [
+    1990,
+    new Date().getFullYear(),
+  ]);
+  const handleYearSlideChangeCommitted = useEvent(
+    (ev, value: number[] | number) => {
+      if (!Array.isArray(value)) {
+        return;
+      }
+      setYearOptions({
+        ...yearOptions,
+        value: value as [number, number],
+      });
+    }
+  );
   const handleYearSlideChange = useEvent((ev, value: number[] | number) => {
     if (!Array.isArray(value)) {
       return;
     }
-    setYearOptions({
-      ...yearOptions,
-      value: value as [number, number],
-    });
+    setYearSliderValue(value as [number, number]);
   });
   const [monthOptions, setMonthOptions] = useAtom(monthsAtom);
   const trueMonths = useMemo(
@@ -254,14 +265,11 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
           disableSwap
           min={yearOptions.min}
           max={yearOptions.max}
-          marks={[
-            { value: yearOptions.min, label: yearOptions.min },
-            { value: yearOptions.max, label: yearOptions.max },
-          ]}
-          valueLabelDisplay="auto"
           step={1}
-          value={yearOptions.value}
+          value={yearSliderValue}
+          valueLabelDisplay="on"
           onChange={handleYearSlideChange}
+          onChangeCommitted={handleYearSlideChangeCommitted}
         />
         <AccordionTitle>Month</AccordionTitle>
         <Box
