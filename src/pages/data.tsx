@@ -1,11 +1,9 @@
-import { ExpandMore } from "@material-ui/icons";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
-  Accordion,
   AccordionDetails,
   AccordionProps,
-  AccordionSummary,
   Box,
   Checkbox,
   Chip,
@@ -14,10 +12,8 @@ import {
   Slider,
   ThemeProvider,
   Typography,
-  AccordionDetailsProps,
   Grow,
   ChipProps,
-  SliderProps,
   Autocomplete,
   TextField,
   styled,
@@ -27,12 +23,16 @@ import {
   TableBody,
   TableHead,
   TableCell,
-  CircularProgress,
+  AccordionSummary,
+  Paper,
 } from "@mui/material";
 import { useAtom, WritableAtom } from "jotai";
-import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
+import React, { SyntheticEvent, useMemo, useState } from "react";
 
+import DebugQuery from "@/components/debug-query";
+import FilterAccordion from "@/components/filter-accordion";
 import { AppLayout } from "@/components/layout";
+import { withStyles } from "@/components/style-utils";
 import {
   addedValueValuesAtom,
   CheckboxValue,
@@ -47,12 +47,21 @@ import {
 import {
   Cube,
   Observation,
+  queryDateExtent,
+  queryPossibleCubes,
   queryObservations,
-  queryPossibleCubesForIndicator,
+  Dimension,
+  agDataDimensions,
+  AgDataDimension,
+  queryDimensions,
+  ObservationIri,
+  queryObservationIris,
 } from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
 import theme from "@/theme";
+
+import useSparql, { SparqlQueryResult } from "./api/use-sparql";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -69,10 +78,10 @@ const blackAndWhiteTheme = createTheme(theme, {
 });
 
 const renderCheckbox = ({ value }: { value: CheckboxValue }) => (
-  <Checkbox value={value.value} />
+  <Checkbox value={value.value} checked={value.value || false} />
 );
 const renderRadio = ({ value }: { value: CheckboxValue }) => (
-  <Radio sx={{ mt: "-6px" }} size="small" checked={value.value} />
+  <Radio sx={{ mt: "-6px" }} size="small" checked={value.value || false} />
 );
 
 const MultiCheckbox = <T extends CheckboxValue>({
@@ -98,7 +107,7 @@ const MultiCheckbox = <T extends CheckboxValue>({
     onChange(newValues);
   };
   const control = radio ? renderRadio : renderCheckbox;
-  const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
+
   return (
     <>
       {values.map((value, i) => (
@@ -122,69 +131,6 @@ const MultiCheckbox = <T extends CheckboxValue>({
         />
       ))}
     </>
-  );
-};
-
-const FilterAccordionSummary = ({ ...props }) => {
-  return (
-    <AccordionSummary
-      {...props}
-      expandIcon={<ExpandMore />}
-      sx={{
-        paddingTop: "6px",
-        paddingBottom: "6px",
-        paddingLeft: "1rem",
-        "&.Mui-expanded": {
-          minHeight: "48px",
-          paddingTop: "6px",
-          paddingBottom: "6px",
-        },
-        "& .MuiAccordionSummary-content": {
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 0,
-          ".Mui-expanded &": {
-            margin: 0,
-          },
-        },
-      }}
-    />
-  );
-};
-
-const FilterAccordionDetails = (props: AccordionDetailsProps) => {
-  return (
-    <AccordionDetails
-      {...props}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        mx: "4px",
-        mt: "-8px",
-        px: "1rem",
-        pb: 5,
-        ...props.sx,
-      }}
-    />
-  );
-};
-
-const FilterAccordion = (props: AccordionProps) => {
-  return (
-    <Accordion
-      {...props}
-      sx={{
-        paddingBottom: 1,
-        "&.Mui-expanded": {
-          marginTop: 0,
-          marginBottom: 0,
-          "&::before": {
-            opacity: 1,
-          },
-        },
-      }}
-    />
   );
 };
 
@@ -216,29 +162,33 @@ const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(indicatorsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Indicators</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox radio values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
 
-const FilterSlider = (props: SliderProps) => {
-  return (
-    <Slider
-      {...props}
-      sx={{
-        "& .MuiSlider-markLabel": {
-          fontSize: "0.75rem",
-        },
-      }}
-    />
-  );
-};
+const FilterSlider = withStyles(Slider, (theme) => ({
+  root: {
+    marginBottom: theme.spacing(6),
+    "& .MuiSlider-valueLabel": {
+      top: "3.25rem",
+      padding: "2px 4px",
+      backgroundColor: theme.palette.grey[300],
+      color: theme.palette.text.primary,
+      fontSize: "0.75rem",
+      "&:before": {
+        bottom: "auto",
+        top: "-8px",
+      },
+    },
+  },
+}));
 
 const MonthChip = (props: ChipProps) => {
   return (
@@ -263,14 +213,26 @@ const MonthChip = (props: ChipProps) => {
 
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   const [yearOptions, setYearOptions] = useAtom(yearAtom);
+  const [yearSliderValue, setYearSliderValue] = useState(() => [
+    1990,
+    new Date().getFullYear(),
+  ]);
+  const handleYearSlideChangeCommitted = useEvent(
+    (ev, value: number[] | number) => {
+      if (!Array.isArray(value)) {
+        return;
+      }
+      setYearOptions({
+        ...yearOptions,
+        value: value as [number, number],
+      });
+    }
+  );
   const handleYearSlideChange = useEvent((ev, value: number[] | number) => {
     if (!Array.isArray(value)) {
       return;
     }
-    setYearOptions({
-      ...yearOptions,
-      value: value as [number, number],
-    });
+    setYearSliderValue(value as [number, number]);
   });
   const [monthOptions, setMonthOptions] = useAtom(monthsAtom);
   const trueMonths = useMemo(
@@ -295,23 +257,20 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   });
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Time</AccordionTitle>
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <AccordionTitle>Year</AccordionTitle>
         <FilterSlider
           disableSwap
           min={yearOptions.min}
           max={yearOptions.max}
-          marks={[
-            { value: yearOptions.min, label: yearOptions.min },
-            { value: yearOptions.max, label: yearOptions.max },
-          ]}
-          valueLabelDisplay="auto"
           step={1}
-          value={yearOptions.value}
+          value={yearSliderValue}
+          valueLabelDisplay="on"
           onChange={handleYearSlideChange}
+          onChangeCommitted={handleYearSlideChangeCommitted}
         />
         <AccordionTitle>Month</AccordionTitle>
         <Box
@@ -334,7 +293,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
             />
           ))}
         </Box>
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -343,13 +302,13 @@ const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(marketsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Markets</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -358,13 +317,13 @@ const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(addedValueValuesAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Added value</AccordionTitle>
         <CountTrue show={!props.expanded} values={values} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -375,13 +334,13 @@ const ProductionSystemsAccordion = (
   const [values, setValues] = useAtom(productionSystemsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Production systems</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -459,17 +418,17 @@ const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(countriesAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Countries</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ mx: "-2px" }}>
+      </AccordionSummary>
+      <AccordionDetails>
         <MultiCheckboxAutocomplete
           values={values}
           onChange={setValues}
           placeholder="Choose countries"
         />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -478,18 +437,18 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(productsAtom);
   return (
     <FilterAccordion {...props}>
-      <FilterAccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <AccordionTitle>Products</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
-      </FilterAccordionSummary>
-      <FilterAccordionDetails sx={{ mx: "-2px" }}>
+      </AccordionSummary>
+      <AccordionDetails sx={{ mx: "-2px" }}>
         <MultiCheckboxAutocomplete
           values={values}
           onChange={setValues}
           groupBy={(x) => x.group}
           placeholder="Choose products"
         />
-      </FilterAccordionDetails>
+      </AccordionDetails>
     </FilterAccordion>
   );
 };
@@ -515,53 +474,13 @@ const MenuContent = () => {
   return (
     <>
       <IndicatorAccordion {...getAccordionProps("indicator")} />
-      <TimeAccordion {...getAccordionProps("time")} />
       <MarketsAccordion {...getAccordionProps("markets")} />
+      <TimeAccordion {...getAccordionProps("time")} />
       <AddedValueAccordion {...getAccordionProps("addedvalue")} />
       <ProductionSystemsAccordion {...getAccordionProps("productionsystems")} />
       <ProductsAccordion {...getAccordionProps("products")} />
       <CountriesAccordion {...getAccordionProps("countries")} />
     </>
-  );
-};
-
-const DebugCard = ({
-  title,
-  value,
-}: {
-  title: string;
-  value: $IntentionalAny;
-}) => {
-  return (
-    <div>
-      <Typography variant="h5">{title}</Typography>
-      <pre style={{ fontSize: "small" }}>{JSON.stringify(value, null, 2)}</pre>
-    </div>
-  );
-};
-
-const StorageDebug = () => {
-  const [indicators] = useAtom(indicatorsAtom);
-  const [markets] = useAtom(marketsAtom);
-  const [addedValueValues] = useAtom(addedValueValuesAtom);
-  const [productionSystems] = useAtom(productionSystemsAtom);
-  const [monthOptions] = useAtom(monthsAtom);
-  const [countriesOptions] = useAtom(countriesAtom);
-  const [products] = useAtom(countriesAtom);
-  return (
-    <Box
-      display="grid"
-      mx={4}
-      sx={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
-    >
-      <DebugCard title="Indicators" value={indicators} />
-      <DebugCard title="Markets" value={markets} />
-      <DebugCard title="Added value" value={addedValueValues} />
-      <DebugCard title="Production systems" value={productionSystems} />
-      <DebugCard title="Month options" value={monthOptions} />
-      <DebugCard title="Countries options" value={countriesOptions} />
-      <DebugCard title="Products" value={products} />
-    </Box>
   );
 };
 
@@ -637,113 +556,198 @@ const TimeStateChip = () => {
     </Grow>
   );
 };
-
-const useSparql = <T extends unknown>(options: Record<string, unknown>) => {
-  const [data, setData] = useState<T[]>();
-  const [fetching, setFetching] = useState(false);
-  const body = JSON.stringify(options);
-  useEffect(() => {
-    if (options.enabled === false) {
-      return;
-    }
-    setFetching(true);
-    const run = async () => {
-      const res = await fetch("/api/sparql", {
-        method: "post",
-        body,
-      }).then((resp) => resp.json());
-      setData(res);
-      setFetching(false);
-    };
-    run();
-  }, [body, options.enabled]);
-  return { data, fetching };
-};
-
-const Results = () => {
-  const locale = useLocale();
+const useCurrentIndicator = () => {
   const [indicators] = useAtom(indicatorsAtom);
   const indicator = indicators.find((x) => x.value);
-  const { data: cubes, fetching: fetchingCubes } = useSparql<Cube>({
-    query: queryPossibleCubesForIndicator(indicator?.dimensionIri!),
-    enabled: indicator?.dimensionIri,
+  return indicator;
+};
+
+const useFilters = () => {
+  const [years] = useAtom(yearAtom);
+  return {
+    years,
+  };
+};
+
+const Results = ({
+  cubesQuery,
+  dimensionsQuery,
+  yearsQuery,
+}: {
+  cubesQuery: SparqlQueryResult<Cube[]>;
+  dimensionsQuery: SparqlQueryResult<Dimension[]>;
+  yearsQuery: SparqlQueryResult<{ min: string; max: string }[]>;
+}) => {
+  const locale = useLocale();
+  const indicator = useCurrentIndicator();
+  const { data: cubes } = cubesQuery;
+  const { data: dimensions, fetching: fetchingDimensions } = dimensionsQuery;
+  const filters = useFilters();
+  const observationIrisQuery = useSparql<ObservationIri[]>({
+    query: queryObservationIris(cubes, filters),
+    enabled: !fetchingDimensions,
+  });
+  const { data: observationIris, fetching: fetchingObservationIris } =
+    observationIrisQuery;
+  const observationsQuery = useSparql<Observation[]>({
+    query: queryObservations(
+      cubes?.length!,
+      observationIris!,
+      dimensions,
+      indicator?.dimensionIri!,
+      locale
+    ),
+    enabled: !fetchingObservationIris,
   });
   const { data: observations, fetching: fetchingObservations } =
-    useSparql<Observation>({
-      query: queryObservations(cubes, indicator?.dimensionIri!, locale),
-      enabled: !fetchingCubes,
-    });
+    observationsQuery;
+
+  const dimensionsToRender: AgDataDimension[] | undefined = useMemo(
+    () => dimensions?.map((d) => agDataDimensions[d.dimension]).filter(Boolean),
+    [dimensions]
+  );
 
   return (
-    <Box m={4}>
-      {fetchingCubes || fetchingObservations ? (
-        <CircularProgress />
-      ) : (
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Product</TableCell>
-              <TableCell>Value Creation Stage</TableCell>
-              <TableCell>Product List</TableCell>
-              <TableCell>Production Stage</TableCell>
-              <TableCell>Origin</TableCell>
-              <TableCell>Value</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {observations?.map((d, i) => (
-              <TableRow key={i}>
-                <TableCell>{d.fullDate}</TableCell>
-                <TableCell>{d.product}</TableCell>
-                <TableCell>{d.valueCreationStage}</TableCell>
-                <TableCell>{d.productList}</TableCell>
-                <TableCell>{d.productionStage}</TableCell>
-                <TableCell>{d.productOrigin}</TableCell>
-                <TableCell>{d.measure}</TableCell>
+    <Box m={4} overflow="hidden">
+      <Paper sx={{ maxHeight: 500, overflow: "auto", mb: 2 }}>
+        {fetchingObservations ? null : (
+          <Table>
+            <TableHead>
+              <TableRow>
+                {dimensionsToRender?.map((d) => (
+                  <TableCell key={d.iri}>{d.name}</TableCell>
+                ))}
+                {/*
+              TODO: Do we even need this indicator here? It is needed to select
+              the cubes for merging, but at this point we probably should just add
+              measures to the agDataDimensions object and generate this automatically.
+              */}
+                <TableCell>{indicator?.label}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
+            </TableHead>
+            <TableBody>
+              {observations?.map((o, i) => (
+                <TableRow key={i}>
+                  {dimensionsToRender?.map((d, j) => (
+                    <TableCell key={`${i}_${j}`}>
+                      {o[d.name as keyof Observation]}
+                    </TableCell>
+                  ))}
+                  <TableCell>{o.measure}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </Paper>
+      <Box>
+        <DebugQuery
+          name="cubes"
+          query={cubesQuery}
+          renderData={(cubes) =>
+            cubes.map((cube) => <div key={cube.cube}>{cube.cube}</div>)
+          }
+        />
+        <DebugQuery
+          name="dimensions"
+          query={dimensionsQuery}
+          renderData={(dims) =>
+            dims.map((dim) => (
+              <div key={dim.dimension}>
+                {dim.dimension}: {dim.count}
+              </div>
+            ))
+          }
+        />
+        <DebugQuery
+          name="observationIris"
+          query={observationIrisQuery}
+          renderData
+        />
+        <DebugQuery name="years" query={yearsQuery} renderData />
+        <DebugQuery name="observations" query={observationsQuery} />
+      </Box>
     </Box>
   );
 };
 
+const SafeHydrate = ({ children }: { children: React.ReactElement }) => {
+  return typeof window === "undefined" ? null : children;
+};
+
 export default function DataBrowser() {
+  const indicator = useCurrentIndicator();
+  const [years, setYearsAtom] = useAtom(yearAtom);
+  const [markets] = useAtom(marketsAtom);
+
+  const cubesQuery = useSparql<Cube[]>({
+    query: queryPossibleCubes({
+      indicator: indicator?.dimensionIri!,
+      markets: markets.filter((m) => m.value).map((m) => m.name),
+    }),
+    enabled: !!indicator?.dimensionIri,
+  });
+  const dimensionsQuery = useSparql<Dimension[]>({
+    query: queryDimensions(cubesQuery.data),
+    enabled: !!(cubesQuery?.data && cubesQuery.data.length > 0),
+  });
+  const yearsQuery = useSparql<{ min: string; max: string }[]>({
+    query: queryDateExtent(cubesQuery.data),
+    enabled: !!(dimensionsQuery?.data && dimensionsQuery.data.length > 0),
+    onSuccess: (data) => {
+      if (data.length === 0) {
+        return;
+      }
+      const { min, max } = data[0];
+      const minYear = parseInt(min.slice(0, 4));
+      const maxYear = parseInt(max.slice(0, 4));
+      setYearsAtom({
+        min: minYear,
+        max: maxYear,
+        value: [minYear, maxYear],
+      });
+    },
+  });
+
   return (
-    <ThemeProvider theme={blackAndWhiteTheme}>
-      <AppLayout>
-        <Box
-          mt="92px"
-          py={16}
-          mb={-8}
-          zIndex={0}
-          display="flex"
-          justifyContent="stretch"
-          minHeight="80vh"
-        >
-          <Box width="236px" flexGrow={0} flexShrink={0}>
-            <MenuContent />
-          </Box>
-          <Box bgcolor="#eee" flexGrow={1}>
-            <Box display="flex" flexWrap="wrap" sx={{ gap: 1 }} m={4}>
-              <StateChip label="Indicators" atom={indicatorsAtom} />
-              <TimeStateChip />
-              <StateChip label="Markets" atom={marketsAtom} />
-              <StateChip label="Added value" atom={addedValueValuesAtom} />
-              <StateChip label="Products" atom={productsAtom} />
-              <StateChip
-                label="Production systems"
-                atom={productionSystemsAtom}
-              />
-              <StateChip label="Countries" atom={countriesAtom} />
+    <SafeHydrate>
+      <ThemeProvider theme={blackAndWhiteTheme}>
+        <AppLayout>
+          <Box
+            mt="76px"
+            py={4}
+            mb={-8}
+            zIndex={0}
+            display="flex"
+            justifyContent="stretch"
+            minHeight="80vh"
+          >
+            <Box width="236px" flexGrow={0} flexShrink={0}>
+              <MenuContent />
             </Box>
-            {/* <StorageDebug /> */}
-            <Results />
+            <Box bgcolor="#eee" flexGrow={1} overflow="hidden">
+              <Box display="flex" flexWrap="wrap" sx={{ gap: 1 }} m={4}>
+                <StateChip label="Indicators" atom={indicatorsAtom} />
+                <TimeStateChip />
+                <StateChip label="Markets" atom={marketsAtom} />
+                <StateChip label="Added value" atom={addedValueValuesAtom} />
+                <StateChip label="Products" atom={productsAtom} />
+                <StateChip
+                  label="Production systems"
+                  atom={productionSystemsAtom}
+                />
+                <StateChip label="Countries" atom={countriesAtom} />
+              </Box>
+              {/* <DataBrowserDebug /> */}
+              <Results
+                cubesQuery={cubesQuery}
+                dimensionsQuery={dimensionsQuery}
+                yearsQuery={yearsQuery}
+              />
+            </Box>
           </Box>
-        </Box>
-      </AppLayout>
-    </ThemeProvider>
+        </AppLayout>
+      </ThemeProvider>
+    </SafeHydrate>
   );
 }

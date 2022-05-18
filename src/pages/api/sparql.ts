@@ -47,7 +47,6 @@ const select = async (query: string) => {
 
 const serve = async (req: NextApiRequest, res: NextApiResponse) => {
   const options = req.body ? JSON.parse(req.body) : {};
-  console.log(options);
   res.setHeader("Content-type", "application/json");
   res.end(
     JSON.stringify((await select(options.query)).map((row) => parseRdf(row)))

@@ -5,7 +5,7 @@ export type CheckboxValue = { label: string; name: string; value: boolean };
 export const markets: CheckboxValue[] = [
   {
     label: "Eggs",
-    name: "eggs",
+    name: "egg",
     value: true,
   },
   {
@@ -20,7 +20,7 @@ export const markets: CheckboxValue[] = [
   },
   {
     label: "Animal feed",
-    name: "animalfeed",
+    name: "animal",
     value: false,
   },
   {
@@ -51,22 +51,22 @@ export const markets: CheckboxValue[] = [
 ];
 
 export const addedValueValues: CheckboxValue[] = [
-  { label: "Production", name: "production", value: false },
+  { label: "Production", name: "production", value: true },
   { label: "Wholesale", name: "wholesale", value: true },
-  { label: "Industry", name: "industry", value: false },
+  { label: "Industry", name: "industry", value: true },
   {
     label: "Pick up and gastro wholesale",
     name: "pickupandgastrowholesale",
-    value: false,
+    value: true,
   },
-  { label: "Consumption", name: "consumption", value: false },
-  { label: "Stock exchanges", name: "stockexchanges", value: false },
-  { label: "Storage", name: "storage", value: false },
+  { label: "Consumption", name: "consumption", value: true },
+  { label: "Stock exchanges", name: "stockexchanges", value: true },
+  { label: "Storage", name: "storage", value: true },
 ];
 
 export const productionSystems: CheckboxValue[] = [
   { label: "Bio", name: "bio", value: true },
-  { label: "Non-Bio", name: "nonbio", value: false },
+  { label: "Non-Bio", name: "nonbio", value: true },
 ];
 
 export type RangeOptions = {
@@ -112,8 +112,8 @@ export const indicators: (CheckboxValue & {
 ];
 
 export const countries: CheckboxValue[] = [
-  { label: "Switzerland", name: "ch", value: true },
-  { label: "France", name: "fr", value: true },
+  { label: "Switzerland", name: "ch", value: false },
+  { label: "France", name: "fr", value: false },
   { label: "Italy", name: "it", value: false },
   { label: "Spain", name: "es", value: false },
 ];
@@ -143,9 +143,9 @@ export const products: (CheckboxValue & {
     group: "eggs",
     value: false,
   },
-  { label: "Eggs < 50", name: "eggs<50", group: "eggs", value: true },
-  { label: "Brie Camembert", name: "brie", group: "milk", value: true },
-  { label: "Emmentaler", name: "emmentaler", group: "milk", value: true },
+  { label: "Eggs < 50", name: "eggs<50", group: "eggs", value: false },
+  { label: "Brie Camembert", name: "brie", group: "milk", value: false },
+  { label: "Emmentaler", name: "emmentaler", group: "milk", value: false },
 ];
 
 export const marketsAtom = atom(markets);

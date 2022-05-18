@@ -1,3 +1,5 @@
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 import { I18nProvider } from "@lingui/react";
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,6 +11,11 @@ import { LocaleProvider } from "@/lib/use-locale";
 import { i18n, Locale } from "@/locales/locales";
 import theme from "@/theme";
 
+export const muiCache = createCache({
+  key: "mui",
+  prepend: true,
+});
+
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const locale = (router.locale || "de") as Locale;
@@ -17,15 +24,17 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <LocaleProvider value={locale}>
-      <I18nProvider i18n={i18n}>
-        <GraphqlProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </GraphqlProvider>
-      </I18nProvider>
-    </LocaleProvider>
+    <CacheProvider value={muiCache}>
+      <LocaleProvider value={locale}>
+        <I18nProvider i18n={i18n}>
+          <GraphqlProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </GraphqlProvider>
+        </I18nProvider>
+      </LocaleProvider>
+    </CacheProvider>
   );
 }
