@@ -171,9 +171,9 @@ theme.typography = merge(theme.typography, {
     textDecoration: "none",
   },
   h1: createTypographyVariant(theme, {
-    fontSize: [24, 32],
-    lineHeight: [36, 48],
-    fontWeight: 700,
+    fontSize: [24, 60],
+    lineHeight: [36, 72],
+    fontWeight: 300,
   }),
   h2: createTypographyVariant(theme, {
     fontSize: [18, 24],
