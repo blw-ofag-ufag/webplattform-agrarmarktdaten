@@ -1,3 +1,4 @@
+import { Chip, Stack } from "@mui/material";
 import React from "react";
 
 import { Hero } from "@/components/hero";
@@ -9,16 +10,36 @@ type BlogProps = {
     title: string;
     description: string;
   };
+  allMarketAreas: {
+    title: string;
+  }[];
+};
+
+const BlogMarketFilters = ({ markets }: { markets: string[] }) => {
+  return (
+    <Stack
+      direction="row"
+      spacing={1}
+      justifyContent="center"
+      sx={{ transform: "translateY(-50%)" }}
+    >
+      {markets.map((d) => (
+        <Chip key={d} label={d} clickable />
+      ))}
+    </Stack>
+  );
 };
 
 export default function Blog(props: BlogProps) {
   const {
     blogPage: { title, description },
+    allMarketAreas,
   } = props;
 
   return (
     <AppLayout>
       <Hero title={title} description={description} />
+      <BlogMarketFilters markets={allMarketAreas.map((d) => d.title)} />
     </AppLayout>
   );
 }
@@ -26,9 +47,13 @@ export default function Blog(props: BlogProps) {
 export const getStaticProps = async (context: $FixMe) => {
   const query = `
     query BlogPageQuery($locale: SiteLocale!) {
-      blogPage (locale: $locale) {
+      blogPage(locale: $locale) {
         title
         description
+      }
+
+      allMarketAreas(locale: $locale) {
+        title
       }
     }
   `;
