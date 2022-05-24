@@ -180,6 +180,11 @@ const DesktopMenu = ({
             <Trans id="menu.data">Daten</Trans>
           </Link>
         </NextLink>
+        <NextLink href="/blog" passHref>
+          <Link typography="h3" fontWeight="light">
+            <Trans id="menu.blog">Blog</Trans>
+          </Link>
+        </NextLink>
         <NextLink href="/about" as="/about" passHref>
           <Link typography="h3" fontWeight="light">
             <Trans id="menu.about">Über uns</Trans>

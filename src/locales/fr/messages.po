@@ -21,117 +21,120 @@ msgstr ""
 #~ msgid "article.card.report.month"
 #~ msgstr ""
 
-#: src/components/card-data.tsx:177
+#: src/components/card-data.tsx:180
 msgid "article.link.data.explore"
 msgstr ""
 
-#: src/components/card-data.tsx:76
+#: src/components/card-data.tsx:79
 msgid "article.link.open.report"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:73
+#: src/pages/area/[slug].tsx:75
 msgid "article.section.data"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:68
+#: src/pages/area/[slug].tsx:70
 msgid "article.section.infografic"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:134
+#: src/pages/area/[slug].tsx:139
 msgid "article.section.link"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:116
+#: src/pages/area/[slug].tsx:120
 msgid "article.section.news"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:105
+#: src/pages/area/[slug].tsx:107
 msgid "article.section.trade"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:88
+#: src/pages/area/[slug].tsx:90
 msgid "article.teaser.data.title"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:61
-#: src/components/homepage/infografik-teaser.tsx:143
+#: src/components/homepage/infografik-teaser.tsx:64
+#: src/components/homepage/infografik-teaser.tsx:146
 msgid "button.infografic.teaser"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:128
-#: src/pages/index.tsx:67
+#: src/pages/area/[slug].tsx:132
+#: src/pages/index.tsx:71
 msgid "button.show.all"
 msgstr ""
 
-#: src/components/contact.tsx:35
+#: src/components/contact.tsx:37
 msgid "contact.contact"
 msgstr ""
 
-#: src/components/contact.tsx:48
+#: src/components/contact.tsx:50
 msgid "contact.follow.us"
 msgstr ""
 
-#: src/components/footer.tsx:28
+#: src/components/footer.tsx:31
 msgid "footer.dataprotection"
 msgstr ""
 
-#: src/components/footer.tsx:22
+#: src/components/footer.tsx:25
 msgid "footer.impressum"
 msgstr ""
 
-#: src/components/footer.tsx:25
+#: src/components/footer.tsx:28
 msgid "footer.legal"
 msgstr ""
 
-#: src/pages/index.tsx:48
+#: src/pages/index.tsx:50
 msgid "homepage.section.market.area"
 msgstr ""
 
-#: src/pages/index.tsx:71
+#: src/pages/index.tsx:76
 msgid "homepage.section.newest.infografic"
 msgstr ""
 
-#: src/pages/index.tsx:55
+#: src/pages/index.tsx:59
 msgid "homepage.section.newsfeed"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:33
+#: src/components/homepage/infografik-teaser.tsx:35
 msgid "infografic"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:91
+#: src/components/homepage/infografik-teaser.tsx:94
 msgid "infografic.date"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:114
+#: src/components/homepage/infografik-teaser.tsx:117
 msgid "infografik.teaser"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:45
-#: src/components/homepage/infografik-teaser.tsx:103
+#: src/components/homepage/infografik-teaser.tsx:47
+#: src/components/homepage/infografik-teaser.tsx:106
 msgid "infografik.title"
 msgstr ""
 
-#: src/components/header.tsx:266
-#: src/components/header.tsx:285
+#: src/components/header.tsx:270
+#: src/components/header.tsx:290
 msgid "logo.swiss.confederation"
 msgstr ""
 
-#: src/components/header.tsx:147
-#: src/components/header.tsx:189
+#: src/components/header.tsx:142
+#: src/components/header.tsx:190
 msgid "menu.about"
 msgstr ""
 
-#: src/components/header.tsx:142
-#: src/components/header.tsx:184
+#: src/components/header.tsx:185
+msgid "menu.blog"
+msgstr "Blog"
+
+#: src/components/header.tsx:180
 msgid "menu.data"
 msgstr ""
 
 #: src/components/header.tsx:130
-#: src/components/header.tsx:179
+#: src/components/header.tsx:175
 msgid "menu.markets"
 msgstr ""
 
-#: src/components/header.tsx:231
+#: src/components/header.tsx:233
 msgid "title.agricultural.market.data"
 msgstr ""
