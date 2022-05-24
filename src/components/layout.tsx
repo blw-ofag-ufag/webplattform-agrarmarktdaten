@@ -73,7 +73,7 @@ export const AppLayout = ({
 }) => (
   <>
     <Header alternates={alternates} allMarketAreas={allMarketAreas} />
-    <Box sx={{ mx: "auto" }}>{children}</Box>
+    <Box sx={{ mt: [0, 0, "92px"] }}>{children}</Box>
     <Footer />
   </>
 );

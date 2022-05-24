@@ -714,8 +714,6 @@ export default function DataBrowser() {
       <ThemeProvider theme={blackAndWhiteTheme}>
         <AppLayout>
           <Box
-            mt="76px"
-            py={4}
             mb={-8}
             zIndex={0}
             display="flex"

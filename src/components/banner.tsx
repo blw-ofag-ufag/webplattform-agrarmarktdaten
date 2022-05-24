@@ -15,14 +15,7 @@ export const Banner = ({
   const baseBgColor = useMemo(() => getMarketAreaColor(slug), [slug]);
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        width: "100vw",
-        mt: [0, 0, "92px"],
-        mb: [0, 0, 6],
-      }}
-    >
+    <Box sx={{ position: "relative", width: "100vw", mb: [0, 0, 6] }}>
       <BannerBackground bgColor={`${baseBgColor}.light`} />
       <Box
         sx={{

@@ -18,7 +18,7 @@ export default function Blog(props: BlogProps) {
 
   return (
     <AppLayout>
-      <Box mt={[0, 0, "92px"]}>
+      <Box>
         <Typography variant="h1">{title}</Typography>
         <Typography variant="subtitle1">{description}</Typography>
       </Box>
