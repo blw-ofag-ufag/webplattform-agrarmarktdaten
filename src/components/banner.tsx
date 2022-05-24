@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React, { ReactNode, useMemo } from "react";
 
+import { ContentContainer } from "@/components/content-container";
 import { getMarketAreaColor } from "@/domain/colors";
 
 export const Banner = ({
@@ -17,16 +18,10 @@ export const Banner = ({
   return (
     <Box sx={{ position: "relative", width: "100vw", mb: [0, 0, 6] }}>
       <BannerBackground bgColor={`${baseBgColor}.light`} />
-      <Box
-        sx={{
-          mt: "-150px",
-          maxWidth: "77rem",
-          mx: "auto",
-        }}
-      >
+      <ContentContainer sx={{ mt: "-150px" }}>
         <BannerTitle color={baseBgColor}>{title}</BannerTitle>
         {intro && <BannerIntro color={baseBgColor}>{intro}</BannerIntro>}
-      </Box>
+      </ContentContainer>
     </Box>
   );
 };

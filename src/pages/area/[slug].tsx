@@ -6,6 +6,7 @@ import React from "react";
 import { Banner } from "@/components/banner";
 import { ReportCard } from "@/components/card-data";
 import { TradeLevelsGrid } from "@/components/card-trade";
+import { ContentContainer } from "@/components/content-container";
 import Flex from "@/components/flex";
 import { InfografikTeaserLarge } from "@/components/homepage/infografik-teaser";
 import { AppLayout } from "@/components/layout";
@@ -55,12 +56,11 @@ export default function Area({
             intro={marketArea.introduction}
           />
           <Box component="article">
-            <Flex
+            <ContentContainer
               sx={{
+                display: "flex",
                 flexDirection: ["column", "column", "row"],
                 justifyContent: ["flex-start", "flex-start", "space-between"],
-                maxWidth: "77rem",
-                mx: "auto",
                 px: [4, 4, 0],
                 py: 4,
               }}
@@ -150,43 +150,10 @@ export default function Area({
                   </div>
                 </Stack>
               </Box>
-            </Flex>
+            </ContentContainer>
           </Box>
         </>
       ) : (
-        // <div>
-        //   <article>
-        //     <h1>{marketArea.title}</h1>
-        //     {marketArea.icon}
-        //     <Typography variant="h2">Reports</Typography>
-        //     {marketArea.reports.map(report => (
-        //       <div key={report.title}>{report.title}</div>
-        //     ))}
-        //     <Typography variant="h2">Sub-Areas</Typography>
-        //     <Grid
-        //       component="ul"
-        //       sx={{ listStyle: "none", m: 0, p: 0 }}
-        //       width={[200, null, 192]}
-        //     >
-        //       {marketArea.children.map(area => (
-        //         <Box component="li" key={area.slug}>
-        //           <NextLink
-        //             href="/area/[slug]"
-        //             as={`/area/${area.slug}`}
-        //             passHref
-        //           >
-        //             <Card>
-        //               <MarketIcon icon={area.icon} />
-        //               <Heading>
-        //                 <Link>{area.title}</Link>
-        //               </Heading>
-        //             </Card>
-        //           </NextLink>
-        //         </Box>
-        //       ))}
-        //     </Grid>
-        //   </article>
-        // </div>
         <div>NOT FOUND</div>
       )}
     </AppLayout>

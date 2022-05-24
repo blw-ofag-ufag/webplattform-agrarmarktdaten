@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
 
+import { ContentContainer } from "@/components/content-container";
 import { AppLayout } from "@/components/layout";
 import { fetchCMS } from "@/lib/cms-api";
 
@@ -18,10 +19,10 @@ export default function Blog(props: BlogProps) {
 
   return (
     <AppLayout>
-      <Box>
+      <ContentContainer>
         <Typography variant="h1">{title}</Typography>
         <Typography variant="subtitle1">{description}</Typography>
-      </Box>
+      </ContentContainer>
     </AppLayout>
   );
 }

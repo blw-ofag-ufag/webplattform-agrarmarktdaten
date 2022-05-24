@@ -3,7 +3,7 @@ import { Box, Button, Typography, Stack } from "@mui/material";
 import React from "react";
 
 import { Banner } from "@/components/banner";
-import Flex from "@/components/flex";
+import { ContentContainer } from "@/components/content-container";
 import { InfografikTeaser } from "@/components/homepage/infografik-teaser";
 import { MarketAreasGrid } from "@/components/homepage/market-areas-grid";
 import { AppLayout } from "@/components/layout";
@@ -23,24 +23,12 @@ export default function HomePage({
   return (
     <AppLayout allMarketAreas={allMarketAreas}>
       <Banner title={homePage.title} intro={homePage.intro} />
-      {/* <ul>
-      {allSimplePages.map(page => {
-        return (
-          <li key={page.slug}>
-            <NextLink href="/[slug]" as={`/${page.slug}`} passHref>
-              <Link>{page.title}</Link>
-            </NextLink>
-          </li>
-        );
-      })}
-    </ul> */}
       <Box component="main">
-        <Flex
+        <ContentContainer
           sx={{
+            display: "flex",
             flexDirection: ["column", "column", "row"],
             justifyContent: ["flex-start", "flex-start", "space-between"],
-            maxWidth: "77rem",
-            mx: "auto",
             px: [4, 4, 0],
             py: 4,
           }}
@@ -81,7 +69,7 @@ export default function HomePage({
               </div>
             </Stack>
           </Box>
-        </Flex>
+        </ContentContainer>
       </Box>
     </AppLayout>
   );
