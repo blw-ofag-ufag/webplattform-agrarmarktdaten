@@ -21,7 +21,7 @@ export const Hero = (props: Props) => {
         backgroundColor: "muted.main",
       }}
     >
-      <ContentContainer narrow={true} sx={{ textAlign: "center" }}>
+      <ContentContainer sx={{ textAlign: "center" }}>
         <Typography variant="h1">{title}</Typography>
         <Typography variant="subtitle1" sx={{ mt: 3, color: "secondary.main" }}>
           {lead}
