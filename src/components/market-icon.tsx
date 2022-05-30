@@ -3,31 +3,27 @@ import { Card, Typography } from "@mui/material";
 import Flex from "@/components/flex";
 import { Icon, IconName } from "@/icons";
 
-export const MarketCard = ({
-  title,
-  icon,
-}: {
-  title: string;
-  icon: IconName;
-}) => {
+export const MarketCard = ({ title }: { title: string }) => {
   return (
     <Card
       sx={{
-        width: 150,
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
+        width: 226,
+        height: 280,
+        backgroundColor: "grey.300",
+        borderTopRightRadius: "30px",
+        borderBottomLeftRadius: "30px",
       }}
       elevation={0}
     >
-      <MarketIcon icon={icon} />
       <Typography
         component="h2"
         sx={{
+          mt: "30px",
+          ml: "20px",
           fontSize: 5,
           fontWeight: "bold",
           lineHeight: "heading",
-          textAlign: "center",
+          textTransform: "uppercase",
         }}
       >
         {title}

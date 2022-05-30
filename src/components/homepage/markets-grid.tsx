@@ -11,14 +11,10 @@ export const MarketsGrid = ({ allMarkets }: { allMarkets: Market[] }) => {
 
   return (
     <Box
-      display="grid"
-      component="ul"
+      display="flex"
       sx={{
-        listStyle: "none",
-        p: 0,
-        pl: 0,
-        gridGap: "0.75rem",
-        gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+        flexWrap: "wrap",
+        gap: 5,
       }}
     >
       {allMarkets.map((d) => {
@@ -35,7 +31,7 @@ export const MarketsGrid = ({ allMarkets }: { allMarkets: Market[] }) => {
               passHref
             >
               <Link sx={{ textDecoration: "none" }}>
-                <MarketCard title={d.name} icon="bio" />
+                <MarketCard title={d.name} />
               </Link>
             </NextLink>
           </Box>

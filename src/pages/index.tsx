@@ -3,8 +3,8 @@ import { Box, Button, Typography, Stack } from "@mui/material";
 import React from "react";
 
 import { ContentContainer } from "@/components/content-container";
+import Flex from "@/components/flex";
 import { Hero } from "@/components/hero";
-import { InfografikTeaser } from "@/components/homepage/infografik-teaser";
 import { MarketsGrid } from "@/components/homepage/markets-grid";
 import { AppLayout } from "@/components/layout";
 import { NewsfeedEntry } from "@/components/newsfeed";
@@ -27,20 +27,20 @@ export default function HomePage({
         <ContentContainer
           sx={{
             display: "flex",
-            flexDirection: ["column", "column", "row"],
+            flexDirection: "column",
             justifyContent: ["flex-start", "flex-start", "space-between"],
             px: [4, 4, 0],
             py: 4,
           }}
         >
-          <Box sx={{ width: ["100%", "100%", "65%"] }}>
+          <Flex sx={{ flexDirection: "column", mt: 7, gap: 6 }}>
             <Typography variant="h2">
               <Trans id="homepage.section.market">Märkte</Trans>
             </Typography>
             <MarketsGrid allMarkets={allMarkets} />
-          </Box>
+          </Flex>
 
-          <Box sx={{ width: ["100%", "100%", "30%"] }}>
+          <Box mt={7}>
             <Stack flexDirection="column" spacing={8}>
               <div>
                 <Typography variant="h2">
@@ -58,14 +58,6 @@ export default function HomePage({
                 <Button variant="text" sx={{ ml: -2 }}>
                   <Trans id="button.show.all">Alle Anzeigen</Trans>
                 </Button>
-              </div>
-              <div>
-                <Typography variant="h2">
-                  <Trans id="homepage.section.newest.infografic">
-                    Neueste Infografik
-                  </Trans>
-                </Typography>
-                <InfografikTeaser />
               </div>
             </Stack>
           </Box>
