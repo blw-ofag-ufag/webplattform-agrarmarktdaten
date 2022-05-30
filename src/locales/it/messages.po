@@ -29,27 +29,27 @@ msgstr ""
 msgid "article.link.open.report"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:75
+#: src/pages/market/[slug].tsx:77
 msgid "article.section.data"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:70
+#: src/pages/market/[slug].tsx:72
 msgid "article.section.infografic"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:139
+#: src/pages/market/[slug].tsx:141
 msgid "article.section.link"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:120
+#: src/pages/market/[slug].tsx:122
 msgid "article.section.news"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:107
+#: src/pages/market/[slug].tsx:109
 msgid "article.section.trade"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:90
+#: src/pages/market/[slug].tsx:92
 msgid "article.teaser.data.title"
 msgstr ""
 
@@ -58,8 +58,8 @@ msgstr ""
 msgid "button.infografic.teaser"
 msgstr ""
 
-#: src/pages/area/[slug].tsx:132
-#: src/pages/index.tsx:71
+#: src/pages/index.tsx:58
+#: src/pages/market/[slug].tsx:134
 msgid "button.show.all"
 msgstr ""
 
@@ -83,15 +83,15 @@ msgstr ""
 msgid "footer.legal"
 msgstr ""
 
-#: src/pages/index.tsx:50
-msgid "homepage.section.market.area"
-msgstr ""
+#: src/pages/index.tsx:37
+msgid "homepage.section.market"
+msgstr "Mercati"
 
 #: src/pages/index.tsx:76
-msgid "homepage.section.newest.infografic"
-msgstr ""
+#~ msgid "homepage.section.newest.infografic"
+#~ msgstr ""
 
-#: src/pages/index.tsx:59
+#: src/pages/index.tsx:46
 msgid "homepage.section.newsfeed"
 msgstr ""
 
@@ -112,29 +112,29 @@ msgstr ""
 msgid "infografik.title"
 msgstr ""
 
-#: src/components/header.tsx:270
-#: src/components/header.tsx:290
+#: src/components/header.tsx:269
+#: src/components/header.tsx:289
 msgid "logo.swiss.confederation"
 msgstr ""
 
-#: src/components/header.tsx:142
-#: src/components/header.tsx:190
+#: src/components/header.tsx:141
+#: src/components/header.tsx:189
 msgid "menu.about"
 msgstr ""
 
-#: src/components/header.tsx:185
+#: src/components/header.tsx:184
 msgid "menu.blog"
 msgstr "Blog"
 
-#: src/components/header.tsx:180
+#: src/components/header.tsx:179
 msgid "menu.data"
 msgstr ""
 
 #: src/components/header.tsx:130
-#: src/components/header.tsx:175
+#: src/components/header.tsx:174
 msgid "menu.markets"
 msgstr ""
 
-#: src/components/header.tsx:233
+#: src/components/header.tsx:232
 msgid "title.agricultural.market.data"
 msgstr ""

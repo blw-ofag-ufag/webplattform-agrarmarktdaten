@@ -29,27 +29,27 @@ msgstr "Explore Data"
 msgid "article.link.open.report"
 msgstr "Open Report"
 
-#: src/pages/area/[slug].tsx:75
+#: src/pages/market/[slug].tsx:77
 msgid "article.section.data"
 msgstr "Data"
 
-#: src/pages/area/[slug].tsx:70
+#: src/pages/market/[slug].tsx:72
 msgid "article.section.infografic"
 msgstr "Infografik"
 
-#: src/pages/area/[slug].tsx:139
+#: src/pages/market/[slug].tsx:141
 msgid "article.section.link"
 msgstr "Links"
 
-#: src/pages/area/[slug].tsx:120
+#: src/pages/market/[slug].tsx:122
 msgid "article.section.news"
 msgstr "Latest"
 
-#: src/pages/area/[slug].tsx:107
+#: src/pages/market/[slug].tsx:109
 msgid "article.section.trade"
 msgstr "Trade Levels"
 
-#: src/pages/area/[slug].tsx:90
+#: src/pages/market/[slug].tsx:92
 msgid "article.teaser.data.title"
 msgstr "Data about the Potatoe Market"
 
@@ -58,8 +58,8 @@ msgstr "Data about the Potatoe Market"
 msgid "button.infografic.teaser"
 msgstr "See Infografics"
 
-#: src/pages/area/[slug].tsx:132
-#: src/pages/index.tsx:71
+#: src/pages/index.tsx:58
+#: src/pages/market/[slug].tsx:134
 msgid "button.show.all"
 msgstr "Show All"
 
@@ -83,15 +83,15 @@ msgstr "Imprint"
 msgid "footer.legal"
 msgstr "Legal"
 
-#: src/pages/index.tsx:50
-msgid "homepage.section.market.area"
-msgstr "Market Areas"
+#: src/pages/index.tsx:37
+msgid "homepage.section.market"
+msgstr "Markets"
 
 #: src/pages/index.tsx:76
-msgid "homepage.section.newest.infografic"
-msgstr "Newest Infografics"
+#~ msgid "homepage.section.newest.infografic"
+#~ msgstr "Newest Infografics"
 
-#: src/pages/index.tsx:59
+#: src/pages/index.tsx:46
 msgid "homepage.section.newsfeed"
 msgstr "Latest"
 
@@ -112,29 +112,29 @@ msgstr "In Switzerland, potatoes grow on more than 10,000 hectares. That's aroun
 msgid "infografik.title"
 msgstr "Swiss Potato Market"
 
-#: src/components/header.tsx:270
-#: src/components/header.tsx:290
+#: src/components/header.tsx:269
+#: src/components/header.tsx:289
 msgid "logo.swiss.confederation"
 msgstr "Logo of the Swiss Confederation"
 
-#: src/components/header.tsx:142
-#: src/components/header.tsx:190
+#: src/components/header.tsx:141
+#: src/components/header.tsx:189
 msgid "menu.about"
 msgstr "About Us"
 
-#: src/components/header.tsx:185
+#: src/components/header.tsx:184
 msgid "menu.blog"
 msgstr "Blog"
 
-#: src/components/header.tsx:180
+#: src/components/header.tsx:179
 msgid "menu.data"
 msgstr "Data"
 
 #: src/components/header.tsx:130
-#: src/components/header.tsx:175
+#: src/components/header.tsx:174
 msgid "menu.markets"
 msgstr "Markets"
 
-#: src/components/header.tsx:233
+#: src/components/header.tsx:232
 msgid "title.agricultural.market.data"
 msgstr "Agricultural Market Data"
