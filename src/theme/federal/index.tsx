@@ -167,58 +167,58 @@ const theme = createTheme({
 });
 
 theme.typography = merge(theme.typography, {
-  link: {
-    textDecoration: "none",
-  },
   h1: createTypographyVariant(theme, {
     fontSize: [24, 60],
     lineHeight: [36, 72],
     fontWeight: 300,
   }),
   h2: createTypographyVariant(theme, {
-    fontSize: [18, 24],
-    lineHeight: [28, 36],
-    fontWeight: 500,
+    fontSize: [18, 34],
+    lineHeight: [28, 42],
+    fontWeight: 400,
   }),
   h3: createTypographyVariant(theme, {
     fontSize: [16, 18],
     lineHeight: [28, 36],
-    fontWeight: "bold",
+    fontWeight: 400,
   }),
   h4: createTypographyVariant(theme, {
     fontSize: [14, 16],
     lineHeight: [22, 24],
-    fontWeight: "bold",
+    fontWeight: 400,
   }),
   h5: createTypographyVariant(theme, {
     fontSize: [12, 14],
     lineHeight: [18, 20],
-    fontWeight: "bold",
+    fontWeight: 400,
+  }),
+  subtitle1: createTypographyVariant(theme, {
+    fontSize: [14, 16],
+    lineHeight: [22, 28],
+    fontWeight: 400,
+    color: "rgba(0, 0, 0, 0.6)",
   }),
   body1: createTypographyVariant(theme, {
     fontSize: [14, 16],
     lineHeight: [22, 24],
-    fontWeight: "regular",
+    fontWeight: 400,
   }),
   body2: createTypographyVariant(theme, {
     fontSize: [12, 14],
     lineHeight: [18, 20],
-    fontWeight: "regular",
+    fontWeight: 400,
   }),
+  link: {
+    textDecoration: "none",
+  },
   tag: createTypographyVariant(theme, {
     lineHeight: [18, 20],
     fontSize: [12, 14],
   }),
-  // table: {
-  //   fontFamily: "body",
-  //   lineHeight: [2, 4, 4],
-  //   fontWeight: "regular",
-  //   fontSize: [2, 3, 3],
-  // },
   caption: createTypographyVariant(theme, {
     fontSize: [10, 12],
     lineHeight: [16, 18],
-    fontWeight: "regular",
+    fontWeight: 400,
   }),
 });
 
