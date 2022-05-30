@@ -1,45 +1,26 @@
-import { Chip, Stack } from "@mui/material";
 import React from "react";
 
+import { BlogMarketFilters } from "@/components/blog/BlogMarketFilters";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
+import { Market } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
 
-type BlogProps = {
+type Props = {
   blogPage: {
     title: string;
-    description: string;
+    lead: string;
   };
-  allMarkets: {
-    name: string;
-  }[];
+  allMarkets: Market[];
 };
 
-const BlogMarketFilters = ({ markets }: { markets: string[] }) => {
-  return (
-    <Stack
-      direction="row"
-      spacing={1}
-      justifyContent="center"
-      sx={{ transform: "translateY(-50%)" }}
-    >
-      {markets.map((d) => (
-        <Chip key={d} label={d} clickable />
-      ))}
-    </Stack>
-  );
-};
-
-export default function Blog(props: BlogProps) {
-  const {
-    blogPage: { title, description },
-    allMarkets,
-  } = props;
+export default function Blog(props: Props) {
+  const { blogPage, allMarkets } = props;
 
   return (
     <AppLayout>
-      <Hero title={title} description={description} />
-      <BlogMarketFilters markets={allMarkets.map((d) => d.name)} />
+      <Hero {...blogPage} />
+      <BlogMarketFilters allMarkets={allMarkets} />
     </AppLayout>
   );
 }
@@ -54,6 +35,10 @@ export const getStaticProps = async (context: $FixMe) => {
 
       allMarkets(locale: $locale) {
         name
+        icon {
+          url
+        }
+        slug
       }
     }
   `;
