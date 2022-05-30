@@ -2,19 +2,19 @@ import { GetStaticPaths } from "next";
 import React from "react";
 
 import { AppLayout } from "@/components/layout";
-import { MarketArea } from "@/domain/types";
+import { Market } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
 
 export default function Page({
   simplePage,
-  allMarketAreas,
+  allMarkets,
 }: {
   simplePage?: {
     title: string;
     body: string;
     _allSlugLocales: { locale: string; value: string }[];
   };
-  allMarketAreas: MarketArea[];
+  allMarkets: Market[];
 }) {
   const alternates = simplePage
     ? simplePage._allSlugLocales.map((loc) => {
@@ -27,7 +27,7 @@ export default function Page({
     : undefined;
 
   return (
-    <AppLayout alternates={alternates} allMarketAreas={allMarketAreas}>
+    <AppLayout alternates={alternates} allMarkets={allMarkets}>
       {simplePage ? (
         <div>
           <ul></ul>
@@ -45,21 +45,24 @@ export default function Page({
 
 export const getStaticProps = async (context: $FixMe) => {
   const query = `
-  query PageQuery($locale: SiteLocale!, $slug: String!){
-    simplePage(locale: $locale, filter: {slug: {eq: $slug}}) {
-      title
-      body
-      _allSlugLocales {
-        locale
-        value
+    query PageQuery($locale: SiteLocale!, $slug: String!){
+      simplePage(locale: $locale, filter: {slug: {eq: $slug}}) {
+        title
+        body
+        _allSlugLocales {
+          locale
+          value
+        }
+      }
+
+      allMarkets(locale: $locale) {
+        name
+        icon {
+          url
+        }
+        slug
       }
     }
-    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
-      title
-      icon
-      slug
-    }
-  }
   `;
 
   const result = await fetchCMS(query, {
@@ -72,14 +75,14 @@ export const getStaticProps = async (context: $FixMe) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
-  query {
-    allSimplePages {
-      _allSlugLocales {
-        locale
-        value
+    query {
+      allSimplePages {
+        _allSlugLocales {
+          locale
+          value
+        }
       }
     }
-  }
   `;
 
   const result = await fetchCMS(query);

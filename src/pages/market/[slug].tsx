@@ -11,21 +11,23 @@ import Flex from "@/components/flex";
 import { InfografikTeaserLarge } from "@/components/homepage/infografik-teaser";
 import { AppLayout } from "@/components/layout";
 import { NewsfeedEntry } from "@/components/newsfeed";
-import { getMarketAreaColor } from "@/domain/colors";
-import { MarketArea, Newsfeed } from "@/domain/types";
+import { getMarketColor } from "@/domain/colors";
+import { Market, Newsfeed } from "@/domain/types";
 import { IconName } from "@/icons";
 import { fetchCMS } from "@/lib/cms-api";
 
-export default function Area({
-  marketArea,
-  allMarketAreas,
+export default function MarketPage({
+  market,
+  allMarkets,
   allNewsfeeds,
 }: {
-  marketArea?: {
-    title: string;
-    introduction?: string;
+  market?: {
+    name: string;
+    description?: string;
     slug: string;
-    icon: IconName;
+    icon: {
+      url: string;
+    };
     infographic: { title: string; year: string };
     reports: { title: string; reportid: string }[];
     links?: { label: string; url: string }[];
@@ -33,27 +35,27 @@ export default function Area({
     children: { title: string; icon: IconName; slug: string }[];
     _allSlugLocales: { locale: string; value: string }[];
   };
-  allMarketAreas: MarketArea[];
+  allMarkets: Market[];
   allNewsfeeds: Newsfeed[];
 }) {
-  const alternates = marketArea
-    ? marketArea._allSlugLocales.map((loc) => {
+  const alternates = market
+    ? market._allSlugLocales.map((loc) => {
         return {
-          href: "/area/[slug]",
-          as: `/area/${loc.value}`,
+          href: "/market/[slug]",
+          as: `/market/${loc.value}`,
           locale: loc.locale,
         };
       })
     : undefined;
 
   return (
-    <AppLayout alternates={alternates} allMarketAreas={allMarketAreas}>
-      {marketArea ? (
+    <AppLayout alternates={alternates} allMarkets={allMarkets}>
+      {market ? (
         <>
           <Banner
-            slug={marketArea.slug}
-            title={marketArea.title}
-            intro={marketArea.introduction}
+            slug={market.slug}
+            title={market.name}
+            intro={market.description}
           />
           <Box component="article">
             <ContentContainer
@@ -69,8 +71,8 @@ export default function Area({
                 <Typography variant="h2">
                   <Trans id="article.section.infografic">Infografik</Trans>
                 </Typography>
-                {(marketArea.slug === "kartoffeln" ||
-                  marketArea.slug === "potatoes") && <InfografikTeaserLarge />}
+                {(market.slug === "kartoffeln" ||
+                  market.slug === "potatoes") && <InfografikTeaserLarge />}
                 <Typography variant="h2">
                   <Trans id="article.section.data">Daten</Trans>
                 </Typography>
@@ -93,22 +95,22 @@ export default function Area({
                     }
                     url=""
                   />
-                  {marketArea.reports.length > 0 && (
+                  {market.reports.length > 0 && (
                     <ReportCard
                       type="report"
-                      title={marketArea.reports[0].title}
+                      title={market.reports[0].title}
                       url=""
                     />
                   )}
                 </Flex>
-                {marketArea.tradeLevels && (
+                {market.tradeLevels && (
                   <>
                     <Typography variant="h2">
                       <Trans id="article.section.trade">Handelsstufen</Trans>
                     </Typography>
                     <TradeLevelsGrid
-                      tradeLevels={marketArea.tradeLevels}
-                      color={getMarketAreaColor(marketArea.slug)}
+                      tradeLevels={market.tradeLevels}
+                      color={getMarketColor(market.slug)}
                     />
                   </>
                 )}
@@ -133,12 +135,12 @@ export default function Area({
                     </Button>
                   </div>
                   <div>
-                    {marketArea.links && (
+                    {market.links && (
                       <>
                         <Typography variant="h2">
                           <Trans id="article.section.link">Links</Trans>
                         </Typography>
-                        {marketArea.links.map((link) => (
+                        {market.links.map((link) => (
                           <Box key={link.label} sx={{ mb: 3 }}>
                             <Link href={link.url}>
                               {">"} {link.label}
@@ -162,45 +164,27 @@ export default function Area({
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const query = `
-  query PageQuery($locale: SiteLocale!, $slug: String!) {
-    marketArea(locale: $locale, filter: {slug: {eq: $slug}}) {
-      title
-      introduction
-      slug
-      icon
+    query PageQuery($locale: SiteLocale!, $slug: String!) {
+      market(locale: $locale, filter: {slug: {eq: $slug}}) {
+        name
+        description
+        slug
+        icon {
+          url
+        }
+      }
 
-      links {
-        label
-        url
-      }
-      tradeLevels {
-        title
-        icon
-      }
-      reports {
-        title
-        reportid
-      }
-      children {
-        title
-        icon
+      allMarkets(locale: $locale) {
+        name
+        description
         slug
       }
-      _allSlugLocales {
-        locale
-        value
+
+      allNewsfeeds(locale: $locale) {
+        title
+        publicationDate
       }
     }
-    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
-      title
-      icon
-      slug
-    }
-    allNewsfeeds(locale: $locale) {
-      title
-      publicationDate
-    }
-  }
   `;
 
   const result = await fetchCMS(query, {
@@ -210,8 +194,8 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 
   return {
     props: {
-      marketArea: result.marketArea,
-      allMarketAreas: result.allMarketAreas,
+      market: result.market,
+      allMarkets: result.allMarkets,
       allNewsfeeds: result.allNewsfeeds,
     },
   };
@@ -220,7 +204,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const query = `
   query {
-    allMarketAreas {
+    allMarkets {
       _allSlugLocales {
         locale
         value
@@ -231,7 +215,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const result = await fetchCMS(query);
 
-  const paths = result.allMarketAreas.flatMap((page: $FixMe) => {
+  const paths = result.allMarkets.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
       locale: loc.locale,
       params: { slug: loc.value },

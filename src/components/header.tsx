@@ -5,17 +5,17 @@ import * as React from "react";
 import { useState } from "react";
 
 import Flex from "@/components/flex";
-import { MarketAreaHeader } from "@/components/header-market-areas";
+import { MarketHeader } from "@/components/header-market";
 import { LanguageMenu } from "@/components/language-menu";
 import { HomeLink } from "@/components/links";
-import { MarketArea } from "@/domain/types";
+import { Market } from "@/domain/types";
 import { Icon } from "@/icons";
 
 export const Header = ({
-  allMarketAreas,
+  allMarkets,
   alternates,
 }: {
-  allMarketAreas?: MarketArea[];
+  allMarkets?: Market[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const [expanded, toggleMenu] = useState(false); // mobile
@@ -62,16 +62,15 @@ export const Header = ({
         <MobileMenuExpanded
           marketMenuexpanded={marketMenuexpanded}
           toggleMarketMenu={toggleMarketMenu}
-          allMarketAreas={allMarketAreas}
+          allMarkets={allMarkets}
           alternates={alternates}
         />
       )}
       <Box sx={{ display: ["none", "none", "block"] }}>
-        {marketMenuexpanded && allMarketAreas && (
-          <MarketAreaHeader
-            marketMenuexpanded={marketMenuexpanded}
+        {marketMenuexpanded && allMarkets && (
+          <MarketHeader
             toggleMarketMenu={toggleMarketMenu}
-            allMarketAreas={allMarketAreas}
+            allMarkets={allMarkets}
           />
         )}
       </Box>
@@ -99,15 +98,16 @@ const MobileHamburger = ({
     </Button>
   );
 };
+
 const MobileMenuExpanded = ({
   marketMenuexpanded,
   toggleMarketMenu,
-  allMarketAreas,
+  allMarkets,
   alternates,
 }: {
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
-  allMarketAreas?: MarketArea[];
+  allMarkets?: Market[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   return (
@@ -130,11 +130,10 @@ const MobileMenuExpanded = ({
         <Trans id="menu.markets">Märkte</Trans>
         <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
       </Link>
-      {marketMenuexpanded && allMarketAreas && (
-        <MarketAreaHeader
-          marketMenuexpanded={marketMenuexpanded}
+      {marketMenuexpanded && allMarkets && (
+        <MarketHeader
           toggleMarketMenu={toggleMarketMenu}
-          allMarketAreas={allMarketAreas}
+          allMarkets={allMarkets}
         />
       )}
       <NextLink href="/about" passHref>

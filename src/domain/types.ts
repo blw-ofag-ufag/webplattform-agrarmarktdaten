@@ -1,9 +1,9 @@
-import { IconName } from "@/icons";
-
-export interface MarketArea {
+export interface Market {
+  name: string;
+  icon: {
+    url: string;
+  };
   slug: string;
-  title: string;
-  icon: IconName;
 }
 
 export interface Newsfeed {

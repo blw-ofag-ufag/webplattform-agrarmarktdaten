@@ -3,14 +3,10 @@ import { default as NextLink } from "next/link";
 import React from "react";
 
 import { MarketCard } from "@/components/market-icon";
-import { MarketArea } from "@/domain/types";
+import { Market } from "@/domain/types";
 import { useLocale } from "@/lib/use-locale";
 
-export const MarketAreasGrid = ({
-  allMarketAreas,
-}: {
-  allMarketAreas: MarketArea[];
-}) => {
+export const MarketsGrid = ({ allMarkets }: { allMarkets: Market[] }) => {
   const locale = useLocale();
 
   return (
@@ -25,21 +21,21 @@ export const MarketAreasGrid = ({
         gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
       }}
     >
-      {allMarketAreas.map((area) => {
+      {allMarkets.map((d) => {
         return (
           <Box
             component="li"
-            key={area.slug}
+            key={d.slug}
             sx={{ mb: 4, listStyleType: "none" }}
           >
             <NextLink
-              href="/area/[slug]"
-              as={`/area/${area.slug}`}
+              href="/market/[slug]"
+              as={`/market/${d.slug}`}
               locale={locale}
               passHref
             >
               <Link sx={{ textDecoration: "none" }}>
-                <MarketCard title={area.title} icon={area.icon}></MarketCard>
+                <MarketCard title={d.name} icon="bio" />
               </Link>
             </NextLink>
           </Box>

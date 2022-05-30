@@ -4,13 +4,9 @@ import NextLink from "next/link";
 import Flex from "@/components/flex";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { MarketArea } from "@/domain/types";
+import { Market } from "@/domain/types";
 
-export const HeaderOld = ({
-  alternates,
-}: {
-  alternates?: { href: string; as: string; label: string }[];
-}) => {
+export const HeaderOld = () => {
   return (
     <Flex
       sx={{
@@ -43,20 +39,6 @@ export const HeaderOld = ({
         <NextLink href="/create/[chartId]" as="/create/new" passHref>
           <Link>Get Data</Link>
         </NextLink>
-
-        {/* {alternates && (
-          <Flex ml={3} sx={{ borderLeft: "1px solid #999" }}>
-            {alternates.map(({ href, label, as }) => {
-              return (
-                <Box ml={3} key={as}>
-                  <NextLink href={href} as={as} passHref>
-                    <Link>{label}</Link>
-                  </NextLink>
-                </Box>
-              );
-            })}
-          </Flex>
-        )} */}
       </Flex>
     </Flex>
   );
@@ -64,15 +46,15 @@ export const HeaderOld = ({
 
 export const AppLayout = ({
   children,
-  allMarketAreas,
+  allMarkets,
   alternates,
 }: {
   children: React.ReactNode;
-  allMarketAreas?: MarketArea[];
+  allMarkets?: Market[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => (
   <>
-    <Header alternates={alternates} allMarketAreas={allMarketAreas} />
+    <Header alternates={alternates} allMarkets={allMarkets} />
     <Box sx={{ mt: [0, 0, "92px"] }}>{children}</Box>
     <Footer />
   </>

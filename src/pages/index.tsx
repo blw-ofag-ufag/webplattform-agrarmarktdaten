@@ -5,23 +5,23 @@ import React from "react";
 import { Banner } from "@/components/banner";
 import { ContentContainer } from "@/components/content-container";
 import { InfografikTeaser } from "@/components/homepage/infografik-teaser";
-import { MarketAreasGrid } from "@/components/homepage/market-areas-grid";
+import { MarketsGrid } from "@/components/homepage/markets-grid";
 import { AppLayout } from "@/components/layout";
 import { NewsfeedEntry } from "@/components/newsfeed";
-import { MarketArea, Newsfeed } from "@/domain/types";
+import { Market, Newsfeed } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
 
 export default function HomePage({
   homePage,
-  allMarketAreas,
+  allMarkets,
   allNewsfeeds,
 }: {
   homePage: { title: string; intro: string };
-  allMarketAreas: MarketArea[];
+  allMarkets: Market[];
   allNewsfeeds: Newsfeed[];
 }) {
   return (
-    <AppLayout allMarketAreas={allMarketAreas}>
+    <AppLayout allMarkets={allMarkets}>
       <Banner title={homePage.title} intro={homePage.intro} />
       <Box component="main">
         <ContentContainer
@@ -35,9 +35,9 @@ export default function HomePage({
         >
           <Box sx={{ width: ["100%", "100%", "65%"] }}>
             <Typography variant="h2">
-              <Trans id="homepage.section.market.area">Märkte</Trans>
+              <Trans id="homepage.section.market">Märkte</Trans>
             </Typography>
-            <MarketAreasGrid allMarketAreas={allMarketAreas} />
+            <MarketsGrid allMarkets={allMarkets} />
           </Box>
 
           <Box sx={{ width: ["100%", "100%", "30%"] }}>
@@ -77,25 +77,30 @@ export default function HomePage({
 
 export const getStaticProps = async (context: $FixMe) => {
   const query = `
-  query PageQuery($locale: SiteLocale!){
-    homePage(locale: $locale) {
-      title
-      intro
+    query PageQuery($locale: SiteLocale!) {
+      homePage(locale: $locale) {
+        title
+        lead
+      }
+
+      allSimplePages(locale: $locale) {
+        slug
+        title
+      }
+
+      allMarkets(locale: $locale) {
+        name
+        icon {
+          url
+        }
+        slug
+      }
+
+      allNewsfeeds(locale: $locale) {
+        title
+        publicationDate
+      }
     }
-    allSimplePages(locale: $locale) {
-      slug
-      title
-    }
-    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
-      title
-      icon
-      slug
-    }
-    allNewsfeeds(locale: $locale) {
-      title
-      publicationDate
-    }
-  }
   `;
 
   const result = await fetchCMS(query, {

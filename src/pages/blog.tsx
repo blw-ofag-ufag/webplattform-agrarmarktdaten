@@ -10,8 +10,8 @@ type BlogProps = {
     title: string;
     description: string;
   };
-  allMarketAreas: {
-    title: string;
+  allMarkets: {
+    name: string;
   }[];
 };
 
@@ -33,13 +33,13 @@ const BlogMarketFilters = ({ markets }: { markets: string[] }) => {
 export default function Blog(props: BlogProps) {
   const {
     blogPage: { title, description },
-    allMarketAreas,
+    allMarkets,
   } = props;
 
   return (
     <AppLayout>
       <Hero title={title} description={description} />
-      <BlogMarketFilters markets={allMarketAreas.map((d) => d.title)} />
+      <BlogMarketFilters markets={allMarkets.map((d) => d.name)} />
     </AppLayout>
   );
 }
@@ -49,11 +49,11 @@ export const getStaticProps = async (context: $FixMe) => {
     query BlogPageQuery($locale: SiteLocale!) {
       blogPage(locale: $locale) {
         title
-        description
+        lead
       }
 
-      allMarketAreas(locale: $locale) {
-        title
+      allMarkets(locale: $locale) {
+        name
       }
     }
   `;

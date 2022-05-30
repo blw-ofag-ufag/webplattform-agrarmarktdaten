@@ -3,18 +3,16 @@ import { default as NextLink } from "next/link";
 import React from "react";
 
 import Flex from "@/components/flex";
-import { MarketArea } from "@/domain/types";
+import { Market } from "@/domain/types";
 import { Icon, IconName } from "@/icons";
 import { useLocale } from "@/lib/use-locale";
 
-export const MarketAreaHeader = ({
-  marketMenuexpanded,
+export const MarketHeader = ({
   toggleMarketMenu,
-  allMarketAreas,
+  allMarkets,
 }: {
-  marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
-  allMarketAreas: MarketArea[];
+  allMarkets: Market[];
 }) => {
   const locale = useLocale();
 
@@ -34,16 +32,16 @@ export const MarketAreaHeader = ({
         zIndex: 30,
       }}
     >
-      {allMarketAreas.map((area) => {
+      {allMarkets.map((d) => {
         return (
           <Box
             component="li"
-            key={area.slug}
+            key={d.slug}
             sx={{ width: ["100%", "100%", "auto"] }}
           >
             <NextLink
-              href="/area/[slug]"
-              as={`/area/${area.slug}`}
+              href="/market/[slug]"
+              as={`/market/${d.slug}`}
               locale={locale}
               passHref
             >
@@ -51,7 +49,7 @@ export const MarketAreaHeader = ({
                 sx={{ textDecoration: "none" }}
                 onClick={() => toggleMarketMenu(false)}
               >
-                <MarketCard title={area.title} icon={area.icon}></MarketCard>
+                <MarketCard title={d.name} icon="bio" />
               </Link>
             </NextLink>
           </Box>

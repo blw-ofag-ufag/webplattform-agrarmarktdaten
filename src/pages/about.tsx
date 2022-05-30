@@ -2,36 +2,39 @@ import React from "react";
 
 import { Banner } from "@/components/banner";
 import { AppLayout } from "@/components/layout";
-import { MarketArea } from "@/domain/types";
+import { Market } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
 
 export default function About({
   aboutPage,
-  allMarketAreas,
+  allMarkets,
 }: {
-  aboutPage: { title: string; introduction: string };
-  allMarketAreas: MarketArea[];
+  aboutPage: { title: string; description: string };
+  allMarkets: Market[];
 }) {
   return (
-    <AppLayout allMarketAreas={allMarketAreas}>
-      <Banner title={aboutPage.title} intro={aboutPage.introduction} />
+    <AppLayout allMarkets={allMarkets}>
+      <Banner title={aboutPage.title} intro={aboutPage.description} />
     </AppLayout>
   );
 }
 
 export const getStaticProps = async (context: $FixMe) => {
   const query = `
-  query PageQuery($locale: SiteLocale!){
-    aboutPage(locale: $locale) {
-      title
-      introduction
+    query PageQuery($locale: SiteLocale!){
+      aboutPage(locale: $locale) {
+        title
+        lead
+      }
+
+      allMarkets(locale: $locale) {
+        name
+        icon {
+          url
+        }
+        slug
+      }
     }
-    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
-      title
-      icon
-      slug
-    }
-  }
   `;
 
   const result = await fetchCMS(query, {

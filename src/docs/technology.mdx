@@ -11,7 +11,7 @@ Compared to other CMS, DatoCMS offers several advantages, among them:
 - **Revision history**: It is straightforward to revert an unwanted change and go back to a previous version of the webplatform content.
 - **Scheduled publication**: A content update can be published instantly, or scheduled for a planned future release.
 - **API-based content access**: The connection between content items and their presentational components is achieved by accessing the content via a GraphQL API, which allows for separation of concerns between content management and display an application/website. This approach integrates seamlessly with the frontend technologies React and Next.js.
-- **Content modeling** Instead of composing pages with generic content blocks, content is structured in domain-specific models (e.g. market areas, reports) that can be linked together and integrated flexibly by a frontend (or even multiple frontends with different functionality).
+- **Content modeling** Instead of composing pages with generic content blocks, content is structured in domain-specific models (e.g. markets, reports) that can be linked together and integrated flexibly by a frontend (or even multiple frontends with different functionality).
 
 <HintSpecimen directive>
 
@@ -26,7 +26,7 @@ Editing content occurs through the CMS dashboard. The content must be edited in 
 - **Homepage**: content displayed on the landing page.
 - **About Page**: content used in the page "Über uns"
 - **Newsfeed**: list of news items displayed in the "Aktuell" section of the homepage.
-- **Market Area**: This section has a subsection per market area (potatoes, milk, etc.), in which the content can be edited for each specific market area.
+- **Market**: This section has a subsection per market (potatoes, milk, etc.), in which the content can be edited for each specific market.
 - **Potato Infografic**: contains the data and texts used in the infografic.
 
 ### Editing Infografic Data
@@ -53,8 +53,8 @@ More in-depth technical documentation for the visualization tool can be found at
 
 ## Integration of Power BI Reports
 
-The integration of a Power BI report curated by IT-Logix is demonstrated with the example of the report named "Auswertung Durchschnittspreis Früchte und Gemüse 2006-2019". The report is linked from the market area pages "Potatoes" and "Fruits & Vegetables". The embedded report opens as a separate page within the platform.
+The integration of a Power BI report curated by IT-Logix is demonstrated with the example of the report named "Auswertung Durchschnittspreis Früchte und Gemüse 2006-2019". The report is linked from the market pages "Potatoes" and "Fruits & Vegetables". The embedded report opens as a separate page within the platform.
 
-Currently, there is only one report available. In a future iteration, it will be possible to customize the power BI report displayed for a specific market area, by defining its ID in the CMS Dashboard.
+Currently, there is only one report available. In a future iteration, it will be possible to customize the power BI report displayed for a specific market, by defining its ID in the CMS Dashboard.
 
 The library [PowerBI-JavaScript](https://github.com/microsoft/PowerBI-JavaScript), maintained by Microsoft, is used to embed the report in the app.

@@ -1,5 +1,5 @@
 {
-  "homepage.section.market.area": {
+  "homepage.section.market": {
     "defaults": "Märkte",
     "origin": [["src/pages/index.tsx", 34]]
   },

@@ -5,7 +5,7 @@ import React from "react";
 
 import { Banner } from "@/components/banner";
 import { AppLayout } from "@/components/layout";
-import { MarketArea } from "@/domain/types";
+import { Market } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
 
 // Dynamic import to escape SSR:
@@ -14,13 +14,9 @@ const DynamicReport = dynamic(() => import("../components/powerbi-report"), {
   ssr: false,
 });
 
-export default function Report({
-  allMarketAreas,
-}: {
-  allMarketAreas: MarketArea[];
-}) {
+export default function Report({ allMarkets }: { allMarkets: Market[] }) {
   return (
-    <AppLayout allMarketAreas={allMarketAreas}>
+    <AppLayout allMarkets={allMarkets}>
       <Banner
         title={"Früchte und Gemüse 2006-2019"}
         intro={"Auswertung Durchschnittspreis Früchte und Gemüse 2006-2019"}
@@ -45,9 +41,11 @@ export default function Report({
 export const getStaticProps = async (context: $FixMe) => {
   const query = `
   query PageQuery($locale: SiteLocale!){
-    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
-      title
-      icon
+    allMarkets(locale: $locale) {
+      name
+      icon {
+        url
+      }
       slug
     }
   }

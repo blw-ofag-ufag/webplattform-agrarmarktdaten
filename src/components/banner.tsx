@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React, { ReactNode, useMemo } from "react";
 
 import { ContentContainer } from "@/components/content-container";
-import { getMarketAreaColor } from "@/domain/colors";
+import { getMarketColor } from "@/domain/colors";
 
 export const Banner = ({
   title,
@@ -13,7 +13,7 @@ export const Banner = ({
   intro?: string | ReactNode;
   slug?: string;
 }) => {
-  const baseBgColor = useMemo(() => getMarketAreaColor(slug), [slug]);
+  const baseBgColor = useMemo(() => getMarketColor(slug), [slug]);
 
   return (
     <Box sx={{ position: "relative", width: "100vw", mb: [0, 0, 6] }}>
