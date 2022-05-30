@@ -16,7 +16,7 @@ export const Hero = ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "456px",
+        height: "420px",
         backgroundColor: "muted.main",
       }}
     >
