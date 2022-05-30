@@ -3,13 +3,14 @@ import { Typography } from "@mui/material";
 import { ContentContainer } from "./content-container";
 import Flex from "./flex";
 
-export const Hero = ({
-  title,
-  description,
-}: {
+type Props = {
   title: string;
-  description: string;
-}) => {
+  lead: string;
+};
+
+export const Hero = (props: Props) => {
+  const { title, lead } = props;
+
   return (
     <Flex
       sx={{
@@ -23,7 +24,7 @@ export const Hero = ({
       <ContentContainer narrow={true} sx={{ textAlign: "center" }}>
         <Typography variant="h1">{title}</Typography>
         <Typography variant="subtitle1" sx={{ mt: 3, color: "secondary.main" }}>
-          {description}
+          {lead}
         </Typography>
       </ContentContainer>
     </Flex>
