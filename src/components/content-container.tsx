@@ -11,7 +11,9 @@ export const ContentContainer = ({
   sx?: SxProps;
 }) => {
   return (
-    <Box sx={{ ...sx, maxWidth: narrow ? "60rem" : "77rem", mx: "auto" }}>
+    <Box
+      sx={{ ...sx, maxWidth: narrow ? "60rem" : "77rem", mx: "auto", px: 5 }}
+    >
       {children}
     </Box>
   );
