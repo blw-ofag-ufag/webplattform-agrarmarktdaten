@@ -2,8 +2,8 @@ import { Trans } from "@lingui/macro";
 import { Box, Button, Typography, Stack } from "@mui/material";
 import React from "react";
 
-import { Banner } from "@/components/banner";
 import { ContentContainer } from "@/components/content-container";
+import { Hero } from "@/components/hero";
 import { InfografikTeaser } from "@/components/homepage/infografik-teaser";
 import { MarketsGrid } from "@/components/homepage/markets-grid";
 import { AppLayout } from "@/components/layout";
@@ -16,13 +16,13 @@ export default function HomePage({
   allMarkets,
   allNewsfeeds,
 }: {
-  homePage: { title: string; intro: string };
+  homePage: { title: string; lead: string };
   allMarkets: Market[];
   allNewsfeeds: Newsfeed[];
 }) {
   return (
     <AppLayout allMarkets={allMarkets}>
-      <Banner title={homePage.title} intro={homePage.intro} />
+      <Hero {...homePage} />
       <Box component="main">
         <ContentContainer
           sx={{
