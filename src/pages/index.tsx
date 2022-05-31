@@ -6,9 +6,9 @@ import React from "react";
 import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
-import { MarketsGrid } from "@/components/homepage/markets-grid";
+import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
-import { BlogPost, Market, SEO } from "@/domain/types";
+import { BlogPost, Market, SEO, Theme } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
 
 type HomePage = { title: string; lead: string; seo?: SEO };
@@ -16,10 +16,12 @@ type HomePage = { title: string; lead: string; seo?: SEO };
 export default function HomePage({
   homePage,
   allMarkets,
+  allThemes,
   allBlogPosts,
 }: {
   homePage: HomePage;
   allMarkets: Pick<Market, "title" | "slug" | "tile">[];
+  allThemes: Pick<Theme, "title" | "slug" | "tile">[];
   allBlogPosts: BlogPost[];
 }) {
   return (
@@ -28,9 +30,16 @@ export default function HomePage({
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
-            <Trans id="homepage.section.market">Märkte</Trans>
+            <Trans id="homepage.section.market">Markets</Trans>
           </Typography>
-          <MarketsGrid allMarkets={allMarkets} />
+          <CardsGrid type="market" entries={allMarkets} />
+        </Stack>
+
+        <Stack flexDirection="column" spacing={6}>
+          <Typography variant="h2">
+            <Trans id="homepage.section.theme">Themes</Trans>
+          </Typography>
+          <CardsGrid type="theme" entries={allThemes} />
         </Stack>
 
         <Stack flexDirection="column" spacing={6}>
@@ -81,6 +90,14 @@ export const getStaticProps = async (context: $FixMe) => {
       }
 
       allMarkets(locale: $locale) {
+        title
+        slug
+        tile {
+          url
+        }
+      }
+
+      allThemes(locale: $locale) {
         title
         slug
         tile {

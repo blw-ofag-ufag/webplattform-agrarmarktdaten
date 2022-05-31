@@ -58,7 +58,7 @@ export const MarketHeader = ({
   );
 };
 
-export const MarketCard = ({ title }: { title: string }) => {
+const MarketCard = ({ title }: { title: string }) => {
   return (
     <Card
       elevation={0}

@@ -28,6 +28,9 @@ export interface Theme {
   title: string;
   lead: string;
   slug: string;
+  tile: {
+    url: string;
+  };
   blocks: any[];
   seo?: SEO;
 }
