@@ -1,15 +1,26 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { useMemo } from "react";
 
 import { ContentContainer } from "./content-container";
 import Flex from "./flex";
 
 type Props = {
+  variant?: "regular" | "market";
   title: string;
   lead: string;
 };
 
 export const Hero = (props: Props) => {
-  const { title, lead } = props;
+  const { variant = "regular", title, lead } = props;
+  const dynamicSxProps = useMemo(() => {
+    return variant === "market"
+      ? {
+          borderTopRightRadius: "110px",
+          borderBottomLeftRadius: "110px",
+          mt: 9,
+        }
+      : {};
+  }, [variant]);
 
   return (
     <Flex
@@ -18,14 +29,21 @@ export const Hero = (props: Props) => {
         alignItems: "center",
         justifyContent: "center",
         height: "420px",
+        mb: 7,
         backgroundColor: "muted.main",
+        ...dynamicSxProps,
       }}
     >
       <ContentContainer sx={{ textAlign: "center" }}>
-        <Typography variant="h1">{title}</Typography>
-        <Typography variant="subtitle1" sx={{ mt: 3, color: "secondary.main" }}>
-          {lead}
-        </Typography>
+        <Box>
+          <Typography variant="h1">{title}</Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ mt: 3, color: "secondary.main" }}
+          >
+            {lead}
+          </Typography>
+        </Box>
       </ContentContainer>
     </Flex>
   );
