@@ -58,7 +58,7 @@ msgstr ""
 msgid "button.infografic.teaser"
 msgstr ""
 
-#: src/pages/index.tsx:58
+#: src/pages/index.tsx:55
 #: src/pages/market/[slug].tsx:134
 msgid "button.show.all"
 msgstr ""
@@ -83,7 +83,11 @@ msgstr ""
 msgid "footer.legal"
 msgstr ""
 
-#: src/pages/index.tsx:37
+#: src/pages/index.tsx:47
+msgid "homepage.section.latestBlogPosts"
+msgstr "Derniers Articles de Blog"
+
+#: src/pages/index.tsx:38
 msgid "homepage.section.market"
 msgstr "Marchés"
 
@@ -91,9 +95,9 @@ msgstr "Marchés"
 #~ msgid "homepage.section.newest.infografic"
 #~ msgstr ""
 
-#: src/pages/index.tsx:46
-msgid "homepage.section.newsfeed"
-msgstr ""
+#: src/pages/index.tsx:47
+#~ msgid "homepage.section.newsfeed"
+#~ msgstr ""
 
 #: src/components/homepage/infografik-teaser.tsx:35
 msgid "infografic"

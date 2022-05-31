@@ -58,7 +58,7 @@ msgstr "Daten zum Kartoffelmarkt"
 msgid "button.infografic.teaser"
 msgstr "Infografik Ansehen"
 
-#: src/pages/index.tsx:58
+#: src/pages/index.tsx:55
 #: src/pages/market/[slug].tsx:134
 msgid "button.show.all"
 msgstr "Alle Anzeigen"
@@ -83,7 +83,11 @@ msgstr "Impressum"
 msgid "footer.legal"
 msgstr "Rechtliche Grundlagen"
 
-#: src/pages/index.tsx:37
+#: src/pages/index.tsx:47
+msgid "homepage.section.latestBlogPosts"
+msgstr "Neuste Blogbeiträge"
+
+#: src/pages/index.tsx:38
 msgid "homepage.section.market"
 msgstr "Märkte"
 
@@ -91,9 +95,9 @@ msgstr "Märkte"
 #~ msgid "homepage.section.newest.infografic"
 #~ msgstr "Neueste Infografik"
 
-#: src/pages/index.tsx:46
-msgid "homepage.section.newsfeed"
-msgstr "Aktuell"
+#: src/pages/index.tsx:47
+#~ msgid "homepage.section.newsfeed"
+#~ msgstr "Aktuell"
 
 #: src/components/homepage/infografik-teaser.tsx:35
 msgid "infografic"

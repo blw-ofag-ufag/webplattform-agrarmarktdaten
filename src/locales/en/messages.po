@@ -58,7 +58,7 @@ msgstr "Data about the Potatoe Market"
 msgid "button.infografic.teaser"
 msgstr "See Infografics"
 
-#: src/pages/index.tsx:58
+#: src/pages/index.tsx:55
 #: src/pages/market/[slug].tsx:134
 msgid "button.show.all"
 msgstr "Show All"
@@ -83,7 +83,11 @@ msgstr "Imprint"
 msgid "footer.legal"
 msgstr "Legal"
 
-#: src/pages/index.tsx:37
+#: src/pages/index.tsx:47
+msgid "homepage.section.latestBlogPosts"
+msgstr "Latest Blog Posts"
+
+#: src/pages/index.tsx:38
 msgid "homepage.section.market"
 msgstr "Markets"
 
@@ -91,9 +95,9 @@ msgstr "Markets"
 #~ msgid "homepage.section.newest.infografic"
 #~ msgstr "Newest Infografics"
 
-#: src/pages/index.tsx:46
-msgid "homepage.section.newsfeed"
-msgstr "Latest"
+#: src/pages/index.tsx:47
+#~ msgid "homepage.section.newsfeed"
+#~ msgstr ""
 
 #: src/components/homepage/infografik-teaser.tsx:35
 msgid "infografic"
