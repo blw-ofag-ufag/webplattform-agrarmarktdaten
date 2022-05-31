@@ -144,7 +144,7 @@ const theme = createTheme({
   breakpoints: {
     values: { xs: 0, sm: 768, md: 992, lg: 1280, xl: 1360 },
   },
-  spacing: [0, 4, 8, 12, 16, 24, 32, 64, 72],
+  spacing: [0, 4, 8, 12, 16, 24, 32, 64, 72, 96],
   shape: {
     borderRadius: 2,
   },
