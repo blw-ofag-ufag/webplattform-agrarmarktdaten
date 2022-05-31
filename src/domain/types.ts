@@ -39,6 +39,7 @@ export interface BlogPost {
   author: Person;
   image: {
     url: string;
+    alt: string;
   };
   markets: Market[];
   themes: Theme[];

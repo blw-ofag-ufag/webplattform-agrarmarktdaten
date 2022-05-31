@@ -3,6 +3,7 @@ import { Box, Button, Typography, Stack } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 
+import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import Flex from "@/components/flex";
 import { Hero } from "@/components/hero";
@@ -45,16 +46,12 @@ export default function HomePage({
           <Box mt={7}>
             <Stack flexDirection="column" spacing={8}>
               <div>
-                <Typography variant="h6">
+                <Typography variant="h6" mb={6}>
                   <Trans id="homepage.section.latestBlogPosts">
                     Latest Blog Posts
                   </Trans>
                 </Typography>
-                <div>
-                  {allBlogPosts.map((d) => (
-                    <div key={d.slug} />
-                  ))}
-                </div>
+                <BlogPostsGrid blogPosts={allBlogPosts} />
                 <Link href="/blog">
                   <Button variant="text" sx={{ ml: -2 }}>
                     <Trans id="button.show.all">Show All</Trans>
@@ -93,7 +90,7 @@ export const getStaticProps = async (context: $FixMe) => {
         }
       }
 
-      allBlogPosts(locale: $locale) {
+      allBlogPosts(locale: $locale, first: 3) {
         title
         lead
         slug
