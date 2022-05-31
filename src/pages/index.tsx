@@ -7,15 +7,17 @@ import Flex from "@/components/flex";
 import { Hero } from "@/components/hero";
 import { MarketsGrid } from "@/components/homepage/markets-grid";
 import { AppLayout } from "@/components/layout";
-import { BlogPost, Market } from "@/domain/types";
+import { BlogPost, Market, SEO } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
+
+type HomePage = { title: string; lead: string; seo?: SEO };
 
 export default function HomePage({
   homePage,
   allMarkets,
   allBlogPosts,
 }: {
-  homePage: { title: string; lead: string };
+  homePage: HomePage;
   allMarkets: Pick<Market, "title" | "slug" | "tile">[];
   allBlogPosts: BlogPost[];
 }) {
@@ -70,6 +72,14 @@ export const getStaticProps = async (context: $FixMe) => {
       homePage(locale: $locale) {
         title
         lead
+        seo(locale: $locale) {
+          title
+          description
+          image {
+            url
+          }
+          twitterCard
+        }
       }
 
       allMarkets(locale: $locale) {

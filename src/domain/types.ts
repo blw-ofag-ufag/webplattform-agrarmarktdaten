@@ -1,3 +1,12 @@
+export interface SEO {
+  title?: string;
+  description?: string;
+  image?: {
+    url: string;
+  };
+  twitterCard?: string;
+}
+
 export interface Market {
   title: string;
   lead: string;
@@ -7,7 +16,7 @@ export interface Market {
   };
   blocks: any[];
   powerBiReport: PowerBIReport;
-  seo: any;
+  seo?: SEO;
 }
 
 export interface PowerBIReport {
@@ -20,7 +29,7 @@ export interface Theme {
   lead: string;
   slug: string;
   blocks: any[];
-  seo: any;
+  seo?: SEO;
 }
 
 export interface BlogPost {
@@ -34,7 +43,7 @@ export interface BlogPost {
   markets: Market[];
   themes: Theme[];
   blocks: any[];
-  seo: any;
+  seo?: SEO;
   _firstPublishedAt?: string;
 }
 
