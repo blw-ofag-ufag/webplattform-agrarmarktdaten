@@ -51,7 +51,20 @@ export default function HomePage({
             </Typography>
             <BlogPostsGrid blogPosts={allBlogPosts} />
             <Link href="/blog">
-              <Button variant="text" sx={{ ml: -2 }}>
+              <Button
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "184px",
+                  height: "48px",
+                  backgroundColor: "grey.300",
+                  color: "black",
+
+                  "&:hover": {
+                    backgroundColor: "grey.500",
+                  },
+                }}
+              >
                 <Trans id="button.show.all">Show All</Trans>
               </Button>
             </Link>
