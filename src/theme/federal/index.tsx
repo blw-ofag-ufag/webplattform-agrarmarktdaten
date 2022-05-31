@@ -192,6 +192,11 @@ theme.typography = merge(theme.typography, {
     lineHeight: [18, 20],
     fontWeight: 400,
   }),
+  h6: createTypographyVariant(theme, {
+    fontSize: [12, 20],
+    lineHeight: [18, 32],
+    fontWeight: 500,
+  }),
   subtitle1: createTypographyVariant(theme, {
     fontSize: [14, 16],
     lineHeight: [22, 28],
