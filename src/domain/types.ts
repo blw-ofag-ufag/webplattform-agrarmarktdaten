@@ -1,5 +1,5 @@
 export interface Market {
-  name: string;
+  title: string;
   tile: {
     url: string;
   };

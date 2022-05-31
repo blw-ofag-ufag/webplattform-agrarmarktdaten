@@ -22,7 +22,7 @@ export default function MarketPage({
   allNewsfeeds,
 }: {
   market?: {
-    name: string;
+    title: string;
     description?: string;
     slug: string;
     tile: {
@@ -54,7 +54,7 @@ export default function MarketPage({
         <>
           <Banner
             slug={market.slug}
-            title={market.name}
+            title={market.title}
             intro={market.description}
           />
           <Box component="article">
@@ -166,8 +166,8 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const query = `
     query PageQuery($locale: SiteLocale!, $slug: String!) {
       market(locale: $locale, filter: {slug: {eq: $slug}}) {
-        name
-        description
+        title
+        lead
         slug
         tile {
           url
@@ -175,8 +175,8 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
       }
 
       allMarkets(locale: $locale) {
-        name
-        description
+        title
+        lead
         slug
       }
 

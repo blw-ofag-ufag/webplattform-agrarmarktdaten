@@ -18,7 +18,7 @@ export const BlogMarketFilters = ({
       sx={{ justifyContent: "center", transform: "translateY(-50%)" }}
     >
       {allMarkets.map((d) => (
-        <Chip key={d.name} label={d.name} clickable />
+        <Chip key={d.title} label={d.title} clickable />
       ))}
     </Stack>
   );

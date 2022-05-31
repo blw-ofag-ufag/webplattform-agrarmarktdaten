@@ -79,9 +79,7 @@ export const getStaticProps = async (context: $FixMe) => {
         slug
         title
       }
-
-      allMarkets(locale: $locale) {
-        name
+          title
         tile {
           url
         }
