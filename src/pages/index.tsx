@@ -25,13 +25,7 @@ export default function HomePage({
   return (
     <AppLayout allMarkets={allMarkets}>
       <Hero {...homePage} />
-      <ContentContainer
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 7,
-        }}
-      >
+      <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
             <Trans id="homepage.section.market">Märkte</Trans>

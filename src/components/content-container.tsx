@@ -9,7 +9,17 @@ export const ContentContainer = ({
   sx?: SxProps;
 }) => {
   return (
-    <Box sx={{ ...sx, maxWidth: "1024px", mt: 7, mx: "auto", px: 5 }}>
+    <Box
+      sx={{
+        ...sx,
+        display: "flex",
+        flexDirection: "column",
+        gap: 7,
+        maxWidth: "1024px",
+        mx: "auto",
+        px: 5,
+      }}
+    >
       {children}
     </Box>
   );
