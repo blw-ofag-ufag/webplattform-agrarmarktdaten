@@ -7,18 +7,17 @@ import Flex from "@/components/flex";
 import { Hero } from "@/components/hero";
 import { MarketsGrid } from "@/components/homepage/markets-grid";
 import { AppLayout } from "@/components/layout";
-import { NewsfeedEntry } from "@/components/newsfeed";
-import { Market, Newsfeed } from "@/domain/types";
+import { BlogPost, Market } from "@/domain/types";
 import { fetchCMS } from "@/lib/cms-api";
 
 export default function HomePage({
   homePage,
   allMarkets,
-  allNewsfeeds,
+  allBlogPosts,
 }: {
   homePage: { title: string; lead: string };
-  allMarkets: Market[];
-  allNewsfeeds: Newsfeed[];
+  allMarkets: Pick<Market, "title" | "slug" | "tile">[];
+  allBlogPosts: BlogPost[];
 }) {
   return (
     <AppLayout allMarkets={allMarkets}>
@@ -43,16 +42,14 @@ export default function HomePage({
           <Box mt={7}>
             <Stack flexDirection="column" spacing={8}>
               <div>
-                <Typography variant="h2">
-                  <Trans id="homepage.section.newsfeed">Aktuell</Trans>
+                <Typography variant="h6">
+                  <Trans id="homepage.section.latestBlogPosts">
+                    Latest Blog Posts
+                  </Trans>
                 </Typography>
                 <div>
-                  {allNewsfeeds.map((news) => (
-                    <NewsfeedEntry
-                      key={news.title}
-                      title={news.title}
-                      publicationDate={news.publicationDate}
-                    />
+                  {allBlogPosts.map((d) => (
+                    <div key={d.slug} />
                   ))}
                 </div>
                 <Button variant="text" sx={{ ml: -2 }}>
@@ -75,20 +72,28 @@ export const getStaticProps = async (context: $FixMe) => {
         lead
       }
 
-      allSimplePages(locale: $locale) {
-        slug
+      allMarkets(locale: $locale) {
         title
-      }
-          title
+        slug
         tile {
           url
         }
-        slug
       }
 
-      allNewsfeeds(locale: $locale) {
+      allBlogPosts(locale: $locale) {
         title
-        publicationDate
+        lead
+        slug
+        image {
+          url
+        }
+        markets {
+          title
+        }
+        themes {
+          title
+        }
+        _firstPublishedAt
       }
     }
   `;

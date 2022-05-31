@@ -4,7 +4,6 @@ import React from "react";
 
 import Flex from "@/components/flex";
 import { Market } from "@/domain/types";
-import { Icon, IconName } from "@/icons";
 import { useLocale } from "@/lib/use-locale";
 
 export const MarketHeader = ({
@@ -12,7 +11,7 @@ export const MarketHeader = ({
   allMarkets,
 }: {
   toggleMarketMenu: (x: boolean) => void;
-  allMarkets: Market[];
+  allMarkets: Pick<Market, "title" | "slug">[];
 }) => {
   const locale = useLocale();
 
@@ -49,7 +48,7 @@ export const MarketHeader = ({
                 sx={{ textDecoration: "none" }}
                 onClick={() => toggleMarketMenu(false)}
               >
-                <MarketCard title={d.name} icon="bio" />
+                <MarketCard title={d.title} />
               </Link>
             </NextLink>
           </Box>
@@ -59,13 +58,7 @@ export const MarketHeader = ({
   );
 };
 
-export const MarketCard = ({
-  title,
-  icon,
-}: {
-  title: string;
-  icon: IconName;
-}) => {
+export const MarketCard = ({ title }: { title: string }) => {
   return (
     <Card
       elevation={0}
@@ -77,7 +70,6 @@ export const MarketCard = ({
         alignItems: "center",
       }}
     >
-      <MarketIcon icon={icon} />
       <Typography
         component="h2"
         sx={{
@@ -93,28 +85,5 @@ export const MarketCard = ({
         {title}
       </Typography>
     </Card>
-  );
-};
-
-export const MarketIcon = ({ icon }: { icon: IconName }) => {
-  return (
-    <Flex
-      sx={{
-        backgroundColor: `${icon}.light`,
-        color: `${icon}.main`,
-        borderRadius: "100%",
-        width: ["3rem", "3rem", "5.5rem"],
-        height: ["3rem", "3rem", "5.5rem"],
-        justifyContent: "center",
-        alignItems: "center",
-        mb: [4, 4, 2],
-        mr: [4, 4, 0],
-        fontSize: ["1.5rem", "1.5rem", "3rem"],
-        transition: "background-color 0.125s ease",
-        "&:hover": { backgroundColor: `${icon}.lightHover` },
-      }}
-    >
-      <Icon name={icon} size={50} />
-    </Flex>
   );
 };

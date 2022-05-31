@@ -50,7 +50,7 @@ export const AppLayout = ({
   alternates,
 }: {
   children: React.ReactNode;
-  allMarkets?: Market[];
+  allMarkets?: Pick<Market, "title" | "slug">[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => (
   <>

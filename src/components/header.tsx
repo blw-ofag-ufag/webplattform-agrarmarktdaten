@@ -11,11 +11,13 @@ import { HomeLink } from "@/components/links";
 import { Market } from "@/domain/types";
 import { Icon } from "@/icons";
 
+type HeaderMarket = Pick<Market, "title" | "slug">;
+
 export const Header = ({
   allMarkets,
   alternates,
 }: {
-  allMarkets?: Market[];
+  allMarkets?: HeaderMarket[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const [expanded, toggleMenu] = useState(false); // mobile
@@ -107,7 +109,7 @@ const MobileMenuExpanded = ({
 }: {
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
-  allMarkets?: Market[];
+  allMarkets?: HeaderMarket[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   return (

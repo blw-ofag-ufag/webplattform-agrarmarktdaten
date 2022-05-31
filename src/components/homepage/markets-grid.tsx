@@ -6,7 +6,11 @@ import { MarketCard } from "@/components/market-icon";
 import { Market } from "@/domain/types";
 import { useLocale } from "@/lib/use-locale";
 
-export const MarketsGrid = ({ allMarkets }: { allMarkets: Market[] }) => {
+export const MarketsGrid = ({
+  allMarkets,
+}: {
+  allMarkets: Pick<Market, "title" | "slug">[];
+}) => {
   const locale = useLocale();
 
   return (
@@ -31,7 +35,7 @@ export const MarketsGrid = ({ allMarkets }: { allMarkets: Market[] }) => {
               passHref
             >
               <Link sx={{ textDecoration: "none" }}>
-                <MarketCard title={d.name} />
+                <MarketCard title={d.title} />
               </Link>
             </NextLink>
           </Box>
