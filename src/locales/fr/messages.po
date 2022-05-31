@@ -30,36 +30,35 @@ msgid "article.link.open.report"
 msgstr ""
 
 #: src/pages/market/[slug].tsx:77
-msgid "article.section.data"
-msgstr ""
+#~ msgid "article.section.data"
+#~ msgstr ""
 
 #: src/pages/market/[slug].tsx:72
-msgid "article.section.infografic"
-msgstr ""
+#~ msgid "article.section.infografic"
+#~ msgstr ""
 
 #: src/pages/market/[slug].tsx:141
-msgid "article.section.link"
-msgstr ""
+#~ msgid "article.section.link"
+#~ msgstr ""
 
 #: src/pages/market/[slug].tsx:122
-msgid "article.section.news"
-msgstr ""
+#~ msgid "article.section.news"
+#~ msgstr ""
 
 #: src/pages/market/[slug].tsx:109
-msgid "article.section.trade"
-msgstr ""
+#~ msgid "article.section.trade"
+#~ msgstr ""
 
 #: src/pages/market/[slug].tsx:92
-msgid "article.teaser.data.title"
-msgstr ""
+#~ msgid "article.teaser.data.title"
+#~ msgstr ""
 
 #: src/components/homepage/infografik-teaser.tsx:64
 #: src/components/homepage/infografik-teaser.tsx:146
 msgid "button.infografic.teaser"
 msgstr ""
 
-#: src/pages/index.tsx:55
-#: src/pages/market/[slug].tsx:134
+#: src/pages/index.tsx:67
 msgid "button.show.all"
 msgstr ""
 
@@ -84,10 +83,12 @@ msgid "footer.legal"
 msgstr ""
 
 #: src/pages/index.tsx:47
+#: src/pages/market/[slug].tsx:42
+#: src/pages/theme/[slug].tsx:42
 msgid "homepage.section.latestBlogPosts"
 msgstr "Derniers Articles de Blog"
 
-#: src/pages/index.tsx:38
+#: src/pages/index.tsx:33
 msgid "homepage.section.market"
 msgstr "Marchés"
 
@@ -98,6 +99,10 @@ msgstr "Marchés"
 #: src/pages/index.tsx:47
 #~ msgid "homepage.section.newsfeed"
 #~ msgstr ""
+
+#: src/pages/index.tsx:40
+msgid "homepage.section.theme"
+msgstr "Thèmes"
 
 #: src/components/homepage/infografik-teaser.tsx:35
 msgid "infografic"
@@ -116,29 +121,29 @@ msgstr ""
 msgid "infografik.title"
 msgstr ""
 
-#: src/components/header.tsx:269
-#: src/components/header.tsx:289
+#: src/components/header.tsx:271
+#: src/components/header.tsx:291
 msgid "logo.swiss.confederation"
 msgstr ""
 
-#: src/components/header.tsx:141
-#: src/components/header.tsx:189
+#: src/components/header.tsx:143
+#: src/components/header.tsx:191
 msgid "menu.about"
 msgstr ""
 
-#: src/components/header.tsx:184
+#: src/components/header.tsx:186
 msgid "menu.blog"
 msgstr "Blog"
 
-#: src/components/header.tsx:179
+#: src/components/header.tsx:181
 msgid "menu.data"
 msgstr ""
 
-#: src/components/header.tsx:130
-#: src/components/header.tsx:174
+#: src/components/header.tsx:132
+#: src/components/header.tsx:176
 msgid "menu.markets"
 msgstr ""
 
-#: src/components/header.tsx:232
+#: src/components/header.tsx:234
 msgid "title.agricultural.market.data"
 msgstr ""
