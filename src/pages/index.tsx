@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Box, Button, Typography, Stack } from "@mui/material";
+import { Button, Typography, Stack } from "@mui/material";
 import Link from "next/link";
 import React from "react";
 
@@ -25,52 +25,47 @@ export default function HomePage({
   return (
     <AppLayout allMarkets={allMarkets}>
       <Hero {...homePage} />
-      <Box component="main">
-        <ContentContainer
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: ["flex-start", "flex-start", "space-between"],
-            gap: 7,
-            mt: 7,
-            px: [4, 4, 0],
-          }}
-        >
-          <Stack flexDirection="column" spacing={6}>
-            <Typography variant="h2">
-              <Trans id="homepage.section.market">Märkte</Trans>
-            </Typography>
-            <MarketsGrid allMarkets={allMarkets} />
-          </Stack>
+      <ContentContainer
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 7,
+        }}
+      >
+        <Stack flexDirection="column" spacing={6}>
+          <Typography variant="h2">
+            <Trans id="homepage.section.market">Märkte</Trans>
+          </Typography>
+          <MarketsGrid allMarkets={allMarkets} />
+        </Stack>
 
-          <Stack flexDirection="column" spacing={6}>
-            <Typography variant="h6">
-              <Trans id="homepage.section.latestBlogPosts">
-                Latest Blog Posts
-              </Trans>
-            </Typography>
-            <BlogPostsGrid blogPosts={allBlogPosts} />
-            <Link href="/blog">
-              <Button
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "184px",
-                  height: "48px",
-                  backgroundColor: "grey.300",
-                  color: "black",
+        <Stack flexDirection="column" spacing={6}>
+          <Typography variant="h6">
+            <Trans id="homepage.section.latestBlogPosts">
+              Latest Blog Posts
+            </Trans>
+          </Typography>
+          <BlogPostsGrid blogPosts={allBlogPosts} />
+          <Link href="/blog">
+            <Button
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "184px",
+                height: "48px",
+                backgroundColor: "grey.300",
+                color: "black",
 
-                  "&:hover": {
-                    backgroundColor: "grey.500",
-                  },
-                }}
-              >
-                <Trans id="button.show.all">Show All</Trans>
-              </Button>
-            </Link>
-          </Stack>
-        </ContentContainer>
-      </Box>
+                "&:hover": {
+                  backgroundColor: "grey.500",
+                },
+              }}
+            >
+              <Trans id="button.show.all">Show All</Trans>
+            </Button>
+          </Link>
+        </Stack>
+      </ContentContainer>
     </AppLayout>
   );
 }
