@@ -43,7 +43,7 @@ export const getStaticProps = async (context: $FixMe) => {
   query PageQuery($locale: SiteLocale!){
     allMarkets(locale: $locale) {
       name
-      icon {
+      tile {
         url
       }
       slug

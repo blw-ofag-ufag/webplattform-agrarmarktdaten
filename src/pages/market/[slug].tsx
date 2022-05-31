@@ -25,7 +25,7 @@ export default function MarketPage({
     name: string;
     description?: string;
     slug: string;
-    icon: {
+    tile: {
       url: string;
     };
     infographic: { title: string; year: string };
@@ -169,7 +169,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
         name
         description
         slug
-        icon {
+        tile {
           url
         }
       }

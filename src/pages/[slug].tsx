@@ -57,7 +57,7 @@ export const getStaticProps = async (context: $FixMe) => {
 
       allMarkets(locale: $locale) {
         name
-        icon {
+        tile {
           url
         }
         slug

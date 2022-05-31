@@ -1,6 +1,6 @@
 export interface Market {
   name: string;
-  icon: {
+  tile: {
     url: string;
   };
   slug: string;
