@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Typography, Stack } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 
 import { ContentContainer } from "@/components/content-container";
@@ -54,9 +55,11 @@ export default function HomePage({
                     <div key={d.slug} />
                   ))}
                 </div>
-                <Button variant="text" sx={{ ml: -2 }}>
-                  <Trans id="button.show.all">Alle Anzeigen</Trans>
-                </Button>
+                <Link href="/blog">
+                  <Button variant="text" sx={{ ml: -2 }}>
+                    <Trans id="button.show.all">Show All</Trans>
+                  </Button>
+                </Link>
               </div>
             </Stack>
           </Box>
