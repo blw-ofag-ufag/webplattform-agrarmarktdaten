@@ -38,7 +38,7 @@ export default function MarketPage({
           <ContentContainer>
             <Hero variant="market" title={market.title} lead={market.lead} />
             <Stack flexDirection="column" spacing={6}>
-              <Typography variant="h6">
+              <Typography variant="h5">
                 <Trans id="homepage.section.latestBlogPosts">
                   Latest Blog Posts
                 </Trans>

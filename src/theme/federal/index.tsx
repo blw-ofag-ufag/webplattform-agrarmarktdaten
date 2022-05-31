@@ -144,7 +144,7 @@ const theme = createTheme({
   breakpoints: {
     values: { xs: 0, sm: 768, md: 992, lg: 1280, xl: 1360 },
   },
-  spacing: [0, 4, 8, 12, 16, 24, 32, 64, 72, 96],
+  spacing: [0, 4, 8, 12, 16, 24, 32, 64, 72],
   shape: {
     borderRadius: 2,
   },
@@ -167,63 +167,58 @@ const theme = createTheme({
 });
 
 theme.typography = merge(theme.typography, {
+  link: {
+    textDecoration: "none",
+  },
   h1: createTypographyVariant(theme, {
-    fontSize: [24, 60],
-    lineHeight: [36, 72],
-    fontWeight: 300,
+    fontSize: [24, 32],
+    lineHeight: [36, 48],
+    fontWeight: 700,
   }),
   h2: createTypographyVariant(theme, {
-    fontSize: [18, 34],
-    lineHeight: [28, 42],
-    fontWeight: 400,
+    fontSize: [18, 24],
+    lineHeight: [28, 36],
+    fontWeight: 500,
   }),
   h3: createTypographyVariant(theme, {
     fontSize: [16, 18],
     lineHeight: [28, 36],
-    fontWeight: 400,
+    fontWeight: "bold",
   }),
   h4: createTypographyVariant(theme, {
     fontSize: [14, 16],
     lineHeight: [22, 24],
-    fontWeight: 400,
+    fontWeight: "bold",
   }),
   h5: createTypographyVariant(theme, {
     fontSize: [12, 14],
     lineHeight: [18, 20],
-    fontWeight: 400,
-  }),
-  h6: createTypographyVariant(theme, {
-    fontSize: [12, 20],
-    lineHeight: [18, 32],
-    fontWeight: 500,
-  }),
-  subtitle1: createTypographyVariant(theme, {
-    fontSize: [14, 16],
-    lineHeight: [22, 28],
-    fontWeight: 400,
-    color: "rgba(0, 0, 0, 0.6)",
+    fontWeight: "bold",
   }),
   body1: createTypographyVariant(theme, {
     fontSize: [14, 16],
     lineHeight: [22, 24],
-    fontWeight: 400,
+    fontWeight: "regular",
   }),
   body2: createTypographyVariant(theme, {
     fontSize: [12, 14],
     lineHeight: [18, 20],
-    fontWeight: 400,
+    fontWeight: "regular",
   }),
-  link: {
-    textDecoration: "none",
-  },
   tag: createTypographyVariant(theme, {
     lineHeight: [18, 20],
     fontSize: [12, 14],
   }),
+  // table: {
+  //   fontFamily: "body",
+  //   lineHeight: [2, 4, 4],
+  //   fontWeight: "regular",
+  //   fontSize: [2, 3, 3],
+  // },
   caption: createTypographyVariant(theme, {
     fontSize: [10, 12],
     lineHeight: [16, 18],
-    fontWeight: 400,
+    fontWeight: "regular",
   }),
 });
 
@@ -722,63 +717,63 @@ theme.components = {
   },
   MuiCssBaseline: {
     styleOverrides: `
-         svg {
-           display: block
-         }
-   
-         *:focus {
-           outline: 3px solid #333333;
-         }
- 
-         [tabindex="-1"]:focus { outline: 0; }
-     
-         fieldset {
-           border: 0;
-           padding: 0.01em 0 0 0;
-           margin: 0;
-           minWidth: 0;
-         }
-   
-         html {
-           margin: 0;
-           padding: 0;
-           font-family: ${theme.typography.fontFamily};
-           -webkit-overflow-scrolling: touch;
-           -ms-overflow-style: -ms-autohiding-scrollbar;
-         }
-   
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: normal;
-           font-weight: 700;
-           src: url("/static/fonts/FrutigerNeueW02-Bd.woff2") format("woff2");
-         }
-   
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: normal;
-           font-weight: 400;
-           src: url("/static/fonts/FrutigerNeueW02-Regular.woff2") format("woff2");
-         }
-   
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: normal;
-           font-weight: 300;
-           src: url("/static/fonts/FrutigerNeueW02-Light.woff2") format("woff2");
-         }
-         
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: italic;
-           font-weight: 400;
-           src: url("/static/fonts/FrutigerNeueW02-It.woff2") format("woff2");
-         }
-         `,
+          svg {
+            display: block
+          }
+    
+          *:focus {
+            outline: 3px solid #333333;
+          }
+  
+          [tabindex="-1"]:focus { outline: 0; }
+      
+          fieldset {
+            border: 0;
+            padding: 0.01em 0 0 0;
+            margin: 0;
+            minWidth: 0;
+          }
+    
+          html {
+            margin: 0;
+            padding: 0;
+            font-family: ${theme.typography.fontFamily};
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+          }
+    
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: normal;
+            font-weight: 700;
+            src: url("/static/fonts/FrutigerNeueW02-Bd.woff2") format("woff2");
+          }
+    
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            src: url("/static/fonts/FrutigerNeueW02-Regular.woff2") format("woff2");
+          }
+    
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: normal;
+            font-weight: 300;
+            src: url("/static/fonts/FrutigerNeueW02-Light.woff2") format("woff2");
+          }
+          
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: italic;
+            font-weight: 400;
+            src: url("/static/fonts/FrutigerNeueW02-It.woff2") format("woff2");
+          }
+          `,
   },
 };
 

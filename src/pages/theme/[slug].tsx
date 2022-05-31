@@ -38,7 +38,7 @@ export default function ThemePage({
           <Hero title={theme.title} lead={theme.lead} />
           <ContentContainer>
             <Stack flexDirection="column" spacing={6}>
-              <Typography variant="h6">
+              <Typography variant="h5">
                 <Trans id="homepage.section.latestBlogPosts">
                   Latest Blog Posts
                 </Trans>

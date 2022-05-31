@@ -61,7 +61,7 @@ export const BlogPostTile = (props: BlogPostPreview) => {
           />
         )}
       </Flex>
-      <Typography variant="h6">{title}</Typography>
+      <Typography variant="h5">{title}</Typography>
       <Typography variant="body2" mt={2}>
         {lead}
       </Typography>
