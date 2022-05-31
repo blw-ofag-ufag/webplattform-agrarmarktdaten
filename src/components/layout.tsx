@@ -15,7 +15,7 @@ export const AppLayout = ({
 }) => (
   <>
     <Header alternates={alternates} allMarkets={allMarkets} />
-    <Box sx={{ mt: [0, 0, "92px"] }}>{children}</Box>
+    <Box sx={{ mt: [0, 0, "92px"], overflow: "auto" }}>{children}</Box>
     <Footer />
   </>
 );
