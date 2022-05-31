@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, Typography } from "@mui/material";
+import { Box, Chip, Typography } from "@mui/material";
 import Image from "next/image";
 
 import { BlogPost } from "@/domain/types";
@@ -17,11 +17,16 @@ export const BlogPostsGrid = (props: { blogPosts: BlogPostPreview[] }) => {
   const { blogPosts } = props;
 
   return (
-    <Grid container spacing={2} columns={{ xs: 1, sm: 2, md: 3 }}>
+    <Flex
+      sx={{
+        flexWrap: "wrap",
+        gap: 6,
+      }}
+    >
       {blogPosts.map((d, i) => (
         <BlogPostTile key={i} {...d} />
       ))}
-    </Grid>
+    </Flex>
   );
 };
 
@@ -30,39 +35,36 @@ export const BlogPostTile = (props: BlogPostPreview) => {
   const mainMarket: BlogPost["markets"][number] | undefined = markets[0];
 
   return (
-    <Grid item>
+    <Box sx={{ width: WIDTH }}>
       <Box
         sx={{
-          width: WIDTH,
+          position: "relative",
+          overflow: "hidden",
+          height: IMAGE_HEIGHT,
+          borderRadius: "10px",
         }}
       >
-        <Box
-          sx={{
-            overflow: "hidden",
-            height: IMAGE_HEIGHT,
-            borderRadius: "10px",
-          }}
-        >
-          <Image
-            src={image.url}
-            width={WIDTH}
-            height={IMAGE_HEIGHT}
-            alt={image.alt}
-          />
-        </Box>
-        <Flex
-          sx={{ alignItems: "center", justifyContent: "space-between", my: 4 }}
-        >
-          {mainMarket && <Chip label={mainMarket.title} />}
-          {_firstPublishedAt && (
-            <Chip label={new Date(_firstPublishedAt).toLocaleDateString()} />
-          )}
-        </Flex>
-        <Typography variant="h6">{title}</Typography>
-        <Typography variant="body2" mt={2}>
-          {lead}
-        </Typography>
+        <Image src={image.url} layout="fill" alt={image.alt} />
       </Box>
-    </Grid>
+      <Flex
+        sx={{
+          alignItems: "center",
+          justifyContent: "space-between",
+          my: 4,
+        }}
+      >
+        {mainMarket && <Chip label={mainMarket.title} />}
+        {_firstPublishedAt && (
+          <Chip
+            variant="outlined"
+            label={new Date(_firstPublishedAt).toLocaleDateString()}
+          />
+        )}
+      </Flex>
+      <Typography variant="h6">{title}</Typography>
+      <Typography variant="body2" mt={2}>
+        {lead}
+      </Typography>
+    </Box>
   );
 };

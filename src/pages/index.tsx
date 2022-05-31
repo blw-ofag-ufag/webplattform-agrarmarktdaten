@@ -5,7 +5,6 @@ import React from "react";
 
 import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
-import Flex from "@/components/flex";
 import { Hero } from "@/components/hero";
 import { MarketsGrid } from "@/components/homepage/markets-grid";
 import { AppLayout } from "@/components/layout";
@@ -32,34 +31,31 @@ export default function HomePage({
             display: "flex",
             flexDirection: "column",
             justifyContent: ["flex-start", "flex-start", "space-between"],
+            gap: 7,
+            mt: 7,
             px: [4, 4, 0],
-            py: 4,
           }}
         >
-          <Flex sx={{ flexDirection: "column", mt: 7, gap: 6 }}>
+          <Stack flexDirection="column" spacing={6}>
             <Typography variant="h2">
               <Trans id="homepage.section.market">Märkte</Trans>
             </Typography>
             <MarketsGrid allMarkets={allMarkets} />
-          </Flex>
+          </Stack>
 
-          <Box mt={7}>
-            <Stack flexDirection="column" spacing={8}>
-              <div>
-                <Typography variant="h6" mb={6}>
-                  <Trans id="homepage.section.latestBlogPosts">
-                    Latest Blog Posts
-                  </Trans>
-                </Typography>
-                <BlogPostsGrid blogPosts={allBlogPosts} />
-                <Link href="/blog">
-                  <Button variant="text" sx={{ ml: -2 }}>
-                    <Trans id="button.show.all">Show All</Trans>
-                  </Button>
-                </Link>
-              </div>
-            </Stack>
-          </Box>
+          <Stack flexDirection="column" spacing={6}>
+            <Typography variant="h6">
+              <Trans id="homepage.section.latestBlogPosts">
+                Latest Blog Posts
+              </Trans>
+            </Typography>
+            <BlogPostsGrid blogPosts={allBlogPosts} />
+            <Link href="/blog">
+              <Button variant="text" sx={{ ml: -2 }}>
+                <Trans id="button.show.all">Show All</Trans>
+              </Button>
+            </Link>
+          </Stack>
         </ContentContainer>
       </Box>
     </AppLayout>
