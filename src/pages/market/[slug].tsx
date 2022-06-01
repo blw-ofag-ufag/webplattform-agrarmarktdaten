@@ -35,7 +35,7 @@ export default function MarketPage({
     <AppLayout alternates={alternates} allMarkets={allMarkets}>
       {market ? (
         <>
-          <ContentContainer>
+          <ContentContainer sx={{ mt: 7 }}>
             <Hero variant="market" title={market.title} lead={market.lead} />
             <Stack flexDirection="column" spacing={6}>
               <Typography variant="h5">
