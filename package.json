@@ -96,6 +96,7 @@
     "@types/theme-ui__components": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "5.13.0",
     "@typescript-eslint/parser": "5.13.0",
+    "@urql/devtools": "^2.0.3",
     "babel-eslint": "10.x",
     "babel-plugin-macros": "^3.1.0",
     "dotenv": "^16.0.1",

@@ -1,6 +1,6 @@
 import "isomorphic-unfetch";
 import React from "react";
-import { Provider, createClient } from "urql";
+import { Provider, createClient, defaultExchanges } from "urql";
 
 const API_URL = "https://graphql.datocms.com";
 const API_TOKEN = process.env.DATOCMS_API_TOKEN;
@@ -14,6 +14,10 @@ export const client = createClient({
       Authorization: `Bearer ${API_TOKEN}`,
     },
   },
+  exchanges:
+    process.env.NODE_ENV === "development"
+      ? [require("@urql/devtools").devtoolsExchange, ...defaultExchanges]
+      : defaultExchanges,
 });
 
 export const GraphqlProvider = ({
