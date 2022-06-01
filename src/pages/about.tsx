@@ -21,23 +21,6 @@ export default function About({
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const query = `
-    query PageQuery($locale: SiteLocale!){
-      aboutPage(locale: $locale) {
-        title
-        lead
-      }
-
-      allMarkets(locale: $locale) {
-        title
-        tile {
-          url
-        }
-        slug
-      }
-    }
-  `;
-
   const result = await fetchCMS<GQL.AboutPageQuery>(GQL.AboutPageDocument, {
     variables: { locale: context.locale },
     preview: context.preview,
