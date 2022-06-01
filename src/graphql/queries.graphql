@@ -223,6 +223,12 @@ query BlogPage($locale: SiteLocale!) {
   }
 }
 
+query BlogPost($locale: SiteLocale!, $slug: String!) {
+  blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
+    slug
+  }
+}
+
 query AboutPage($locale: SiteLocale!) {
   aboutPage(locale: $locale) {
     title

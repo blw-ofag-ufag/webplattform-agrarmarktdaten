@@ -4114,6 +4114,14 @@ export type BlogPageQueryVariables = Exact<{
 
 export type BlogPageQuery = { __typename: 'Query', blogPage?: { __typename: 'BlogPageRecord', title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
 
+export type BlogPostQueryVariables = Exact<{
+  locale: SiteLocale;
+  slug: Scalars['String'];
+}>;
+
+
+export type BlogPostQuery = { __typename: 'Query', blogPost?: { __typename: 'BlogPostRecord', slug?: string | null } | null };
+
 export type AboutPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
@@ -4397,6 +4405,17 @@ ${FullBlogPostFragmentDoc}`;
 
 export function useBlogPageQuery(options: Omit<Urql.UseQueryArgs<BlogPageQueryVariables>, 'query'>) {
   return Urql.useQuery<BlogPageQuery>({ query: BlogPageDocument, ...options });
+};
+export const BlogPostDocument = gql`
+    query BlogPost($locale: SiteLocale!, $slug: String!) {
+  blogPost(locale: $locale, filter: {slug: {eq: $slug}}) {
+    slug
+  }
+}
+    `;
+
+export function useBlogPostQuery(options: Omit<Urql.UseQueryArgs<BlogPostQueryVariables>, 'query'>) {
+  return Urql.useQuery<BlogPostQuery>({ query: BlogPostDocument, ...options });
 };
 export const AboutPageDocument = gql`
     query AboutPage($locale: SiteLocale!) {
