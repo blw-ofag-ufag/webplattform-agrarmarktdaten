@@ -1,7 +1,7 @@
 import "isomorphic-unfetch";
 
 const API_URL = "https://graphql.datocms.com";
-const API_TOKEN = "880654d6951b0e08722848ff6881c9";
+const API_TOKEN = process.env.DATOCMS_API_TOKEN;
 const DEV = process.env.NODE_ENV === "development";
 
 export async function fetchCMS(

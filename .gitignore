@@ -6,6 +6,7 @@
 /public/dist/**/*.js
 /build
 .now
+.env
 tsconfig.tsbuildinfo
 
 src/locales/**/messages.js
