@@ -14,6 +14,14 @@ fragment FullMarket on MarketRecord {
   tile {
     url
   }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
   seo {
     ...FullSEO
   }
@@ -25,6 +33,14 @@ fragment FullTheme on ThemeRecord {
   slug
   tile {
     url
+  }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...MarkdownBlock
+    ...SurveyBlock
   }
   seo {
     ...FullSEO
@@ -38,6 +54,14 @@ fragment FullBlogPost on BlogPostRecord {
   image {
     url
   }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
   markets {
     title
   }
@@ -47,6 +71,62 @@ fragment FullBlogPost on BlogPostRecord {
   _firstPublishedAt
 }
 
+# Blocks
+fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
+  markdown
+  description
+  assets {
+    title
+    file {
+      url
+    }
+  }
+}
+
+fragment ExternalVideoBlock on ExternalVideoBlockRecord {
+  externalVideoUrl: url {
+    url
+    title
+  }
+}
+
+fragment GalleryBlock on GalleryBlockRecord {
+  assets {
+    title
+    url
+  }
+}
+
+fragment IframeBlock on IframeBlockRecord {
+  iFrameUrl: url
+}
+
+fragment ImageTeaserBlock on ImageTeaserBlockRecord {
+  description
+  asset {
+    title
+    alt
+    url
+  }
+}
+
+fragment MarkdownBlock on MarkdownBlockRecord {
+  content
+}
+
+fragment SurveyBlock on SurveyBlockRecord {
+  formUrl
+  question {
+    question
+    formFieldId
+    isMultipleChoice
+    possibleAnswers {
+      answer
+    }
+  }
+}
+
+# Queries
 query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
     title

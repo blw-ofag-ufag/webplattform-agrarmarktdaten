@@ -207,7 +207,7 @@ export type BlogPageRecordTitleArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-export type BlogPostModelBlocksField = DownloadTeaserRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyRecord;
+export type BlogPostModelBlocksField = DownloadTeaserBlockRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeBlockRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyBlockRecord;
 
 export type BlogPostModelFilter = {
   OR?: InputMaybe<Array<InputMaybe<BlogPostModelFilter>>>;
@@ -451,9 +451,9 @@ export type DownloadTeaserAssetRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-/** Record of type Download Teaser (download_teaser) */
-export type DownloadTeaserRecord = {
-  __typename: 'DownloadTeaserRecord';
+/** Record of type Download Teaser (download_teaser_block) */
+export type DownloadTeaserBlockRecord = {
+  __typename: 'DownloadTeaserBlockRecord';
   _createdAt: Scalars['DateTime'];
   _firstPublishedAt?: Maybe<Scalars['DateTime']>;
   _isValid: Scalars['BooleanType'];
@@ -474,20 +474,20 @@ export type DownloadTeaserRecord = {
 };
 
 
-/** Record of type Download Teaser (download_teaser) */
-export type DownloadTeaserRecordSeoMetaTagsArgs = {
+/** Record of type Download Teaser (download_teaser_block) */
+export type DownloadTeaserBlockRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
 
-/** Record of type Download Teaser (download_teaser) */
-export type DownloadTeaserRecordDescriptionArgs = {
+/** Record of type Download Teaser (download_teaser_block) */
+export type DownloadTeaserBlockRecordDescriptionArgs = {
   markdown?: InputMaybe<Scalars['Boolean']>;
 };
 
 
-/** Record of type Download Teaser (download_teaser) */
-export type DownloadTeaserRecordMarkdownArgs = {
+/** Record of type Download Teaser (download_teaser_block) */
+export type DownloadTeaserBlockRecordMarkdownArgs = {
   markdown?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -727,9 +727,9 @@ export type HomePageRecordTitleArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-/** Record of type iFrame (iframe) */
-export type IframeRecord = {
-  __typename: 'IframeRecord';
+/** Record of type iFrame (iframe_block) */
+export type IframeBlockRecord = {
+  __typename: 'IframeBlockRecord';
   _createdAt: Scalars['DateTime'];
   _firstPublishedAt?: Maybe<Scalars['DateTime']>;
   _isValid: Scalars['BooleanType'];
@@ -748,8 +748,8 @@ export type IframeRecord = {
 };
 
 
-/** Record of type iFrame (iframe) */
-export type IframeRecordSeoMetaTagsArgs = {
+/** Record of type iFrame (iframe_block) */
+export type IframeBlockRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -2224,7 +2224,7 @@ export type MarkdownBlockRecordContentArgs = {
   markdown?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type MarketModelBlocksField = DownloadTeaserRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyRecord;
+export type MarketModelBlocksField = DownloadTeaserBlockRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeBlockRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyBlockRecord;
 
 export type MarketModelFilter = {
   OR?: InputMaybe<Array<InputMaybe<MarketModelFilter>>>;
@@ -3455,6 +3455,33 @@ export type SurveyAnswerRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
+/** Record of type Survey (survey_block) */
+export type SurveyBlockRecord = {
+  __typename: 'SurveyBlockRecord';
+  _createdAt: Scalars['DateTime'];
+  _firstPublishedAt?: Maybe<Scalars['DateTime']>;
+  _isValid: Scalars['BooleanType'];
+  _modelApiKey: Scalars['String'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']>;
+  _publishedAt?: Maybe<Scalars['DateTime']>;
+  /** SEO meta tags */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']>;
+  _updatedAt: Scalars['DateTime'];
+  createdAt: Scalars['DateTime'];
+  formUrl?: Maybe<Scalars['String']>;
+  id: Scalars['ItemId'];
+  question: Array<SurveyQuestionRecord>;
+  updatedAt: Scalars['DateTime'];
+};
+
+
+/** Record of type Survey (survey_block) */
+export type SurveyBlockRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
 /** Record of type Survey Question (survey_question) */
 export type SurveyQuestionRecord = {
   __typename: 'SurveyQuestionRecord';
@@ -3484,33 +3511,6 @@ export type SurveyQuestionRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-/** Record of type Survey (survey) */
-export type SurveyRecord = {
-  __typename: 'SurveyRecord';
-  _createdAt: Scalars['DateTime'];
-  _firstPublishedAt?: Maybe<Scalars['DateTime']>;
-  _isValid: Scalars['BooleanType'];
-  _modelApiKey: Scalars['String'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']>;
-  _publishedAt?: Maybe<Scalars['DateTime']>;
-  /** SEO meta tags */
-  _seoMetaTags: Array<Tag>;
-  _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']>;
-  _updatedAt: Scalars['DateTime'];
-  createdAt: Scalars['DateTime'];
-  formUrl?: Maybe<Scalars['String']>;
-  id: Scalars['ItemId'];
-  question: Array<SurveyQuestionRecord>;
-  updatedAt: Scalars['DateTime'];
-};
-
-
-/** Record of type Survey (survey) */
-export type SurveyRecordSeoMetaTagsArgs = {
-  locale?: InputMaybe<SiteLocale>;
-};
-
 export type Tag = {
   __typename: 'Tag';
   attributes?: Maybe<Scalars['MetaTagAttributes']>;
@@ -3530,7 +3530,7 @@ export type TextFilter = {
   notMatches?: InputMaybe<StringMatchesFilter>;
 };
 
-export type ThemeModelBlocksField = DownloadTeaserRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyRecord;
+export type ThemeModelBlocksField = DownloadTeaserBlockRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeBlockRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyBlockRecord;
 
 export type ThemeModelFilter = {
   OR?: InputMaybe<Array<InputMaybe<ThemeModelFilter>>>;
@@ -4054,18 +4054,32 @@ export type FocalPoint = {
 
 export type FullSeoFragment = { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null };
 
-export type FullMarketFragment = { __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null };
+export type FullMarketFragment = { __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null };
 
-export type FullThemeFragment = { __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null };
+export type FullThemeFragment = { __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null };
 
-export type FullBlogPostFragment = { __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> };
+export type FullBlogPostFragment = { __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> };
+
+export type DownloadTeaserBlockFragment = { __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> };
+
+export type ExternalVideoBlockFragment = { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null };
+
+export type GalleryBlockFragment = { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> };
+
+export type IframeBlockFragment = { __typename: 'IframeBlockRecord', iFrameUrl?: string | null };
+
+export type ImageTeaserBlockFragment = { __typename: 'ImageTeaserBlockRecord', description?: string | null, asset?: { __typename: 'FileField', title?: string | null, alt?: string | null, url: string } | null };
+
+export type MarkdownBlockFragment = { __typename: 'MarkdownBlockRecord', content?: string | null };
+
+export type SurveyBlockFragment = { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> };
 
 export type HomePageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
 
-export type HomePageQuery = { __typename: 'Query', homePage?: { __typename: 'HomePageRecord', title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allThemes: Array<{ __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
+export type HomePageQuery = { __typename: 'Query', homePage?: { __typename: 'HomePageRecord', title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allThemes: Array<{ __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
 
 export type MarketPageQueryVariables = Exact<{
   locale: SiteLocale;
@@ -4073,7 +4087,7 @@ export type MarketPageQueryVariables = Exact<{
 }>;
 
 
-export type MarketPageQuery = { __typename: 'Query', market?: { __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
+export type MarketPageQuery = { __typename: 'Query', market?: { __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
 
 export type AllMarketsSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4086,7 +4100,7 @@ export type ThemePageQueryVariables = Exact<{
 }>;
 
 
-export type ThemePageQuery = { __typename: 'Query', theme?: { __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allThemes: Array<{ __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
+export type ThemePageQuery = { __typename: 'Query', theme?: { __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allThemes: Array<{ __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
 
 export type AllThemesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4098,15 +4112,66 @@ export type BlogPageQueryVariables = Exact<{
 }>;
 
 
-export type BlogPageQuery = { __typename: 'Query', blogPage?: { __typename: 'BlogPageRecord', title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
+export type BlogPageQuery = { __typename: 'Query', blogPage?: { __typename: 'BlogPageRecord', title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
 
 export type AboutPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
 
-export type AboutPageQuery = { __typename: 'Query', aboutPage?: { __typename: 'AboutPageRecord', title?: string | null, lead?: string | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }> };
+export type AboutPageQuery = { __typename: 'Query', aboutPage?: { __typename: 'AboutPageRecord', title?: string | null, lead?: string | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', markdown?: string | null, description?: string | null, assets: Array<{ __typename: 'DownloadTeaserAssetRecord', title?: string | null, file?: { __typename: 'FileField', url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', externalVideoUrl?: { __typename: 'VideoField', url?: string | null, title?: string | null } | null } | { __typename: 'GalleryBlockRecord', assets: Array<{ __typename: 'FileField', title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', iFrameUrl?: string | null } | { __typename: 'ImageTeaserBlockRecord' } | { __typename: 'MarkdownBlockRecord', content?: string | null } | { __typename: 'SurveyBlockRecord', formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null }> };
 
+export const DownloadTeaserBlockFragmentDoc = gql`
+    fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
+  markdown
+  description
+  assets {
+    title
+    file {
+      url
+    }
+  }
+}
+    `;
+export const ExternalVideoBlockFragmentDoc = gql`
+    fragment ExternalVideoBlock on ExternalVideoBlockRecord {
+  externalVideoUrl: url {
+    url
+    title
+  }
+}
+    `;
+export const GalleryBlockFragmentDoc = gql`
+    fragment GalleryBlock on GalleryBlockRecord {
+  assets {
+    title
+    url
+  }
+}
+    `;
+export const IframeBlockFragmentDoc = gql`
+    fragment IframeBlock on IframeBlockRecord {
+  iFrameUrl: url
+}
+    `;
+export const MarkdownBlockFragmentDoc = gql`
+    fragment MarkdownBlock on MarkdownBlockRecord {
+  content
+}
+    `;
+export const SurveyBlockFragmentDoc = gql`
+    fragment SurveyBlock on SurveyBlockRecord {
+  formUrl
+  question {
+    question
+    formFieldId
+    isMultipleChoice
+    possibleAnswers {
+      answer
+    }
+  }
+}
+    `;
 export const FullSeoFragmentDoc = gql`
     fragment FullSEO on SeoField {
   title
@@ -4125,11 +4190,25 @@ export const FullMarketFragmentDoc = gql`
   tile {
     url
   }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
   seo {
     ...FullSEO
   }
 }
-    ${FullSeoFragmentDoc}`;
+    ${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}
+${FullSeoFragmentDoc}`;
 export const FullThemeFragmentDoc = gql`
     fragment FullTheme on ThemeRecord {
   title
@@ -4138,11 +4217,25 @@ export const FullThemeFragmentDoc = gql`
   tile {
     url
   }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
   seo {
     ...FullSEO
   }
 }
-    ${FullSeoFragmentDoc}`;
+    ${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}
+${FullSeoFragmentDoc}`;
 export const FullBlogPostFragmentDoc = gql`
     fragment FullBlogPost on BlogPostRecord {
   title
@@ -4151,6 +4244,14 @@ export const FullBlogPostFragmentDoc = gql`
   image {
     url
   }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
   markets {
     title
   }
@@ -4158,6 +4259,21 @@ export const FullBlogPostFragmentDoc = gql`
     title
   }
   _firstPublishedAt
+}
+    ${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}`;
+export const ImageTeaserBlockFragmentDoc = gql`
+    fragment ImageTeaserBlock on ImageTeaserBlockRecord {
+  description
+  asset {
+    title
+    alt
+    url
+  }
 }
     `;
 export const HomePageDocument = gql`
