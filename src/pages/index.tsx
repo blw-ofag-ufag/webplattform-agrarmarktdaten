@@ -10,7 +10,7 @@ import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
 import { BlogPost, Market, SEO, Theme } from "@/domain/types";
 import * as GQL from "@/graphql";
-import { fetchCMS } from "@/lib/cms-api";
+import { client } from "@/graphql/api";
 
 type HomePage = { title: string; lead: string; seo?: SEO };
 
@@ -75,10 +75,14 @@ export default function HomePage({
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const result = await fetchCMS<GQL.HomePageQuery>(GQL.HomePageDocument, {
-    variables: { locale: context.locale },
-    preview: context.preview,
-  });
+  const result = await client
+    .query<GQL.HomePageQuery>(GQL.HomePageDocument, { locale: context.locale })
+    .toPromise();
 
-  return { props: result };
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  return { props: result.data };
 };

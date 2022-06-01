@@ -7,7 +7,7 @@ import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import { BlogPost, Market } from "@/domain/types";
 import * as GQL from "@/graphql";
-import { fetchCMS } from "@/lib/cms-api";
+import { client } from "@/graphql";
 
 type Props = {
   blogPage: {
@@ -33,10 +33,14 @@ export default function Blog(props: Props) {
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const result = await fetchCMS<GQL.BlogPageQuery>(GQL.BlogPageDocument, {
-    variables: { locale: context.locale },
-    preview: context.preview,
-  });
+  const result = await client
+    .query<GQL.BlogPageQuery>(GQL.BlogPageDocument, { locale: context.locale })
+    .toPromise();
 
-  return { props: result };
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  return { props: result.data };
 };

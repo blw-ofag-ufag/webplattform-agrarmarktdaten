@@ -4,7 +4,7 @@ import { Banner } from "@/components/banner";
 import { AppLayout } from "@/components/layout";
 import { Market } from "@/domain/types";
 import * as GQL from "@/graphql";
-import { fetchCMS } from "@/lib/cms-api";
+import { client } from "@/graphql";
 
 export default function About({
   aboutPage,
@@ -21,10 +21,16 @@ export default function About({
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const result = await fetchCMS<GQL.AboutPageQuery>(GQL.AboutPageDocument, {
-    variables: { locale: context.locale },
-    preview: context.preview,
-  });
+  const result = await client
+    .query<GQL.AboutPageQuery>(GQL.AboutPageDocument, {
+      locale: context.locale,
+    })
+    .toPromise();
 
-  return { props: result };
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  return { props: result.data };
 };

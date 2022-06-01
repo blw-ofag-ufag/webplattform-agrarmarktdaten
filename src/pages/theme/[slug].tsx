@@ -9,7 +9,7 @@ import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import { BlogPost, Theme } from "@/domain/types";
 import * as GQL from "@/graphql";
-import { fetchCMS } from "@/lib/cms-api";
+import { client } from "@/graphql";
 
 export default function ThemePage({
   theme,
@@ -56,26 +56,39 @@ export default function ThemePage({
 }
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
-  const result = await fetchCMS<GQL.ThemePageQuery>(GQL.ThemePageDocument, {
-    variables: { locale: context.locale, slug: context.params.slug },
-    preview: context.preview,
-  });
+  const result = await client
+    .query<GQL.ThemePageQuery>(GQL.ThemePageDocument, {
+      locale: context.locale,
+      slug: context.params.slug,
+    })
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
 
   return {
     props: {
-      theme: result.theme,
-      allThemes: result.allThemes,
-      allBlogPosts: result.allBlogPosts,
+      theme: result.data.theme,
+      allThemes: result.data.allThemes,
+      allBlogPosts: result.data.allBlogPosts,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const result = await fetchCMS<GQL.AllThemesSlugLocalesQuery>(
-    GQL.AllThemesSlugLocalesDocument
-  );
-  const paths = result.allThemes.flatMap((page: $FixMe) => {
-    return page._allSlugLocales.map((loc: $FixMe) => ({
+  const result = await client
+    .query<GQL.AllThemesSlugLocalesQuery>(GQL.AllThemesSlugLocalesDocument)
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  const paths = result.data.allThemes.flatMap((d: $FixMe) => {
+    return d._allSlugLocales.map((loc: $FixMe) => ({
       locale: loc.locale,
       params: { slug: loc.value },
     }));

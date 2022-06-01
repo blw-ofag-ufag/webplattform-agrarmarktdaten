@@ -9,7 +9,7 @@ import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import { BlogPost, Market } from "@/domain/types";
 import * as GQL from "@/graphql";
-import { fetchCMS } from "@/lib/cms-api";
+import { client } from "@/graphql";
 
 export default function MarketPage({
   market,
@@ -56,25 +56,38 @@ export default function MarketPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
-  const result = await fetchCMS<GQL.MarketPageQuery>(GQL.MarketPageDocument, {
-    variables: { locale: context.locale, slug: context.params.slug },
-    preview: context.preview,
-  });
+  const result = await client
+    .query<GQL.MarketPageQuery>(GQL.MarketPageDocument, {
+      locale: context.locale,
+      slug: context.params.slug,
+    })
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
 
   return {
     props: {
-      market: result.market,
-      allMarkets: result.allMarkets,
-      allBlogPosts: result.allBlogPosts,
+      market: result.data.market,
+      allMarkets: result.data.allMarkets,
+      allBlogPosts: result.data.allBlogPosts,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const result = await fetchCMS<GQL.AllMarketsSlugLocalesQuery>(
-    GQL.AllMarketsSlugLocalesDocument
-  );
-  const paths = result.allMarkets.flatMap((page: $FixMe) => {
+  const result = await client
+    .query<GQL.AllMarketsSlugLocalesQuery>(GQL.AllMarketsSlugLocalesDocument)
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  const paths = result.data.allMarkets.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
       locale: loc.locale,
       params: { slug: loc.value },
