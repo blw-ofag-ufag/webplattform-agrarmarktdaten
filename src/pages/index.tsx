@@ -31,14 +31,14 @@ export default function HomePage({
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
-            <Trans id="homepage.section.market">Markets</Trans>
+            <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={allMarkets} />
         </Stack>
 
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
-            <Trans id="homepage.section.theme">Themes</Trans>
+            <Trans id="homepage.section.theme">Themen</Trans>
           </Typography>
           <CardsGrid type="theme" entries={allThemes} />
         </Stack>
@@ -46,7 +46,7 @@ export default function HomePage({
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h5">
             <Trans id="homepage.section.latestBlogPosts">
-              Latest Blog Posts
+              Neuste Blogbeiträge
             </Trans>
           </Typography>
           <BlogPostsGrid blogPosts={allBlogPosts} />
@@ -65,7 +65,7 @@ export default function HomePage({
                 },
               }}
             >
-              <Trans id="button.show.all">Show All</Trans>
+              <Trans id="button.show.all">Alle Anzeigen</Trans>
             </Button>
           </Link>
         </Stack>

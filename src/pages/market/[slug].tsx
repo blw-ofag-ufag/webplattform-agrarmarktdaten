@@ -41,7 +41,7 @@ export default function MarketPage({
             <Stack flexDirection="column" spacing={6}>
               <Typography variant="h5">
                 <Trans id="homepage.section.latestBlogPosts">
-                  Latest Blog Posts
+                  Neuste Blogbeiträge
                 </Trans>
               </Typography>
               <BlogPostsGrid blogPosts={allBlogPosts} />
