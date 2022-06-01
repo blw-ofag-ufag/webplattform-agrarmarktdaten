@@ -1,4 +1,4 @@
-fragment SEO on SeoField {
+fragment FullSEO on SeoField {
   title
   description
   image {
@@ -7,59 +7,71 @@ fragment SEO on SeoField {
   twitterCard
 }
 
+fragment FullMarket on MarketRecord {
+  title
+  lead
+  slug
+  tile {
+    url
+  }
+  seo {
+    ...FullSEO
+  }
+}
+
+fragment FullTheme on ThemeRecord {
+  title
+  lead
+  slug
+  tile {
+    url
+  }
+  seo {
+    ...FullSEO
+  }
+}
+
+fragment FullBlogPost on BlogPostRecord {
+  title
+  lead
+  slug
+  image {
+    url
+  }
+  markets {
+    title
+  }
+  themes {
+    title
+  }
+  _firstPublishedAt
+}
+
 query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
     title
     lead
     seo {
-      ...SEO
+      ...FullSEO
     }
   }
 
   allMarkets(locale: $locale) {
-    title
-    slug
-    tile {
-      url
-    }
+    ...FullMarket
   }
 
   allThemes(locale: $locale) {
-    title
-    slug
-    tile {
-      url
-    }
+    ...FullTheme
   }
 
   allBlogPosts(locale: $locale, first: 3) {
-    title
-    lead
-    slug
-    image {
-      url
-    }
-    markets {
-      title
-    }
-    themes {
-      title
-    }
-    _firstPublishedAt
+    ...FullBlogPost
   }
 }
 
 query MarketPage($locale: SiteLocale!, $slug: String!) {
   market(locale: $locale, filter: { slug: { eq: $slug } }) {
-    title
-    lead
-    slug
-    tile {
-      url
-    }
-    seo {
-      ...SEO
-    }
+    ...FullMarket
 
     _allSlugLocales {
       locale
@@ -68,25 +80,11 @@ query MarketPage($locale: SiteLocale!, $slug: String!) {
   }
 
   allMarkets(locale: $locale) {
-    title
-    lead
-    slug
+    ...FullMarket
   }
 
   allBlogPosts(locale: $locale, first: 3) {
-    title
-    lead
-    slug
-    image {
-      url
-    }
-    markets {
-      title
-    }
-    themes {
-      title
-    }
-    _firstPublishedAt
+    ...FullBlogPost
   }
 }
 
@@ -101,15 +99,7 @@ query AllMarketsSlugLocales {
 
 query ThemePage($locale: SiteLocale!, $slug: String!) {
   theme(locale: $locale, filter: { slug: { eq: $slug } }) {
-    title
-    lead
-    slug
-    tile {
-      url
-    }
-    seo {
-      ...SEO
-    }
+    ...FullTheme
 
     _allSlugLocales {
       locale
@@ -118,25 +108,11 @@ query ThemePage($locale: SiteLocale!, $slug: String!) {
   }
 
   allThemes(locale: $locale) {
-    title
-    lead
-    slug
+    ...FullTheme
   }
 
   allBlogPosts(locale: $locale, first: 3) {
-    title
-    lead
-    slug
-    image {
-      url
-    }
-    markets {
-      title
-    }
-    themes {
-      title
-    }
-    _firstPublishedAt
+    ...FullBlogPost
   }
 }
 
@@ -154,32 +130,16 @@ query BlogPage($locale: SiteLocale!) {
     title
     lead
     seo {
-      ...SEO
+      ...FullSEO
     }
   }
 
   allMarkets(locale: $locale) {
-    title
-    tile {
-      url
-    }
-    slug
+    ...FullMarket
   }
 
   allBlogPosts(locale: $locale) {
-    title
-    lead
-    slug
-    image {
-      url
-    }
-    markets {
-      title
-    }
-    themes {
-      title
-    }
-    _firstPublishedAt
+    ...FullBlogPost
   }
 }
 
@@ -190,10 +150,6 @@ query AboutPage($locale: SiteLocale!) {
   }
 
   allMarkets(locale: $locale) {
-    title
-    tile {
-      url
-    }
-    slug
+    ...FullMarket
   }
 }
