@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { GraphqlProvider } from "@/graphql";
 import { LocaleProvider } from "@/lib/use-locale";
 import { i18n, Locale } from "@/locales/locales";
-import theme from "@/theme";
+import blwTheme from "@/theme/blw";
 
 export const muiCache = createCache({
   key: "mui",
@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <LocaleProvider value={locale}>
         <I18nProvider i18n={i18n}>
           <GraphqlProvider>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={blwTheme}>
               <CssBaseline />
               <Component {...pageProps} />
             </ThemeProvider>
