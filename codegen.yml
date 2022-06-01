@@ -9,13 +9,14 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-urql"
-config:
-  nonOptionalTypename: true
-  namingConvention:
-    transformUnderscore: true
-    enumValues: keep
-    scalars:
-      BooleanType: boolean
-      Date: string
-      DateTime: string
-      IntType: number
+    config:
+      nonOptionalTypename: true
+      namingConvention:
+        transformUnderscore: true
+        enumValues: keep
+      scalars:
+        BooleanType: boolean
+        Date: string
+        DateTime: string
+        FloatType: number
+        IntType: number
