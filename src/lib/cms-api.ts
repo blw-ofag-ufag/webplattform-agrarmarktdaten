@@ -2,9 +2,11 @@ import { DocumentNode } from "graphql";
 import "isomorphic-unfetch";
 import { print } from "graphql";
 
-const API_URL = "https://graphql.datocms.com";
-const API_TOKEN = process.env.DATOCMS_API_TOKEN;
-const DEV = process.env.NODE_ENV === "development";
+import {
+  DATOCMS_API_TOKEN,
+  DATOCMS_API_URL,
+  IS_DEV_ENVIRONMENT,
+} from "@/domain/env";
 
 type Options = {
   variables?: { [k: string]: any };
@@ -17,17 +19,20 @@ export async function fetchCMS<T>(
 ): Promise<T> {
   const { variables, preview } = options;
   const query = print(document);
-  const result = await fetch(`${API_URL}${preview || DEV ? "/preview" : ""}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
-    body: JSON.stringify({
-      query,
-      variables,
-    }),
-  });
+  const result = await fetch(
+    `${DATOCMS_API_URL}${preview || IS_DEV_ENVIRONMENT ? "/preview" : ""}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    }
+  );
 
   const json = await result.json();
   if (json.errors) {
