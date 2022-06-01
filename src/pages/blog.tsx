@@ -6,6 +6,7 @@ import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import { BlogPost, Market } from "@/domain/types";
+import * as GQL from "@/graphql";
 import { fetchCMS } from "@/lib/cms-api";
 
 type Props = {
@@ -32,40 +33,7 @@ export default function Blog(props: Props) {
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const query = `
-    query BlogPageQuery($locale: SiteLocale!) {
-      blogPage(locale: $locale) {
-        title
-        lead
-      }
-
-      allMarkets(locale: $locale) {
-        title
-        tile {
-          url
-        }
-        slug
-      }
-
-      allBlogPosts(locale: $locale) {
-        title
-        lead
-        slug
-        image {
-          url
-        }
-        markets {
-          title
-        }
-        themes {
-          title
-        }
-        _firstPublishedAt
-      }
-    }
-  `;
-
-  const result = await fetchCMS(query, {
+  const result = await fetchCMS<GQL.BlogPageQuery>(GQL.BlogPageDocument, {
     variables: { locale: context.locale },
     preview: context.preview,
   });

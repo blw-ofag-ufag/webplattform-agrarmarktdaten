@@ -9,6 +9,7 @@ import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
 import { BlogPost, Market, SEO, Theme } from "@/domain/types";
+import * as GQL from "@/graphql";
 import { fetchCMS } from "@/lib/cms-api";
 
 type HomePage = { title: string; lead: string; seo?: SEO };
@@ -74,56 +75,7 @@ export default function HomePage({
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const query = `
-    query PageQuery($locale: SiteLocale!) {
-      homePage(locale: $locale) {
-        title
-        lead
-        seo(locale: $locale) {
-          title
-          description
-          image {
-            url
-          }
-          twitterCard
-        }
-      }
-
-      allMarkets(locale: $locale) {
-        title
-        slug
-        tile {
-          url
-        }
-      }
-
-      allThemes(locale: $locale) {
-        title
-        slug
-        tile {
-          url
-        }
-      }
-
-      allBlogPosts(locale: $locale, first: 3) {
-        title
-        lead
-        slug
-        image {
-          url
-        }
-        markets {
-          title
-        }
-        themes {
-          title
-        }
-        _firstPublishedAt
-      }
-    }
-  `;
-
-  const result = await fetchCMS(query, {
+  const result = await fetchCMS<GQL.HomePageQuery>(GQL.HomePageDocument, {
     variables: { locale: context.locale },
     preview: context.preview,
   });

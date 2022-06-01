@@ -3,6 +3,7 @@ import React from "react";
 import { Banner } from "@/components/banner";
 import { AppLayout } from "@/components/layout";
 import { Market } from "@/domain/types";
+import * as GQL from "@/graphql";
 import { fetchCMS } from "@/lib/cms-api";
 
 export default function About({
@@ -37,7 +38,7 @@ export const getStaticProps = async (context: $FixMe) => {
     }
   `;
 
-  const result = await fetchCMS(query, {
+  const result = await fetchCMS<GQL.AboutPageQuery>(GQL.AboutPageDocument, {
     variables: { locale: context.locale },
     preview: context.preview,
   });

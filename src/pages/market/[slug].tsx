@@ -8,6 +8,7 @@ import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import { BlogPost, Market } from "@/domain/types";
+import * as GQL from "@/graphql";
 import { fetchCMS } from "@/lib/cms-api";
 
 export default function MarketPage({
@@ -55,47 +56,7 @@ export default function MarketPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
-  const query = `
-    query PageQuery($locale: SiteLocale!, $slug: String!) {
-      market(locale: $locale, filter: {slug: {eq: $slug}}) {
-        title
-        lead
-        slug
-        tile {
-          url
-        }
-
-        _allSlugLocales {
-          locale
-          value
-        }
-      }
-
-      allMarkets(locale: $locale) {
-        title
-        lead
-        slug
-      }
-
-      allBlogPosts(locale: $locale, first: 3) {
-        title
-        lead
-        slug
-        image {
-          url
-        }
-        markets {
-          title
-        }
-        themes {
-          title
-        }
-        _firstPublishedAt
-      }
-    }
-  `;
-
-  const result = await fetchCMS(query, {
+  const result = await fetchCMS<GQL.MarketPageQuery>(GQL.MarketPageDocument, {
     variables: { locale: context.locale, slug: context.params.slug },
     preview: context.preview,
   });
@@ -110,19 +71,9 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const query = `
-    query {
-      allMarkets {
-        _allSlugLocales {
-          locale
-          value
-        }
-      }
-    }
-  `;
-
-  const result = await fetchCMS(query);
-
+  const result = await fetchCMS<GQL.AllMarketsSlugLocalesQuery>(
+    GQL.AllMarketsSlugLocalesDocument
+  );
   const paths = result.allMarkets.flatMap((page: $FixMe) => {
     return page._allSlugLocales.map((loc: $FixMe) => ({
       locale: loc.locale,

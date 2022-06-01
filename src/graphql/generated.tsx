@@ -4052,6 +4052,8 @@ export type FocalPoint = {
   y?: Maybe<Scalars['FloatType']>;
 };
 
+export type SeoFragment = { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null };
+
 export type HomePageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
@@ -4059,19 +4061,63 @@ export type HomePageQueryVariables = Exact<{
 
 export type HomePageQuery = { __typename: 'Query', homePage?: { __typename: 'HomePageRecord', title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null }>, allThemes: Array<{ __typename: 'ThemeRecord', title?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: any | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
 
+export type MarketPageQueryVariables = Exact<{
+  locale: SiteLocale;
+  slug: Scalars['String'];
+}>;
 
+
+export type MarketPageQuery = { __typename: 'Query', market?: { __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, lead?: string | null, slug?: string | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: any | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
+
+export type AllMarketsSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllMarketsSlugLocalesQuery = { __typename: 'Query', allMarkets: Array<{ __typename: 'MarketRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null }> };
+
+export type ThemePageQueryVariables = Exact<{
+  locale: SiteLocale;
+  slug: Scalars['String'];
+}>;
+
+
+export type ThemePageQuery = { __typename: 'Query', theme?: { __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null } | null, allThemes: Array<{ __typename: 'ThemeRecord', title?: string | null, lead?: string | null, slug?: string | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: any | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
+
+export type AllThemesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllThemesSlugLocalesQuery = { __typename: 'Query', allThemes: Array<{ __typename: 'ThemeRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null } | null> | null }> };
+
+export type BlogPageQueryVariables = Exact<{
+  locale: SiteLocale;
+}>;
+
+
+export type BlogPageQuery = { __typename: 'Query', blogPage?: { __typename: 'BlogPageRecord', title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', url: string } | null } | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: any | null, image?: { __typename: 'FileField', url: string } | null, markets: Array<{ __typename: 'MarketRecord', title?: string | null }>, themes: Array<{ __typename: 'ThemeRecord', title?: string | null }> }> };
+
+export type AboutPageQueryVariables = Exact<{
+  locale: SiteLocale;
+}>;
+
+
+export type AboutPageQuery = { __typename: 'Query', aboutPage?: { __typename: 'AboutPageRecord', title?: string | null, lead?: string | null } | null, allMarkets: Array<{ __typename: 'MarketRecord', title?: string | null, slug?: string | null, tile?: { __typename: 'FileField', url: string } | null }> };
+
+export const SeoFragmentDoc = gql`
+    fragment SEO on SeoField {
+  title
+  description
+  image {
+    url
+  }
+  twitterCard
+}
+    `;
 export const HomePageDocument = gql`
     query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
     title
     lead
-    seo(locale: $locale) {
-      title
-      description
-      image {
-        url
-      }
-      twitterCard
+    seo {
+      ...SEO
     }
   }
   allMarkets(locale: $locale) {
@@ -4104,8 +4150,178 @@ export const HomePageDocument = gql`
     _firstPublishedAt
   }
 }
-    `;
+    ${SeoFragmentDoc}`;
 
 export function useHomePageQuery(options: Omit<Urql.UseQueryArgs<HomePageQueryVariables>, 'query'>) {
   return Urql.useQuery<HomePageQuery>({ query: HomePageDocument, ...options });
+};
+export const MarketPageDocument = gql`
+    query MarketPage($locale: SiteLocale!, $slug: String!) {
+  market(locale: $locale, filter: {slug: {eq: $slug}}) {
+    title
+    lead
+    slug
+    tile {
+      url
+    }
+    seo {
+      ...SEO
+    }
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  allMarkets(locale: $locale) {
+    title
+    lead
+    slug
+  }
+  allBlogPosts(locale: $locale, first: 3) {
+    title
+    lead
+    slug
+    image {
+      url
+    }
+    markets {
+      title
+    }
+    themes {
+      title
+    }
+    _firstPublishedAt
+  }
+}
+    ${SeoFragmentDoc}`;
+
+export function useMarketPageQuery(options: Omit<Urql.UseQueryArgs<MarketPageQueryVariables>, 'query'>) {
+  return Urql.useQuery<MarketPageQuery>({ query: MarketPageDocument, ...options });
+};
+export const AllMarketsSlugLocalesDocument = gql`
+    query AllMarketsSlugLocales {
+  allMarkets {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+    `;
+
+export function useAllMarketsSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllMarketsSlugLocalesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllMarketsSlugLocalesQuery>({ query: AllMarketsSlugLocalesDocument, ...options });
+};
+export const ThemePageDocument = gql`
+    query ThemePage($locale: SiteLocale!, $slug: String!) {
+  theme(locale: $locale, filter: {slug: {eq: $slug}}) {
+    title
+    lead
+    slug
+    tile {
+      url
+    }
+    seo {
+      ...SEO
+    }
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  allThemes(locale: $locale) {
+    title
+    lead
+    slug
+  }
+  allBlogPosts(locale: $locale, first: 3) {
+    title
+    lead
+    slug
+    image {
+      url
+    }
+    markets {
+      title
+    }
+    themes {
+      title
+    }
+    _firstPublishedAt
+  }
+}
+    ${SeoFragmentDoc}`;
+
+export function useThemePageQuery(options: Omit<Urql.UseQueryArgs<ThemePageQueryVariables>, 'query'>) {
+  return Urql.useQuery<ThemePageQuery>({ query: ThemePageDocument, ...options });
+};
+export const AllThemesSlugLocalesDocument = gql`
+    query AllThemesSlugLocales {
+  allThemes {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+    `;
+
+export function useAllThemesSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllThemesSlugLocalesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllThemesSlugLocalesQuery>({ query: AllThemesSlugLocalesDocument, ...options });
+};
+export const BlogPageDocument = gql`
+    query BlogPage($locale: SiteLocale!) {
+  blogPage(locale: $locale) {
+    title
+    lead
+    seo {
+      ...SEO
+    }
+  }
+  allMarkets(locale: $locale) {
+    title
+    tile {
+      url
+    }
+    slug
+  }
+  allBlogPosts(locale: $locale) {
+    title
+    lead
+    slug
+    image {
+      url
+    }
+    markets {
+      title
+    }
+    themes {
+      title
+    }
+    _firstPublishedAt
+  }
+}
+    ${SeoFragmentDoc}`;
+
+export function useBlogPageQuery(options: Omit<Urql.UseQueryArgs<BlogPageQueryVariables>, 'query'>) {
+  return Urql.useQuery<BlogPageQuery>({ query: BlogPageDocument, ...options });
+};
+export const AboutPageDocument = gql`
+    query AboutPage($locale: SiteLocale!) {
+  aboutPage(locale: $locale) {
+    title
+    lead
+  }
+  allMarkets(locale: $locale) {
+    title
+    tile {
+      url
+    }
+    slug
+  }
+}
+    `;
+
+export function useAboutPageQuery(options: Omit<Urql.UseQueryArgs<AboutPageQueryVariables>, 'query'>) {
+  return Urql.useQuery<AboutPageQuery>({ query: AboutPageDocument, ...options });
 };
