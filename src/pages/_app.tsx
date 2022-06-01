@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 
-import { GraphqlProvider } from "@/graphql";
+import { GraphqlProvider } from "@/graphql/api";
 import { LocaleProvider } from "@/lib/use-locale";
 import { i18n, Locale } from "@/locales/locales";
 import blwTheme from "@/theme/blw";

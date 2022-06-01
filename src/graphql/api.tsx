@@ -4,8 +4,6 @@ import { Provider, createClient } from "urql";
 
 const client = createClient({
   url: "https://test.visualize.admin.ch/api/graphql",
-  // url: "https://gentle-escarpment-19386.herokuapp.com/api/graphql"
-  // url: "http://localhost:4000/api/graphql"
 });
 
 export const GraphqlProvider = ({
