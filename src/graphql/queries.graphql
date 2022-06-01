@@ -1,0 +1,46 @@
+query HomePage($locale: SiteLocale!) {
+  homePage(locale: $locale) {
+    title
+    lead
+    seo(locale: $locale) {
+      title
+      description
+      image {
+        url
+      }
+      twitterCard
+    }
+  }
+
+  allMarkets(locale: $locale) {
+    title
+    slug
+    tile {
+      url
+    }
+  }
+
+  allThemes(locale: $locale) {
+    title
+    slug
+    tile {
+      url
+    }
+  }
+
+  allBlogPosts(locale: $locale, first: 3) {
+    title
+    lead
+    slug
+    image {
+      url
+    }
+    markets {
+      title
+    }
+    themes {
+      title
+    }
+    _firstPublishedAt
+  }
+}
