@@ -12,12 +12,12 @@ export const ContentContainer = ({
     <Container
       maxWidth="md"
       sx={{
-        ...sx,
         display: "flex",
         flexDirection: "column",
         gap: 7,
         mx: "auto",
         px: 5,
+        ...sx,
       }}
     >
       {children}
