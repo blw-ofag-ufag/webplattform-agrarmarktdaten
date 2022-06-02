@@ -33,6 +33,16 @@ const pages: ConfigPageOrGroup[] = [
     title: "Technology",
     content: require("@/docs/technology.mdx"),
   },
+  {
+    title: "Components",
+    pages: [
+      {
+        path: "/components/content-container",
+        title: "ContentContainer",
+        content: require("@/docs/components/content-container.tsx"),
+      },
+    ],
+  },
 ];
 
 const mkHeading = (level: number) => {
