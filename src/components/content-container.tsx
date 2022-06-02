@@ -1,4 +1,4 @@
-import { Box, SxProps } from "@mui/material";
+import { Container, SxProps } from "@mui/material";
 import React from "react";
 
 export const ContentContainer = ({
@@ -9,18 +9,18 @@ export const ContentContainer = ({
   sx?: SxProps;
 }) => {
   return (
-    <Box
+    <Container
+      maxWidth="md"
       sx={{
         ...sx,
         display: "flex",
         flexDirection: "column",
         gap: 7,
-        maxWidth: "1024px",
         mx: "auto",
         px: 5,
       }}
     >
       {children}
-    </Box>
+    </Container>
   );
 };
