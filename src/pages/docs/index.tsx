@@ -41,6 +41,11 @@ const pages: ConfigPageOrGroup[] = [
         title: "ContentContainer",
         content: require("@/docs/components/content-container.tsx"),
       },
+      {
+        path: "/components/hero",
+        title: "Hero",
+        content: require("@/docs/components/hero.tsx"),
+      },
     ],
   },
 ];
