@@ -1,8 +1,16 @@
 import { Box, Typography } from "@mui/material";
-import { useMemo } from "react";
 
 import { ContentContainer } from "./content-container";
 import Flex from "./flex";
+import { makeStyles } from "./style-utils";
+
+const useStyles = makeStyles()({
+  market: {
+    borderTopRightRadius: "110px",
+    borderBottomLeftRadius: "110px",
+    mt: 9,
+  },
+});
 
 type Props = {
   variant?: "regular" | "market";
@@ -12,18 +20,11 @@ type Props = {
 
 export const Hero = (props: Props) => {
   const { variant = "regular", title, lead } = props;
-  const dynamicSxProps = useMemo(() => {
-    return variant === "market"
-      ? {
-          borderTopRightRadius: "110px",
-          borderBottomLeftRadius: "110px",
-          mt: 9,
-        }
-      : {};
-  }, [variant]);
+  const { classes } = useStyles();
 
   return (
     <Flex
+      className={variant === "market" ? classes.market : undefined}
       sx={{
         flexDirection: "column",
         alignItems: "center",
@@ -31,7 +32,6 @@ export const Hero = (props: Props) => {
         height: "420px",
         mb: 7,
         backgroundColor: "muted.main",
-        ...dynamicSxProps,
       }}
     >
       <ContentContainer sx={{ textAlign: "center" }}>
