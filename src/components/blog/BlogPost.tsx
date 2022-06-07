@@ -56,10 +56,7 @@ export const BlogPostTile = (props: BlogPostPreview) => {
       >
         {mainMarket && <Chip label={mainMarket.title} />}
         {_firstPublishedAt && (
-          <Chip
-            variant="outlined"
-            label={new Date(_firstPublishedAt).toLocaleDateString()}
-          />
+          <Chip variant="outlined" label={_firstPublishedAt} />
         )}
       </Flex>
       <Typography variant="h5">{title}</Typography>

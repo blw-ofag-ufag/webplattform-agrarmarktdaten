@@ -11,7 +11,15 @@ import {
 
 const defaultExchanges = [
   dedupExchange,
-  cacheExchange({ schema: require("./schema.json") }),
+  cacheExchange({
+    schema: require("./schema.json"),
+    resolvers: {
+      BlogPostRecord: {
+        _firstPublishedAt: (parent) =>
+          new Date(parent._firstPublishedAt as string).toLocaleDateString(),
+      },
+    },
+  }),
   fetchExchange,
 ];
 
