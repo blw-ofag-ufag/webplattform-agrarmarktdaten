@@ -4210,13 +4210,7 @@ export const FullMarketFragmentDoc = gql`
     ...FullSEO
   }
 }
-    ${DownloadTeaserBlockFragmentDoc}
-${ExternalVideoBlockFragmentDoc}
-${GalleryBlockFragmentDoc}
-${IframeBlockFragmentDoc}
-${MarkdownBlockFragmentDoc}
-${SurveyBlockFragmentDoc}
-${FullSeoFragmentDoc}`;
+    `;
 export const FullThemeFragmentDoc = gql`
     fragment FullTheme on ThemeRecord {
   title
@@ -4237,13 +4231,7 @@ export const FullThemeFragmentDoc = gql`
     ...FullSEO
   }
 }
-    ${DownloadTeaserBlockFragmentDoc}
-${ExternalVideoBlockFragmentDoc}
-${GalleryBlockFragmentDoc}
-${IframeBlockFragmentDoc}
-${MarkdownBlockFragmentDoc}
-${SurveyBlockFragmentDoc}
-${FullSeoFragmentDoc}`;
+    `;
 export const FullBlogPostFragmentDoc = gql`
     fragment FullBlogPost on BlogPostRecord {
   title
@@ -4268,12 +4256,7 @@ export const FullBlogPostFragmentDoc = gql`
   }
   _firstPublishedAt
 }
-    ${DownloadTeaserBlockFragmentDoc}
-${ExternalVideoBlockFragmentDoc}
-${GalleryBlockFragmentDoc}
-${IframeBlockFragmentDoc}
-${MarkdownBlockFragmentDoc}
-${SurveyBlockFragmentDoc}`;
+    `;
 export const ImageTeaserBlockFragmentDoc = gql`
     fragment ImageTeaserBlock on ImageTeaserBlockRecord {
   description
@@ -4305,6 +4288,12 @@ export const HomePageDocument = gql`
 }
     ${FullSeoFragmentDoc}
 ${FullMarketFragmentDoc}
+${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}
 ${FullThemeFragmentDoc}
 ${FullBlogPostFragmentDoc}`;
 
@@ -4328,6 +4317,13 @@ export const MarketPageDocument = gql`
   }
 }
     ${FullMarketFragmentDoc}
+${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}
+${FullSeoFragmentDoc}
 ${FullBlogPostFragmentDoc}`;
 
 export function useMarketPageQuery(options: Omit<Urql.UseQueryArgs<MarketPageQueryVariables>, 'query'>) {
@@ -4364,6 +4360,13 @@ export const ThemePageDocument = gql`
   }
 }
     ${FullThemeFragmentDoc}
+${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}
+${FullSeoFragmentDoc}
 ${FullBlogPostFragmentDoc}`;
 
 export function useThemePageQuery(options: Omit<Urql.UseQueryArgs<ThemePageQueryVariables>, 'query'>) {
@@ -4401,6 +4404,12 @@ export const BlogPageDocument = gql`
 }
     ${FullSeoFragmentDoc}
 ${FullMarketFragmentDoc}
+${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}
 ${FullBlogPostFragmentDoc}`;
 
 export function useBlogPageQuery(options: Omit<Urql.UseQueryArgs<BlogPageQueryVariables>, 'query'>) {
@@ -4427,7 +4436,14 @@ export const AboutPageDocument = gql`
     ...FullMarket
   }
 }
-    ${FullMarketFragmentDoc}`;
+    ${FullMarketFragmentDoc}
+${DownloadTeaserBlockFragmentDoc}
+${ExternalVideoBlockFragmentDoc}
+${GalleryBlockFragmentDoc}
+${IframeBlockFragmentDoc}
+${MarkdownBlockFragmentDoc}
+${SurveyBlockFragmentDoc}
+${FullSeoFragmentDoc}`;
 
 export function useAboutPageQuery(options: Omit<Urql.UseQueryArgs<AboutPageQueryVariables>, 'query'>) {
   return Urql.useQuery<AboutPageQuery>({ query: AboutPageDocument, ...options });
