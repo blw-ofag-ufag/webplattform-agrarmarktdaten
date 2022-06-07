@@ -23,7 +23,7 @@ export default function Blog(props: Props) {
 
   return (
     <AppLayout>
-      <Hero {...blogPage} />
+      <Hero title={blogPage.title} lead={blogPage.lead} />
       <ContentContainer>
         <BlogMarketFilters allMarkets={allMarkets} />
         <BlogPostsGrid blogPosts={allBlogPosts} />

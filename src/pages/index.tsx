@@ -27,7 +27,7 @@ export default function HomePage({
 }) {
   return (
     <AppLayout allMarkets={allMarkets}>
-      <Hero {...homePage} />
+      <Hero title={homePage.title} lead={homePage.lead} />
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
