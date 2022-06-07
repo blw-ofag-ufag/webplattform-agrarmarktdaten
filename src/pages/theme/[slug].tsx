@@ -10,6 +10,7 @@ import { AppLayout } from "@/components/layout";
 import { BlogPost, Theme } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
+import { Locale } from "@/locales/locales";
 
 export default function ThemePage({
   theme,
@@ -87,10 +88,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
     throw new Error("Failed to fetch API");
   }
 
-  const paths = result.data.allThemes.flatMap((d: $FixMe) => {
-    return d._allSlugLocales.map((loc: $FixMe) => ({
-      locale: loc.locale,
-      params: { slug: loc.value },
+  const paths = result.data.allThemes.flatMap((d) => {
+    return d._allSlugLocales!.map((loc) => ({
+      locale: loc!.locale as Locale,
+      params: { slug: loc!.value as string },
     }));
   });
 
