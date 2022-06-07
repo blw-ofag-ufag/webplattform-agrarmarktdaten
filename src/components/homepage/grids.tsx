@@ -28,11 +28,7 @@ export const CardsGrid = ({
     >
       {entries.map((d) => {
         return (
-          <Box
-            component="li"
-            key={d.slug}
-            sx={{ mb: 4, listStyleType: "none" }}
-          >
+          <Box key={d.slug} sx={{ mb: 4, listStyleType: "none" }}>
             <NextLink
               href={`/${type}/[slug]`}
               as={`/${type}/${d.slug}`}
