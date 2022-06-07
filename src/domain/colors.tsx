@@ -1,4 +1,4 @@
-export const getMarketAreaColor = (slug?: string) => {
+export const getMarketColor = (slug?: string) => {
   switch (slug) {
     case "eggs":
     case "eier":

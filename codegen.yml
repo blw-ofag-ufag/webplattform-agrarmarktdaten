@@ -1,0 +1,30 @@
+schema:
+  - https://graphql.datocms.com:
+      headers:
+        Authorization: ${DATOCMS_API_TOKEN}
+documents: "src/**/*.graphql"
+generates:
+  src/graphql/generated.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-urql"
+    config:
+      dedupeFragments: true
+      nonOptionalTypename: true
+      namingConvention:
+        transformUnderscore: true
+        enumValues: keep
+      scalars:
+        BooleanType: boolean
+        Date: string
+        DateTime: string
+        FloatType: number
+        IntType: number
+  src/graphql/schema.json:
+    plugins:
+      - "introspection"
+    config:
+      minify: true
+      descriptions: false
+      directiveIsRepeatable: false

@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
 import React, { ReactNode, useMemo } from "react";
 
-import { getMarketAreaColor } from "@/domain/colors";
+import { ContentContainer } from "@/components/content-container";
+import { getMarketColor } from "@/domain/colors";
 
 export const Banner = ({
   title,
@@ -12,28 +13,15 @@ export const Banner = ({
   intro?: string | ReactNode;
   slug?: string;
 }) => {
-  const baseBgColor = useMemo(() => getMarketAreaColor(slug), [slug]);
+  const baseBgColor = useMemo(() => getMarketColor(slug), [slug]);
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        width: "100vw",
-        mt: [0, 0, "92px"],
-        mb: [0, 0, 6],
-      }}
-    >
+    <Box sx={{ position: "relative", width: "100vw", mb: [0, 0, 6] }}>
       <BannerBackground bgColor={`${baseBgColor}.light`} />
-      <Box
-        sx={{
-          mt: "-150px",
-          maxWidth: "77rem",
-          mx: "auto",
-        }}
-      >
+      <ContentContainer sx={{ mt: "-150px" }}>
         <BannerTitle color={baseBgColor}>{title}</BannerTitle>
         {intro && <BannerIntro color={baseBgColor}>{intro}</BannerIntro>}
-      </Box>
+      </ContentContainer>
     </Box>
   );
 };

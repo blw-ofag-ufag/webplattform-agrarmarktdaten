@@ -2,42 +2,35 @@ import React from "react";
 
 import { Banner } from "@/components/banner";
 import { AppLayout } from "@/components/layout";
-import { MarketArea } from "@/domain/types";
-import { fetchCMS } from "@/lib/cms-api";
+import { Market } from "@/domain/types";
+import * as GQL from "@/graphql";
+import { client } from "@/graphql";
 
 export default function About({
   aboutPage,
-  allMarketAreas,
+  allMarkets,
 }: {
-  aboutPage: { title: string; introduction: string };
-  allMarketAreas: MarketArea[];
+  aboutPage: { title: string; description: string };
+  allMarkets: Market[];
 }) {
   return (
-    <AppLayout allMarketAreas={allMarketAreas}>
-      <Banner title={aboutPage.title} intro={aboutPage.introduction} />
+    <AppLayout allMarkets={allMarkets}>
+      <Banner title={aboutPage.title} intro={aboutPage.description} />
     </AppLayout>
   );
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const query = `
-  query PageQuery($locale: SiteLocale!){
-    aboutPage(locale: $locale) {
-      title
-      introduction
-    }
-    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
-      title
-      icon
-      slug
-    }
+  const result = await client
+    .query<GQL.AboutPageQuery>(GQL.AboutPageDocument, {
+      locale: context.locale,
+    })
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
   }
-  `;
 
-  const result = await fetchCMS(query, {
-    variables: { locale: context.locale },
-    preview: context.preview,
-  });
-
-  return { props: result };
+  return { props: result.data };
 };

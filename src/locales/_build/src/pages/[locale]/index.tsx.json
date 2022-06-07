@@ -1,9 +1,9 @@
 {
-  "homepage.section.market.area": {
+  "homepage.section.market": {
     "defaults": "Märkte",
     "origin": [["src/pages/index.tsx", 34]]
   },
-  "homepage.section.newsfeed": {
+  "homepage.section.latestBlogPosts": {
     "defaults": "Aktuell",
     "origin": [["src/pages/index.tsx", 41]]
   },

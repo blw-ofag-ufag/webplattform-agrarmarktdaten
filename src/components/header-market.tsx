@@ -3,18 +3,15 @@ import { default as NextLink } from "next/link";
 import React from "react";
 
 import Flex from "@/components/flex";
-import { MarketArea } from "@/domain/types";
-import { Icon, IconName } from "@/icons";
+import { Market } from "@/domain/types";
 import { useLocale } from "@/lib/use-locale";
 
-export const MarketAreaHeader = ({
-  marketMenuexpanded,
+export const MarketHeader = ({
   toggleMarketMenu,
-  allMarketAreas,
+  allMarkets,
 }: {
-  marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
-  allMarketAreas: MarketArea[];
+  allMarkets: Pick<Market, "title" | "slug">[];
 }) => {
   const locale = useLocale();
 
@@ -34,16 +31,16 @@ export const MarketAreaHeader = ({
         zIndex: 30,
       }}
     >
-      {allMarketAreas.map((area) => {
+      {allMarkets.map((d) => {
         return (
           <Box
             component="li"
-            key={area.slug}
+            key={d.slug}
             sx={{ width: ["100%", "100%", "auto"] }}
           >
             <NextLink
-              href="/area/[slug]"
-              as={`/area/${area.slug}`}
+              href="/market/[slug]"
+              as={`/market/${d.slug}`}
               locale={locale}
               passHref
             >
@@ -51,7 +48,7 @@ export const MarketAreaHeader = ({
                 sx={{ textDecoration: "none" }}
                 onClick={() => toggleMarketMenu(false)}
               >
-                <MarketCard title={area.title} icon={area.icon}></MarketCard>
+                <MarketCard title={d.title} />
               </Link>
             </NextLink>
           </Box>
@@ -61,13 +58,7 @@ export const MarketAreaHeader = ({
   );
 };
 
-export const MarketCard = ({
-  title,
-  icon,
-}: {
-  title: string;
-  icon: IconName;
-}) => {
+const MarketCard = ({ title }: { title: string }) => {
   return (
     <Card
       elevation={0}
@@ -79,7 +70,6 @@ export const MarketCard = ({
         alignItems: "center",
       }}
     >
-      <MarketIcon icon={icon} />
       <Typography
         component="h2"
         sx={{
@@ -95,28 +85,5 @@ export const MarketCard = ({
         {title}
       </Typography>
     </Card>
-  );
-};
-
-export const MarketIcon = ({ icon }: { icon: IconName }) => {
-  return (
-    <Flex
-      sx={{
-        backgroundColor: `${icon}.light`,
-        color: `${icon}.main`,
-        borderRadius: "100%",
-        width: ["3rem", "3rem", "5.5rem"],
-        height: ["3rem", "3rem", "5.5rem"],
-        justifyContent: "center",
-        alignItems: "center",
-        mb: [4, 4, 2],
-        mr: [4, 4, 0],
-        fontSize: ["1.5rem", "1.5rem", "3rem"],
-        transition: "background-color 0.125s ease",
-        "&:hover": { backgroundColor: `${icon}.lightHover` },
-      }}
-    >
-      <Icon name={icon} size={50} />
-    </Flex>
   );
 };

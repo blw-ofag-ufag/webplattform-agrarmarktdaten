@@ -59,14 +59,14 @@ import {
 } from "@/lib/cube-queries";
 import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
-import theme from "@/theme";
+import blwTheme from "@/theme/blw";
 
 import useSparql, { SparqlQueryResult } from "./api/use-sparql";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const blackAndWhiteTheme = createTheme(theme, {
+const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
     primary: {
       main: "#444",
@@ -714,8 +714,6 @@ export default function DataBrowser() {
       <ThemeProvider theme={blackAndWhiteTheme}>
         <AppLayout>
           <Box
-            mt="76px"
-            py={4}
             mb={-8}
             zIndex={0}
             display="flex"

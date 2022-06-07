@@ -717,63 +717,63 @@ theme.components = {
   },
   MuiCssBaseline: {
     styleOverrides: `
-         svg {
-           display: block
-         }
-   
-         *:focus {
-           outline: 3px solid #333333;
-         }
- 
-         [tabindex="-1"]:focus { outline: 0; }
-     
-         fieldset {
-           border: 0;
-           padding: 0.01em 0 0 0;
-           margin: 0;
-           minWidth: 0;
-         }
-   
-         html {
-           margin: 0;
-           padding: 0;
-           font-family: ${theme.typography.fontFamily};
-           -webkit-overflow-scrolling: touch;
-           -ms-overflow-style: -ms-autohiding-scrollbar;
-         }
-   
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: normal;
-           font-weight: 700;
-           src: url("/static/fonts/FrutigerNeueW02-Bd.woff2") format("woff2");
-         }
-   
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: normal;
-           font-weight: 400;
-           src: url("/static/fonts/FrutigerNeueW02-Regular.woff2") format("woff2");
-         }
-   
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: normal;
-           font-weight: 300;
-           src: url("/static/fonts/FrutigerNeueW02-Light.woff2") format("woff2");
-         }
-         
-         @font-face {
-           font-family: "FrutigerNeue";
-           font-display: swap;
-           font-style: italic;
-           font-weight: 400;
-           src: url("/static/fonts/FrutigerNeueW02-It.woff2") format("woff2");
-         }
-         `,
+          svg {
+            display: block
+          }
+    
+          *:focus {
+            outline: 3px solid #333333;
+          }
+  
+          [tabindex="-1"]:focus { outline: 0; }
+      
+          fieldset {
+            border: 0;
+            padding: 0.01em 0 0 0;
+            margin: 0;
+            minWidth: 0;
+          }
+    
+          html {
+            margin: 0;
+            padding: 0;
+            font-family: ${theme.typography.fontFamily};
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+          }
+    
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: normal;
+            font-weight: 700;
+            src: url("/static/fonts/FrutigerNeueW02-Bd.woff2") format("woff2");
+          }
+    
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            src: url("/static/fonts/FrutigerNeueW02-Regular.woff2") format("woff2");
+          }
+    
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: normal;
+            font-weight: 300;
+            src: url("/static/fonts/FrutigerNeueW02-Light.woff2") format("woff2");
+          }
+          
+          @font-face {
+            font-family: "FrutigerNeue";
+            font-display: swap;
+            font-style: italic;
+            font-weight: 400;
+            src: url("/static/fonts/FrutigerNeueW02-It.woff2") format("woff2");
+          }
+          `,
   },
 };
 

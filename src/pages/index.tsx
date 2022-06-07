@@ -1,119 +1,88 @@
 import { Trans } from "@lingui/macro";
-import { Box, Button, Typography, Stack } from "@mui/material";
+import { Button, Typography, Stack } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 
-import { Banner } from "@/components/banner";
-import Flex from "@/components/flex";
-import { InfografikTeaser } from "@/components/homepage/infografik-teaser";
-import { MarketAreasGrid } from "@/components/homepage/market-areas-grid";
+import { BlogPostsGrid } from "@/components/blog/BlogPost";
+import { ContentContainer } from "@/components/content-container";
+import { Hero } from "@/components/hero";
+import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
-import { NewsfeedEntry } from "@/components/newsfeed";
-import { MarketArea, Newsfeed } from "@/domain/types";
-import { fetchCMS } from "@/lib/cms-api";
+import { BlogPost, Market, SEO, Theme } from "@/domain/types";
+import * as GQL from "@/graphql";
+import { client } from "@/graphql/api";
+
+type HomePage = { title: string; lead: string; seo?: SEO };
 
 export default function HomePage({
   homePage,
-  allMarketAreas,
-  allNewsfeeds,
+  allMarkets,
+  allThemes,
+  allBlogPosts,
 }: {
-  homePage: { title: string; intro: string };
-  allMarketAreas: MarketArea[];
-  allNewsfeeds: Newsfeed[];
+  homePage: HomePage;
+  allMarkets: Pick<Market, "title" | "slug" | "tile">[];
+  allThemes: Pick<Theme, "title" | "slug" | "tile">[];
+  allBlogPosts: BlogPost[];
 }) {
   return (
-    <AppLayout allMarketAreas={allMarketAreas}>
-      <Banner title={homePage.title} intro={homePage.intro} />
-      {/* <ul>
-      {allSimplePages.map(page => {
-        return (
-          <li key={page.slug}>
-            <NextLink href="/[slug]" as={`/${page.slug}`} passHref>
-              <Link>{page.title}</Link>
-            </NextLink>
-          </li>
-        );
-      })}
-    </ul> */}
-      <Box component="main">
-        <Flex
-          sx={{
-            flexDirection: ["column", "column", "row"],
-            justifyContent: ["flex-start", "flex-start", "space-between"],
-            maxWidth: "77rem",
-            mx: "auto",
-            px: [4, 4, 0],
-            py: 4,
-          }}
-        >
-          <Box sx={{ width: ["100%", "100%", "65%"] }}>
-            <Typography variant="h2">
-              <Trans id="homepage.section.market.area">Märkte</Trans>
-            </Typography>
-            <MarketAreasGrid allMarketAreas={allMarketAreas} />
-          </Box>
+    <AppLayout allMarkets={allMarkets}>
+      <Hero title={homePage.title} lead={homePage.lead} />
+      <ContentContainer>
+        <Stack flexDirection="column" spacing={6}>
+          <Typography variant="h2">
+            <Trans id="homepage.section.market">Märkte</Trans>
+          </Typography>
+          <CardsGrid type="market" entries={allMarkets} />
+        </Stack>
 
-          <Box sx={{ width: ["100%", "100%", "30%"] }}>
-            <Stack flexDirection="column" spacing={8}>
-              <div>
-                <Typography variant="h2">
-                  <Trans id="homepage.section.newsfeed">Aktuell</Trans>
-                </Typography>
-                <div>
-                  {allNewsfeeds.map((news) => (
-                    <NewsfeedEntry
-                      key={news.title}
-                      title={news.title}
-                      publicationDate={news.publicationDate}
-                    />
-                  ))}
-                </div>
-                <Button variant="text" sx={{ ml: -2 }}>
-                  <Trans id="button.show.all">Alle Anzeigen</Trans>
-                </Button>
-              </div>
-              <div>
-                <Typography variant="h2">
-                  <Trans id="homepage.section.newest.infografic">
-                    Neueste Infografik
-                  </Trans>
-                </Typography>
-                <InfografikTeaser />
-              </div>
-            </Stack>
-          </Box>
-        </Flex>
-      </Box>
+        <Stack flexDirection="column" spacing={6}>
+          <Typography variant="h2">
+            <Trans id="homepage.section.theme">Themen</Trans>
+          </Typography>
+          <CardsGrid type="theme" entries={allThemes} />
+        </Stack>
+
+        <Stack flexDirection="column" spacing={6}>
+          <Typography variant="h5">
+            <Trans id="homepage.section.latestBlogPosts">
+              Neuste Blogbeiträge
+            </Trans>
+          </Typography>
+          <BlogPostsGrid blogPosts={allBlogPosts} />
+          <Link href="/blog">
+            <Button
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "184px",
+                height: "48px",
+                backgroundColor: "grey.300",
+                color: "black",
+
+                "&:hover": {
+                  backgroundColor: "grey.500",
+                },
+              }}
+            >
+              <Trans id="button.show.all">Alle Anzeigen</Trans>
+            </Button>
+          </Link>
+        </Stack>
+      </ContentContainer>
     </AppLayout>
   );
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const query = `
-  query PageQuery($locale: SiteLocale!){
-    homePage(locale: $locale) {
-      title
-      intro
-    }
-    allSimplePages(locale: $locale) {
-      slug
-      title
-    }
-    allMarketAreas(locale: $locale, filter: {parent: {exists: false}}) {
-      title
-      icon
-      slug
-    }
-    allNewsfeeds(locale: $locale) {
-      title
-      publicationDate
-    }
+  const result = await client
+    .query<GQL.HomePageQuery>(GQL.HomePageDocument, { locale: context.locale })
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
   }
-  `;
 
-  const result = await fetchCMS(query, {
-    variables: { locale: context.locale },
-    preview: context.preview,
-  });
-
-  return { props: result };
+  return { props: result.data };
 };

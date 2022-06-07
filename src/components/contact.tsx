@@ -2,6 +2,7 @@ import { Trans } from "@lingui/macro";
 import { Box, Link, Typography } from "@mui/material";
 import React, { ReactNode } from "react";
 
+import { ContentContainer } from "@/components/content-container";
 import Flex from "@/components/flex";
 import { Icon, IconName } from "@/icons";
 
@@ -16,13 +17,12 @@ export const Contact = () => {
         color: "grey.800",
       }}
     >
-      <Flex
+      <ContentContainer
         sx={{
+          display: "flex",
           flexDirection: ["column", "column", "row"],
-          justifyContent: ["flex-start", "flex-start", "space-between"],
           flexFlow: [null, null, "row wrap"],
-          maxWidth: "77rem",
-          mx: "auto",
+          justifyContent: ["flex-start", "flex-start", "space-between"],
           px: [4, 4, 0],
         }}
       >
@@ -55,7 +55,7 @@ export const Contact = () => {
             <SocialIcon name="youtube" />
           </Box>
         </Flex>
-      </Flex>
+      </ContentContainer>
     </Box>
   );
 };

@@ -25,6 +25,10 @@ module.exports = withBundleAnalyzer(
 
     pageExtensions: ["js", "ts", "tsx", "mdx"],
 
+    images: {
+      domains: ["www.datocms-assets.com"],
+    },
+
     webpack(config, { dev, isServer, defaultLoaders }) {
       config.module.rules.push({
         test: /\.(graphql|gql)$/,

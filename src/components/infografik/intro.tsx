@@ -4,7 +4,12 @@ import { Box, Button } from "@mui/material";
 import Flex from "@/components/flex";
 import { colors } from "@/components/infografik/colors";
 import { smoothScroll } from "@/lib/smooth-scroll";
-import { PotatoInfographic } from "@/pages/infografik";
+
+export interface PotatoInfographic {
+  title: string;
+  year: string;
+  dataProduktionBetriebsstruktur: $FixMe;
+}
 
 export const Intro = ({ title }: Pick<PotatoInfographic, "title">) => {
   return (

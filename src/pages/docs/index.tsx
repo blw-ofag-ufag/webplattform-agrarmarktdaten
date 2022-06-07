@@ -18,35 +18,54 @@ import {
 import { useEffect, useState } from "react";
 
 const pages: ConfigPageOrGroup[] = [
-  { path: "/", title: "Introduction", content: require("../docs/index.mdx") },
-  { path: "/design", title: "Design", content: require("../docs/design.mdx") },
+  {
+    path: "/",
+    title: "Introduction",
+    content: require("@/docs/index.mdx"),
+  },
+  {
+    path: "/design",
+    title: "Design",
+    content: require("@/docs/design.mdx"),
+  },
   {
     path: "/technology",
     title: "Technology",
-    content: require("../docs/technology.mdx"),
+    content: require("@/docs/technology.mdx"),
+  },
+  {
+    title: "Components",
+    pages: [
+      {
+        path: "/components/content-container",
+        title: "ContentContainer",
+        content: require("@/docs/components/content-container.tsx"),
+      },
+      {
+        path: "/components/hero",
+        title: "Hero",
+        content: require("@/docs/components/hero.tsx"),
+      },
+    ],
   },
 ];
 
+const mkHeading = (level: number) => {
+  return (props: $IntentionalAny) => {
+    return (
+      <Markdown.Heading level={level} text={[props.children]} slug="wat" />
+    );
+  };
+};
+
 const mdxComponents = {
   wrapper: ({ children }: $IntentionalAny) => <Page>{children}</Page>,
-  h1: (props: $IntentionalAny) => (
-    <Markdown.Heading level={1} text={[props.children]} slug={"wat"} />
-  ),
-  h2: (props: $IntentionalAny) => (
-    <Markdown.Heading level={2} text={[props.children]} slug={"wat"} />
-  ),
-  h3: (props: $IntentionalAny) => (
-    <Markdown.Heading level={3} text={[props.children]} slug={"wat"} />
-  ),
-  h4: (props: $IntentionalAny) => (
-    <Markdown.Heading level={4} text={[props.children]} slug={"wat"} />
-  ),
-  h5: (props: $IntentionalAny) => (
-    <Markdown.Heading level={5} text={[props.children]} slug={"wat"} />
-  ),
-  h6: (props: $IntentionalAny) => (
-    <Markdown.Heading level={6} text={[props.children]} slug={"wat"} />
-  ),
+  h1: mkHeading(1),
+  h2: mkHeading(2),
+  h3: mkHeading(3),
+  h4: mkHeading(4),
+  h5: mkHeading(5),
+  h6: mkHeading(6),
   p: Markdown.Paragraph,
   ul: Markdown.UnorderedList,
   ol: Markdown.OrderedList,

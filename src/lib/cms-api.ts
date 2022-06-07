@@ -1,32 +1,44 @@
+import { DocumentNode } from "graphql";
 import "isomorphic-unfetch";
+import { print } from "graphql";
 
-const API_URL = "https://graphql.datocms.com";
-const API_TOKEN = "880654d6951b0e08722848ff6881c9";
-const DEV = process.env.NODE_ENV === "development";
+import {
+  DATOCMS_API_TOKEN,
+  DATOCMS_API_URL,
+  IS_DEV_ENVIRONMENT,
+} from "@/domain/env";
 
-export async function fetchCMS(
-  query: string,
-  {
-    variables,
-    preview,
-  }: { variables?: { [k: string]: $FixMe }; preview?: boolean } = {}
-) {
-  const res = await fetch(API_URL + (preview || DEV ? "/preview" : ""), {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${API_TOKEN}`,
-    },
-    body: JSON.stringify({
-      query,
-      variables,
-    }),
-  });
+type Options = {
+  variables?: { [k: string]: any };
+  preview?: boolean;
+};
 
-  const json = await res.json();
+export async function fetchCMS<T>(
+  document: DocumentNode,
+  options: Options = {}
+): Promise<T> {
+  const { variables, preview } = options;
+  const query = print(document);
+  const result = await fetch(
+    `${DATOCMS_API_URL}${preview || IS_DEV_ENVIRONMENT ? "/preview" : ""}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
+      },
+      body: JSON.stringify({
+        query,
+        variables,
+      }),
+    }
+  );
+
+  const json = await result.json();
   if (json.errors) {
     console.error(json.errors);
     throw new Error("Failed to fetch API");
   }
+
   return json.data;
 }
