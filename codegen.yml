@@ -10,6 +10,7 @@ generates:
       - "typescript-operations"
       - "typescript-urql"
     config:
+      dedupeFragments: true
       nonOptionalTypename: true
       namingConvention:
         transformUnderscore: true
