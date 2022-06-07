@@ -12,15 +12,15 @@ generates:
   src/graphql/schema.json:
     plugins:
       - "introspection"
-    config:
-      dedupeFragments: true
-      nonOptionalTypename: true
-      namingConvention:
-        transformUnderscore: true
-        enumValues: keep
-      scalars:
-        BooleanType: boolean
-        Date: string
-        DateTime: string
-        FloatType: number
-        IntType: number
+config:
+  dedupeFragments: true
+  nonOptionalTypename: true
+  namingConvention:
+    transformUnderscore: true
+    enumValues: keep
+  scalars:
+    BooleanType: boolean
+    Date: string
+    DateTime: string
+    FloatType: number
+    IntType: number
