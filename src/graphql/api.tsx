@@ -9,7 +9,11 @@ import {
   IS_DEV_ENVIRONMENT,
 } from "@/domain/env";
 
-const defaultExchanges = [dedupExchange, cacheExchange({}), fetchExchange];
+const defaultExchanges = [
+  dedupExchange,
+  cacheExchange({ schema: require("./schema.json") }),
+  fetchExchange,
+];
 
 export const client = createClient({
   url: DATOCMS_API_URL,

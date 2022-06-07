@@ -9,6 +9,9 @@ generates:
       - "typescript"
       - "typescript-operations"
       - "typescript-urql"
+  src/graphql/schema.json:
+    plugins:
+      - "introspection"
     config:
       dedupeFragments: true
       nonOptionalTypename: true
