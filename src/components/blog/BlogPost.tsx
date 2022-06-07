@@ -1,4 +1,5 @@
 import { Box, Chip, Typography } from "@mui/material";
+import { head } from "lodash";
 import Image from "next/image";
 
 import { BlogPost } from "@/domain/types";
@@ -32,7 +33,7 @@ export const BlogPostsGrid = (props: { blogPosts: BlogPostPreview[] }) => {
 
 export const BlogPostTile = (props: BlogPostPreview) => {
   const { title, lead, image, markets, _firstPublishedAt } = props;
-  const mainMarket: BlogPost["markets"][number] | undefined = markets[0];
+  const mainMarket = head(markets);
 
   return (
     <Box sx={{ width: WIDTH }}>
