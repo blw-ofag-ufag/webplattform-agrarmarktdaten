@@ -13,6 +13,9 @@ const defaultExchanges = [
   dedupExchange,
   cacheExchange({
     schema: require("./schema.json"),
+    keys: {
+      VideoField: (parent) => String(parent.url),
+    },
     resolvers: {
       BlogPostRecord: {
         _firstPublishedAt: (parent) =>

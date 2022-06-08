@@ -1,6 +1,8 @@
 # Queries
+## Regular
 query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
+    id
     title
     lead
     seo {
@@ -40,15 +42,6 @@ query MarketPage($locale: SiteLocale!, $slug: String!) {
   }
 }
 
-query AllMarketsSlugLocales {
-  allMarkets {
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-}
-
 query ThemePage($locale: SiteLocale!, $slug: String!) {
   theme(locale: $locale, filter: { slug: { eq: $slug } }) {
     ...FullTheme
@@ -68,17 +61,9 @@ query ThemePage($locale: SiteLocale!, $slug: String!) {
   }
 }
 
-query AllThemesSlugLocales {
-  allThemes {
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-}
-
 query BlogPage($locale: SiteLocale!) {
   blogPage(locale: $locale) {
+    id
     title
     lead
     seo {
@@ -97,12 +82,13 @@ query BlogPage($locale: SiteLocale!) {
 
 query BlogPost($locale: SiteLocale!, $slug: String!) {
   blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
-    slug
+    ...FullBlogPost
   }
 }
 
 query AboutPage($locale: SiteLocale!) {
   aboutPage(locale: $locale) {
+    id
     title
     lead
   }
@@ -112,21 +98,55 @@ query AboutPage($locale: SiteLocale!) {
   }
 }
 
+## Slugs
+query AllMarketsSlugLocales {
+  allMarkets {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllThemesSlugLocales {
+  allThemes {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllBlogPostsSlugLocales {
+  allBlogPosts {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
 # Fragments
 fragment FullSEO on SeoField {
   title
   description
   image {
+    id
     url
   }
   twitterCard
 }
 
 fragment FullMarket on MarketRecord {
+  id
   title
   lead
   slug
   tile {
+    id
     url
   }
   blocks {
@@ -134,6 +154,7 @@ fragment FullMarket on MarketRecord {
     ...ExternalVideoBlock
     ...GalleryBlock
     ...IframeBlock
+    ...ImageTeaserBlock
     ...MarkdownBlock
     ...SurveyBlock
   }
@@ -143,10 +164,12 @@ fragment FullMarket on MarketRecord {
 }
 
 fragment FullTheme on ThemeRecord {
+  id
   title
   lead
   slug
   tile {
+    id
     url
   }
   blocks {
@@ -154,6 +177,7 @@ fragment FullTheme on ThemeRecord {
     ...ExternalVideoBlock
     ...GalleryBlock
     ...IframeBlock
+    ...ImageTeaserBlock
     ...MarkdownBlock
     ...SurveyBlock
   }
@@ -163,10 +187,12 @@ fragment FullTheme on ThemeRecord {
 }
 
 fragment FullBlogPost on BlogPostRecord {
+  id
   title
   lead
   slug
   image {
+    id
     url
   }
   blocks {
@@ -174,13 +200,16 @@ fragment FullBlogPost on BlogPostRecord {
     ...ExternalVideoBlock
     ...GalleryBlock
     ...IframeBlock
+    ...ImageTeaserBlock
     ...MarkdownBlock
     ...SurveyBlock
   }
   markets {
+    id
     title
   }
   themes {
+    id
     title
   }
   _firstPublishedAt
@@ -188,37 +217,46 @@ fragment FullBlogPost on BlogPostRecord {
 
 # Blocks
 fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
+  id
   markdown
   description
-  assets {
+  downloadTeaserAssets {
+    id
     title
     file {
+      id
       url
     }
   }
 }
 
 fragment ExternalVideoBlock on ExternalVideoBlockRecord {
-  externalVideoUrl: url {
+  id
+  externalVideo {
     url
     title
   }
 }
 
 fragment GalleryBlock on GalleryBlockRecord {
-  assets {
+  id
+  galleryAssets {
+    id
     title
     url
   }
 }
 
 fragment IframeBlock on IframeBlockRecord {
-  iFrameUrl: url
+  id
+  url
 }
 
 fragment ImageTeaserBlock on ImageTeaserBlockRecord {
+  id
   description
-  asset {
+  imageTeaserAsset {
+    id
     title
     alt
     url
@@ -226,16 +264,20 @@ fragment ImageTeaserBlock on ImageTeaserBlockRecord {
 }
 
 fragment MarkdownBlock on MarkdownBlockRecord {
+  id
   content
 }
 
 fragment SurveyBlock on SurveyBlockRecord {
+  id
   formUrl
   question {
+    id
     question
     formFieldId
     isMultipleChoice
     possibleAnswers {
+      id
       answer
     }
   }
