@@ -15,6 +15,7 @@ const defaultExchanges = [
     schema: require("./schema.json"),
     keys: {
       VideoField: (parent) => String(parent.url),
+      StringMultiLocaleField: () => null,
     },
     resolvers: {
       BlogPostRecord: {
