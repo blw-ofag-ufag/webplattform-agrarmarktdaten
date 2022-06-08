@@ -83,6 +83,11 @@ query BlogPage($locale: SiteLocale!) {
 query BlogPost($locale: SiteLocale!, $slug: String!) {
   blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
     ...FullBlogPost
+
+    _allSlugLocales {
+      locale
+      value
+    }
   }
 }
 
