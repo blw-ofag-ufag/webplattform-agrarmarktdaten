@@ -1,3 +1,118 @@
+# Queries
+query HomePage($locale: SiteLocale!) {
+  homePage(locale: $locale) {
+    title
+    lead
+    seo {
+      ...FullSEO
+    }
+  }
+
+  allMarkets(locale: $locale) {
+    ...FullMarket
+  }
+
+  allThemes(locale: $locale) {
+    ...FullTheme
+  }
+
+  allBlogPosts(locale: $locale, first: 3) {
+    ...FullBlogPost
+  }
+}
+
+query MarketPage($locale: SiteLocale!, $slug: String!) {
+  market(locale: $locale, filter: { slug: { eq: $slug } }) {
+    ...FullMarket
+
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+
+  allMarkets(locale: $locale) {
+    ...FullMarket
+  }
+
+  allBlogPosts(locale: $locale, first: 3) {
+    ...FullBlogPost
+  }
+}
+
+query AllMarketsSlugLocales {
+  allMarkets {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query ThemePage($locale: SiteLocale!, $slug: String!) {
+  theme(locale: $locale, filter: { slug: { eq: $slug } }) {
+    ...FullTheme
+
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+
+  allThemes(locale: $locale) {
+    ...FullTheme
+  }
+
+  allBlogPosts(locale: $locale, first: 3) {
+    ...FullBlogPost
+  }
+}
+
+query AllThemesSlugLocales {
+  allThemes {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query BlogPage($locale: SiteLocale!) {
+  blogPage(locale: $locale) {
+    title
+    lead
+    seo {
+      ...FullSEO
+    }
+  }
+
+  allMarkets(locale: $locale) {
+    ...FullMarket
+  }
+
+  allBlogPosts(locale: $locale) {
+    ...FullBlogPost
+  }
+}
+
+query BlogPost($locale: SiteLocale!, $slug: String!) {
+  blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
+    slug
+  }
+}
+
+query AboutPage($locale: SiteLocale!) {
+  aboutPage(locale: $locale) {
+    title
+    lead
+  }
+
+  allMarkets(locale: $locale) {
+    ...FullMarket
+  }
+}
+
+# Fragments
 fragment FullSEO on SeoField {
   title
   description
@@ -123,119 +238,5 @@ fragment SurveyBlock on SurveyBlockRecord {
     possibleAnswers {
       answer
     }
-  }
-}
-
-# Queries
-query HomePage($locale: SiteLocale!) {
-  homePage(locale: $locale) {
-    title
-    lead
-    seo {
-      ...FullSEO
-    }
-  }
-
-  allMarkets(locale: $locale) {
-    ...FullMarket
-  }
-
-  allThemes(locale: $locale) {
-    ...FullTheme
-  }
-
-  allBlogPosts(locale: $locale, first: 3) {
-    ...FullBlogPost
-  }
-}
-
-query MarketPage($locale: SiteLocale!, $slug: String!) {
-  market(locale: $locale, filter: { slug: { eq: $slug } }) {
-    ...FullMarket
-
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-
-  allMarkets(locale: $locale) {
-    ...FullMarket
-  }
-
-  allBlogPosts(locale: $locale, first: 3) {
-    ...FullBlogPost
-  }
-}
-
-query AllMarketsSlugLocales {
-  allMarkets {
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-}
-
-query ThemePage($locale: SiteLocale!, $slug: String!) {
-  theme(locale: $locale, filter: { slug: { eq: $slug } }) {
-    ...FullTheme
-
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-
-  allThemes(locale: $locale) {
-    ...FullTheme
-  }
-
-  allBlogPosts(locale: $locale, first: 3) {
-    ...FullBlogPost
-  }
-}
-
-query AllThemesSlugLocales {
-  allThemes {
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-}
-
-query BlogPage($locale: SiteLocale!) {
-  blogPage(locale: $locale) {
-    title
-    lead
-    seo {
-      ...FullSEO
-    }
-  }
-
-  allMarkets(locale: $locale) {
-    ...FullMarket
-  }
-
-  allBlogPosts(locale: $locale) {
-    ...FullBlogPost
-  }
-}
-
-query BlogPost($locale: SiteLocale!, $slug: String!) {
-  blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
-    slug
-  }
-}
-
-query AboutPage($locale: SiteLocale!) {
-  aboutPage(locale: $locale) {
-    title
-    lead
-  }
-
-  allMarkets(locale: $locale) {
-    ...FullMarket
   }
 }
