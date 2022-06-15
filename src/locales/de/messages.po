@@ -58,7 +58,7 @@ msgstr "Report öffnen"
 msgid "button.infografic.teaser"
 msgstr "Infografik Ansehen"
 
-#: src/pages/index.tsx:67
+#: src/pages/index.tsx:68
 msgid "button.show.all"
 msgstr "Alle Anzeigen"
 
@@ -69,6 +69,10 @@ msgstr "Kontakt"
 #: src/components/contact.tsx:50
 msgid "contact.follow.us"
 msgstr "Folgen Sie Uns"
+
+#: src/components/back-button.tsx:31
+msgid "cta.back"
+msgstr "Geh zurück"
 
 #: src/components/footer.tsx:31
 msgid "footer.dataprotection"
@@ -82,13 +86,14 @@ msgstr "Impressum"
 msgid "footer.legal"
 msgstr "Rechtliche Grundlagen"
 
-#: src/pages/index.tsx:47
-#: src/pages/market/[slug].tsx:42
-#: src/pages/theme/[slug].tsx:42
+#: src/pages/blog/[slug].tsx:42
+#: src/pages/index.tsx:48
+#: src/pages/market/[slug].tsx:43
+#: src/pages/theme/[slug].tsx:44
 msgid "homepage.section.latestBlogPosts"
 msgstr "Neuste Blogbeiträge"
 
-#: src/pages/index.tsx:33
+#: src/pages/index.tsx:34
 msgid "homepage.section.market"
 msgstr "Märkte"
 
@@ -100,7 +105,7 @@ msgstr "Märkte"
 #~ msgid "homepage.section.newsfeed"
 #~ msgstr "Aktuell"
 
-#: src/pages/index.tsx:40
+#: src/pages/index.tsx:41
 msgid "homepage.section.theme"
 msgstr "Themen"
 

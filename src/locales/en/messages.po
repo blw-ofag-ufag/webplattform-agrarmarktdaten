@@ -58,7 +58,7 @@ msgstr "Open Report"
 msgid "button.infografic.teaser"
 msgstr "See Infografics"
 
-#: src/pages/index.tsx:67
+#: src/pages/index.tsx:68
 msgid "button.show.all"
 msgstr "Show All"
 
@@ -69,6 +69,10 @@ msgstr "Contact"
 #: src/components/contact.tsx:50
 msgid "contact.follow.us"
 msgstr "Follow Us"
+
+#: src/components/back-button.tsx:31
+msgid "cta.back"
+msgstr "Go back"
 
 #: src/components/footer.tsx:31
 msgid "footer.dataprotection"
@@ -82,13 +86,14 @@ msgstr "Imprint"
 msgid "footer.legal"
 msgstr "Legal"
 
-#: src/pages/index.tsx:47
-#: src/pages/market/[slug].tsx:42
-#: src/pages/theme/[slug].tsx:42
+#: src/pages/blog/[slug].tsx:42
+#: src/pages/index.tsx:48
+#: src/pages/market/[slug].tsx:43
+#: src/pages/theme/[slug].tsx:44
 msgid "homepage.section.latestBlogPosts"
 msgstr "Latest Blog Posts"
 
-#: src/pages/index.tsx:33
+#: src/pages/index.tsx:34
 msgid "homepage.section.market"
 msgstr "Markets"
 
@@ -100,7 +105,7 @@ msgstr "Markets"
 #~ msgid "homepage.section.newsfeed"
 #~ msgstr ""
 
-#: src/pages/index.tsx:40
+#: src/pages/index.tsx:41
 msgid "homepage.section.theme"
 msgstr "Themes"
 

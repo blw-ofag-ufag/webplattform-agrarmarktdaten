@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -27,7 +28,7 @@ export const BackButton = () => {
       startIcon={<SvgIcControlArrowLeft />}
       sx={{ position: "absolute", mt: 6, ml: 4, color: "black" }}
     >
-      Go back
+      <Trans id="cta.back">Geh zurück</Trans>
     </Button>
   );
 };
