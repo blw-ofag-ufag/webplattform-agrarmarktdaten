@@ -1,8 +1,10 @@
-import { Box, Chip, Typography } from "@mui/material";
+import { Box, Chip, Link, Typography } from "@mui/material";
 import { head } from "lodash";
 import Image from "next/image";
+import NextLink from "next/link";
 
 import { BlogPost } from "@/domain/types";
+import { useLocale } from "@/lib/use-locale";
 
 import Flex from "../flex";
 
@@ -11,7 +13,7 @@ const IMAGE_HEIGHT = WIDTH * (9 / 16);
 
 type BlogPostPreview = Pick<
   BlogPost,
-  "title" | "lead" | "image" | "markets" | "_firstPublishedAt"
+  "title" | "lead" | "image" | "markets" | "_firstPublishedAt" | "slug"
 >;
 
 export const BlogPostsGrid = (props: { blogPosts: BlogPostPreview[] }) => {
@@ -32,37 +34,42 @@ export const BlogPostsGrid = (props: { blogPosts: BlogPostPreview[] }) => {
 };
 
 export const BlogPostTile = (props: BlogPostPreview) => {
-  const { title, lead, image, markets, _firstPublishedAt } = props;
+  const { title, lead, image, markets, slug, _firstPublishedAt } = props;
   const mainMarket = head(markets);
+  const locale = useLocale();
 
   return (
-    <Box sx={{ width: WIDTH }}>
-      <Box
-        sx={{
-          position: "relative",
-          overflow: "hidden",
-          height: IMAGE_HEIGHT,
-          borderRadius: "10px",
-        }}
-      >
-        <Image src={image.url} layout="fill" alt={image.alt} />
-      </Box>
-      <Flex
-        sx={{
-          alignItems: "center",
-          justifyContent: "space-between",
-          my: 4,
-        }}
-      >
-        {mainMarket && <Chip label={mainMarket.title} />}
-        {_firstPublishedAt && (
-          <Chip variant="outlined" label={_firstPublishedAt} />
-        )}
-      </Flex>
-      <Typography variant="h5">{title}</Typography>
-      <Typography variant="body2" mt={2}>
-        {lead}
-      </Typography>
-    </Box>
+    <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref>
+      <Link sx={{ textDecoration: "none" }}>
+        <Box sx={{ width: WIDTH }}>
+          <Box
+            sx={{
+              position: "relative",
+              overflow: "hidden",
+              height: IMAGE_HEIGHT,
+              borderRadius: "10px",
+            }}
+          >
+            <Image src={image.url} layout="fill" alt={image.alt} />
+          </Box>
+          <Flex
+            sx={{
+              alignItems: "center",
+              justifyContent: "space-between",
+              my: 4,
+            }}
+          >
+            {mainMarket && <Chip label={mainMarket.title} />}
+            {_firstPublishedAt && (
+              <Chip variant="outlined" label={_firstPublishedAt} />
+            )}
+          </Flex>
+          <Typography variant="h5">{title}</Typography>
+          <Typography variant="body2" mt={2}>
+            {lead}
+          </Typography>
+        </Box>
+      </Link>
+    </NextLink>
   );
 };
