@@ -2,6 +2,7 @@ import { Trans } from "@lingui/macro";
 import { Stack, Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps } from "next";
 
+import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
@@ -11,8 +12,10 @@ import { Locale } from "@/locales/locales";
 
 export default function BlogPostPage({
   blogPost,
+  allBlogPosts,
 }: {
   blogPost: GQL.BlogPostQuery;
+  allBlogPosts: GQL.AllBlogPostsQuery;
 }) {
   const alternates = blogPost
     ? blogPost.blogPost?._allSlugLocales?.map((loc) => {
@@ -26,17 +29,18 @@ export default function BlogPostPage({
 
   return (
     <AppLayout alternates={alternates} allMarkets={[]}>
-      {blogPost ? (
+      {blogPost.blogPost ? (
         <>
           <ContentContainer sx={{ mt: 7 }}>
-            <Hero title={blogPost.blogPost?.title as string} lead={blogPost.blogPost?.lead as string} />
-            <Stack flexDirection="column" spacing={6}>
+            <Hero title={blogPost.blogPost.title as string} lead={blogPost.blogPost.lead as string} />
+            {allBlogPosts.allBlogPosts ? (<Stack flexDirection="column" spacing={6}>
               <Typography variant="h5">
                 <Trans id="homepage.section.latestBlogPosts">
                   Neuste Blogbeiträge
                 </Trans>
               </Typography>
-            </Stack>
+              <BlogPostsGrid blogPosts={allBlogPosts.allBlogPosts as GQL.BlogPostRecord[]} />
+            </Stack>) : null}
           </ContentContainer>
         </>
       ) : (
@@ -47,21 +51,32 @@ export default function BlogPostPage({
 }
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
-  const result = await client
+  const blogPostQuery = await client
     .query<GQL.BlogPostQuery>(GQL.BlogPostDocument, {
       locale: context.locale,
       slug: context.params.slug,
     })
     .toPromise();
 
-  if (!result.data) {
-    console.error(result.error?.toString());
+  if (!blogPostQuery.data) {
+    console.error(blogPostQuery.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  const allBlogPostsQuery = await client.query<GQL.AllBlogPostsQuery>(GQL.AllBlogPostsDocument, {
+    locale: context.locale,
+    first: 3
+  }).toPromise();
+
+  if (!allBlogPostsQuery.data) {
+    console.error(allBlogPostsQuery.error?.toString());
     throw new Error("Failed to fetch API");
   }
 
   return {
     props: {
-      blogPost: result.data,
+      blogPost: blogPostQuery.data,
+      allBlogPosts: allBlogPostsQuery.data
     },
   };
 };

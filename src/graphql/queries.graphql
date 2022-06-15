@@ -91,6 +91,12 @@ query BlogPost($locale: SiteLocale!, $slug: String!) {
   }
 }
 
+query AllBlogPosts($locale: SiteLocale!, $first: IntType!) {
+  allBlogPosts(locale: $locale, first: $first) {
+    ...FullBlogPost
+  }
+}
+
 query AboutPage($locale: SiteLocale!) {
   aboutPage(locale: $locale) {
     id
