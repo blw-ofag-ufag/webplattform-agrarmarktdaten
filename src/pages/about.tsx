@@ -2,7 +2,6 @@ import React from "react";
 
 import { Banner } from "@/components/banner";
 import { AppLayout } from "@/components/layout";
-import { Market } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 
@@ -11,7 +10,7 @@ export default function About({
   allMarkets,
 }: {
   aboutPage: { title: string; description: string };
-  allMarkets: Market[];
+  allMarkets: GQL.MarketRecord[];
 }) {
   return (
     <AppLayout allMarkets={allMarkets}>

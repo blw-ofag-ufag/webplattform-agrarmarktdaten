@@ -2,6 +2,7 @@ import { Box, Card, Link, Typography } from "@mui/material";
 import { default as NextLink } from "next/link";
 import React from "react";
 
+import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
 
 type Entry = {
@@ -14,7 +15,7 @@ export const CardsGrid = ({
   entries,
 }: {
   type: "market" | "theme";
-  entries: Entry[];
+  entries: GQL.MarketRecord[] | GQL.ThemeRecord[];
 }) => {
   const locale = useLocale();
 
@@ -36,7 +37,7 @@ export const CardsGrid = ({
               passHref
             >
               <Link sx={{ textDecoration: "none" }}>
-                <GridCard type={type} title={d.title} />
+                <GridCard type={type} title={d.title as string} />
               </Link>
             </NextLink>
           </Box>

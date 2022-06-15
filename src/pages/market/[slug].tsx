@@ -7,7 +7,7 @@ import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
-import { BlogPost, Market } from "@/domain/types";
+import { Market } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 
@@ -19,8 +19,8 @@ export default function MarketPage({
   market?: Market & {
     _allSlugLocales: { locale: string; value: string }[];
   };
-  allMarkets: Market[];
-  allBlogPosts: BlogPost[];
+  allMarkets: GQL.MarketRecord[];
+  allBlogPosts: GQL.BlogPostRecord[];
 }) {
   const alternates = market
     ? market._allSlugLocales.map((loc) => {

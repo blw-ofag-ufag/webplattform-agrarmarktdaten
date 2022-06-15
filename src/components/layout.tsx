@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { Market } from "@/domain/types";
+import * as GQL from "@/graphql";
 
 import { BackButton } from "./back-button";
 
@@ -13,7 +13,7 @@ export const AppLayout = ({
   alternates,
 }: {
   children: React.ReactNode;
-  allMarkets?: Pick<Market, "title" | "slug">[];
+  allMarkets?: GQL.MarketRecord[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const router = useRouter();
