@@ -5,28 +5,17 @@ import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
-import { BlogPost, Market } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 
-type Props = {
-  blogPage: {
-    title: string;
-    lead: string;
-  };
-  allMarkets: Market[];
-  allBlogPosts: BlogPost[];
-};
-
-export default function Blog(props: Props) {
-  const { blogPage, allMarkets, allBlogPosts } = props;
+export default function Blog({blogPage, allMarkets, allBlogPosts}: GQL.BlogPageQuery) {
 
   return (
     <AppLayout>
-      <Hero title={blogPage.title} lead={blogPage.lead} />
+      <Hero title={blogPage?.title as string} lead={blogPage?.lead as string} />
       <ContentContainer>
-        <BlogMarketFilters allMarkets={allMarkets} />
-        <BlogPostsGrid blogPosts={allBlogPosts} />
+        <BlogMarketFilters allMarkets={allMarkets as GQL.MarketRecord[]} />
+        <BlogPostsGrid blogPosts={allBlogPosts as GQL.BlogPostRecord[]} />
       </ContentContainer>
     </AppLayout>
   );

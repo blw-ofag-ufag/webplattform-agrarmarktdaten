@@ -3,20 +3,16 @@ import { head } from "lodash";
 import Image from "next/image";
 import NextLink from "next/link";
 
-import { BlogPost } from "@/domain/types";
+import * as GQL from '@/graphql'
 import { useLocale } from "@/lib/use-locale";
+
 
 import Flex from "../flex";
 
 const WIDTH = 310;
 const IMAGE_HEIGHT = WIDTH * (9 / 16);
 
-type BlogPostPreview = Pick<
-  BlogPost,
-  "title" | "lead" | "image" | "markets" | "_firstPublishedAt" | "slug"
->;
-
-export const BlogPostsGrid = (props: { blogPosts: BlogPostPreview[] }) => {
+export const BlogPostsGrid = (props: { blogPosts: GQL.BlogPostRecord[] }) => {
   const { blogPosts } = props;
 
   return (
@@ -33,7 +29,7 @@ export const BlogPostsGrid = (props: { blogPosts: BlogPostPreview[] }) => {
   );
 };
 
-export const BlogPostTile = (props: BlogPostPreview) => {
+export const BlogPostTile = (props:  GQL.BlogPostRecord) => {
   const { title, lead, image, markets, slug, _firstPublishedAt } = props;
   const mainMarket = head(markets);
   const locale = useLocale();
@@ -50,7 +46,7 @@ export const BlogPostTile = (props: BlogPostPreview) => {
               borderRadius: "10px",
             }}
           >
-            <Image src={image.url} layout="fill" alt={image.alt} />
+            <Image src={image!.url as string} layout="fill" alt={image!.alt as string} />
           </Box>
           <Flex
             sx={{
