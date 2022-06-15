@@ -49,7 +49,7 @@ export default function HomePage({
               Neuste Blogbeiträge
             </Trans>
           </Typography>
-          <BlogPostsGrid blogPosts={allBlogPosts} />
+          <BlogPostsGrid blogPosts={allBlogPosts as GQL.BlogPostRecord[]} />
           <Link href="/blog">
             <Button
               sx={{
