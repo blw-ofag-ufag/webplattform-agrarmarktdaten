@@ -1,10 +1,9 @@
-const withMDX = require("@next/mdx")();
-
-const pkg = require("./package.json");
-
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
+const withMDX = require("@next/mdx")();
+
+const pkg = require("./package.json");
 
 const VERSION = `v${pkg.version}`;
 
