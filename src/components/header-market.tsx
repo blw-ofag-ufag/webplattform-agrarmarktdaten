@@ -3,7 +3,7 @@ import { default as NextLink } from "next/link";
 import React from "react";
 
 import Flex from "@/components/flex";
-import { Market } from "@/domain/types";
+import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
 
 export const MarketHeader = ({
@@ -11,7 +11,7 @@ export const MarketHeader = ({
   allMarkets,
 }: {
   toggleMarketMenu: (x: boolean) => void;
-  allMarkets: Pick<Market, "title" | "slug">[];
+  allMarkets: GQL.MarketRecord[];
 }) => {
   const locale = useLocale();
 
@@ -48,7 +48,7 @@ export const MarketHeader = ({
                 sx={{ textDecoration: "none" }}
                 onClick={() => toggleMarketMenu(false)}
               >
-                <MarketCard title={d.title} />
+                <MarketCard title={d.title as string} />
               </Link>
             </NextLink>
           </Box>

@@ -1,15 +1,12 @@
 import { Chip, Stack } from "@mui/material";
 
-import { Market } from "@/domain/types";
 
-type Props = {
-  allMarkets: Market[];
-};
+import * as GQL from '@/graphql'
 
 export const BlogMarketFilters = ({
   allMarkets,
 }: {
-  allMarkets: Props["allMarkets"];
+  allMarkets: GQL.MarketRecord[]
 }) => {
   return (
     <Stack

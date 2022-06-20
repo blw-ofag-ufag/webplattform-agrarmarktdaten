@@ -9,6 +9,7 @@ import { MarketHeader } from "@/components/header-market";
 import { LanguageMenu } from "@/components/language-menu";
 import { HomeLink } from "@/components/links";
 import { Market } from "@/domain/types";
+import * as GQL from "@/graphql";
 import { Icon } from "@/icons";
 
 type HeaderMarket = Pick<Market, "title" | "slug">;
@@ -17,7 +18,7 @@ export const Header = ({
   allMarkets,
   alternates,
 }: {
-  allMarkets?: HeaderMarket[];
+  allMarkets?: GQL.MarketRecord[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const [expanded, toggleMenu] = useState(false); // mobile
@@ -109,7 +110,7 @@ const MobileMenuExpanded = ({
 }: {
   marketMenuexpanded: boolean;
   toggleMarketMenu: (x: boolean) => void;
-  allMarkets?: HeaderMarket[];
+  allMarkets?: GQL.MarketRecord[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   return (

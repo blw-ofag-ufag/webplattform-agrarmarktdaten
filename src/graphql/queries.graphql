@@ -1,134 +1,8 @@
-fragment FullSEO on SeoField {
-  title
-  description
-  image {
-    url
-  }
-  twitterCard
-}
-
-fragment FullMarket on MarketRecord {
-  title
-  lead
-  slug
-  tile {
-    url
-  }
-  blocks {
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...MarkdownBlock
-    ...SurveyBlock
-  }
-  seo {
-    ...FullSEO
-  }
-}
-
-fragment FullTheme on ThemeRecord {
-  title
-  lead
-  slug
-  tile {
-    url
-  }
-  blocks {
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...MarkdownBlock
-    ...SurveyBlock
-  }
-  seo {
-    ...FullSEO
-  }
-}
-
-fragment FullBlogPost on BlogPostRecord {
-  title
-  lead
-  slug
-  image {
-    url
-  }
-  blocks {
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...MarkdownBlock
-    ...SurveyBlock
-  }
-  markets {
-    title
-  }
-  themes {
-    title
-  }
-  _firstPublishedAt
-}
-
-# Blocks
-fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
-  markdown
-  description
-  assets {
-    title
-    file {
-      url
-    }
-  }
-}
-
-fragment ExternalVideoBlock on ExternalVideoBlockRecord {
-  externalVideoUrl: url {
-    url
-    title
-  }
-}
-
-fragment GalleryBlock on GalleryBlockRecord {
-  assets {
-    title
-    url
-  }
-}
-
-fragment IframeBlock on IframeBlockRecord {
-  iFrameUrl: url
-}
-
-fragment ImageTeaserBlock on ImageTeaserBlockRecord {
-  description
-  asset {
-    title
-    alt
-    url
-  }
-}
-
-fragment MarkdownBlock on MarkdownBlockRecord {
-  content
-}
-
-fragment SurveyBlock on SurveyBlockRecord {
-  formUrl
-  question {
-    question
-    formFieldId
-    isMultipleChoice
-    possibleAnswers {
-      answer
-    }
-  }
-}
-
 # Queries
+## Regular
 query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
+    id
     title
     lead
     seo {
@@ -168,15 +42,6 @@ query MarketPage($locale: SiteLocale!, $slug: String!) {
   }
 }
 
-query AllMarketsSlugLocales {
-  allMarkets {
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-}
-
 query ThemePage($locale: SiteLocale!, $slug: String!) {
   theme(locale: $locale, filter: { slug: { eq: $slug } }) {
     ...FullTheme
@@ -196,17 +61,9 @@ query ThemePage($locale: SiteLocale!, $slug: String!) {
   }
 }
 
-query AllThemesSlugLocales {
-  allThemes {
-    _allSlugLocales {
-      locale
-      value
-    }
-  }
-}
-
 query BlogPage($locale: SiteLocale!) {
   blogPage(locale: $locale) {
+    id
     title
     lead
     seo {
@@ -225,17 +82,214 @@ query BlogPage($locale: SiteLocale!) {
 
 query BlogPost($locale: SiteLocale!, $slug: String!) {
   blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
-    slug
+    ...FullBlogPost
+
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllBlogPosts($locale: SiteLocale!, $first: IntType!) {
+  allBlogPosts(locale: $locale, first: $first) {
+    ...FullBlogPost
   }
 }
 
 query AboutPage($locale: SiteLocale!) {
   aboutPage(locale: $locale) {
+    id
     title
     lead
   }
 
   allMarkets(locale: $locale) {
     ...FullMarket
+  }
+}
+
+## Slugs
+query AllMarketsSlugLocales {
+  allMarkets {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllThemesSlugLocales {
+  allThemes {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllBlogPostsSlugLocales {
+  allBlogPosts {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+# Fragments
+fragment FullSEO on SeoField {
+  title
+  description
+  image {
+    id
+    url
+  }
+  twitterCard
+}
+
+fragment FullMarket on MarketRecord {
+  id
+  title
+  lead
+  slug
+  tile {
+    id
+    url
+  }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...ImageTeaserBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
+  seo {
+    ...FullSEO
+  }
+}
+
+fragment FullTheme on ThemeRecord {
+  id
+  title
+  lead
+  slug
+  tile {
+    id
+    url
+  }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...ImageTeaserBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
+  seo {
+    ...FullSEO
+  }
+}
+
+fragment FullBlogPost on BlogPostRecord {
+  id
+  title
+  lead
+  slug
+  image {
+    id
+    url
+  }
+  blocks {
+    ...DownloadTeaserBlock
+    ...ExternalVideoBlock
+    ...GalleryBlock
+    ...IframeBlock
+    ...ImageTeaserBlock
+    ...MarkdownBlock
+    ...SurveyBlock
+  }
+  markets {
+    id
+    title
+  }
+  themes {
+    id
+    title
+  }
+  _firstPublishedAt
+}
+
+# Blocks
+fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
+  id
+  markdown
+  description
+  downloadTeaserAssets {
+    id
+    title
+    file {
+      id
+      url
+    }
+  }
+}
+
+fragment ExternalVideoBlock on ExternalVideoBlockRecord {
+  id
+  externalVideo {
+    url
+    title
+  }
+}
+
+fragment GalleryBlock on GalleryBlockRecord {
+  id
+  galleryAssets {
+    id
+    title
+    url
+  }
+}
+
+fragment IframeBlock on IframeBlockRecord {
+  id
+  url
+}
+
+fragment ImageTeaserBlock on ImageTeaserBlockRecord {
+  id
+  description
+  imageTeaserAsset {
+    id
+    title
+    alt
+    url
+  }
+}
+
+fragment MarkdownBlock on MarkdownBlockRecord {
+  id
+  content
+}
+
+fragment SurveyBlock on SurveyBlockRecord {
+  id
+  formUrl
+  question {
+    id
+    question
+    formFieldId
+    isMultipleChoice
+    possibleAnswers {
+      id
+      answer
+    }
   }
 }

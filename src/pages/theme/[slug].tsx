@@ -7,7 +7,7 @@ import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
-import { BlogPost, Theme } from "@/domain/types";
+import { Theme } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { Locale } from "@/locales/locales";
@@ -17,27 +17,25 @@ export default function ThemePage({
   allThemes,
   allBlogPosts,
 }: {
-  theme?: Theme & {
-    _allSlugLocales: { locale: string; value: string }[];
-  };
+  theme?: GQL.ThemeRecord;
   allThemes: Theme[];
-  allBlogPosts: BlogPost[];
+  allBlogPosts: GQL.BlogPostRecord[];
 }) {
   const alternates = theme
-    ? theme._allSlugLocales.map((loc) => {
+    ? theme._allSlugLocales!.map((loc) => {
         return {
           href: "/theme/[slug]",
           as: `/theme/${loc.value}`,
-          locale: loc.locale,
+          locale: loc.locale as Locale,
         };
       })
     : undefined;
 
   return (
-    <AppLayout alternates={alternates} allMarkets={allThemes}>
+    <AppLayout alternates={alternates} allMarkets={[]}>
       {theme ? (
         <>
-          <Hero title={theme.title} lead={theme.lead} />
+          <Hero title={theme.title as string} lead={theme.lead as string} />
           <ContentContainer>
             <Stack flexDirection="column" spacing={6}>
               <Typography variant="h5">

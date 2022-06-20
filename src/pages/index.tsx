@@ -8,7 +8,7 @@ import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
-import { BlogPost, Market, SEO, Theme } from "@/domain/types";
+import { BlogPost, SEO } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 
@@ -21,8 +21,8 @@ export default function HomePage({
   allBlogPosts,
 }: {
   homePage: HomePage;
-  allMarkets: Pick<Market, "title" | "slug" | "tile">[];
-  allThemes: Pick<Theme, "title" | "slug" | "tile">[];
+  allMarkets: GQL.MarketRecord[];
+  allThemes: GQL.ThemeRecord[];
   allBlogPosts: BlogPost[];
 }) {
   return (
@@ -49,7 +49,7 @@ export default function HomePage({
               Neuste Blogbeiträge
             </Trans>
           </Typography>
-          <BlogPostsGrid blogPosts={allBlogPosts} />
+          <BlogPostsGrid blogPosts={allBlogPosts as GQL.BlogPostRecord[]} />
           <Link href="/blog">
             <Button
               sx={{
