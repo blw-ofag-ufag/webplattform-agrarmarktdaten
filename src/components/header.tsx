@@ -159,7 +159,7 @@ const DesktopMenu = ({
   return (
     <Box sx={{ display: ["none", "none", "flex"], order: 2, mx: "auto" }}>
       <Stack direction="row" spacing={6}>
-        <Link
+        {/* <Link
           typography="h3"
           fontWeight="light"
           onClick={() => toggleMarketMenu(!marketMenuexpanded)}
@@ -176,7 +176,7 @@ const DesktopMenu = ({
         >
           <Trans id="menu.markets">Märkte</Trans>
           <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
-        </Link>
+        </Link> */}
         <NextLink href="/data" passHref>
           <Link typography="h3" fontWeight="light">
             <Trans id="menu.data">Daten</Trans>
