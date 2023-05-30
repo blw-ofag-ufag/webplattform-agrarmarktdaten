@@ -202,6 +202,18 @@ fragment FullBlogPost on BlogPostRecord {
   title
   lead
   slug
+  author {
+    first_name
+    last_name
+    portrait {
+      id
+      url
+    }
+    role {
+      title
+      description
+    }
+  }
   image {
     id
     url
