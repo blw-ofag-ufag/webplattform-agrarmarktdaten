@@ -1,4 +1,4 @@
-import { keyframes } from "@emotion/core";
+import { keyframes } from "@emotion/react";
 import { Box, Button } from "@mui/material";
 
 import Flex from "@/components/flex";

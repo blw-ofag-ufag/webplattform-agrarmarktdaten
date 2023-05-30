@@ -2,18 +2,13 @@
 // TypeScript helpers
 
 /** Fix this type, preferably before accepting the PR */
-type $FixMe = any; 
+type $FixMe = any;
 
 /** This `any` is intentional => never has to be fixed */
 type $IntentionalAny = any;
 
 /** TS cannot express the proper type atm */
 type $Unexpressable = any;
-
-declare module "@theme-ui/presets" {
-  export const deep: $FixMe;
-  export const swiss: $FixMe;
-}
 
 // -----------------------------------------------------------------------------
 // MDX stuff
