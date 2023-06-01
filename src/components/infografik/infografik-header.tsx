@@ -1,13 +1,10 @@
 import { Link } from "@mui/material";
-import { default as NextLink } from "next/link";
-import React from "react";
+import NextLink from "next/link";
 
 import Flex from "@/components/flex";
 import { colors } from "@/components/infografik/colors";
 import { LanguageMenu } from "@/components/language-menu";
 import { Icon } from "@/icons";
-
-
 
 export const InfografikHeader = () => {
   return (
@@ -26,7 +23,7 @@ export const InfografikHeader = () => {
         borderBottom: "1px solid rgba(0,0,0,0.15)",
       }}
     >
-      <NextLink href="/" passHref>
+      <NextLink href="/" passHref legacyBehavior>
         <Link sx={{ textDecoration: "none" }}>
           <Icon name="arrowLeft" />
         </Link>

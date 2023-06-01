@@ -1,7 +1,7 @@
 import { Header } from "@interactivethings/swiss-federal-ci";
 import { Trans } from "@lingui/macro";
 import { Button, Stack, Typography } from "@mui/material";
-import Link from "next/link";
+import NextLink from "next/link";
 
 import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
@@ -51,7 +51,7 @@ export default function HomePage({
             </Trans>
           </Typography>
           <BlogPostsGrid blogPosts={allBlogPosts as GQL.BlogPostRecord[]} />
-          <Link href="/blog">
+          <NextLink href="/blog" legacyBehavior>
             <Button
               sx={{
                 display: "flex",
@@ -68,7 +68,7 @@ export default function HomePage({
             >
               <Trans id="button.show.all">Alle Anzeigen</Trans>
             </Button>
-          </Link>
+          </NextLink>
         </Stack>
       </ContentContainer>
     </AppLayout>

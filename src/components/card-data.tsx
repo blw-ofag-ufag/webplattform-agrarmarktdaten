@@ -52,7 +52,7 @@ export const ReportCard = ({
           >
             <DynamicReportTeaser />
           </Box>
-          <NextLink href="/report" passHref>
+          <NextLink href="/report" passHref legacyBehavior>
             <Link
               component="a"
               sx={{
@@ -153,7 +153,12 @@ export const ReportCard = ({
             </Box>
           </Flex> */}
           </Flex>
-          <NextLink href="/create/[chartId]" as="/create/new" passHref>
+          <NextLink
+            href="/create/[chartId]"
+            as="/create/new"
+            passHref
+            legacyBehavior
+          >
             <Link
               component="a"
               sx={{

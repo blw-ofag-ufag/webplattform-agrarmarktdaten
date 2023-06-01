@@ -1,6 +1,5 @@
 import { Box, Card, Link, Typography } from "@mui/material";
-import { default as NextLink } from "next/link";
-import React from "react";
+import NextLink from "next/link";
 
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
@@ -35,6 +34,7 @@ export const CardsGrid = ({
               as={`/${type}/${d.slug}`}
               locale={locale}
               passHref
+              legacyBehavior
             >
               <Link sx={{ textDecoration: "none" }}>
                 <GridCard type={type} title={d.title as string} />

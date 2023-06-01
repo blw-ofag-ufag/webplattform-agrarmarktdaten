@@ -3,9 +3,8 @@ import { head } from "lodash";
 import Image from "next/image";
 import NextLink from "next/link";
 
-import * as GQL from '@/graphql'
+import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
-
 
 import Flex from "../flex";
 
@@ -29,13 +28,19 @@ export const BlogPostsGrid = (props: { blogPosts: GQL.BlogPostRecord[] }) => {
   );
 };
 
-export const BlogPostTile = (props:  GQL.BlogPostRecord) => {
+export const BlogPostTile = (props: GQL.BlogPostRecord) => {
   const { title, lead, image, markets, slug, _firstPublishedAt } = props;
   const mainMarket = head(markets);
   const locale = useLocale();
 
   return (
-    <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref>
+    <NextLink
+      href="/blog/[slug]"
+      as={`/blog/${slug}`}
+      locale={locale}
+      passHref
+      legacyBehavior
+    >
       <Link sx={{ textDecoration: "none" }}>
         <Box sx={{ width: WIDTH }}>
           <Box
@@ -46,7 +51,11 @@ export const BlogPostTile = (props:  GQL.BlogPostRecord) => {
               borderRadius: "10px",
             }}
           >
-            <Image src={image!.url as string} layout="fill" alt={image!.alt as string} />
+            <Image
+              src={image!.url as string}
+              layout="fill"
+              alt={image!.alt as string}
+            />
           </Box>
           <Flex
             sx={{
