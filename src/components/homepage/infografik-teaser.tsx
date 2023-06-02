@@ -1,13 +1,12 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Link, Typography } from "@mui/material";
-import { default as NextLink } from "next/link";
-import React from "react";
+import NextLink from "next/link";
 
 import Flex from "@/components/flex";
 
 export const InfografikTeaser = () => {
   return (
-    <NextLink href="/infografik" passHref>
+    <NextLink href="/infografik" passHref legacyBehavior>
       <Flex
         component="a"
         sx={{

@@ -1,6 +1,5 @@
 import { Box, Card, Link, Typography } from "@mui/material";
-import { default as NextLink } from "next/link";
-import React from "react";
+import NextLink from "next/link";
 
 import Flex from "@/components/flex";
 import * as GQL from "@/graphql";
@@ -43,6 +42,7 @@ export const MarketHeader = ({
               as={`/market/${d.slug}`}
               locale={locale}
               passHref
+              legacyBehavior
             >
               <Link
                 sx={{ textDecoration: "none" }}

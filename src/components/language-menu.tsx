@@ -6,7 +6,6 @@ import { CurrentPageLink } from "@/components/links";
 import { useLocale } from "@/lib/use-locale";
 import { locales } from "@/locales/locales";
 
-
 export const LanguageMenu = ({
   alternates,
 }: {
@@ -37,7 +36,13 @@ export const LanguageMenu = ({
                 active={d.locale === locale}
                 disabled={false}
               >
-                <NextLink href={d.href} as={d.as} locale={d.locale} passHref>
+                <NextLink
+                  href={d.href}
+                  as={d.as}
+                  locale={d.locale}
+                  passHref
+                  legacyBehavior
+                >
                   <Link
                     rel="alternate"
                     hrefLang={d.locale}

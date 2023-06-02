@@ -1,6 +1,6 @@
 import * as qs from "querystring";
 
-import Link, { LinkProps } from "next/link";
+import NextLink, { LinkProps } from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -55,13 +55,14 @@ export const LocalizedLink = ({
 }) => {
   const locale = useLocale();
   return (
-    <Link
+    <NextLink
       {...rest}
       {...createDynamicRouteProps({
         pathname,
         query: query || {},
       })}
       locale={locale}
+      legacyBehavior
     />
   );
 };
@@ -73,9 +74,9 @@ export const HomeLink = (
 ) => {
   const locale = useLocale();
   return (
-    <Link {...props} href="/" locale={locale}>
+    <NextLink {...props} href="/" locale={locale} legacyBehavior>
       {props.children}
-    </Link>
+    </NextLink>
   );
 };
 
@@ -88,5 +89,12 @@ export const CurrentPageLink = ({
   children: React.ReactNode;
 }) => {
   const { pathname, query } = useRouter();
-  return <Link {...rest} href={{ pathname, query }} locale={locale} />;
+  return (
+    <NextLink
+      {...rest}
+      href={{ pathname, query }}
+      locale={locale}
+      legacyBehavior
+    />
+  );
 };

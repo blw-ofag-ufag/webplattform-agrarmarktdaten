@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
-import { Box, Button, Link, Typography, Stack } from "@mui/material";
+import { Box, Button, Link, Stack, Typography } from "@mui/material";
 import NextLink from "next/link";
-import * as React from "react";
 import { useState } from "react";
 
 import Flex from "@/components/flex";
@@ -139,7 +138,7 @@ const MobileMenuExpanded = ({
           allMarkets={allMarkets}
         />
       )}
-      <NextLink href="/about" passHref>
+      <NextLink href="/about" passHref legacyBehavior>
         <Link>
           <Trans id="menu.about">Über uns</Trans>
         </Link>
@@ -177,17 +176,17 @@ const DesktopMenu = ({
           <Trans id="menu.markets">Märkte</Trans>
           <Icon name={marketMenuexpanded ? "navUp" : "navDown"} />
         </Link> */}
-        <NextLink href="/data" passHref>
+        <NextLink href="/data" passHref legacyBehavior>
           <Link typography="h3" fontWeight="light">
             <Trans id="menu.data">Daten</Trans>
           </Link>
         </NextLink>
-        <NextLink href="/blog" passHref>
+        <NextLink href="/blog" passHref legacyBehavior>
           <Link typography="h3" fontWeight="light">
             <Trans id="menu.blog">Blog</Trans>
           </Link>
         </NextLink>
-        <NextLink href="/about" as="/about" passHref>
+        <NextLink href="/about" as="/about" passHref legacyBehavior>
           <Link typography="h3" fontWeight="light">
             <Trans id="menu.about">Über uns</Trans>
           </Link>
