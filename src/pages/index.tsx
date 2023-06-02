@@ -28,7 +28,7 @@ export default function HomePage({
   return (
     <AppLayout allMarkets={allMarkets}>
       <Hero title={homePage.title} lead={homePage.lead} />
-      <Header />
+      <Header shortTitle="BLW" longTitle="Bundesamt für Landwirtschaft " />
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">

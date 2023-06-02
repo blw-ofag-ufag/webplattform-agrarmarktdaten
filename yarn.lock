@@ -1904,10 +1904,10 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@interactivethings/swiss-federal-ci@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@interactivethings/swiss-federal-ci/-/swiss-federal-ci-0.1.3.tgz#c4dd4d44d7c6f55834c46923e93b240296748240"
-  integrity sha512-8NIz58FtOZsaxbYfHvwKcXMB6pofOvWq7IybWqINC1zDMvdA6FJ91pbEo+ir4hH7W6lFyiZD2swSdg8BkWi1XQ==
+"@interactivethings/swiss-federal-ci@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@interactivethings/swiss-federal-ci/-/swiss-federal-ci-0.1.6.tgz#ab2a3cb7798c93d531980b4f74170c5cbf0a47c1"
+  integrity sha512-boFK9bFIuYOa+na/WoWjMqQPeiK6b2bglNNUZmMSaKX1QxgW5JpOqOaOKywWKghTX8Q2duGm9TjUsJNgclNhSA==
 
 "@jest/types@^26.6.2":
   version "26.6.2"
