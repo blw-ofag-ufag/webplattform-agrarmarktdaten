@@ -1,7 +1,7 @@
 import { Stream } from "stream";
 
+import { Literal } from "@rdfjs/types";
 import { NextApiRequest, NextApiResponse } from "next";
-import { Literal } from "rdf-js";
 // @ts-ignore
 import ParsingClient from "sparql-http-client";
 
