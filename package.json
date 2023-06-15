@@ -24,7 +24,9 @@
   },
   "dependencies": {
     "@babel/standalone": "^7.8.4",
+    "@emotion/css": "^11.11.0",
     "@emotion/react": "^11.9.0",
+    "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.8.1",
     "@interactivethings/swiss-federal-ci": "^0.1.6",
     "@juggle/resize-observer": "^3.0.2",

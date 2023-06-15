@@ -1,5 +1,4 @@
-import createCache from "@emotion/cache";
-import { CacheProvider } from "@emotion/react";
+import { CacheProvider, EmotionCache } from "@emotion/react";
 import { I18nProvider } from "@lingui/react";
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,13 +9,20 @@ import { GraphqlProvider } from "@/graphql/api";
 import { LocaleProvider } from "@/lib/use-locale";
 import { i18n, Locale } from "@/locales/locales";
 import blwTheme from "@/theme/blw";
+import { createEmotionCache } from "@/theme/emotion-cache";
 
-export const muiCache = createCache({
-  key: "mui",
-  prepend: true,
-});
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
 
-export default function App({ Component, pageProps }: AppProps) {
+export interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
+
+export default function App({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}: MyAppProps) {
   const router = useRouter();
   const locale = (router.locale || "de") as Locale;
   if (i18n.locale !== locale) {
@@ -24,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <CacheProvider value={muiCache}>
+    <CacheProvider value={emotionCache}>
       <LocaleProvider value={locale}>
         <I18nProvider i18n={i18n}>
           <GraphqlProvider>
