@@ -1,9 +1,15 @@
+import {
+  Header,
+  LocaleSwitcher,
+  Menu,
+} from "@interactivethings/swiss-federal-ci";
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
+import React from "react";
 
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
 import * as GQL from "@/graphql";
+import { locales } from "@/locales/locales";
 
 import { BackButton } from "./back-button";
 
@@ -17,10 +23,38 @@ export const AppLayout = ({
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const router = useRouter();
+  const { headerSections, menuSections } = React.useMemo(() => {
+    const menuSections =
+      allMarkets?.map((market) => {
+        return {
+          title: market.title as string,
+          // FIXME - the slug is also localized
+          href: `/market/${market.slug}`,
+        };
+      }) ?? [];
+    const headerSections = menuSections.map((d) => ({
+      ...d,
+      mobileOnly: true,
+    }));
+
+    return { headerSections, menuSections };
+  }, [allMarkets]);
 
   return (
     <>
-      <Header alternates={alternates} allMarkets={allMarkets} />
+      <LocaleSwitcher locales={locales} />
+      <Header
+        shortTitle="BLW"
+        longTitle="Bundesamt für Landwirtschaft"
+        rootHref="/"
+        sections={headerSections}
+      />
+      <Box sx={{ display: { xs: "none", lg: "block" } }}>
+        <Menu
+          sections={menuSections}
+          // ContentWrapperProps={{ sx: { justifyContent: "center" } }}
+        />
+      </Box>
       <Box sx={{ mt: [0, 0, "92px"], overflow: "auto", position: "relative" }}>
         {router.pathname !== "/" ? <BackButton /> : null}
         {children}
