@@ -1,4 +1,3 @@
-import { Header } from "@interactivethings/swiss-federal-ci";
 import { Trans } from "@lingui/macro";
 import { Button, Stack, Typography } from "@mui/material";
 import NextLink from "next/link";
@@ -28,7 +27,6 @@ export default function HomePage({
   return (
     <AppLayout allMarkets={allMarkets}>
       <Hero title={homePage.title} lead={homePage.lead} />
-      <Header shortTitle="BLW" longTitle="Bundesamt für Landwirtschaft " />
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
