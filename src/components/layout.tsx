@@ -1,13 +1,19 @@
 import {
+  Footer,
+  FooterSection,
+  FooterSectionSocialMediaButton,
+  FooterSectionSocialMediaButtonGroup,
+  FooterSectionText,
+  FooterSectionTitle,
   Header,
   LocaleSwitcher,
   Menu,
 } from "@interactivethings/swiss-federal-ci";
-import { Box } from "@mui/material";
+import { t } from "@lingui/macro";
+import { Box, Link } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { Footer } from "@/components/footer";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
 
@@ -62,11 +68,67 @@ export const AppLayout = ({
       <Box sx={{ display: { xs: "none", lg: "block" } }}>
         <Menu sections={menuSections} />
       </Box>
-      <Box sx={{ mt: [0, 0, "92px"], overflow: "auto", position: "relative" }}>
+      <Box
+        sx={{
+          mt: [0, 0, "92px"],
+          mb: "92px",
+          overflow: "auto",
+          position: "relative",
+        }}
+      >
         {router.pathname !== "/" ? <BackButton /> : null}
         {children}
       </Box>
-      <Footer />
+      <Footer
+        bottomLinks={[
+          {
+            title: t({
+              id: "footer.impressum",
+              message: "Impressum",
+            }),
+            href: "",
+          },
+          {
+            title: t({
+              id: "footer.legal",
+              message: "Rechtliche Grundlagen",
+            }),
+            href: "",
+          },
+          {
+            title: t({
+              id: "footer.dataprotection",
+              message: "Datenschutzverordnung",
+            }),
+            href: "",
+          },
+        ]}
+      >
+        <FooterSection>
+          <FooterSectionTitle
+            title={t({ id: "contact.contact", message: "Kontakt" })}
+          />
+          <FooterSectionText text="Bundesamt für Landwirtschaft BLW" />
+          <FooterSectionText text="Fachbereich Marktanalysen" />
+          <FooterSectionText text="3003 Bern" />
+          <Link
+            href="https://www.blw.admin.ch/blw/de/home.html"
+            target="_blank"
+          >
+            <FooterSectionText text="www.blw.admin.ch" />
+          </Link>
+        </FooterSection>
+        <FooterSection>
+          <FooterSectionTitle
+            title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })}
+          />
+          <FooterSectionSocialMediaButtonGroup>
+            <FooterSectionSocialMediaButton type="facebook" href="/" />
+            <FooterSectionSocialMediaButton type="twitter" href="/" />
+            <FooterSectionSocialMediaButton type="youtube" href="/" />
+          </FooterSectionSocialMediaButtonGroup>
+        </FooterSection>
+      </Footer>
     </>
   );
 };
