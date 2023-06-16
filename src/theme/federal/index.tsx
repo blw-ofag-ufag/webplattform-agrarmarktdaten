@@ -721,10 +721,6 @@ theme.components = {
           svg {
             display: block
           }
-    
-          *:focus {
-            outline: 3px solid #333333;
-          }
   
           [tabindex="-1"]:focus { outline: 0; }
       
