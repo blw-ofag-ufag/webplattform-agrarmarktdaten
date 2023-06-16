@@ -6,8 +6,10 @@ import {
   FooterSectionText,
   FooterSectionTitle,
   Header,
+  HeaderProps,
   LocaleSwitcher,
   Menu,
+  MenuProps,
 } from "@interactivethings/swiss-federal-ci";
 import { t } from "@lingui/macro";
 import { Box, Link } from "@mui/material";
@@ -30,15 +32,19 @@ export const AppLayout = ({
 }) => {
   const router = useRouter();
   const { headerSections, menuSections } = React.useMemo(() => {
-    const menuSections =
-      allMarkets?.map((market) => {
-        return {
-          title: market.title as string,
-          // FIXME - the slug is also localized
-          href: `/market/${market.slug}`,
-        };
-      }) ?? [];
-    const headerSections = menuSections.map((d) => ({
+    const menuSections: MenuProps["sections"] = [
+      {
+        title: t({ id: "menu.markets", message: "Märkte" }),
+        sections:
+          allMarkets?.map((market) => {
+            return {
+              title: market.title as string,
+              href: `/market/${market.slug}`,
+            };
+          }) ?? [],
+      },
+    ];
+    const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
       mobileOnly: true,
     }));
@@ -54,7 +60,9 @@ export const AppLayout = ({
           href: d.as,
         })),
       }
-    : { locales };
+    : {
+        locales,
+      };
 
   return (
     <>
