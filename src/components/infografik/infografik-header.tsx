@@ -3,7 +3,6 @@ import NextLink from "next/link";
 
 import Flex from "@/components/flex";
 import { colors } from "@/components/infografik/colors";
-import { LanguageMenu } from "@/components/language-menu";
 import { Icon } from "@/icons";
 
 export const InfografikHeader = () => {
@@ -28,7 +27,6 @@ export const InfografikHeader = () => {
           <Icon name="arrowLeft" />
         </Link>
       </NextLink>
-      <LanguageMenu />
     </Flex>
   );
 };

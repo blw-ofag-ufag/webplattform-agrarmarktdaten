@@ -14,10 +14,10 @@ import { messages as catalogIt } from "@/locales/it/messages.js";
 
 export const defaultLocale = "de";
 
-// The order specified here will determine the fallback order when strings are not available in the preferred language
-export const locales = ["de", "fr", "it", "en"] as const;
+export type Locale = "de" | "fr" | "it" | "en";
 
-export type Locale = typeof locales[number];
+// The order specified here will determine the fallback order when strings are not available in the preferred language
+export const locales: Locale[] = ["de", "fr", "it", "en"];
 
 i18n.loadLocaleData({
   de: { plurals: pluralsDe },
