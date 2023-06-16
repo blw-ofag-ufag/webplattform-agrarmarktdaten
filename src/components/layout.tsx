@@ -40,9 +40,19 @@ export const AppLayout = ({
     return { headerSections, menuSections };
   }, [allMarkets]);
 
+  const localeSwitcherProps = alternates
+    ? {
+        alternates: alternates.map((d) => ({
+          locale: d.locale,
+          pathname: d.href,
+          href: d.as,
+        })),
+      }
+    : { locales };
+
   return (
     <>
-      <LocaleSwitcher locales={locales} />
+      <LocaleSwitcher {...localeSwitcherProps} />
       <Header
         shortTitle="BLW"
         longTitle="Bundesamt für Landwirtschaft"
@@ -50,10 +60,7 @@ export const AppLayout = ({
         sections={headerSections}
       />
       <Box sx={{ display: { xs: "none", lg: "block" } }}>
-        <Menu
-          sections={menuSections}
-          // ContentWrapperProps={{ sx: { justifyContent: "center" } }}
-        />
+        <Menu sections={menuSections} />
       </Box>
       <Box sx={{ mt: [0, 0, "92px"], overflow: "auto", position: "relative" }}>
         {router.pathname !== "/" ? <BackButton /> : null}
