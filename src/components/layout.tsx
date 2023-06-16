@@ -34,6 +34,10 @@ export const AppLayout = ({
   const { headerSections, menuSections } = React.useMemo(() => {
     const menuSections: MenuProps["sections"] = [
       {
+        title: "Home",
+        href: "/",
+      },
+      {
         title: t({ id: "menu.markets", message: "Märkte" }),
         sections:
           allMarkets?.map((market) => {
