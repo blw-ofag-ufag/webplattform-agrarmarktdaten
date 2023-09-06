@@ -4,4 +4,4 @@
 /src/graphql/resolver-types.ts
 /src/graphql/query-hooks.ts
 
-node_modules/
+/node_modules/**/*
