@@ -13,6 +13,16 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx:93
+msgid "infografic.date"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx:67
+msgid "button.show.all"
+msgstr ""
+
 #: src/components/card-data.tsx:32
 #~ msgid "article.card.data"
 #~ msgstr ""
@@ -21,13 +31,13 @@ msgstr ""
 #~ msgid "article.card.report.month"
 #~ msgstr ""
 
-#: src/components/card-data.tsx:180
-msgid "article.link.data.explore"
-msgstr ""
+#: src/components/card-data.tsx:185
+#~ msgid "article.link.data.explore"
+#~ msgstr ""
 
 #: src/components/card-data.tsx:79
-msgid "article.link.open.report"
-msgstr ""
+#~ msgid "article.link.open.report"
+#~ msgstr ""
 
 #: src/pages/market/[slug].tsx:77
 #~ msgid "article.section.data"
@@ -53,49 +63,69 @@ msgstr ""
 #~ msgid "article.teaser.data.title"
 #~ msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:64
-#: src/components/homepage/infografik-teaser.tsx:146
-msgid "button.infografic.teaser"
-msgstr ""
+#: src/components/homepage/infografik-teaser.tsx:63
+#: src/components/homepage/infografik-teaser.tsx:145
+#~ msgid "button.infografic.teaser"
+#~ msgstr ""
 
-#: src/pages/index.tsx:68
-msgid "button.show.all"
-msgstr ""
+#: src/pages/index.tsx:67
+#~ msgid "button.show.all"
+#~ msgstr ""
 
-#: src/components/contact.tsx:37
-msgid "contact.contact"
-msgstr ""
+#: src/components/layout.tsx:121
+#~ msgid "contact.contact"
+#~ msgstr ""
 
-#: src/components/contact.tsx:50
-msgid "contact.follow.us"
-msgstr ""
+#: src/components/layout.tsx:135
+#~ msgid "contact.follow.us"
+#~ msgstr ""
 
 #: src/components/back-button.tsx:31
-msgid "cta.back"
-msgstr "Retourner"
+#~ msgid "cta.back"
+#~ msgstr "Retourner"
 
-#: src/components/footer.tsx:31
+#. js-lingui-explicit-id
+#: src/components/card-data.tsx:185
+msgid "article.link.data.explore"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx:112
 msgid "footer.dataprotection"
 msgstr ""
 
-#: src/components/footer.tsx:25
-msgid "footer.impressum"
+#. js-lingui-explicit-id
+#: src/components/layout.tsx:136
+msgid "contact.follow.us"
 msgstr ""
 
-#: src/components/footer.tsx:28
-msgid "footer.legal"
+#: src/components/layout.tsx:111
+#~ msgid "footer.dataprotection"
+#~ msgstr ""
+
+#: src/components/layout.tsx:97
+#~ msgid "footer.impressum"
+#~ msgstr ""
+
+#: src/components/layout.tsx:104
+#~ msgid "footer.legal"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/back-button.tsx:31
+msgid "cta.back"
 msgstr ""
 
 #: src/pages/blog/[slug].tsx:42
-#: src/pages/index.tsx:48
+#: src/pages/index.tsx:47
 #: src/pages/market/[slug].tsx:43
-#: src/pages/theme/[slug].tsx:44
-msgid "homepage.section.latestBlogPosts"
-msgstr "Derniers Articles de Blog"
+#: src/pages/theme/[slug].tsx:42
+#~ msgid "homepage.section.latestBlogPosts"
+#~ msgstr "Derniers Articles de Blog"
 
-#: src/pages/index.tsx:34
-msgid "homepage.section.market"
-msgstr "Marchés"
+#: src/pages/index.tsx:33
+#~ msgid "homepage.section.market"
+#~ msgstr "Marchés"
 
 #: src/pages/index.tsx:76
 #~ msgid "homepage.section.newest.infografic"
@@ -105,50 +135,114 @@ msgstr "Marchés"
 #~ msgid "homepage.section.newsfeed"
 #~ msgstr ""
 
-#: src/pages/index.tsx:41
-msgid "homepage.section.theme"
-msgstr "Thèmes"
+#: src/pages/index.tsx:40
+#~ msgid "homepage.section.theme"
+#~ msgstr "Thèmes"
 
-#: src/components/homepage/infografik-teaser.tsx:35
-msgid "infografic"
+#. js-lingui-explicit-id
+#: src/components/layout.tsx:98
+msgid "footer.impressum"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:94
-msgid "infografic.date"
-msgstr ""
-
-#: src/components/homepage/infografik-teaser.tsx:117
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx:116
 msgid "infografik.teaser"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:47
-#: src/components/homepage/infografik-teaser.tsx:106
-msgid "infografik.title"
+#: src/components/homepage/infografik-teaser.tsx:34
+#~ msgid "infografic"
+#~ msgstr ""
+
+#: src/components/homepage/infografik-teaser.tsx:93
+#~ msgid "infografic.date"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx:34
+msgid "infografic"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx:63
+#: src/components/homepage/infografik-teaser.tsx:145
+msgid "button.infografic.teaser"
+msgstr ""
+
+#: src/components/homepage/infografik-teaser.tsx:116
+#~ msgid "infografik.teaser"
+#~ msgstr ""
+
+#: src/components/homepage/infografik-teaser.tsx:46
+#: src/components/homepage/infografik-teaser.tsx:105
+#~ msgid "infografik.title"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx:122
+msgid "contact.contact"
 msgstr ""
 
 #: src/components/header.tsx:271
 #: src/components/header.tsx:291
-msgid "logo.swiss.confederation"
+#~ msgid "logo.swiss.confederation"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx:41
+msgid "menu.markets"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx:33
+msgid "homepage.section.market"
 msgstr ""
 
 #: src/components/header.tsx:143
 #: src/components/header.tsx:191
-msgid "menu.about"
-msgstr ""
+#~ msgid "menu.about"
+#~ msgstr ""
 
 #: src/components/header.tsx:186
-msgid "menu.blog"
-msgstr "Blog"
+#~ msgid "menu.blog"
+#~ msgstr "Blog"
 
 #: src/components/header.tsx:181
-msgid "menu.data"
+#~ msgid "menu.data"
+#~ msgstr ""
+
+#: src/components/layout.tsx:41
+#~ msgid "menu.markets"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/blog/[slug].tsx:42
+#: src/pages/index.tsx:47
+#: src/pages/market/[slug].tsx:43
+#: src/pages/theme/[slug].tsx:42
+msgid "homepage.section.latestBlogPosts"
 msgstr ""
 
-#: src/components/header.tsx:132
-#: src/components/header.tsx:176
-msgid "menu.markets"
+#. js-lingui-explicit-id
+#: src/components/layout.tsx:105
+msgid "footer.legal"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/card-data.tsx:79
+msgid "article.link.open.report"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx:46
+#: src/components/homepage/infografik-teaser.tsx:105
+msgid "infografik.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx:40
+msgid "homepage.section.theme"
 msgstr ""
 
 #: src/components/header.tsx:234
-msgid "title.agricultural.market.data"
-msgstr ""
+#~ msgid "title.agricultural.market.data"
+#~ msgstr ""
