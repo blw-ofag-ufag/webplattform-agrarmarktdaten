@@ -203,8 +203,8 @@ fragment FullBlogPost on BlogPostRecord {
   lead
   slug
   author {
-    first_name
-    last_name
+    firstName
+    lastName
     portrait {
       id
       url
