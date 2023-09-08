@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:93
+#: src/components/homepage/infografik-teaser.tsx:94
 msgid "infografic.date"
 msgstr ""
 
@@ -90,12 +90,12 @@ msgid "article.link.data.explore"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:112
+#: src/components/layout.tsx:111
 msgid "footer.dataprotection"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:136
+#: src/components/layout.tsx:135
 msgid "contact.follow.us"
 msgstr ""
 
@@ -140,12 +140,12 @@ msgstr ""
 #~ msgstr "Temi"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:98
+#: src/components/layout.tsx:97
 msgid "footer.impressum"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:116
+#: src/components/homepage/infografik-teaser.tsx:117
 msgid "infografik.teaser"
 msgstr ""
 
@@ -158,13 +158,13 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:34
+#: src/components/homepage/infografik-teaser.tsx:35
 msgid "infografic"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:63
-#: src/components/homepage/infografik-teaser.tsx:145
+#: src/components/homepage/infografik-teaser.tsx:64
+#: src/components/homepage/infografik-teaser.tsx:146
 msgid "button.infografic.teaser"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:122
+#: src/components/layout.tsx:121
 msgid "contact.contact"
 msgstr ""
 
@@ -223,7 +223,7 @@ msgid "homepage.section.latestBlogPosts"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:105
+#: src/components/layout.tsx:104
 msgid "footer.legal"
 msgstr ""
 
@@ -233,8 +233,8 @@ msgid "article.link.open.report"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:46
-#: src/components/homepage/infografik-teaser.tsx:105
+#: src/components/homepage/infografik-teaser.tsx:47
+#: src/components/homepage/infografik-teaser.tsx:106
 msgid "infografik.title"
 msgstr ""
 
