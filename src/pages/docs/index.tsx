@@ -21,17 +21,17 @@ const pages: ConfigPageOrGroup[] = [
   {
     path: "/",
     title: "Introduction",
-    content: require("@/docs/index.mdx"),
+    content: require("@/catalog/index.mdx"),
   },
   {
     path: "/design",
     title: "Design",
-    content: require("@/docs/design.mdx"),
+    content: require("@/catalog/design.mdx"),
   },
   {
     path: "/technology",
     title: "Technology",
-    content: require("@/docs/technology.mdx"),
+    content: require("@/catalog/technology.mdx"),
   },
   {
     title: "Components",
@@ -39,12 +39,12 @@ const pages: ConfigPageOrGroup[] = [
       {
         path: "/components/content-container",
         title: "ContentContainer",
-        content: require("@/docs/components/content-container.tsx"),
+        content: require("@/catalog/components/content-container.tsx"),
       },
       {
         path: "/components/hero",
         title: "Hero",
-        content: require("@/docs/components/hero.tsx"),
+        content: require("@/catalog/components/hero.tsx"),
       },
     ],
   },
