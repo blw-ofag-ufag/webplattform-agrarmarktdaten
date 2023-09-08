@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "next",
+    "storybook": "storybook dev -p 6006 --no-open",
     "build": "lingui compile && next build",
     "export": "lingui compile && next build && next export -o build",
     "start": "next start -p $PORT",
@@ -21,7 +22,8 @@
     "preversion": "yarn lint",
     "postversion": "git push --follow-tags",
     "icons:transform": "svgr -d src/icons/icons-jsx src/icons/icons-svg --replace-attr-values '#000=currentColor' --icon",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@babel/standalone": "^7.8.4",
@@ -69,6 +71,14 @@
     "@lingui/macro": "^4.4.2",
     "@mdx-js/loader": "^2.3.0",
     "@rdfjs/types": "^1.1.0",
+    "@storybook/addon-essentials": "^7.4.0",
+    "@storybook/addon-interactions": "^7.4.0",
+    "@storybook/addon-links": "^7.4.0",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.4.0",
+    "@storybook/nextjs": "^7.4.0",
+    "@storybook/react": "^7.4.0",
+    "@storybook/testing-library": "^0.2.0",
     "@svgr/cli": "^8.1.0",
     "@types/d3": "^7.4.0",
     "@types/lodash": "^4.14.138",
@@ -90,10 +100,12 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-storybook": "^0.6.13",
     "eslint-plugin-unused-imports": "^3.0.0",
     "husky": ">=6",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
+    "storybook": "^7.4.0",
     "typescript": "5.2.2"
   }
 }
