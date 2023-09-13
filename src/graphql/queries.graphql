@@ -16,11 +16,13 @@ query HomePage($locale: SiteLocale!) {
       ...FullSEO
     }
     markets {
+      id
       title
       slug
     }
 
     focusArticles {
+      id
       title
       slug
     }
@@ -216,7 +218,7 @@ query AllMarketArticlesSlugLocales {
 }
 
 query AllFocusArticlesSlugLocales {
-  allThemes {
+  allFocusArticles {
     id
     _allSlugLocales {
       locale

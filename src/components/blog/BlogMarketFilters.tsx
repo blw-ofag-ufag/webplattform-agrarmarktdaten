@@ -1,12 +1,11 @@
 import { Chip, Stack } from "@mui/material";
 
-
-import * as GQL from '@/graphql'
+import * as GQL from "@/graphql";
 
 export const BlogMarketFilters = ({
   allMarkets,
 }: {
-  allMarkets: GQL.MarketRecord[]
+  allMarkets: GQL.SimpleMarketArticleFragment[];
 }) => {
   return (
     <Stack

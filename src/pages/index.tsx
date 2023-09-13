@@ -30,7 +30,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
           <Typography variant="h2">
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
-          <CardsGrid type="theme" entries={homePage.focusArticles} />
+          <CardsGrid type="focus" entries={homePage.focusArticles} />
         </Stack>
 
         <Stack flexDirection="column" spacing={6}>
