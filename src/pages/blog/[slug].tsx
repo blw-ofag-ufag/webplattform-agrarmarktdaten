@@ -10,15 +10,10 @@ import { client } from "@/graphql";
 import * as GQL from "@/graphql";
 import { Locale } from "@/locales/locales";
 
-export default function BlogPostPage({
-  blogPost,
-  allBlogPosts,
-}: {
-  blogPost: GQL.BlogPostQuery;
-  allBlogPosts: GQL.AllBlogPostsQuery;
-}) {
+export default function BlogPostPage(props: GQL.BlogPostQuery) {
+  const { blogPost, topBlogPosts, allMarketArticles, allFocusArticles } = props;
   const alternates = blogPost
-    ? blogPost.blogPost?._allSlugLocales?.map((loc) => {
+    ? blogPost?._allSlugLocales?.map((loc) => {
         return {
           href: "/blog/[slug]",
           as: `/blog/${loc!.value!}`,
@@ -27,27 +22,23 @@ export default function BlogPostPage({
       })
     : undefined;
 
+  if (!blogPost?.title || !blogPost.lead) {
+    return null;
+  }
   return (
-    <AppLayout alternates={alternates} allMarkets={[]}>
-      {blogPost.blogPost ? (
+    <AppLayout alternates={alternates} allMarkets={allMarketArticles}>
+      {blogPost ? (
         <>
           <ContentContainer sx={{ mt: 7 }}>
-            <Hero
-              title={blogPost.blogPost.title as string}
-              lead={blogPost.blogPost.lead as string}
-            />
-            {allBlogPosts.allBlogPosts ? (
-              <Stack flexDirection="column" spacing={6}>
-                <Typography variant="h5">
-                  <Trans id="homepage.section.latestBlogPosts">
-                    Neuste Blogbeiträge
-                  </Trans>
-                </Typography>
-                <BlogPostsGrid
-                  blogPosts={allBlogPosts.allBlogPosts as GQL.BlogPostRecord[]}
-                />
-              </Stack>
-            ) : null}
+            <Hero title={blogPost.title} lead={blogPost.lead} />
+            <Stack flexDirection="column" spacing={6}>
+              <Typography variant="h5">
+                <Trans id="homepage.section.latestBlogPosts">
+                  Neuste Blogbeiträge
+                </Trans>
+              </Typography>
+              <BlogPostsGrid blogPosts={topBlogPosts} />
+            </Stack>
           </ContentContainer>
         </>
       ) : (
@@ -70,22 +61,12 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  const allBlogPostsQuery = await client
-    .query<GQL.AllBlogPostsQuery>(GQL.AllBlogPostsDocument, {
-      locale: context.locale,
-      first: 3,
-    })
-    .toPromise();
-
-  if (!allBlogPostsQuery.data) {
-    console.error(allBlogPostsQuery.error?.toString());
-    throw new Error("Failed to fetch API");
-  }
-
   return {
     props: {
-      blogPost: blogPostQuery.data,
-      allBlogPosts: allBlogPostsQuery.data,
+      blogPost: blogPostQuery.data.blogPost,
+      allMarketArticles: blogPostQuery.data.allMarketArticles,
+      allFocusArticles: blogPostQuery.data.allFocusArticles,
+      topBlogPosts: blogPostQuery.data.topBlogPosts,
     },
   };
 };
@@ -93,7 +74,8 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const result = await client
     .query<GQL.AllBlogPostsSlugLocalesQuery>(
-      GQL.AllBlogPostsSlugLocalesDocument
+      GQL.AllBlogPostsSlugLocalesDocument,
+      {}
     )
     .toPromise();
 

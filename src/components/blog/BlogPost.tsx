@@ -11,7 +11,11 @@ import Flex from "../flex";
 const WIDTH = 310;
 const IMAGE_HEIGHT = WIDTH * (9 / 16);
 
-export const BlogPostsGrid = (props: { blogPosts: GQL.BlogPostRecord[] }) => {
+interface Props {
+  blogPosts: GQL.SimpleBlogPostFragment[];
+}
+
+export const BlogPostsGrid = (props: Props) => {
   const { blogPosts } = props;
 
   return (
@@ -28,7 +32,7 @@ export const BlogPostsGrid = (props: { blogPosts: GQL.BlogPostRecord[] }) => {
   );
 };
 
-export const BlogPostTile = (props: GQL.BlogPostRecord) => {
+export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
   const { title, lead, image, markets, slug, _firstPublishedAt } = props;
   const mainMarket = head(markets);
   const locale = useLocale();
@@ -51,11 +55,9 @@ export const BlogPostTile = (props: GQL.BlogPostRecord) => {
               borderRadius: "10px",
             }}
           >
-            <Image
-              src={image!.url as string}
-              layout="fill"
-              alt={image!.alt as string}
-            />
+            {image?.url && (
+              <Image src={image?.url} layout="fill" alt={image?.alt ?? ""} />
+            )}
           </Box>
           <Flex
             sx={{

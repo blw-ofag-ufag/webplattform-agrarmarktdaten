@@ -15,7 +15,7 @@ const useStyles = makeStyles()({
 type Props = {
   variant?: "regular" | "market";
   title: string;
-  lead: string;
+  lead?: string;
 };
 
 export const Hero = (props: Props) => {
@@ -37,12 +37,12 @@ export const Hero = (props: Props) => {
       <ContentContainer sx={{ textAlign: "center" }}>
         <Box>
           <Typography variant="h1">{title}</Typography>
-          <Typography
+          {lead && <Typography
             variant="subtitle1"
             sx={{ mt: 3, color: "secondary.main" }}
           >
             {lead}
-          </Typography>
+          </Typography>}
         </Box>
       </ContentContainer>
     </Flex>

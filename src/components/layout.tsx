@@ -27,7 +27,7 @@ export const AppLayout = ({
   alternates,
 }: {
   children: React.ReactNode;
-  allMarkets?: GQL.MarketRecord[];
+  allMarkets?: GQL.SimpleMarketArticleFragment[];
   alternates?: { href: string; as: string; locale: string }[];
 }) => {
   const router = useRouter();

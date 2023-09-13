@@ -7,39 +7,30 @@ import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
-import { BlogPost, SEO } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 
-type HomePage = { title: string; lead: string; seo?: SEO };
-
-export default function HomePage({
-  homePage,
-  allMarkets,
-  allThemes,
-  allBlogPosts,
-}: {
-  homePage: HomePage;
-  allMarkets: GQL.MarketRecord[];
-  allThemes: GQL.ThemeRecord[];
-  allBlogPosts: BlogPost[];
-}) {
+export default function HomePage(props: GQL.HomePageQuery) {
+  const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  if (!homePage?.title || !homePage.lead) {
+    return null;
+  }
   return (
-    <AppLayout allMarkets={allMarkets}>
+    <AppLayout allMarkets={allMarketArticles}>
       <Hero title={homePage.title} lead={homePage.lead} />
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
-          <CardsGrid type="market" entries={allMarkets} />
+          <CardsGrid type="market" entries={homePage.markets} />
         </Stack>
 
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h2">
-            <Trans id="homepage.section.theme">Themen</Trans>
+            <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
-          <CardsGrid type="theme" entries={allThemes} />
+          <CardsGrid type="theme" entries={homePage.focusArticles} />
         </Stack>
 
         <Stack flexDirection="column" spacing={6}>
@@ -48,7 +39,7 @@ export default function HomePage({
               Neuste Blogbeiträge
             </Trans>
           </Typography>
-          <BlogPostsGrid blogPosts={allBlogPosts as GQL.BlogPostRecord[]} />
+          <BlogPostsGrid blogPosts={topBlogPosts} />
           <NextLink href="/blog" legacyBehavior>
             <Button
               sx={{

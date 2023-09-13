@@ -1,35 +1,25 @@
 import { Trans } from "@lingui/macro";
-import { Stack, Typography } from "@mui/material";
-import { Hero } from "@/components/hero";
-import React from "react";
+import { Button, Stack, Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps } from "next";
+import React from "react";
 import { AppLayout } from "@/components/layout";
-
-import { BlogPostsGrid } from "@/components/blog/BlogPost";
-import { ContentContainer } from "@/components/content-container";
+import { Hero } from "@/components/hero";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
+import { ContentContainer } from "@/components/content-container";
+import { BlogPostsGrid } from "@/components/blog/BlogPost";
+import NextLink from "next/link";
 
-export default function MarketPage(props: GQL.MarketPageQuery) {
-  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } =
+export default function MarketPage(props: GQL.FocusArticlePageQuery) {
+  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } =
     props;
-
-  const alternates = marketArticle?._allSlugLocales?.map((loc) => {
-    return {
-      href: "/market/[slug]",
-      as: `/market/${loc.value}`,
-      locale: loc.locale as string,
-    };
-  });
-
-  if (!marketArticle?.title || !marketArticle?.lead) {
+  if (!focusArticle?.title || !focusArticle?.lead) {
     return null;
   }
-
   return (
-    <AppLayout alternates={alternates} allMarkets={allMarketArticles}>
-      <ContentContainer sx={{ mt: 7 }}>
-        <Hero title={marketArticle.title} lead={marketArticle.lead} />
+    <AppLayout allMarkets={allMarketArticles}>
+      <Hero title={focusArticle.title} lead={focusArticle.lead} />
+      <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
           <Typography variant="h5">
             <Trans id="homepage.section.latestBlogPosts">
@@ -37,6 +27,24 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
             </Trans>
           </Typography>
           <BlogPostsGrid blogPosts={topBlogPosts} />
+          <NextLink href="/blog" legacyBehavior>
+            <Button
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                width: "184px",
+                height: "48px",
+                backgroundColor: "grey.300",
+                color: "black",
+
+                "&:hover": {
+                  backgroundColor: "grey.500",
+                },
+              }}
+            >
+              <Trans id="button.show.all">Alle Anzeigen</Trans>
+            </Button>
+          </NextLink>
         </Stack>
       </ContentContainer>
     </AppLayout>
@@ -45,7 +53,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.MarketPageQuery>(GQL.MarketPageDocument, {
+    .query<GQL.FocusArticlePageQuery>(GQL.FocusArticlePageDocument, {
       locale: context.locale,
       slug: context.params.slug,
     })
@@ -58,7 +66,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 
   return {
     props: {
-      marketArticle: result.data.marketArticle,
+      focusArticle: result.data.focusArticle,
       allMarketArticles: result.data.allMarketArticles,
       allFocusArticles: result.data.allFocusArticles,
       topBlogPosts: result.data.topBlogPosts,
