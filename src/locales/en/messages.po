@@ -14,235 +14,236 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:94
+#: src/components/homepage/infografik-teaser.tsx
 msgid "infografic.date"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/pages/index.tsx:67
+#: src/pages/focus/[slug].tsx
+#: src/pages/index.tsx
 msgid "button.show.all"
 msgstr ""
 
-#: src/components/card-data.tsx:32
+#: src/components/card-data.tsx
 #~ msgid "article.card.data"
 #~ msgstr "Query Database"
 
-#: src/components/card-data.tsx:32
+#: src/components/card-data.tsx
 #~ msgid "article.card.report.month"
 #~ msgstr "Chart of the Month"
 
-#: src/components/card-data.tsx:185
+#: src/components/card-data.tsx
 #~ msgid "article.link.data.explore"
 #~ msgstr "Explore Data"
 
-#: src/components/card-data.tsx:79
+#: src/components/card-data.tsx
 #~ msgid "article.link.open.report"
 #~ msgstr "Open Report"
 
-#: src/pages/market/[slug].tsx:77
+#: src/pages/market/[slug].tsx
 #~ msgid "article.section.data"
 #~ msgstr "Data"
 
-#: src/pages/market/[slug].tsx:72
+#: src/pages/market/[slug].tsx
 #~ msgid "article.section.infografic"
 #~ msgstr "Infografik"
 
-#: src/pages/market/[slug].tsx:141
+#: src/pages/market/[slug].tsx
 #~ msgid "article.section.link"
 #~ msgstr "Links"
 
-#: src/pages/market/[slug].tsx:122
+#: src/pages/market/[slug].tsx
 #~ msgid "article.section.news"
 #~ msgstr "Latest"
 
-#: src/pages/market/[slug].tsx:109
+#: src/pages/market/[slug].tsx
 #~ msgid "article.section.trade"
 #~ msgstr "Trade Levels"
 
-#: src/pages/market/[slug].tsx:92
+#: src/pages/market/[slug].tsx
 #~ msgid "article.teaser.data.title"
 #~ msgstr "Data about the Potatoe Market"
 
-#: src/components/homepage/infografik-teaser.tsx:63
-#: src/components/homepage/infografik-teaser.tsx:145
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
 #~ msgid "button.infografic.teaser"
 #~ msgstr "See Infografics"
 
-#: src/pages/index.tsx:67
+#: src/pages/index.tsx
 #~ msgid "button.show.all"
 #~ msgstr "Show All"
 
-#: src/components/layout.tsx:121
+#: src/components/layout.tsx
 #~ msgid "contact.contact"
 #~ msgstr "Contact"
 
-#: src/components/layout.tsx:135
+#: src/components/layout.tsx
 #~ msgid "contact.follow.us"
 #~ msgstr "Follow Us"
 
-#: src/components/back-button.tsx:31
+#: src/components/back-button.tsx
 #~ msgid "cta.back"
 #~ msgstr "Go back"
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx:185
+#: src/components/card-data.tsx
 msgid "article.link.data.explore"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:111
+#: src/components/layout.tsx
 msgid "footer.dataprotection"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:135
+#: src/pages/index.tsx
+msgid "homepage.section.theme"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
 msgid "contact.follow.us"
 msgstr ""
 
-#: src/components/layout.tsx:111
+#: src/components/layout.tsx
 #~ msgid "footer.dataprotection"
 #~ msgstr "Data Protection"
 
-#: src/components/layout.tsx:97
+#: src/components/layout.tsx
 #~ msgid "footer.impressum"
 #~ msgstr "Imprint"
 
-#: src/components/layout.tsx:104
+#: src/components/layout.tsx
 #~ msgid "footer.legal"
 #~ msgstr "Legal"
 
 #. js-lingui-explicit-id
-#: src/components/back-button.tsx:31
+#: src/components/back-button.tsx
 msgid "cta.back"
 msgstr ""
 
-#: src/pages/blog/[slug].tsx:42
-#: src/pages/index.tsx:47
-#: src/pages/market/[slug].tsx:43
-#: src/pages/theme/[slug].tsx:42
+#: src/pages/blog/[slug].tsx
+#: src/pages/index.tsx
+#: src/pages/market/[slug].tsx
+#: src/pages/theme/[slug].tsx
 #~ msgid "homepage.section.latestBlogPosts"
 #~ msgstr "Latest Blog Posts"
 
-#: src/pages/index.tsx:33
+#: src/pages/index.tsx
 #~ msgid "homepage.section.market"
 #~ msgstr "Markets"
 
-#: src/pages/index.tsx:76
+#: src/pages/index.tsx
 #~ msgid "homepage.section.newest.infografic"
 #~ msgstr "Newest Infografics"
 
-#: src/pages/index.tsx:47
+#: src/pages/index.tsx
 #~ msgid "homepage.section.newsfeed"
 #~ msgstr ""
 
-#: src/pages/index.tsx:40
+#: src/pages/index.tsx
 #~ msgid "homepage.section.theme"
 #~ msgstr "Themes"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:97
+#: src/components/layout.tsx
 msgid "footer.impressum"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:117
+#: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.teaser"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:34
+#: src/components/homepage/infografik-teaser.tsx
 #~ msgid "infografic"
 #~ msgstr "Infografic"
 
-#: src/components/homepage/infografik-teaser.tsx:93
+#: src/components/homepage/infografik-teaser.tsx
 #~ msgid "infografic.date"
 #~ msgstr "2018"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:35
+#: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:64
-#: src/components/homepage/infografik-teaser.tsx:146
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
 msgid "button.infografic.teaser"
 msgstr ""
 
-#: src/components/homepage/infografik-teaser.tsx:116
+#: src/components/homepage/infografik-teaser.tsx
 #~ msgid "infografik.teaser"
 #~ msgstr "In Switzerland, potatoes grow on more than 10,000 hectares. That's around 14,000 football fields full of great tubers. The harvested 400,000 tonnes end up on our plate all year round."
 
-#: src/components/homepage/infografik-teaser.tsx:46
-#: src/components/homepage/infografik-teaser.tsx:105
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
 #~ msgid "infografik.title"
 #~ msgstr "Swiss Potato Market"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:121
+#: src/components/layout.tsx
 msgid "contact.contact"
 msgstr ""
 
-#: src/components/header.tsx:271
-#: src/components/header.tsx:291
+#: src/components/header.tsx
+#: src/components/header.tsx
 #~ msgid "logo.swiss.confederation"
 #~ msgstr "Logo of the Swiss Confederation"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:41
+#: src/components/layout.tsx
 msgid "menu.markets"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/pages/index.tsx:33
+#: src/pages/index.tsx
 msgid "homepage.section.market"
 msgstr ""
 
-#: src/components/header.tsx:143
-#: src/components/header.tsx:191
+#: src/components/header.tsx
+#: src/components/header.tsx
 #~ msgid "menu.about"
 #~ msgstr "About Us"
 
-#: src/components/header.tsx:186
+#: src/components/header.tsx
 #~ msgid "menu.blog"
 #~ msgstr "Blog"
 
-#: src/components/header.tsx:181
+#: src/components/header.tsx
 #~ msgid "menu.data"
 #~ msgstr "Data"
 
-#: src/components/layout.tsx:41
+#: src/components/layout.tsx
 #~ msgid "menu.markets"
 #~ msgstr "Markets"
 
 #. js-lingui-explicit-id
-#: src/pages/blog/[slug].tsx:42
-#: src/pages/index.tsx:47
-#: src/pages/market/[slug].tsx:43
-#: src/pages/theme/[slug].tsx:42
+#: src/pages/blog/[slug].tsx
+#: src/pages/focus/[slug].tsx
+#: src/pages/index.tsx
+#: src/pages/market/[slug].tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx:104
+#: src/components/layout.tsx
 msgid "footer.legal"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx:79
+#: src/components/card-data.tsx
 msgid "article.link.open.report"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx:47
-#: src/components/homepage/infografik-teaser.tsx:106
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.title"
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/pages/index.tsx:40
-msgid "homepage.section.theme"
-msgstr ""
-
-#: src/components/header.tsx:234
+#: src/components/header.tsx
 #~ msgid "title.agricultural.market.data"
 #~ msgstr "Agricultural Market Data"

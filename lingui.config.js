@@ -1,4 +1,5 @@
 const { locales } = require("./src/locales/locales.json");
+import { formatter } from "@lingui/format-po";
 
 module.exports = {
   locales,
@@ -9,7 +10,7 @@ module.exports = {
       exclude: ["/node_modules/", "/.next/"],
     },
   ],
-  format: "po",
+  format: formatter({ lineNumbers: false }),
   compileNamespace: "cjs",
   sourceLocale: "de",
   fallbackLocales: {
