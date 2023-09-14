@@ -79,11 +79,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     throw new Error("Failed to fetch API");
   }
 
-  const paths = result.data.allMarketArticles.flatMap((page: $FixMe) => {
-    return page._allSlugLocales.map((loc: $FixMe) => ({
-      locale: loc.locale,
-      params: { slug: loc.value },
-    }));
+  const paths = result.data.allMarketArticles.flatMap((page) => {
+    return page._allSlugLocales
+      ? page._allSlugLocales?.map((loc) => ({
+          locale: loc.locale ?? undefined,
+          params: { slug: loc.value ?? undefined },
+        }))
+      : [];
   });
 
   return {
