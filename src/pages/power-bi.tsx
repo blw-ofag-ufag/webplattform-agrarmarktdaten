@@ -1,7 +1,7 @@
-import PowerBiReport from "../components/powerbi-report";
+import { PowerBIReport } from "@/components/powerbi-report";
 
 const Page = () => {
-  return <PowerBiReport />;
+  return <PowerBIReport datasetId="" reportId="" reportWorkspaceId="" />;
 };
 
 export default Page;
