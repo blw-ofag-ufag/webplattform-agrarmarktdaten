@@ -206,6 +206,19 @@ query BlogPost($locale: SiteLocale!, $slug: String!) {
   }
 }
 
+query AllPowerBIReports($locale: SiteLocale!) {
+  allPowerBiReports(locale: $locale) {
+    id
+    reportId
+    dataset {
+      datasetId
+    }
+    workspace {
+      workspaceId
+    }
+  }
+}
+
 ## Slugs
 query AllMarketArticlesSlugLocales {
   allMarketArticles {

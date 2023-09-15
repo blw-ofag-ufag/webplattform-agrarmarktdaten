@@ -2729,16 +2729,6 @@ export type LinksFilter = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
 };
 
-/** Specifies how to filter by locale */
-export type LocalesFilter = {
-  /** Filter records that are localized in all the specified locales */
-  allIn?: InputMaybe<Array<SiteLocale>>;
-  /** Filter records that are localized in at least one of the specified locales */
-  anyIn?: InputMaybe<Array<SiteLocale>>;
-  /** Filter records that are not localized in any of the specified locales */
-  notIn?: InputMaybe<Array<SiteLocale>>;
-};
-
 /** Block of type Markdown (markdown_block) */
 export type MarkdownBlockRecord = RecordInterface & {
   __typename: 'MarkdownBlockRecord';
@@ -3263,23 +3253,123 @@ export type PotatoInfographicRecordTitleArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-export type PowerBiReportModelFilter = {
-  AND?: InputMaybe<Array<InputMaybe<PowerBiReportModelFilter>>>;
-  OR?: InputMaybe<Array<InputMaybe<PowerBiReportModelFilter>>>;
+export type PowerBiDatasetModelFilter = {
+  AND?: InputMaybe<Array<InputMaybe<PowerBiDatasetModelFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<PowerBiDatasetModelFilter>>>;
   _createdAt?: InputMaybe<CreatedAtFilter>;
   _firstPublishedAt?: InputMaybe<PublishedAtFilter>;
   _isValid?: InputMaybe<BooleanFilter>;
-  _locales?: InputMaybe<LocalesFilter>;
   _publicationScheduledAt?: InputMaybe<PublishedAtFilter>;
   _publishedAt?: InputMaybe<PublishedAtFilter>;
   _status?: InputMaybe<StatusFilter>;
   _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
   _updatedAt?: InputMaybe<UpdatedAtFilter>;
   createdAt?: InputMaybe<CreatedAtFilter>;
+  datasetId?: InputMaybe<StringFilter>;
   id?: InputMaybe<ItemIdFilter>;
-  title?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<UpdatedAtFilter>;
-  url?: InputMaybe<StringFilter>;
+  workspace?: InputMaybe<LinkFilter>;
+};
+
+export enum PowerBiDatasetModelOrderBy {
+  _createdAt_ASC = '_createdAt_ASC',
+  _createdAt_DESC = '_createdAt_DESC',
+  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
+  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
+  _isValid_ASC = '_isValid_ASC',
+  _isValid_DESC = '_isValid_DESC',
+  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
+  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
+  _publishedAt_ASC = '_publishedAt_ASC',
+  _publishedAt_DESC = '_publishedAt_DESC',
+  _status_ASC = '_status_ASC',
+  _status_DESC = '_status_DESC',
+  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
+  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
+  _updatedAt_ASC = '_updatedAt_ASC',
+  _updatedAt_DESC = '_updatedAt_DESC',
+  createdAt_ASC = 'createdAt_ASC',
+  createdAt_DESC = 'createdAt_DESC',
+  datasetId_ASC = 'datasetId_ASC',
+  datasetId_DESC = 'datasetId_DESC',
+  id_ASC = 'id_ASC',
+  id_DESC = 'id_DESC',
+  name_ASC = 'name_ASC',
+  name_DESC = 'name_DESC',
+  updatedAt_ASC = 'updatedAt_ASC',
+  updatedAt_DESC = 'updatedAt_DESC'
+}
+
+/** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
+export type PowerBiDatasetRecord = RecordInterface & {
+  __typename: 'PowerBiDatasetRecord';
+  _allDatasetIdLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** SEO meta tags */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  datasetId?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ItemId']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+  workspace?: Maybe<PowerBiWorkspaceRecord>;
+};
+
+
+/** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
+export type PowerBiDatasetRecordAllDatasetIdLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
+export type PowerBiDatasetRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
+export type PowerBiDatasetRecordDatasetIdArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+export type PowerBiDatasetRecordMultiLocaleField = {
+  __typename: 'PowerBiDatasetRecordMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<PowerBiDatasetRecord>;
+};
+
+export type PowerBiReportModelFilter = {
+  AND?: InputMaybe<Array<InputMaybe<PowerBiReportModelFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<PowerBiReportModelFilter>>>;
+  _createdAt?: InputMaybe<CreatedAtFilter>;
+  _firstPublishedAt?: InputMaybe<PublishedAtFilter>;
+  _isValid?: InputMaybe<BooleanFilter>;
+  _publicationScheduledAt?: InputMaybe<PublishedAtFilter>;
+  _publishedAt?: InputMaybe<PublishedAtFilter>;
+  _status?: InputMaybe<StatusFilter>;
+  _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
+  _updatedAt?: InputMaybe<UpdatedAtFilter>;
+  createdAt?: InputMaybe<CreatedAtFilter>;
+  dataset?: InputMaybe<LinkFilter>;
+  id?: InputMaybe<ItemIdFilter>;
+  name?: InputMaybe<StringFilter>;
+  reportId?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<UpdatedAtFilter>;
+  workspace?: InputMaybe<LinkFilter>;
 };
 
 export enum PowerBiReportModelOrderBy {
@@ -3303,24 +3393,145 @@ export enum PowerBiReportModelOrderBy {
   createdAt_DESC = 'createdAt_DESC',
   id_ASC = 'id_ASC',
   id_DESC = 'id_DESC',
-  title_ASC = 'title_ASC',
-  title_DESC = 'title_DESC',
+  name_ASC = 'name_ASC',
+  name_DESC = 'name_DESC',
+  reportId_ASC = 'reportId_ASC',
+  reportId_DESC = 'reportId_DESC',
   updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC',
-  url_ASC = 'url_ASC',
-  url_DESC = 'url_DESC'
+  updatedAt_DESC = 'updatedAt_DESC'
 }
 
-/** Record of type Ξ Power BI Report (power_bi_report) */
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecord = RecordInterface & {
   __typename: 'PowerBiReportRecord';
-  _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allDatasetLocales?: Maybe<Array<PowerBiDatasetRecordMultiLocaleField>>;
+  _allNameLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allReportIdLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
   _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
   _isValid: Scalars['BooleanType']['output'];
-  _locales: Array<SiteLocale>;
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** SEO meta tags */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  dataset?: Maybe<PowerBiDatasetRecord>;
+  id: Scalars['ItemId']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  reportId?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+  workspace?: Maybe<PowerBiWorkspaceRecord>;
+};
+
+
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
+export type PowerBiReportRecordAllDatasetLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
+export type PowerBiReportRecordAllNameLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
+export type PowerBiReportRecordAllReportIdLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
+export type PowerBiReportRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
+export type PowerBiReportRecordDatasetArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
+export type PowerBiReportRecordNameArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Power BI Report (power_bi_report) */
+export type PowerBiReportRecordReportIdArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+export type PowerBiWorkspaceModelFilter = {
+  AND?: InputMaybe<Array<InputMaybe<PowerBiWorkspaceModelFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<PowerBiWorkspaceModelFilter>>>;
+  _createdAt?: InputMaybe<CreatedAtFilter>;
+  _firstPublishedAt?: InputMaybe<PublishedAtFilter>;
+  _isValid?: InputMaybe<BooleanFilter>;
+  _publicationScheduledAt?: InputMaybe<PublishedAtFilter>;
+  _publishedAt?: InputMaybe<PublishedAtFilter>;
+  _status?: InputMaybe<StatusFilter>;
+  _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
+  _updatedAt?: InputMaybe<UpdatedAtFilter>;
+  createdAt?: InputMaybe<CreatedAtFilter>;
+  id?: InputMaybe<ItemIdFilter>;
+  name?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<UpdatedAtFilter>;
+  workspaceId?: InputMaybe<StringFilter>;
+};
+
+export enum PowerBiWorkspaceModelOrderBy {
+  _createdAt_ASC = '_createdAt_ASC',
+  _createdAt_DESC = '_createdAt_DESC',
+  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
+  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
+  _isValid_ASC = '_isValid_ASC',
+  _isValid_DESC = '_isValid_DESC',
+  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
+  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
+  _publishedAt_ASC = '_publishedAt_ASC',
+  _publishedAt_DESC = '_publishedAt_DESC',
+  _status_ASC = '_status_ASC',
+  _status_DESC = '_status_DESC',
+  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
+  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
+  _updatedAt_ASC = '_updatedAt_ASC',
+  _updatedAt_DESC = '_updatedAt_DESC',
+  createdAt_ASC = 'createdAt_ASC',
+  createdAt_DESC = 'createdAt_DESC',
+  id_ASC = 'id_ASC',
+  id_DESC = 'id_DESC',
+  name_ASC = 'name_ASC',
+  name_DESC = 'name_DESC',
+  updatedAt_ASC = 'updatedAt_ASC',
+  updatedAt_DESC = 'updatedAt_DESC',
+  workspaceId_ASC = 'workspaceId_ASC',
+  workspaceId_DESC = 'workspaceId_DESC'
+}
+
+/** Record of type 🏡 Power BI Workspace (power_bi_workspace) */
+export type PowerBiWorkspaceRecord = RecordInterface & {
+  __typename: 'PowerBiWorkspaceRecord';
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _isValid: Scalars['BooleanType']['output'];
   _modelApiKey: Scalars['String']['output'];
   _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -3331,28 +3542,14 @@ export type PowerBiReportRecord = RecordInterface & {
   _updatedAt: Scalars['DateTime']['output'];
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
-  title?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
-  url?: Maybe<Scalars['String']['output']>;
+  workspaceId?: Maybe<Scalars['String']['output']>;
 };
 
 
-/** Record of type Ξ Power BI Report (power_bi_report) */
-export type PowerBiReportRecordAllTitleLocalesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
-  locale?: InputMaybe<SiteLocale>;
-};
-
-
-/** Record of type Ξ Power BI Report (power_bi_report) */
-export type PowerBiReportRecordSeoMetaTagsArgs = {
-  locale?: InputMaybe<SiteLocale>;
-};
-
-
-/** Record of type Ξ Power BI Report (power_bi_report) */
-export type PowerBiReportRecordTitleArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+/** Record of type 🏡 Power BI Workspace (power_bi_workspace) */
+export type PowerBiWorkspaceRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -3388,7 +3585,11 @@ export type Query = {
   /** Returns meta information regarding a record collection */
   _allPeopleMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
+  _allPowerBiDatasetsMeta: CollectionMetadata;
+  /** Returns meta information regarding a record collection */
   _allPowerBiReportsMeta: CollectionMetadata;
+  /** Returns meta information regarding a record collection */
+  _allPowerBiWorkspacesMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
   _allSimplePagesMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
@@ -3410,7 +3611,11 @@ export type Query = {
   /** Returns a collection of records */
   allPeople: Array<PersonRecord>;
   /** Returns a collection of records */
+  allPowerBiDatasets: Array<PowerBiDatasetRecord>;
+  /** Returns a collection of records */
   allPowerBiReports: Array<PowerBiReportRecord>;
+  /** Returns a collection of records */
+  allPowerBiWorkspaces: Array<PowerBiWorkspaceRecord>;
   /** Returns a collection of records */
   allSimplePages: Array<SimplePageRecord>;
   /** Returns a collection of records */
@@ -3440,7 +3645,11 @@ export type Query = {
   /** Returns the single instance record */
   potatoInfographic?: Maybe<PotatoInfographicRecord>;
   /** Returns a specific record */
+  powerBiDataset?: Maybe<PowerBiDatasetRecord>;
+  /** Returns a specific record */
   powerBiReport?: Maybe<PowerBiReportRecord>;
+  /** Returns a specific record */
+  powerBiWorkspace?: Maybe<PowerBiWorkspaceRecord>;
   /** Returns a specific record */
   simplePage?: Maybe<SimplePageRecord>;
   /** Returns the single instance record */
@@ -3493,9 +3702,25 @@ export type QueryAllPeopleMetaArgs = {
 
 
 /** The query root for this schema */
+export type QueryAllPowerBiDatasetsMetaArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<PowerBiDatasetModelFilter>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** The query root for this schema */
 export type QueryAllPowerBiReportsMetaArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PowerBiReportModelFilter>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** The query root for this schema */
+export type QueryAllPowerBiWorkspacesMetaArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<PowerBiWorkspaceModelFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -3593,12 +3818,34 @@ export type QueryAllPeopleArgs = {
 
 
 /** The query root for this schema */
+export type QueryAllPowerBiDatasetsArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<PowerBiDatasetModelFilter>;
+  first?: InputMaybe<Scalars['IntType']['input']>;
+  locale?: InputMaybe<SiteLocale>;
+  orderBy?: InputMaybe<Array<InputMaybe<PowerBiDatasetModelOrderBy>>>;
+  skip?: InputMaybe<Scalars['IntType']['input']>;
+};
+
+
+/** The query root for this schema */
 export type QueryAllPowerBiReportsArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PowerBiReportModelFilter>;
   first?: InputMaybe<Scalars['IntType']['input']>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiReportModelOrderBy>>>;
+  skip?: InputMaybe<Scalars['IntType']['input']>;
+};
+
+
+/** The query root for this schema */
+export type QueryAllPowerBiWorkspacesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<PowerBiWorkspaceModelFilter>;
+  first?: InputMaybe<Scalars['IntType']['input']>;
+  locale?: InputMaybe<SiteLocale>;
+  orderBy?: InputMaybe<Array<InputMaybe<PowerBiWorkspaceModelOrderBy>>>;
   skip?: InputMaybe<Scalars['IntType']['input']>;
 };
 
@@ -3724,11 +3971,29 @@ export type QueryPotatoInfographicArgs = {
 
 
 /** The query root for this schema */
+export type QueryPowerBiDatasetArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<PowerBiDatasetModelFilter>;
+  locale?: InputMaybe<SiteLocale>;
+  orderBy?: InputMaybe<Array<InputMaybe<PowerBiDatasetModelOrderBy>>>;
+};
+
+
+/** The query root for this schema */
 export type QueryPowerBiReportArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PowerBiReportModelFilter>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiReportModelOrderBy>>>;
+};
+
+
+/** The query root for this schema */
+export type QueryPowerBiWorkspaceArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  filter?: InputMaybe<PowerBiWorkspaceModelFilter>;
+  locale?: InputMaybe<SiteLocale>;
+  orderBy?: InputMaybe<Array<InputMaybe<PowerBiWorkspaceModelOrderBy>>>;
 };
 
 
@@ -4819,6 +5084,13 @@ export type BlogPostQueryVariables = Exact<{
 
 export type BlogPostQuery = { __typename: 'Query', blogPost?: { __typename: 'BlogPostRecord', id: any, title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, authors: Array<{ __typename: 'PersonRecord', firstName?: string | null, lastName?: string | null, portrait?: { __typename: 'FileField', id: any, url: string } | null }>, image?: { __typename: 'FileField', id: any, url: string } | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', id: any, markdown?: string | null, description?: string | null, downloadTeaserAssets: Array<{ __typename: 'DownloadTeaserAssetRecord', id: any, title?: string | null, file?: { __typename: 'FileField', id: any, url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', id: any, externalVideo?: { __typename: 'VideoField', url: string, title: string } | null } | { __typename: 'GalleryBlockRecord', id: any, galleryAssets: Array<{ __typename: 'FileField', id: any, title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', id: any, url?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', id: any, title?: string | null, alt?: string | null, url: string } | null } | { __typename: 'MarkdownBlockRecord', id: any, content?: string | null } | { __typename: 'SurveyBlockRecord', id: any, formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', id: any, question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', id: any, answer?: string | null }> }> }>, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null }> }> };
 
+export type AllPowerBiReportsQueryVariables = Exact<{
+  locale: SiteLocale;
+}>;
+
+
+export type AllPowerBiReportsQuery = { __typename: 'Query', allPowerBiReports: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, dataset?: { __typename: 'PowerBiDatasetRecord', datasetId?: string | null } | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null } | null }> };
+
 export type AllMarketArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5331,6 +5603,24 @@ ${SimpleBlogPostFragmentDoc}`;
 
 export function useBlogPostQuery(options: Omit<Urql.UseQueryArgs<BlogPostQueryVariables>, 'query'>) {
   return Urql.useQuery<BlogPostQuery, BlogPostQueryVariables>({ query: BlogPostDocument, ...options });
+};
+export const AllPowerBiReportsDocument = gql`
+    query AllPowerBIReports($locale: SiteLocale!) {
+  allPowerBiReports(locale: $locale) {
+    id
+    reportId
+    dataset {
+      datasetId
+    }
+    workspace {
+      workspaceId
+    }
+  }
+}
+    `;
+
+export function useAllPowerBiReportsQuery(options: Omit<Urql.UseQueryArgs<AllPowerBiReportsQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllPowerBiReportsQuery, AllPowerBiReportsQueryVariables>({ query: AllPowerBiReportsDocument, ...options });
 };
 export const AllMarketArticlesSlugLocalesDocument = gql`
     query AllMarketArticlesSlugLocales {
