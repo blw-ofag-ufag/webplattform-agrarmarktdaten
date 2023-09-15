@@ -15,6 +15,7 @@ const Page = (props: Props) => {
 
     return (
       <PowerBIReport
+        key={reportId}
         datasetId={datasetId}
         reportId={reportId}
         reportWorkspaceId={reportWorkspaceId}
