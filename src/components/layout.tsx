@@ -40,7 +40,7 @@ export const AppLayout = ({
   alternates,
 }: Props) => {
   const router = useRouter();
-  const isXXlAndUp = useMediaQuery(b.up("xxl" as any));
+  const isXXlAndUp = useMediaQuery(b.up("xxl"));
   const { headerSections, menuSections } = React.useMemo(() => {
     const menuSections: MenuProps["sections"] = [
       {
