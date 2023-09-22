@@ -2211,10 +2211,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@interactivethings/swiss-federal-ci@^0.5.6":
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/@interactivethings/swiss-federal-ci/-/swiss-federal-ci-0.5.6.tgz#10923c1b44ad199f1052e1e497484d79bada392d"
-  integrity sha512-YraZ+6lDxQdFZM98Ik9gZtjrxKVqwhgZputX4dkxZMEfJsx/NitsNxCfVzcOoscIKG/R1uYWtz0/MPnjx6o3TA==
+"@interactivethings/swiss-federal-ci@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@interactivethings/swiss-federal-ci/-/swiss-federal-ci-0.5.7.tgz#db8259bf725576bd55b3e45d17a02d4dbba39b29"
+  integrity sha512-1yieNuy2Z5mDJvuL8E6fswQlbLHS5zc8wLR6M8W6MQsTXiN8geoS6/uW1FHKfTyIY3TDLSCkM65lM/K4Nwr7LQ==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
