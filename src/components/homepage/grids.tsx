@@ -4,11 +4,6 @@ import NextLink from "next/link";
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
 
-type Entry = {
-  title: string;
-  slug: string;
-};
-
 export const CardsGrid = ({
   type,
   entries,

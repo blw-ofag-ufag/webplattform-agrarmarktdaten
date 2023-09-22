@@ -17,8 +17,6 @@ const DynamicReportTeaser = dynamic(
 
 export const ReportCard = ({
   type,
-  title,
-  url,
 }: {
   type: "report" | "data";
   title: string | ReactNode;

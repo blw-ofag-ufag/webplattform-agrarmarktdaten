@@ -40,10 +40,7 @@ export const Waffle = ({
   backgroundScale,
   getColor,
   colorScale,
-  getCategory,
 
-  getOpacityCategory,
-  opacityScale,
   bioColored,
   bioPrefix,
 }: Props) => {
