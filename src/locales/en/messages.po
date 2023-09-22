@@ -115,7 +115,7 @@ msgstr ""
 
 #: src/components/layout.tsx
 #~ msgid "footer.legal"
-#~ msgstr "Legal"
+#~ msgstr "Mandate and legal basis"
 
 #. js-lingui-explicit-id
 #: src/components/back-button.tsx
