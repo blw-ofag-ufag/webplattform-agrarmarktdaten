@@ -26,7 +26,11 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
     return null;
   }
   return (
-    <AppLayout alternates={alternates} allMarkets={allMarketArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       {blogPost ? (
         <>
           <ContentContainer sx={{ mt: 7 }}>

@@ -16,7 +16,10 @@ export default function HomePage(props: GQL.HomePageQuery) {
     return null;
   }
   return (
-    <AppLayout allMarkets={allMarketArticles}>
+    <AppLayout
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero title={homePage.title} lead={homePage.lead} />
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>

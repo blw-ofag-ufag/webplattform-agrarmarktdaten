@@ -10,7 +10,10 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
     return null;
   }
   return (
-    <AppLayout allMarkets={allMarketArticles}>
+    <AppLayout
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero title={termsPage.title} lead={termsPage.lead} />
       <ContentContainer>{/* {termsPage.content} */}</ContentContainer>
     </AppLayout>

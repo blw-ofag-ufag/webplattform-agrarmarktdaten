@@ -27,7 +27,11 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
   }
 
   return (
-    <AppLayout alternates={alternates} allMarkets={allMarketArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <ContentContainer sx={{ mt: 7 }}>
         <Hero title={marketArticle.title} lead={marketArticle.lead} />
         <Stack flexDirection="column" spacing={6}>

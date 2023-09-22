@@ -5,12 +5,16 @@ import { Hero } from "@/components/hero";
 import { ContentContainer } from "@/components/content-container";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, topBlogPosts } = props;
+  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } =
+    props;
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
   return (
-    <AppLayout allMarkets={allMarketArticles}>
+    <AppLayout
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero title={methodsPage.title} lead={methodsPage.lead} />
       <ContentContainer>{/* {methodsPage.content} */}</ContentContainer>
     </AppLayout>

@@ -17,7 +17,10 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
     return null;
   }
   return (
-    <AppLayout allMarkets={allMarketArticles}>
+    <AppLayout
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero title={focusArticle.title} lead={focusArticle.lead} />
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
