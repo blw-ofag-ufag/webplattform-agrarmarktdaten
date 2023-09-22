@@ -137,11 +137,11 @@ export const AppLayout = ({
       >
         <FooterSection>
           <FooterSectionTitle
-            title={t({ id: "footer.about_us.label", message: "About us" })}
+            title={t({ id: "footer.about_us.label", message: "About Us" })}
           />
           <FooterSectionText
             text={t({
-              id: "footer.about_us.label",
+              id: "footer.id",
               message:
                 "The Federal Office for Agriculture FOAG is the Confederation's competence centre for all core issues relating to the agricultural sector. The FOAG is committed to ensuring that farmers produce high-quality food sustainably and with a focus on the market.",
             })}

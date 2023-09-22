@@ -14,9 +14,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "footer.dataprotection"
+#~ msgstr "Datenschutzverordnung"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "contact.contact"
+#~ msgstr "Kontakt"
+
+#. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografic.date"
 msgstr "2018"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.about_us.label"
+msgstr "About Us"
 
 #. js-lingui-explicit-id
 #: src/pages/focus/[slug].tsx
@@ -91,14 +107,14 @@ msgid "article.link.data.explore"
 msgstr "Daten abfragen"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "footer.dataprotection"
-msgstr "Datenschutzverordnung"
-
-#. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.theme"
 msgstr "Themen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.focus"
+msgstr "Fokus"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -116,6 +132,12 @@ msgstr "Folgen Sie Uns"
 #: src/components/layout.tsx
 #~ msgid "footer.legal"
 #~ msgstr "Rechtliche Grundlagen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.furtherinformation"
+msgstr "Further Information"
 
 #. js-lingui-explicit-id
 #: src/components/back-button.tsx
@@ -183,11 +205,6 @@ msgstr "Infografik Ansehen"
 #~ msgid "infografik.title"
 #~ msgstr "Schweizer Kartoffelmarkt"
 
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "contact.contact"
-msgstr "Kontakt"
-
 #: src/components/header.tsx
 #: src/components/header.tsx
 #~ msgid "logo.swiss.confederation"
@@ -243,6 +260,21 @@ msgstr "Report öffnen"
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.title"
 msgstr "Schweizer Kartoffelmarkt"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.newsletter"
+msgstr "Subscribe to newsletter"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.terms"
+msgstr "Terms and Conditions"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.id"
+msgstr "The Federal Office for Agriculture FOAG is the Confederation's competence centre for all core issues relating to the agricultural sector. The FOAG is committed to ensuring that farmers produce high-quality food sustainably and with a focus on the market."
 
 #: src/components/header.tsx
 #~ msgid "title.agricultural.market.data"
