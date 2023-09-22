@@ -13,142 +13,269 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/card-data.tsx:32
-#~ msgid "article.card.data"
-#~ msgstr "Datenbankabfrage"
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "footer.dataprotection"
+#~ msgstr "Datenschutzverordnung"
 
-#: src/components/card-data.tsx:32
-#~ msgid "article.card.report.month"
-#~ msgstr "Grafik des Monats"
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "contact.contact"
+#~ msgstr "Kontakt"
 
-#: src/components/card-data.tsx:180
-msgid "article.link.data.explore"
-msgstr "Daten abfragen"
-
-#: src/components/card-data.tsx:79
-msgid "article.link.open.report"
-msgstr "Report öffnen"
-
-#: src/pages/market/[slug].tsx:77
-#~ msgid "article.section.data"
-#~ msgstr "Daten"
-
-#: src/pages/market/[slug].tsx:72
-#~ msgid "article.section.infografic"
-#~ msgstr "Infografik"
-
-#: src/pages/market/[slug].tsx:141
-#~ msgid "article.section.link"
-#~ msgstr "Links"
-
-#: src/pages/market/[slug].tsx:122
-#~ msgid "article.section.news"
-#~ msgstr "Neuigkeiten"
-
-#: src/pages/market/[slug].tsx:109
-#~ msgid "article.section.trade"
-#~ msgstr "Handelsstufen"
-
-#: src/pages/market/[slug].tsx:92
-#~ msgid "article.teaser.data.title"
-#~ msgstr "Daten zum Kartoffelmarkt"
-
-#: src/components/homepage/infografik-teaser.tsx:64
-#: src/components/homepage/infografik-teaser.tsx:146
-msgid "button.infografic.teaser"
-msgstr "Infografik Ansehen"
-
-#: src/pages/index.tsx:68
-msgid "button.show.all"
-msgstr "Alle Anzeigen"
-
-#: src/components/contact.tsx:37
-msgid "contact.contact"
-msgstr "Kontakt"
-
-#: src/components/contact.tsx:50
-msgid "contact.follow.us"
-msgstr "Folgen Sie Uns"
-
-#: src/components/back-button.tsx:31
-msgid "cta.back"
-msgstr "Geh zurück"
-
-#: src/components/footer.tsx:31
-msgid "footer.dataprotection"
-msgstr "Datenschutzverordnung"
-
-#: src/components/footer.tsx:25
-msgid "footer.impressum"
-msgstr "Impressum"
-
-#: src/components/footer.tsx:28
-msgid "footer.legal"
-msgstr "Rechtliche Grundlagen"
-
-#: src/pages/blog/[slug].tsx:42
-#: src/pages/index.tsx:48
-#: src/pages/market/[slug].tsx:43
-#: src/pages/theme/[slug].tsx:44
-msgid "homepage.section.latestBlogPosts"
-msgstr "Neuste Blogbeiträge"
-
-#: src/pages/index.tsx:34
-msgid "homepage.section.market"
-msgstr "Märkte"
-
-#: src/pages/index.tsx:76
-#~ msgid "homepage.section.newest.infografic"
-#~ msgstr "Neueste Infografik"
-
-#: src/pages/index.tsx:47
-#~ msgid "homepage.section.newsfeed"
-#~ msgstr "Aktuell"
-
-#: src/pages/index.tsx:41
-msgid "homepage.section.theme"
-msgstr "Themen"
-
-#: src/components/homepage/infografik-teaser.tsx:35
-msgid "infografic"
-msgstr "Infografik"
-
-#: src/components/homepage/infografik-teaser.tsx:94
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx
 msgid "infografic.date"
 msgstr "2018"
 
-#: src/components/homepage/infografik-teaser.tsx:117
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.about_us.label"
+msgstr "About Us"
+
+#. js-lingui-explicit-id
+#: src/pages/focus/[slug].tsx
+#: src/pages/index.tsx
+msgid "button.show.all"
+msgstr "Alle Anzeigen"
+
+#: src/components/card-data.tsx
+#~ msgid "article.card.data"
+#~ msgstr "Datenbankabfrage"
+
+#: src/components/card-data.tsx
+#~ msgid "article.card.report.month"
+#~ msgstr "Grafik des Monats"
+
+#: src/components/card-data.tsx
+#~ msgid "article.link.data.explore"
+#~ msgstr "Daten abfragen"
+
+#: src/components/card-data.tsx
+#~ msgid "article.link.open.report"
+#~ msgstr "Report öffnen"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.data"
+#~ msgstr "Daten"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.infografic"
+#~ msgstr "Infografik"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.link"
+#~ msgstr "Links"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.news"
+#~ msgstr "Neuigkeiten"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.trade"
+#~ msgstr "Handelsstufen"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.teaser.data.title"
+#~ msgstr "Daten zum Kartoffelmarkt"
+
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "button.infografic.teaser"
+#~ msgstr "Infografik Ansehen"
+
+#: src/pages/index.tsx
+#~ msgid "button.show.all"
+#~ msgstr "Alle Anzeigen"
+
+#: src/components/layout.tsx
+#~ msgid "contact.contact"
+#~ msgstr "Kontakt"
+
+#: src/components/layout.tsx
+#~ msgid "contact.follow.us"
+#~ msgstr "Folgen Sie Uns"
+
+#: src/components/back-button.tsx
+#~ msgid "cta.back"
+#~ msgstr "Geh zurück"
+
+#. js-lingui-explicit-id
+#: src/components/card-data.tsx
+msgid "article.link.data.explore"
+msgstr "Daten abfragen"
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.theme"
+msgstr "Themen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.focus"
+msgstr "Fokus"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "contact.follow.us"
+msgstr "Folgen Sie Uns"
+
+#: src/components/layout.tsx
+#~ msgid "footer.dataprotection"
+#~ msgstr "Datenschutzverordnung"
+
+#: src/components/layout.tsx
+#~ msgid "footer.impressum"
+#~ msgstr "Impressum"
+
+#: src/components/layout.tsx
+#~ msgid "footer.legal"
+#~ msgstr "Rechtliche Grundlagen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.furtherinformation"
+msgstr "Further Information"
+
+#. js-lingui-explicit-id
+#: src/components/back-button.tsx
+msgid "cta.back"
+msgstr "Geh zurück"
+
+#: src/pages/blog/[slug].tsx
+#: src/pages/index.tsx
+#: src/pages/market/[slug].tsx
+#: src/pages/theme/[slug].tsx
+#~ msgid "homepage.section.latestBlogPosts"
+#~ msgstr "Neuste Blogbeiträge"
+
+#: src/pages/index.tsx
+#~ msgid "homepage.section.market"
+#~ msgstr "Märkte"
+
+#: src/pages/index.tsx
+#~ msgid "homepage.section.newest.infografic"
+#~ msgstr "Neueste Infografik"
+
+#: src/pages/index.tsx
+#~ msgid "homepage.section.newsfeed"
+#~ msgstr "Aktuell"
+
+#: src/pages/index.tsx
+#~ msgid "homepage.section.theme"
+#~ msgstr "Themen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.impressum"
+msgstr "Impressum"
+
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.teaser"
 msgstr "In der Schweiz wachsen auf mehr als 10'000 Hektaren Kartoffeln. Das sind etwa 14'000 Fussballfelder voller toller Knollen. Die geernteten 400'000 Tonnen landen schliesslich über das ganze Jahr hindurch auf unserem Teller."
 
-#: src/components/homepage/infografik-teaser.tsx:47
-#: src/components/homepage/infografik-teaser.tsx:106
-msgid "infografik.title"
-msgstr "Schweizer Kartoffelmarkt"
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "infografic"
+#~ msgstr "Infografik"
 
-#: src/components/header.tsx:271
-#: src/components/header.tsx:291
-msgid "logo.swiss.confederation"
-msgstr "Logo of the Swiss Confederation"
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "infografic.date"
+#~ msgstr "2018"
 
-#: src/components/header.tsx:143
-#: src/components/header.tsx:191
-msgid "menu.about"
-msgstr "Über uns"
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx
+msgid "infografic"
+msgstr "Infografik"
 
-#: src/components/header.tsx:186
-msgid "menu.blog"
-msgstr "Blog"
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
+msgid "button.infografic.teaser"
+msgstr "Infografik Ansehen"
 
-#: src/components/header.tsx:181
-msgid "menu.data"
-msgstr "Daten"
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "infografik.teaser"
+#~ msgstr "In der Schweiz wachsen auf mehr als 10'000 Hektaren Kartoffeln. Das sind etwa 14'000 Fussballfelder voller toller Knollen. Die geernteten 400'000 Tonnen landen schliesslich über das ganze Jahr hindurch auf unserem Teller."
 
-#: src/components/header.tsx:132
-#: src/components/header.tsx:176
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "infografik.title"
+#~ msgstr "Schweizer Kartoffelmarkt"
+
+#: src/components/header.tsx
+#: src/components/header.tsx
+#~ msgid "logo.swiss.confederation"
+#~ msgstr "Logo of the Swiss Confederation"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
 msgid "menu.markets"
 msgstr "Märkte"
 
-#: src/components/header.tsx:234
-msgid "title.agricultural.market.data"
-msgstr "Agrarmarktdaten"
+#. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.market"
+msgstr "Märkte"
+
+#: src/components/header.tsx
+#: src/components/header.tsx
+#~ msgid "menu.about"
+#~ msgstr "Über uns"
+
+#: src/components/header.tsx
+#~ msgid "menu.blog"
+#~ msgstr "Blog"
+
+#: src/components/header.tsx
+#~ msgid "menu.data"
+#~ msgstr "Daten"
+
+#: src/components/layout.tsx
+#~ msgid "menu.markets"
+#~ msgstr "Märkte"
+
+#. js-lingui-explicit-id
+#: src/pages/blog/[slug].tsx
+#: src/pages/focus/[slug].tsx
+#: src/pages/index.tsx
+#: src/pages/market/[slug].tsx
+msgid "homepage.section.latestBlogPosts"
+msgstr "Neuste Blogbeiträge"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.legal"
+msgstr "Rechtliche Grundlagen"
+
+#. js-lingui-explicit-id
+#: src/components/card-data.tsx
+msgid "article.link.open.report"
+msgstr "Report öffnen"
+
+#. js-lingui-explicit-id
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
+msgid "infografik.title"
+msgstr "Schweizer Kartoffelmarkt"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.newsletter"
+msgstr "Subscribe to newsletter"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.terms"
+msgstr "Terms and Conditions"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "footer.id"
+msgstr "The Federal Office for Agriculture FOAG is the Confederation's competence centre for all core issues relating to the agricultural sector. The FOAG is committed to ensuring that farmers produce high-quality food sustainably and with a focus on the market."
+
+#: src/components/header.tsx
+#~ msgid "title.agricultural.market.data"
+#~ msgstr "Agrarmarktdaten"

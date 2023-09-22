@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged
+# commented out until the issue about ignoring the node_modules folder is solved
+#npx lint-staged

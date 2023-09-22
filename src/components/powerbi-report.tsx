@@ -1,46 +1,64 @@
-import * as pbi from "powerbi-client";
-import React, { useRef, useEffect, useMemo } from "react";
+import dynamic from "next/dynamic";
+import * as models from "powerbi-models";
+import React, { useEffect } from "react";
 
-export const GROUP_ID = "c1cfad5e-d2bc-4ec0-a2d3-159a0042b43c";
-export const REPORT_ID = "cf816279-d5f4-46be-a838-2770dc61793b";
+import { makeStyles } from "./style-utils";
 
-const Report = () => {
-  const ref = useRef<HTMLDivElement>(null);
+const PowerBIEmbed = dynamic(
+  () => import("powerbi-client-react").then((d) => d.PowerBIEmbed),
+  { ssr: false }
+);
 
-  const powerbi = useMemo(() => {
-    return new pbi.service.Service(
-      pbi.factories.hpmFactory,
-      pbi.factories.wpmpFactory,
-      pbi.factories.routerFactory
-    );
-  }, []);
+const CONFIG: models.IReportEmbedConfiguration = {
+  type: "report",
+  id: undefined,
+  embedUrl: undefined,
+  accessToken: undefined,
+  tokenType: models.TokenType.Embed,
+};
+
+const useStyles = makeStyles()({
+  root: {
+    aspectRatio: "16/9",
+    width: "100%",
+  },
+});
+
+const getEmbedUrl = (reportId: string, reportWorkspaceId: string) => {
+  return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}`;
+};
+
+type PowerBIReportProps = {
+  datasetId: string;
+  reportId: string;
+  reportWorkspaceId: string;
+};
+
+export const PowerBIReport = (props: PowerBIReportProps) => {
+  const { datasetId, reportId, reportWorkspaceId } = props;
+  const [config, setConfig] = React.useState(CONFIG);
+  const { classes } = useStyles();
 
   useEffect(() => {
     const fetchReport = async () => {
-      const embedToken = await fetch(`/api/powerbi/report`).then((res) =>
-        res.json()
-      );
-      const embedConfiguration = {
+      const embedToken = await fetch("/api/powerbi/report", {
+        method: "POST",
+        body: JSON.stringify({
+          datasets: [{ id: datasetId }],
+          reports: [{ id: reportId }],
+        }),
+      }).then((d) => d.json());
+      setConfig({
         type: "report",
-        id: REPORT_ID,
-        embedUrl: `https://embedded.powerbi.com/reportEmbed?reportId=${REPORT_ID}&groupId=${GROUP_ID}`,
-        tokenType: pbi.models.TokenType.Embed,
-        accessToken: embedToken["token"],
-      };
-      if (ref.current) {
-        powerbi.embed(ref.current, embedConfiguration);
-      }
+        id: reportId,
+        embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
+        tokenType: models.TokenType.Embed,
+        accessToken: embedToken.token,
+      });
     };
+
     fetchReport();
-  }, [powerbi]);
+  }, [datasetId, reportId, reportWorkspaceId]);
 
-  return (
-    <div
-      style={{ height: "50vw", maxHeight: "58rem" }}
-      ref={ref}
-      powerbi-settings-nav-content-pane-enabled="false"
-    ></div>
-  );
+  return <PowerBIEmbed embedConfig={config} cssClassName={classes.root} />;
 };
-
-export default Report;

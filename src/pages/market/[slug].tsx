@@ -1,56 +1,48 @@
 import { Trans } from "@lingui/macro";
 import { Stack, Typography } from "@mui/material";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { Hero } from "@/components/hero";
 import React from "react";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { AppLayout } from "@/components/layout";
 
 import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
-import { Hero } from "@/components/hero";
-import { AppLayout } from "@/components/layout";
-import { Market } from "@/domain/types";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 
-export default function MarketPage({
-  market,
-  allMarkets,
-  allBlogPosts,
-}: {
-  market?: Market & {
-    _allSlugLocales: { locale: string; value: string }[];
-  };
-  allMarkets: GQL.MarketRecord[];
-  allBlogPosts: GQL.BlogPostRecord[];
-}) {
-  const alternates = market
-    ? market._allSlugLocales.map((loc) => {
-        return {
-          href: "/market/[slug]",
-          as: `/market/${loc.value}`,
-          locale: loc.locale,
-        };
-      })
-    : undefined;
+export default function MarketPage(props: GQL.MarketPageQuery) {
+  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } =
+    props;
+
+  const alternates = marketArticle?._allSlugLocales?.map((loc) => {
+    return {
+      href: "/market/[slug]",
+      as: `/market/${loc.value}`,
+      locale: loc.locale as string,
+    };
+  });
+
+  if (!marketArticle?.title || !marketArticle?.lead) {
+    return null;
+  }
 
   return (
-    <AppLayout alternates={alternates} allMarkets={allMarkets}>
-      {market ? (
-        <>
-          <ContentContainer sx={{ mt: 7 }}>
-            <Hero variant="market" title={market.title} lead={market.lead} />
-            <Stack flexDirection="column" spacing={6}>
-              <Typography variant="h5">
-                <Trans id="homepage.section.latestBlogPosts">
-                  Neuste Blogbeiträge
-                </Trans>
-              </Typography>
-              <BlogPostsGrid blogPosts={allBlogPosts} />
-            </Stack>
-          </ContentContainer>
-        </>
-      ) : (
-        <div>NOT FOUND</div>
-      )}
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
+      <ContentContainer sx={{ mt: 7 }}>
+        <Hero title={marketArticle.title} lead={marketArticle.lead} />
+        <Stack flexDirection="column" spacing={6}>
+          <Typography variant="h5">
+            <Trans id="homepage.section.latestBlogPosts">
+              Neuste Blogbeiträge
+            </Trans>
+          </Typography>
+          <BlogPostsGrid blogPosts={topBlogPosts} />
+        </Stack>
+      </ContentContainer>
     </AppLayout>
   );
 }
@@ -70,16 +62,20 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 
   return {
     props: {
-      market: result.data.market,
-      allMarkets: result.data.allMarkets,
-      allBlogPosts: result.data.allBlogPosts,
+      marketArticle: result.data.marketArticle,
+      allMarketArticles: result.data.allMarketArticles,
+      allFocusArticles: result.data.allFocusArticles,
+      topBlogPosts: result.data.topBlogPosts,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const result = await client
-    .query<GQL.AllMarketsSlugLocalesQuery>(GQL.AllMarketsSlugLocalesDocument)
+    .query<GQL.AllMarketArticlesSlugLocalesQuery>(
+      GQL.AllMarketArticlesSlugLocalesDocument,
+      {}
+    )
     .toPromise();
 
   if (!result.data) {
@@ -87,11 +83,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     throw new Error("Failed to fetch API");
   }
 
-  const paths = result.data.allMarkets.flatMap((page: $FixMe) => {
-    return page._allSlugLocales.map((loc: $FixMe) => ({
-      locale: loc.locale,
-      params: { slug: loc.value },
-    }));
+  const paths = result.data.allMarketArticles.flatMap((page) => {
+    return page._allSlugLocales
+      ? page._allSlugLocales?.map((loc) => ({
+          locale: loc.locale ?? undefined,
+          params: { slug: loc.value ?? undefined },
+        }))
+      : [];
   });
 
   return {

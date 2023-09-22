@@ -2,67 +2,166 @@
 ## Regular
 query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
     id
     title
     lead
+    hero {
+      url
+    }
     seo {
       ...FullSEO
     }
+    markets {
+      id
+      title
+      slug
+    }
+
+    focusArticles {
+      id
+      title
+      slug
+    }
   }
 
-  allMarkets(locale: $locale) {
-    ...FullMarket
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
   }
 
-  allThemes(locale: $locale) {
-    ...FullTheme
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
   }
 
-  allBlogPosts(locale: $locale, first: 3) {
-    ...FullBlogPost
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+    ...SimpleBlogPost
+  }
+}
+
+query LegalPage($locale: SiteLocale!) {
+  legalPage(locale: $locale) {
+    title
+    slug
+    lead
+    content {
+      content
+    }
+  }
+
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+}
+
+query TermsPage($locale: SiteLocale!) {
+  termsPage(locale: $locale) {
+    title
+    slug
+    lead
+    content {
+      content
+    }
+  }
+
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
   }
 }
 
 query MarketPage($locale: SiteLocale!, $slug: String!) {
-  market(locale: $locale, filter: { slug: { eq: $slug } }) {
-    ...FullMarket
-
+  marketArticle(locale: $locale, filter: { slug: { eq: $slug } }) {
     _allSlugLocales {
       locale
       value
     }
+    ...FullMarketArticle
   }
 
-  allMarkets(locale: $locale) {
-    ...FullMarket
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
   }
 
-  allBlogPosts(locale: $locale, first: 3) {
-    ...FullBlogPost
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+    ...SimpleBlogPost
   }
 }
 
-query ThemePage($locale: SiteLocale!, $slug: String!) {
-  theme(locale: $locale, filter: { slug: { eq: $slug } }) {
-    ...FullTheme
-
+query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
+  focusArticle(locale: $locale, filter: { slug: { eq: $slug } }) {
     _allSlugLocales {
       locale
       value
     }
+    ...FullFocusArticle
   }
 
-  allThemes(locale: $locale) {
-    ...FullTheme
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
   }
 
-  allBlogPosts(locale: $locale, first: 3) {
-    ...FullBlogPost
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+    ...SimpleBlogPost
   }
 }
 
-query BlogPage($locale: SiteLocale!) {
-  blogPage(locale: $locale) {
+query MethodsPage($locale: SiteLocale!) {
+  methodsPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    lead
+    seo {
+      ...FullSEO
+    }
+    content {
+      __typename
+      ...DownloadTeaserBlock
+      ...ExternalVideoBlock
+      ...GalleryBlock
+      ...IframeBlock
+      ...ImageTeaserBlock
+      ...MarkdownBlock
+      ...SurveyBlock
+    }
+  }
+
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+    ...SimpleBlogPost
+  }
+}
+
+query AnalysisPage($locale: SiteLocale!) {
+  analysisPage(locale: $locale) {
     id
     title
     lead
@@ -71,12 +170,16 @@ query BlogPage($locale: SiteLocale!) {
     }
   }
 
-  allMarkets(locale: $locale) {
-    ...FullMarket
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
   }
 
-  allBlogPosts(locale: $locale) {
-    ...FullBlogPost
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+
+  allBlogPosts(locale: $locale, first: 7) {
+    ...SimpleBlogPost
   }
 }
 
@@ -89,29 +192,36 @@ query BlogPost($locale: SiteLocale!, $slug: String!) {
       value
     }
   }
-}
 
-query AllBlogPosts($locale: SiteLocale!, $first: IntType!) {
-  allBlogPosts(locale: $locale, first: $first) {
-    ...FullBlogPost
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+    ...SimpleBlogPost
   }
 }
 
-query AboutPage($locale: SiteLocale!) {
-  aboutPage(locale: $locale) {
+query AllPowerBIReports($locale: SiteLocale!) {
+  allPowerBiReports(locale: $locale) {
     id
-    title
-    lead
-  }
-
-  allMarkets(locale: $locale) {
-    ...FullMarket
+    reportId
+    dataset {
+      datasetId
+    }
+    workspace {
+      workspaceId
+    }
   }
 }
 
 ## Slugs
-query AllMarketsSlugLocales {
-  allMarkets {
+query AllMarketArticlesSlugLocales {
+  allMarketArticles {
     id
     _allSlugLocales {
       locale
@@ -120,8 +230,8 @@ query AllMarketsSlugLocales {
   }
 }
 
-query AllThemesSlugLocales {
-  allThemes {
+query AllFocusArticlesSlugLocales {
+  allFocusArticles {
     id
     _allSlugLocales {
       locale
@@ -151,16 +261,25 @@ fragment FullSEO on SeoField {
   twitterCard
 }
 
-fragment FullMarket on MarketRecord {
+fragment SimpleMarketArticle on MarketArticleRecord {
   id
   title
-  lead
   slug
-  tile {
-    id
-    url
-  }
+}
+
+fragment SimpleFocusArticle on FocusArticleRecord {
+  id
+  title
+  slug
+}
+
+fragment FullMarketArticle on MarketArticleRecord {
+  id
+  title
+  slug
+  lead
   blocks {
+    __typename
     ...DownloadTeaserBlock
     ...ExternalVideoBlock
     ...GalleryBlock
@@ -174,16 +293,13 @@ fragment FullMarket on MarketRecord {
   }
 }
 
-fragment FullTheme on ThemeRecord {
+fragment FullFocusArticle on FocusArticleRecord {
   id
   title
-  lead
   slug
-  tile {
-    id
-    url
-  }
+  lead
   blocks {
+    __typename
     ...DownloadTeaserBlock
     ...ExternalVideoBlock
     ...GalleryBlock
@@ -195,6 +311,22 @@ fragment FullTheme on ThemeRecord {
   seo {
     ...FullSEO
   }
+}
+
+fragment SimpleBlogPost on BlogPostRecord {
+  id
+  title
+  slug
+  lead
+  image {
+    id
+    url
+    alt
+  }
+  markets {
+    title
+  }
+  _firstPublishedAt
 }
 
 fragment FullBlogPost on BlogPostRecord {
@@ -202,16 +334,12 @@ fragment FullBlogPost on BlogPostRecord {
   title
   lead
   slug
-  author {
-    first_name
-    last_name
+  authors {
+    firstName
+    lastName
     portrait {
       id
       url
-    }
-    role {
-      title
-      description
     }
   }
   image {
@@ -230,10 +358,12 @@ fragment FullBlogPost on BlogPostRecord {
   markets {
     id
     title
+    slug
   }
-  themes {
+  focusArticles {
     id
     title
+    slug
   }
   _firstPublishedAt
 }

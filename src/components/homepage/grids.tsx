@@ -13,8 +13,8 @@ export const CardsGrid = ({
   type,
   entries,
 }: {
-  type: "market" | "theme";
-  entries: GQL.MarketRecord[] | GQL.ThemeRecord[];
+  type: "market" | "focus";
+  entries: GQL.SimpleMarketArticleFragment[] | GQL.SimpleFocusArticleFragment[];
 }) => {
   const locale = useLocale();
 
@@ -55,11 +55,11 @@ const GridCard = ({
   type,
 }: {
   title: string;
-  type: "market" | "theme";
+  type: "market" | "focus";
 }) => {
   return type === "market" ? (
     <MarketCard title={title} />
-  ) : type === "theme" ? (
+  ) : type === "focus" ? (
     <ThemeCard title={title} />
   ) : null;
 };

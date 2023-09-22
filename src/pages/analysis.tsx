@@ -1,5 +1,4 @@
 import React from "react";
-
 import { BlogMarketFilters } from "@/components/blog/BlogMarketFilters";
 import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
@@ -8,14 +7,21 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 
-export default function Blog({blogPage, allMarkets, allBlogPosts}: GQL.BlogPageQuery) {
-
+export default function Analysis({
+  analysisPage,
+  allBlogPosts,
+  allFocusArticles,
+  allMarketArticles,
+}: GQL.AnalysisPageQuery) {
   return (
     <AppLayout>
-      <Hero title={blogPage?.title as string} lead={blogPage?.lead as string} />
+      <Hero
+        title={analysisPage?.title as string}
+        lead={analysisPage?.lead as string}
+      />
       <ContentContainer>
-        <BlogMarketFilters allMarkets={allMarkets as GQL.MarketRecord[]} />
-        <BlogPostsGrid blogPosts={allBlogPosts as GQL.BlogPostRecord[]} />
+        <BlogMarketFilters allMarkets={allMarketArticles} />
+        <BlogPostsGrid blogPosts={allBlogPosts} />
       </ContentContainer>
     </AppLayout>
   );
@@ -23,7 +29,9 @@ export default function Blog({blogPage, allMarkets, allBlogPosts}: GQL.BlogPageQ
 
 export const getStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.BlogPageQuery>(GQL.BlogPageDocument, { locale: context.locale })
+    .query<GQL.AnalysisPageQuery>(GQL.AnalysisPageDocument, {
+      locale: context.locale,
+    })
     .toPromise();
 
   if (!result.data) {

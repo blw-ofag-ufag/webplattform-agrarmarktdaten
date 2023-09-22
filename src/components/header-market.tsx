@@ -10,7 +10,7 @@ export const MarketHeader = ({
   allMarkets,
 }: {
   toggleMarketMenu: (x: boolean) => void;
-  allMarkets: GQL.MarketRecord[];
+  allMarkets: GQL.MarketArticleRecord[];
 }) => {
   const locale = useLocale();
 

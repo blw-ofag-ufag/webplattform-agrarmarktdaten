@@ -1,20 +1,8 @@
 {
-  "extends": "next",
+  "extends": ["next", "plugin:storybook/recommended"],
   "plugins": ["unused-imports", "import"],
   "rules": {
     "react/display-name": "off",
-    "unused-imports/no-unused-imports-ts": "error",
-    "import/order": [2, {
-      "alphabetize": { "order": "asc" },
-      "newlines-between": "always",
-      "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
-      "pathGroups": [
-        {
-          "pattern": "@/**",
-          "group": "internal"
-        }
-      ],
-      "pathGroupsExcludedImportTypes": ["builtin"]
-    }]
+    "unused-imports/no-unused-imports-ts": "error"
   }
 }

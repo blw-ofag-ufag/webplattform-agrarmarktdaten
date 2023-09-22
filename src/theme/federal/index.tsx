@@ -10,6 +10,19 @@ import SvgIcCheckboxActive from "@/theme/federal/icons/IcCheckboxActive";
 import SvgIcCheckboxDefault from "@/theme/federal/icons/IcCheckboxDefault";
 import shadows from "@/theme/federal/shadows";
 
+declare module "@mui/material/styles" {
+  interface BreakpointOverrides {
+    xxs: true;
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    xxl: true;
+    xxxl: true;
+  }
+}
+
 declare module "@mui/material" {
   interface PaletteColorOptions {
     light?: string;

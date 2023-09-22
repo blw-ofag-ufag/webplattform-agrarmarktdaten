@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Link, Typography } from "@mui/material";
+import Image from 'next/image'
 import NextLink from "next/link";
 
 import Flex from "@/components/flex";
@@ -147,7 +148,7 @@ export const InfografikTeaserLarge = () => {
         </NextLink>
       </Box>
       <Box sx={{ order: [1, 1, 2], width: ["100%", "100%", "50%"] }}>
-        <img
+        <Image
           src="/img/infografik-teaser-large-illustration.png"
           alt="infografic teaser"
           style={{ width: "100%" }}
