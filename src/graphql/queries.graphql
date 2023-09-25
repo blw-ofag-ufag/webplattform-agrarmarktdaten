@@ -325,6 +325,11 @@ fragment SimpleBlogPost on BlogPostRecord {
   }
   markets {
     title
+    slug
+  }
+  focusArticles {
+    title
+    slug
   }
   _firstPublishedAt
 }
