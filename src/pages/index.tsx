@@ -1,14 +1,12 @@
 import { Trans } from "@lingui/macro";
-import { Button, Stack, Typography } from "@mui/material";
-import NextLink from "next/link";
-
-import { BlogPostsGrid } from "@/components/blog/BlogPost";
+import { Stack, Typography } from "@mui/material";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
+import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 
 export default function HomePage(props: GQL.HomePageQuery) {
   const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -16,10 +14,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
     return null;
   }
   return (
-    <AppLayout
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-    >
+    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={homePage.title} lead={homePage.lead} />
       <ContentContainer>
         <Stack flexDirection="column" spacing={6}>
@@ -35,42 +30,16 @@ export default function HomePage(props: GQL.HomePageQuery) {
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </Stack>
-
-        <Stack flexDirection="column" spacing={6}>
-          <Typography variant="h5">
-            <Trans id="homepage.section.latestBlogPosts">
-              Neuste Blogbeiträge
-            </Trans>
-          </Typography>
-          <BlogPostsGrid blogPosts={topBlogPosts} />
-          <NextLink href="/blog" legacyBehavior>
-            <Button
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                width: "184px",
-                height: "48px",
-                backgroundColor: "grey.300",
-                color: "black",
-
-                "&:hover": {
-                  backgroundColor: "grey.500",
-                },
-              }}
-            >
-              <Trans id="button.show.all">Alle Anzeigen</Trans>
-            </Button>
-          </NextLink>
-        </Stack>
       </ContentContainer>
+      <Stack flexDirection="column" spacing={6}>
+        <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      </Stack>
     </AppLayout>
   );
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const result = await client
-    .query<GQL.HomePageQuery>(GQL.HomePageDocument, { locale: context.locale })
-    .toPromise();
+  const result = await client.query<GQL.HomePageQuery>(GQL.HomePageDocument, { locale: context.locale }).toPromise();
 
   if (!result.data) {
     console.error(result.error?.toString());

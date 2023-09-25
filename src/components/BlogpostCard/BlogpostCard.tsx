@@ -4,7 +4,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { e, s, c, t } from "@interactivethings/swiss-federal-ci";
 import { i18n } from "@lingui/core";
-
+import { useResizeObserver } from "@/lib/use-resize-observer";
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
 
@@ -13,21 +13,30 @@ import Flex from "../flex";
 export const BlogpostCard = (props: GQL.SimpleBlogPostFragment) => {
   const { title, lead, image, markets, slug, _firstPublishedAt } = props;
   const locale = useLocale();
+  const [ref, width] = useResizeObserver();
 
   return (
     <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-      <Box sx={{ maxWidth: "100%", boxShadow: e[6], borderRadius: s(2), pb: s(9) }}>
+      <Box ref={ref} sx={{ maxWidth: "100%", boxShadow: e[6], borderRadius: s(2), pb: s(9) }}>
         <Box
           sx={{
             position: "relative",
             overflow: "hidden",
-            maxWidth: "100%",
+            minWidth: "100%",
             aspectRatio: 16 / 9,
             borderTopLeftRadius: s(2),
             borderTopRightRadius: s(2),
           }}
         >
-          {image?.url && <Image src={image?.url} fill alt={image?.alt ?? ""} />}
+          {image?.url && (
+            <Image
+              src={image?.url}
+              width={width}
+              height={300}
+              style={{ objectFit: "cover", aspectRatio: 16 / 9, minWidth: "100%", width: "100%", height: "auto" }}
+              alt={image?.alt ?? ""}
+            />
+          )}
         </Box>
         <Flex
           sx={{
@@ -47,7 +56,7 @@ export const BlogpostCard = (props: GQL.SimpleBlogPostFragment) => {
         <Typography variant="body2" sx={{ color: c.monochrome[800], px: s(7), typography: t.h1 }}>
           {title}
         </Typography>
-        <Flex sx={{ px: s(7), mt: s(4) }}>
+        <Flex sx={{ px: s(7), mt: s(4), minHeight: "42px" }}>
           {markets.length > 0 && (
             <Box sx={{ display: "flex", columnGap: s(4), rowGap: s(2), flexWrap: "wrap" }}>
               {markets.map((market) => {
