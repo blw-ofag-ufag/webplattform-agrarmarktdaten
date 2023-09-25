@@ -68,6 +68,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
               xxl: "64px",
               xxxl: "64px",
             }}
+            sx={{ maxWidth: "1676px", width: "100%", margin: "0 auto" }}
             rowGap={6}
             columns={{ xxxl: 12, xxl: 12, xl: 12, lg: 6, md: 6, sm: 4, xs: 4, xxs: 4 }}
           >
@@ -76,7 +77,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
               IndicatorIcon={<LensIcon />}
               NextIcon={<ArrowForwardIosIcon />}
               PrevIcon={<ArrowBackIosIcon />}
-              sx={{ width: "100%", display: "flex", flexDirection: "column" }}
+              sx={{ width: "100%", height: "fit-content", display: "flex", flexDirection: "column" }}
             >
               {blogposts.map((d) => (
                 <Grid key={d.id} xxxl={0} xxl={0} xl={0} lg={6} md={6} sm={4} xs={4} xxs={4}>
