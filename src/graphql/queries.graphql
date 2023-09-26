@@ -47,7 +47,7 @@ query LegalPage($locale: SiteLocale!) {
     slug
     lead
     content {
-      content
+      value
     }
   }
 

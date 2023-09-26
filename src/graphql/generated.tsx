@@ -2624,10 +2624,16 @@ export enum ItemStatus {
   updated = 'updated'
 }
 
+export type LegalPageModelContentField = {
+  __typename: 'LegalPageModelContentField';
+  blocks: Array<Scalars['String']['output']>;
+  links: Array<Scalars['String']['output']>;
+  value: Scalars['JsonField']['output'];
+};
+
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecord = RecordInterface & {
   __typename: 'LegalPageRecord';
-  _allContentLocales?: Maybe<Array<MarkdownBlockRecordListListNonNullMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
@@ -2643,7 +2649,7 @@ export type LegalPageRecord = RecordInterface & {
   _status: ItemStatus;
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _updatedAt: Scalars['DateTime']['output'];
-  content: Array<MarkdownBlockRecord>;
+  content?: Maybe<LegalPageModelContentField>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
   lead?: Maybe<Scalars['String']['output']>;
@@ -2651,13 +2657,6 @@ export type LegalPageRecord = RecordInterface & {
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
-};
-
-
-/** Record of type 🧑‍⚖️ Legal Page (legal_page) */
-export type LegalPageRecordAllContentLocalesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
-  locale?: InputMaybe<SiteLocale>;
 };
 
 
@@ -2677,13 +2676,6 @@ export type LegalPageRecordAllTitleLocalesArgs = {
 
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordSeoMetaTagsArgs = {
-  locale?: InputMaybe<SiteLocale>;
-};
-
-
-/** Record of type 🧑‍⚖️ Legal Page (legal_page) */
-export type LegalPageRecordContentArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -5037,7 +5029,7 @@ export type LegalPageQueryVariables = Exact<{
 }>;
 
 
-export type LegalPageQuery = { __typename: 'Query', legalPage?: { __typename: 'LegalPageRecord', title?: string | null, slug?: string | null, lead?: string | null, content: Array<{ __typename: 'MarkdownBlockRecord', content?: string | null }> } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+export type LegalPageQuery = { __typename: 'Query', legalPage?: { __typename: 'LegalPageRecord', title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'LegalPageModelContentField', value: any } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
 
 export type TermsPageQueryVariables = Exact<{
   locale: SiteLocale;
@@ -5389,7 +5381,7 @@ export const LegalPageDocument = gql`
     slug
     lead
     content {
-      content
+      value
     }
   }
   allMarketArticles(locale: $locale) {
