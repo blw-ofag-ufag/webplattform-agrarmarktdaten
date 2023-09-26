@@ -34,6 +34,9 @@ export const Hero = (props: Props) => {
           pb: s(18),
           mb: 7,
           backgroundImage: `url(${hero})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
         }}
       >
         <ContentContainer sx={{ ml: s(8) }}>
