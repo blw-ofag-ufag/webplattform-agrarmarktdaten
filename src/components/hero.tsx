@@ -41,8 +41,8 @@ export const Hero = (props: Props) => {
       >
         <ContentContainer sx={{ ml: s(8) }}>
           <Box>
-            <Box sx={{ width: "55px", height: "3px", backgroundColor: "white" }} />
-            <Typography variant="h1" sx={{ color: "white", fontSize: "64px" }}>
+            <Box sx={{ width: "55px", height: "3px", backgroundColor: hero ? "white" : "black" }} />
+            <Typography variant="h1" sx={{ color: hero ? "white" : "black", fontSize: "64px" }}>
               {title}
             </Typography>
           </Box>
