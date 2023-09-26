@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Box } from "@mui/material";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
@@ -7,6 +7,7 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
+import { s } from "@interactivethings/swiss-federal-ci";
 
 export default function HomePage(props: GQL.HomePageQuery) {
   const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -16,21 +17,19 @@ export default function HomePage(props: GQL.HomePageQuery) {
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={homePage.title} lead={homePage.lead} />
-      <ContentContainer>
-        <Stack flexDirection="column" spacing={6}>
-          <Typography variant="h2">
+      <Box sx={{ bgcolor: "#f9f9f9" }}>
+        <ContentContainer sx={{ gap: s(8), pt: s(20) }}>
+          <Typography variant="h2" sx={{ ml: s(8), fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={homePage.markets} />
-        </Stack>
 
-        <Stack flexDirection="column" spacing={6}>
-          <Typography variant="h2">
+          <Typography variant="h2" sx={{ ml: s(8), fontWeight: 700 }}>
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
-        </Stack>
-      </ContentContainer>
+        </ContentContainer>
+      </Box>
       <Stack flexDirection="column" spacing={6}>
         <TopBlogpostsTeaser blogposts={topBlogPosts} />
       </Stack>

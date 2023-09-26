@@ -1,16 +1,10 @@
 import { Container, SxProps } from "@mui/material";
 import React from "react";
 
-export const ContentContainer = ({
-  children,
-  sx,
-}: {
-  children: React.ReactNode;
-  sx?: SxProps;
-}) => {
+export const ContentContainer = ({ children, sx }: { children: React.ReactNode; sx?: SxProps }) => {
   return (
     <Container
-      maxWidth="md"
+      maxWidth="xxxl"
       sx={{
         display: "flex",
         flexDirection: "column",

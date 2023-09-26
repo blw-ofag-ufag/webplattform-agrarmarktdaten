@@ -1,16 +1,20 @@
 import { Box, Card, Link, Typography } from "@mui/material";
 import NextLink from "next/link";
+import { s } from "@interactivethings/swiss-federal-ci";
+import { getMarketColor } from "@/domain/colors";
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
 
-export const CardsGrid = ({
-  type,
-  entries,
-}: {
+const CARD_HEIGHT = 176;
+
+interface Props {
   type: "market" | "focus";
   entries: GQL.SimpleMarketArticleFragment[] | GQL.SimpleFocusArticleFragment[];
-}) => {
+}
+
+export const CardsGrid = ({ type, entries }: Props) => {
   const locale = useLocale();
 
   return (
@@ -19,67 +23,69 @@ export const CardsGrid = ({
       sx={{
         flexWrap: "wrap",
         gap: 5,
+        mb: s(10),
       }}
     >
-      {entries.map((d) => {
-        return (
-          <Box key={d.slug} sx={{ mb: 4, listStyleType: "none" }}>
-            <NextLink
-              href={`/${type}/[slug]`}
-              as={`/${type}/${d.slug}`}
-              locale={locale}
-              passHref
-              legacyBehavior
-            >
-              <Link sx={{ textDecoration: "none" }}>
-                <GridCard type={type} title={d.title as string} />
-              </Link>
-            </NextLink>
-          </Box>
-        );
-      })}
+      <Grid
+        container
+        columnSpacing={{
+          xxs: "16px",
+          xs: "20px",
+          sm: "28px",
+          md: "36px",
+          lg: "40px",
+          xl: "48px",
+          xxl: "64px",
+          xxxl: "64px",
+        }}
+        sx={{ maxWidth: "1676px", margin: "0 auto", width: "100%" }}
+        rowGap={6}
+        columns={{ xxxl: 12, xxl: 12, xl: 12, lg: 6, md: 6, sm: 4, xs: 4, xxs: 4 }}
+      >
+        {entries.map((d) => {
+          return (
+            <Grid key={d.id} sx={{ mb: 4 }} xxxl={4} xxl={4} xl={4} lg={3} md={3} sm={4} xs={4} xxs={4}>
+              <NextLink href={`/${type}/[slug]`} as={`/${type}/${d.slug}`} locale={locale} passHref legacyBehavior>
+                <Link sx={{ textDecoration: "none" }}>
+                  <GridCard type={type} title={d.title as string} slug={d.slug} />
+                </Link>
+              </NextLink>
+            </Grid>
+          );
+        })}
+      </Grid>
     </Box>
   );
 };
 
-const CARD_WIDTH = 226;
-const CARD_HEIGHT = 280;
-
-const GridCard = ({
-  title,
-  type,
-}: {
-  title: string;
-  type: "market" | "focus";
-}) => {
+const GridCard = ({ title, type, slug }: { title: string; type: "market" | "focus"; slug?: string | null }) => {
   return type === "market" ? (
-    <MarketCard title={title} />
+    <MarketCard title={title} slug={slug} />
   ) : type === "focus" ? (
     <ThemeCard title={title} />
   ) : null;
 };
 
-const MarketCard = ({ title }: { title: string }) => {
+const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) => {
+  const marketColor = getMarketColor(slug);
   return (
     <Card
-      elevation={0}
+      elevation={4}
       sx={{
-        width: CARD_WIDTH,
+        width: "100%",
         height: CARD_HEIGHT,
-        borderTopRightRadius: "30px",
-        borderBottomLeftRadius: "30px",
-        backgroundColor: "grey.300",
+        borderRadius: s(2),
       }}
     >
+      <Box sx={{ bgcolor: marketColor, width: "100%", height: "20px", mb: s(5.5) }} />
+      <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
       <Typography
         component="h2"
         sx={{
-          mt: "30px",
-          ml: "20px",
-          fontSize: 5,
+          mt: s(2),
+          ml: s(8),
           fontWeight: "bold",
           lineHeight: "heading",
-          textTransform: "uppercase",
         }}
       >
         {title}
@@ -91,24 +97,22 @@ const MarketCard = ({ title }: { title: string }) => {
 const ThemeCard = ({ title }: { title: string }) => {
   return (
     <Card
-      elevation={0}
+      elevation={4}
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: CARD_WIDTH,
+        width: "100%",
         height: CARD_HEIGHT,
-        borderRadius: "30px",
-        backgroundColor: "grey.300",
+        borderRadius: s(2),
       }}
     >
+      <Box sx={{ bgcolor: "#ACB4BD", width: "100%", height: "20px", mb: s(5.5) }} />
+      <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
       <Typography
         component="h2"
         sx={{
-          fontSize: 5,
+          mt: s(2),
+          ml: s(8),
           fontWeight: "bold",
           lineHeight: "heading",
-          textTransform: "uppercase",
         }}
       >
         {title}
