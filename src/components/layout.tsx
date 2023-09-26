@@ -33,12 +33,7 @@ interface Props {
   alternates?: { href: string; as: string; locale: string }[];
 }
 
-export const AppLayout = ({
-  children,
-  allMarkets,
-  allFocusArticles,
-  alternates,
-}: Props) => {
+export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }: Props) => {
   const router = useRouter();
   const isXXlAndUp = useMediaQuery(b.up("xxl"));
   const { headerSections, menuSections } = React.useMemo(() => {
@@ -94,18 +89,13 @@ export const AppLayout = ({
   return (
     <>
       <LocaleSwitcher {...localeSwitcherProps} />
-      <Header
-        shortTitle="BLW"
-        longTitle="Bundesamt für Landwirtschaft"
-        rootHref="/"
-        sections={headerSections}
-      />
+      <Header shortTitle="BLW" longTitle="Bundesamt für Landwirtschaft" rootHref="/" sections={headerSections} />
       <Box sx={{ display: { xs: "none", lg: "block" } }}>
         <Menu sections={menuSections} />
       </Box>
       <Box
         sx={{
-          mt: [0, 0, "92px"],
+          mt: 4,
           mb: "92px",
           overflow: "auto",
           position: "relative",
@@ -136,9 +126,7 @@ export const AppLayout = ({
         nCols={isXXlAndUp ? 4 : 3}
       >
         <FooterSection>
-          <FooterSectionTitle
-            title={t({ id: "footer.about_us.label", message: "About Us" })}
-          />
+          <FooterSectionTitle title={t({ id: "footer.about_us.label", message: "About Us" })} />
           <FooterSectionText
             text={t({
               id: "footer.id",
@@ -149,30 +137,13 @@ export const AppLayout = ({
         </FooterSection>
 
         <FooterSection>
-          <FooterSectionTitle
-            title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })}
-          />
+          <FooterSectionTitle title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })} />
           <FooterSectionSocialMediaButtonGroup>
-            <FooterSectionSocialMediaButton
-              type="twitter"
-              href="https://www.twitter.com"
-            />
-            <FooterSectionSocialMediaButton
-              type="facebook"
-              href="https://www.facebook.com"
-            />
-            <FooterSectionSocialMediaButton
-              type="youtube"
-              href="https://www.youtube.com"
-            />
-            <FooterSectionSocialMediaButton
-              type="instagram"
-              href="https://www.instagram.com"
-            />
-            <FooterSectionSocialMediaButton
-              type="linkedin"
-              href="https://www.linkedin.com"
-            />
+            <FooterSectionSocialMediaButton type="twitter" href="https://www.twitter.com" />
+            <FooterSectionSocialMediaButton type="facebook" href="https://www.facebook.com" />
+            <FooterSectionSocialMediaButton type="youtube" href="https://www.youtube.com" />
+            <FooterSectionSocialMediaButton type="instagram" href="https://www.instagram.com" />
+            <FooterSectionSocialMediaButton type="linkedin" href="https://www.linkedin.com" />
           </FooterSectionSocialMediaButtonGroup>
           <Box
             sx={{
@@ -205,16 +176,10 @@ export const AppLayout = ({
                   message: "Further Information",
                 })}
               />
-              <Link
-                href="https://www.blw.admin.ch/blw/de/home.html"
-                sx={{ textDecoration: "none" }}
-              >
+              <Link href="https://www.blw.admin.ch/blw/de/home.html" sx={{ textDecoration: "none" }}>
                 <FooterSectionButton label="Bundesamt für Landwirtschaft" />
               </Link>
-              <Link
-                href="https://2022.agrarbericht.ch/de"
-                sx={{ textDecoration: "none" }}
-              >
+              <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
                 <FooterSectionButton label="Agrarbericht" />
               </Link>
               <Link
@@ -232,10 +197,7 @@ export const AppLayout = ({
             </FooterSection>
             <FooterSection>
               <FooterSectionTitle title="Feedback" />
-              <Link
-                href="https://www.blw.admin.ch/blw/de/home.html"
-                target="_blank"
-              >
+              <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
                 <FooterSectionButton label="Contact" />
               </Link>
             </FooterSection>
@@ -260,16 +222,10 @@ export const AppLayout = ({
                     message: "Further Information",
                   })}
                 />
-                <Link
-                  href="https://www.blw.admin.ch/blw/de/home.html"
-                  sx={{ textDecoration: "none" }}
-                >
+                <Link href="https://www.blw.admin.ch/blw/de/home.html" sx={{ textDecoration: "none" }}>
                   <FooterSectionButton label="Bundesamt für Landwirtschaft" />
                 </Link>
-                <Link
-                  href="https://2022.agrarbericht.ch/de"
-                  sx={{ textDecoration: "none" }}
-                >
+                <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
                   <FooterSectionButton label="Agrarbericht" />
                 </Link>
                 <Link
@@ -294,10 +250,7 @@ export const AppLayout = ({
                 }}
               >
                 <FooterSectionTitle title="Feedback" />
-                <Link
-                  href="https://www.blw.admin.ch/blw/de/home.html"
-                  target="_blank"
-                >
+                <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
                   <FooterSectionButton label="Contact" />
                 </Link>
               </Box>

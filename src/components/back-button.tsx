@@ -11,13 +11,8 @@ export const BackButton = () => {
   const [backRoute, setBackRoute] = useState("/");
 
   useEffect(() => {
-    const theoreticalBackRoute = router.pathname
-      .split("/")
-      .slice(0, -1)
-      .join("/");
-    const actualBackRoute = backRouteOverrides[theoreticalBackRoute] as
-      | string
-      | undefined;
+    const theoreticalBackRoute = router.pathname.split("/").slice(0, -1).join("/");
+    const actualBackRoute = backRouteOverrides[theoreticalBackRoute] as string | undefined;
     setBackRoute(actualBackRoute || theoreticalBackRoute || "/");
   }, [router.pathname]);
 
@@ -26,7 +21,7 @@ export const BackButton = () => {
       variant="text"
       onClick={() => router.push(backRoute)}
       startIcon={<SvgIcControlArrowLeft />}
-      sx={{ position: "absolute", mt: 6, ml: 4, color: "black" }}
+      sx={{ position: "absolute", mt: 0, ml: 4, color: "black" }}
     >
       <Trans id="cta.back">Geh zurück</Trans>
     </Button>
