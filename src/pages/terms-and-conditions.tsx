@@ -1,8 +1,10 @@
 import { ContentContainer } from "@/components/content-container";
-import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
+import { StructuredText } from "@/components/StructuredText";
+import { s } from "@interactivethings/swiss-federal-ci";
+import { Typography } from "@mui/material";
 
 export default function LegalPage(props: GQL.TermsPageQuery) {
   const { termsPage, allMarketArticles, allFocusArticles } = props;
@@ -10,22 +12,20 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
     return null;
   }
   return (
-    <AppLayout
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-    >
-      <Hero title={termsPage.title} lead={termsPage.lead} />
-      <ContentContainer>{/* {termsPage.content} */}</ContentContainer>
+    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+      <ContentContainer sx={{ mb: s(24), mt: s(24), maxWidth: "1096px" }}>
+        <Typography variant="h1">{termsPage.title}</Typography>
+        <Typography variant="body1">{termsPage.lead}</Typography>
+      </ContentContainer>
+      <ContentContainer sx={{ maxWidth: "1096px" }}>
+        {termsPage.content && <StructuredText data={termsPage.content} />}
+      </ContentContainer>
     </AppLayout>
   );
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const result = await client
-    .query<GQL.TermsPageQuery>(GQL.TermsPageDocument, {
-      locale: context.locale,
-    })
-    .toPromise();
+  const result = await client.query<GQL.TermsPageQuery>(GQL.TermsPageDocument, { locale: context.locale }).toPromise();
 
   if (!result.data) {
     console.error(result.error?.toString());
