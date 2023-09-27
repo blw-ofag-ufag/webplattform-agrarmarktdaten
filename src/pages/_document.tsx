@@ -19,7 +19,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         {/* PWA primary color, background of the page on Safari (cobalt[600]). */}
         <meta name="theme-color" content="2f4356" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans&display=optional" />
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
       </Head>
