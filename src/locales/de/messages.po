@@ -32,7 +32,7 @@ msgstr "2018"
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.about_us.label"
-msgstr "About Us"
+msgstr "Über uns"
 
 #. js-lingui-explicit-id
 #: src/pages/focus/[slug].tsx
@@ -137,7 +137,7 @@ msgstr "Folgen Sie Uns"
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.furtherinformation"
-msgstr "Further Information"
+msgstr "Weitere Informationen"
 
 #. js-lingui-explicit-id
 #: src/components/back-button.tsx
@@ -264,17 +264,17 @@ msgstr "Schweizer Kartoffelmarkt"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.newsletter"
-msgstr "Subscribe to newsletter"
+msgstr "Newsletter Anmeldung"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.terms"
-msgstr "Terms and Conditions"
+msgstr "AGBs"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.id"
-msgstr "The Federal Office for Agriculture FOAG is the Confederation's competence centre for all core issues relating to the agricultural sector. The FOAG is committed to ensuring that farmers produce high-quality food sustainably and with a focus on the market."
+msgstr "Das Bundesamt für Landwirtschaft BLW ist das Kompetenzzentrum des Bundes für alle Kernfragen des Agrarsektors. Das BLW setzt sich dafür ein, dass die Bäuerinnen und Bauern nachhaltig und marktorientiert hochwertige Lebensmittel produzieren."
 
 #: src/components/header.tsx
 #~ msgid "title.agricultural.market.data"

@@ -198,7 +198,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
             <FooterSection>
               <FooterSectionTitle title="Feedback" />
               <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
-                <FooterSectionButton label="Contact" />
+                <FooterSectionButton label="Feedback" />
               </Link>
             </FooterSection>
           </>
