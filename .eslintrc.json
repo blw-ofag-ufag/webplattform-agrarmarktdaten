@@ -1,8 +1,18 @@
 {
   "extends": ["next", "plugin:storybook/recommended"],
-  "plugins": ["unused-imports", "import"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["unused-imports", "import", "@typescript-eslint"],
   "rules": {
     "react/display-name": "off",
-    "unused-imports/no-unused-imports-ts": "error"
+    "unused-imports/no-unused-imports-ts": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ]
   }
 }

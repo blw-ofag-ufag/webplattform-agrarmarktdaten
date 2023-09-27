@@ -1,6 +1,9 @@
 import { ascending, range } from "d3";
 
-import { Betriebsgrössenkategorie, BioOderNicht } from "@/components/infografik/data/type";
+import {
+  Betriebsgrössenkategorie,
+  BioOderNicht,
+} from "@/components/infografik/data/type";
 
 const betriebeOrder = {
   "< 1 ha-bio": 1,
@@ -31,7 +34,7 @@ export const getBetriebeSquaresData = (betriebe: Betriebe[]) => {
 
   const squares: $FixMe[] = [];
   for (const element of filteredData) {
-    range(0, Math.round(element["perc.alle.Betriebe"] * 100)).map((x) =>
+    range(0, Math.round(element["perc.alle.Betriebe"] * 100)).map(() =>
       squares.push({
         ...element,
         BetriebsgrössenkategorieBio: `${element.Betriebsgrössenkategorie}-${element["Bio"]}`,

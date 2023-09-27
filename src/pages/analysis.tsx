@@ -14,7 +14,10 @@ export default function Analysis({
   allMarketArticles,
 }: GQL.AnalysisPageQuery) {
   return (
-    <AppLayout>
+    <AppLayout
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero
         title={analysisPage?.title as string}
         lead={analysisPage?.lead as string}

@@ -1,30 +1,34 @@
-export const getMarketColor = (slug?: string) => {
+export const getMarketColor = (slug?: string | null) => {
   switch (slug) {
     case "eggs":
     case "eier":
-      return "egg";
+      return "#ACB4BD";
     case "fleisch":
     case "meat":
-      return "meat";
+    case "fleisch":
+    case "fr-meat":
+    case "it-meat":
+      return "#F47769";
     case "fruchte-gemuse":
     case "fruits-and-vegetables":
-      return "fruit";
+      return "#ACB4BD";
     case "kartoffeln":
     case "potatoes":
-      return "potato";
+      return "#ACB4BD";
     case "milch":
     case "milk":
-      return "milk";
+      return "#6C84B5";
     case "brot-and-getreide":
     case "bread-and-grain":
-      return "grain";
+      return "#ACB4BD";
     case "speisepilze":
     case "mushrooms":
-      return "mushroom";
+      return "#ACB4BD";
     case "bio":
-    case "organic":
-      return "bio";
+      return "#ACB4BD";
+    case "feed":
+      return "#6B503E";
     default:
-      return "primary";
+      return "#ACB4BD";
   }
 };

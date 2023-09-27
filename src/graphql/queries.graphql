@@ -47,7 +47,7 @@ query LegalPage($locale: SiteLocale!) {
     slug
     lead
     content {
-      content
+      value
     }
   }
 
@@ -325,6 +325,11 @@ fragment SimpleBlogPost on BlogPostRecord {
   }
   markets {
     title
+    slug
+  }
+  focusArticles {
+    title
+    slug
   }
   _firstPublishedAt
 }
