@@ -90,7 +90,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
     <>
       <LocaleSwitcher {...localeSwitcherProps} />
       <Header shortTitle="BLW" longTitle="Bundesamt für Landwirtschaft" rootHref="/" sections={headerSections} />
-      <Box sx={{ display: { xs: "none", lg: "block" } }}>
+      <Box sx={{ display: { xxs: "none", xs: "none", lg: "block" } }}>
         <Menu sections={menuSections} />
       </Box>
       <Box
