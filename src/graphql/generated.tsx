@@ -2761,7 +2761,12 @@ export type MarkdownBlockRecordListListNonNullMultiLocaleField = {
   value: Array<MarkdownBlockRecord>;
 };
 
-export type MarketArticleModelBlocksField = DownloadTeaserBlockRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeBlockRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyBlockRecord;
+export type MarketArticleModelContentField = {
+  __typename: 'MarketArticleModelContentField';
+  blocks: Array<Scalars['String']['output']>;
+  links: Array<PowerBiReportRecord>;
+  value: Scalars['JsonField']['output'];
+};
 
 export type MarketArticleModelFilter = {
   AND?: InputMaybe<Array<InputMaybe<MarketArticleModelFilter>>>;
@@ -2774,6 +2779,7 @@ export type MarketArticleModelFilter = {
   _status?: InputMaybe<StatusFilter>;
   _unpublishingScheduledAt?: InputMaybe<PublishedAtFilter>;
   _updatedAt?: InputMaybe<UpdatedAtFilter>;
+  content?: InputMaybe<StructuredTextFilter>;
   createdAt?: InputMaybe<CreatedAtFilter>;
   id?: InputMaybe<ItemIdFilter>;
   lead?: InputMaybe<TextFilter>;
@@ -2831,7 +2837,7 @@ export type MarketArticleRecord = RecordInterface & {
   _status: ItemStatus;
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _updatedAt: Scalars['DateTime']['output'];
-  blocks: Array<MarketArticleModelBlocksField>;
+  content?: Maybe<MarketArticleModelContentField>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
   lead?: Maybe<Scalars['String']['output']>;
@@ -4305,6 +4311,20 @@ export type StringMultiLocaleField = {
   value?: Maybe<Scalars['String']['output']>;
 };
 
+/** Specifies how to filter Structured Text fields */
+export type StructuredTextFilter = {
+  /** Filter records with the specified field defined (i.e. with any value) or not [DEPRECATED] */
+  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  /** Filter records with the specified field set as blank (null or single empty paragraph) */
+  isBlank?: InputMaybe<Scalars['BooleanType']['input']>;
+  /** Filter records with the specified field present (neither null, nor empty string) */
+  isPresent?: InputMaybe<Scalars['BooleanType']['input']>;
+  /** Filter records based on a regular expression */
+  matches?: InputMaybe<StringMatchesFilter>;
+  /** Exclude records based on a regular expression */
+  notMatches?: InputMaybe<StringMatchesFilter>;
+};
+
 /** Block of type Survey Answer (survey_answer) */
 export type SurveyAnswerRecord = RecordInterface & {
   __typename: 'SurveyAnswerRecord';
@@ -4400,10 +4420,16 @@ export type Tag = {
   tag: Scalars['String']['output'];
 };
 
+export type TermsPageModelContentField = {
+  __typename: 'TermsPageModelContentField';
+  blocks: Array<Scalars['String']['output']>;
+  links: Array<Scalars['String']['output']>;
+  value: Scalars['JsonField']['output'];
+};
+
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecord = RecordInterface & {
   __typename: 'TermsPageRecord';
-  _allContentLocales?: Maybe<Array<MarkdownBlockRecordListListNonNullMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
@@ -4419,7 +4445,7 @@ export type TermsPageRecord = RecordInterface & {
   _status: ItemStatus;
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _updatedAt: Scalars['DateTime']['output'];
-  content: Array<MarkdownBlockRecord>;
+  content?: Maybe<TermsPageModelContentField>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
   lead?: Maybe<Scalars['String']['output']>;
@@ -4427,13 +4453,6 @@ export type TermsPageRecord = RecordInterface & {
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
-};
-
-
-/** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
-export type TermsPageRecordAllContentLocalesArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
-  locale?: InputMaybe<SiteLocale>;
 };
 
 
@@ -4453,13 +4472,6 @@ export type TermsPageRecordAllTitleLocalesArgs = {
 
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordSeoMetaTagsArgs = {
-  locale?: InputMaybe<SiteLocale>;
-};
-
-
-/** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
-export type TermsPageRecordContentArgs = {
-  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -5029,14 +5041,14 @@ export type LegalPageQueryVariables = Exact<{
 }>;
 
 
-export type LegalPageQuery = { __typename: 'Query', legalPage?: { __typename: 'LegalPageRecord', title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'LegalPageModelContentField', value: any } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+export type LegalPageQuery = { __typename: 'Query', legalPage?: { __typename: 'LegalPageRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'LegalPageModelContentField', value: any } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
 
 export type TermsPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
 
-export type TermsPageQuery = { __typename: 'Query', termsPage?: { __typename: 'TermsPageRecord', title?: string | null, slug?: string | null, lead?: string | null, content: Array<{ __typename: 'MarkdownBlockRecord', content?: string | null }> } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+export type TermsPageQuery = { __typename: 'Query', termsPage?: { __typename: 'TermsPageRecord', title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'TermsPageModelContentField', value: any } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
 
 export type MarketPageQueryVariables = Exact<{
   locale: SiteLocale;
@@ -5044,7 +5056,7 @@ export type MarketPageQueryVariables = Exact<{
 }>;
 
 
-export type MarketPageQuery = { __typename: 'Query', marketArticle?: { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', id: any, markdown?: string | null, description?: string | null, downloadTeaserAssets: Array<{ __typename: 'DownloadTeaserAssetRecord', id: any, title?: string | null, file?: { __typename: 'FileField', id: any, url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', id: any, externalVideo?: { __typename: 'VideoField', url: string, title: string } | null } | { __typename: 'GalleryBlockRecord', id: any, galleryAssets: Array<{ __typename: 'FileField', id: any, title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', id: any, url?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', id: any, title?: string | null, alt?: string | null, url: string } | null } | { __typename: 'MarkdownBlockRecord', id: any, content?: string | null } | { __typename: 'SurveyBlockRecord', id: any, formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', id: any, question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', id: any, answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type MarketPageQuery = { __typename: 'Query', marketArticle?: { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, content?: { __typename: 'MarketArticleModelContentField', value: any, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
 
 export type FocusArticlePageQueryVariables = Exact<{
   locale: SiteLocale;
@@ -5104,7 +5116,7 @@ export type SimpleMarketArticleFragment = { __typename: 'MarketArticleRecord', i
 
 export type SimpleFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null };
 
-export type FullMarketArticleFragment = { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', id: any, markdown?: string | null, description?: string | null, downloadTeaserAssets: Array<{ __typename: 'DownloadTeaserAssetRecord', id: any, title?: string | null, file?: { __typename: 'FileField', id: any, url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', id: any, externalVideo?: { __typename: 'VideoField', url: string, title: string } | null } | { __typename: 'GalleryBlockRecord', id: any, galleryAssets: Array<{ __typename: 'FileField', id: any, title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', id: any, url?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', id: any, title?: string | null, alt?: string | null, url: string } | null } | { __typename: 'MarkdownBlockRecord', id: any, content?: string | null } | { __typename: 'SurveyBlockRecord', id: any, formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', id: any, question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', id: any, answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
+export type FullMarketArticleFragment = { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'MarketArticleModelContentField', value: any, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
 
 export type FullFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, blocks: Array<{ __typename: 'DownloadTeaserBlockRecord', id: any, markdown?: string | null, description?: string | null, downloadTeaserAssets: Array<{ __typename: 'DownloadTeaserAssetRecord', id: any, title?: string | null, file?: { __typename: 'FileField', id: any, url: string } | null }> } | { __typename: 'ExternalVideoBlockRecord', id: any, externalVideo?: { __typename: 'VideoField', url: string, title: string } | null } | { __typename: 'GalleryBlockRecord', id: any, galleryAssets: Array<{ __typename: 'FileField', id: any, title?: string | null, url: string }> } | { __typename: 'IframeBlockRecord', id: any, url?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', id: any, title?: string | null, alt?: string | null, url: string } | null } | { __typename: 'MarkdownBlockRecord', id: any, content?: string | null } | { __typename: 'SurveyBlockRecord', id: any, formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', id: any, question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', id: any, answer?: string | null }> }> }>, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
 
@@ -5138,6 +5150,52 @@ export const SimpleFocusArticleFragmentDoc = gql`
   id
   title
   slug
+}
+    `;
+export const FullSeoFragmentDoc = gql`
+    fragment FullSEO on SeoField {
+  title
+  description
+  image {
+    id
+    url
+  }
+  twitterCard
+}
+    `;
+export const FullMarketArticleFragmentDoc = gql`
+    fragment FullMarketArticle on MarketArticleRecord {
+  id
+  title
+  slug
+  lead
+  content {
+    value
+    links {
+      __typename
+      id
+      workspace {
+        id
+        name
+        workspaceId
+      }
+      reportId
+      name
+      dataset {
+        name
+        id
+        datasetId
+        workspace {
+          workspaceId
+          name
+          id
+        }
+      }
+    }
+  }
+  seo {
+    ...FullSEO
+  }
 }
     `;
 export const DownloadTeaserBlockFragmentDoc = gql`
@@ -5211,38 +5269,6 @@ export const SurveyBlockFragmentDoc = gql`
       id
       answer
     }
-  }
-}
-    `;
-export const FullSeoFragmentDoc = gql`
-    fragment FullSEO on SeoField {
-  title
-  description
-  image {
-    id
-    url
-  }
-  twitterCard
-}
-    `;
-export const FullMarketArticleFragmentDoc = gql`
-    fragment FullMarketArticle on MarketArticleRecord {
-  id
-  title
-  slug
-  lead
-  blocks {
-    __typename
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...ImageTeaserBlock
-    ...MarkdownBlock
-    ...SurveyBlock
-  }
-  seo {
-    ...FullSEO
   }
 }
     `;
@@ -5377,6 +5403,7 @@ export function useHomePageQuery(options: Omit<Urql.UseQueryArgs<HomePageQueryVa
 export const LegalPageDocument = gql`
     query LegalPage($locale: SiteLocale!) {
   legalPage(locale: $locale) {
+    id
     title
     slug
     lead
@@ -5404,7 +5431,7 @@ export const TermsPageDocument = gql`
     slug
     lead
     content {
-      content
+      value
     }
   }
   allMarketArticles(locale: $locale) {
@@ -5440,13 +5467,6 @@ export const MarketPageDocument = gql`
   }
 }
     ${FullMarketArticleFragmentDoc}
-${DownloadTeaserBlockFragmentDoc}
-${ExternalVideoBlockFragmentDoc}
-${GalleryBlockFragmentDoc}
-${IframeBlockFragmentDoc}
-${ImageTeaserBlockFragmentDoc}
-${MarkdownBlockFragmentDoc}
-${SurveyBlockFragmentDoc}
 ${FullSeoFragmentDoc}
 ${SimpleMarketArticleFragmentDoc}
 ${SimpleFocusArticleFragmentDoc}

@@ -43,6 +43,7 @@ query HomePage($locale: SiteLocale!) {
 
 query LegalPage($locale: SiteLocale!) {
   legalPage(locale: $locale) {
+    id
     title
     slug
     lead
@@ -66,7 +67,7 @@ query TermsPage($locale: SiteLocale!) {
     slug
     lead
     content {
-      content
+      value
     }
   }
 
@@ -278,15 +279,29 @@ fragment FullMarketArticle on MarketArticleRecord {
   title
   slug
   lead
-  blocks {
-    __typename
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...ImageTeaserBlock
-    ...MarkdownBlock
-    ...SurveyBlock
+  content {
+    value
+    links {
+      __typename
+      id
+      workspace {
+        id
+        name
+        workspaceId
+      }
+      reportId
+      name
+      dataset {
+        name
+        id
+        datasetId
+        workspace {
+          workspaceId
+          name
+          id
+        }
+      }
+    }
   }
   seo {
     ...FullSEO
