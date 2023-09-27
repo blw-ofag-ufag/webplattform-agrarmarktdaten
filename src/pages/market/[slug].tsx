@@ -1,18 +1,15 @@
-import { Trans } from "@lingui/macro";
-import { Stack, Typography } from "@mui/material";
 import { Hero } from "@/components/hero";
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { AppLayout } from "@/components/layout";
-
+import { StructuredText } from "@/components/StructuredText";
 import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
-  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } =
-    props;
+  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
 
   const alternates = marketArticle?._allSlugLocales?.map((loc) => {
     return {
@@ -25,24 +22,16 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
   if (!marketArticle?.title || !marketArticle?.lead) {
     return null;
   }
-
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-    >
-      <ContentContainer sx={{ mt: 7 }}>
+    <AppLayout alternates={alternates} allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+      <ContentContainer sx={{ maxWidth: "1096px", mt: 7 }}>
         <Hero title={marketArticle.title} lead={marketArticle.lead} />
-        <Stack flexDirection="column" spacing={6}>
-          <Typography variant="h5">
-            <Trans id="homepage.section.latestBlogPosts">
-              Neuste Blogbeiträge
-            </Trans>
-          </Typography>
-          <BlogPostsGrid blogPosts={topBlogPosts} />
-        </Stack>
       </ContentContainer>
+      <ContentContainer sx={{ maxWidth: "1096px" }}>
+        {marketArticle.content && <StructuredText data={marketArticle.content} />}
+      </ContentContainer>
+
+      <BlogPostsGrid blogPosts={topBlogPosts} />
     </AppLayout>
   );
 }
@@ -72,10 +61,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const result = await client
-    .query<GQL.AllMarketArticlesSlugLocalesQuery>(
-      GQL.AllMarketArticlesSlugLocalesDocument,
-      {}
-    )
+    .query<GQL.AllMarketArticlesSlugLocalesQuery>(GQL.AllMarketArticlesSlugLocalesDocument, {})
     .toPromise();
 
   if (!result.data) {

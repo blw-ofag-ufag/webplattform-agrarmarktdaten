@@ -2,6 +2,8 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { StructuredText as ST, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
 import { isHeading, isParagraph } from "datocms-structured-text-utils";
 import { Typography } from "@mui/material";
+import { PowerBIReport } from "@/components/powerbi-report";
+import * as GQL from "@/graphql";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
@@ -29,6 +31,21 @@ const StructuredText = (props: Props) => {
           );
         }),
       ]}
+      renderInlineRecord={({ record }) => {
+        switch (record.__typename) {
+          case "PowerBiReportRecord":
+            const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
+            return (
+              <PowerBIReport
+                datasetId={powerBiReport.dataset?.datasetId ?? ""}
+                reportId={powerBiReport?.reportId ?? ""}
+                reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
+              />
+            );
+          default:
+            return null;
+        }
+      }}
     />
   );
 };
