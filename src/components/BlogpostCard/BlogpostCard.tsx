@@ -17,7 +17,7 @@ export const BlogpostCard = (props: GQL.SimpleBlogPostFragment) => {
 
   return (
     <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-      <Box ref={ref} sx={{ maxWidth: "100%", boxShadow: e[6], borderRadius: s(2), pb: s(9) }}>
+      <Box ref={ref} sx={{ maxWidth: "100%", boxShadow: e[6], borderRadius: s(2), pb: s(9), cursor: "pointer" }}>
         <Box
           sx={{
             position: "relative",

@@ -3,10 +3,10 @@ import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { AppLayout } from "@/components/layout";
 import { StructuredText } from "@/components/StructuredText";
-import { BlogPostsGrid } from "@/components/blog/BlogPost";
 import { ContentContainer } from "@/components/content-container";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
+import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -31,7 +31,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
         {marketArticle.content && <StructuredText data={marketArticle.content} />}
       </ContentContainer>
 
-      <BlogPostsGrid blogPosts={topBlogPosts} />
+      <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );
 }
