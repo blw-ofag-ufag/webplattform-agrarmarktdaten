@@ -30,9 +30,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </ContentContainer>
       </Box>
-      <Stack flexDirection="column" spacing={6}>
-        <TopBlogpostsTeaser blogposts={topBlogPosts} />
-      </Stack>
+      <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );
 }
