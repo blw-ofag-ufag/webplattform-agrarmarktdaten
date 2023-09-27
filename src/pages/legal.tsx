@@ -26,11 +26,7 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const result = await client
-    .query<GQL.LegalPageQuery>(GQL.LegalPageDocument, {
-      locale: context.locale,
-    })
-    .toPromise();
+  const result = await client.query<GQL.LegalPageQuery>(GQL.LegalPageDocument, { locale: context.locale }).toPromise();
 
   if (!result.data) {
     console.error(result.error?.toString());
