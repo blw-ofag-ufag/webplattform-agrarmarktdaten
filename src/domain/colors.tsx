@@ -1,33 +1,50 @@
 export const getMarketColor = (slug?: string | null) => {
   switch (slug) {
-    case "eggs":
-    case "eier":
-      return "#ACB4BD";
-    case "fleisch":
-    case "meat":
-    case "fleisch":
-    case "fr-meat":
-    case "it-meat":
-      return "#F47769";
-    case "fruchte-gemuse":
-    case "fruits-and-vegetables":
-      return "#ACB4BD";
-    case "kartoffeln":
-    case "potatoes":
-      return "#ACB4BD";
     case "milch":
+    case "lait":
+    case "latte":
     case "milk":
       return "#6C84B5";
+    case "milch-und-fleischersatzprodukte":
+    case "lait-et-substituts-de-viande":
+    case "sostituti-del-latte-e-della-carne":
+    case "milk-and-meat-substitutes":
+      return "#B0BDD7";
+    case "fruchte-gemuse":
+    case "fruits-et-legumes":
+    case "frutta-e-verdura":
+    case "fruits-and-vegetables":
+      return "#A9D18D";
+    case "fleisch":
+    case "viande":
+    case "carne":
+    case "meat":
+      return "#F47769";
     case "brot-and-getreide":
-    case "bread-and-grain":
-      return "#ACB4BD";
-    case "speisepilze":
-    case "mushrooms":
-      return "#ACB4BD";
-    case "bio":
-      return "#ACB4BD";
+    case "pain-et-ceraales":
+    case "pane-e-cereali":
+    case "bread-and-cereals":
+      return "#F9B067";
+    case "eier":
+    case "oeufs":
+    case "uova":
+    case "eggs":
+      return "#EDD15A";
+    case "futtermittel":
+    case "alimentation":
+    case "alimentazione":
     case "feed":
-      return "#6B503E";
+      return "#6B503F";
+    case "kartoffeln":
+    case "pommes-de-terre":
+    case "patate":
+    case "potatoes":
+      return "#9C7958";
+    case "olsaaten":
+    case "graines-oleagineuses":
+    case "semi-oleosi":
+    case "oil-seeds":
+      return "#AA8F1F";
     default:
       return "#ACB4BD";
   }

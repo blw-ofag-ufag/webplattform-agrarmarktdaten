@@ -39,7 +39,7 @@ export const Hero = (props: Props) => {
           backgroundPosition: "center",
         }}
       >
-        <ContentContainer sx={{ ml: s(8) }}>
+        <ContentContainer sx={{ ml: s(8), maxWidth: "1096px" }}>
           <Box>
             <Box sx={{ width: "55px", height: "3px", backgroundColor: hero ? "white" : "black" }} />
             <Typography variant="h1" sx={{ color: hero ? "white" : "black", fontSize: "64px" }}>
