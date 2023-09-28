@@ -137,14 +137,28 @@ query MethodsPage($locale: SiteLocale!) {
       ...FullSEO
     }
     content {
-      __typename
-      ...DownloadTeaserBlock
-      ...ExternalVideoBlock
-      ...GalleryBlock
-      ...IframeBlock
-      ...ImageTeaserBlock
-      ...MarkdownBlock
-      ...SurveyBlock
+      value
+      links {
+        __typename
+        id
+        workspace {
+          id
+          name
+          workspaceId
+        }
+        reportId
+        name
+        dataset {
+          name
+          id
+          datasetId
+          workspace {
+            workspaceId
+            name
+            id
+          }
+        }
+      }
     }
   }
 
@@ -313,15 +327,29 @@ fragment FullFocusArticle on FocusArticleRecord {
   title
   slug
   lead
-  blocks {
-    __typename
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...ImageTeaserBlock
-    ...MarkdownBlock
-    ...SurveyBlock
+  content {
+    value
+    links {
+      __typename
+      id
+      workspace {
+        id
+        name
+        workspaceId
+      }
+      reportId
+      name
+      dataset {
+        name
+        id
+        datasetId
+        workspace {
+          workspaceId
+          name
+          id
+        }
+      }
+    }
   }
   seo {
     ...FullSEO
