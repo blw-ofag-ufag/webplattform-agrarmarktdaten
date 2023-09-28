@@ -2,7 +2,7 @@ import { Box, Card, Link, Typography } from "@mui/material";
 import NextLink from "next/link";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { getMarketColor } from "@/domain/colors";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import Grid from "@mui/material/Unstable_Grid2";
 
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
