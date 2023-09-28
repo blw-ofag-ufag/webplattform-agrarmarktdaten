@@ -89,9 +89,21 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
   return (
     <>
       <LocaleSwitcher {...localeSwitcherProps} />
-      <Header shortTitle="BLW" longTitle="Bundesamt für Landwirtschaft" rootHref="/" sections={headerSections} />
-      <Box sx={{ display: { xxs: "none", xs: "none", lg: "block" } }}>
-        <Menu sections={menuSections} />
+      <Box sx={{ borderBottom: `1px solid ${c.monochrome[200]}` }}>
+        <Box sx={{ maxWidth: "1920px", margin: "0 auto" }}>
+          <Header
+            shortTitle="BLW"
+            longTitle="Bundesamt für Landwirtschaft"
+            rootHref="/"
+            sections={headerSections}
+            sx={{ borderBottom: "none" }}
+          />
+        </Box>
+      </Box>
+      <Box sx={{ borderBottom: `1px solid ${c.monochrome[200]}`, display: { xxs: "none", xs: "none", lg: "block" } }}>
+        <Box sx={{ maxWidth: "1920px", margin: "0 auto" }}>
+          <Menu sx={{ borderBottom: "none" }} sections={menuSections} />
+        </Box>
       </Box>
       <Box
         sx={{
@@ -105,6 +117,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
         {children}
       </Box>
       <Footer
+        ContentWrapperProps={{ sx: { maxWidth: "1920px" } }}
         bottomLinks={[
           {
             title: t({ id: "footer.impressum", message: "Impressum" }),
