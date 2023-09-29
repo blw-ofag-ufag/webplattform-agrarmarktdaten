@@ -608,9 +608,13 @@ const Results = ({
   );
 };
 
-const SafeHydrate = ({ children }: { children: React.ReactElement }) => {
-  return typeof window === "undefined" ? null : children;
-};
+export function SafeHydrate({ children }: { children: React.ReactNode }) {
+  const [display, setDisplay] = useState(false);
+  useEffect(() => {
+    setDisplay(true);
+  }, []);
+  return display ? <>{children}</> : null;
+}
 
 export default function DataBrowser() {
   const indicator = useCurrentIndicator();
