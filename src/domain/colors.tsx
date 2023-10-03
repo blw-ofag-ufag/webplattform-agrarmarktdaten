@@ -20,7 +20,7 @@ export const getMarketColor = (slug?: string | null) => {
     case "carne":
     case "meat":
       return "#F47769";
-    case "brot-and-getreide":
+    case "brot-und-getreide":
     case "pain-et-ceraales":
     case "pane-e-cereali":
     case "bread-and-cereals":
