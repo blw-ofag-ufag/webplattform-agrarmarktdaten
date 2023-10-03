@@ -20,6 +20,7 @@ import { Box, Link, useMediaQuery, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
+import { useStickyBox } from "react-sticky-box";
 
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
@@ -36,6 +37,7 @@ interface Props {
 export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }: Props) => {
   const router = useRouter();
   const isXXlAndUp = useMediaQuery(b.up("xxl"));
+  const stickyRef = useStickyBox({ offsetTop: 0 });
   const { headerSections, menuSections } = React.useMemo(() => {
     const menuSections: MenuProps["sections"] = [
       {
@@ -100,19 +102,20 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
           />
         </Box>
       </Box>
-      <Box sx={{ borderBottom: `1px solid ${c.monochrome[200]}`, display: { xxs: "none", xs: "none", lg: "block" } }}>
+      <Box
+        ref={stickyRef}
+        sx={{
+          borderBottom: `1px solid ${c.monochrome[200]}`,
+          display: { xxs: "none", xs: "none", lg: "block" },
+          backgroundColor: "white",
+          zIndex: 10,
+        }}
+      >
         <Box sx={{ maxWidth: "1920px", margin: "0 auto" }}>
           <Menu sx={{ borderBottom: "none" }} sections={menuSections} />
         </Box>
       </Box>
-      <Box
-        sx={{
-          mt: 4,
-          mb: "92px",
-          overflow: "auto",
-          position: "relative",
-        }}
-      >
+      <Box sx={{ mb: "92px", position: "relative" }}>
         {router.pathname !== "/" ? <BackButton /> : null}
         {children}
       </Box>
