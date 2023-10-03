@@ -51,6 +51,8 @@ export type AgDataDimension = {
 const agDataBase = "https://lindas.admin.ch/foag/agricultural-market-data";
 const agDataDim = "https://agriculture.ld.admin.ch/foag/property";
 
+const agDateDim = "http://schema.org/startDate";
+
 export const agDataDimensions: { [key: string]: AgDataDimension } = {
   "https://agriculture.ld.admin.ch/foag/property/date": {
     name: "date",
@@ -142,8 +144,6 @@ export const queryObservationIris = (
     return undefined;
   }
 
-  console.log(filters.years.value[0], filters.years.value[1]);
-
   // TODO: Improve ORDER BY, currently 2000 will be before 1999.
   // Coverting to string makes it WAY faster than when sorting by date.
   // Retrieve date iri in more elegant way?
@@ -156,7 +156,7 @@ export const queryObservationIris = (
     SELECT ?observation
     WHERE {
       ${getCubesObservations(cubes)}
-      ?observation ${agDataDimensions[`${agDataDim}/date`].iri} ?date .
+      ?observation <${agDateDim}> ?date .
 
       BIND(
         IF(
@@ -170,7 +170,7 @@ export const queryObservationIris = (
         ) as ?fullDate
       )
       
-      # FILTER(YEAR(?fullDate) >= ${filters.years.value[0]} && YEAR(?fullDate) <= ${filters.years.value[1]})
+      FILTER(YEAR(?fullDate) >= ${filters.years.value[0]} && YEAR(?fullDate) <= ${filters.years.value[1]})
     }
     ORDER BY STR(?date)
     LIMIT 100
@@ -316,7 +316,7 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
     FROM <${agDataBase}>
     WHERE {
       ${getCubesObservations(cubes)}
-      ?observation ${agDataDimensions[`${agDataDim}/date`].iri} ?date .
+      ?observation ${agDateDim} ?date .
     }
   `;
 

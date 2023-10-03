@@ -543,8 +543,9 @@ const Results = ({
     enabled: !fetchingDimensions,
   });
 
-  const { data: observationIris, fetching: fetchingObservationIris } = observationIrisQuery;
   console.log(observationIrisQuery);
+
+  const { data: observationIris, fetching: fetchingObservationIris } = observationIrisQuery;
   const observationsQuery = useSparql<Observation[]>({
     query: queryObservations(cubes?.length!, observationIris!, dimensions, indicator?.dimensionIri!, locale),
     enabled: !fetchingObservationIris,
@@ -644,8 +645,8 @@ export default function DataBrowser() {
         return;
       }
       const { min, max } = data[0];
-      const minYear = parseInt(min.replace("https://agriculture.ld.admin.ch/foag/date/", "").slice(0, 4));
-      const maxYear = parseInt(max.replace("https://agriculture.ld.admin.ch/foag/date/", "").slice(0, 4));
+      const minYear = parseInt(min.slice(0, 4));
+      const maxYear = parseInt(max.slice(0, 4));
       setYearsAtom({
         min: minYear,
         max: maxYear,
