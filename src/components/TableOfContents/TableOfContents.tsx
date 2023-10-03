@@ -10,7 +10,7 @@ import { useAtomValue } from "jotai";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
-  activeColor: string;
+  activeColor?: string;
   sx?: SxProps;
 }
 
@@ -32,7 +32,7 @@ const extractH6s = (data?: StructuredTextGraphQlResponse) => {
 };
 
 const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
-  const { data, activeColor, sx } = props;
+  const { data, activeColor = "#ACB4BD", sx } = props;
   const toc = React.useMemo(() => extractH6s(data), [data]);
 
   const activeSection = useAtomValue(sectionAtom);
