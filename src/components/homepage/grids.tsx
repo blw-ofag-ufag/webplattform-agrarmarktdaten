@@ -18,14 +18,7 @@ export const CardsGrid = ({ type, entries }: Props) => {
   const locale = useLocale();
 
   return (
-    <Box
-      display="flex"
-      sx={{
-        flexWrap: "wrap",
-        gap: 5,
-        mb: s(10),
-      }}
-    >
+    <Box display="flex" sx={{ flexWrap: "wrap", gap: 5, mb: s(10) }}>
       <Grid
         container
         columnSpacing={{
@@ -67,7 +60,7 @@ const GridCard = ({ title, type, slug }: { title: string; type: "market" | "focu
 };
 
 const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) => {
-  const marketColor = getMarketColor(slug);
+  const [color, bgColor] = getMarketColor(slug);
   return (
     <Card
       elevation={4}
@@ -75,19 +68,12 @@ const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) =>
         width: "100%",
         height: CARD_HEIGHT,
         borderRadius: s(2),
+        ":hover": { backgroundColor: bgColor, color },
       }}
     >
-      <Box sx={{ bgcolor: marketColor, width: "100%", height: "20px", mb: s(5.5) }} />
-      <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
-      <Typography
-        component="h2"
-        sx={{
-          mt: s(2),
-          ml: s(8),
-          fontWeight: "bold",
-          lineHeight: "heading",
-        }}
-      >
+      <Box sx={{ bgcolor: bgColor, width: "100%", height: "20px", mb: s(5.5) }} />
+      <Box sx={{ width: "48px", height: "3px", bgcolor: color, ml: s(8) }} />
+      <Typography component="h2" sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}>
         {title}
       </Typography>
     </Card>
@@ -98,23 +84,11 @@ const ThemeCard = ({ title }: { title: string }) => {
   return (
     <Card
       elevation={4}
-      sx={{
-        width: "100%",
-        height: CARD_HEIGHT,
-        borderRadius: s(2),
-      }}
+      sx={{ width: "100%", height: CARD_HEIGHT, borderRadius: s(2), ":hover": { backgroundColor: "#ACB4BD" } }}
     >
       <Box sx={{ bgcolor: "#ACB4BD", width: "100%", height: "20px", mb: s(5.5) }} />
       <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
-      <Typography
-        component="h2"
-        sx={{
-          mt: s(2),
-          ml: s(8),
-          fontWeight: "bold",
-          lineHeight: "heading",
-        }}
-      >
+      <Typography component="h2" sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}>
         {title}
       </Typography>
     </Card>
