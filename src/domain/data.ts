@@ -4,49 +4,9 @@ export type CheckboxValue = { label: string; name: string; value: boolean };
 
 export const markets: CheckboxValue[] = [
   {
-    label: "Eggs",
-    name: "egg",
+    label: "Milk and Dairy",
+    name: "MilkDairyProducts",
     value: true,
-  },
-  {
-    label: "Meat",
-    name: "meat",
-    value: true,
-  },
-  {
-    label: "Fruits",
-    name: "fruits",
-    value: false,
-  },
-  {
-    label: "Animal feed",
-    name: "animal",
-    value: false,
-  },
-  {
-    label: "Vegetable",
-    name: "vegetable",
-    value: false,
-  },
-  {
-    label: "Cereals/Flour",
-    name: "cereals/flour",
-    value: false,
-  },
-  {
-    label: "Milk",
-    name: "milk",
-    value: false,
-  },
-  {
-    label: "Potatoes",
-    name: "potatoes",
-    value: false,
-  },
-  {
-    label: "Oilseeds",
-    name: "oilseeds",
-    value: false,
   },
 ];
 
@@ -85,29 +45,22 @@ export const indicators: (CheckboxValue & {
   dimensionIri: string;
 })[] = [
   {
-    label: "Prices",
-    name: "prices",
+    label: "Price",
+    name: "price",
     value: true,
-    dimensionIri: "<http://schema.org/price>",
+    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
   },
   {
-    label: "Amounts",
-    name: "amounts",
+    label: "Quantity",
+    name: "quantity",
     value: false,
-    dimensionIri: "<http://schema.org/amount>",
-  },
-  {
-    label: "Areas",
-    name: "areas",
-    value: false,
-    dimensionIri: "<http://schema.org/areas>",
+    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/quantity>",
   },
   {
     label: "Index",
     name: "index",
     value: false,
-    dimensionIri:
-      "<https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/priceIndex>",
+    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/index>",
   },
 ];
 

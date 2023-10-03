@@ -27,8 +27,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { PrimitiveAtom, useAtom, useSetAtom } from "jotai";
-import React, { SyntheticEvent, useMemo, useState } from "react";
+import { PrimitiveAtom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import React, { SyntheticEvent, useEffect, useMemo, useState } from "react";
 
 import DebugQuery from "@/components/debug-query";
 import FilterAccordion from "@/components/filter-accordion";
@@ -518,7 +518,7 @@ const useCurrentIndicator = () => {
 };
 
 const useFilters = () => {
-  const [years] = useAtom(yearAtom);
+  const years = useAtomValue(yearAtom);
   return {
     years,
   };
@@ -542,7 +542,9 @@ const Results = ({
     query: queryObservationIris(cubes, filters),
     enabled: !fetchingDimensions,
   });
+
   const { data: observationIris, fetching: fetchingObservationIris } = observationIrisQuery;
+  console.log(observationIrisQuery);
   const observationsQuery = useSparql<Observation[]>({
     query: queryObservations(cubes?.length!, observationIris!, dimensions, indicator?.dimensionIri!, locale),
     enabled: !fetchingObservationIris,
@@ -628,10 +630,12 @@ export default function DataBrowser() {
     }),
     enabled: !!indicator?.dimensionIri,
   });
+
   const dimensionsQuery = useSparql<Dimension[]>({
     query: queryDimensions(cubesQuery.data),
     enabled: !!(cubesQuery?.data && cubesQuery.data.length > 0),
   });
+
   const yearsQuery = useSparql<{ min: string; max: string }[]>({
     query: queryDateExtent(cubesQuery.data),
     enabled: !!(dimensionsQuery?.data && dimensionsQuery.data.length > 0),
@@ -640,8 +644,8 @@ export default function DataBrowser() {
         return;
       }
       const { min, max } = data[0];
-      const minYear = parseInt(min.slice(0, 4));
-      const maxYear = parseInt(max.slice(0, 4));
+      const minYear = parseInt(min.replace("https://agriculture.ld.admin.ch/foag/date/", "").slice(0, 4));
+      const maxYear = parseInt(max.replace("https://agriculture.ld.admin.ch/foag/date/", "").slice(0, 4));
       setYearsAtom({
         min: minYear,
         max: maxYear,
