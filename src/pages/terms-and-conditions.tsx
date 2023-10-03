@@ -3,7 +3,6 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { s } from "@interactivethings/swiss-federal-ci";
 import { Typography } from "@mui/material";
 
 export default function LegalPage(props: GQL.TermsPageQuery) {
@@ -13,7 +12,7 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <ContentContainer sx={{ mb: s(24), mt: s(24), maxWidth: "1096px" }}>
+      <ContentContainer sx={{ mb: "96px", mt: "96px", maxWidth: "1096px" }}>
         <Typography variant="h1">{termsPage.title}</Typography>
         <Typography variant="body1">{termsPage.lead}</Typography>
       </ContentContainer>

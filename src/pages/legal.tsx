@@ -4,7 +4,6 @@ import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
 import { ContentContainer } from "@/components/content-container";
 import { Typography } from "@mui/material";
-import { s } from "@interactivethings/swiss-federal-ci";
 
 export default function LegalPage(props: GQL.LegalPageQuery) {
   const { legalPage, allMarketArticles, allFocusArticles } = props;
@@ -13,7 +12,7 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <ContentContainer sx={{ mb: s(24), mt: s(24), maxWidth: "1096px" }}>
+      <ContentContainer sx={{ mb: "96px", mt: "96px", maxWidth: "1096px" }}>
         <Typography variant="h1">{legalPage.title}</Typography>
         <Typography variant="body1">{legalPage.lead}</Typography>
       </ContentContainer>
