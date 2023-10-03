@@ -7266,12 +7266,21 @@ datocms-listen@^0.1.9:
   dependencies:
     "@0no-co/graphql.web" "^1.0.1"
 
-datocms-structured-text-generic-html-renderer@^2.0.1:
+datocms-structured-text-generic-html-renderer@^2.0.1, datocms-structured-text-generic-html-renderer@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/datocms-structured-text-generic-html-renderer/-/datocms-structured-text-generic-html-renderer-2.0.4.tgz#df50488b486a20f45583c2e685998873c843c1dc"
   integrity sha512-Rv5Y1eC9NZXNSz3FHvHGFvGnKEEbvG1kQWlylpCSoeDBZPBwSWAFD/ixIAOfa8Yk1EVpmoQd3KQd725WKYJwRQ==
   dependencies:
     datocms-structured-text-utils "^2.0.4"
+
+datocms-structured-text-to-html-string@^2.1.11:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/datocms-structured-text-to-html-string/-/datocms-structured-text-to-html-string-2.1.11.tgz#2b47b994c3ecb0590e0f2c83c381fd4319c8a2cd"
+  integrity sha512-chEdtfVhkSC39hkFIuKeblFfZ9DnnwF8a9QK9xjIkhcXDBlKBt4f/cc7BTx+oBjDuCiDSdcoHP8TdU/Jdh7+Mg==
+  dependencies:
+    datocms-structured-text-generic-html-renderer "^2.0.4"
+    datocms-structured-text-utils "^2.0.4"
+    vhtml "^2.2.0"
 
 datocms-structured-text-utils@^2.0.1, datocms-structured-text-utils@^2.0.4:
   version "2.0.4"
@@ -12586,6 +12595,11 @@ react-side-effect@^1.0.2:
   dependencies:
     shallowequal "^1.0.1"
 
+react-sticky-box@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-sticky-box/-/react-sticky-box-2.0.4.tgz#ec5f7f890465bcc13288939044765d818f3503d3"
+  integrity sha512-EcnT4fpyyrBwyy5tsWViBTFBMsJZijDC78s2D/GlqrKuU0vsmW+jNc/Ubs1C4/HF/YmTZ90Y5GIGLQMzScQQbA==
+
 react-string-replace@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-string-replace/-/react-string-replace-1.1.1.tgz#8413a598c60e397fe77df3464f2889f00ba25989"
@@ -14529,6 +14543,11 @@ vfile@^5.0.0:
     is-buffer "^2.0.0"
     unist-util-stringify-position "^3.0.0"
     vfile-message "^3.0.0"
+
+vhtml@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vhtml/-/vhtml-2.2.0.tgz#369e6823ed6c32cbb9f6e33395bae7c65faa014c"
+  integrity sha512-TPXrXrxBOslRUVnlVkiAqhoXneiertIg86bdvzionrUYhEuiROvyPZNiiP6GIIJ2Q7oPNVyEtIx8gMAZZE9lCQ==
 
 vm-browserify@^1.1.2:
   version "1.1.2"
