@@ -230,7 +230,6 @@ export const queryObservations = (
 };
 
 export const queryPossibleCubes = ({ indicator, markets }: { indicator: string; markets: string[] }) => {
-  console.log(indicator, markets);
   const res = `
     PREFIX cube: <https://cube.link/>
     PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -249,8 +248,6 @@ export const queryPossibleCubes = ({ indicator, markets }: { indicator: string; 
       )
     }
   `;
-
-  console.log(res);
 
   return res;
 };

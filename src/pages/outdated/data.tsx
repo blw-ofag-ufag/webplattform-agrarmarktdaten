@@ -62,7 +62,7 @@ import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
 import blwTheme from "@/theme/blw";
 
-import useSparql, { SparqlQueryResult } from "../api/use-sparql";
+import useSparql, { SparqlQueryResult, useCube } from "../api/use-sparql";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -543,8 +543,6 @@ const Results = ({
     enabled: !fetchingDimensions,
   });
 
-  console.log(observationIrisQuery);
-
   const { data: observationIris, fetching: fetchingObservationIris } = observationIrisQuery;
   const observationsQuery = useSparql<Observation[]>({
     query: queryObservations(cubes?.length!, observationIris!, dimensions, indicator?.dimensionIri!, locale),
@@ -623,6 +621,9 @@ export default function DataBrowser() {
   const indicator = useCurrentIndicator();
   const setYearsAtom = useSetAtom(yearAtom);
   const [markets] = useAtom(marketsAtom);
+
+  const a = useCube();
+  console.log(a);
 
   const cubesQuery = useSparql<Cube[]>({
     query: queryPossibleCubes({

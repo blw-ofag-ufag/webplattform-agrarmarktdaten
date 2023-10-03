@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { Cube, Source } from "rdf-cube-view-query";
+import rdf from "rdf-ext";
+import * as ns from "../../lib/namespace";
 
 export type UseQueryOptions<T> = {
   enabled: boolean;
@@ -73,10 +76,7 @@ const useQuery = <T extends unknown>({
 const useSparql = <T extends unknown>({
   query,
   ...options
-}: { query?: string } & Omit<
-  UseQueryOptions<T>,
-  "key" | "fetch"
->): SparqlQueryResult<T> => {
+}: { query?: string } & Omit<UseQueryOptions<T>, "key" | "fetch">): SparqlQueryResult<T> => {
   const res = useQuery<T>({
     key: query || "",
     fetch: fetchSparql,
@@ -87,3 +87,26 @@ const useSparql = <T extends unknown>({
 };
 
 export default useSparql;
+
+const source = new Source({
+  endpointUrl: "http://test.lindas.admin.ch/query",
+  sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
+});
+
+export const useCube = () => {
+  const [cubes, setCubes] = useState<Cube[]>();
+
+  useEffect(() => {
+    const run = async () => {
+      try {
+        const cubes = await source.cubes();
+        console.log(cubes.map((cube) => cube.dimensions.map((d) => d.minExclusive)));
+        setCubes(cubes);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    run();
+  }, []);
+  return { cubes };
+};
