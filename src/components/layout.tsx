@@ -195,7 +195,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
           sections={menuSections}
         />
       </Box>
-      <Box sx={{ pb: "92px", position: "relative" }}>
+      <Box sx={{ position: "relative" }}>
         {router.pathname !== "/" ? <BackButton /> : null}
         {children}
       </Box>

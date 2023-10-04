@@ -17,7 +17,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} color="#ffffff" />
-      <Box sx={{ bgcolor: "#f9f9f9" }}>
+      <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <ContentContainer sx={{ gap: s(8), pt: s(20) }}>
           <Typography variant="h2" sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
