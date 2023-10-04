@@ -91,16 +91,65 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
   return (
     <>
       <LocaleSwitcher {...localeSwitcherProps} />
-      <Box sx={{ borderBottom: `1px solid ${c.monochrome[200]}` }}>
-        <Box sx={{ maxWidth: "1920px", margin: "0 auto" }}>
-          <Header
-            shortTitle="BLW"
-            longTitle="Bundesamt für Landwirtschaft"
-            rootHref="/"
-            sections={headerSections}
-            sx={{ borderBottom: "none" }}
-          />
-        </Box>
+      <Box
+        sx={{
+          borderBottom: `1px solid ${c.monochrome[200]}`,
+          [b.up("lg")]: { display: "flex", justifyContent: "center" },
+        }}
+      >
+        <Header
+          shortTitle="BLW"
+          longTitle="Bundesamt für Landwirtschaft"
+          rootHref="/"
+          sections={headerSections}
+          ContentWrapperProps={{
+            sx: {
+              [b.only("xxxl")]: {
+                px: s(3),
+              },
+              [b.only("xxl")]: {
+                px: s(3),
+              },
+              [b.only("xl")]: {
+                px: s(3),
+              },
+              [b.only("lg")]: {
+                px: s(3),
+              },
+              [b.only("md")]: {
+                px: s(3),
+              },
+            },
+          }}
+          sx={{
+            borderBottom: "none",
+            px: 0,
+            [b.only("xxxl")]: {
+              maxWidth: "1676px",
+            },
+            [b.only("xxl")]: {
+              maxWidth: "1544px",
+            },
+            [b.only("xl")]: {
+              maxWidth: "1152px",
+            },
+            [b.only("lg")]: {
+              maxWidth: "928px",
+            },
+            [b.only("md")]: {
+              maxWidth: "100%",
+            },
+            [b.only("sm")]: {
+              maxWidth: "100%",
+            },
+            [b.only("xs")]: {
+              maxWidth: "100%",
+            },
+            [b.down("xxs")]: {
+              maxWidth: "100%",
+            },
+          }}
+        />
       </Box>
       <Box
         ref={stickyRef}
@@ -111,11 +160,42 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
           zIndex: 10,
         }}
       >
-        <Box sx={{ maxWidth: "1920px", margin: "0 auto" }}>
-          <Menu sx={{ borderBottom: "none" }} sections={menuSections} />
-        </Box>
+        <Menu
+          sx={{ borderBottom: "none" }}
+          ContentWrapperProps={{
+            sx: {
+              px: 0,
+              width: "100%",
+              [b.only("xxxl")]: {
+                maxWidth: "1676px",
+              },
+              [b.only("xxl")]: {
+                maxWidth: "1544px",
+              },
+              [b.only("xl")]: {
+                maxWidth: "1152px",
+              },
+              [b.only("lg")]: {
+                maxWidth: "928px",
+              },
+              [b.only("md")]: {
+                maxWidth: "696px",
+              },
+              [b.only("sm")]: {
+                maxWidth: "568px",
+              },
+              [b.only("xs")]: {
+                maxWidth: "424px",
+              },
+              [b.down("xxs")]: {
+                maxWidth: "340px",
+              },
+            },
+          }}
+          sections={menuSections}
+        />
       </Box>
-      <Box sx={{ mb: "92px", position: "relative" }}>
+      <Box sx={{ pb: "92px", position: "relative" }}>
         {router.pathname !== "/" ? <BackButton /> : null}
         {children}
       </Box>
