@@ -1,4 +1,3 @@
-import { ContentContainer } from "@/components/content-container";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
