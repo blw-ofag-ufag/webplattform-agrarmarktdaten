@@ -101,7 +101,7 @@ interface HeaderProps {
 const Header1 = (props: HeaderProps) => {
   const { id, children } = props;
   const ref = React.useRef(null);
-  const entry = useIntersectionObserver(ref, { rootMargin: "10%", threshold: 1.0 });
+  const entry = useIntersectionObserver(ref, { rootMargin: "0%", threshold: 1.0 });
   const setSection = useSetAtom(sectionAtom);
 
   React.useEffect(() => {
