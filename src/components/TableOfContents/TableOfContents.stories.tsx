@@ -15,6 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
+    activeColor: "#ACB4BD",
     data: {
       value: {
         schema: "dast",
