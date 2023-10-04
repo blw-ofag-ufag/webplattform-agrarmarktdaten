@@ -18,6 +18,8 @@ interface Props {
 const extractH6s = (data?: StructuredTextGraphQlResponse) => {
   const h6s: Heading[] = [];
   render(data, {
+    renderBlock: () => null,
+    renderInlineRecord: () => null,
     customNodeRules: [
       renderNodeRule(isHeading, ({ node }) => {
         if (node.level === 6) {
@@ -26,7 +28,6 @@ const extractH6s = (data?: StructuredTextGraphQlResponse) => {
         return null;
       }),
     ],
-    renderInlineRecord: () => null,
   });
   return { value: { schema: "dast", document: { type: "root", children: h6s } } } as const;
 };
@@ -73,6 +74,7 @@ const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
             }),
           ]}
           renderInlineRecord={() => null}
+          renderBlock={() => <></>}
         />
       </Box>
     );
