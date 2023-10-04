@@ -1,8 +1,6 @@
 import * as React from "react";
 import { s } from "@interactivethings/swiss-federal-ci";
-import { StructuredText as ST, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
-import { isHeading, isParagraph } from "datocms-structured-text-utils";
-import { Typography } from "@mui/material";
+import { StructuredText as ST, renderNodeRule, StructuredTextGraphQlResponse, Image } from "react-datocms";
 import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
 import { Typography, Box } from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
@@ -73,6 +71,20 @@ const StructuredText = (props: Props) => {
                 reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
               />
             );
+          default:
+            return null;
+        }
+      }}
+      renderBlock={({ record }) => {
+        switch (record.__typename) {
+          case "ImageTeaserBlockRecord":
+            const image = record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
+            return image?.responsiveImage ? (
+              <Box sx={{ my: s(4) }}>
+                {/*eslint-disable-next-line jsx-a11y/alt-text*/}
+                <Image data={image?.responsiveImage} />
+              </Box>
+            ) : null;
           default:
             return null;
         }
