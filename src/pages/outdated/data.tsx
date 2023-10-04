@@ -61,8 +61,9 @@ import {
 import useEvent from "@/lib/use-event";
 import { useLocale } from "@/lib/use-locale";
 import blwTheme from "@/theme/blw";
+import * as ns from "../../lib/namespace";
 
-import useSparql, { SparqlQueryResult, useCube } from "../api/use-sparql";
+import useSparql, { getCubeDimension, SparqlQueryResult, useCube } from "../api/use-sparql";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -618,12 +619,21 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 }
 
 export default function DataBrowser() {
+  const locale = useLocale();
   const indicator = useCurrentIndicator();
   const setYearsAtom = useSetAtom(yearAtom);
   const [markets] = useAtom(marketsAtom);
 
-  const a = useCube();
-  console.log(a);
+  const { cubes } = useCube();
+
+  const dims = cubes.map((cube) => {
+    if (cube.view) {
+      const dim = getCubeDimension(cube.view, "product", { locale });
+      console.log(dim);
+    }
+  });
+
+  console.log(dims);
 
   const cubesQuery = useSparql<Cube[]>({
     query: queryPossibleCubes({

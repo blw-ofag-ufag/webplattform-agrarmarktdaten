@@ -11,4 +11,30 @@ export const cubeView = namespace("https://cube.link/view/");
 export const cubeMeta = namespace("https://cube.link/meta/");
 export const view = namespace("https://cube.link/view/");
 
-export const amdp = namespace("https://lindas.admin.ch/foag/agricultural-market-data");
+export const amdp = namespace("https://agriculture.ld.admin.ch/foag/");
+export const amdpDimension = namespace("https://agriculture.ld.admin.ch/foag/property/");
+
+export const energyPricing = namespace("https://energy.ld.admin.ch/elcom/electricity-price/dimension/");
+
+export const electricityprice = namespace("https://energy.ld.admin.ch/elcom/electricityprice/");
+export const electricitypriceDimension = namespace("https://energy.ld.admin.ch/elcom/electricityprice/dimension/");
+
+export const addNamespaceToID = ({ dimension, id }: { dimension: string; id: string }): string => {
+  // Check for full IRIs
+  if (id.match(/^http(s)?:\/\//)) {
+    return id;
+  }
+
+  return amdp(`${dimension}/${id}`).value;
+};
+
+export const stripNamespaceFromIri = ({ iri }: { iri: string }): string => {
+  const matches = iri.match(/\/([a-zA-Z0-9]+)$/);
+
+  if (!matches) {
+    // Warn?
+    return iri;
+  }
+
+  return matches[1];
+};
