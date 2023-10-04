@@ -3,6 +3,8 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { StructuredText as ST, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
 import { isHeading, isParagraph } from "datocms-structured-text-utils";
 import { Typography } from "@mui/material";
+import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
+import { Typography, Box } from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
@@ -21,6 +23,19 @@ const StructuredText = (props: Props) => {
     <ST
       data={data}
       customNodeRules={[
+        renderNodeRule(isLink, ({ node, children, key }) => {
+          return (
+            <Typography
+              variant="body1"
+              component="a"
+              sx={{ color: "inherit", textUnderlineOffset: "2px", ":hover": { color: "#4B5563" } }}
+              key={key}
+              href={node.url}
+            >
+              {children}
+            </Typography>
+          );
+        }),
         renderNodeRule(isHeading, ({ node, children, key }) => {
           //We don't allow h6 headers to be able to save those for the table of contents menu
           if (node.level === 6) {
