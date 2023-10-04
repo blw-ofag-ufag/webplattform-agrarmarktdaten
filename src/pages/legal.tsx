@@ -2,8 +2,10 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { ContentContainer } from "@/components/content-container";
 import { Typography } from "@mui/material";
+import { Grid } from "@/components/Grid";
+import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
+import { s } from "@interactivethings/swiss-federal-ci";
 
 export default function LegalPage(props: GQL.LegalPageQuery) {
   const { legalPage, allMarketArticles, allFocusArticles } = props;
@@ -12,14 +14,31 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <ContentContainer sx={{ mb: "96px", mt: "96px", maxWidth: "1096px" }}>
-        <Typography variant="h1">{legalPage.title}</Typography>
-        <Typography variant="body1">{legalPage.lead}</Typography>
-      </ContentContainer>
-
-      <ContentContainer sx={{ maxWidth: "1096px" }}>
-        {legalPage.content && <StructuredText data={legalPage.content} />}
-      </ContentContainer>
+      <Grid sx={{ pt: "96px" }}>
+        <MUIGrid
+          xxxlOffset={2}
+          xxxl={12}
+          xxlOffset={2}
+          xxl={12}
+          xlOffset={2}
+          xl={12}
+          lg={6}
+          md={6}
+          sm={4}
+          xs={4}
+          xxs={4}
+        >
+          <Typography variant="h1" sx={{ pb: s(6) }}>
+            {legalPage.title}
+          </Typography>
+          <Typography variant="body1">{legalPage.lead}</Typography>
+        </MUIGrid>
+      </Grid>
+      <Grid sx={{ mt: "96px" }}>
+        <MUIGrid xxxlOffset={2} xxxl={9} xxlOffset={2} xxl={9} xlOffset={2} xl={9} lg={6} md={6} sm={4} xs={4} xxs={4}>
+          {legalPage.content && <StructuredText data={legalPage.content} />}
+        </MUIGrid>
+      </Grid>
     </AppLayout>
   );
 }
