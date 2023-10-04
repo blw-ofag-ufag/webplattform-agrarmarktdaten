@@ -29,7 +29,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </ContentContainer>
-      <TopBlogpostsTeaser blogposts={topBlogPosts} />
+        <TopBlogpostsTeaser blogposts={topBlogPosts} />
       </Box>
     </AppLayout>
   );
