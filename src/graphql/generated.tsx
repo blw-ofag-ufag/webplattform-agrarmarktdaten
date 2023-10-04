@@ -730,7 +730,7 @@ export type FileFilter = {
 
 export type FocusArticleModelContentField = {
   __typename: 'FocusArticleModelContentField';
-  blocks: Array<Scalars['String']['output']>;
+  blocks: Array<ImageTeaserBlockRecord>;
   links: Array<PowerBiReportRecord>;
   value: Scalars['JsonField']['output'];
 };
@@ -2769,7 +2769,7 @@ export type MarkdownBlockRecordListListNonNullMultiLocaleField = {
 
 export type MarketArticleModelContentField = {
   __typename: 'MarketArticleModelContentField';
-  blocks: Array<Scalars['String']['output']>;
+  blocks: Array<ImageTeaserBlockRecord>;
   links: Array<PowerBiReportRecord>;
   value: Scalars['JsonField']['output'];
 };
@@ -2918,7 +2918,7 @@ export type MarketArticleRecordTitleArgs = {
 
 export type MethodsPageModelContentField = {
   __typename: 'MethodsPageModelContentField';
-  blocks: Array<Scalars['String']['output']>;
+  blocks: Array<ImageTeaserBlockRecord>;
   links: Array<PowerBiReportRecord>;
   value: Scalars['JsonField']['output'];
 };
@@ -5067,7 +5067,7 @@ export type MarketPageQueryVariables = Exact<{
 }>;
 
 
-export type MarketPageQuery = { __typename: 'Query', marketArticle?: { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, content?: { __typename: 'MarketArticleModelContentField', value: any, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type MarketPageQuery = { __typename: 'Query', marketArticle?: { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, content?: { __typename: 'MarketArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
 
 export type FocusArticlePageQueryVariables = Exact<{
   locale: SiteLocale;
@@ -5075,14 +5075,14 @@ export type FocusArticlePageQueryVariables = Exact<{
 }>;
 
 
-export type FocusArticlePageQuery = { __typename: 'Query', focusArticle?: { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, content?: { __typename: 'FocusArticleModelContentField', value: any, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type FocusArticlePageQuery = { __typename: 'Query', focusArticle?: { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, content?: { __typename: 'FocusArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
 
 export type MethodsPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
 
-export type MethodsPageQuery = { __typename: 'Query', methodsPage?: { __typename: 'MethodsPageRecord', id: any, title?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null, content?: { __typename: 'MethodsPageModelContentField', value: any, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type MethodsPageQuery = { __typename: 'Query', methodsPage?: { __typename: 'MethodsPageRecord', id: any, title?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null, content?: { __typename: 'MethodsPageModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
 
 export type AnalysisPageQueryVariables = Exact<{
   locale: SiteLocale;
@@ -5127,9 +5127,9 @@ export type SimpleMarketArticleFragment = { __typename: 'MarketArticleRecord', i
 
 export type SimpleFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null };
 
-export type FullMarketArticleFragment = { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'MarketArticleModelContentField', value: any, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
+export type FullMarketArticleFragment = { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'MarketArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
 
-export type FullFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'FocusArticleModelContentField', value: any, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
+export type FullFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'FocusArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
 
 export type SimpleBlogPostFragment = { __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> };
 
@@ -5182,6 +5182,27 @@ export const FullMarketArticleFragmentDoc = gql`
   lead
   content {
     value
+    blocks {
+      id
+      __typename
+      ... on ImageTeaserBlockRecord {
+        imageTeaserAsset {
+          url
+          alt
+          width
+          height
+          responsiveImage(imgixParams: {fit: crop, w: 300, h: 300, auto: format}) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+          }
+        }
+      }
+    }
     links {
       __typename
       id
@@ -5217,6 +5238,27 @@ export const FullFocusArticleFragmentDoc = gql`
   lead
   content {
     value
+    blocks {
+      id
+      __typename
+      ... on ImageTeaserBlockRecord {
+        imageTeaserAsset {
+          url
+          alt
+          width
+          height
+          responsiveImage(imgixParams: {fit: crop, w: 300, h: 300, auto: format}) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+          }
+        }
+      }
+    }
     links {
       __typename
       id
@@ -5543,6 +5585,27 @@ export const MethodsPageDocument = gql`
     }
     content {
       value
+      blocks {
+        id
+        __typename
+        ... on ImageTeaserBlockRecord {
+          imageTeaserAsset {
+            url
+            alt
+            width
+            height
+            responsiveImage(imgixParams: {fit: crop, w: 300, h: 300, auto: format}) {
+              sizes
+              src
+              width
+              height
+              alt
+              title
+              base64
+            }
+          }
+        }
+      }
       links {
         __typename
         id
