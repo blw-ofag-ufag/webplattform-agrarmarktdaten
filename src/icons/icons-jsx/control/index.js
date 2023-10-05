@@ -1,5 +1,7 @@
 export { default as IcControlArrowLeft } from "./IcControlArrowLeft";
 export { default as IcControlArrowRight } from "./IcControlArrowRight";
+export { default as IcControlChevronDown } from "./IcControlChevronDown";
+export { default as IcControlChevronUp } from "./IcControlChevronUp";
 export { default as IcControlClose } from "./IcControlClose";
 export { default as IcControlMenu } from "./IcControlMenu";
 export { default as IcControlNavDown } from "./IcControlNavDown";
