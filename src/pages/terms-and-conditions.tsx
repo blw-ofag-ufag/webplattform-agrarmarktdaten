@@ -1,10 +1,11 @@
-import { ContentContainer } from "@/components/content-container";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { s } from "@interactivethings/swiss-federal-ci";
 import { Typography } from "@mui/material";
+import { Grid } from "@/components/Grid";
+import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
+import { s } from "@interactivethings/swiss-federal-ci";
 
 export default function LegalPage(props: GQL.TermsPageQuery) {
   const { termsPage, allMarketArticles, allFocusArticles } = props;
@@ -13,13 +14,31 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <ContentContainer sx={{ mb: s(24), mt: s(24), maxWidth: "1096px" }}>
-        <Typography variant="h1">{termsPage.title}</Typography>
-        <Typography variant="body1">{termsPage.lead}</Typography>
-      </ContentContainer>
-      <ContentContainer sx={{ maxWidth: "1096px" }}>
-        {termsPage.content && <StructuredText data={termsPage.content} />}
-      </ContentContainer>
+      <Grid sx={{ pt: "96px" }}>
+        <MUIGrid
+          xxxlOffset={2}
+          xxxl={12}
+          xxlOffset={2}
+          xxl={12}
+          xlOffset={2}
+          xl={12}
+          lg={6}
+          md={6}
+          sm={4}
+          xs={4}
+          xxs={4}
+        >
+          <Typography variant="h1" sx={{ pb: s(6) }}>
+            {termsPage.title}
+          </Typography>
+          <Typography variant="body1">{termsPage.lead}</Typography>
+        </MUIGrid>
+      </Grid>
+      <Grid sx={{ mt: "96px" }}>
+        <MUIGrid xxxlOffset={2} xxxl={9} xxlOffset={2} xxl={9} xlOffset={2} xl={9} lg={6} md={6} sm={4} xs={4} xxs={4}>
+          {termsPage.content && <StructuredText data={termsPage.content} />}
+        </MUIGrid>
+      </Grid>
     </AppLayout>
   );
 }

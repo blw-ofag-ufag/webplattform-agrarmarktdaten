@@ -16,21 +16,21 @@ export default function HomePage(props: GQL.HomePageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} />
-      <Box sx={{ bgcolor: "#f9f9f9" }}>
+      <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} color="#ffffff" />
+      <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <ContentContainer sx={{ gap: s(8), pt: s(20) }}>
-          <Typography variant="h2" sx={{ ml: s(8), fontWeight: 700 }}>
+          <Typography variant="h2" sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={homePage.markets} />
 
-          <Typography variant="h2" sx={{ ml: s(8), fontWeight: 700 }}>
+          <Typography variant="h2" sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </ContentContainer>
+        <TopBlogpostsTeaser blogposts={topBlogPosts} />
       </Box>
-      <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );
 }

@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const result = await client
-    .query<GQL.AllMarketArticlesSlugLocalesQuery>(GQL.AllMarketArticlesSlugLocalesDocument, {})
+    .query<GQL.AllFocusArticlesSlugLocalesQuery>(GQL.AllFocusArticlesSlugLocalesDocument, {})
     .toPromise();
 
   if (!result.data) {
@@ -57,7 +57,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     throw new Error("Failed to fetch API");
   }
 
-  const paths = result.data.allMarketArticles.flatMap((page) => {
+  const paths = result.data.allFocusArticles.flatMap((page) => {
     return page._allSlugLocales
       ? page._allSlugLocales?.map((loc) => ({
           locale: loc.locale ?? undefined,
