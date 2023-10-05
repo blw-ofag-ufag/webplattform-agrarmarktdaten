@@ -1,7 +1,6 @@
-import { Trans, t, plural } from "@lingui/macro";
+import { plural, t, Trans } from "@lingui/macro";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   AccordionDetails,
   AccordionProps,
@@ -70,6 +69,7 @@ import useSparql, {
   SparqlQueryResult,
   useCube,
 } from "./api/use-sparql";
+import { flachen } from "@/components/infografik/data/flachen";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -160,7 +160,7 @@ const CountTrue = ({
 
 const AccordionTitle = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Typography variant="overline" fontWeight="bold" color="grey.600">
+    <Typography variant="h5" fontWeight="bold" color="grey.800">
       {children}
     </Typography>
   );
@@ -168,11 +168,17 @@ const AccordionTitle = ({ children }: { children: React.ReactNode }) => {
 
 const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(indicatorsAtom);
+  const selected = useMemo(() => values.find((x) => x.value), [values]);
+
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <AccordionTitle>Indicators</AccordionTitle>
-        <CountTrue show={!props.expanded} values={values} />
+        <Grow in={!props.expanded && !!selected}>
+          <Typography variant="body2" color="grey.500" mr={1}>
+            {selected && selected.label}
+          </Typography>
+        </Grow>
       </AccordionSummary>
       <AccordionDetails>
         <MultiCheckbox radio values={values} onChange={setValues} />
@@ -265,7 +271,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   });
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <AccordionTitle>Time</AccordionTitle>
       </AccordionSummary>
       <AccordionDetails>
@@ -306,12 +312,44 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   );
 };
 
+const FilterPreviewMultiCheckbox = ({
+  show = true,
+  selected,
+  options,
+}: {
+  show?: boolean;
+  selected: CheckboxValue[];
+  options: CheckboxValue[];
+}) => {
+  return (
+    <Grow in={show}>
+      <Typography variant="body2" color="grey.500" mr={1}>
+        {selected.length === 0 && <Trans id="data.filters.none">None</Trans>}
+        {selected.length === options.length && (
+          <Trans id="data.filters.all">All</Trans>
+        )}
+        {selected.length > 0 &&
+          selected.length < options.length &&
+          selected[0].label +
+            (selected.length > 1 ? " +" + (selected.length - 1) : "")}
+      </Typography>
+    </Grow>
+  );
+};
+
 const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(marketsAtom);
+  const selected = useMemo(() => values.filter((x) => x.value), [values]);
+
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <AccordionTitle>Markets</AccordionTitle>
+        <FilterPreviewMultiCheckbox
+          show={!props.expanded}
+          selected={selected}
+          options={values}
+        />
         <CountTrue show={!props.expanded} values={values} />
       </AccordionSummary>
       <AccordionDetails>
@@ -323,11 +361,17 @@ const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
 
 const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(addedValueValuesAtom);
+  const selected = useMemo(() => values.filter((x) => x.value), [values]);
+
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <AccordionTitle>Added value</AccordionTitle>
-        <CountTrue show={!props.expanded} values={values} />
+        <FilterPreviewMultiCheckbox
+          show={!props.expanded}
+          selected={selected}
+          options={values}
+        />
       </AccordionSummary>
       <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
@@ -340,11 +384,17 @@ const ProductionSystemsAccordion = (
   props: Omit<AccordionProps, "children">
 ) => {
   const [values, setValues] = useAtom(productionSystemsAtom);
+  const selected = useMemo(() => values.filter((x) => x.value), [values]);
+
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <AccordionTitle>Production systems</AccordionTitle>
-        <CountTrue values={values} show={!props.expanded} />
+        <FilterPreviewMultiCheckbox
+          show={!props.expanded}
+          selected={selected}
+          options={values}
+        />
       </AccordionSummary>
       <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
@@ -431,7 +481,7 @@ const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(countriesAtom);
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <AccordionTitle>Countries</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
       </AccordionSummary>
@@ -450,7 +500,7 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(productsAtom);
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary>
         <AccordionTitle>Products</AccordionTitle>
         <CountTrue values={values} show={!props.expanded} />
       </AccordionSummary>
@@ -521,78 +571,6 @@ const MenuContent = () => {
   );
 };
 
-const StateChip = <T extends CheckboxValue>({
-  label,
-  atom,
-}: {
-  label: string;
-  atom: PrimitiveAtom<T[]>;
-}) => {
-  const [values, setValues] = useAtom(atom);
-  const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
-  if (values.length === trueValues.length || trueValues.length === 0) {
-    return null;
-  }
-  return (
-    <Grow in>
-      <Chip
-        onDelete={() => {
-          setValues(values.map((x) => ({ ...x, value: false })));
-        }}
-        title={trueValues.map((x) => x.label).join(", ")}
-        label={
-          <>
-            {label}:{" "}
-            {trueValues
-              .slice(0, 3)
-              .map((x) => x.label)
-              .join(", ")}
-            {trueValues.length > 2 ? "..." : null}
-          </>
-        }
-      />
-    </Grow>
-  );
-};
-
-const TimeStateChip = () => {
-  const [months, setMonths] = useAtom(monthsAtom);
-  const [yearRange, setYearRange] = useAtom(yearAtom);
-  const trueMonths = useMemo(() => months.filter((v) => v.value), [months]);
-
-  const handleDelete = useEvent(() => {
-    setYearRange({ ...yearRange, value: [yearRange.min, yearRange.max] });
-    setMonths(months.map((x) => ({ ...x, value: true })));
-  });
-
-  const displayMonths =
-    trueMonths.length !== months.length && trueMonths.length !== 0;
-  const displayYears =
-    yearRange.value[0] !== yearRange.min ||
-    yearRange.value[1] !== yearRange.max;
-
-  if (!displayMonths && !displayYears) {
-    return null;
-  }
-
-  return (
-    <Grow in>
-      <Chip
-        onDelete={handleDelete}
-        label={
-          <>
-            Time:{" "}
-            {displayMonths ? trueMonths.map((x) => x.name).join(", ") : null}
-            {displayMonths && displayYears ? ", " : null}
-            {displayYears
-              ? `${yearRange.value[0]}-${yearRange.value[1]}`
-              : null}
-          </>
-        }
-      />
-    </Grow>
-  );
-};
 const useCurrentIndicator = () => {
   const [indicators] = useAtom(indicatorsAtom);
   const indicator = indicators.find((x) => x.value);
@@ -608,8 +586,7 @@ const useFilters = () => {
 
 const Results = ({
   cubesQuery,
-  dimensionsQuery,
-  yearsQuery,
+  dimensionsQuery, //yearsQuery,
 }: {
   cubesQuery: SparqlQueryResult<Cube[]>;
   dimensionsQuery: SparqlQueryResult<Dimension[]>;
@@ -762,18 +739,6 @@ export default function DataBrowser() {
               <MenuContent />
             </Box>
             <Box bgcolor="#eee" flexGrow={1} overflow="hidden">
-              <Box display="flex" flexWrap="wrap" sx={{ gap: 1 }} m={4}>
-                <StateChip label="Indicators" atom={indicatorsAtom} />
-                <TimeStateChip />
-                <StateChip label="Markets" atom={marketsAtom} />
-                <StateChip label="Added value" atom={addedValueValuesAtom} />
-                <StateChip label="Products" atom={productsAtom} />
-                <StateChip
-                  label="Production systems"
-                  atom={productionSystemsAtom}
-                />
-                <StateChip label="Countries" atom={countriesAtom} />
-              </Box>
               {/* <DataBrowserDebug /> */}
               <Results
                 cubesQuery={cubesQuery}
