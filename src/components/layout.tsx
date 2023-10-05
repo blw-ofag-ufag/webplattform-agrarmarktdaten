@@ -196,7 +196,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
         />
       </Box>
       <Box sx={{ position: "relative" }}>
-        {router.pathname !== "/" ? <BackButton /> : null}
+        {!["/", "/data"].includes(router.pathname) ? <BackButton /> : null}
         {children}
       </Box>
       <Footer
