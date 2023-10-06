@@ -41,12 +41,10 @@ export const Hero = (props: Props) => {
         }}
       >
         <ContentContainer sx={{ maxWidth: "1096px" }}>
-          <Box>
-            <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
-            <Typography variant="h1" sx={{ color, fontSize: "64px" }}>
-              {title}
-            </Typography>
-          </Box>
+          <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
+          <Typography variant="h1" sx={{ color, fontSize: "64px" }}>
+            {title}
+          </Typography>
         </ContentContainer>
       </Flex>
       <ContentContainer sx={{ pb: "96px" }}>
