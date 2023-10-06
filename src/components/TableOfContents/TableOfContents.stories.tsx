@@ -324,7 +324,8 @@ export const Primary: Story = {
                 },
                 {
                   type: "span",
-                  value: " animi possimus eos omnis vitae nam laudantium aliquam aut dolor possimus.",
+                  value:
+                    " animi possimus eos omnis vitae nam laudantium aliquam aut dolor possimus.",
                 },
               ],
             },

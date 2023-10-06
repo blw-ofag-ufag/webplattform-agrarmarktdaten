@@ -3,11 +3,7 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import React from "react";
 import { Provider, createClient, dedupExchange, fetchExchange } from "urql";
 
-import {
-  DATOCMS_API_TOKEN,
-  DATOCMS_API_URL,
-  IS_DEV_ENVIRONMENT,
-} from "@/domain/env";
+import { DATOCMS_API_TOKEN, DATOCMS_API_URL, IS_DEV_ENVIRONMENT } from "@/domain/env";
 
 const defaultExchanges = [
   dedupExchange,
@@ -41,10 +37,6 @@ export const client = createClient({
     : defaultExchanges,
 });
 
-export const GraphqlProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const GraphqlProvider = ({ children }: { children: React.ReactNode }) => {
   return <Provider value={client}>{children}</Provider>;
 };

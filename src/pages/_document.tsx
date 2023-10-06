@@ -1,6 +1,13 @@
 import createEmotionServer from "@emotion/server/create-instance";
 import { AppType } from "next/app";
-import Document, { DocumentContext, DocumentProps, Head, Html, Main, NextScript } from "next/document";
+import Document, {
+  DocumentContext,
+  DocumentProps,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from "next/document";
 import * as React from "react";
 
 import { createEmotionCache } from "@/theme/emotion-cache";
@@ -19,7 +26,10 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         {/* PWA primary color, background of the page on Safari (cobalt[600]). */}
         <meta name="theme-color" content="2f4356" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans&display=optional" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Noto+Sans&display=optional"
+        />
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
       </Head>

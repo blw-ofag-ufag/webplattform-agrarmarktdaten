@@ -366,7 +366,12 @@ const MultiCheckboxAutocomplete = <T extends CheckboxValue>({
       getOptionLabel={(option) => option.label}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
-          <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+          <Checkbox
+            icon={icon}
+            checkedIcon={checkedIcon}
+            style={{ marginRight: 8 }}
+            checked={selected}
+          />
           {option.label}
         </li>
       )}
@@ -394,7 +399,11 @@ const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
         <CountTrue values={values} show={!props.expanded} />
       </AccordionSummary>
       <AccordionDetails>
-        <MultiCheckboxAutocomplete values={values} onChange={setValues} placeholder="Choose countries" />
+        <MultiCheckboxAutocomplete
+          values={values}
+          onChange={setValues}
+          placeholder="Choose countries"
+        />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -451,7 +460,13 @@ const MenuContent = () => {
   );
 };
 
-const StateChip = <T extends CheckboxValue>({ label, atom }: { label: string; atom: PrimitiveAtom<T[]> }) => {
+const StateChip = <T extends CheckboxValue>({
+  label,
+  atom,
+}: {
+  label: string;
+  atom: PrimitiveAtom<T[]>;
+}) => {
   const [values, setValues] = useAtom(atom);
   const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
   if (values.length === trueValues.length || trueValues.length === 0) {
@@ -545,7 +560,13 @@ const Results = ({
 
   const { data: observationIris, fetching: fetchingObservationIris } = observationIrisQuery;
   const observationsQuery = useSparql<Observation[]>({
-    query: queryObservations(cubes?.length!, observationIris!, dimensions, indicator?.dimensionIri!, locale),
+    query: queryObservations(
+      cubes?.length!,
+      observationIris!,
+      dimensions,
+      indicator?.dimensionIri!,
+      locale
+    ),
     enabled: !fetchingObservationIris,
   });
   const { data: observations, fetching: fetchingObservations } = observationsQuery;
@@ -684,7 +705,11 @@ export default function DataBrowser() {
                 <StateChip label="Countries" atom={countriesAtom} />
               </Box>
               {/* <DataBrowserDebug /> */}
-              <Results cubesQuery={cubesQuery} dimensionsQuery={dimensionsQuery} yearsQuery={yearsQuery} />
+              <Results
+                cubesQuery={cubesQuery}
+                dimensionsQuery={dimensionsQuery}
+                yearsQuery={yearsQuery}
+              />
             </Box>
           </Box>
         </AppLayout>

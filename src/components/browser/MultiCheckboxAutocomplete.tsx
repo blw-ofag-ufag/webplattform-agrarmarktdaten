@@ -1,11 +1,5 @@
 import { CheckboxValue } from "@/domain/data";
-import {
-  Autocomplete,
-  AutocompleteProps,
-  Checkbox,
-  TextField,
-  styled,
-} from "@mui/material";
+import { Autocomplete, AutocompleteProps, Checkbox, TextField, styled } from "@mui/material";
 import { useMemo } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -34,10 +28,7 @@ const MultiCheckboxAutocomplete = <T extends CheckboxValue>({
     return values.filter((x) => x.value);
   }, [values]);
 
-  const handleChange: AutocompleteProps<T, true, false, false>["onChange"] = (
-    _,
-    value
-  ) => {
+  const handleChange: AutocompleteProps<T, true, false, false>["onChange"] = (_, value) => {
     const selectedByName = new Set(value.map((s) => s.name));
     const newValues = values.map((v) => ({
       ...v,

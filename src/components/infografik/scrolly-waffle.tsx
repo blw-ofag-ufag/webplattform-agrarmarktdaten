@@ -9,13 +9,7 @@ import { ScrollyProvider, useReadScrolly, useScrolly } from "@/components/infogr
 import { StickySection } from "@/components/infografik/sticky-section";
 import { Waffle } from "@/components/infografik/waffle";
 
-export const ScrollySection = ({
-  id,
-  children,
-}: {
-  id: string;
-  children?: ReactNode;
-}) => {
+export const ScrollySection = ({ id, children }: { id: string; children?: ReactNode }) => {
   const { ref } = useScrolly(id);
 
   return (
@@ -25,11 +19,7 @@ export const ScrollySection = ({
   );
 };
 
-export const ScrollySections = ({
-  sectionIds,
-}: {
-  sectionIds: Set<string>;
-}) => {
+export const ScrollySections = ({ sectionIds }: { sectionIds: Set<string> }) => {
   return (
     <>
       {[...sectionIds].map((step) => (
@@ -51,9 +41,7 @@ export const StickyWaffle = memo(
               <Box
                 sx={{
                   textAlign: "center",
-                  color: sections[activeSection].bioColored
-                    ? colors.green
-                    : colors.brown,
+                  color: sections[activeSection].bioColored ? colors.green : colors.brown,
                   fontWeight: "bold",
                   fontSize: "24px",
                 }}
@@ -66,9 +54,7 @@ export const StickyWaffle = memo(
                 squares={squaresData}
                 getColor={(d) => d[sections[activeSection].colorDimension]}
                 colorScale={sections[activeSection].colorScale}
-                getBackground={(d) =>
-                  d[sections[activeSection].backgroundDimension]
-                }
+                getBackground={(d) => d[sections[activeSection].backgroundDimension]}
                 backgroundScale={sections[activeSection].backgroundScale}
                 dimensions={sections[activeSection].dimensions}
                 getCategory={(d) => d[sections[activeSection].dimension]}
@@ -129,11 +115,7 @@ export const ScrollyWaffleDataFetcher = ({
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <ScrollyWaffle
-          sectionIds={sectionIds}
-          sections={sections}
-          squaresData={squares}
-        />
+        <ScrollyWaffle sectionIds={sectionIds} sections={sections} squaresData={squares} />
       )}
     </>
   );

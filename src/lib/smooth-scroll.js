@@ -1,9 +1,7 @@
 export const smoothScroll = (selectorOrElement, duration = 700) => {
   const el = toElement(selectorOrElement);
   if (el === null) {
-    return Promise.reject(
-      new Error(`Element '${selectorOrElement}' not found`)
-    );
+    return Promise.reject(new Error(`Element '${selectorOrElement}' not found`));
   }
   const clock = window.performance.now();
   const start = window.pageYOffset;
@@ -23,15 +21,10 @@ export const smoothScroll = (selectorOrElement, duration = 700) => {
 };
 
 const getTop = (element, start) =>
-  element.nodeName === "HTML"
-    ? -start
-    : element.getBoundingClientRect().top + start;
-const easeInOutCubic = (t) =>
-  t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  element.nodeName === "HTML" ? -start : element.getBoundingClientRect().top + start;
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1);
 const position = (start, end, elapsed, duration) =>
-  elapsed > duration
-    ? end
-    : start + (end - start) * easeInOutCubic(elapsed / duration);
+  elapsed > duration ? end : start + (end - start) * easeInOutCubic(elapsed / duration);
 const toElement = (selectorOrElement) => {
   if (typeof selectorOrElement === "string") {
     return document.querySelector(selectorOrElement);

@@ -35,7 +35,19 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
         </MUIGrid>
       </Grid>
       <Grid sx={{ mt: "96px" }}>
-        <MUIGrid xxxlOffset={2} xxxl={9} xxlOffset={2} xxl={9} xlOffset={2} xl={9} lg={6} md={6} sm={4} xs={4} xxs={4}>
+        <MUIGrid
+          xxxlOffset={2}
+          xxxl={9}
+          xxlOffset={2}
+          xxl={9}
+          xlOffset={2}
+          xl={9}
+          lg={6}
+          md={6}
+          sm={4}
+          xs={4}
+          xxs={4}
+        >
           {termsPage.content && <StructuredText data={termsPage.content} />}
         </MUIGrid>
       </Grid>
@@ -44,7 +56,9 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  const result = await client.query<GQL.TermsPageQuery>(GQL.TermsPageDocument, { locale: context.locale }).toPromise();
+  const result = await client
+    .query<GQL.TermsPageQuery>(GQL.TermsPageDocument, { locale: context.locale })
+    .toPromise();
 
   if (!result.data) {
     console.error(result.error?.toString());

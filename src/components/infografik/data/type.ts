@@ -8,12 +8,8 @@ export const bioOderNicht: BioOderNicht[] = ["bio", "Nicht-bio"];
 // Bio / Nicht-bio
 export const bioTypes = ["bio", "Nicht-bio"];
 export const bioColors = [colors.green, colors.brown];
-export const bioColorScale = scaleOrdinal<string>()
-  .domain(bioTypes)
-  .range(bioColors);
-export const bioOpacityScale = scaleOrdinal<number>()
-  .domain(bioTypes)
-  .range([1, 0.5]);
+export const bioColorScale = scaleOrdinal<string>().domain(bioTypes).range(bioColors);
+export const bioOpacityScale = scaleOrdinal<number>().domain(bioTypes).range([1, 0.5]);
 
 // Gradients
 const backgroundRange = ["one", "two", "three", "four", "five"];
@@ -56,10 +52,7 @@ export const backgroundStyle = (color: string) => {
 
 // Flächenstruktur
 export type KartoffelTyp = "Frischkartoffeln" | "Pflanzkartoffeln";
-export const kartoffelTypen: KartoffelTyp[] = [
-  "Frischkartoffeln",
-  "Pflanzkartoffeln",
-];
+export const kartoffelTypen: KartoffelTyp[] = ["Frischkartoffeln", "Pflanzkartoffeln"];
 
 export type KartoffelTypBio =
   | "Frischkartoffeln-Bio"
@@ -73,12 +66,7 @@ export const kartoffelTypenBio: KartoffelTypBio[] = [
   "Pflanzkartoffeln-Nicht-Bio",
 ];
 
-export type KochTyp =
-  | "Festkochend"
-  | "Mehligkochend"
-  | "Frites"
-  | "Chips"
-  | "Diverse";
+export type KochTyp = "Festkochend" | "Mehligkochend" | "Frites" | "Chips" | "Diverse";
 
 export const kochTypen: KochTyp[] = [
   "Festkochend",
@@ -89,12 +77,7 @@ export const kochTypen: KochTyp[] = [
 ];
 
 // Betriebsstruktur
-export type Betriebsgrössenkategorie =
-  | "< 1 ha"
-  | "1 - 5 ha"
-  | "5 - 10 ha"
-  | ">10 ha"
-  | "Alle";
+export type Betriebsgrössenkategorie = "< 1 ha" | "1 - 5 ha" | "5 - 10 ha" | ">10 ha" | "Alle";
 export const betriebsgrössenkategorie: Betriebsgrössenkategorie[] = [
   "< 1 ha",
   "1 - 5 ha",
@@ -119,9 +102,7 @@ export const kartoffelTypenBackgroundScale = scaleOrdinal()
 export const kartoffelTypenBioBackgroundScale = scaleOrdinal()
   .domain(kartoffelTypenBio)
   .range(backgroundRange);
-export const kochTypenBackgroundScale = scaleOrdinal()
-  .domain(kochTypen)
-  .range(backgroundRange);
+export const kochTypenBackgroundScale = scaleOrdinal().domain(kochTypen).range(backgroundRange);
 export const betriebsgrössenkategorieBackgroundScale = scaleOrdinal()
   .domain(betriebsgrössenkategorie)
   .range(backgroundRange);

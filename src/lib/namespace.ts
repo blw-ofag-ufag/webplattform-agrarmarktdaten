@@ -1,6 +1,19 @@
 import namespace from "@rdfjs/namespace";
 
-export { dcat, dcterms, geo, qudt, rdf, rdfs, schema, sh, skos, time, vcard, xsd } from "@tpluscode/rdf-ns-builders";
+export {
+  dcat,
+  dcterms,
+  geo,
+  qudt,
+  rdf,
+  rdfs,
+  schema,
+  sh,
+  skos,
+  time,
+  vcard,
+  xsd,
+} from "@tpluscode/rdf-ns-builders";
 
 export const classifications = namespace("http://classifications.data.admin.ch/");
 export const schemaAdmin = namespace("https://schema.ld.admin.ch/");
@@ -14,10 +27,14 @@ export const view = namespace("https://cube.link/view/");
 export const amdp = namespace("https://agriculture.ld.admin.ch/foag/");
 export const amdpDimension = namespace("https://agriculture.ld.admin.ch/foag/property/");
 
-export const energyPricing = namespace("https://energy.ld.admin.ch/elcom/electricity-price/dimension/");
+export const energyPricing = namespace(
+  "https://energy.ld.admin.ch/elcom/electricity-price/dimension/"
+);
 
 export const electricityprice = namespace("https://energy.ld.admin.ch/elcom/electricityprice/");
-export const electricitypriceDimension = namespace("https://energy.ld.admin.ch/elcom/electricityprice/dimension/");
+export const electricitypriceDimension = namespace(
+  "https://energy.ld.admin.ch/elcom/electricityprice/dimension/"
+);
 
 export const addNamespaceToID = ({ dimension, id }: { dimension: string; id: string }): string => {
   // Check for full IRIs

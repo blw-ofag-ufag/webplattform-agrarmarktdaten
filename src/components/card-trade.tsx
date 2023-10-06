@@ -17,15 +17,7 @@ export const TradeLevelsGrid = ({
   </Flex>
 );
 
-const TradeCard = ({
-  title,
-  icon,
-  color,
-}: {
-  title: string;
-  icon: IconName;
-  color: string;
-}) => {
+const TradeCard = ({ title, icon, color }: { title: string; icon: IconName; color: string }) => {
   return (
     <Card sx={{ width: ["49%", "24%"], mb: 4 }}>
       <TradeIcon icon={icon} color={color} />
@@ -44,13 +36,7 @@ const TradeCard = ({
   );
 };
 
-export const TradeIcon = ({
-  icon,
-  color,
-}: {
-  icon: IconName;
-  color: string;
-}) => {
+export const TradeIcon = ({ icon, color }: { icon: IconName; color: string }) => {
   return (
     <Flex
       sx={{

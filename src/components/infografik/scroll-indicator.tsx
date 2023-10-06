@@ -1,10 +1,5 @@
 import { Box } from "@mui/material";
-import {
-  motion,
-  useSpring,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { motion, useSpring, useTransform, useViewportScroll } from "framer-motion";
 
 import { colors } from "@/components/infografik/colors";
 
