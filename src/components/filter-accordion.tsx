@@ -4,7 +4,9 @@ import { withStyles } from "./style-utils";
 
 const FilterAccordion = withStyles(Accordion, (theme) => ({
   root: {
-    paddingBottom: 1,
+    "&::before": {
+      backgroundColor: theme.palette.grey[300],
+    },
     "&.Mui-expanded": {
       marginTop: 0,
       marginBottom: 0,
@@ -12,6 +14,7 @@ const FilterAccordion = withStyles(Accordion, (theme) => ({
         opacity: 1,
       },
     },
+
     "& .MuiAccordionSummary-root": {
       paddingTop: theme.spacing(2.5),
       paddingBottom: theme.spacing(2.5),
@@ -34,6 +37,7 @@ const FilterAccordion = withStyles(Accordion, (theme) => ({
     "& .MuiAccordionDetails-root": {
       display: "flex",
       flexDirection: "column",
+
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       marginTop: theme.spacing(-2),

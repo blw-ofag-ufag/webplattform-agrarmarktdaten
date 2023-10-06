@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons/24dp/ic_ChevronSmallDown</title>
+    <g id="Icons/24dp/ic_ChevronSmallDown" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ChevronSmallDown" transform="translate(7, 10)" fill="#1F2937" fill-rule="nonzero" stroke="#1F2937" stroke-width="0.25">
+            <polygon id="Path" points="0.375 0 4.93701 2.634 9.50001 0 9.87501 0.649 4.93701 3.501 0 0.649"></polygon>
+        </g>
+    </g>
+</svg>

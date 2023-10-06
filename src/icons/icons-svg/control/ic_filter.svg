@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons/24dp/ic_Filter</title>
+    <g id="Icons/24dp/ic_Filter" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Filter" transform="translate(5, 4)" fill="#000" fill-rule="nonzero" stroke="#000" stroke-width="0.25">
+            <path d="M9.03708,16.56346 L4.48148,16.56346 L4.48148,7.37896 L0,4.51856 L0,-8.8817842e-16 L13.51858,-8.8817842e-16 L13.51858,4.51856 L9.03708,7.37896 L9.03708,16.56346 Z M5.23148,15.81346 L8.28708,15.81346 L8.28708,6.96876 L12.76858,4.1084 L12.76858,0.75 L0.75,0.75 L0.75,4.1084 L5.23148,6.96876 L5.23148,15.81346 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

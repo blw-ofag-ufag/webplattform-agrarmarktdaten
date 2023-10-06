@@ -35,8 +35,9 @@ msgid "footer.about_us.label"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 #: src/pages/focus/[slug].tsx
-#: src/pages/index.tsx
+#: src/pages/methods.tsx
 msgid "button.show.all"
 msgstr ""
 
@@ -238,10 +239,11 @@ msgstr ""
 #~ msgstr "Markets"
 
 #. js-lingui-explicit-id
+#: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 #: src/pages/blog/[slug].tsx
 #: src/pages/focus/[slug].tsx
-#: src/pages/index.tsx
 #: src/pages/market/[slug].tsx
+#: src/pages/methods.tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr ""
 
