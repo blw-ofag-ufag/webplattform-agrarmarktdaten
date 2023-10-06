@@ -9,6 +9,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Stack,
   ThemeProvider,
 } from "@mui/material";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -198,34 +199,37 @@ export default function DataBrowser() {
     <SafeHydrate>
       <ThemeProvider theme={blackAndWhiteTheme}>
         <AppLayout>
-          <Alert severity="info">
-            <Trans id="data.alert.info">
-              Our database contains Milk and Dairy Product market data. Other
-              markets will be available soon.
-            </Trans>
-          </Alert>
-          <Box
-            zIndex={0}
-            display="flex"
-            justifyContent="stretch"
-            minHeight="80vh"
-            sx={{
-              borderTop: "1px solid",
-              borderColor: "grey.300",
-            }}
-          >
-            <Box width="388px" flexGrow={0} flexShrink={0}>
-              <SidePanel />
+          <Stack flexGrow={1} minHeight={0}>
+            <Alert severity="info">
+              <Trans id="data.alert.info">
+                Our database contains Milk and Dairy Product market data. Other
+                markets will be available soon.
+              </Trans>
+            </Alert>
+            <Box
+              zIndex={0}
+              display="flex"
+              justifyContent="stretch"
+              flexGrow={1}
+              minHeight={0}
+              sx={{
+                borderTop: "1px solid",
+                borderColor: "grey.300",
+              }}
+            >
+              <Box width="388px" flexGrow={0} flexShrink={0}>
+                <SidePanel />
+              </Box>
+              <Box bgcolor="#eee" flexGrow={1} overflow="hidden">
+                {/* <DataBrowserDebug /> */}
+                <Results
+                  cubesQuery={cubesQuery}
+                  dimensionsQuery={dimensionsQuery}
+                  yearsQuery={yearsQuery}
+                />
+              </Box>
             </Box>
-            <Box bgcolor="#eee" flexGrow={1} overflow="hidden">
-              {/* <DataBrowserDebug /> */}
-              <Results
-                cubesQuery={cubesQuery}
-                dimensionsQuery={dimensionsQuery}
-                yearsQuery={yearsQuery}
-              />
-            </Box>
-          </Box>
+          </Stack>
         </AppLayout>
       </ThemeProvider>
     </SafeHydrate>

@@ -16,7 +16,7 @@ import {
   b,
 } from "@interactivethings/swiss-federal-ci";
 import { t } from "@lingui/macro";
-import { Box, Link, useMediaQuery, Typography } from "@mui/material";
+import { Stack, Box, Link, useMediaQuery, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
@@ -93,7 +93,7 @@ export const AppLayout = ({
       };
 
   return (
-    <>
+    <Stack minHeight="100vh">
       <LocaleSwitcher {...localeSwitcherProps} />
       <Box
         sx={{
@@ -109,19 +109,19 @@ export const AppLayout = ({
           ContentWrapperProps={{
             sx: {
               [b.only("xxxl")]: {
-                px: s(3),
+                p: s(3),
               },
               [b.only("xxl")]: {
-                px: s(3),
+                p: s(3),
               },
               [b.only("xl")]: {
-                px: s(3),
+                p: s(3),
               },
               [b.only("lg")]: {
-                px: s(3),
+                p: s(3),
               },
               [b.only("md")]: {
-                px: s(3),
+                p: s(3),
               },
             },
           }}
@@ -199,12 +199,20 @@ export const AppLayout = ({
           sections={menuSections}
         />
       </Box>
-      <Box sx={{ position: "relative" }}>
+      <Box
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          minHeight: 0,
+        }}
+      >
         {!["/", "/data"].includes(router.pathname) ? <BackButton /> : null}
         {children}
       </Box>
       {router.pathname !== "/data" && <FooterBLW />}
-    </>
+    </Stack>
   );
 };
 
