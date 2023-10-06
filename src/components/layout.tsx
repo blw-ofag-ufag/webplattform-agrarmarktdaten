@@ -34,9 +34,13 @@ interface Props {
   alternates?: { href: string; as: string; locale: string }[];
 }
 
-export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }: Props) => {
+export const AppLayout = ({
+  children,
+  allMarkets,
+  allFocusArticles,
+  alternates,
+}: Props) => {
   const router = useRouter();
-  const isXXlAndUp = useMediaQuery(b.up("xxl"));
   const stickyRef = useStickyBox({ offsetTop: 0 });
   const { headerSections, menuSections } = React.useMemo(() => {
     const menuSections: MenuProps["sections"] = [
@@ -199,88 +203,176 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
         {!["/", "/data"].includes(router.pathname) ? <BackButton /> : null}
         {children}
       </Box>
-      <Footer
-        ContentWrapperProps={{ sx: { maxWidth: "1920px" } }}
-        bottomLinks={[
-          {
-            title: t({ id: "footer.impressum", message: "Impressum" }),
-            href: "",
-          },
-          {
-            title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
-            href: "/legal",
-          },
-          {
-            title: t({ id: "footer.about_us.label", message: "About Us" }),
-            href: "#",
-          },
-          {
-            title: t({ id: "footer.terms", message: "Terms and Conditions" }),
-            href: "/terms-and-conditions",
-          },
-        ]}
-        nCols={isXXlAndUp ? 4 : 3}
-      >
-        <FooterSection>
-          <FooterSectionTitle title={t({ id: "footer.about_us.label", message: "About Us" })} />
-          <FooterSectionText
-            text={t({
-              id: "footer.id",
-              message:
-                "The Federal Office for Agriculture FOAG is the Confederation's competence centre for all core issues relating to the agricultural sector. The FOAG is committed to ensuring that farmers produce high-quality food sustainably and with a focus on the market.",
-            })}
-          />
-        </FooterSection>
+      {router.pathname !== "/data" && <FooterBLW />}
+    </>
+  );
+};
 
-        <FooterSection>
-          <FooterSectionTitle title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })} />
-          <FooterSectionSocialMediaButtonGroup>
-            <FooterSectionSocialMediaButton type="twitter" href="https://www.twitter.com" />
-            <FooterSectionSocialMediaButton type="facebook" href="https://www.facebook.com" />
-            <FooterSectionSocialMediaButton type="youtube" href="https://www.youtube.com" />
-            <FooterSectionSocialMediaButton type="instagram" href="https://www.instagram.com" />
-            <FooterSectionSocialMediaButton type="linkedin" href="https://www.linkedin.com" />
-          </FooterSectionSocialMediaButtonGroup>
-          <Box
+const FooterBLW = () => {
+  const isXXlAndUp = useMediaQuery(b.up("xxl"));
+  return (
+    <Footer
+      ContentWrapperProps={{ sx: { maxWidth: "1920px" } }}
+      bottomLinks={[
+        {
+          title: t({ id: "footer.impressum", message: "Impressum" }),
+          href: "",
+        },
+        {
+          title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
+          href: "/legal",
+        },
+        {
+          title: t({ id: "footer.about_us.label", message: "About Us" }),
+          href: "#",
+        },
+        {
+          title: t({ id: "footer.terms", message: "Terms and Conditions" }),
+          href: "/terms-and-conditions",
+        },
+      ]}
+      nCols={isXXlAndUp ? 4 : 3}
+    >
+      <FooterSection>
+        <FooterSectionTitle
+          title={t({ id: "footer.about_us.label", message: "About Us" })}
+        />
+        <FooterSectionText
+          text={t({
+            id: "footer.id",
+            message:
+              "The Federal Office for Agriculture FOAG is the Confederation's competence centre for all core issues relating to the agricultural sector. The FOAG is committed to ensuring that farmers produce high-quality food sustainably and with a focus on the market.",
+          })}
+        />
+      </FooterSection>
+
+      <FooterSection>
+        <FooterSectionTitle
+          title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })}
+        />
+        <FooterSectionSocialMediaButtonGroup>
+          <FooterSectionSocialMediaButton
+            type="twitter"
+            href="https://www.twitter.com"
+          />
+          <FooterSectionSocialMediaButton
+            type="facebook"
+            href="https://www.facebook.com"
+          />
+          <FooterSectionSocialMediaButton
+            type="youtube"
+            href="https://www.youtube.com"
+          />
+          <FooterSectionSocialMediaButton
+            type="instagram"
+            href="https://www.instagram.com"
+          />
+          <FooterSectionSocialMediaButton
+            type="linkedin"
+            href="https://www.linkedin.com"
+          />
+        </FooterSectionSocialMediaButtonGroup>
+        <Box
+          sx={{
+            marginTop: s(10),
+            display: "flex",
+            bgcolor: c.cobalt[500],
+            border: `${c.cobalt[50]} 1px solid`,
+            width: "fit-content",
+            px: s(5),
+            py: s(2.5),
+          }}
+        >
+          <Link href="https://www.blw.admin.ch/blw/de/home/services/newsletter.html">
+            <Typography sx={{ mr: 2 }}>
+              {t({
+                id: "footer.newsletter",
+                message: "Subscribe to newsletter",
+              })}
+            </Typography>
+          </Link>
+          <SvgIcControlArrowRight width="24px" height="24px" />
+        </Box>
+      </FooterSection>
+      {isXXlAndUp ? (
+        <>
+          <FooterSection>
+            <FooterSectionTitle
+              title={t({
+                id: "footer.furtherinformation",
+                message: "Further Information",
+              })}
+            />
+            <Link
+              href="https://www.blw.admin.ch/blw/de/home.html"
+              sx={{ textDecoration: "none" }}
+            >
+              <FooterSectionButton label="Bundesamt für Landwirtschaft" />
+            </Link>
+            <Link
+              href="https://2022.agrarbericht.ch/de"
+              sx={{ textDecoration: "none" }}
+            >
+              <FooterSectionButton label="Agrarbericht" />
+            </Link>
+            <Link
+              href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/erhebungen/lik.html"
+              sx={{ textDecoration: "none" }}
+            >
+              <FooterSectionButton label="Landesindex der Konsumentenpreise" />
+            </Link>
+            <Link
+              href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/produzentenpreise-importpreise.html"
+              sx={{ textDecoration: "none" }}
+            >
+              <FooterSectionButton label="Produzenten- und Importpreis-Index" />
+            </Link>
+          </FooterSection>
+          <FooterSection>
+            <FooterSectionTitle title="Feedback" />
+            <Link
+              href="https://www.blw.admin.ch/blw/de/home.html"
+              target="_blank"
+            >
+              <FooterSectionButton label="Feedback" />
+            </Link>
+          </FooterSection>
+        </>
+      ) : (
+        <>
+          <FooterSection
             sx={{
-              marginTop: s(10),
               display: "flex",
-              bgcolor: c.cobalt[500],
-              border: `${c.cobalt[50]} 1px solid`,
-              width: "fit-content",
-              px: s(5),
-              py: s(2.5),
+              flexDirection: "column",
+              gap: s(10),
+              [b.only("lg")]: {
+                flexDirection: "row",
+                justifyContent: "space-between",
+              },
             }}
           >
-            <Link href="https://www.blw.admin.ch/blw/de/home/services/newsletter.html">
-              <Typography sx={{ mr: 2 }}>
-                {t({
-                  id: "footer.newsletter",
-                  message: "Subscribe to newsletter",
-                })}
-              </Typography>
-            </Link>
-            <SvgIcControlArrowRight width="24px" height="24px" />
-          </Box>
-        </FooterSection>
-        {isXXlAndUp ? (
-          <>
-            <FooterSection>
+            <Box sx={{ width: "100%" }}>
               <FooterSectionTitle
                 title={t({
                   id: "footer.furtherinformation",
                   message: "Further Information",
                 })}
               />
-              <Link href="https://www.blw.admin.ch/blw/de/home.html" sx={{ textDecoration: "none" }}>
+              <Link
+                href="https://www.blw.admin.ch/blw/de/home.html"
+                sx={{ textDecoration: "none" }}
+              >
                 <FooterSectionButton label="Bundesamt für Landwirtschaft" />
               </Link>
-              <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
+              <Link
+                href="https://2022.agrarbericht.ch/de"
+                sx={{ textDecoration: "none" }}
+              >
                 <FooterSectionButton label="Agrarbericht" />
               </Link>
               <Link
                 href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/erhebungen/lik.html"
-                sx={{ textDecoration: "none" }}
+                sx={{ textDecoration: "none", textAlign: "left" }}
               >
                 <FooterSectionButton label="Landesindex der Konsumentenpreise" />
               </Link>
@@ -290,70 +382,26 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
               >
                 <FooterSectionButton label="Produzenten- und Importpreis-Index" />
               </Link>
-            </FooterSection>
-            <FooterSection>
-              <FooterSectionTitle title="Feedback" />
-              <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
-                <FooterSectionButton label="Feedback" />
-              </Link>
-            </FooterSection>
-          </>
-        ) : (
-          <>
-            <FooterSection
+            </Box>
+            <Box
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: s(10),
-                [b.only("lg")]: {
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                },
+                mt: s(10),
+                width: "100%",
+                [b.only("lg")]: { mt: 0 },
+                [b.only("md")]: { mt: s(4) },
               }}
             >
-              <Box sx={{ width: "100%" }}>
-                <FooterSectionTitle
-                  title={t({
-                    id: "footer.furtherinformation",
-                    message: "Further Information",
-                  })}
-                />
-                <Link href="https://www.blw.admin.ch/blw/de/home.html" sx={{ textDecoration: "none" }}>
-                  <FooterSectionButton label="Bundesamt für Landwirtschaft" />
-                </Link>
-                <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
-                  <FooterSectionButton label="Agrarbericht" />
-                </Link>
-                <Link
-                  href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/erhebungen/lik.html"
-                  sx={{ textDecoration: "none", textAlign: "left" }}
-                >
-                  <FooterSectionButton label="Landesindex der Konsumentenpreise" />
-                </Link>
-                <Link
-                  href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/produzentenpreise-importpreise.html"
-                  sx={{ textDecoration: "none" }}
-                >
-                  <FooterSectionButton label="Produzenten- und Importpreis-Index" />
-                </Link>
-              </Box>
-              <Box
-                sx={{
-                  mt: s(10),
-                  width: "100%",
-                  [b.only("lg")]: { mt: 0 },
-                  [b.only("md")]: { mt: s(4) },
-                }}
+              <FooterSectionTitle title="Feedback" />
+              <Link
+                href="https://www.blw.admin.ch/blw/de/home.html"
+                target="_blank"
               >
-                <FooterSectionTitle title="Feedback" />
-                <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
-                  <FooterSectionButton label="Kontakt" />
-                </Link>
-              </Box>
-            </FooterSection>
-          </>
-        )}
-      </Footer>
-    </>
+                <FooterSectionButton label="Kontakt" />
+              </Link>
+            </Box>
+          </FooterSection>
+        </>
+      )}
+    </Footer>
   );
 };
