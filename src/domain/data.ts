@@ -219,6 +219,8 @@ export const products: (CheckboxValue & {
   { label: "Emmentaler", name: "emmentaler", group: "milk", value: false },
 ];
 
+export type TimeGranularity = "year" | "month";
+
 export const marketsAtom = atom(markets);
 export const addedValueValuesAtom = atom(addedValueValues);
 export const productionSystemsAtom = atom(productionSystems);
@@ -227,3 +229,4 @@ export const countriesAtom = atom(countries);
 export const yearAtom = atom(year);
 export const monthsAtom = atom(months);
 export const productsAtom = atom(products);
+export const timeAtom = atom<TimeGranularity>("year");

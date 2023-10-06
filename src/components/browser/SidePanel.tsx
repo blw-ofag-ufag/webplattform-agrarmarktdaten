@@ -35,6 +35,7 @@ import {
   yearAtom,
 } from "@/domain/data";
 import MultiCheckbox from "./MultiCheckbox";
+import TimeFilter from "./TimeFilter";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -255,8 +256,8 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
         <AccordionTitle>Time</AccordionTitle>
       </AccordionSummary>
       <AccordionDetails>
-        <AccordionTitle>Year</AccordionTitle>
-        <FilterSlider
+        <TimeFilter />
+        {/* <FilterSlider
           disableSwap
           min={yearOptions.min}
           max={yearOptions.max}
@@ -286,7 +287,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
               }
             />
           ))}
-        </Box>
+        </Box> */}
       </AccordionDetails>
     </FilterAccordion>
   );
