@@ -196,7 +196,50 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
         />
       </Box>
       <Box sx={{ position: "relative" }}>
-        {router.pathname !== "/" ? <BackButton /> : null}
+        {router.pathname !== "/" ? (
+          <Box
+            sx={{
+              position: "absolute",
+              width: "100%",
+              height: "50px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+                height: "50px",
+                [b.only("xxxl")]: {
+                  maxWidth: "1676px",
+                },
+                [b.only("xxl")]: {
+                  maxWidth: "1544px",
+                },
+                [b.only("xl")]: {
+                  maxWidth: "1152px",
+                },
+                [b.only("lg")]: {
+                  maxWidth: "928px",
+                },
+                [b.only("md")]: {
+                  maxWidth: "696px",
+                },
+                [b.only("sm")]: {
+                  maxWidth: "568px",
+                },
+                [b.only("xs")]: {
+                  maxWidth: "424px",
+                },
+                [b.down("xxs")]: {
+                  maxWidth: "340px",
+                },
+              }}
+            >
+              <BackButton />
+            </Box>
+          </Box>
+        ) : null}
         {children}
       </Box>
       <Footer
