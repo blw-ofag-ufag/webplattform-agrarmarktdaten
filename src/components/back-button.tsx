@@ -21,7 +21,7 @@ export const BackButton = () => {
       variant="text"
       onClick={() => router.push(backRoute)}
       startIcon={<SvgIcControlArrowLeft />}
-      sx={{ position: "absolute", mt: 0, ml: 4, color: "black" }}
+      sx={{ position: "absolute", mt: 4, ml: 2, color: "black" }}
     >
       <Trans id="cta.back">Geh zurück</Trans>
     </Button>

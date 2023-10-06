@@ -17,10 +17,11 @@ type Props = {
   title: string;
   lead?: string;
   hero?: string;
+  color?: string;
 };
 
 export const Hero = (props: Props) => {
-  const { variant = "regular", title, lead, hero } = props;
+  const { variant = "regular", title, lead, hero, color = "#000000" } = props;
   const { classes } = useStyles();
 
   return (
@@ -30,7 +31,7 @@ export const Hero = (props: Props) => {
         sx={{
           flexDirection: "column",
           justifyContent: "end",
-          height: "400px",
+          height: hero ? "400px" : "250px",
           pb: s(18),
           mb: 7,
           backgroundImage: `url(${hero})`,
@@ -39,16 +40,14 @@ export const Hero = (props: Props) => {
           backgroundPosition: "center",
         }}
       >
-        <ContentContainer sx={{ ml: s(8) }}>
-          <Box>
-            <Box sx={{ width: "55px", height: "3px", backgroundColor: hero ? "white" : "black" }} />
-            <Typography variant="h1" sx={{ color: hero ? "white" : "black", fontSize: "64px" }}>
-              {title}
-            </Typography>
-          </Box>
+        <ContentContainer sx={{ maxWidth: "1096px" }}>
+          <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
+          <Typography variant="h1" sx={{ color, fontSize: "64px" }}>
+            {title}
+          </Typography>
         </ContentContainer>
       </Flex>
-      <ContentContainer sx={{ ml: s(8), pb: s(24) }}>
+      <ContentContainer sx={{ pb: "96px" }}>
         {lead && (
           <Typography variant="subtitle1" sx={{ mt: 16, mb: 24, color: c.monochrome[800] }}>
             {lead}

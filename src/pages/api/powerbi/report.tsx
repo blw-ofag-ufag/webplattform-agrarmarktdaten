@@ -1,11 +1,7 @@
 import "isomorphic-unfetch";
 import { NextApiHandler } from "next";
 
-import {
-  POWER_BI_CLIENT_ID,
-  POWER_BI_CLIENT_SECRET,
-  POWER_BI_TENANT_ID,
-} from "@/domain/env";
+import { POWER_BI_CLIENT_ID, POWER_BI_CLIENT_SECRET, POWER_BI_TENANT_ID } from "@/domain/env";
 
 const ACCESS_TOKEN_URL = `https://login.microsoftonline.com/${POWER_BI_TENANT_ID}/oauth2/v2.0/token`;
 const SCOPE = "https://analysis.windows.net/powerbi/api/.default";
@@ -57,10 +53,7 @@ const handler: NextApiHandler = async (req, res) => {
         Authorization: `Bearer ${accessTokenResult.access_token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        datasets,
-        reports,
-      }),
+      body: JSON.stringify({ datasets, reports }),
     }).then((res) => res.json());
 
     if (!embedCodeResult.token) {

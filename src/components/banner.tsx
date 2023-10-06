@@ -13,7 +13,7 @@ export const Banner = ({
   intro?: string | ReactNode;
   slug?: string;
 }) => {
-  const baseBgColor = useMemo(() => getMarketColor(slug), [slug]);
+  const [, baseBgColor] = useMemo(() => getMarketColor(slug), [slug]);
 
   return (
     <Box sx={{ position: "relative", width: "100vw", mb: [0, 0, 6] }}>
@@ -26,11 +26,7 @@ export const Banner = ({
   );
 };
 
-const BannerBackground = ({
-  bgColor = "primary.light",
-}: {
-  bgColor?: string;
-}) => (
+const BannerBackground = ({ bgColor = "primary.light" }: { bgColor?: string }) => (
   <Box
     sx={{
       backgroundColor: bgColor,
@@ -41,13 +37,7 @@ const BannerBackground = ({
   ></Box>
 );
 
-const BannerTitle = ({
-  color = "primary",
-  children,
-}: {
-  color?: string;
-  children: ReactNode;
-}) => (
+const BannerTitle = ({ color = "primary", children }: { color?: string; children: ReactNode }) => (
   <Box
     sx={{
       color: "grey.100",
@@ -64,13 +54,7 @@ const BannerTitle = ({
     {children}
   </Box>
 );
-const BannerIntro = ({
-  color,
-  children,
-}: {
-  color: string;
-  children: ReactNode;
-}) => (
+const BannerIntro = ({ color, children }: { color: string; children: ReactNode }) => (
   <Box
     typography="body1"
     sx={{

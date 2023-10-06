@@ -10,7 +10,6 @@ export const ContentContainer = ({ children, sx }: { children: React.ReactNode; 
         display: "flex",
         flexDirection: "column",
         mx: "auto",
-        // px: 5,
         [b.only("xxxl")]: {
           maxWidth: "1676px",
         },
@@ -32,7 +31,7 @@ export const ContentContainer = ({ children, sx }: { children: React.ReactNode; 
         [b.only("xs")]: {
           maxWidth: "424px",
         },
-        [b.only("xs")]: {
+        [b.down("xs")]: {
           maxWidth: "340px",
         },
         ...sx,

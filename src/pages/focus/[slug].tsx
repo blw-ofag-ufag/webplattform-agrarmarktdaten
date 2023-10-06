@@ -1,5 +1,3 @@
-import { Trans } from "@lingui/macro";
-import { Button, Stack, Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
 import { AppLayout } from "@/components/layout";
@@ -7,49 +5,21 @@ import { Hero } from "@/components/hero";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { ContentContainer } from "@/components/content-container";
-import { BlogPostsGrid } from "@/components/blog/BlogPost";
-import NextLink from "next/link";
+import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
+import { StructuredText } from "@/components/StructuredText";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
-  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } =
-    props;
+  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   if (!focusArticle?.title || !focusArticle?.lead) {
     return null;
   }
   return (
-    <AppLayout
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-    >
+    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={focusArticle.title} lead={focusArticle.lead} />
-      <ContentContainer>
-        <Stack flexDirection="column" spacing={6}>
-          <Typography variant="h5">
-            <Trans id="homepage.section.latestBlogPosts">
-              Neuste Blogbeiträge
-            </Trans>
-          </Typography>
-          <BlogPostsGrid blogPosts={topBlogPosts} />
-          <NextLink href="/blog" legacyBehavior>
-            <Button
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                width: "184px",
-                height: "48px",
-                backgroundColor: "grey.300",
-                color: "black",
-
-                "&:hover": {
-                  backgroundColor: "grey.500",
-                },
-              }}
-            >
-              <Trans id="button.show.all">Alle Anzeigen</Trans>
-            </Button>
-          </NextLink>
-        </Stack>
+      <ContentContainer sx={{ maxWidth: "1096px" }}>
+        {focusArticle.content && <StructuredText data={focusArticle.content} />}
       </ContentContainer>
+      <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );
 }
@@ -79,10 +49,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const result = await client
-    .query<GQL.AllMarketArticlesSlugLocalesQuery>(
-      GQL.AllMarketArticlesSlugLocalesDocument,
-      {}
-    )
+    .query<GQL.AllFocusArticlesSlugLocalesQuery>(GQL.AllFocusArticlesSlugLocalesDocument, {})
     .toPromise();
 
   if (!result.data) {
@@ -90,7 +57,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     throw new Error("Failed to fetch API");
   }
 
-  const paths = result.data.allMarketArticles.flatMap((page) => {
+  const paths = result.data.allFocusArticles.flatMap((page) => {
     return page._allSlugLocales
       ? page._allSlugLocales?.map((loc) => ({
           locale: loc.locale ?? undefined,

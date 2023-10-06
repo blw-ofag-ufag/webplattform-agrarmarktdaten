@@ -43,6 +43,7 @@ query HomePage($locale: SiteLocale!) {
 
 query LegalPage($locale: SiteLocale!) {
   legalPage(locale: $locale) {
+    id
     title
     slug
     lead
@@ -66,7 +67,7 @@ query TermsPage($locale: SiteLocale!) {
     slug
     lead
     content {
-      content
+      value
     }
   }
 
@@ -136,14 +137,49 @@ query MethodsPage($locale: SiteLocale!) {
       ...FullSEO
     }
     content {
-      __typename
-      ...DownloadTeaserBlock
-      ...ExternalVideoBlock
-      ...GalleryBlock
-      ...IframeBlock
-      ...ImageTeaserBlock
-      ...MarkdownBlock
-      ...SurveyBlock
+      value
+      blocks {
+        id
+        __typename
+        ... on ImageTeaserBlockRecord {
+          imageTeaserAsset {
+            url
+            alt
+            width
+            height
+            responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+              sizes
+              src
+              width
+              height
+              alt
+              title
+              base64
+            }
+          }
+        }
+      }
+      links {
+        __typename
+        id
+        workspace {
+          id
+          name
+          workspaceId
+        }
+        reportId
+        name
+        dataset {
+          name
+          id
+          datasetId
+          workspace {
+            workspaceId
+            name
+            id
+          }
+        }
+      }
     }
   }
 
@@ -278,15 +314,50 @@ fragment FullMarketArticle on MarketArticleRecord {
   title
   slug
   lead
-  blocks {
-    __typename
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...ImageTeaserBlock
-    ...MarkdownBlock
-    ...SurveyBlock
+  content {
+    value
+    blocks {
+      id
+      __typename
+      ... on ImageTeaserBlockRecord {
+        imageTeaserAsset {
+          url
+          alt
+          width
+          height
+          responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+          }
+        }
+      }
+    }
+    links {
+      __typename
+      id
+      workspace {
+        id
+        name
+        workspaceId
+      }
+      reportId
+      name
+      dataset {
+        name
+        id
+        datasetId
+        workspace {
+          workspaceId
+          name
+          id
+        }
+      }
+    }
   }
   seo {
     ...FullSEO
@@ -298,15 +369,51 @@ fragment FullFocusArticle on FocusArticleRecord {
   title
   slug
   lead
-  blocks {
-    __typename
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...ImageTeaserBlock
-    ...MarkdownBlock
-    ...SurveyBlock
+  content {
+    value
+
+    blocks {
+      id
+      __typename
+      ... on ImageTeaserBlockRecord {
+        imageTeaserAsset {
+          url
+          alt
+          width
+          height
+          responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+          }
+        }
+      }
+    }
+    links {
+      __typename
+      id
+      workspace {
+        id
+        name
+        workspaceId
+      }
+      reportId
+      name
+      dataset {
+        name
+        id
+        datasetId
+        workspace {
+          workspaceId
+          name
+          id
+        }
+      }
+    }
   }
   seo {
     ...FullSEO
@@ -351,14 +458,51 @@ fragment FullBlogPost on BlogPostRecord {
     id
     url
   }
-  blocks {
-    ...DownloadTeaserBlock
-    ...ExternalVideoBlock
-    ...GalleryBlock
-    ...IframeBlock
-    ...ImageTeaserBlock
-    ...MarkdownBlock
-    ...SurveyBlock
+  content {
+    value
+
+    blocks {
+      id
+      __typename
+      ... on ImageTeaserBlockRecord {
+        imageTeaserAsset {
+          url
+          alt
+          width
+          height
+          responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+          }
+        }
+      }
+    }
+    links {
+      __typename
+      id
+      workspace {
+        id
+        name
+        workspaceId
+      }
+      reportId
+      name
+      dataset {
+        name
+        id
+        datasetId
+        workspace {
+          workspaceId
+          name
+          id
+        }
+      }
+    }
   }
   markets {
     id

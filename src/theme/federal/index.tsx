@@ -56,17 +56,12 @@ declare module "@mui/material" {
 
 const isSafari15 =
   typeof navigator !== "undefined" && navigator.vendor.indexOf("Apple") >= 0
-    ? navigator.userAgent
-        .match(/Version[/\s]([\d]+)/g)?.[0]
-        ?.split("/")?.[1] === "15"
+    ? navigator.userAgent.match(/Version[/\s]([\d]+)/g)?.[0]?.split("/")?.[1] === "15"
     : false;
 
 const breakpoints = ["xs", "md"] as Breakpoint[];
 
-const createTypographyVariant = (
-  theme: Theme,
-  spec: Record<string, $IntentionalAny>
-) => {
+const createTypographyVariant = (theme: Theme, spec: Record<string, $IntentionalAny>) => {
   const res = omit(spec, ["lineHeight", "fontSize"]);
   for (let i = 0; i < spec.fontSize.length; i++) {
     const lineHeight = `${spec.lineHeight[i]}px`;
@@ -166,6 +161,7 @@ const theme = createTheme({
 
   typography: {
     fontFamily: [
+      "NotoSans",
       "FrutigerNeue",
       "-apple-system",
       "BlinkMacSystemFont",
@@ -236,11 +232,7 @@ theme.typography = merge(theme.typography, {
   }),
 });
 
-const makeStandardAlertVariant = ({
-  severity,
-}: {
-  severity: "info" | "warning" | "success" | "error";
-}) => ({
+const makeStandardAlertVariant = ({ severity }: { severity: "info" | "warning" | "success" | "error" }) => ({
   "&": {
     backgroundColor: theme.palette[severity].light,
   },

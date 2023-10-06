@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Stack, Typography, Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
@@ -16,23 +16,21 @@ export default function HomePage(props: GQL.HomePageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} />
-      <Box sx={{ bgcolor: "#f9f9f9" }}>
+      <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} color="#ffffff" />
+      <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <ContentContainer sx={{ gap: s(8), pt: s(20) }}>
-          <Typography variant="h2" sx={{ ml: s(8), fontWeight: 700 }}>
+          <Typography variant="h2" sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={homePage.markets} />
 
-          <Typography variant="h2" sx={{ ml: s(8), fontWeight: 700 }}>
+          <Typography variant="h2" sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </ContentContainer>
-      </Box>
-      <Stack flexDirection="column" spacing={6}>
         <TopBlogpostsTeaser blogposts={topBlogPosts} />
-      </Stack>
+      </Box>
     </AppLayout>
   );
 }

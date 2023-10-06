@@ -3,51 +3,23 @@ import { client } from "@/graphql/api";
 import { AppLayout } from "@/components/layout";
 import { Hero } from "@/components/hero";
 import { ContentContainer } from "@/components/content-container";
-import { Button, Stack, Typography } from "@mui/material";
-import { Trans } from "@lingui/macro";
-import { BlogPostsGrid } from "@/components/blog/BlogPost";
-import NextLink from "next/link";
+import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
+import { StructuredText } from "@/components/StructuredText";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } =
-    props;
+  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
   return (
-    <AppLayout
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-    >
+    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={methodsPage.title} lead={methodsPage.lead} />
-      <ContentContainer>
-        <Stack flexDirection="column" spacing={6}>
-          <Typography variant="h5">
-            <Trans id="homepage.section.latestBlogPosts">
-              Neuste Blogbeiträge
-            </Trans>
-          </Typography>
-          <BlogPostsGrid blogPosts={topBlogPosts} />
-          <NextLink href="/blog" legacyBehavior>
-            <Button
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                width: "184px",
-                height: "48px",
-                backgroundColor: "grey.300",
-                color: "black",
-
-                "&:hover": {
-                  backgroundColor: "grey.500",
-                },
-              }}
-            >
-              <Trans id="button.show.all">Alle Anzeigen</Trans>
-            </Button>
-          </NextLink>
-        </Stack>
-      </ContentContainer>
+      {methodsPage.content && (
+        <ContentContainer>
+          <StructuredText data={methodsPage.content} />
+        </ContentContainer>
+      )}
+      <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );
 }
