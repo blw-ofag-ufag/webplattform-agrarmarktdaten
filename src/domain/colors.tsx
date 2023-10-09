@@ -1,8 +1,8 @@
 export const getMarketColor = (slug?: string | null) => {
   switch (slug) {
-    case "milch":
-    case "lait":
-    case "latte":
+    case "milch-und-milchprodukte":
+    case "lait-et-produits-laitiers":
+    case "latte-e-latticini":
     case "milk":
       return ["#000000", "#6C84B5"];
     case "milch-und-fleischersatzprodukte":
@@ -10,7 +10,7 @@ export const getMarketColor = (slug?: string | null) => {
     case "sostituti-del-latte-e-della-carne":
     case "milk-and-meat-substitutes":
       return ["#000000", "#B0BDD7"];
-    case "fruchte-gemuse":
+    case "fruchte-gemuese-speisepilze":
     case "fruits-et-legumes":
     case "frutta-e-verdura":
     case "fruits-and-vegetables":
@@ -20,7 +20,7 @@ export const getMarketColor = (slug?: string | null) => {
     case "carne":
     case "meat":
       return ["#000000", "#F47769"];
-    case "brot-und-getreide":
+    case "getreide":
     case "pain-et-ceraales":
     case "pane-e-cereali":
     case "bread-and-cereals":
