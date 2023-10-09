@@ -196,13 +196,18 @@ export const parseObservation = (d: Record<string, Literal | NamedNode<string>>)
 
     const parsedValue = parseObservationValue(v);
 
-    parsed[key] = typeof parsedValue === "string" ? ns.stripNamespaceFromIri({ iri: parsedValue }) : parsedValue;
+    parsed[key] =
+      typeof parsedValue === "string"
+        ? ns.stripNamespaceFromIri({ iri: parsedValue })
+        : parsedValue;
   }
   return parsed;
 };
 
 export const getSparqlEditorUrl = (query: string): string | null => {
-  return process.env.SPARQL_EDITOR ? `${process.env.SPARQL_EDITOR}#query=${encodeURIComponent(query)}` : query;
+  return process.env.SPARQL_EDITOR
+    ? `${process.env.SPARQL_EDITOR}#query=${encodeURIComponent(query)}`
+    : query;
 };
 
 export const getObservations = async (
@@ -261,7 +266,11 @@ export const getObservations = async (
   return res;
 };
 
-export const getCubeDimension = (view: View, dimensionKey: string, { locale }: { locale: string }) => {
+export const getCubeDimension = (
+  view: View,
+  dimensionKey: string,
+  { locale }: { locale: string }
+) => {
   const viewDimension = view.dimension({
     cubeDimension: ns.amdpDimension(dimensionKey),
   });
@@ -289,8 +298,12 @@ export const getCubeDimension = (view: View, dimensionKey: string, { locale }: {
 
 export const getName = (node: Cube | CubeDimension, { locale }: { locale: string }) => {
   const term =
-    node.out(ns.schema`name`).terms.find((term) => term.termType === "Literal" && term.language === locale) ??
-    node.out(ns.schema`name`).terms.find((term) => term.termType === "Literal" && term.language === defaultLocale);
+    node
+      .out(ns.schema`name`)
+      .terms.find((term) => term.termType === "Literal" && term.language === locale) ??
+    node
+      .out(ns.schema`name`)
+      .terms.find((term) => term.termType === "Literal" && term.language === defaultLocale);
 
   return term?.value ?? "---";
 };

@@ -22,11 +22,7 @@ const MultiCheckbox = <T extends CheckboxValue>({
     if (radio) {
       newValues = values.map((v, j) => ({ ...v, value: i === j }));
     } else {
-      newValues = [
-        ...values.slice(0, i),
-        { ...values[i], value },
-        ...values.slice(i + 1),
-      ];
+      newValues = [...values.slice(0, i), { ...values[i], value }, ...values.slice(i + 1)];
     }
     onChange(newValues);
   };

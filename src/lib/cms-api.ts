@@ -2,21 +2,14 @@ import { DocumentNode } from "graphql";
 import "isomorphic-unfetch";
 import { print } from "graphql";
 
-import {
-  DATOCMS_API_TOKEN,
-  DATOCMS_API_URL,
-  IS_DEV_ENVIRONMENT,
-} from "@/domain/env";
+import { DATOCMS_API_TOKEN, DATOCMS_API_URL, IS_DEV_ENVIRONMENT } from "@/domain/env";
 
 type Options = {
   variables?: { [k: string]: any };
   preview?: boolean;
 };
 
-export async function fetchCMS<T>(
-  document: DocumentNode,
-  options: Options = {}
-): Promise<T> {
+export async function fetchCMS<T>(document: DocumentNode, options: Options = {}): Promise<T> {
   const { variables, preview } = options;
   const query = print(document);
   const result = await fetch(

@@ -2,13 +2,7 @@ import { ReactNode } from "react";
 
 import Flex from "@/components/flex";
 
-export const ChapterHeader = ({
-  id,
-  children,
-}: {
-  id: string;
-  children: ReactNode;
-}) => {
+export const ChapterHeader = ({ id, children }: { id: string; children: ReactNode }) => {
   return (
     <Flex
       id={id}

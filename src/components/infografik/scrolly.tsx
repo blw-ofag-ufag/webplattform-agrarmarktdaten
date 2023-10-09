@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 type ActiveSection = string | undefined;

@@ -70,8 +70,25 @@ export const CardsGrid = ({ type, entries }: Props) => {
       >
         {entries.map((d) => {
           return (
-            <Grid key={d.id} sx={{ mb: 4 }} xxxl={4} xxl={4} xl={4} lg={3} md={3} sm={4} xs={4} xxs={4}>
-              <NextLink href={`/${type}/[slug]`} as={`/${type}/${d.slug}`} locale={locale} passHref legacyBehavior>
+            <Grid
+              key={d.id}
+              sx={{ mb: 4 }}
+              xxxl={4}
+              xxl={4}
+              xl={4}
+              lg={3}
+              md={3}
+              sm={4}
+              xs={4}
+              xxs={4}
+            >
+              <NextLink
+                href={`/${type}/[slug]`}
+                as={`/${type}/${d.slug}`}
+                locale={locale}
+                passHref
+                legacyBehavior
+              >
                 <Link sx={{ textDecoration: "none" }}>
                   <GridCard type={type} title={d.title as string} slug={d.slug} />
                 </Link>
@@ -84,7 +101,15 @@ export const CardsGrid = ({ type, entries }: Props) => {
   );
 };
 
-const GridCard = ({ title, type, slug }: { title: string; type: "market" | "focus"; slug?: string | null }) => {
+const GridCard = ({
+  title,
+  type,
+  slug,
+}: {
+  title: string;
+  type: "market" | "focus";
+  slug?: string | null;
+}) => {
   return type === "market" ? (
     <MarketCard title={title} slug={slug} />
   ) : type === "focus" ? (
@@ -106,7 +131,10 @@ const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) =>
     >
       <Box sx={{ bgcolor: bgColor, width: "100%", height: "20px", mb: s(5.5) }} />
       <Box sx={{ width: "48px", height: "3px", bgcolor: color, ml: s(8) }} />
-      <Typography component="h2" sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}>
+      <Typography
+        component="h2"
+        sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}
+      >
         {title}
       </Typography>
     </Card>
@@ -117,11 +145,19 @@ const ThemeCard = ({ title }: { title: string }) => {
   return (
     <Card
       elevation={4}
-      sx={{ width: "100%", height: CARD_HEIGHT, borderRadius: s(2), ":hover": { backgroundColor: "#ACB4BD" } }}
+      sx={{
+        width: "100%",
+        height: CARD_HEIGHT,
+        borderRadius: s(2),
+        ":hover": { backgroundColor: "#ACB4BD" },
+      }}
     >
       <Box sx={{ bgcolor: "#ACB4BD", width: "100%", height: "20px", mb: s(5.5) }} />
       <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
-      <Typography component="h2" sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}>
+      <Typography
+        component="h2"
+        sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}
+      >
         {title}
       </Typography>
     </Card>

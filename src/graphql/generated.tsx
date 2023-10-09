@@ -1,63 +1,66 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+import gql from "graphql-tag";
+import * as Urql from "urql";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  BooleanType: { input: boolean; output: boolean; }
-  CustomData: { input: any; output: any; }
-  Date: { input: string; output: string; }
-  DateTime: { input: string; output: string; }
-  FloatType: { input: number; output: number; }
-  IntType: { input: number; output: number; }
-  ItemId: { input: any; output: any; }
-  JsonField: { input: any; output: any; }
-  MetaTagAttributes: { input: any; output: any; }
-  UploadId: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  BooleanType: { input: boolean; output: boolean };
+  CustomData: { input: any; output: any };
+  Date: { input: string; output: string };
+  DateTime: { input: string; output: string };
+  FloatType: { input: number; output: number };
+  IntType: { input: number; output: number };
+  ItemId: { input: any; output: any };
+  JsonField: { input: any; output: any };
+  MetaTagAttributes: { input: any; output: any };
+  UploadId: { input: any; output: any };
 };
 
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecord = RecordInterface & {
-  __typename: 'AboutPageRecord';
+  __typename: "AboutPageRecord";
   _allContentLocales?: Maybe<Array<MarkdownBlockRecordListListNonNullMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   content: Array<MarkdownBlockRecord>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordAllContentLocalesArgs = {
@@ -65,13 +68,11 @@ export type AboutPageRecordAllContentLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordAllSeoLocalesArgs = {
@@ -79,13 +80,11 @@ export type AboutPageRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordAllTitleLocalesArgs = {
@@ -93,12 +92,10 @@ export type AboutPageRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordContentArgs = {
@@ -106,13 +103,11 @@ export type AboutPageRecordContentArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordSeoArgs = {
@@ -120,13 +115,11 @@ export type AboutPageRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🏛️ About Page (about_page) */
 export type AboutPageRecordTitleArgs = {
@@ -136,40 +129,38 @@ export type AboutPageRecordTitleArgs = {
 
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecord = RecordInterface & {
-  __typename: 'AnalysisPageRecord';
+  __typename: "AnalysisPageRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordAllSeoLocalesArgs = {
@@ -177,13 +168,11 @@ export type AnalysisPageRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordAllTitleLocalesArgs = {
@@ -191,19 +180,16 @@ export type AnalysisPageRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordSeoArgs = {
@@ -211,13 +197,11 @@ export type AnalysisPageRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 📊 Analysis Page (analysis_page) */
 export type AnalysisPageRecordTitleArgs = {
@@ -226,10 +210,10 @@ export type AnalysisPageRecordTitleArgs = {
 };
 
 export type BlogPostModelContentField = {
-  __typename: 'BlogPostModelContentField';
+  __typename: "BlogPostModelContentField";
   blocks: Array<ImageTeaserBlockRecord>;
   links: Array<PowerBiReportRecord>;
-  value: Scalars['JsonField']['output'];
+  value: Scalars["JsonField"]["output"];
 };
 
 export type BlogPostModelFilter = {
@@ -258,73 +242,71 @@ export type BlogPostModelFilter = {
 };
 
 export enum BlogPostModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  title_ASC = 'title_ASC',
-  title_DESC = 'title_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  title_ASC = "title_ASC",
+  title_DESC = "title_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecord = RecordInterface & {
-  __typename: 'BlogPostRecord';
+  __typename: "BlogPostRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   authors: Array<PersonRecord>;
   content?: Maybe<BlogPostModelContentField>;
-  createdAt: Scalars['DateTime']['output'];
+  createdAt: Scalars["DateTime"]["output"];
   focusArticles: Array<FocusArticleRecord>;
-  id: Scalars['ItemId']['output'];
+  id: Scalars["ItemId"]["output"];
   image?: Maybe<FileField>;
-  lead?: Maybe<Scalars['String']['output']>;
+  lead?: Maybe<Scalars["String"]["output"]>;
   markets: Array<MarketArticleRecord>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordAllSeoLocalesArgs = {
@@ -332,13 +314,11 @@ export type BlogPostRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordAllTitleLocalesArgs = {
@@ -346,19 +326,16 @@ export type BlogPostRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordSeoArgs = {
@@ -366,13 +343,11 @@ export type BlogPostRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordTitleArgs = {
@@ -383,98 +358,97 @@ export type BlogPostRecordTitleArgs = {
 /** Specifies how to filter Boolean fields */
 export type BooleanFilter = {
   /** Search for records with an exact match */
-  eq?: InputMaybe<Scalars['BooleanType']['input']>;
+  eq?: InputMaybe<Scalars["BooleanType"]["input"]>;
 };
 
 export type CollectionMetadata = {
-  __typename: 'CollectionMetadata';
-  count: Scalars['IntType']['output'];
+  __typename: "CollectionMetadata";
+  count: Scalars["IntType"]["output"];
 };
 
 export enum ColorBucketType {
-  black = 'black',
-  blue = 'blue',
-  brown = 'brown',
-  cyan = 'cyan',
-  green = 'green',
-  grey = 'grey',
-  orange = 'orange',
-  pink = 'pink',
-  purple = 'purple',
-  red = 'red',
-  white = 'white',
-  yellow = 'yellow'
+  black = "black",
+  blue = "blue",
+  brown = "brown",
+  cyan = "cyan",
+  green = "green",
+  grey = "grey",
+  orange = "orange",
+  pink = "pink",
+  purple = "purple",
+  red = "red",
+  white = "white",
+  yellow = "yellow",
 }
 
 export type ColorField = {
-  __typename: 'ColorField';
-  alpha: Scalars['IntType']['output'];
-  blue: Scalars['IntType']['output'];
-  cssRgb: Scalars['String']['output'];
-  green: Scalars['IntType']['output'];
-  hex: Scalars['String']['output'];
-  red: Scalars['IntType']['output'];
+  __typename: "ColorField";
+  alpha: Scalars["IntType"]["output"];
+  blue: Scalars["IntType"]["output"];
+  cssRgb: Scalars["String"]["output"];
+  green: Scalars["IntType"]["output"];
+  hex: Scalars["String"]["output"];
+  red: Scalars["IntType"]["output"];
 };
 
 /** Specifies how to filter by creation datetime */
 export type CreatedAtFilter = {
   /** Filter records with a value that's within the specified minute range. Seconds and milliseconds are truncated from the argument. */
-  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  eq?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with a value that's strictly greater than the one specified. Seconds and milliseconds are truncated from the argument. */
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's greater than or equal to than the one specified. Seconds and milliseconds are truncated from the argument. */
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's less than the one specified. Seconds and milliseconds are truncated from the argument. */
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's less or equal than the one specified. Seconds and milliseconds are truncated from the argument. */
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's outside the specified minute range. Seconds and milliseconds are truncated from the argument. */
-  neq?: InputMaybe<Scalars['DateTime']['input']>;
+  neq?: InputMaybe<Scalars["DateTime"]["input"]>;
 };
 
 /** Specifies how to filter Date fields */
 export type DateFilter = {
   /** Search for records with an exact match */
-  eq?: InputMaybe<Scalars['Date']['input']>;
+  eq?: InputMaybe<Scalars["Date"]["input"]>;
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with a value that's strictly greater than the one specified */
-  gt?: InputMaybe<Scalars['Date']['input']>;
+  gt?: InputMaybe<Scalars["Date"]["input"]>;
   /** Filter records with a value that's greater than or equal to the one specified */
-  gte?: InputMaybe<Scalars['Date']['input']>;
+  gte?: InputMaybe<Scalars["Date"]["input"]>;
   /** Filter records with a value that's less than the one specified */
-  lt?: InputMaybe<Scalars['Date']['input']>;
+  lt?: InputMaybe<Scalars["Date"]["input"]>;
   /** Filter records with a value that's less or equal than the one specified */
-  lte?: InputMaybe<Scalars['Date']['input']>;
+  lte?: InputMaybe<Scalars["Date"]["input"]>;
   /** Exclude records with an exact match */
-  neq?: InputMaybe<Scalars['Date']['input']>;
+  neq?: InputMaybe<Scalars["Date"]["input"]>;
 };
 
 /** Block of type Download Teaser Asset (download_teaser_asset) */
 export type DownloadTeaserAssetRecord = RecordInterface & {
-  __typename: 'DownloadTeaserAssetRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "DownloadTeaserAssetRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   file?: Maybe<FileField>;
-  id: Scalars['ItemId']['output'];
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  id: Scalars["ItemId"]["output"];
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Download Teaser Asset (download_teaser_asset) */
 export type DownloadTeaserAssetRecordSeoMetaTagsArgs = {
@@ -483,68 +457,64 @@ export type DownloadTeaserAssetRecordSeoMetaTagsArgs = {
 
 /** Block of type Download Teaser (download_teaser_block) */
 export type DownloadTeaserBlockRecord = RecordInterface & {
-  __typename: 'DownloadTeaserBlockRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "DownloadTeaserBlockRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  description?: Maybe<Scalars['String']['output']>;
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  description?: Maybe<Scalars["String"]["output"]>;
   downloadTeaserAssets: Array<DownloadTeaserAssetRecord>;
-  id: Scalars['ItemId']['output'];
-  markdown?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  id: Scalars["ItemId"]["output"];
+  markdown?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Download Teaser (download_teaser_block) */
 export type DownloadTeaserBlockRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Block of type Download Teaser (download_teaser_block) */
 export type DownloadTeaserBlockRecordDescriptionArgs = {
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Block of type Download Teaser (download_teaser_block) */
 export type DownloadTeaserBlockRecordMarkdownArgs = {
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
 
 /** Block of type External Video (external_video_block) */
 export type ExternalVideoBlockRecord = RecordInterface & {
-  __typename: 'ExternalVideoBlockRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "ExternalVideoBlockRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   externalVideo?: Maybe<VideoField>;
-  id: Scalars['ItemId']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  id: Scalars["ItemId"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type External Video (external_video_block) */
 export type ExternalVideoBlockRecordSeoMetaTagsArgs = {
@@ -552,170 +522,156 @@ export type ExternalVideoBlockRecordSeoMetaTagsArgs = {
 };
 
 export enum FaviconType {
-  appleTouchIcon = 'appleTouchIcon',
-  icon = 'icon',
-  msApplication = 'msApplication'
+  appleTouchIcon = "appleTouchIcon",
+  icon = "icon",
+  msApplication = "msApplication",
 }
 
 export type FileField = FileFieldInterface & {
-  __typename: 'FileField';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "FileField";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  alt?: Maybe<Scalars['String']['output']>;
-  author?: Maybe<Scalars['String']['output']>;
-  basename: Scalars['String']['output'];
-  blurUpThumb?: Maybe<Scalars['String']['output']>;
-  blurhash?: Maybe<Scalars['String']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  alt?: Maybe<Scalars["String"]["output"]>;
+  author?: Maybe<Scalars["String"]["output"]>;
+  basename: Scalars["String"]["output"];
+  blurUpThumb?: Maybe<Scalars["String"]["output"]>;
+  blurhash?: Maybe<Scalars["String"]["output"]>;
   colors: Array<ColorField>;
-  copyright?: Maybe<Scalars['String']['output']>;
-  customData: Scalars['CustomData']['output'];
-  exifInfo: Scalars['CustomData']['output'];
-  filename: Scalars['String']['output'];
+  copyright?: Maybe<Scalars["String"]["output"]>;
+  customData: Scalars["CustomData"]["output"];
+  exifInfo: Scalars["CustomData"]["output"];
+  filename: Scalars["String"]["output"];
   focalPoint?: Maybe<FocalPoint>;
-  format: Scalars['String']['output'];
-  height?: Maybe<Scalars['IntType']['output']>;
-  id: Scalars['UploadId']['output'];
-  md5: Scalars['String']['output'];
-  mimeType: Scalars['String']['output'];
-  notes?: Maybe<Scalars['String']['output']>;
+  format: Scalars["String"]["output"];
+  height?: Maybe<Scalars["IntType"]["output"]>;
+  id: Scalars["UploadId"]["output"];
+  md5: Scalars["String"]["output"];
+  mimeType: Scalars["String"]["output"];
+  notes?: Maybe<Scalars["String"]["output"]>;
   responsiveImage?: Maybe<ResponsiveImage>;
-  size: Scalars['IntType']['output'];
-  smartTags: Array<Scalars['String']['output']>;
-  tags: Array<Scalars['String']['output']>;
-  thumbhash?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  url: Scalars['String']['output'];
+  size: Scalars["IntType"]["output"];
+  smartTags: Array<Scalars["String"]["output"]>;
+  tags: Array<Scalars["String"]["output"]>;
+  thumbhash?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  url: Scalars["String"]["output"];
   video?: Maybe<UploadVideoField>;
-  width?: Maybe<Scalars['IntType']['output']>;
+  width?: Maybe<Scalars["IntType"]["output"]>;
 };
-
 
 export type FileFieldAltArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldBlurUpThumbArgs = {
   imgixParams?: InputMaybe<ImgixParams>;
-  punch?: Scalars['Float']['input'];
-  quality?: Scalars['Int']['input'];
-  size?: Scalars['Int']['input'];
+  punch?: Scalars["Float"]["input"];
+  quality?: Scalars["Int"]["input"];
+  size?: Scalars["Int"]["input"];
 };
-
 
 export type FileFieldCustomDataArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldFocalPointArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldResponsiveImageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   imgixParams?: InputMaybe<ImgixParams>;
   locale?: InputMaybe<SiteLocale>;
-  sizes?: InputMaybe<Scalars['String']['input']>;
+  sizes?: InputMaybe<Scalars["String"]["input"]>;
 };
-
 
 export type FileFieldTitleArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldUrlArgs = {
   imgixParams?: InputMaybe<ImgixParams>;
 };
 
 export type FileFieldInterface = {
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  alt?: Maybe<Scalars['String']['output']>;
-  author?: Maybe<Scalars['String']['output']>;
-  basename: Scalars['String']['output'];
-  blurUpThumb?: Maybe<Scalars['String']['output']>;
-  blurhash?: Maybe<Scalars['String']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  alt?: Maybe<Scalars["String"]["output"]>;
+  author?: Maybe<Scalars["String"]["output"]>;
+  basename: Scalars["String"]["output"];
+  blurUpThumb?: Maybe<Scalars["String"]["output"]>;
+  blurhash?: Maybe<Scalars["String"]["output"]>;
   colors: Array<ColorField>;
-  copyright?: Maybe<Scalars['String']['output']>;
-  customData: Scalars['CustomData']['output'];
-  exifInfo: Scalars['CustomData']['output'];
-  filename: Scalars['String']['output'];
+  copyright?: Maybe<Scalars["String"]["output"]>;
+  customData: Scalars["CustomData"]["output"];
+  exifInfo: Scalars["CustomData"]["output"];
+  filename: Scalars["String"]["output"];
   focalPoint?: Maybe<FocalPoint>;
-  format: Scalars['String']['output'];
-  height?: Maybe<Scalars['IntType']['output']>;
-  id: Scalars['UploadId']['output'];
-  md5: Scalars['String']['output'];
-  mimeType: Scalars['String']['output'];
-  notes?: Maybe<Scalars['String']['output']>;
+  format: Scalars["String"]["output"];
+  height?: Maybe<Scalars["IntType"]["output"]>;
+  id: Scalars["UploadId"]["output"];
+  md5: Scalars["String"]["output"];
+  mimeType: Scalars["String"]["output"];
+  notes?: Maybe<Scalars["String"]["output"]>;
   responsiveImage?: Maybe<ResponsiveImage>;
-  size: Scalars['IntType']['output'];
-  smartTags: Array<Scalars['String']['output']>;
-  tags: Array<Scalars['String']['output']>;
-  thumbhash?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  url: Scalars['String']['output'];
+  size: Scalars["IntType"]["output"];
+  smartTags: Array<Scalars["String"]["output"]>;
+  tags: Array<Scalars["String"]["output"]>;
+  thumbhash?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  url: Scalars["String"]["output"];
   video?: Maybe<UploadVideoField>;
-  width?: Maybe<Scalars['IntType']['output']>;
+  width?: Maybe<Scalars["IntType"]["output"]>;
 };
-
 
 export type FileFieldInterfaceAltArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldInterfaceBlurUpThumbArgs = {
   imgixParams?: InputMaybe<ImgixParams>;
-  punch?: Scalars['Float']['input'];
-  quality?: Scalars['Int']['input'];
-  size?: Scalars['Int']['input'];
+  punch?: Scalars["Float"]["input"];
+  quality?: Scalars["Int"]["input"];
+  size?: Scalars["Int"]["input"];
 };
-
 
 export type FileFieldInterfaceCustomDataArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldInterfaceFocalPointArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldInterfaceResponsiveImageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   imgixParams?: InputMaybe<ImgixParams>;
   locale?: InputMaybe<SiteLocale>;
-  sizes?: InputMaybe<Scalars['String']['input']>;
+  sizes?: InputMaybe<Scalars["String"]["input"]>;
 };
-
 
 export type FileFieldInterfaceTitleArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 export type FileFieldInterfaceUrlArgs = {
   imgixParams?: InputMaybe<ImgixParams>;
 };
 
 export type FileFieldMultiLocaleField = {
-  __typename: 'FileFieldMultiLocaleField';
+  __typename: "FileFieldMultiLocaleField";
   locale?: Maybe<SiteLocale>;
   value?: Maybe<FileField>;
 };
@@ -723,22 +679,22 @@ export type FileFieldMultiLocaleField = {
 /** Specifies how to filter Single-file/image fields */
 export type FileFilter = {
   /** Search for records with an exact match. The specified value must be an Upload ID */
-  eq?: InputMaybe<Scalars['UploadId']['input']>;
+  eq?: InputMaybe<Scalars["UploadId"]["input"]>;
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records that have one of the specified uploads */
-  in?: InputMaybe<Array<InputMaybe<Scalars['UploadId']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["UploadId"]["input"]>>>;
   /** Exclude records with an exact match. The specified value must be an Upload ID */
-  neq?: InputMaybe<Scalars['UploadId']['input']>;
+  neq?: InputMaybe<Scalars["UploadId"]["input"]>;
   /** Filter records that do not have one of the specified uploads */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['UploadId']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["UploadId"]["input"]>>>;
 };
 
 export type FocusArticleModelContentField = {
-  __typename: 'FocusArticleModelContentField';
+  __typename: "FocusArticleModelContentField";
   blocks: Array<ImageTeaserBlockRecord>;
   links: Array<PowerBiReportRecord>;
-  value: Scalars['JsonField']['output'];
+  value: Scalars["JsonField"]["output"];
 };
 
 export type FocusArticleModelFilter = {
@@ -764,70 +720,68 @@ export type FocusArticleModelFilter = {
 };
 
 export enum FocusArticleModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  title_ASC = 'title_ASC',
-  title_DESC = 'title_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  title_ASC = "title_ASC",
+  title_DESC = "title_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecord = RecordInterface & {
-  __typename: 'FocusArticleRecord';
+  __typename: "FocusArticleRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   content?: Maybe<FocusArticleModelContentField>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   powerBiReport?: Maybe<PowerBiReportRecord>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordAllSeoLocalesArgs = {
@@ -835,13 +789,11 @@ export type FocusArticleRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordAllTitleLocalesArgs = {
@@ -849,19 +801,16 @@ export type FocusArticleRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordSeoArgs = {
@@ -869,13 +818,11 @@ export type FocusArticleRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordTitleArgs = {
@@ -885,26 +832,25 @@ export type FocusArticleRecordTitleArgs = {
 
 /** Block of type Gallery (gallery_block) */
 export type GalleryBlockRecord = RecordInterface & {
-  __typename: 'GalleryBlockRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "GalleryBlockRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   galleryAssets: Array<FileField>;
-  id: Scalars['ItemId']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  id: Scalars["ItemId"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Gallery (gallery_block) */
 export type GalleryBlockRecordSeoMetaTagsArgs = {
@@ -912,66 +858,64 @@ export type GalleryBlockRecordSeoMetaTagsArgs = {
 };
 
 export type GlobalSeoField = {
-  __typename: 'GlobalSeoField';
-  facebookPageUrl?: Maybe<Scalars['String']['output']>;
+  __typename: "GlobalSeoField";
+  facebookPageUrl?: Maybe<Scalars["String"]["output"]>;
   fallbackSeo?: Maybe<SeoField>;
-  siteName?: Maybe<Scalars['String']['output']>;
-  titleSuffix?: Maybe<Scalars['String']['output']>;
-  twitterAccount?: Maybe<Scalars['String']['output']>;
+  siteName?: Maybe<Scalars["String"]["output"]>;
+  titleSuffix?: Maybe<Scalars["String"]["output"]>;
+  twitterAccount?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type HomeModelContentField = {
-  __typename: 'HomeModelContentField';
-  blocks: Array<Scalars['String']['output']>;
-  links: Array<Scalars['String']['output']>;
-  value: Scalars['JsonField']['output'];
+  __typename: "HomeModelContentField";
+  blocks: Array<Scalars["String"]["output"]>;
+  links: Array<Scalars["String"]["output"]>;
+  value: Scalars["JsonField"]["output"];
 };
 
 export type HomeModelContentFieldMultiLocaleField = {
-  __typename: 'HomeModelContentFieldMultiLocaleField';
+  __typename: "HomeModelContentFieldMultiLocaleField";
   locale?: Maybe<SiteLocale>;
   value?: Maybe<HomeModelContentField>;
 };
 
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecord = RecordInterface & {
-  __typename: 'HomePageRecord';
+  __typename: "HomePageRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   focusArticles: Array<FocusArticleRecord>;
   hero?: Maybe<FileField>;
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   markets: Array<MarketArticleRecord>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordAllSeoLocalesArgs = {
@@ -979,13 +923,11 @@ export type HomePageRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordAllTitleLocalesArgs = {
@@ -993,19 +935,16 @@ export type HomePageRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordSeoArgs = {
@@ -1013,13 +952,11 @@ export type HomePageRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🏠 Home (home_page) */
 export type HomePageRecordTitleArgs = {
@@ -1029,36 +966,35 @@ export type HomePageRecordTitleArgs = {
 
 /** Record of type Ξ home (home) */
 export type HomeRecord = RecordInterface & {
-  __typename: 'HomeRecord';
+  __typename: "HomeRecord";
   _allContentLocales?: Maybe<Array<HomeModelContentFieldMultiLocaleField>>;
   _allImageLocales?: Maybe<Array<FileFieldMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSubtitleLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   content?: Maybe<HomeModelContentField>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
   image?: Maybe<FileField>;
-  link?: Maybe<Scalars['String']['output']>;
+  link?: Maybe<Scalars["String"]["output"]>;
   seo?: Maybe<SeoField>;
-  subtitle?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  subtitle?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type Ξ home (home) */
 export type HomeRecordAllContentLocalesArgs = {
@@ -1066,13 +1002,11 @@ export type HomeRecordAllContentLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ home (home) */
 export type HomeRecordAllImageLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ home (home) */
 export type HomeRecordAllSeoLocalesArgs = {
@@ -1080,13 +1014,11 @@ export type HomeRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ home (home) */
 export type HomeRecordAllSubtitleLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ home (home) */
 export type HomeRecordAllTitleLocalesArgs = {
@@ -1094,12 +1026,10 @@ export type HomeRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ home (home) */
 export type HomeRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ home (home) */
 export type HomeRecordContentArgs = {
@@ -1107,13 +1037,11 @@ export type HomeRecordContentArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ home (home) */
 export type HomeRecordImageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ home (home) */
 export type HomeRecordSeoArgs = {
@@ -1121,13 +1049,11 @@ export type HomeRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ home (home) */
 export type HomeRecordSubtitleArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ home (home) */
 export type HomeRecordTitleArgs = {
@@ -1137,26 +1063,25 @@ export type HomeRecordTitleArgs = {
 
 /** Block of type iFrame (iframe_block) */
 export type IframeBlockRecord = RecordInterface & {
-  __typename: 'IframeBlockRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "IframeBlockRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  updatedAt: Scalars['DateTime']['output'];
-  url?: Maybe<Scalars['String']['output']>;
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
+  url?: Maybe<Scalars["String"]["output"]>;
 };
-
 
 /** Block of type iFrame (iframe_block) */
 export type IframeBlockRecordSeoMetaTagsArgs = {
@@ -1165,37 +1090,35 @@ export type IframeBlockRecordSeoMetaTagsArgs = {
 
 /** Block of type Image Teaser (image_teaser_block) */
 export type ImageTeaserBlockRecord = RecordInterface & {
-  __typename: 'ImageTeaserBlockRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "ImageTeaserBlockRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ItemId']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  description?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ItemId"]["output"];
   imageTeaserAsset?: Maybe<FileField>;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Image Teaser (image_teaser_block) */
 export type ImageTeaserBlockRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Block of type Image Teaser (image_teaser_block) */
 export type ImageTeaserBlockRecordDescriptionArgs = {
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
 
 export type ImgixParams = {
@@ -1208,7 +1131,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/ar)
    */
-  ar?: InputMaybe<Scalars['String']['input']>;
+  ar?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Automatic
    *
@@ -1224,7 +1147,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/bg)
    */
-  bg?: InputMaybe<Scalars['String']['input']>;
+  bg?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Background Removal
    *
@@ -1232,7 +1155,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/rendering/background-removal/bg-remove)
    */
-  bgRemove?: InputMaybe<Scalars['BooleanType']['input']>;
+  bgRemove?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /**
    * Blend
    *
@@ -1240,7 +1163,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend)
    */
-  blend?: InputMaybe<Scalars['String']['input']>;
+  blend?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Blend Align
    *
@@ -1260,7 +1183,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend-alpha)
    */
-  blendAlpha?: InputMaybe<Scalars['IntType']['input']>;
+  blendAlpha?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Blend Color
    *
@@ -1268,7 +1191,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend-color)
    */
-  blendColor?: InputMaybe<Scalars['String']['input']>;
+  blendColor?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Blend Crop
    *
@@ -1298,7 +1221,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend-h)
    */
-  blendH?: InputMaybe<Scalars['FloatType']['input']>;
+  blendH?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Blend Mode
    *
@@ -1318,7 +1241,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend-pad)
    */
-  blendPad?: InputMaybe<Scalars['IntType']['input']>;
+  blendPad?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Blend Size
    *
@@ -1338,7 +1261,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend-w)
    */
-  blendW?: InputMaybe<Scalars['FloatType']['input']>;
+  blendW?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Blend X Position
    *
@@ -1348,7 +1271,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend-x)
    */
-  blendX?: InputMaybe<Scalars['IntType']['input']>;
+  blendX?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Blend Y Position
    *
@@ -1358,7 +1281,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/blending/blend-y)
    */
-  blendY?: InputMaybe<Scalars['IntType']['input']>;
+  blendY?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Gaussian Blur
    *
@@ -1366,7 +1289,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/blur)
    */
-  blur?: InputMaybe<Scalars['IntType']['input']>;
+  blur?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Border Size & Color
    *
@@ -1374,7 +1297,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border)
    */
-  border?: InputMaybe<Scalars['String']['input']>;
+  border?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Border Bottom
    *
@@ -1384,7 +1307,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-bottom)
    */
-  borderBottom?: InputMaybe<Scalars['IntType']['input']>;
+  borderBottom?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Border Left
    *
@@ -1394,7 +1317,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-left)
    */
-  borderLeft?: InputMaybe<Scalars['IntType']['input']>;
+  borderLeft?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Outer Border Radius
    *
@@ -1404,7 +1327,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-radius)
    */
-  borderRadius?: InputMaybe<Scalars['String']['input']>;
+  borderRadius?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Inner Border Radius
    *
@@ -1414,7 +1337,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-radius-inner)
    */
-  borderRadiusInner?: InputMaybe<Scalars['String']['input']>;
+  borderRadiusInner?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Border Right
    *
@@ -1424,7 +1347,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-right)
    */
-  borderRight?: InputMaybe<Scalars['IntType']['input']>;
+  borderRight?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Border Top
    *
@@ -1434,7 +1357,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/border-top)
    */
-  borderTop?: InputMaybe<Scalars['IntType']['input']>;
+  borderTop?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Brightness
    *
@@ -1442,7 +1365,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/bri)
    */
-  bri?: InputMaybe<Scalars['IntType']['input']>;
+  bri?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Client Hints
    *
@@ -1458,7 +1381,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/format/chromasub)
    */
-  chromasub?: InputMaybe<Scalars['IntType']['input']>;
+  chromasub?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Color Quantization
    *
@@ -1466,7 +1389,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/format/colorquant)
    */
-  colorquant?: InputMaybe<Scalars['IntType']['input']>;
+  colorquant?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Palette Color Count
    *
@@ -1476,7 +1399,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/color-palette/colors)
    */
-  colors?: InputMaybe<Scalars['IntType']['input']>;
+  colors?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Contrast
    *
@@ -1484,7 +1407,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/con)
    */
-  con?: InputMaybe<Scalars['IntType']['input']>;
+  con?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Mask Corner Radius
    *
@@ -1494,7 +1417,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/mask/corner-radius)
    */
-  cornerRadius?: InputMaybe<Scalars['String']['input']>;
+  cornerRadius?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Crop Mode
    *
@@ -1520,7 +1443,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/format/dl)
    */
-  dl?: InputMaybe<Scalars['String']['input']>;
+  dl?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Dots Per Inch
    *
@@ -1528,7 +1451,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/format/dpi)
    */
-  dpi?: InputMaybe<Scalars['IntType']['input']>;
+  dpi?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Device Pixel Ratio
    *
@@ -1536,7 +1459,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/dpr)
    */
-  dpr?: InputMaybe<Scalars['FloatType']['input']>;
+  dpr?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Duotone
    *
@@ -1544,7 +1467,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/duotone)
    */
-  duotone?: InputMaybe<Scalars['String']['input']>;
+  duotone?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Duotone Alpha
    *
@@ -1554,7 +1477,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/duotone-alpha)
    */
-  duotoneAlpha?: InputMaybe<Scalars['IntType']['input']>;
+  duotoneAlpha?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Exposure
    *
@@ -1562,7 +1485,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/exp)
    */
-  exp?: InputMaybe<Scalars['IntType']['input']>;
+  exp?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Url Expiration Timestamp
    *
@@ -1570,7 +1493,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/expires)
    */
-  expires?: InputMaybe<Scalars['IntType']['input']>;
+  expires?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Face Index
    *
@@ -1580,7 +1503,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/face-detection/faceindex)
    */
-  faceindex?: InputMaybe<Scalars['IntType']['input']>;
+  faceindex?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Face Padding
    *
@@ -1590,7 +1513,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/face-detection/facepad)
    */
-  facepad?: InputMaybe<Scalars['FloatType']['input']>;
+  facepad?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Json Face Data
    *
@@ -1600,7 +1523,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/face-detection/faces)
    */
-  faces?: InputMaybe<Scalars['IntType']['input']>;
+  faces?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Fill Mode
    *
@@ -1620,7 +1543,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/fill/fill-color)
    */
-  fillColor?: InputMaybe<Scalars['String']['input']>;
+  fillColor?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Resize Fit Mode
    *
@@ -1654,7 +1577,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/focalpoint-crop/fp-debug)
    */
-  fpDebug?: InputMaybe<Scalars['BooleanType']['input']>;
+  fpDebug?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /**
    * Focal Point X Position
    *
@@ -1664,7 +1587,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/focalpoint-crop/fp-x)
    */
-  fpX?: InputMaybe<Scalars['FloatType']['input']>;
+  fpX?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Focal Point Y Position
    *
@@ -1674,7 +1597,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/focalpoint-crop/fp-y)
    */
-  fpY?: InputMaybe<Scalars['FloatType']['input']>;
+  fpY?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Focal Point Zoom
    *
@@ -1684,19 +1607,19 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/focalpoint-crop/fp-z)
    */
-  fpZ?: InputMaybe<Scalars['FloatType']['input']>;
+  fpZ?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Frames Per Second
    *
    * Specifies the framerate of the generated image.
    */
-  fps?: InputMaybe<Scalars['IntType']['input']>;
+  fps?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Frame Selection
    *
    * Specifies the frame of an animated image to use.
    */
-  frame?: InputMaybe<Scalars['String']['input']>;
+  frame?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Gamma
    *
@@ -1704,13 +1627,13 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/gam)
    */
-  gam?: InputMaybe<Scalars['IntType']['input']>;
+  gam?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Animated Gif Quality
    *
    * Depends on: `fm=gif`
    */
-  gifQ?: InputMaybe<Scalars['IntType']['input']>;
+  gifQ?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Grid Colors
    *
@@ -1718,7 +1641,7 @@ export type ImgixParams = {
    *
    * Depends on: `transparency`
    */
-  gridColors?: InputMaybe<Scalars['String']['input']>;
+  gridColors?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Grid Size
    *
@@ -1726,7 +1649,7 @@ export type ImgixParams = {
    *
    * Depends on: `transparency`
    */
-  gridSize?: InputMaybe<Scalars['IntType']['input']>;
+  gridSize?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Image Height
    *
@@ -1734,7 +1657,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/h)
    */
-  h?: InputMaybe<Scalars['FloatType']['input']>;
+  h?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Highlight
    *
@@ -1742,7 +1665,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/high)
    */
-  high?: InputMaybe<Scalars['IntType']['input']>;
+  high?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Halftone
    *
@@ -1750,7 +1673,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/htn)
    */
-  htn?: InputMaybe<Scalars['IntType']['input']>;
+  htn?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Hue Shift
    *
@@ -1758,13 +1681,13 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/hue)
    */
-  hue?: InputMaybe<Scalars['IntType']['input']>;
+  hue?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Frame Interval
    *
    * Displays every Nth frame starting with the first frame.
    */
-  interval?: InputMaybe<Scalars['IntType']['input']>;
+  interval?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Invert
    *
@@ -1772,7 +1695,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/invert)
    */
-  invert?: InputMaybe<Scalars['BooleanType']['input']>;
+  invert?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /**
    * Iptc Passthrough
    *
@@ -1784,7 +1707,7 @@ export type ImgixParams = {
    *
    * Specifies the number of times an animated image should repeat. A value of 0 means infinite looping.
    */
-  loop?: InputMaybe<Scalars['IntType']['input']>;
+  loop?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Lossless Compression
    *
@@ -1794,7 +1717,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/format/lossless)
    */
-  lossless?: InputMaybe<Scalars['BooleanType']['input']>;
+  lossless?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /**
    * Watermark Image Url
    *
@@ -1802,7 +1725,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark)
    */
-  mark?: InputMaybe<Scalars['String']['input']>;
+  mark?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Watermark Alignment Mode
    *
@@ -1822,7 +1745,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-alpha)
    */
-  markAlpha?: InputMaybe<Scalars['IntType']['input']>;
+  markAlpha?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Watermark Base Url
    *
@@ -1832,7 +1755,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-base)
    */
-  markBase?: InputMaybe<Scalars['String']['input']>;
+  markBase?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Watermark Fit Mode
    *
@@ -1852,7 +1775,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-h)
    */
-  markH?: InputMaybe<Scalars['FloatType']['input']>;
+  markH?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Watermark Padding
    *
@@ -1862,7 +1785,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-pad)
    */
-  markPad?: InputMaybe<Scalars['IntType']['input']>;
+  markPad?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Watermark Rotation
    *
@@ -1870,7 +1793,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-rot)
    */
-  markRot?: InputMaybe<Scalars['FloatType']['input']>;
+  markRot?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Watermark Scale
    *
@@ -1880,7 +1803,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-scale)
    */
-  markScale?: InputMaybe<Scalars['IntType']['input']>;
+  markScale?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Watermark Tile
    *
@@ -1900,7 +1823,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-w)
    */
-  markW?: InputMaybe<Scalars['FloatType']['input']>;
+  markW?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Watermark X Position
    *
@@ -1910,7 +1833,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-x)
    */
-  markX?: InputMaybe<Scalars['IntType']['input']>;
+  markX?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Watermark Y Position
    *
@@ -1920,7 +1843,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/watermark/mark-y)
    */
-  markY?: InputMaybe<Scalars['IntType']['input']>;
+  markY?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Mask Type
    *
@@ -1928,7 +1851,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/mask)
    */
-  mask?: InputMaybe<Scalars['String']['input']>;
+  mask?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Mask Background Color
    *
@@ -1938,7 +1861,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/mask/mask-bg)
    */
-  maskBg?: InputMaybe<Scalars['String']['input']>;
+  maskBg?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Maximum Height
    *
@@ -1948,7 +1871,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/max-height)
    */
-  maxH?: InputMaybe<Scalars['IntType']['input']>;
+  maxH?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Maximum Width
    *
@@ -1958,7 +1881,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/max-width)
    */
-  maxW?: InputMaybe<Scalars['IntType']['input']>;
+  maxW?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Minimum Height
    *
@@ -1968,7 +1891,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/min-height)
    */
-  minH?: InputMaybe<Scalars['IntType']['input']>;
+  minH?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Minimum Width
    *
@@ -1978,7 +1901,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/min-width)
    */
-  minW?: InputMaybe<Scalars['IntType']['input']>;
+  minW?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Monochrome
    *
@@ -1986,7 +1909,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/monochrome)
    */
-  monochrome?: InputMaybe<Scalars['String']['input']>;
+  monochrome?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Noise Reduction Bound
    *
@@ -1994,7 +1917,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/noise-reduction/nr)
    */
-  nr?: InputMaybe<Scalars['IntType']['input']>;
+  nr?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Noise Reduction Sharpen
    *
@@ -2002,7 +1925,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/noise-reduction/nrs)
    */
-  nrs?: InputMaybe<Scalars['IntType']['input']>;
+  nrs?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Orientation
    *
@@ -2010,7 +1933,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/rotation/orient)
    */
-  orient?: InputMaybe<Scalars['IntType']['input']>;
+  orient?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Padding
    *
@@ -2018,7 +1941,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/pad)
    */
-  pad?: InputMaybe<Scalars['IntType']['input']>;
+  pad?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Padding Bottom
    *
@@ -2026,7 +1949,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/pad-bottom)
    */
-  padBottom?: InputMaybe<Scalars['IntType']['input']>;
+  padBottom?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Padding Left
    *
@@ -2034,7 +1957,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/pad-left)
    */
-  padLeft?: InputMaybe<Scalars['IntType']['input']>;
+  padLeft?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Padding Right
    *
@@ -2042,7 +1965,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/pad-right)
    */
-  padRight?: InputMaybe<Scalars['IntType']['input']>;
+  padRight?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Padding Top
    *
@@ -2050,7 +1973,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/border-and-padding/pad-top)
    */
-  padTop?: InputMaybe<Scalars['IntType']['input']>;
+  padTop?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Pdf Page Number
    *
@@ -2058,7 +1981,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/pdf/page)
    */
-  page?: InputMaybe<Scalars['IntType']['input']>;
+  page?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Color Palette Extraction
    *
@@ -2074,7 +1997,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/pdf/pdf-annotation)
    */
-  pdfAnnotation?: InputMaybe<Scalars['BooleanType']['input']>;
+  pdfAnnotation?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /**
    * Css Prefix
    *
@@ -2084,7 +2007,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/color-palette/prefix)
    */
-  prefix?: InputMaybe<Scalars['String']['input']>;
+  prefix?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Pixellate
    *
@@ -2092,7 +2015,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/px)
    */
-  px?: InputMaybe<Scalars['IntType']['input']>;
+  px?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Output Quality
    *
@@ -2102,7 +2025,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/format/q)
    */
-  q?: InputMaybe<Scalars['IntType']['input']>;
+  q?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Source Rectangle Region
    *
@@ -2110,13 +2033,13 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/rect)
    */
-  rect?: InputMaybe<Scalars['String']['input']>;
+  rect?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Reverse
    *
    * Reverses the frame order on the source animation.
    */
-  reverse?: InputMaybe<Scalars['BooleanType']['input']>;
+  reverse?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /**
    * Rotation
    *
@@ -2124,7 +2047,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/rotation/rot)
    */
-  rot?: InputMaybe<Scalars['FloatType']['input']>;
+  rot?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Saturation
    *
@@ -2132,7 +2055,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/sat)
    */
-  sat?: InputMaybe<Scalars['IntType']['input']>;
+  sat?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Sepia Tone
    *
@@ -2140,7 +2063,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/stylize/sepia)
    */
-  sepia?: InputMaybe<Scalars['IntType']['input']>;
+  sepia?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Shadow
    *
@@ -2148,7 +2071,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/shad)
    */
-  shad?: InputMaybe<Scalars['FloatType']['input']>;
+  shad?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Sharpen
    *
@@ -2156,13 +2079,13 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/sharp)
    */
-  sharp?: InputMaybe<Scalars['FloatType']['input']>;
+  sharp?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Frame Skip
    *
    * Skips every Nth frame starting with the first frame.
    */
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Transparency
    *
@@ -2188,7 +2111,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/trim/trim-color)
    */
-  trimColor?: InputMaybe<Scalars['String']['input']>;
+  trimColor?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Trim Mean Difference
    *
@@ -2198,7 +2121,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/trim/trim-md)
    */
-  trimMd?: InputMaybe<Scalars['FloatType']['input']>;
+  trimMd?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Trim Padding
    *
@@ -2208,7 +2131,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/trim/trim-pad)
    */
-  trimPad?: InputMaybe<Scalars['IntType']['input']>;
+  trimPad?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Trim Standard Deviation
    *
@@ -2218,7 +2141,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/trim/trim-sd)
    */
-  trimSd?: InputMaybe<Scalars['FloatType']['input']>;
+  trimSd?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Trim Tolerance
    *
@@ -2228,7 +2151,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/trim/trim-tol)
    */
-  trimTol?: InputMaybe<Scalars['FloatType']['input']>;
+  trimTol?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Text String
    *
@@ -2236,7 +2159,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt)
    */
-  txt?: InputMaybe<Scalars['String']['input']>;
+  txt?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Text Align
    *
@@ -2266,7 +2189,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-color)
    */
-  txtColor?: InputMaybe<Scalars['String']['input']>;
+  txtColor?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Text Fit Mode
    *
@@ -2286,7 +2209,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-font)
    */
-  txtFont?: InputMaybe<Scalars['String']['input']>;
+  txtFont?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Text Leading
    *
@@ -2296,7 +2219,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/typesetting/txt-lead)
    */
-  txtLead?: InputMaybe<Scalars['IntType']['input']>;
+  txtLead?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text Ligatures
    *
@@ -2306,7 +2229,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-lig)
    */
-  txtLig?: InputMaybe<Scalars['IntType']['input']>;
+  txtLig?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text Outline
    *
@@ -2316,7 +2239,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-line)
    */
-  txtLine?: InputMaybe<Scalars['IntType']['input']>;
+  txtLine?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text Outline Color
    *
@@ -2326,7 +2249,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-line-color)
    */
-  txtLineColor?: InputMaybe<Scalars['String']['input']>;
+  txtLineColor?: InputMaybe<Scalars["String"]["input"]>;
   /**
    * Text Padding
    *
@@ -2336,7 +2259,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-pad)
    */
-  txtPad?: InputMaybe<Scalars['IntType']['input']>;
+  txtPad?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text Shadow
    *
@@ -2346,7 +2269,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-shad)
    */
-  txtShad?: InputMaybe<Scalars['FloatType']['input']>;
+  txtShad?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Text Font Size
    *
@@ -2356,7 +2279,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-size)
    */
-  txtSize?: InputMaybe<Scalars['IntType']['input']>;
+  txtSize?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text Tracking
    *
@@ -2366,7 +2289,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/typesetting/txt-track)
    */
-  txtTrack?: InputMaybe<Scalars['IntType']['input']>;
+  txtTrack?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text Width
    *
@@ -2376,7 +2299,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-width)
    */
-  txtWidth?: InputMaybe<Scalars['IntType']['input']>;
+  txtWidth?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text X Position
    *
@@ -2386,7 +2309,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-x)
    */
-  txtX?: InputMaybe<Scalars['IntType']['input']>;
+  txtX?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Text Y Position
    *
@@ -2396,7 +2319,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/text/txt-y)
    */
-  txtY?: InputMaybe<Scalars['IntType']['input']>;
+  txtY?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Unsharp Mask
    *
@@ -2404,7 +2327,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/usm)
    */
-  usm?: InputMaybe<Scalars['IntType']['input']>;
+  usm?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Unsharp Mask Radius
    *
@@ -2414,7 +2337,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/usmrad)
    */
-  usmrad?: InputMaybe<Scalars['FloatType']['input']>;
+  usmrad?: InputMaybe<Scalars["FloatType"]["input"]>;
   /**
    * Vibrance
    *
@@ -2422,7 +2345,7 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/adjustment/vib)
    */
-  vib?: InputMaybe<Scalars['IntType']['input']>;
+  vib?: InputMaybe<Scalars["IntType"]["input"]>;
   /**
    * Image Width
    *
@@ -2430,254 +2353,252 @@ export type ImgixParams = {
    *
    * [Open Imgix reference »](https://docs.imgix.com/apis/url/size/w)
    */
-  w?: InputMaybe<Scalars['FloatType']['input']>;
+  w?: InputMaybe<Scalars["FloatType"]["input"]>;
 };
 
 export enum ImgixParamsAuto {
-  compress = 'compress',
-  enhance = 'enhance',
-  format = 'format',
-  redeye = 'redeye'
+  compress = "compress",
+  enhance = "enhance",
+  format = "format",
+  redeye = "redeye",
 }
 
 export enum ImgixParamsBlendAlign {
-  bottom = 'bottom',
-  center = 'center',
-  left = 'left',
-  middle = 'middle',
-  right = 'right',
-  top = 'top'
+  bottom = "bottom",
+  center = "center",
+  left = "left",
+  middle = "middle",
+  right = "right",
+  top = "top",
 }
 
 export enum ImgixParamsBlendCrop {
-  bottom = 'bottom',
-  faces = 'faces',
-  left = 'left',
-  right = 'right',
-  top = 'top'
+  bottom = "bottom",
+  faces = "faces",
+  left = "left",
+  right = "right",
+  top = "top",
 }
 
 export enum ImgixParamsBlendFit {
-  clamp = 'clamp',
-  clip = 'clip',
-  crop = 'crop',
-  max = 'max',
-  scale = 'scale'
+  clamp = "clamp",
+  clip = "clip",
+  crop = "crop",
+  max = "max",
+  scale = "scale",
 }
 
 export enum ImgixParamsBlendMode {
-  burn = 'burn',
-  color = 'color',
-  darken = 'darken',
-  difference = 'difference',
-  dodge = 'dodge',
-  exclusion = 'exclusion',
-  hardlight = 'hardlight',
-  hue = 'hue',
-  lighten = 'lighten',
-  luminosity = 'luminosity',
-  multiply = 'multiply',
-  normal = 'normal',
-  overlay = 'overlay',
-  saturation = 'saturation',
-  screen = 'screen',
-  softlight = 'softlight'
+  burn = "burn",
+  color = "color",
+  darken = "darken",
+  difference = "difference",
+  dodge = "dodge",
+  exclusion = "exclusion",
+  hardlight = "hardlight",
+  hue = "hue",
+  lighten = "lighten",
+  luminosity = "luminosity",
+  multiply = "multiply",
+  normal = "normal",
+  overlay = "overlay",
+  saturation = "saturation",
+  screen = "screen",
+  softlight = "softlight",
 }
 
 export enum ImgixParamsBlendSize {
-  inherit = 'inherit'
+  inherit = "inherit",
 }
 
 export enum ImgixParamsCh {
-  dpr = 'dpr',
-  saveData = 'saveData',
-  width = 'width'
+  dpr = "dpr",
+  saveData = "saveData",
+  width = "width",
 }
 
 export enum ImgixParamsCrop {
-  bottom = 'bottom',
-  edges = 'edges',
-  entropy = 'entropy',
-  faces = 'faces',
-  focalpoint = 'focalpoint',
-  left = 'left',
-  right = 'right',
-  top = 'top'
+  bottom = "bottom",
+  edges = "edges",
+  entropy = "entropy",
+  faces = "faces",
+  focalpoint = "focalpoint",
+  left = "left",
+  right = "right",
+  top = "top",
 }
 
 export enum ImgixParamsCs {
-  adobergb1998 = 'adobergb1998',
-  srgb = 'srgb',
-  strip = 'strip',
-  tinysrgb = 'tinysrgb'
+  adobergb1998 = "adobergb1998",
+  srgb = "srgb",
+  strip = "strip",
+  tinysrgb = "tinysrgb",
 }
 
 export enum ImgixParamsFill {
-  blur = 'blur',
-  solid = 'solid'
+  blur = "blur",
+  solid = "solid",
 }
 
 export enum ImgixParamsFit {
-  clamp = 'clamp',
-  clip = 'clip',
-  crop = 'crop',
-  facearea = 'facearea',
-  fill = 'fill',
-  fillmax = 'fillmax',
-  max = 'max',
-  min = 'min',
-  scale = 'scale'
+  clamp = "clamp",
+  clip = "clip",
+  crop = "crop",
+  facearea = "facearea",
+  fill = "fill",
+  fillmax = "fillmax",
+  max = "max",
+  min = "min",
+  scale = "scale",
 }
 
 export enum ImgixParamsFlip {
-  h = 'h',
-  hv = 'hv',
-  v = 'v'
+  h = "h",
+  hv = "hv",
+  v = "v",
 }
 
 export enum ImgixParamsFm {
-  avif = 'avif',
-  blurhash = 'blurhash',
-  gif = 'gif',
-  jp2 = 'jp2',
-  jpg = 'jpg',
-  json = 'json',
-  jxr = 'jxr',
-  mp4 = 'mp4',
-  pjpg = 'pjpg',
-  png = 'png',
-  png8 = 'png8',
-  png32 = 'png32',
-  webm = 'webm',
-  webp = 'webp'
+  avif = "avif",
+  blurhash = "blurhash",
+  gif = "gif",
+  jp2 = "jp2",
+  jpg = "jpg",
+  json = "json",
+  jxr = "jxr",
+  mp4 = "mp4",
+  pjpg = "pjpg",
+  png = "png",
+  png8 = "png8",
+  png32 = "png32",
+  webm = "webm",
+  webp = "webp",
 }
 
 export enum ImgixParamsIptc {
-  allow = 'allow',
-  block = 'block'
+  allow = "allow",
+  block = "block",
 }
 
 export enum ImgixParamsMarkAlign {
-  bottom = 'bottom',
-  center = 'center',
-  left = 'left',
-  middle = 'middle',
-  right = 'right',
-  top = 'top'
+  bottom = "bottom",
+  center = "center",
+  left = "left",
+  middle = "middle",
+  right = "right",
+  top = "top",
 }
 
 export enum ImgixParamsMarkFit {
-  clip = 'clip',
-  crop = 'crop',
-  fill = 'fill',
-  max = 'max',
-  scale = 'scale'
+  clip = "clip",
+  crop = "crop",
+  fill = "fill",
+  max = "max",
+  scale = "scale",
 }
 
 export enum ImgixParamsMarkTile {
-  grid = 'grid'
+  grid = "grid",
 }
 
 export enum ImgixParamsPalette {
-  css = 'css',
-  json = 'json'
+  css = "css",
+  json = "json",
 }
 
 export enum ImgixParamsTransparency {
-  grid = 'grid'
+  grid = "grid",
 }
 
 export enum ImgixParamsTrim {
-  auto = 'auto',
-  color = 'color'
+  auto = "auto",
+  color = "color",
 }
 
 export enum ImgixParamsTxtAlign {
-  bottom = 'bottom',
-  center = 'center',
-  left = 'left',
-  middle = 'middle',
-  right = 'right',
-  top = 'top'
+  bottom = "bottom",
+  center = "center",
+  left = "left",
+  middle = "middle",
+  right = "right",
+  top = "top",
 }
 
 export enum ImgixParamsTxtClip {
-  ellipsis = 'ellipsis',
-  end = 'end',
-  middle = 'middle',
-  start = 'start'
+  ellipsis = "ellipsis",
+  end = "end",
+  middle = "middle",
+  start = "start",
 }
 
 export enum ImgixParamsTxtFit {
-  max = 'max'
+  max = "max",
 }
 
 /** Specifies how to filter by usage */
 export type InUseFilter = {
   /** Search uploads that are currently used by some record or not */
-  eq?: InputMaybe<Scalars['BooleanType']['input']>;
+  eq?: InputMaybe<Scalars["BooleanType"]["input"]>;
 };
 
 /** Specifies how to filter by ID */
 export type ItemIdFilter = {
   /** Search the record with the specified ID */
-  eq?: InputMaybe<Scalars['ItemId']['input']>;
+  eq?: InputMaybe<Scalars["ItemId"]["input"]>;
   /** Search records with the specified IDs */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
   /** Exclude the record with the specified ID */
-  neq?: InputMaybe<Scalars['ItemId']['input']>;
+  neq?: InputMaybe<Scalars["ItemId"]["input"]>;
   /** Search records that do not have the specified IDs */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
 };
 
 export enum ItemStatus {
-  draft = 'draft',
-  published = 'published',
-  updated = 'updated'
+  draft = "draft",
+  published = "published",
+  updated = "updated",
 }
 
 export type LegalPageModelContentField = {
-  __typename: 'LegalPageModelContentField';
-  blocks: Array<Scalars['String']['output']>;
-  links: Array<Scalars['String']['output']>;
-  value: Scalars['JsonField']['output'];
+  __typename: "LegalPageModelContentField";
+  blocks: Array<Scalars["String"]["output"]>;
+  links: Array<Scalars["String"]["output"]>;
+  value: Scalars["JsonField"]["output"];
 };
 
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecord = RecordInterface & {
-  __typename: 'LegalPageRecord';
+  __typename: "LegalPageRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   content?: Maybe<LegalPageModelContentField>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordAllTitleLocalesArgs = {
@@ -2685,19 +2606,16 @@ export type LegalPageRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordTitleArgs = {
@@ -2708,76 +2626,74 @@ export type LegalPageRecordTitleArgs = {
 /** Specifies how to filter Single-link fields */
 export type LinkFilter = {
   /** Search for records with an exact match. The specified value must be a Record ID */
-  eq?: InputMaybe<Scalars['ItemId']['input']>;
+  eq?: InputMaybe<Scalars["ItemId"]["input"]>;
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records linked to one of the specified records */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
   /** Exclude records with an exact match. The specified value must be a Record ID */
-  neq?: InputMaybe<Scalars['ItemId']['input']>;
+  neq?: InputMaybe<Scalars["ItemId"]["input"]>;
   /** Filter records not linked to one of the specified records */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
 };
 
 /** Specifies how to filter Multiple-links fields */
 export type LinksFilter = {
   /** Filter records linked to all of the specified records. The specified values must be Record IDs */
-  allIn?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  allIn?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
   /** Filter records linked to at least one of the specified records. The specified values must be Record IDs */
-  anyIn?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  anyIn?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
   /** Search for records with an exact match. The specified values must be Record IDs */
-  eq?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  eq?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records not linked to any of the specified records. The specified values must be Record IDs */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["ItemId"]["input"]>>>;
 };
 
 /** Block of type Markdown (markdown_block) */
 export type MarkdownBlockRecord = RecordInterface & {
-  __typename: 'MarkdownBlockRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "MarkdownBlockRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  content?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  content?: Maybe<Scalars["String"]["output"]>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Markdown (markdown_block) */
 export type MarkdownBlockRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Block of type Markdown (markdown_block) */
 export type MarkdownBlockRecordContentArgs = {
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
 
 export type MarkdownBlockRecordListListNonNullMultiLocaleField = {
-  __typename: 'MarkdownBlockRecordListListNonNullMultiLocaleField';
+  __typename: "MarkdownBlockRecordListListNonNullMultiLocaleField";
   locale?: Maybe<SiteLocale>;
   value: Array<MarkdownBlockRecord>;
 };
 
 export type MarketArticleModelContentField = {
-  __typename: 'MarketArticleModelContentField';
+  __typename: "MarketArticleModelContentField";
   blocks: Array<ImageTeaserBlockRecord>;
   links: Array<PowerBiReportRecord>;
-  value: Scalars['JsonField']['output'];
+  value: Scalars["JsonField"]["output"];
 };
 
 export type MarketArticleModelFilter = {
@@ -2803,70 +2719,68 @@ export type MarketArticleModelFilter = {
 };
 
 export enum MarketArticleModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  title_ASC = 'title_ASC',
-  title_DESC = 'title_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  title_ASC = "title_ASC",
+  title_DESC = "title_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecord = RecordInterface & {
-  __typename: 'MarketArticleRecord';
+  __typename: "MarketArticleRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   content?: Maybe<MarketArticleModelContentField>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   powerBiReport?: Maybe<PowerBiReportRecord>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordAllSeoLocalesArgs = {
@@ -2874,13 +2788,11 @@ export type MarketArticleRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordAllTitleLocalesArgs = {
@@ -2888,19 +2800,16 @@ export type MarketArticleRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordSeoArgs = {
@@ -2908,13 +2817,11 @@ export type MarketArticleRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordTitleArgs = {
@@ -2923,42 +2830,41 @@ export type MarketArticleRecordTitleArgs = {
 };
 
 export type MethodsPageModelContentField = {
-  __typename: 'MethodsPageModelContentField';
+  __typename: "MethodsPageModelContentField";
   blocks: Array<ImageTeaserBlockRecord>;
   links: Array<PowerBiReportRecord>;
-  value: Scalars['JsonField']['output'];
+  value: Scalars["JsonField"]["output"];
 };
 
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecord = RecordInterface & {
-  __typename: 'MethodsPageRecord';
+  __typename: "MethodsPageRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   content?: Maybe<MethodsPageModelContentField>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordAllLeadLocalesArgs = {
@@ -2966,13 +2872,11 @@ export type MethodsPageRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordAllSeoLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordAllSlugLocalesArgs = {
@@ -2980,19 +2884,16 @@ export type MethodsPageRecordAllSlugLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordAllTitleLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordLeadArgs = {
@@ -3000,20 +2901,17 @@ export type MethodsPageRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordSeoArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordTitleArgs = {
@@ -3022,9 +2920,9 @@ export type MethodsPageRecordTitleArgs = {
 };
 
 export enum MuxThumbnailFormatType {
-  gif = 'gif',
-  jpg = 'jpg',
-  png = 'png'
+  gif = "gif",
+  jpg = "jpg",
+  png = "png",
 }
 
 export type NewsfeedModelFilter = {
@@ -3046,58 +2944,57 @@ export type NewsfeedModelFilter = {
 };
 
 export enum NewsfeedModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  publicationDate_ASC = 'publicationDate_ASC',
-  publicationDate_DESC = 'publicationDate_DESC',
-  title_ASC = 'title_ASC',
-  title_DESC = 'title_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  publicationDate_ASC = "publicationDate_ASC",
+  publicationDate_DESC = "publicationDate_DESC",
+  title_ASC = "title_ASC",
+  title_DESC = "title_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type Ξ Newsfeed (newsfeed) */
 export type NewsfeedRecord = RecordInterface & {
-  __typename: 'NewsfeedRecord';
+  __typename: "NewsfeedRecord";
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  publicationDate?: Maybe<Scalars['Date']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  publicationDate?: Maybe<Scalars["Date"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type Ξ Newsfeed (newsfeed) */
 export type NewsfeedRecordAllTitleLocalesArgs = {
@@ -3105,12 +3002,10 @@ export type NewsfeedRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ Newsfeed (newsfeed) */
 export type NewsfeedRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ Newsfeed (newsfeed) */
 export type NewsfeedRecordTitleArgs = {
@@ -3147,61 +3042,60 @@ export type PersonModelFilter = {
 };
 
 export enum PersonModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  email_ASC = 'email_ASC',
-  email_DESC = 'email_DESC',
-  firstName_ASC = 'firstName_ASC',
-  firstName_DESC = 'firstName_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  lastName_ASC = 'lastName_ASC',
-  lastName_DESC = 'lastName_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  email_ASC = "email_ASC",
+  email_DESC = "email_DESC",
+  firstName_ASC = "firstName_ASC",
+  firstName_DESC = "firstName_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  lastName_ASC = "lastName_ASC",
+  lastName_DESC = "lastName_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type 🧑Person (person) */
 export type PersonRecord = RecordInterface & {
-  __typename: 'PersonRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "PersonRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  email?: Maybe<Scalars['String']['output']>;
-  firstName?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ItemId']['output'];
-  lastName?: Maybe<Scalars['String']['output']>;
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  email?: Maybe<Scalars["String"]["output"]>;
+  firstName?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ItemId"]["output"];
+  lastName?: Maybe<Scalars["String"]["output"]>;
   portrait?: Maybe<FileField>;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🧑Person (person) */
 export type PersonRecordSeoMetaTagsArgs = {
@@ -3210,30 +3104,29 @@ export type PersonRecordSeoMetaTagsArgs = {
 
 /** Record of type Ξ Potato Infographic (potato_infographic) */
 export type PotatoInfographicRecord = RecordInterface & {
-  __typename: 'PotatoInfographicRecord';
+  __typename: "PotatoInfographicRecord";
   _allDataProduktionBetriebsstrukturLocales?: Maybe<Array<FileFieldMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   dataProduktionBetriebsstruktur?: Maybe<FileField>;
-  id: Scalars['ItemId']['output'];
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
-  year?: Maybe<Scalars['String']['output']>;
+  id: Scalars["ItemId"]["output"];
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
+  year?: Maybe<Scalars["String"]["output"]>;
 };
-
 
 /** Record of type Ξ Potato Infographic (potato_infographic) */
 export type PotatoInfographicRecordAllDataProduktionBetriebsstrukturLocalesArgs = {
@@ -3241,26 +3134,22 @@ export type PotatoInfographicRecordAllDataProduktionBetriebsstrukturLocalesArgs 
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ Potato Infographic (potato_infographic) */
 export type PotatoInfographicRecordAllTitleLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ Potato Infographic (potato_infographic) */
 export type PotatoInfographicRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ Potato Infographic (potato_infographic) */
 export type PotatoInfographicRecordDataProduktionBetriebsstrukturArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ Potato Infographic (potato_infographic) */
 export type PotatoInfographicRecordTitleArgs = {
@@ -3288,59 +3177,58 @@ export type PowerBiDatasetModelFilter = {
 };
 
 export enum PowerBiDatasetModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  datasetId_ASC = 'datasetId_ASC',
-  datasetId_DESC = 'datasetId_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  name_ASC = 'name_ASC',
-  name_DESC = 'name_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  datasetId_ASC = "datasetId_ASC",
+  datasetId_DESC = "datasetId_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  name_ASC = "name_ASC",
+  name_DESC = "name_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
 export type PowerBiDatasetRecord = RecordInterface & {
-  __typename: 'PowerBiDatasetRecord';
+  __typename: "PowerBiDatasetRecord";
   _allDatasetIdLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  datasetId?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ItemId']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  datasetId?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ItemId"]["output"];
+  name?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
   workspace?: Maybe<PowerBiWorkspaceRecord>;
 };
-
 
 /** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
 export type PowerBiDatasetRecordAllDatasetIdLocalesArgs = {
@@ -3348,12 +3236,10 @@ export type PowerBiDatasetRecordAllDatasetIdLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
 export type PowerBiDatasetRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🗃️ Power BI Dataset (power_bi_dataset) */
 export type PowerBiDatasetRecordDatasetIdArgs = {
@@ -3362,7 +3248,7 @@ export type PowerBiDatasetRecordDatasetIdArgs = {
 };
 
 export type PowerBiDatasetRecordMultiLocaleField = {
-  __typename: 'PowerBiDatasetRecordMultiLocaleField';
+  __typename: "PowerBiDatasetRecordMultiLocaleField";
   locale?: Maybe<SiteLocale>;
   value?: Maybe<PowerBiDatasetRecord>;
 };
@@ -3388,62 +3274,61 @@ export type PowerBiReportModelFilter = {
 };
 
 export enum PowerBiReportModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  name_ASC = 'name_ASC',
-  name_DESC = 'name_DESC',
-  reportId_ASC = 'reportId_ASC',
-  reportId_DESC = 'reportId_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  name_ASC = "name_ASC",
+  name_DESC = "name_DESC",
+  reportId_ASC = "reportId_ASC",
+  reportId_DESC = "reportId_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecord = RecordInterface & {
-  __typename: 'PowerBiReportRecord';
+  __typename: "PowerBiReportRecord";
   _allDatasetLocales?: Maybe<Array<PowerBiDatasetRecordMultiLocaleField>>;
   _allNameLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allReportIdLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
   dataset?: Maybe<PowerBiDatasetRecord>;
-  id: Scalars['ItemId']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  reportId?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  id: Scalars["ItemId"]["output"];
+  name?: Maybe<Scalars["String"]["output"]>;
+  reportId?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
   workspace?: Maybe<PowerBiWorkspaceRecord>;
 };
-
 
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecordAllDatasetLocalesArgs = {
@@ -3451,13 +3336,11 @@ export type PowerBiReportRecordAllDatasetLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecordAllNameLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecordAllReportIdLocalesArgs = {
@@ -3465,12 +3348,10 @@ export type PowerBiReportRecordAllReportIdLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecordDatasetArgs = {
@@ -3478,13 +3359,11 @@ export type PowerBiReportRecordDatasetArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecordNameArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type 🗂️ Power BI Report (power_bi_report) */
 export type PowerBiReportRecordReportIdArgs = {
@@ -3511,57 +3390,56 @@ export type PowerBiWorkspaceModelFilter = {
 };
 
 export enum PowerBiWorkspaceModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  name_ASC = 'name_ASC',
-  name_DESC = 'name_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC',
-  workspaceId_ASC = 'workspaceId_ASC',
-  workspaceId_DESC = 'workspaceId_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  name_ASC = "name_ASC",
+  name_DESC = "name_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
+  workspaceId_ASC = "workspaceId_ASC",
+  workspaceId_DESC = "workspaceId_DESC",
 }
 
 /** Record of type 🏡 Power BI Workspace (power_bi_workspace) */
 export type PowerBiWorkspaceRecord = RecordInterface & {
-  __typename: 'PowerBiWorkspaceRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "PowerBiWorkspaceRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
-  workspaceId?: Maybe<Scalars['String']['output']>;
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  name?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
+  workspaceId?: Maybe<Scalars["String"]["output"]>;
 };
-
 
 /** Record of type 🏡 Power BI Workspace (power_bi_workspace) */
 export type PowerBiWorkspaceRecordSeoMetaTagsArgs = {
@@ -3571,24 +3449,24 @@ export type PowerBiWorkspaceRecordSeoMetaTagsArgs = {
 /** Specifies how to filter by publication datetime */
 export type PublishedAtFilter = {
   /** Filter records with a value that's within the specified minute range. Seconds and milliseconds are truncated from the argument. */
-  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  eq?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with a value that's strictly greater than the one specified. Seconds and milliseconds are truncated from the argument. */
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's greater than or equal to than the one specified. Seconds and milliseconds are truncated from the argument. */
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's less than the one specified. Seconds and milliseconds are truncated from the argument. */
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's less or equal than the one specified. Seconds and milliseconds are truncated from the argument. */
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's outside the specified minute range. Seconds and milliseconds are truncated from the argument. */
-  neq?: InputMaybe<Scalars['DateTime']['input']>;
+  neq?: InputMaybe<Scalars["DateTime"]["input"]>;
 };
 
 /** The query root for this schema */
 export type Query = {
-  __typename: 'Query';
+  __typename: "Query";
   /** Returns meta information regarding a record collection */
   _allBlogPostsMeta: CollectionMetadata;
   /** Returns meta information regarding a record collection */
@@ -3675,14 +3553,12 @@ export type Query = {
   upload?: Maybe<FileField>;
 };
 
-
 /** The query root for this schema */
 export type QueryAllBlogPostsMetaArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<BlogPostModelFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllFocusArticlesMetaArgs = {
@@ -3691,14 +3567,12 @@ export type QueryAllFocusArticlesMetaArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryAllMarketArticlesMetaArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<MarketArticleModelFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllNewsfeedsMetaArgs = {
@@ -3707,14 +3581,12 @@ export type QueryAllNewsfeedsMetaArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryAllPeopleMetaArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PersonModelFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllPowerBiDatasetsMetaArgs = {
@@ -3723,14 +3595,12 @@ export type QueryAllPowerBiDatasetsMetaArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryAllPowerBiReportsMetaArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PowerBiReportModelFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllPowerBiWorkspacesMetaArgs = {
@@ -3739,14 +3609,12 @@ export type QueryAllPowerBiWorkspacesMetaArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryAllSimplePagesMetaArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<SimplePageModelFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllThemesMetaArgs = {
@@ -3755,13 +3623,11 @@ export type QueryAllThemesMetaArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryAllUploadsMetaArgs = {
   filter?: InputMaybe<UploadFilter>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QuerySiteArgs = {
@@ -3769,141 +3635,127 @@ export type QuerySiteArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryAboutPageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryAllBlogPostsArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<BlogPostModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<BlogPostModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllFocusArticlesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<FocusArticleModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<FocusArticleModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllMarketArticlesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<MarketArticleModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<MarketArticleModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllNewsfeedsArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<NewsfeedModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<NewsfeedModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllPeopleArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PersonModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PersonModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllPowerBiDatasetsArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PowerBiDatasetModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiDatasetModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllPowerBiReportsArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PowerBiReportModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiReportModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllPowerBiWorkspacesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<PowerBiWorkspaceModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiWorkspaceModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllSimplePagesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<SimplePageModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<SimplePageModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllThemesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<ThemeModelFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<ThemeModelOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAllUploadsArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   filter?: InputMaybe<UploadFilter>;
-  first?: InputMaybe<Scalars['IntType']['input']>;
+  first?: InputMaybe<Scalars["IntType"]["input"]>;
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<UploadOrderBy>>>;
-  skip?: InputMaybe<Scalars['IntType']['input']>;
+  skip?: InputMaybe<Scalars["IntType"]["input"]>;
 };
-
 
 /** The query root for this schema */
 export type QueryAnalysisPageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryBlogPostArgs = {
@@ -3913,7 +3765,6 @@ export type QueryBlogPostArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<BlogPostModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QueryFocusArticleArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
@@ -3922,13 +3773,11 @@ export type QueryFocusArticleArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<FocusArticleModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QueryHomeArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryHomePageArgs = {
@@ -3936,13 +3785,11 @@ export type QueryHomePageArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** The query root for this schema */
 export type QueryLegalPageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryMarketArticleArgs = {
@@ -3952,13 +3799,11 @@ export type QueryMarketArticleArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<MarketArticleModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QueryMethodsPageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryNewsfeedArgs = {
@@ -3968,7 +3813,6 @@ export type QueryNewsfeedArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<NewsfeedModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QueryPersonArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
@@ -3977,13 +3821,11 @@ export type QueryPersonArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<PersonModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QueryPotatoInfographicArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryPowerBiDatasetArgs = {
@@ -3993,7 +3835,6 @@ export type QueryPowerBiDatasetArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiDatasetModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QueryPowerBiReportArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
@@ -4001,7 +3842,6 @@ export type QueryPowerBiReportArgs = {
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiReportModelOrderBy>>>;
 };
-
 
 /** The query root for this schema */
 export type QueryPowerBiWorkspaceArgs = {
@@ -4011,7 +3851,6 @@ export type QueryPowerBiWorkspaceArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<PowerBiWorkspaceModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QuerySimplePageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
@@ -4020,13 +3859,11 @@ export type QuerySimplePageArgs = {
   orderBy?: InputMaybe<Array<InputMaybe<SimplePageModelOrderBy>>>;
 };
 
-
 /** The query root for this schema */
 export type QueryTermsPageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** The query root for this schema */
 export type QueryThemeArgs = {
@@ -4035,7 +3872,6 @@ export type QueryThemeArgs = {
   locale?: InputMaybe<SiteLocale>;
   orderBy?: InputMaybe<Array<InputMaybe<ThemeModelOrderBy>>>;
 };
-
 
 /** The query root for this schema */
 export type QueryUploadArgs = {
@@ -4046,22 +3882,21 @@ export type QueryUploadArgs = {
 };
 
 export type RecordInterface = {
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
 };
-
 
 export type RecordInterfaceSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
@@ -4080,37 +3915,37 @@ export type ResolutionFilter = {
 };
 
 export enum ResolutionType {
-  icon = 'icon',
-  large = 'large',
-  medium = 'medium',
-  small = 'small'
+  icon = "icon",
+  large = "large",
+  medium = "medium",
+  small = "small",
 }
 
 export type ResponsiveImage = {
-  __typename: 'ResponsiveImage';
-  alt?: Maybe<Scalars['String']['output']>;
-  aspectRatio: Scalars['FloatType']['output'];
-  base64?: Maybe<Scalars['String']['output']>;
-  bgColor?: Maybe<Scalars['String']['output']>;
-  height: Scalars['IntType']['output'];
-  sizes: Scalars['String']['output'];
-  src: Scalars['String']['output'];
-  srcSet: Scalars['String']['output'];
-  title?: Maybe<Scalars['String']['output']>;
-  webpSrcSet: Scalars['String']['output'];
-  width: Scalars['IntType']['output'];
+  __typename: "ResponsiveImage";
+  alt?: Maybe<Scalars["String"]["output"]>;
+  aspectRatio: Scalars["FloatType"]["output"];
+  base64?: Maybe<Scalars["String"]["output"]>;
+  bgColor?: Maybe<Scalars["String"]["output"]>;
+  height: Scalars["IntType"]["output"];
+  sizes: Scalars["String"]["output"];
+  src: Scalars["String"]["output"];
+  srcSet: Scalars["String"]["output"];
+  title?: Maybe<Scalars["String"]["output"]>;
+  webpSrcSet: Scalars["String"]["output"];
+  width: Scalars["IntType"]["output"];
 };
 
 export type SeoField = {
-  __typename: 'SeoField';
-  description?: Maybe<Scalars['String']['output']>;
+  __typename: "SeoField";
+  description?: Maybe<Scalars["String"]["output"]>;
   image?: Maybe<FileField>;
-  title?: Maybe<Scalars['String']['output']>;
-  twitterCard?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  twitterCard?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type SeoFieldMultiLocaleField = {
-  __typename: 'SeoFieldMultiLocaleField';
+  __typename: "SeoFieldMultiLocaleField";
   locale?: Maybe<SiteLocale>;
   value?: Maybe<SeoField>;
 };
@@ -4118,7 +3953,7 @@ export type SeoFieldMultiLocaleField = {
 /** Specifies how to filter SEO meta tags fields */
 export type SeoFilter = {
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
 };
 
 export type SimplePageModelFilter = {
@@ -4142,67 +3977,65 @@ export type SimplePageModelFilter = {
 };
 
 export enum SimplePageModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  title_ASC = 'title_ASC',
-  title_DESC = 'title_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  title_ASC = "title_ASC",
+  title_DESC = "title_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecord = RecordInterface & {
-  __typename: 'SimplePageRecord';
+  __typename: "SimplePageRecord";
   _allBodyLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  author: Scalars['String']['output'];
-  body?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  author: Scalars["String"]["output"];
+  body?: Maybe<Scalars["String"]["output"]>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecordAllBodyLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecordAllSlugLocalesArgs = {
@@ -4210,33 +4043,28 @@ export type SimplePageRecordAllSlugLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecordAllTitleLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecordBodyArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type Ξ Simple Page (simple_page) */
 export type SimplePageRecordTitleArgs = {
@@ -4245,18 +4073,16 @@ export type SimplePageRecordTitleArgs = {
 };
 
 export type Site = {
-  __typename: 'Site';
+  __typename: "Site";
   favicon?: Maybe<FileField>;
   faviconMetaTags: Array<Tag>;
   globalSeo?: Maybe<GlobalSeoField>;
   locales: Array<SiteLocale>;
 };
 
-
 export type SiteFaviconMetaTagsArgs = {
   variants?: InputMaybe<Array<InputMaybe<FaviconType>>>;
 };
-
 
 export type SiteGlobalSeoArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
@@ -4264,22 +4090,22 @@ export type SiteGlobalSeoArgs = {
 };
 
 export enum SiteLocale {
-  de = 'de',
-  en = 'en',
-  fr = 'fr',
-  it = 'it'
+  de = "de",
+  en = "en",
+  fr = "fr",
+  it = "it",
 }
 
 /** Specifies how to filter Slug fields */
 export type SlugFilter = {
   /** Search for records with an exact match */
-  eq?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars["String"]["input"]>;
   /** Filter records that have one of the specified slugs */
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Exclude records with an exact match */
-  neq?: InputMaybe<Scalars['String']['input']>;
+  neq?: InputMaybe<Scalars["String"]["input"]>;
   /** Filter records that do have one of the specified slugs */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
 };
 
 /** Specifies how to filter by status */
@@ -4297,45 +4123,45 @@ export type StatusFilter = {
 /** Specifies how to filter Single-line string fields */
 export type StringFilter = {
   /** Search for records with an exact match */
-  eq?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars["String"]["input"]>;
   /** Filter records with the specified field defined (i.e. with any value) or not [DEPRECATED] */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records that equal one of the specified values */
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Filter records with the specified field set as blank (null or empty string) */
-  isBlank?: InputMaybe<Scalars['BooleanType']['input']>;
+  isBlank?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with the specified field present (neither null, nor empty string) */
-  isPresent?: InputMaybe<Scalars['BooleanType']['input']>;
+  isPresent?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude records with an exact match */
-  neq?: InputMaybe<Scalars['String']['input']>;
+  neq?: InputMaybe<Scalars["String"]["input"]>;
   /** Filter records that do not equal one of the specified values */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Exclude records based on a regular expression */
   notMatches?: InputMaybe<StringMatchesFilter>;
 };
 
 export type StringMatchesFilter = {
-  caseSensitive?: InputMaybe<Scalars['BooleanType']['input']>;
-  pattern: Scalars['String']['input'];
-  regexp?: InputMaybe<Scalars['BooleanType']['input']>;
+  caseSensitive?: InputMaybe<Scalars["BooleanType"]["input"]>;
+  pattern: Scalars["String"]["input"];
+  regexp?: InputMaybe<Scalars["BooleanType"]["input"]>;
 };
 
 export type StringMultiLocaleField = {
-  __typename: 'StringMultiLocaleField';
+  __typename: "StringMultiLocaleField";
   locale?: Maybe<SiteLocale>;
-  value?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars["String"]["output"]>;
 };
 
 /** Specifies how to filter Structured Text fields */
 export type StructuredTextFilter = {
   /** Filter records with the specified field defined (i.e. with any value) or not [DEPRECATED] */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with the specified field set as blank (null or single empty paragraph) */
-  isBlank?: InputMaybe<Scalars['BooleanType']['input']>;
+  isBlank?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with the specified field present (neither null, nor empty string) */
-  isPresent?: InputMaybe<Scalars['BooleanType']['input']>;
+  isPresent?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude records based on a regular expression */
@@ -4344,26 +4170,25 @@ export type StructuredTextFilter = {
 
 /** Block of type Survey Answer (survey_answer) */
 export type SurveyAnswerRecord = RecordInterface & {
-  __typename: 'SurveyAnswerRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "SurveyAnswerRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  answer?: Maybe<Scalars['String']['output']>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  answer?: Maybe<Scalars["String"]["output"]>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Survey Answer (survey_answer) */
 export type SurveyAnswerRecordSeoMetaTagsArgs = {
@@ -4372,27 +4197,26 @@ export type SurveyAnswerRecordSeoMetaTagsArgs = {
 
 /** Block of type Survey (survey_block) */
 export type SurveyBlockRecord = RecordInterface & {
-  __typename: 'SurveyBlockRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "SurveyBlockRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  formUrl?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ItemId']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  formUrl?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ItemId"]["output"];
   question: Array<SurveyQuestionRecord>;
-  updatedAt: Scalars['DateTime']['output'];
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Survey (survey_block) */
 export type SurveyBlockRecordSeoMetaTagsArgs = {
@@ -4401,29 +4225,28 @@ export type SurveyBlockRecordSeoMetaTagsArgs = {
 
 /** Block of type Survey Question (survey_question) */
 export type SurveyQuestionRecord = RecordInterface & {
-  __typename: 'SurveyQuestionRecord';
-  _createdAt: Scalars['DateTime']['output'];
+  __typename: "SurveyQuestionRecord";
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
-  createdAt: Scalars['DateTime']['output'];
-  formFieldId?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ItemId']['output'];
-  isMultipleChoice?: Maybe<Scalars['BooleanType']['output']>;
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
+  createdAt: Scalars["DateTime"]["output"];
+  formFieldId?: Maybe<Scalars["String"]["output"]>;
+  id: Scalars["ItemId"]["output"];
+  isMultipleChoice?: Maybe<Scalars["BooleanType"]["output"]>;
   possibleAnswers: Array<SurveyAnswerRecord>;
-  question?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  question?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Block of type Survey Question (survey_question) */
 export type SurveyQuestionRecordSeoMetaTagsArgs = {
@@ -4431,54 +4254,52 @@ export type SurveyQuestionRecordSeoMetaTagsArgs = {
 };
 
 export type Tag = {
-  __typename: 'Tag';
-  attributes?: Maybe<Scalars['MetaTagAttributes']['output']>;
-  content?: Maybe<Scalars['String']['output']>;
-  tag: Scalars['String']['output'];
+  __typename: "Tag";
+  attributes?: Maybe<Scalars["MetaTagAttributes"]["output"]>;
+  content?: Maybe<Scalars["String"]["output"]>;
+  tag: Scalars["String"]["output"];
 };
 
 export type TermsPageModelContentField = {
-  __typename: 'TermsPageModelContentField';
-  blocks: Array<Scalars['String']['output']>;
-  links: Array<Scalars['String']['output']>;
-  value: Scalars['JsonField']['output'];
+  __typename: "TermsPageModelContentField";
+  blocks: Array<Scalars["String"]["output"]>;
+  links: Array<Scalars["String"]["output"]>;
+  value: Scalars["JsonField"]["output"];
 };
 
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecord = RecordInterface & {
-  __typename: 'TermsPageRecord';
+  __typename: "TermsPageRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   content?: Maybe<TermsPageModelContentField>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  slug?: Maybe<Scalars["String"]["output"]>;
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordAllTitleLocalesArgs = {
@@ -4486,19 +4307,16 @@ export type TermsPageRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordTitleArgs = {
@@ -4509,18 +4327,25 @@ export type TermsPageRecordTitleArgs = {
 /** Specifies how to filter text fields */
 export type TextFilter = {
   /** Filter records with the specified field defined (i.e. with any value) or not [DEPRECATED] */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with the specified field set as blank (null or empty string) */
-  isBlank?: InputMaybe<Scalars['BooleanType']['input']>;
+  isBlank?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with the specified field present (neither null, nor empty string) */
-  isPresent?: InputMaybe<Scalars['BooleanType']['input']>;
+  isPresent?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude records based on a regular expression */
   notMatches?: InputMaybe<StringMatchesFilter>;
 };
 
-export type ThemeModelBlocksField = DownloadTeaserBlockRecord | ExternalVideoBlockRecord | GalleryBlockRecord | IframeBlockRecord | ImageTeaserBlockRecord | MarkdownBlockRecord | SurveyBlockRecord;
+export type ThemeModelBlocksField =
+  | DownloadTeaserBlockRecord
+  | ExternalVideoBlockRecord
+  | GalleryBlockRecord
+  | IframeBlockRecord
+  | ImageTeaserBlockRecord
+  | MarkdownBlockRecord
+  | SurveyBlockRecord;
 
 export type ThemeModelFilter = {
   AND?: InputMaybe<Array<InputMaybe<ThemeModelFilter>>>;
@@ -4544,70 +4369,68 @@ export type ThemeModelFilter = {
 };
 
 export enum ThemeModelOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _firstPublishedAt_ASC = '_firstPublishedAt_ASC',
-  _firstPublishedAt_DESC = '_firstPublishedAt_DESC',
-  _isValid_ASC = '_isValid_ASC',
-  _isValid_DESC = '_isValid_DESC',
-  _publicationScheduledAt_ASC = '_publicationScheduledAt_ASC',
-  _publicationScheduledAt_DESC = '_publicationScheduledAt_DESC',
-  _publishedAt_ASC = '_publishedAt_ASC',
-  _publishedAt_DESC = '_publishedAt_DESC',
-  _status_ASC = '_status_ASC',
-  _status_DESC = '_status_DESC',
-  _unpublishingScheduledAt_ASC = '_unpublishingScheduledAt_ASC',
-  _unpublishingScheduledAt_DESC = '_unpublishingScheduledAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  createdAt_ASC = 'createdAt_ASC',
-  createdAt_DESC = 'createdAt_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  title_ASC = 'title_ASC',
-  title_DESC = 'title_DESC',
-  updatedAt_ASC = 'updatedAt_ASC',
-  updatedAt_DESC = 'updatedAt_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _firstPublishedAt_ASC = "_firstPublishedAt_ASC",
+  _firstPublishedAt_DESC = "_firstPublishedAt_DESC",
+  _isValid_ASC = "_isValid_ASC",
+  _isValid_DESC = "_isValid_DESC",
+  _publicationScheduledAt_ASC = "_publicationScheduledAt_ASC",
+  _publicationScheduledAt_DESC = "_publicationScheduledAt_DESC",
+  _publishedAt_ASC = "_publishedAt_ASC",
+  _publishedAt_DESC = "_publishedAt_DESC",
+  _status_ASC = "_status_ASC",
+  _status_DESC = "_status_DESC",
+  _unpublishingScheduledAt_ASC = "_unpublishingScheduledAt_ASC",
+  _unpublishingScheduledAt_DESC = "_unpublishingScheduledAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  createdAt_ASC = "createdAt_ASC",
+  createdAt_DESC = "createdAt_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  title_ASC = "title_ASC",
+  title_DESC = "title_DESC",
+  updatedAt_ASC = "updatedAt_ASC",
+  updatedAt_DESC = "updatedAt_DESC",
 }
 
 /** Record of type ΞTheme (theme) */
 export type ThemeRecord = RecordInterface & {
-  __typename: 'ThemeRecord';
+  __typename: "ThemeRecord";
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _createdAt: Scalars['DateTime']['output'];
+  _createdAt: Scalars["DateTime"]["output"];
   /** Editing URL */
-  _editingUrl?: Maybe<Scalars['String']['output']>;
-  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
-  _isValid: Scalars['BooleanType']['output'];
-  _modelApiKey: Scalars['String']['output'];
-  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _editingUrl?: Maybe<Scalars["String"]["output"]>;
+  _firstPublishedAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _isValid: Scalars["BooleanType"]["output"];
+  _modelApiKey: Scalars["String"]["output"];
+  _publicationScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _publishedAt?: Maybe<Scalars["DateTime"]["output"]>;
   /** SEO meta tags */
   _seoMetaTags: Array<Tag>;
   _status: ItemStatus;
-  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
-  _updatedAt: Scalars['DateTime']['output'];
+  _unpublishingScheduledAt?: Maybe<Scalars["DateTime"]["output"]>;
+  _updatedAt: Scalars["DateTime"]["output"];
   blocks: Array<ThemeModelBlocksField>;
-  createdAt: Scalars['DateTime']['output'];
-  id: Scalars['ItemId']['output'];
-  lead?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars["DateTime"]["output"];
+  id: Scalars["ItemId"]["output"];
+  lead?: Maybe<Scalars["String"]["output"]>;
   seo?: Maybe<SeoField>;
-  slug?: Maybe<Scalars['String']['output']>;
+  slug?: Maybe<Scalars["String"]["output"]>;
   tile?: Maybe<FileField>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt: Scalars['DateTime']['output'];
+  title?: Maybe<Scalars["String"]["output"]>;
+  updatedAt: Scalars["DateTime"]["output"];
 };
-
 
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordAllSeoLocalesArgs = {
@@ -4615,13 +4438,11 @@ export type ThemeRecordAllSeoLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordAllTitleLocalesArgs = {
@@ -4629,19 +4450,16 @@ export type ThemeRecordAllTitleLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordSeoMetaTagsArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordLeadArgs = {
   locale?: InputMaybe<SiteLocale>;
-  markdown?: InputMaybe<Scalars['Boolean']['input']>;
+  markdown?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
-
 
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordSeoArgs = {
@@ -4649,13 +4467,11 @@ export type ThemeRecordSeoArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
-
 
 /** Record of type ΞTheme (theme) */
 export type ThemeRecordTitleArgs = {
@@ -4678,35 +4494,35 @@ export type TypeFilter = {
 /** Specifies how to filter by update datetime */
 export type UpdatedAtFilter = {
   /** Filter records with a value that's within the specified minute range. Seconds and milliseconds are truncated from the argument. */
-  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  eq?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter records with a value that's strictly greater than the one specified. Seconds and milliseconds are truncated from the argument. */
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's greater than or equal to than the one specified. Seconds and milliseconds are truncated from the argument. */
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's less than the one specified. Seconds and milliseconds are truncated from the argument. */
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's less or equal than the one specified. Seconds and milliseconds are truncated from the argument. */
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter records with a value that's outside the specified minute range. Seconds and milliseconds are truncated from the argument. */
-  neq?: InputMaybe<Scalars['DateTime']['input']>;
+  neq?: InputMaybe<Scalars["DateTime"]["input"]>;
 };
 
 /** Specifies how to filter by default alt */
 export type UploadAltFilter = {
   /** Search the uploads with the specified alt */
-  eq?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars["String"]["input"]>;
   /** Filter uploads with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Search uploads with the specified values as default alt */
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Filter uploads based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude the uploads with the specified alt */
-  neq?: InputMaybe<Scalars['String']['input']>;
+  neq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search uploads that do not have the specified values as default alt */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Exclude uploads based on a regular expression */
   notMatches?: InputMaybe<StringMatchesFilter>;
 };
@@ -4714,7 +4530,7 @@ export type UploadAltFilter = {
 /** Specifies how to filter by auhtor */
 export type UploadAuthorFilter = {
   /** Filter uploads with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter uploads based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude uploads based on a regular expression */
@@ -4746,7 +4562,7 @@ export type UploadColorsFilter = {
 /** Specifies how to filter by copyright */
 export type UploadCopyrightFilter = {
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter uploads based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude uploads based on a regular expression */
@@ -4756,17 +4572,17 @@ export type UploadCopyrightFilter = {
 /** Specifies how to filter by creation datetime */
 export type UploadCreatedAtFilter = {
   /** Search for uploads with an exact match */
-  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  eq?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's strictly greater than the one specified */
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's greater than or equal to the one specified */
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's less than the one specified */
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's less or equal than the one specified */
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Exclude uploads with an exact match */
-  neq?: InputMaybe<Scalars['DateTime']['input']>;
+  neq?: InputMaybe<Scalars["DateTime"]["input"]>;
 };
 
 /** Specifies how to filter by filename */
@@ -4808,67 +4624,67 @@ export type UploadFilter = {
 /** Specifies how to filter by format */
 export type UploadFormatFilter = {
   /** Search the asset with the specified format */
-  eq?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search assets with the specified formats */
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Exclude the asset with the specified format */
-  neq?: InputMaybe<Scalars['String']['input']>;
+  neq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search assets that do not have the specified formats */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
 };
 
 /** Specifies how to filter by height */
 export type UploadHeightFilter = {
   /** Search assets with the specified height */
-  eq?: InputMaybe<Scalars['IntType']['input']>;
+  eq?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger than the specified height */
-  gt?: InputMaybe<Scalars['IntType']['input']>;
+  gt?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger or equal to the specified height */
-  gte?: InputMaybe<Scalars['IntType']['input']>;
+  gte?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets smaller than the specified height */
-  lt?: InputMaybe<Scalars['IntType']['input']>;
+  lt?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger or equal to the specified height */
-  lte?: InputMaybe<Scalars['IntType']['input']>;
+  lte?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search assets that do not have the specified height */
-  neq?: InputMaybe<Scalars['IntType']['input']>;
+  neq?: InputMaybe<Scalars["IntType"]["input"]>;
 };
 
 /** Specifies how to filter by ID */
 export type UploadIdFilter = {
   /** Search the asset with the specified ID */
-  eq?: InputMaybe<Scalars['UploadId']['input']>;
+  eq?: InputMaybe<Scalars["UploadId"]["input"]>;
   /** Search assets with the specified IDs */
-  in?: InputMaybe<Array<InputMaybe<Scalars['UploadId']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["UploadId"]["input"]>>>;
   /** Exclude the asset with the specified ID */
-  neq?: InputMaybe<Scalars['UploadId']['input']>;
+  neq?: InputMaybe<Scalars["UploadId"]["input"]>;
   /** Search assets that do not have the specified IDs */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['UploadId']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["UploadId"]["input"]>>>;
 };
 
 /** Specifies how to filter by MD5 */
 export type UploadMd5Filter = {
   /** Search the asset with the specified MD5 */
-  eq?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search assets with the specified MD5s */
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Exclude the asset with the specified MD5 */
-  neq?: InputMaybe<Scalars['String']['input']>;
+  neq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search assets that do not have the specified MD5s */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
 };
 
 /** Specifies how to filter by mime type */
 export type UploadMimeTypeFilter = {
   /** Search the asset with the specified mime type */
-  eq?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search assets with the specified mime types */
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Filter uploads based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude the asset with the specified mime type */
-  neq?: InputMaybe<Scalars['String']['input']>;
+  neq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search assets that do not have the specified mime types */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Exclude uploads based on a regular expression */
   notMatches?: InputMaybe<StringMatchesFilter>;
 };
@@ -4876,7 +4692,7 @@ export type UploadMimeTypeFilter = {
 /** Specifies how to filter by notes */
 export type UploadNotesFilter = {
   /** Filter records with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Filter uploads based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude uploads based on a regular expression */
@@ -4884,124 +4700,122 @@ export type UploadNotesFilter = {
 };
 
 export enum UploadOrderBy {
-  _createdAt_ASC = '_createdAt_ASC',
-  _createdAt_DESC = '_createdAt_DESC',
-  _updatedAt_ASC = '_updatedAt_ASC',
-  _updatedAt_DESC = '_updatedAt_DESC',
-  basename_ASC = 'basename_ASC',
-  basename_DESC = 'basename_DESC',
-  filename_ASC = 'filename_ASC',
-  filename_DESC = 'filename_DESC',
-  format_ASC = 'format_ASC',
-  format_DESC = 'format_DESC',
-  id_ASC = 'id_ASC',
-  id_DESC = 'id_DESC',
-  mimeType_ASC = 'mimeType_ASC',
-  mimeType_DESC = 'mimeType_DESC',
-  resolution_ASC = 'resolution_ASC',
-  resolution_DESC = 'resolution_DESC',
-  size_ASC = 'size_ASC',
-  size_DESC = 'size_DESC'
+  _createdAt_ASC = "_createdAt_ASC",
+  _createdAt_DESC = "_createdAt_DESC",
+  _updatedAt_ASC = "_updatedAt_ASC",
+  _updatedAt_DESC = "_updatedAt_DESC",
+  basename_ASC = "basename_ASC",
+  basename_DESC = "basename_DESC",
+  filename_ASC = "filename_ASC",
+  filename_DESC = "filename_DESC",
+  format_ASC = "format_ASC",
+  format_DESC = "format_DESC",
+  id_ASC = "id_ASC",
+  id_DESC = "id_DESC",
+  mimeType_ASC = "mimeType_ASC",
+  mimeType_DESC = "mimeType_DESC",
+  resolution_ASC = "resolution_ASC",
+  resolution_DESC = "resolution_DESC",
+  size_ASC = "size_ASC",
+  size_DESC = "size_DESC",
 }
 
 export enum UploadOrientation {
-  landscape = 'landscape',
-  portrait = 'portrait',
-  square = 'square'
+  landscape = "landscape",
+  portrait = "portrait",
+  square = "square",
 }
 
 /** Specifies how to filter by size */
 export type UploadSizeFilter = {
   /** Search assets with the specified size (in bytes) */
-  eq?: InputMaybe<Scalars['IntType']['input']>;
+  eq?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger than the specified size (in bytes) */
-  gt?: InputMaybe<Scalars['IntType']['input']>;
+  gt?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger or equal to the specified size (in bytes) */
-  gte?: InputMaybe<Scalars['IntType']['input']>;
+  gte?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets smaller than the specified size (in bytes) */
-  lt?: InputMaybe<Scalars['IntType']['input']>;
+  lt?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger or equal to the specified size (in bytes) */
-  lte?: InputMaybe<Scalars['IntType']['input']>;
+  lte?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search assets that do not have the specified size (in bytes) */
-  neq?: InputMaybe<Scalars['IntType']['input']>;
+  neq?: InputMaybe<Scalars["IntType"]["input"]>;
 };
 
 /** Specifies how to filter by tags */
 export type UploadTagsFilter = {
   /** Filter uploads linked to all of the specified tags */
-  allIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  allIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Filter uploads linked to at least one of the specified tags */
-  anyIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  anyIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Filter uploads linked to the specified tag */
-  contains?: InputMaybe<Scalars['String']['input']>;
+  contains?: InputMaybe<Scalars["String"]["input"]>;
   /** Search for uploads with an exact match */
-  eq?: InputMaybe<Array<Scalars['String']['input']>>;
+  eq?: InputMaybe<Array<Scalars["String"]["input"]>>;
   /** Filter uploads not linked to any of the specified tags */
-  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
+  notIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
 };
 
 /** Specifies how to filter by default title */
 export type UploadTitleFilter = {
   /** Search the asset with the specified title */
-  eq?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars["String"]["input"]>;
   /** Filter assets with the specified field defined (i.e. with any value) or not */
-  exists?: InputMaybe<Scalars['BooleanType']['input']>;
+  exists?: InputMaybe<Scalars["BooleanType"]["input"]>;
   /** Search assets with the specified as default title */
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Filter uploads based on a regular expression */
   matches?: InputMaybe<StringMatchesFilter>;
   /** Exclude the asset with the specified title */
-  neq?: InputMaybe<Scalars['String']['input']>;
+  neq?: InputMaybe<Scalars["String"]["input"]>;
   /** Search assets that do not have the specified as default title */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>;
   /** Exclude uploads based on a regular expression */
   notMatches?: InputMaybe<StringMatchesFilter>;
 };
 
 export enum UploadType {
-  archive = 'archive',
-  audio = 'audio',
-  image = 'image',
-  pdfdocument = 'pdfdocument',
-  presentation = 'presentation',
-  richtext = 'richtext',
-  spreadsheet = 'spreadsheet',
-  video = 'video'
+  archive = "archive",
+  audio = "audio",
+  image = "image",
+  pdfdocument = "pdfdocument",
+  presentation = "presentation",
+  richtext = "richtext",
+  spreadsheet = "spreadsheet",
+  video = "video",
 }
 
 /** Specifies how to filter by update datetime */
 export type UploadUpdatedAtFilter = {
   /** Search for uploads with an exact match */
-  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  eq?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's strictly greater than the one specified */
-  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's greater than or equal to the one specified */
-  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's less than the one specified */
-  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lt?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Filter uploads with a value that's less or equal than the one specified */
-  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars["DateTime"]["input"]>;
   /** Exclude uploads with an exact match */
-  neq?: InputMaybe<Scalars['DateTime']['input']>;
+  neq?: InputMaybe<Scalars["DateTime"]["input"]>;
 };
 
 export type UploadVideoField = {
-  __typename: 'UploadVideoField';
-  duration?: Maybe<Scalars['Int']['output']>;
-  framerate?: Maybe<Scalars['Int']['output']>;
-  mp4Url?: Maybe<Scalars['String']['output']>;
-  muxAssetId: Scalars['String']['output'];
-  muxPlaybackId: Scalars['String']['output'];
-  streamingUrl: Scalars['String']['output'];
-  thumbnailUrl: Scalars['String']['output'];
+  __typename: "UploadVideoField";
+  duration?: Maybe<Scalars["Int"]["output"]>;
+  framerate?: Maybe<Scalars["Int"]["output"]>;
+  mp4Url?: Maybe<Scalars["String"]["output"]>;
+  muxAssetId: Scalars["String"]["output"];
+  muxPlaybackId: Scalars["String"]["output"];
+  streamingUrl: Scalars["String"]["output"];
+  thumbnailUrl: Scalars["String"]["output"];
 };
-
 
 export type UploadVideoFieldMp4UrlArgs = {
   exactRes?: InputMaybe<VideoMp4Res>;
   res?: InputMaybe<VideoMp4Res>;
 };
-
 
 export type UploadVideoFieldThumbnailUrlArgs = {
   format?: InputMaybe<MuxThumbnailFormatType>;
@@ -5010,621 +4824,1060 @@ export type UploadVideoFieldThumbnailUrlArgs = {
 /** Specifies how to filter by width */
 export type UploadWidthFilter = {
   /** Search assets with the specified width */
-  eq?: InputMaybe<Scalars['IntType']['input']>;
+  eq?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger than the specified width */
-  gt?: InputMaybe<Scalars['IntType']['input']>;
+  gt?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger or equal to the specified width */
-  gte?: InputMaybe<Scalars['IntType']['input']>;
+  gte?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets smaller than the specified width */
-  lt?: InputMaybe<Scalars['IntType']['input']>;
+  lt?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search all assets larger or equal to the specified width */
-  lte?: InputMaybe<Scalars['IntType']['input']>;
+  lte?: InputMaybe<Scalars["IntType"]["input"]>;
   /** Search assets that do not have the specified width */
-  neq?: InputMaybe<Scalars['IntType']['input']>;
+  neq?: InputMaybe<Scalars["IntType"]["input"]>;
 };
 
 export type VideoField = {
-  __typename: 'VideoField';
-  height: Scalars['IntType']['output'];
-  provider: Scalars['String']['output'];
-  providerUid: Scalars['String']['output'];
-  thumbnailUrl: Scalars['String']['output'];
-  title: Scalars['String']['output'];
-  url: Scalars['String']['output'];
-  width: Scalars['IntType']['output'];
+  __typename: "VideoField";
+  height: Scalars["IntType"]["output"];
+  provider: Scalars["String"]["output"];
+  providerUid: Scalars["String"]["output"];
+  thumbnailUrl: Scalars["String"]["output"];
+  title: Scalars["String"]["output"];
+  url: Scalars["String"]["output"];
+  width: Scalars["IntType"]["output"];
 };
 
 export enum VideoMp4Res {
-  high = 'high',
-  low = 'low',
-  medium = 'medium'
+  high = "high",
+  low = "low",
+  medium = "medium",
 }
 
 export type FocalPoint = {
-  __typename: 'focalPoint';
-  x: Scalars['FloatType']['output'];
-  y: Scalars['FloatType']['output'];
+  __typename: "focalPoint";
+  x: Scalars["FloatType"]["output"];
+  y: Scalars["FloatType"]["output"];
 };
 
 export type HomePageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
-
-export type HomePageQuery = { __typename: 'Query', homePage?: { __typename: 'HomePageRecord', id: any, title?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, hero?: { __typename: 'FileField', url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type HomePageQuery = {
+  __typename: "Query";
+  homePage?: {
+    __typename: "HomePageRecord";
+    id: any;
+    title?: string | null;
+    lead?: string | null;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+    hero?: { __typename: "FileField"; url: string } | null;
+    seo?: {
+      __typename: "SeoField";
+      title?: string | null;
+      description?: string | null;
+      twitterCard?: string | null;
+      image?: { __typename: "FileField"; id: any; url: string } | null;
+    } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      id: any;
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      id: any;
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  topBlogPosts: Array<{
+    __typename: "BlogPostRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _firstPublishedAt?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string; alt?: string | null } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  }>;
+};
 
 export type LegalPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
-
-export type LegalPageQuery = { __typename: 'Query', legalPage?: { __typename: 'LegalPageRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'LegalPageModelContentField', value: any } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+export type LegalPageQuery = {
+  __typename: "Query";
+  legalPage?: {
+    __typename: "LegalPageRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    content?: { __typename: "LegalPageModelContentField"; value: any } | null;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+};
 
 export type TermsPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
-
-export type TermsPageQuery = { __typename: 'Query', termsPage?: { __typename: 'TermsPageRecord', title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'TermsPageModelContentField', value: any } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+export type TermsPageQuery = {
+  __typename: "Query";
+  termsPage?: {
+    __typename: "TermsPageRecord";
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    content?: { __typename: "TermsPageModelContentField"; value: any } | null;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+};
 
 export type MarketPageQueryVariables = Exact<{
   locale: SiteLocale;
-  slug: Scalars['String']['input'];
+  slug: Scalars["String"]["input"];
 }>;
 
-
-export type MarketPageQuery = { __typename: 'Query', marketArticle?: { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, content?: { __typename: 'MarketArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type MarketPageQuery = {
+  __typename: "Query";
+  marketArticle?: {
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+    content?: {
+      __typename: "MarketArticleModelContentField";
+      value: any;
+      blocks: Array<{
+        __typename: "ImageTeaserBlockRecord";
+        id: any;
+        imageTeaserAsset?: {
+          __typename: "FileField";
+          url: string;
+          alt?: string | null;
+          width?: number | null;
+          height?: number | null;
+          responsiveImage?: {
+            __typename: "ResponsiveImage";
+            sizes: string;
+            src: string;
+            width: number;
+            height: number;
+            alt?: string | null;
+            title?: string | null;
+            base64?: string | null;
+          } | null;
+        } | null;
+      }>;
+      links: Array<{
+        __typename: "PowerBiReportRecord";
+        id: any;
+        reportId?: string | null;
+        name?: string | null;
+        workspace?: {
+          __typename: "PowerBiWorkspaceRecord";
+          id: any;
+          name?: string | null;
+          workspaceId?: string | null;
+        } | null;
+        dataset?: {
+          __typename: "PowerBiDatasetRecord";
+          name?: string | null;
+          id: any;
+          datasetId?: string | null;
+          workspace?: {
+            __typename: "PowerBiWorkspaceRecord";
+            workspaceId?: string | null;
+            name?: string | null;
+            id: any;
+          } | null;
+        } | null;
+      }>;
+    } | null;
+    seo?: {
+      __typename: "SeoField";
+      title?: string | null;
+      description?: string | null;
+      twitterCard?: string | null;
+      image?: { __typename: "FileField"; id: any; url: string } | null;
+    } | null;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  topBlogPosts: Array<{
+    __typename: "BlogPostRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _firstPublishedAt?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string; alt?: string | null } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  }>;
+};
 
 export type FocusArticlePageQueryVariables = Exact<{
   locale: SiteLocale;
-  slug: Scalars['String']['input'];
+  slug: Scalars["String"]["input"];
 }>;
 
-
-export type FocusArticlePageQuery = { __typename: 'Query', focusArticle?: { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, content?: { __typename: 'FocusArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type FocusArticlePageQuery = {
+  __typename: "Query";
+  focusArticle?: {
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+    content?: {
+      __typename: "FocusArticleModelContentField";
+      value: any;
+      blocks: Array<{
+        __typename: "ImageTeaserBlockRecord";
+        id: any;
+        imageTeaserAsset?: {
+          __typename: "FileField";
+          url: string;
+          alt?: string | null;
+          width?: number | null;
+          height?: number | null;
+          responsiveImage?: {
+            __typename: "ResponsiveImage";
+            sizes: string;
+            src: string;
+            width: number;
+            height: number;
+            alt?: string | null;
+            title?: string | null;
+            base64?: string | null;
+          } | null;
+        } | null;
+      }>;
+      links: Array<{
+        __typename: "PowerBiReportRecord";
+        id: any;
+        reportId?: string | null;
+        name?: string | null;
+        workspace?: {
+          __typename: "PowerBiWorkspaceRecord";
+          id: any;
+          name?: string | null;
+          workspaceId?: string | null;
+        } | null;
+        dataset?: {
+          __typename: "PowerBiDatasetRecord";
+          name?: string | null;
+          id: any;
+          datasetId?: string | null;
+          workspace?: {
+            __typename: "PowerBiWorkspaceRecord";
+            workspaceId?: string | null;
+            name?: string | null;
+            id: any;
+          } | null;
+        } | null;
+      }>;
+    } | null;
+    seo?: {
+      __typename: "SeoField";
+      title?: string | null;
+      description?: string | null;
+      twitterCard?: string | null;
+      image?: { __typename: "FileField"; id: any; url: string } | null;
+    } | null;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  topBlogPosts: Array<{
+    __typename: "BlogPostRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _firstPublishedAt?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string; alt?: string | null } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  }>;
+};
 
 export type MethodsPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
-
-export type MethodsPageQuery = { __typename: 'Query', methodsPage?: { __typename: 'MethodsPageRecord', id: any, title?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null, content?: { __typename: 'MethodsPageModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type MethodsPageQuery = {
+  __typename: "Query";
+  methodsPage?: {
+    __typename: "MethodsPageRecord";
+    id: any;
+    title?: string | null;
+    lead?: string | null;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+    seo?: {
+      __typename: "SeoField";
+      title?: string | null;
+      description?: string | null;
+      twitterCard?: string | null;
+      image?: { __typename: "FileField"; id: any; url: string } | null;
+    } | null;
+    content?: {
+      __typename: "MethodsPageModelContentField";
+      value: any;
+      blocks: Array<{
+        __typename: "ImageTeaserBlockRecord";
+        id: any;
+        imageTeaserAsset?: {
+          __typename: "FileField";
+          url: string;
+          alt?: string | null;
+          width?: number | null;
+          height?: number | null;
+          responsiveImage?: {
+            __typename: "ResponsiveImage";
+            sizes: string;
+            src: string;
+            width: number;
+            height: number;
+            alt?: string | null;
+            title?: string | null;
+            base64?: string | null;
+          } | null;
+        } | null;
+      }>;
+      links: Array<{
+        __typename: "PowerBiReportRecord";
+        id: any;
+        reportId?: string | null;
+        name?: string | null;
+        workspace?: {
+          __typename: "PowerBiWorkspaceRecord";
+          id: any;
+          name?: string | null;
+          workspaceId?: string | null;
+        } | null;
+        dataset?: {
+          __typename: "PowerBiDatasetRecord";
+          name?: string | null;
+          id: any;
+          datasetId?: string | null;
+          workspace?: {
+            __typename: "PowerBiWorkspaceRecord";
+            workspaceId?: string | null;
+            name?: string | null;
+            id: any;
+          } | null;
+        } | null;
+      }>;
+    } | null;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  topBlogPosts: Array<{
+    __typename: "BlogPostRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _firstPublishedAt?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string; alt?: string | null } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  }>;
+};
 
 export type AnalysisPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
-
-export type AnalysisPageQuery = { __typename: 'Query', analysisPage?: { __typename: 'AnalysisPageRecord', id: any, title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type AnalysisPageQuery = {
+  __typename: "Query";
+  analysisPage?: {
+    __typename: "AnalysisPageRecord";
+    id: any;
+    title?: string | null;
+    lead?: string | null;
+    seo?: {
+      __typename: "SeoField";
+      title?: string | null;
+      description?: string | null;
+      twitterCard?: string | null;
+      image?: { __typename: "FileField"; id: any; url: string } | null;
+    } | null;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allBlogPosts: Array<{
+    __typename: "BlogPostRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _firstPublishedAt?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string; alt?: string | null } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  }>;
+};
 
 export type BlogPostQueryVariables = Exact<{
   locale: SiteLocale;
-  slug: Scalars['String']['input'];
+  slug: Scalars["String"]["input"];
 }>;
 
-
-export type BlogPostQuery = { __typename: 'Query', blogPost?: { __typename: 'BlogPostRecord', id: any, title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, authors: Array<{ __typename: 'PersonRecord', firstName?: string | null, lastName?: string | null, portrait?: { __typename: 'FileField', id: any, url: string } | null }>, image?: { __typename: 'FileField', id: any, url: string } | null, content?: { __typename: 'BlogPostModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> }> };
+export type BlogPostQuery = {
+  __typename: "Query";
+  blogPost?: {
+    __typename: "BlogPostRecord";
+    id: any;
+    title?: string | null;
+    lead?: string | null;
+    slug?: string | null;
+    _firstPublishedAt?: string | null;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+    authors: Array<{
+      __typename: "PersonRecord";
+      firstName?: string | null;
+      lastName?: string | null;
+      portrait?: { __typename: "FileField"; id: any; url: string } | null;
+    }>;
+    image?: { __typename: "FileField"; id: any; url: string } | null;
+    content?: {
+      __typename: "BlogPostModelContentField";
+      value: any;
+      blocks: Array<{
+        __typename: "ImageTeaserBlockRecord";
+        id: any;
+        imageTeaserAsset?: {
+          __typename: "FileField";
+          url: string;
+          alt?: string | null;
+          width?: number | null;
+          height?: number | null;
+          responsiveImage?: {
+            __typename: "ResponsiveImage";
+            sizes: string;
+            src: string;
+            width: number;
+            height: number;
+            alt?: string | null;
+            title?: string | null;
+            base64?: string | null;
+          } | null;
+        } | null;
+      }>;
+      links: Array<{
+        __typename: "PowerBiReportRecord";
+        id: any;
+        reportId?: string | null;
+        name?: string | null;
+        workspace?: {
+          __typename: "PowerBiWorkspaceRecord";
+          id: any;
+          name?: string | null;
+          workspaceId?: string | null;
+        } | null;
+        dataset?: {
+          __typename: "PowerBiDatasetRecord";
+          name?: string | null;
+          id: any;
+          datasetId?: string | null;
+          workspace?: {
+            __typename: "PowerBiWorkspaceRecord";
+            workspaceId?: string | null;
+            name?: string | null;
+            id: any;
+          } | null;
+        } | null;
+      }>;
+    } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      id: any;
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      id: any;
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  } | null;
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  topBlogPosts: Array<{
+    __typename: "BlogPostRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+    lead?: string | null;
+    _firstPublishedAt?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string; alt?: string | null } | null;
+    markets: Array<{
+      __typename: "MarketArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+    focusArticles: Array<{
+      __typename: "FocusArticleRecord";
+      title?: string | null;
+      slug?: string | null;
+    }>;
+  }>;
+};
 
 export type AllPowerBiReportsQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
 
+export type AllPowerBiReportsQuery = {
+  __typename: "Query";
+  allPowerBiReports: Array<{
+    __typename: "PowerBiReportRecord";
+    id: any;
+    reportId?: string | null;
+    dataset?: { __typename: "PowerBiDatasetRecord"; datasetId?: string | null } | null;
+    workspace?: { __typename: "PowerBiWorkspaceRecord"; workspaceId?: string | null } | null;
+  }>;
+};
 
-export type AllPowerBiReportsQuery = { __typename: 'Query', allPowerBiReports: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, dataset?: { __typename: 'PowerBiDatasetRecord', datasetId?: string | null } | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null } | null }> };
+export type AllMarketArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AllMarketArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllMarketArticlesSlugLocalesQuery = {
+  __typename: "Query";
+  allMarketArticles: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+  }>;
+};
 
+export type AllFocusArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type AllMarketArticlesSlugLocalesQuery = { __typename: 'Query', allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null }> };
+export type AllFocusArticlesSlugLocalesQuery = {
+  __typename: "Query";
+  allFocusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+  }>;
+};
 
-export type AllFocusArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllBlogPostsSlugLocalesQueryVariables = Exact<{ [key: string]: never }>;
 
+export type AllBlogPostsSlugLocalesQuery = {
+  __typename: "Query";
+  allBlogPosts: Array<{
+    __typename: "BlogPostRecord";
+    id: any;
+    _allSlugLocales?: Array<{
+      __typename: "StringMultiLocaleField";
+      locale?: SiteLocale | null;
+      value?: string | null;
+    }> | null;
+  }>;
+};
 
-export type AllFocusArticlesSlugLocalesQuery = { __typename: 'Query', allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null }> };
+export type FullSeoFragment = {
+  __typename: "SeoField";
+  title?: string | null;
+  description?: string | null;
+  twitterCard?: string | null;
+  image?: { __typename: "FileField"; id: any; url: string } | null;
+};
 
-export type AllBlogPostsSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+export type SimpleMarketArticleFragment = {
+  __typename: "MarketArticleRecord";
+  id: any;
+  title?: string | null;
+  slug?: string | null;
+};
 
+export type SimpleFocusArticleFragment = {
+  __typename: "FocusArticleRecord";
+  id: any;
+  title?: string | null;
+  slug?: string | null;
+};
 
-export type AllBlogPostsSlugLocalesQuery = { __typename: 'Query', allBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null }> };
+export type FullMarketArticleFragment = {
+  __typename: "MarketArticleRecord";
+  id: any;
+  title?: string | null;
+  slug?: string | null;
+  lead?: string | null;
+  content?: {
+    __typename: "MarketArticleModelContentField";
+    value: any;
+    blocks: Array<{
+      __typename: "ImageTeaserBlockRecord";
+      id: any;
+      imageTeaserAsset?: {
+        __typename: "FileField";
+        url: string;
+        alt?: string | null;
+        width?: number | null;
+        height?: number | null;
+        responsiveImage?: {
+          __typename: "ResponsiveImage";
+          sizes: string;
+          src: string;
+          width: number;
+          height: number;
+          alt?: string | null;
+          title?: string | null;
+          base64?: string | null;
+        } | null;
+      } | null;
+    }>;
+    links: Array<{
+      __typename: "PowerBiReportRecord";
+      id: any;
+      reportId?: string | null;
+      name?: string | null;
+      workspace?: {
+        __typename: "PowerBiWorkspaceRecord";
+        id: any;
+        name?: string | null;
+        workspaceId?: string | null;
+      } | null;
+      dataset?: {
+        __typename: "PowerBiDatasetRecord";
+        name?: string | null;
+        id: any;
+        datasetId?: string | null;
+        workspace?: {
+          __typename: "PowerBiWorkspaceRecord";
+          workspaceId?: string | null;
+          name?: string | null;
+          id: any;
+        } | null;
+      } | null;
+    }>;
+  } | null;
+  seo?: {
+    __typename: "SeoField";
+    title?: string | null;
+    description?: string | null;
+    twitterCard?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string } | null;
+  } | null;
+};
 
-export type FullSeoFragment = { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null };
+export type FullFocusArticleFragment = {
+  __typename: "FocusArticleRecord";
+  id: any;
+  title?: string | null;
+  slug?: string | null;
+  lead?: string | null;
+  content?: {
+    __typename: "FocusArticleModelContentField";
+    value: any;
+    blocks: Array<{
+      __typename: "ImageTeaserBlockRecord";
+      id: any;
+      imageTeaserAsset?: {
+        __typename: "FileField";
+        url: string;
+        alt?: string | null;
+        width?: number | null;
+        height?: number | null;
+        responsiveImage?: {
+          __typename: "ResponsiveImage";
+          sizes: string;
+          src: string;
+          width: number;
+          height: number;
+          alt?: string | null;
+          title?: string | null;
+          base64?: string | null;
+        } | null;
+      } | null;
+    }>;
+    links: Array<{
+      __typename: "PowerBiReportRecord";
+      id: any;
+      reportId?: string | null;
+      name?: string | null;
+      workspace?: {
+        __typename: "PowerBiWorkspaceRecord";
+        id: any;
+        name?: string | null;
+        workspaceId?: string | null;
+      } | null;
+      dataset?: {
+        __typename: "PowerBiDatasetRecord";
+        name?: string | null;
+        id: any;
+        datasetId?: string | null;
+        workspace?: {
+          __typename: "PowerBiWorkspaceRecord";
+          workspaceId?: string | null;
+          name?: string | null;
+          id: any;
+        } | null;
+      } | null;
+    }>;
+  } | null;
+  seo?: {
+    __typename: "SeoField";
+    title?: string | null;
+    description?: string | null;
+    twitterCard?: string | null;
+    image?: { __typename: "FileField"; id: any; url: string } | null;
+  } | null;
+};
 
-export type SimpleMarketArticleFragment = { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null };
+export type SimpleBlogPostFragment = {
+  __typename: "BlogPostRecord";
+  id: any;
+  title?: string | null;
+  slug?: string | null;
+  lead?: string | null;
+  _firstPublishedAt?: string | null;
+  image?: { __typename: "FileField"; id: any; url: string; alt?: string | null } | null;
+  markets: Array<{
+    __typename: "MarketArticleRecord";
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  focusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    title?: string | null;
+    slug?: string | null;
+  }>;
+};
 
-export type SimpleFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null };
+export type FullBlogPostFragment = {
+  __typename: "BlogPostRecord";
+  id: any;
+  title?: string | null;
+  lead?: string | null;
+  slug?: string | null;
+  _firstPublishedAt?: string | null;
+  authors: Array<{
+    __typename: "PersonRecord";
+    firstName?: string | null;
+    lastName?: string | null;
+    portrait?: { __typename: "FileField"; id: any; url: string } | null;
+  }>;
+  image?: { __typename: "FileField"; id: any; url: string } | null;
+  content?: {
+    __typename: "BlogPostModelContentField";
+    value: any;
+    blocks: Array<{
+      __typename: "ImageTeaserBlockRecord";
+      id: any;
+      imageTeaserAsset?: {
+        __typename: "FileField";
+        url: string;
+        alt?: string | null;
+        width?: number | null;
+        height?: number | null;
+        responsiveImage?: {
+          __typename: "ResponsiveImage";
+          sizes: string;
+          src: string;
+          width: number;
+          height: number;
+          alt?: string | null;
+          title?: string | null;
+          base64?: string | null;
+        } | null;
+      } | null;
+    }>;
+    links: Array<{
+      __typename: "PowerBiReportRecord";
+      id: any;
+      reportId?: string | null;
+      name?: string | null;
+      workspace?: {
+        __typename: "PowerBiWorkspaceRecord";
+        id: any;
+        name?: string | null;
+        workspaceId?: string | null;
+      } | null;
+      dataset?: {
+        __typename: "PowerBiDatasetRecord";
+        name?: string | null;
+        id: any;
+        datasetId?: string | null;
+        workspace?: {
+          __typename: "PowerBiWorkspaceRecord";
+          workspaceId?: string | null;
+          name?: string | null;
+          id: any;
+        } | null;
+      } | null;
+    }>;
+  } | null;
+  markets: Array<{
+    __typename: "MarketArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+  focusArticles: Array<{
+    __typename: "FocusArticleRecord";
+    id: any;
+    title?: string | null;
+    slug?: string | null;
+  }>;
+};
 
-export type FullMarketArticleFragment = { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'MarketArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
+export type DownloadTeaserBlockFragment = {
+  __typename: "DownloadTeaserBlockRecord";
+  id: any;
+  markdown?: string | null;
+  description?: string | null;
+  downloadTeaserAssets: Array<{
+    __typename: "DownloadTeaserAssetRecord";
+    id: any;
+    title?: string | null;
+    file?: { __typename: "FileField"; id: any; url: string } | null;
+  }>;
+};
 
-export type FullFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, content?: { __typename: 'FocusArticleModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null };
+export type ExternalVideoBlockFragment = {
+  __typename: "ExternalVideoBlockRecord";
+  id: any;
+  externalVideo?: { __typename: "VideoField"; url: string; title: string } | null;
+};
 
-export type SimpleBlogPostFragment = { __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, _firstPublishedAt?: string | null, image?: { __typename: 'FileField', id: any, url: string, alt?: string | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', title?: string | null, slug?: string | null }> };
+export type GalleryBlockFragment = {
+  __typename: "GalleryBlockRecord";
+  id: any;
+  galleryAssets: Array<{ __typename: "FileField"; id: any; title?: string | null; url: string }>;
+};
 
-export type FullBlogPostFragment = { __typename: 'BlogPostRecord', id: any, title?: string | null, lead?: string | null, slug?: string | null, _firstPublishedAt?: string | null, authors: Array<{ __typename: 'PersonRecord', firstName?: string | null, lastName?: string | null, portrait?: { __typename: 'FileField', id: any, url: string } | null }>, image?: { __typename: 'FileField', id: any, url: string } | null, content?: { __typename: 'BlogPostModelContentField', value: any, blocks: Array<{ __typename: 'ImageTeaserBlockRecord', id: any, imageTeaserAsset?: { __typename: 'FileField', url: string, alt?: string | null, width?: number | null, height?: number | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null }> } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+export type IframeBlockFragment = { __typename: "IframeBlockRecord"; id: any; url?: string | null };
 
-export type DownloadTeaserBlockFragment = { __typename: 'DownloadTeaserBlockRecord', id: any, markdown?: string | null, description?: string | null, downloadTeaserAssets: Array<{ __typename: 'DownloadTeaserAssetRecord', id: any, title?: string | null, file?: { __typename: 'FileField', id: any, url: string } | null }> };
+export type ImageTeaserBlockFragment = {
+  __typename: "ImageTeaserBlockRecord";
+  id: any;
+  description?: string | null;
+  imageTeaserAsset?: {
+    __typename: "FileField";
+    id: any;
+    title?: string | null;
+    alt?: string | null;
+    url: string;
+  } | null;
+};
 
-export type ExternalVideoBlockFragment = { __typename: 'ExternalVideoBlockRecord', id: any, externalVideo?: { __typename: 'VideoField', url: string, title: string } | null };
+export type MarkdownBlockFragment = {
+  __typename: "MarkdownBlockRecord";
+  id: any;
+  content?: string | null;
+};
 
-export type GalleryBlockFragment = { __typename: 'GalleryBlockRecord', id: any, galleryAssets: Array<{ __typename: 'FileField', id: any, title?: string | null, url: string }> };
-
-export type IframeBlockFragment = { __typename: 'IframeBlockRecord', id: any, url?: string | null };
-
-export type ImageTeaserBlockFragment = { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', id: any, title?: string | null, alt?: string | null, url: string } | null };
-
-export type MarkdownBlockFragment = { __typename: 'MarkdownBlockRecord', id: any, content?: string | null };
-
-export type SurveyBlockFragment = { __typename: 'SurveyBlockRecord', id: any, formUrl?: string | null, question: Array<{ __typename: 'SurveyQuestionRecord', id: any, question?: string | null, formFieldId?: string | null, isMultipleChoice?: boolean | null, possibleAnswers: Array<{ __typename: 'SurveyAnswerRecord', id: any, answer?: string | null }> }> };
+export type SurveyBlockFragment = {
+  __typename: "SurveyBlockRecord";
+  id: any;
+  formUrl?: string | null;
+  question: Array<{
+    __typename: "SurveyQuestionRecord";
+    id: any;
+    question?: string | null;
+    formFieldId?: string | null;
+    isMultipleChoice?: boolean | null;
+    possibleAnswers: Array<{ __typename: "SurveyAnswerRecord"; id: any; answer?: string | null }>;
+  }>;
+};
 
 export const SimpleMarketArticleFragmentDoc = gql`
-    fragment SimpleMarketArticle on MarketArticleRecord {
-  id
-  title
-  slug
-}
-    `;
+  fragment SimpleMarketArticle on MarketArticleRecord {
+    id
+    title
+    slug
+  }
+`;
 export const SimpleFocusArticleFragmentDoc = gql`
-    fragment SimpleFocusArticle on FocusArticleRecord {
-  id
-  title
-  slug
-}
-    `;
+  fragment SimpleFocusArticle on FocusArticleRecord {
+    id
+    title
+    slug
+  }
+`;
 export const FullSeoFragmentDoc = gql`
-    fragment FullSEO on SeoField {
-  title
-  description
-  image {
-    id
-    url
+  fragment FullSEO on SeoField {
+    title
+    description
+    image {
+      id
+      url
+    }
+    twitterCard
   }
-  twitterCard
-}
-    `;
+`;
 export const FullMarketArticleFragmentDoc = gql`
-    fragment FullMarketArticle on MarketArticleRecord {
-  id
-  title
-  slug
-  lead
-  content {
-    value
-    blocks {
-      id
-      __typename
-      ... on ImageTeaserBlockRecord {
-        imageTeaserAsset {
-          url
-          alt
-          width
-          height
-          responsiveImage(imgixParams: {fit: crop, w: 300, h: 300, auto: format}) {
-            sizes
-            src
-            width
-            height
-            alt
-            title
-            base64
-          }
-        }
-      }
-    }
-    links {
-      __typename
-      id
-      workspace {
-        id
-        name
-        workspaceId
-      }
-      reportId
-      name
-      dataset {
-        name
-        id
-        datasetId
-        workspace {
-          workspaceId
-          name
-          id
-        }
-      }
-    }
-  }
-  seo {
-    ...FullSEO
-  }
-}
-    `;
-export const FullFocusArticleFragmentDoc = gql`
-    fragment FullFocusArticle on FocusArticleRecord {
-  id
-  title
-  slug
-  lead
-  content {
-    value
-    blocks {
-      id
-      __typename
-      ... on ImageTeaserBlockRecord {
-        imageTeaserAsset {
-          url
-          alt
-          width
-          height
-          responsiveImage(imgixParams: {fit: crop, w: 300, h: 300, auto: format}) {
-            sizes
-            src
-            width
-            height
-            alt
-            title
-            base64
-          }
-        }
-      }
-    }
-    links {
-      __typename
-      id
-      workspace {
-        id
-        name
-        workspaceId
-      }
-      reportId
-      name
-      dataset {
-        name
-        id
-        datasetId
-        workspace {
-          workspaceId
-          name
-          id
-        }
-      }
-    }
-  }
-  seo {
-    ...FullSEO
-  }
-}
-    `;
-export const SimpleBlogPostFragmentDoc = gql`
-    fragment SimpleBlogPost on BlogPostRecord {
-  id
-  title
-  slug
-  lead
-  image {
-    id
-    url
-    alt
-  }
-  markets {
-    title
-    slug
-  }
-  focusArticles {
-    title
-    slug
-  }
-  _firstPublishedAt
-}
-    `;
-export const FullBlogPostFragmentDoc = gql`
-    fragment FullBlogPost on BlogPostRecord {
-  id
-  title
-  lead
-  slug
-  authors {
-    firstName
-    lastName
-    portrait {
-      id
-      url
-    }
-  }
-  image {
-    id
-    url
-  }
-  content {
-    value
-    blocks {
-      id
-      __typename
-      ... on ImageTeaserBlockRecord {
-        imageTeaserAsset {
-          url
-          alt
-          width
-          height
-          responsiveImage(imgixParams: {fit: crop, w: 300, h: 300, auto: format}) {
-            sizes
-            src
-            width
-            height
-            alt
-            title
-            base64
-          }
-        }
-      }
-    }
-    links {
-      __typename
-      id
-      workspace {
-        id
-        name
-        workspaceId
-      }
-      reportId
-      name
-      dataset {
-        name
-        id
-        datasetId
-        workspace {
-          workspaceId
-          name
-          id
-        }
-      }
-    }
-  }
-  markets {
-    id
-    title
-    slug
-  }
-  focusArticles {
-    id
-    title
-    slug
-  }
-  _firstPublishedAt
-}
-    `;
-export const DownloadTeaserBlockFragmentDoc = gql`
-    fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
-  id
-  markdown
-  description
-  downloadTeaserAssets {
-    id
-    title
-    file {
-      id
-      url
-    }
-  }
-}
-    `;
-export const ExternalVideoBlockFragmentDoc = gql`
-    fragment ExternalVideoBlock on ExternalVideoBlockRecord {
-  id
-  externalVideo {
-    url
-    title
-  }
-}
-    `;
-export const GalleryBlockFragmentDoc = gql`
-    fragment GalleryBlock on GalleryBlockRecord {
-  id
-  galleryAssets {
-    id
-    title
-    url
-  }
-}
-    `;
-export const IframeBlockFragmentDoc = gql`
-    fragment IframeBlock on IframeBlockRecord {
-  id
-  url
-}
-    `;
-export const ImageTeaserBlockFragmentDoc = gql`
-    fragment ImageTeaserBlock on ImageTeaserBlockRecord {
-  id
-  description
-  imageTeaserAsset {
-    id
-    title
-    alt
-    url
-  }
-}
-    `;
-export const MarkdownBlockFragmentDoc = gql`
-    fragment MarkdownBlock on MarkdownBlockRecord {
-  id
-  content
-}
-    `;
-export const SurveyBlockFragmentDoc = gql`
-    fragment SurveyBlock on SurveyBlockRecord {
-  id
-  formUrl
-  question {
-    id
-    question
-    formFieldId
-    isMultipleChoice
-    possibleAnswers {
-      id
-      answer
-    }
-  }
-}
-    `;
-export const HomePageDocument = gql`
-    query HomePage($locale: SiteLocale!) {
-  homePage(locale: $locale) {
-    _allSlugLocales {
-      locale
-      value
-    }
-    id
-    title
-    lead
-    hero {
-      url
-    }
-    seo {
-      ...FullSEO
-    }
-    markets {
-      id
-      title
-      slug
-    }
-    focusArticles {
-      id
-      title
-      slug
-    }
-  }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
-}
-    ${FullSeoFragmentDoc}
-${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}
-${SimpleBlogPostFragmentDoc}`;
-
-export function useHomePageQuery(options: Omit<Urql.UseQueryArgs<HomePageQueryVariables>, 'query'>) {
-  return Urql.useQuery<HomePageQuery, HomePageQueryVariables>({ query: HomePageDocument, ...options });
-};
-export const LegalPageDocument = gql`
-    query LegalPage($locale: SiteLocale!) {
-  legalPage(locale: $locale) {
+  fragment FullMarketArticle on MarketArticleRecord {
     id
     title
     slug
     lead
-    content {
-      value
-    }
-  }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-}
-    ${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}`;
-
-export function useLegalPageQuery(options: Omit<Urql.UseQueryArgs<LegalPageQueryVariables>, 'query'>) {
-  return Urql.useQuery<LegalPageQuery, LegalPageQueryVariables>({ query: LegalPageDocument, ...options });
-};
-export const TermsPageDocument = gql`
-    query TermsPage($locale: SiteLocale!) {
-  termsPage(locale: $locale) {
-    title
-    slug
-    lead
-    content {
-      value
-    }
-  }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-}
-    ${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}`;
-
-export function useTermsPageQuery(options: Omit<Urql.UseQueryArgs<TermsPageQueryVariables>, 'query'>) {
-  return Urql.useQuery<TermsPageQuery, TermsPageQueryVariables>({ query: TermsPageDocument, ...options });
-};
-export const MarketPageDocument = gql`
-    query MarketPage($locale: SiteLocale!, $slug: String!) {
-  marketArticle(locale: $locale, filter: {slug: {eq: $slug}}) {
-    _allSlugLocales {
-      locale
-      value
-    }
-    ...FullMarketArticle
-  }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
-}
-    ${FullMarketArticleFragmentDoc}
-${FullSeoFragmentDoc}
-${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}
-${SimpleBlogPostFragmentDoc}`;
-
-export function useMarketPageQuery(options: Omit<Urql.UseQueryArgs<MarketPageQueryVariables>, 'query'>) {
-  return Urql.useQuery<MarketPageQuery, MarketPageQueryVariables>({ query: MarketPageDocument, ...options });
-};
-export const FocusArticlePageDocument = gql`
-    query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
-  focusArticle(locale: $locale, filter: {slug: {eq: $slug}}) {
-    _allSlugLocales {
-      locale
-      value
-    }
-    ...FullFocusArticle
-  }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
-}
-    ${FullFocusArticleFragmentDoc}
-${FullSeoFragmentDoc}
-${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}
-${SimpleBlogPostFragmentDoc}`;
-
-export function useFocusArticlePageQuery(options: Omit<Urql.UseQueryArgs<FocusArticlePageQueryVariables>, 'query'>) {
-  return Urql.useQuery<FocusArticlePageQuery, FocusArticlePageQueryVariables>({ query: FocusArticlePageDocument, ...options });
-};
-export const MethodsPageDocument = gql`
-    query MethodsPage($locale: SiteLocale!) {
-  methodsPage(locale: $locale) {
-    _allSlugLocales {
-      locale
-      value
-    }
-    id
-    title
-    lead
-    seo {
-      ...FullSEO
-    }
     content {
       value
       blocks {
@@ -5636,7 +5889,7 @@ export const MethodsPageDocument = gql`
             alt
             width
             height
-            responsiveImage(imgixParams: {fit: crop, w: 300, h: 300, auto: format}) {
+            responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
               sizes
               src
               width
@@ -5670,140 +5923,646 @@ export const MethodsPageDocument = gql`
         }
       }
     }
-  }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
-}
-    ${FullSeoFragmentDoc}
-${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}
-${SimpleBlogPostFragmentDoc}`;
-
-export function useMethodsPageQuery(options: Omit<Urql.UseQueryArgs<MethodsPageQueryVariables>, 'query'>) {
-  return Urql.useQuery<MethodsPageQuery, MethodsPageQueryVariables>({ query: MethodsPageDocument, ...options });
-};
-export const AnalysisPageDocument = gql`
-    query AnalysisPage($locale: SiteLocale!) {
-  analysisPage(locale: $locale) {
-    id
-    title
-    lead
     seo {
       ...FullSEO
     }
   }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
+`;
+export const FullFocusArticleFragmentDoc = gql`
+  fragment FullFocusArticle on FocusArticleRecord {
+    id
+    title
+    slug
+    lead
+    content {
+      value
+      blocks {
+        id
+        __typename
+        ... on ImageTeaserBlockRecord {
+          imageTeaserAsset {
+            url
+            alt
+            width
+            height
+            responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+              sizes
+              src
+              width
+              height
+              alt
+              title
+              base64
+            }
+          }
+        }
+      }
+      links {
+        __typename
+        id
+        workspace {
+          id
+          name
+          workspaceId
+        }
+        reportId
+        name
+        dataset {
+          name
+          id
+          datasetId
+          workspace {
+            workspaceId
+            name
+            id
+          }
+        }
+      }
+    }
+    seo {
+      ...FullSEO
+    }
   }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
+`;
+export const SimpleBlogPostFragmentDoc = gql`
+  fragment SimpleBlogPost on BlogPostRecord {
+    id
+    title
+    slug
+    lead
+    image {
+      id
+      url
+      alt
+    }
+    markets {
+      title
+      slug
+    }
+    focusArticles {
+      title
+      slug
+    }
+    _firstPublishedAt
   }
-  allBlogPosts(locale: $locale, first: 7) {
-    ...SimpleBlogPost
+`;
+export const FullBlogPostFragmentDoc = gql`
+  fragment FullBlogPost on BlogPostRecord {
+    id
+    title
+    lead
+    slug
+    authors {
+      firstName
+      lastName
+      portrait {
+        id
+        url
+      }
+    }
+    image {
+      id
+      url
+    }
+    content {
+      value
+      blocks {
+        id
+        __typename
+        ... on ImageTeaserBlockRecord {
+          imageTeaserAsset {
+            url
+            alt
+            width
+            height
+            responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+              sizes
+              src
+              width
+              height
+              alt
+              title
+              base64
+            }
+          }
+        }
+      }
+      links {
+        __typename
+        id
+        workspace {
+          id
+          name
+          workspaceId
+        }
+        reportId
+        name
+        dataset {
+          name
+          id
+          datasetId
+          workspace {
+            workspaceId
+            name
+            id
+          }
+        }
+      }
+    }
+    markets {
+      id
+      title
+      slug
+    }
+    focusArticles {
+      id
+      title
+      slug
+    }
+    _firstPublishedAt
   }
-}
-    ${FullSeoFragmentDoc}
-${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}
-${SimpleBlogPostFragmentDoc}`;
+`;
+export const DownloadTeaserBlockFragmentDoc = gql`
+  fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
+    id
+    markdown
+    description
+    downloadTeaserAssets {
+      id
+      title
+      file {
+        id
+        url
+      }
+    }
+  }
+`;
+export const ExternalVideoBlockFragmentDoc = gql`
+  fragment ExternalVideoBlock on ExternalVideoBlockRecord {
+    id
+    externalVideo {
+      url
+      title
+    }
+  }
+`;
+export const GalleryBlockFragmentDoc = gql`
+  fragment GalleryBlock on GalleryBlockRecord {
+    id
+    galleryAssets {
+      id
+      title
+      url
+    }
+  }
+`;
+export const IframeBlockFragmentDoc = gql`
+  fragment IframeBlock on IframeBlockRecord {
+    id
+    url
+  }
+`;
+export const ImageTeaserBlockFragmentDoc = gql`
+  fragment ImageTeaserBlock on ImageTeaserBlockRecord {
+    id
+    description
+    imageTeaserAsset {
+      id
+      title
+      alt
+      url
+    }
+  }
+`;
+export const MarkdownBlockFragmentDoc = gql`
+  fragment MarkdownBlock on MarkdownBlockRecord {
+    id
+    content
+  }
+`;
+export const SurveyBlockFragmentDoc = gql`
+  fragment SurveyBlock on SurveyBlockRecord {
+    id
+    formUrl
+    question {
+      id
+      question
+      formFieldId
+      isMultipleChoice
+      possibleAnswers {
+        id
+        answer
+      }
+    }
+  }
+`;
+export const HomePageDocument = gql`
+  query HomePage($locale: SiteLocale!) {
+    homePage(locale: $locale) {
+      _allSlugLocales {
+        locale
+        value
+      }
+      id
+      title
+      lead
+      hero {
+        url
+      }
+      seo {
+        ...FullSEO
+      }
+      markets {
+        id
+        title
+        slug
+      }
+      focusArticles {
+        id
+        title
+        slug
+      }
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+    topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+      ...SimpleBlogPost
+    }
+  }
+  ${FullSeoFragmentDoc}
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+  ${SimpleBlogPostFragmentDoc}
+`;
 
-export function useAnalysisPageQuery(options: Omit<Urql.UseQueryArgs<AnalysisPageQueryVariables>, 'query'>) {
-  return Urql.useQuery<AnalysisPageQuery, AnalysisPageQueryVariables>({ query: AnalysisPageDocument, ...options });
-};
+export function useHomePageQuery(
+  options: Omit<Urql.UseQueryArgs<HomePageQueryVariables>, "query">
+) {
+  return Urql.useQuery<HomePageQuery, HomePageQueryVariables>({
+    query: HomePageDocument,
+    ...options,
+  });
+}
+export const LegalPageDocument = gql`
+  query LegalPage($locale: SiteLocale!) {
+    legalPage(locale: $locale) {
+      id
+      title
+      slug
+      lead
+      content {
+        value
+      }
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+  }
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+`;
+
+export function useLegalPageQuery(
+  options: Omit<Urql.UseQueryArgs<LegalPageQueryVariables>, "query">
+) {
+  return Urql.useQuery<LegalPageQuery, LegalPageQueryVariables>({
+    query: LegalPageDocument,
+    ...options,
+  });
+}
+export const TermsPageDocument = gql`
+  query TermsPage($locale: SiteLocale!) {
+    termsPage(locale: $locale) {
+      title
+      slug
+      lead
+      content {
+        value
+      }
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+  }
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+`;
+
+export function useTermsPageQuery(
+  options: Omit<Urql.UseQueryArgs<TermsPageQueryVariables>, "query">
+) {
+  return Urql.useQuery<TermsPageQuery, TermsPageQueryVariables>({
+    query: TermsPageDocument,
+    ...options,
+  });
+}
+export const MarketPageDocument = gql`
+  query MarketPage($locale: SiteLocale!, $slug: String!) {
+    marketArticle(locale: $locale, filter: { slug: { eq: $slug } }) {
+      _allSlugLocales {
+        locale
+        value
+      }
+      ...FullMarketArticle
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+    topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+      ...SimpleBlogPost
+    }
+  }
+  ${FullMarketArticleFragmentDoc}
+  ${FullSeoFragmentDoc}
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+  ${SimpleBlogPostFragmentDoc}
+`;
+
+export function useMarketPageQuery(
+  options: Omit<Urql.UseQueryArgs<MarketPageQueryVariables>, "query">
+) {
+  return Urql.useQuery<MarketPageQuery, MarketPageQueryVariables>({
+    query: MarketPageDocument,
+    ...options,
+  });
+}
+export const FocusArticlePageDocument = gql`
+  query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
+    focusArticle(locale: $locale, filter: { slug: { eq: $slug } }) {
+      _allSlugLocales {
+        locale
+        value
+      }
+      ...FullFocusArticle
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+    topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+      ...SimpleBlogPost
+    }
+  }
+  ${FullFocusArticleFragmentDoc}
+  ${FullSeoFragmentDoc}
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+  ${SimpleBlogPostFragmentDoc}
+`;
+
+export function useFocusArticlePageQuery(
+  options: Omit<Urql.UseQueryArgs<FocusArticlePageQueryVariables>, "query">
+) {
+  return Urql.useQuery<FocusArticlePageQuery, FocusArticlePageQueryVariables>({
+    query: FocusArticlePageDocument,
+    ...options,
+  });
+}
+export const MethodsPageDocument = gql`
+  query MethodsPage($locale: SiteLocale!) {
+    methodsPage(locale: $locale) {
+      _allSlugLocales {
+        locale
+        value
+      }
+      id
+      title
+      lead
+      seo {
+        ...FullSEO
+      }
+      content {
+        value
+        blocks {
+          id
+          __typename
+          ... on ImageTeaserBlockRecord {
+            imageTeaserAsset {
+              url
+              alt
+              width
+              height
+              responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+                sizes
+                src
+                width
+                height
+                alt
+                title
+                base64
+              }
+            }
+          }
+        }
+        links {
+          __typename
+          id
+          workspace {
+            id
+            name
+            workspaceId
+          }
+          reportId
+          name
+          dataset {
+            name
+            id
+            datasetId
+            workspace {
+              workspaceId
+              name
+              id
+            }
+          }
+        }
+      }
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+    topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+      ...SimpleBlogPost
+    }
+  }
+  ${FullSeoFragmentDoc}
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+  ${SimpleBlogPostFragmentDoc}
+`;
+
+export function useMethodsPageQuery(
+  options: Omit<Urql.UseQueryArgs<MethodsPageQueryVariables>, "query">
+) {
+  return Urql.useQuery<MethodsPageQuery, MethodsPageQueryVariables>({
+    query: MethodsPageDocument,
+    ...options,
+  });
+}
+export const AnalysisPageDocument = gql`
+  query AnalysisPage($locale: SiteLocale!) {
+    analysisPage(locale: $locale) {
+      id
+      title
+      lead
+      seo {
+        ...FullSEO
+      }
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+    allBlogPosts(locale: $locale, first: 7) {
+      ...SimpleBlogPost
+    }
+  }
+  ${FullSeoFragmentDoc}
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+  ${SimpleBlogPostFragmentDoc}
+`;
+
+export function useAnalysisPageQuery(
+  options: Omit<Urql.UseQueryArgs<AnalysisPageQueryVariables>, "query">
+) {
+  return Urql.useQuery<AnalysisPageQuery, AnalysisPageQueryVariables>({
+    query: AnalysisPageDocument,
+    ...options,
+  });
+}
 export const BlogPostDocument = gql`
-    query BlogPost($locale: SiteLocale!, $slug: String!) {
-  blogPost(locale: $locale, filter: {slug: {eq: $slug}}) {
-    ...FullBlogPost
-    _allSlugLocales {
-      locale
-      value
+  query BlogPost($locale: SiteLocale!, $slug: String!) {
+    blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
+      ...FullBlogPost
+      _allSlugLocales {
+        locale
+        value
+      }
+    }
+    allMarketArticles(locale: $locale) {
+      ...SimpleMarketArticle
+    }
+    allFocusArticles(locale: $locale) {
+      ...SimpleFocusArticle
+    }
+    topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+      ...SimpleBlogPost
     }
   }
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
-}
-    ${FullBlogPostFragmentDoc}
-${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}
-${SimpleBlogPostFragmentDoc}`;
+  ${FullBlogPostFragmentDoc}
+  ${SimpleMarketArticleFragmentDoc}
+  ${SimpleFocusArticleFragmentDoc}
+  ${SimpleBlogPostFragmentDoc}
+`;
 
-export function useBlogPostQuery(options: Omit<Urql.UseQueryArgs<BlogPostQueryVariables>, 'query'>) {
-  return Urql.useQuery<BlogPostQuery, BlogPostQueryVariables>({ query: BlogPostDocument, ...options });
-};
+export function useBlogPostQuery(
+  options: Omit<Urql.UseQueryArgs<BlogPostQueryVariables>, "query">
+) {
+  return Urql.useQuery<BlogPostQuery, BlogPostQueryVariables>({
+    query: BlogPostDocument,
+    ...options,
+  });
+}
 export const AllPowerBiReportsDocument = gql`
-    query AllPowerBIReports($locale: SiteLocale!) {
-  allPowerBiReports(locale: $locale) {
-    id
-    reportId
-    dataset {
-      datasetId
-    }
-    workspace {
-      workspaceId
+  query AllPowerBIReports($locale: SiteLocale!) {
+    allPowerBiReports(locale: $locale) {
+      id
+      reportId
+      dataset {
+        datasetId
+      }
+      workspace {
+        workspaceId
+      }
     }
   }
-}
-    `;
+`;
 
-export function useAllPowerBiReportsQuery(options: Omit<Urql.UseQueryArgs<AllPowerBiReportsQueryVariables>, 'query'>) {
-  return Urql.useQuery<AllPowerBiReportsQuery, AllPowerBiReportsQueryVariables>({ query: AllPowerBiReportsDocument, ...options });
-};
+export function useAllPowerBiReportsQuery(
+  options: Omit<Urql.UseQueryArgs<AllPowerBiReportsQueryVariables>, "query">
+) {
+  return Urql.useQuery<AllPowerBiReportsQuery, AllPowerBiReportsQueryVariables>({
+    query: AllPowerBiReportsDocument,
+    ...options,
+  });
+}
 export const AllMarketArticlesSlugLocalesDocument = gql`
-    query AllMarketArticlesSlugLocales {
-  allMarketArticles {
-    id
-    _allSlugLocales {
-      locale
-      value
+  query AllMarketArticlesSlugLocales {
+    allMarketArticles {
+      id
+      _allSlugLocales {
+        locale
+        value
+      }
     }
   }
-}
-    `;
+`;
 
-export function useAllMarketArticlesSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllMarketArticlesSlugLocalesQueryVariables>, 'query'>) {
-  return Urql.useQuery<AllMarketArticlesSlugLocalesQuery, AllMarketArticlesSlugLocalesQueryVariables>({ query: AllMarketArticlesSlugLocalesDocument, ...options });
-};
+export function useAllMarketArticlesSlugLocalesQuery(
+  options?: Omit<Urql.UseQueryArgs<AllMarketArticlesSlugLocalesQueryVariables>, "query">
+) {
+  return Urql.useQuery<
+    AllMarketArticlesSlugLocalesQuery,
+    AllMarketArticlesSlugLocalesQueryVariables
+  >({ query: AllMarketArticlesSlugLocalesDocument, ...options });
+}
 export const AllFocusArticlesSlugLocalesDocument = gql`
-    query AllFocusArticlesSlugLocales {
-  allFocusArticles {
-    id
-    _allSlugLocales {
-      locale
-      value
+  query AllFocusArticlesSlugLocales {
+    allFocusArticles {
+      id
+      _allSlugLocales {
+        locale
+        value
+      }
     }
   }
-}
-    `;
+`;
 
-export function useAllFocusArticlesSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllFocusArticlesSlugLocalesQueryVariables>, 'query'>) {
-  return Urql.useQuery<AllFocusArticlesSlugLocalesQuery, AllFocusArticlesSlugLocalesQueryVariables>({ query: AllFocusArticlesSlugLocalesDocument, ...options });
-};
+export function useAllFocusArticlesSlugLocalesQuery(
+  options?: Omit<Urql.UseQueryArgs<AllFocusArticlesSlugLocalesQueryVariables>, "query">
+) {
+  return Urql.useQuery<AllFocusArticlesSlugLocalesQuery, AllFocusArticlesSlugLocalesQueryVariables>(
+    { query: AllFocusArticlesSlugLocalesDocument, ...options }
+  );
+}
 export const AllBlogPostsSlugLocalesDocument = gql`
-    query AllBlogPostsSlugLocales {
-  allBlogPosts {
-    id
-    _allSlugLocales {
-      locale
-      value
+  query AllBlogPostsSlugLocales {
+    allBlogPosts {
+      id
+      _allSlugLocales {
+        locale
+        value
+      }
     }
   }
-}
-    `;
+`;
 
-export function useAllBlogPostsSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllBlogPostsSlugLocalesQueryVariables>, 'query'>) {
-  return Urql.useQuery<AllBlogPostsSlugLocalesQuery, AllBlogPostsSlugLocalesQueryVariables>({ query: AllBlogPostsSlugLocalesDocument, ...options });
-};
+export function useAllBlogPostsSlugLocalesQuery(
+  options?: Omit<Urql.UseQueryArgs<AllBlogPostsSlugLocalesQueryVariables>, "query">
+) {
+  return Urql.useQuery<AllBlogPostsSlugLocalesQuery, AllBlogPostsSlugLocalesQueryVariables>({
+    query: AllBlogPostsSlugLocalesDocument,
+    ...options,
+  });
+}

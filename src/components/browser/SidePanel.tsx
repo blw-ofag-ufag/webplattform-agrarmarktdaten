@@ -1,8 +1,4 @@
-import {
-  IcControlDownload,
-  IcControlExternal,
-  IcFilter,
-} from "@/icons/icons-jsx/control";
+import { IcControlDownload, IcControlExternal, IcFilter } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, plural, t } from "@lingui/macro";
 import {
@@ -90,9 +86,7 @@ const SidePanel = () => {
         <MarketsAccordion {...getAccordionProps("markets")} />
         <TimeAccordion {...getAccordionProps("time")} />
         <AddedValueAccordion {...getAccordionProps("addedvalue")} />
-        <ProductionSystemsAccordion
-          {...getAccordionProps("productionsystems")}
-        />
+        <ProductionSystemsAccordion {...getAccordionProps("productionsystems")} />
         <ProductsAccordion {...getAccordionProps("products")} />
         <CountriesAccordion {...getAccordionProps("countries")} />
       </Box>
@@ -207,21 +201,16 @@ const MonthChip = (props: ChipProps) => {
 
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   const [yearOptions, setYearOptions] = useAtom(yearAtom);
-  const [yearSliderValue, setYearSliderValue] = useState(() => [
-    1990,
-    new Date().getFullYear(),
-  ]);
-  const handleYearSlideChangeCommitted = useEvent(
-    (ev, value: number[] | number) => {
-      if (!Array.isArray(value)) {
-        return;
-      }
-      setYearOptions({
-        ...yearOptions,
-        value: value as [number, number],
-      });
+  const [yearSliderValue, setYearSliderValue] = useState(() => [1990, new Date().getFullYear()]);
+  const handleYearSlideChangeCommitted = useEvent((ev, value: number[] | number) => {
+    if (!Array.isArray(value)) {
+      return;
     }
-  );
+    setYearOptions({
+      ...yearOptions,
+      value: value as [number, number],
+    });
+  });
   const handleYearSlideChange = useEvent((ev, value: number[] | number) => {
     if (!Array.isArray(value)) {
       return;
@@ -229,15 +218,10 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
     setYearSliderValue(value as [number, number]);
   });
   const [monthOptions, setMonthOptions] = useAtom(monthsAtom);
-  const trueMonths = useMemo(
-    () => monthOptions.filter((m) => m.value),
-    [monthOptions]
-  );
+  const trueMonths = useMemo(() => monthOptions.filter((m) => m.value), [monthOptions]);
   const handleToggleMonth = useEvent((i: number) => {
     if (trueMonths.length === monthOptions.length) {
-      setMonthOptions(
-        monthOptions.map((m, j) => ({ ...m, value: i === j ? true : false }))
-      );
+      setMonthOptions(monthOptions.map((m, j) => ({ ...m, value: i === j ? true : false })));
     } else {
       setMonthOptions([
         ...monthOptions.slice(0, i),
@@ -279,11 +263,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
               key={m.name}
               label={m.label}
               onClick={() => handleToggleMonth(i)}
-              color={
-                m.value && trueMonths.length !== monthOptions.length
-                  ? "primary"
-                  : undefined
-              }
+              color={m.value && trueMonths.length !== monthOptions.length ? "primary" : undefined}
             />
           ))}
         </Box>
@@ -305,13 +285,10 @@ const FilterPreviewMultiCheckbox = ({
     <Grow in={show}>
       <Typography variant="body2" color="grey.500" mr={1}>
         {selected.length === 0 && <Trans id="data.filters.none">None</Trans>}
-        {selected.length === options.length && (
-          <Trans id="data.filters.all">All</Trans>
-        )}
+        {selected.length === options.length && <Trans id="data.filters.all">All</Trans>}
         {selected.length > 0 &&
           selected.length < options.length &&
-          selected[0].label +
-            (selected.length > 1 ? " +" + (selected.length - 1) : "")}
+          selected[0].label + (selected.length > 1 ? " +" + (selected.length - 1) : "")}
       </Typography>
     </Grow>
   );
@@ -325,11 +302,7 @@ const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>Markets</AccordionTitle>
-        <FilterPreviewMultiCheckbox
-          show={!props.expanded}
-          selected={selected}
-          options={values}
-        />
+        <FilterPreviewMultiCheckbox show={!props.expanded} selected={selected} options={values} />
         <CountTrue show={!props.expanded} values={values} />
       </AccordionSummary>
       <AccordionDetails>
@@ -347,11 +320,7 @@ const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>Added value</AccordionTitle>
-        <FilterPreviewMultiCheckbox
-          show={!props.expanded}
-          selected={selected}
-          options={values}
-        />
+        <FilterPreviewMultiCheckbox show={!props.expanded} selected={selected} options={values} />
       </AccordionSummary>
       <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
@@ -360,9 +329,7 @@ const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
   );
 };
 
-const ProductionSystemsAccordion = (
-  props: Omit<AccordionProps, "children">
-) => {
+const ProductionSystemsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(productionSystemsAtom);
   const selected = useMemo(() => values.filter((x) => x.value), [values]);
 
@@ -370,11 +337,7 @@ const ProductionSystemsAccordion = (
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>Production systems</AccordionTitle>
-        <FilterPreviewMultiCheckbox
-          show={!props.expanded}
-          selected={selected}
-          options={values}
-        />
+        <FilterPreviewMultiCheckbox show={!props.expanded} selected={selected} options={values} />
       </AccordionSummary>
       <AccordionDetails>
         <MultiCheckbox values={values} onChange={setValues} />
@@ -422,16 +385,9 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
   );
 };
 
-const CountTrue = ({
-  values,
-  show,
-}: {
-  values: CheckboxValue[];
-  show: boolean;
-}) => {
+const CountTrue = ({ values, show }: { values: CheckboxValue[]; show: boolean }) => {
   const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
-  return trueValues.length === values.length ||
-    trueValues.length === 0 ? null : (
+  return trueValues.length === values.length || trueValues.length === 0 ? null : (
     <Grow in={show}>
       <Chip sx={{ color: "grey.700" }} size="small" label={trueValues.length} />
     </Grow>

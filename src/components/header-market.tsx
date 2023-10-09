@@ -32,11 +32,7 @@ export const MarketHeader = ({
     >
       {allMarkets.map((d) => {
         return (
-          <Box
-            component="li"
-            key={d.slug}
-            sx={{ width: ["100%", "100%", "auto"] }}
-          >
+          <Box component="li" key={d.slug} sx={{ width: ["100%", "100%", "auto"] }}>
             <NextLink
               href="/market/[slug]"
               as={`/market/${d.slug}`}
@@ -44,10 +40,7 @@ export const MarketHeader = ({
               passHref
               legacyBehavior
             >
-              <Link
-                sx={{ textDecoration: "none" }}
-                onClick={() => toggleMarketMenu(false)}
-              >
+              <Link sx={{ textDecoration: "none" }} onClick={() => toggleMarketMenu(false)}>
                 <MarketCard title={d.title as string} />
               </Link>
             </NextLink>

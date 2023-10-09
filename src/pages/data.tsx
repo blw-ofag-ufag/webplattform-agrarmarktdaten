@@ -33,11 +33,7 @@ import {
 import { useLocale } from "@/lib/use-locale";
 import blwTheme from "@/theme/blw";
 
-import useSparql, {
-  getCubeDimension,
-  SparqlQueryResult,
-  useCube,
-} from "./api/use-sparql";
+import useSparql, { getCubeDimension, SparqlQueryResult, useCube } from "./api/use-sparql";
 import SidePanel from "@/components/browser/SidePanel";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
@@ -82,8 +78,7 @@ const Results = ({
     enabled: !fetchingDimensions,
   });
 
-  const { data: observationIris, fetching: fetchingObservationIris } =
-    observationIrisQuery;
+  const { data: observationIris, fetching: fetchingObservationIris } = observationIrisQuery;
   const observationsQuery = useSparql<Observation[]>({
     query: queryObservations(
       cubes?.length!,
@@ -94,8 +89,7 @@ const Results = ({
     ),
     enabled: !fetchingObservationIris,
   });
-  const { data: observations, fetching: fetchingObservations } =
-    observationsQuery;
+  const { data: observations, fetching: fetchingObservations } = observationsQuery;
 
   const dimensionsToRender: AgDataDimension[] | undefined = useMemo(
     () => dimensions?.map((d) => agDataDimensions[d.dimension]).filter(Boolean),
@@ -109,9 +103,7 @@ const Results = ({
           <Table>
             <TableHead>
               <TableRow>
-                {dimensionsToRender?.map((d) => (
-                  <TableCell key={d.iri}>{d.name}</TableCell>
-                ))}
+                {dimensionsToRender?.map((d) => <TableCell key={d.iri}>{d.name}</TableCell>)}
                 {/*
                TODO: Do we even need this indicator here? It is needed to select
                the cubes for merging, but at this point we probably should just add
@@ -124,9 +116,7 @@ const Results = ({
               {observations?.map((o, i) => (
                 <TableRow key={i}>
                   {dimensionsToRender?.map((d, j) => (
-                    <TableCell key={`${i}_${j}`}>
-                      {o[d.name as keyof Observation]}
-                    </TableCell>
+                    <TableCell key={`${i}_${j}`}>{o[d.name as keyof Observation]}</TableCell>
                   ))}
                   <TableCell>{o.measure}</TableCell>
                 </TableRow>
@@ -202,8 +192,8 @@ export default function DataBrowser() {
           <Stack flexGrow={1} minHeight={0}>
             <Alert severity="info">
               <Trans id="data.alert.info">
-                Our database contains Milk and Dairy Product market data. Other
-                markets will be available soon.
+                Our database contains Milk and Dairy Product market data. Other markets will be
+                available soon.
               </Trans>
             </Alert>
             <Box

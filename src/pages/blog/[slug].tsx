@@ -37,9 +37,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
             <Hero title={blogPost.title} lead={blogPost.lead} />
             <Stack flexDirection="column" spacing={6}>
               <Typography variant="h5">
-                <Trans id="homepage.section.latestBlogPosts">
-                  Neuste Blogbeiträge
-                </Trans>
+                <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
               </Typography>
               <BlogPostsGrid blogPosts={topBlogPosts} />
             </Stack>
@@ -77,10 +75,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const result = await client
-    .query<GQL.AllBlogPostsSlugLocalesQuery>(
-      GQL.AllBlogPostsSlugLocalesDocument,
-      {}
-    )
+    .query<GQL.AllBlogPostsSlugLocalesQuery>(GQL.AllBlogPostsSlugLocalesDocument, {})
     .toPromise();
 
   if (!result.data) {

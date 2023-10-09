@@ -1,9 +1,6 @@
 import { ascending, range } from "d3";
 
-import {
-  Betriebsgrössenkategorie,
-  BioOderNicht,
-} from "@/components/infografik/data/type";
+import { Betriebsgrössenkategorie, BioOderNicht } from "@/components/infografik/data/type";
 
 const betriebeOrder = {
   "< 1 ha-bio": 1,

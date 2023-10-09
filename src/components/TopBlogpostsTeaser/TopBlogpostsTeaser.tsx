@@ -57,10 +57,30 @@ export const TopBlogpostsTeaser = (props: Props) => {
         if (blogposts[i + 1]) {
           cards.push(
             <Box key={i} display="flex">
-              <Grid key={blogposts[i].id} xxxl={0} xxl={0} xl={0} lg={3} md={3} sm={4} xs={4} xxs={4}>
+              <Grid
+                key={blogposts[i].id}
+                xxxl={0}
+                xxl={0}
+                xl={0}
+                lg={3}
+                md={3}
+                sm={4}
+                xs={4}
+                xxs={4}
+              >
                 <BlogpostCard {...blogposts[i]} />
               </Grid>
-              <Grid key={blogposts[i + 1].id} xxxl={0} xxl={0} xl={0} lg={3} md={3} sm={4} xs={4} xxs={4}>
+              <Grid
+                key={blogposts[i + 1].id}
+                xxxl={0}
+                xxl={0}
+                xl={0}
+                lg={3}
+                md={3}
+                sm={4}
+                xs={4}
+                xxs={4}
+              >
                 <BlogpostCard {...blogposts[i + 1]} />
               </Grid>
             </Box>
@@ -95,7 +115,13 @@ export const TopBlogpostsTeaser = (props: Props) => {
             IndicatorIcon={<LensIcon />}
             NextIcon={<ArrowForwardIosIcon />}
             PrevIcon={<ArrowBackIosIcon />}
-            sx={{ width: "100%", height: "fit-content", display: "flex", flexDirection: "column", overflow: "initial" }}
+            sx={{
+              width: "100%",
+              height: "fit-content",
+              display: "flex",
+              flexDirection: "column",
+              overflow: "initial",
+            }}
           >
             {cards}
           </Carousel>
