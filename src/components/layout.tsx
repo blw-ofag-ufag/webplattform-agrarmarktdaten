@@ -16,7 +16,7 @@ import {
   b,
 } from "@interactivethings/swiss-federal-ci";
 import { t } from "@lingui/macro";
-import { Stack, Box, Link, useMediaQuery, Typography } from "@mui/material";
+import { Box, Link, useMediaQuery, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
