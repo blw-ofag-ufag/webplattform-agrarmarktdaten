@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { atom } from "jotai";
 
 export type CheckboxValue = { label: string; name: string; value: boolean };
@@ -219,8 +220,6 @@ export const products: (CheckboxValue & {
   { label: "Emmentaler", name: "emmentaler", group: "milk", value: false },
 ];
 
-export type TimeGranularity = "year" | "month";
-
 export const marketsAtom = atom(markets);
 export const addedValueValuesAtom = atom(addedValueValues);
 export const productionSystemsAtom = atom(productionSystems);
@@ -229,4 +228,19 @@ export const countriesAtom = atom(countries);
 export const yearAtom = atom(year);
 export const monthsAtom = atom(months);
 export const productsAtom = atom(products);
-export const timeAtom = atom<TimeGranularity>("year");
+
+/* Time  */
+
+export type TimeView = "year" | "month";
+
+const MIN_DATE = dayjs("2020-01");
+const MAX_DATE = dayjs("2023-01");
+
+export const timeRange = {
+  min: MIN_DATE.unix(),
+  max: MAX_DATE.unix(),
+  value: [MIN_DATE.unix(), MAX_DATE.unix()] as [number, number],
+};
+
+export const timeViewAtom = atom<TimeView>("year");
+export const timeRangeAtom = atom<RangeOptions>(timeRange);
