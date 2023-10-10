@@ -339,22 +339,25 @@ fragment FullMarketArticle on MarketArticleRecord {
     }
     links {
       __typename
-      id
-      workspace {
+      ...DataDownloadSection
+      ... on PowerBiReportRecord {
         id
-        name
-        workspaceId
-      }
-      reportId
-      name
-      dataset {
-        name
-        id
-        datasetId
         workspace {
+          id
+          name
           workspaceId
+        }
+        reportId
+        name
+        dataset {
           name
           id
+          datasetId
+          workspace {
+            workspaceId
+            name
+            id
+          }
         }
       }
     }
@@ -581,6 +584,20 @@ fragment SurveyBlock on SurveyBlockRecord {
     possibleAnswers {
       id
       answer
+    }
+  }
+}
+
+fragment DataDownloadSection on DataDownloadSectionRecord {
+  id
+  title
+  dataDownloadItems {
+    title
+    description
+    date
+    file {
+      url
+      format
     }
   }
 }
