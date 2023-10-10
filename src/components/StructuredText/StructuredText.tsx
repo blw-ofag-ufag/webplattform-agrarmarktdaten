@@ -10,6 +10,7 @@ import { sectionAtom } from "@/lib/atoms";
 import { useSetAtom } from "jotai";
 import { Download } from "@/icons/icons-jsx/control";
 import { Temporal } from "proposal-temporal";
+import Link from "next/link";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
@@ -126,9 +127,11 @@ const StructuredText = (props: Props) => {
                       formattedDate = `${day}.${month}.${year}`;
                     }
                     return (
+                      file?.url && (
+                        <Link href={file.url} key={id} legacyBehavior>
                       <Box
-                        key={id}
                         sx={{
+                              cursor: "pointer",
                           borderBottom: `${c.cobalt[200]} 1px solid`,
                           py: s(4),
                           ":hover": { backgroundColor: c.cobalt[50] },
@@ -149,6 +152,8 @@ const StructuredText = (props: Props) => {
                           </Typography>
                         </Box>
                       </Box>
+                        </Link>
+                      )
                     );
                   })}
                 </Box>
