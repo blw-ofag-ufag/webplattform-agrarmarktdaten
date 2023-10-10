@@ -29,7 +29,7 @@ import FilterAccordion from "../filter-accordion";
 import { makeStyles } from "../style-utils";
 import MultiCheckbox from "./MultiCheckbox";
 import MultiCheckboxAutocomplete from "./MultiCheckboxAutocomplete";
-import TimeFilter from "./TimeFilter";
+import TimeFilter, { previewTime } from "./TimeFilter";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -178,6 +178,9 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>Time</AccordionTitle>
+        <PreviewFilter show={!props.expanded}>
+          {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
+        </PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
         <TimeFilter
@@ -203,13 +206,26 @@ const FilterPreviewMultiCheckbox = ({
   options: CheckboxValue[];
 }) => {
   return (
+    <PreviewFilter show={show}>
+      {selected.length === 0 && <Trans id="data.filters.none">None</Trans>}
+      {selected.length === options.length && <Trans id="data.filters.all">All</Trans>}
+      {selected.length > 0 &&
+        selected.length < options.length &&
+        selected[0].label + (selected.length > 1 ? " +" + (selected.length - 1) : "")}
+    </PreviewFilter>
+  );
+};
+
+const PreviewFilter = ({
+  show = true,
+  children,
+}: {
+  show: boolean;
+} & PropsWithChildren) => {
+  return (
     <Grow in={show}>
       <Typography variant="body2" color="grey.500" mr={1}>
-        {selected.length === 0 && <Trans id="data.filters.none">None</Trans>}
-        {selected.length === options.length && <Trans id="data.filters.all">All</Trans>}
-        {selected.length > 0 &&
-          selected.length < options.length &&
-          selected[0].label + (selected.length > 1 ? " +" + (selected.length - 1) : "")}
+        {children}
       </Typography>
     </Grow>
   );

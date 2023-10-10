@@ -14,11 +14,7 @@ import {
   sliderClasses,
   toggleButtonClasses,
 } from "@mui/material";
-import {
-  DatePicker,
-  DatePickerProps,
-  LocalizationProvider,
-} from "@mui/x-date-pickers";
+import { DatePicker, DatePickerProps, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/de";
@@ -74,6 +70,8 @@ const TimeSlider = withStyles(Slider, (theme) => ({
   },
 }));
 
+const formatTimeView = (view: TimeView) => (view === "year" ? "YYYY" : "MM.YYYY");
+
 export default function TimeFilter({
   min,
   max,
@@ -99,10 +97,7 @@ export default function TimeFilter({
 
   const locale = useLocale();
 
-  const timeFormat = useMemo(
-    () => (view === "year" ? "YYYY" : "MM.YYYY"),
-    [view]
-  );
+  const timeFormat = useMemo(() => formatTimeView(view), [view]);
 
   const sliderValues = useMemo(() => {
     const getMark = (date: Dayjs, showLabel: boolean = false) => ({
@@ -195,16 +190,12 @@ export default function TimeFilter({
           size="small"
           marks={sliderValues}
           onChange={(_, value) => setSliderRange(value as [number, number])}
-          onChangeCommitted={(_, value) =>
-            onChangeRange(value as [number, number])
-          }
+          onChangeCommitted={(_, value) => onChangeRange(value as [number, number])}
           sx={{
             [`& .${sliderClasses.markLabel}[data-index="0"]`]: {
               transform: "translateX(0%)",
             },
-            [`& .${sliderClasses.markLabel}[data-index="${
-              sliderValues.length - 1
-            }"]`]: {
+            [`& .${sliderClasses.markLabel}[data-index="${sliderValues.length - 1}"]`]: {
               transform: "translateX(-100%)",
             },
           }}
@@ -213,6 +204,12 @@ export default function TimeFilter({
     </Stack>
   );
 }
+
+export const previewTime = (min: number, max: number, view: TimeView) => {
+  return `${dayjs.unix(min).format(formatTimeView(view))} - ${dayjs
+    .unix(max)
+    .format(formatTimeView(view))}`;
+};
 
 const DatePickerField = ({
   min,
