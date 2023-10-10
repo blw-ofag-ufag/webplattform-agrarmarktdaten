@@ -14,6 +14,7 @@ import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
 import { sectionAtom } from "@/lib/atoms";
 import { useSetAtom } from "jotai";
 import { DataDownloadSection } from "@/components/DataDownloadSection";
+import { HighlightSection } from "@/components/HighlightSection";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
@@ -91,6 +92,7 @@ const StructuredText = (props: Props) => {
               const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
               return (
                 <PowerBIReport
+                  key={record.id}
                   datasetId={powerBiReport.dataset?.datasetId ?? ""}
                   reportId={powerBiReport?.reportId ?? ""}
                   reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
@@ -98,8 +100,11 @@ const StructuredText = (props: Props) => {
               );
             case "DataDownloadSectionRecord":
               const dataDownloadSection = record as Partial<GQL.DataDownloadSectionRecord>;
-              return <DataDownloadSection data={dataDownloadSection} />;
+              return <DataDownloadSection key={record.id} data={dataDownloadSection} />;
 
+            case "HighlightSectionRecord":
+              const highlightSection = record as Partial<GQL.HighlightSectionRecord>;
+              return <HighlightSection key={record.id} data={highlightSection} />;
             default:
               return null;
           }
