@@ -340,26 +340,8 @@ fragment FullMarketArticle on MarketArticleRecord {
     links {
       __typename
       ...DataDownloadSection
-      ... on PowerBiReportRecord {
-        id
-        workspace {
-          id
-          name
-          workspaceId
-        }
-        reportId
-        name
-        dataset {
-          name
-          id
-          datasetId
-          workspace {
-            workspaceId
-            name
-            id
-          }
-        }
-      }
+      ...HighlightSection
+      ...PowerBI
     }
   }
   seo {
@@ -588,6 +570,27 @@ fragment SurveyBlock on SurveyBlockRecord {
   }
 }
 
+fragment PowerBI on PowerBiReportRecord {
+  id
+  workspace {
+    id
+    name
+    workspaceId
+  }
+  reportId
+  name
+  dataset {
+    name
+    id
+    datasetId
+    workspace {
+      workspaceId
+      name
+      id
+    }
+  }
+}
+
 fragment DataDownloadSection on DataDownloadSectionRecord {
   id
   title
@@ -598,6 +601,55 @@ fragment DataDownloadSection on DataDownloadSectionRecord {
     file {
       url
       format
+    }
+  }
+}
+
+fragment HighlightSection on HighlightSectionRecord {
+  id
+  title
+  content {
+    blocks {
+      id
+      __typename
+    }
+    links {
+      __typename
+      ...HighlightSectionFileRecord
+      ...HighlightSectionLink
+    }
+    value
+  }
+}
+
+fragment HighlightSectionFileRecord on HighlightSectionFileRecord {
+  id
+  title
+  file {
+    url
+  }
+}
+
+fragment HighlightSectionLink on HighlightSectionLinkRecord {
+  id
+  title
+  link {
+    __typename
+    ... on BlogPostRecord {
+      id
+      slug
+    }
+    ... on FocusArticleRecord {
+      id
+      slug
+    }
+    ... on MarketArticleRecord {
+      id
+      slug
+    }
+    ... on MethodsPageRecord {
+      id
+      slug
     }
   }
 }
