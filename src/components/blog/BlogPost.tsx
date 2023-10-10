@@ -38,13 +38,7 @@ export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
   const locale = useLocale();
 
   return (
-    <NextLink
-      href="/blog/[slug]"
-      as={`/blog/${slug}`}
-      locale={locale}
-      passHref
-      legacyBehavior
-    >
+    <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
       <Link sx={{ textDecoration: "none" }}>
         <Box sx={{ width: WIDTH }}>
           <Box
@@ -55,9 +49,7 @@ export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
               borderRadius: "10px",
             }}
           >
-            {image?.url && (
-              <Image src={image?.url} layout="fill" alt={image?.alt ?? ""} />
-            )}
+            {image?.url && <Image src={image?.url} layout="fill" alt={image?.alt ?? ""} />}
           </Box>
           <Flex
             sx={{
@@ -67,9 +59,7 @@ export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
             }}
           >
             {mainMarket && <Chip label={mainMarket.title} />}
-            {_firstPublishedAt && (
-              <Chip variant="outlined" label={_firstPublishedAt} />
-            )}
+            {_firstPublishedAt && <Chip variant="outlined" label={_firstPublishedAt} />}
           </Flex>
           <Typography variant="h5">{title}</Typography>
           <Typography variant="body2" mt={2}>

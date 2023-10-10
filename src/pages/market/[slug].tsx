@@ -31,7 +31,11 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
   }
   const [color, marketColor] = getMarketColor(marketArticle.slug);
   return (
-    <AppLayout alternates={alternates} allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Box sx={{ bgcolor: marketColor /* , height: "250px" */ }}>
         <Grid>
           <MUIGrid

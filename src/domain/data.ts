@@ -4,49 +4,9 @@ export type CheckboxValue = { label: string; name: string; value: boolean };
 
 export const markets: CheckboxValue[] = [
   {
-    label: "Eggs",
-    name: "egg",
+    label: "Milk and Dairy",
+    name: "MilkDairyProducts",
     value: true,
-  },
-  {
-    label: "Meat",
-    name: "meat",
-    value: true,
-  },
-  {
-    label: "Fruits",
-    name: "fruits",
-    value: false,
-  },
-  {
-    label: "Animal feed",
-    name: "animal",
-    value: false,
-  },
-  {
-    label: "Vegetable",
-    name: "vegetable",
-    value: false,
-  },
-  {
-    label: "Cereals/Flour",
-    name: "cereals/flour",
-    value: false,
-  },
-  {
-    label: "Milk",
-    name: "milk",
-    value: false,
-  },
-  {
-    label: "Potatoes",
-    name: "potatoes",
-    value: false,
-  },
-  {
-    label: "Oilseeds",
-    name: "oilseeds",
-    value: false,
   },
 ];
 
@@ -81,33 +41,144 @@ export const year: RangeOptions = {
   value: [2010, 2015],
 };
 
+export const cubeDimensions = [
+  {
+    iri: "http://schema.org/startDate",
+    label: "Date",
+    name: "startDate",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/date-type",
+    label: "Date Type",
+    name: "date-type",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/cost-component",
+    label: "Cost Component",
+    name: "cost-component",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/currency",
+    label: "Currency",
+    name: "currency",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/data-method",
+    label: "Data Method",
+    name: "data-method",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/data-source",
+    label: "Data Source",
+    name: "data-source",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/date",
+    label: "Date",
+    name: "date",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/foreign-trade",
+    label: "Foreign Trade",
+    name: "foreign-trade",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/key-indicator-type",
+    label: "Key Indicator Type",
+    name: "key-indicator-type",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/market",
+    label: "Market",
+    name: "market",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/product",
+    label: "Product",
+    name: "product",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/product-group",
+    label: "Product Group",
+    name: "product-group",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/production-system",
+    label: "Production System",
+    name: "production-system",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/product-origin",
+    label: "Product Origin",
+    name: "product-origin",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/product-properties",
+    label: "Product Properties",
+    name: "product-properties",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/product-subgroup",
+    label: "Product Subgroup",
+    name: "product-subgroup",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/sales-region",
+    label: "Sales Region",
+    name: "sales-region",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/unit",
+    label: "Unit",
+    name: "unit",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/usage",
+    label: "Usage",
+    name: "usage",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/value-chain-detail",
+    label: "Value Chain Detail",
+    name: "value-chain-detail",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/property/value-chain",
+    label: "Value Chain",
+    name: "value-chain",
+  },
+  {
+    iri: "https://agriculture.ld.admin.ch/foag/measure/price",
+    label: "Price",
+    name: "price",
+  },
+  {
+    iri: "https://cube.link/observedBy",
+    label: "Observed By",
+    name: "observedBy",
+  },
+];
+
 export const indicators: (CheckboxValue & {
   dimensionIri: string;
 })[] = [
   {
-    label: "Prices",
-    name: "prices",
+    label: "Price",
+    name: "price",
     value: true,
-    dimensionIri: "<http://schema.org/price>",
+    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
   },
   {
-    label: "Amounts",
-    name: "amounts",
+    label: "Quantity",
+    name: "quantity",
     value: false,
-    dimensionIri: "<http://schema.org/amount>",
-  },
-  {
-    label: "Areas",
-    name: "areas",
-    value: false,
-    dimensionIri: "<http://schema.org/areas>",
+    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/quantity>",
   },
   {
     label: "Index",
     name: "index",
     value: false,
-    dimensionIri:
-      "<https://agriculture.ld.admin.ch/foag/agricultural-market-data/dimension/priceIndex>",
+    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/index>",
   },
 ];
 

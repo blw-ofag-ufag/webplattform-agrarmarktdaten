@@ -1,6 +1,11 @@
 import * as React from "react";
 import { s, c } from "@interactivethings/swiss-federal-ci";
-import { StructuredText as ST, renderNodeRule, StructuredTextGraphQlResponse, Image } from "react-datocms";
+import {
+  StructuredText as ST,
+  renderNodeRule,
+  StructuredTextGraphQlResponse,
+  Image,
+} from "react-datocms";
 import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
 import { Typography, Box } from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
@@ -38,7 +43,11 @@ const StructuredText = (props: Props) => {
               <Typography
                 variant="body1"
                 component="a"
-                sx={{ color: "inherit", textUnderlineOffset: "2px", ":hover": { color: "#4B5563" } }}
+                sx={{
+                  color: "inherit",
+                  textUnderlineOffset: "2px",
+                  ":hover": { color: "#4B5563" },
+                }}
                 key={key}
                 href={node.url}
               >
@@ -59,7 +68,13 @@ const StructuredText = (props: Props) => {
               return <Header1 id={id}>{children}</Header1>;
             }
             return (
-              <Typography key={key} id={id} variant={`h${node.level}`} component={`h${node.level}`} sx={{ mb: s(6) }}>
+              <Typography
+                key={key}
+                id={id}
+                variant={`h${node.level}`}
+                component={`h${node.level}`}
+                sx={{ mb: s(6) }}
+              >
                 {children}
               </Typography>
             );
@@ -129,29 +144,30 @@ const StructuredText = (props: Props) => {
                     return (
                       file?.url && (
                         <Link href={file.url} key={id} legacyBehavior>
-                      <Box
-                        sx={{
+                          <Box
+                            sx={{
                               cursor: "pointer",
-                          borderBottom: `${c.cobalt[200]} 1px solid`,
-                          py: s(4),
-                          ":hover": { backgroundColor: c.cobalt[50] },
-                        }}
-                      >
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Download width={24} height={24} />
-                          <Typography variant="h3" sx={{ ml: s(4), color: c.cobalt[800] }}>
-                            {title}
-                          </Typography>
-                        </Box>
-                        <Box sx={{ ml: s(10.5), mt: s(3), color: c.cobalt[500] }}>
-                          <Typography variant="body1" sx={{ mb: s(2) }}>
-                            {description}
-                          </Typography>
-                          <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                            {`${file?.format.toUpperCase()}`} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; {formattedDate}
-                          </Typography>
-                        </Box>
-                      </Box>
+                              borderBottom: `${c.cobalt[200]} 1px solid`,
+                              py: s(4),
+                              ":hover": { backgroundColor: c.cobalt[50] },
+                            }}
+                          >
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                              <Download width={24} height={24} />
+                              <Typography variant="h3" sx={{ ml: s(4), color: c.cobalt[800] }}>
+                                {title}
+                              </Typography>
+                            </Box>
+                            <Box sx={{ ml: s(10.5), mt: s(3), color: c.cobalt[500] }}>
+                              <Typography variant="body1" sx={{ mb: s(2) }}>
+                                {description}
+                              </Typography>
+                              <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                                {`${file?.format.toUpperCase()}`}{" "}
+                                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; {formattedDate}
+                              </Typography>
+                            </Box>
+                          </Box>
                         </Link>
                       )
                     );
@@ -165,7 +181,8 @@ const StructuredText = (props: Props) => {
         renderBlock={({ record }) => {
           switch (record.__typename) {
             case "ImageTeaserBlockRecord":
-              const image = record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
+              const image =
+                record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
               return image?.responsiveImage ? (
                 <Box sx={{ my: s(4) }}>
                   {/*eslint-disable-next-line jsx-a11y/alt-text*/}

@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { Box, Button, Link, Typography } from "@mui/material";
-import Image from 'next/image'
+import Image from "next/image";
 import NextLink from "next/link";
 
 import Flex from "@/components/flex";
@@ -115,10 +115,9 @@ export const InfografikTeaserLarge = () => {
           }}
         >
           <Trans id="infografik.teaser">
-            In der Schweiz wachsen auf mehr als 10&apos;000 Hektaren Kartoffeln.
-            Das sind etwa 14&apos;000 Fussballfelder voller toller Knollen. Die
-            geernteten 400&apos;000 Tonnen landen schliesslich über das ganze
-            Jahr hindurch auf unserem Teller.
+            In der Schweiz wachsen auf mehr als 10&apos;000 Hektaren Kartoffeln. Das sind etwa
+            14&apos;000 Fussballfelder voller toller Knollen. Die geernteten 400&apos;000 Tonnen
+            landen schliesslich über das ganze Jahr hindurch auf unserem Teller.
           </Trans>
         </Typography>
         <NextLink href="/infografik" passHref>

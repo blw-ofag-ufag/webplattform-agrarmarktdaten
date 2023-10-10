@@ -25,14 +25,10 @@ export const NewsfeedEntry = ({ title, publicationDate }: Newsfeed) => {
         },
       }}
     >
-      <Typography
-        sx={{ fontSize: 4, lineHeight: "body", fontWeight: "bold", pb: 1 }}
-      >
+      <Typography sx={{ fontSize: 4, lineHeight: "body", fontWeight: "bold", pb: 1 }}>
         {title}
       </Typography>
-      <Typography
-        sx={{ fontSize: 4, lineHeight: "body", fontWeight: "regular" }}
-      >
+      <Typography sx={{ fontSize: 4, lineHeight: "body", fontWeight: "regular" }}>
         {date}
       </Typography>
     </Flex>

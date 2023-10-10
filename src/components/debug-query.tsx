@@ -26,11 +26,10 @@ const CompactAccordion = withStyles(
       "& + &": {
         borderTop: `1px solid ${theme.palette.divider}`,
       },
-      "& > .MuiAccordionSummary-root, & > .MuiAccordionSummary-root.Mui-expanded":
-        {
-          minHeight: "2rem",
-          height: "2rem",
-        },
+      "& > .MuiAccordionSummary-root, & > .MuiAccordionSummary-root.Mui-expanded": {
+        minHeight: "2rem",
+        height: "2rem",
+      },
       "& > .MuiAccordionSummary-root > .MuiAccordionSummary-content": {
         display: "flex",
         flexDirection: "row",
@@ -89,9 +88,7 @@ const DebugQuery = <T extends unknown>({
   query: SparqlQueryResult<T>;
   name: string;
   sx?: SxProps<Theme>;
-  renderData?:
-    | ((data: T) => React.ReactElement | React.ReactElement[])
-    | boolean;
+  renderData?: ((data: T) => React.ReactElement | React.ReactElement[]) | boolean;
 }) => {
   const { classes } = useStyles();
   const { executionTime, sparqlQuery, fetching, data } = query;
@@ -130,26 +127,18 @@ const DebugQuery = <T extends unknown>({
         {renderData && data ? (
           <CompactAccordion TransitionProps={{ timeout: 0 }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography
-                variant="overline"
-                className={classes.innerAccordionTitle}
-              >
+              <Typography variant="overline" className={classes.innerAccordionTitle}>
                 Data
               </Typography>
             </AccordionSummary>
             <AccordionDetails className={classes.innerAccordionDetails}>
-              {(typeof renderData === "function"
-                ? renderData
-                : defaultRenderData)(data)}
+              {(typeof renderData === "function" ? renderData : defaultRenderData)(data)}
             </AccordionDetails>
           </CompactAccordion>
         ) : null}
         <CompactAccordion TransitionProps={{ timeout: 0 }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography
-              variant="overline"
-              className={classes.innerAccordionTitle}
-            >
+            <Typography variant="overline" className={classes.innerAccordionTitle}>
               Query
             </Typography>
           </AccordionSummary>

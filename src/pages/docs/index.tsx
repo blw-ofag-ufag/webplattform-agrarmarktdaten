@@ -52,9 +52,7 @@ const pages: ConfigPageOrGroup[] = [
 
 const mkHeading = (level: number) => {
   return (props: $IntentionalAny) => {
-    return (
-      <Markdown.Heading level={level} text={[props.children]} slug="wat" />
-    );
+    return <Markdown.Heading level={level} text={[props.children]} slug="wat" />;
   };
 };
 
@@ -77,9 +75,7 @@ const mdxComponents = {
   img: Markdown.Image,
   code: Markdown.CodeSpan,
   hr: Markdown.Hr,
-  a: ({ href, ...props }: $IntentionalAny) => (
-    <Markdown.Link to={href} {...props} />
-  ),
+  a: ({ href, ...props }: $IntentionalAny) => <Markdown.Link to={href} {...props} />,
   ImageSpecimen,
   AudioSpecimen,
   CodeSpecimen,

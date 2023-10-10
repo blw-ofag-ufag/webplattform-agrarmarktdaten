@@ -17,9 +17,7 @@ const ReportTeaser = () => {
 
   useEffect(() => {
     const fetchReport = async () => {
-      const embedToken = await fetch(`/api/powerbi/report`).then((res) =>
-        res.json()
-      );
+      const embedToken = await fetch(`/api/powerbi/report`).then((res) => res.json());
       const embedConfiguration = {
         type: "report",
         id: REPORT_ID,

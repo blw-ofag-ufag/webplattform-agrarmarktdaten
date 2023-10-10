@@ -11,19 +11,13 @@ import {
 } from "@/components/infografik/data/type";
 import { SquareLabel } from "@/components/infografik/square-label";
 
-
 export const sectionIds_flachen = new Set(["one", "two", "three", "four"]);
 
 export type Section = $FixMe;
 export const sections_flachen = {
   one: {
     title: "Alle Kartoffelarten",
-    label: (
-      <SquareLabel
-        title="Gesamtanbaufläche Kartoffelproduktion"
-        subtitle="11105 ha (100%)"
-      />
-    ),
+    label: <SquareLabel title="Gesamtanbaufläche Kartoffelproduktion" subtitle="11105 ha (100%)" />,
     dimension: undefined,
     colorDimension: "Bio",
     backgroundDimension: undefined,
@@ -76,12 +70,7 @@ export const sectionIds_betriebe = new Set(["one", "two", "three"]);
 export const sections_betriebe = {
   one: {
     title: "Alle Betriebe",
-    label: (
-      <SquareLabel
-        title=" Gesamtanzahl der Kartoffelproduzenten"
-        subtitle="4539 (100%)"
-      />
-    ),
+    label: <SquareLabel title=" Gesamtanzahl der Kartoffelproduzenten" subtitle="4539 (100%)" />,
     dimension: undefined,
     colorDimension: "Bio",
     backgroundDimension: undefined,

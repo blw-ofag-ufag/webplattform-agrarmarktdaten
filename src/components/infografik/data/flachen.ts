@@ -1,24 +1,17 @@
 import { range } from "d3";
 
 import { flachenPerKochtyp } from "@/components/infografik/data/kochtyp";
-import {
-  Betriebsgrössenkategorie,
-  BioOderNicht,
-} from "@/components/infografik/data/type";
+import { Betriebsgrössenkategorie, BioOderNicht } from "@/components/infografik/data/type";
 
 export const getFlachenSquaresData = () => {
   const squares_kartoffeltypen: $FixMe[] = [];
   for (const element of flachen_einfach) {
-    range(0, Math.round(element.Percentage * 100)).map(() =>
-      squares_kartoffeltypen.push(element)
-    );
+    range(0, Math.round(element.Percentage * 100)).map(() => squares_kartoffeltypen.push(element));
   }
 
   const squares_kochtypen: $FixMe[] = [];
   for (const element of flachenPerKochtyp) {
-    range(0, Math.round(element.percentage)).map(() =>
-      squares_kochtypen.push(element)
-    );
+    range(0, Math.round(element.percentage)).map(() => squares_kochtypen.push(element));
   }
   const squares = squares_kartoffeltypen.map((d, i) => ({
     KartoffelTypBio: `${d.Kartoffeltyp}-${d.Bio}`,

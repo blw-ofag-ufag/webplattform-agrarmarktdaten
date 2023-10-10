@@ -232,7 +232,11 @@ theme.typography = merge(theme.typography, {
   }),
 });
 
-const makeStandardAlertVariant = ({ severity }: { severity: "info" | "warning" | "success" | "error" }) => ({
+const makeStandardAlertVariant = ({
+  severity,
+}: {
+  severity: "info" | "warning" | "success" | "error";
+}) => ({
   "&": {
     backgroundColor: theme.palette[severity].light,
   },

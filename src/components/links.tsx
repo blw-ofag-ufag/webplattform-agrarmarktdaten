@@ -89,12 +89,5 @@ export const CurrentPageLink = ({
   children: React.ReactNode;
 }) => {
   const { pathname, query } = useRouter();
-  return (
-    <NextLink
-      {...rest}
-      href={{ pathname, query }}
-      locale={locale}
-      legacyBehavior
-    />
-  );
+  return <NextLink {...rest} href={{ pathname, query }} locale={locale} legacyBehavior />;
 };

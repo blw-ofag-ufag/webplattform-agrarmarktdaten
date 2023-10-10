@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import ParsingClient from "sparql-http-client";
 
 const client = new ParsingClient({
-  endpointUrl: "http://int.lindas.admin.ch/query",
+  endpointUrl: "http://test.lindas.admin.ch/query",
 });
 
 const parseRdf = (obj: Record<string, Literal | NamedNode>) => {
@@ -48,9 +48,7 @@ const select = async (query: string) => {
 const serve = async (req: NextApiRequest, res: NextApiResponse) => {
   const options = req.body ? JSON.parse(req.body) : {};
   res.setHeader("Content-type", "application/json");
-  res.end(
-    JSON.stringify((await select(options.query)).map((row) => parseRdf(row)))
-  );
+  res.end(JSON.stringify((await select(options.query)).map((row) => parseRdf(row))));
 };
 
 export default serve;
