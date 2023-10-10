@@ -17,7 +17,10 @@ export const BlogpostCard = (props: GQL.SimpleBlogPostFragment) => {
 
   return (
     <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-      <Box ref={ref} sx={{ maxWidth: "100%", boxShadow: e[6], borderRadius: s(2), pb: s(9), cursor: "pointer" }}>
+      <Box
+        ref={ref}
+        sx={{ maxWidth: "100%", boxShadow: e[6], borderRadius: s(2), pb: s(9), cursor: "pointer" }}
+      >
         <Box
           sx={{
             position: "relative",
@@ -33,7 +36,13 @@ export const BlogpostCard = (props: GQL.SimpleBlogPostFragment) => {
               src={image?.url}
               width={width}
               height={300}
-              style={{ objectFit: "cover", aspectRatio: 16 / 9, minWidth: "100%", width: "100%", height: "auto" }}
+              style={{
+                objectFit: "cover",
+                aspectRatio: 16 / 9,
+                minWidth: "100%",
+                width: "100%",
+                height: "auto",
+              }}
               alt={image?.alt ?? ""}
             />
           )}

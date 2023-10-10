@@ -34,12 +34,7 @@ interface Props {
   alternates?: { href: string; as: string; locale: string }[];
 }
 
-export const AppLayout = ({
-  children,
-  allMarkets,
-  allFocusArticles,
-  alternates,
-}: Props) => {
+export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }: Props) => {
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
   const { headerSections, menuSections } = React.useMemo(() => {
@@ -285,9 +280,7 @@ const FooterBLW = () => {
       nCols={isXXlAndUp ? 4 : 3}
     >
       <FooterSection>
-        <FooterSectionTitle
-          title={t({ id: "footer.about_us.label", message: "About Us" })}
-        />
+        <FooterSectionTitle title={t({ id: "footer.about_us.label", message: "About Us" })} />
         <FooterSectionText
           text={t({
             id: "footer.id",
@@ -298,30 +291,13 @@ const FooterBLW = () => {
       </FooterSection>
 
       <FooterSection>
-        <FooterSectionTitle
-          title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })}
-        />
+        <FooterSectionTitle title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })} />
         <FooterSectionSocialMediaButtonGroup>
-          <FooterSectionSocialMediaButton
-            type="twitter"
-            href="https://www.twitter.com"
-          />
-          <FooterSectionSocialMediaButton
-            type="facebook"
-            href="https://www.facebook.com"
-          />
-          <FooterSectionSocialMediaButton
-            type="youtube"
-            href="https://www.youtube.com"
-          />
-          <FooterSectionSocialMediaButton
-            type="instagram"
-            href="https://www.instagram.com"
-          />
-          <FooterSectionSocialMediaButton
-            type="linkedin"
-            href="https://www.linkedin.com"
-          />
+          <FooterSectionSocialMediaButton type="twitter" href="https://www.twitter.com" />
+          <FooterSectionSocialMediaButton type="facebook" href="https://www.facebook.com" />
+          <FooterSectionSocialMediaButton type="youtube" href="https://www.youtube.com" />
+          <FooterSectionSocialMediaButton type="instagram" href="https://www.instagram.com" />
+          <FooterSectionSocialMediaButton type="linkedin" href="https://www.linkedin.com" />
         </FooterSectionSocialMediaButtonGroup>
         <Box
           sx={{
@@ -354,16 +330,10 @@ const FooterBLW = () => {
                 message: "Further Information",
               })}
             />
-            <Link
-              href="https://www.blw.admin.ch/blw/de/home.html"
-              sx={{ textDecoration: "none" }}
-            >
+            <Link href="https://www.blw.admin.ch/blw/de/home.html" sx={{ textDecoration: "none" }}>
               <FooterSectionButton label="Bundesamt für Landwirtschaft" />
             </Link>
-            <Link
-              href="https://2022.agrarbericht.ch/de"
-              sx={{ textDecoration: "none" }}
-            >
+            <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
               <FooterSectionButton label="Agrarbericht" />
             </Link>
             <Link
@@ -381,10 +351,7 @@ const FooterBLW = () => {
           </FooterSection>
           <FooterSection>
             <FooterSectionTitle title="Feedback" />
-            <Link
-              href="https://www.blw.admin.ch/blw/de/home.html"
-              target="_blank"
-            >
+            <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
               <FooterSectionButton label="Feedback" />
             </Link>
           </FooterSection>
@@ -415,10 +382,7 @@ const FooterBLW = () => {
               >
                 <FooterSectionButton label="Bundesamt für Landwirtschaft" />
               </Link>
-              <Link
-                href="https://2022.agrarbericht.ch/de"
-                sx={{ textDecoration: "none" }}
-              >
+              <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
                 <FooterSectionButton label="Agrarbericht" />
               </Link>
               <Link
@@ -443,10 +407,7 @@ const FooterBLW = () => {
               }}
             >
               <FooterSectionTitle title="Feedback" />
-              <Link
-                href="https://www.blw.admin.ch/blw/de/home.html"
-                target="_blank"
-              >
+              <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
                 <FooterSectionButton label="Kontakt" />
               </Link>
             </Box>

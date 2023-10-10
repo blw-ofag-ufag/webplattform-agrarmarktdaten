@@ -8,10 +8,7 @@ import { Betriebe } from "@/components/infografik/data/betriebe";
 import { Flachen } from "@/components/infografik/data/flachen";
 import { FlachenPerKochtyp } from "@/components/infografik/data/kochtyp";
 import { Section } from "@/components/infografik/data/sections";
-import {
-  backgroundStyle,
-  bioOpacityScale,
-} from "@/components/infografik/data/type";
+import { backgroundStyle, bioOpacityScale } from "@/components/infografik/data/type";
 import { useResizeObserver } from "@/lib/use-resize-observer";
 
 type DataType = Flachen | Betriebe | FlachenPerKochtyp | $FixMe;
@@ -99,13 +96,7 @@ export const Waffle = ({
           dimensions.map((c) => {
             const color = bioColored ? colors.green : colors.brown;
             const bg = (backgroundStyle(color) as any)[backgroundScale(c)];
-            return (
-              <LegendItem
-                key={c}
-                item={bioColored ? `${bioPrefix}${c}` : c}
-                bg={bg}
-              />
-            );
+            return <LegendItem key={c} item={bioColored ? `${bioPrefix}${c}` : c} bg={bg} />;
           })}
       </Flex>
     </div>

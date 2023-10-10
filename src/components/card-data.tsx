@@ -8,12 +8,9 @@ import Flex from "@/components/flex";
 
 // Dynamic import to escape SSR:
 // The "window" object needs to be available to embed powerBI report
-const DynamicReportTeaser = dynamic(
-  () => import("../components/powerbi-teaser"),
-  {
-    ssr: false,
-  }
-);
+const DynamicReportTeaser = dynamic(() => import("../components/powerbi-teaser"), {
+  ssr: false,
+});
 
 export const ReportCard = ({
   type,
@@ -151,12 +148,7 @@ export const ReportCard = ({
             </Box>
           </Flex> */}
           </Flex>
-          <NextLink
-            href="/create/[chartId]"
-            as="/create/new"
-            passHref
-            legacyBehavior
-          >
+          <NextLink href="/create/[chartId]" as="/create/new" passHref legacyBehavior>
             <Link
               component="a"
               sx={{

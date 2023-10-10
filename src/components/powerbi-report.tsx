@@ -4,10 +4,9 @@ import React, { useEffect } from "react";
 
 import { makeStyles } from "./style-utils";
 
-const PowerBIEmbed = dynamic(
-  () => import("powerbi-client-react").then((d) => d.PowerBIEmbed),
-  { ssr: false }
-);
+const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
+  ssr: false,
+});
 
 const CONFIG: models.IReportEmbedConfiguration = {
   type: "report",

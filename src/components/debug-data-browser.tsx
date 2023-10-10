@@ -10,13 +10,7 @@ import {
   productionSystemsAtom,
 } from "@/domain/data";
 
-const DebugCard = ({
-  title,
-  value,
-}: {
-  title: string;
-  value: $IntentionalAny;
-}) => {
+const DebugCard = ({ title, value }: { title: string; value: $IntentionalAny }) => {
   return (
     <div>
       <Typography variant="h5">{title}</Typography>

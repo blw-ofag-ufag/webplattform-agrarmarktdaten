@@ -20,6 +20,7 @@
     "graphql:codegen:dev": "graphql-codegen --config codegen.yml --watch -r dotenv/config",
     "setup:dev": "yarn",
     "preversion": "yarn lint",
+    "prettier": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "postversion": "git push --follow-tags",
     "icons:transform": "svgr -d src/icons/icons-jsx src/icons/icons-svg --replace-attr-values '#000=currentColor' --icon",
     "prepare": "husky install",

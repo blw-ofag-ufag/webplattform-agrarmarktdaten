@@ -131,7 +131,9 @@ const getCubesObservations = (cubes: Cube[]) => {
 };
 
 const selectDimensions = (dims: AgDataDimension[]) => {
-  return `${dims.map((d) => `${d.iri} ?${d.name}${`${d.isOptional ? "Iri" : ""}`} `).join("; \n")} .`;
+  return `${dims
+    .map((d) => `${d.iri} ?${d.name}${`${d.isOptional ? "Iri" : ""}`} `)
+    .join("; \n")} .`;
 };
 
 export const queryObservationIris = (
@@ -170,7 +172,9 @@ export const queryObservationIris = (
         ) as ?fullDate
       )
       
-      FILTER(YEAR(?fullDate) >= ${filters.years.value[0]} && YEAR(?fullDate) <= ${filters.years.value[1]})
+      FILTER(YEAR(?fullDate) >= ${filters.years.value[0]} && YEAR(?fullDate) <= ${
+        filters.years.value[1]
+      })
     }
     ORDER BY STR(?date)
     LIMIT 100
@@ -197,7 +201,9 @@ export const queryObservations = (
     .filter((d) => +d.count !== nOfCubes)
     .map((d) => agDataDimensions[d.dimension])
     .filter(Boolean);
-  const sparqlDimensions = [...safeDimensions, ...unsafeDimensions].map((d) => `?${d.name}`).join(" ");
+  const sparqlDimensions = [...safeDimensions, ...unsafeDimensions]
+    .map((d) => `?${d.name}`)
+    .join(" ");
 
   // TODO: Think about filtering by isOptional (currently only
   // date is availabe in all cubes).
@@ -229,7 +235,13 @@ export const queryObservations = (
   `;
 };
 
-export const queryPossibleCubes = ({ indicator, markets }: { indicator: string; markets: string[] }) => {
+export const queryPossibleCubes = ({
+  indicator,
+  markets,
+}: {
+  indicator: string;
+  markets: string[];
+}) => {
   const res = `
     PREFIX cube: <https://cube.link/>
     PREFIX sh: <http://www.w3.org/ns/shacl#>
