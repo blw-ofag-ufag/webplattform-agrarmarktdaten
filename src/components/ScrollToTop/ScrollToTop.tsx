@@ -10,6 +10,8 @@ const ScrollToTop = () => {
     <Fade in={trigger}>
       <Box
         sx={{
+          float: "right",
+          pointerEvents: "auto",
           width: "fit-content",
           cursor: "pointer",
           backgroundColor: "#ffffff",
@@ -19,12 +21,12 @@ const ScrollToTop = () => {
           padding: "14px",
           border: `1px solid ${c.cobalt[400]}`,
           borderRadius: "4px",
+          position: "sticky",
+          bottom: 100,
+          right: 20,
         }}
         onClick={() => {
-          window?.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
+          window?.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
         <ArrowForwardIos sx={{ transform: "rotate(-90deg)" }} />

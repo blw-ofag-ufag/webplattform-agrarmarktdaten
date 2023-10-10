@@ -382,19 +382,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
           </>
         )}
       </Footer>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          paddingRight: "20px",
-          position: "sticky",
-          bottom: "100px",
-          right: "20px",
-          height: "fit-content",
-        }}
-      >
-        <ScrollToTop />
-      </div>
+      <ScrollToTop />
     </Box>
   );
 };
