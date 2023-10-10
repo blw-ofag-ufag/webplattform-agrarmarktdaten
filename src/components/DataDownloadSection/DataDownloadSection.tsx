@@ -30,7 +30,7 @@ const DataDownloadSection = (props: Props) => {
         sx={{
           position: "absolute",
           top: -15,
-          left: 50,
+          left: 80,
           backgroundColor: c.cobalt[100],
           width: "fit-content",
           borderRadius: 100,
