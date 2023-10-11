@@ -27,10 +27,12 @@ import {
   marketsAtom,
   monthsAtom,
   productionSystemsAtom,
+  products,
   productsAtom,
   yearAtom,
 } from "@/domain/data";
 import MultiCheckbox from "./MultiCheckbox";
+import Select from "./Select";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -371,15 +373,22 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>Products</AccordionTitle>
-        <CountTrue values={values} show={!props.expanded} />
+        {/*         <CountTrue values={values} show={!props.expanded} />
+         */}
       </AccordionSummary>
       <AccordionDetails sx={{ mx: "-2px" }}>
-        <MultiCheckboxAutocomplete
+        <Select
+          options={products}
+          groups={[(d) => d.market, (d) => d.group, (d) => d.subgroup]}
+          values={values}
+          onChange={setValues}
+        />
+        {/* <MultiCheckboxAutocomplete
           values={values}
           onChange={setValues}
           groupBy={(x) => x.group}
           placeholder="Choose products"
-        />
+        /> */}
       </AccordionDetails>
     </FilterAccordion>
   );

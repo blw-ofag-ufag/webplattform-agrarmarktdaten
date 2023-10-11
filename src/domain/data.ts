@@ -1,3 +1,4 @@
+import { Option } from "@/components/browser/Select";
 import { atom } from "jotai";
 
 export type CheckboxValue = { label: string; name: string; value: boolean };
@@ -204,19 +205,36 @@ export const months: CheckboxValue[] = [
   { label: "Dec", name: "dec", value: true },
 ];
 
-export const products: (CheckboxValue & {
-  group: string;
-})[] = [
-  { label: "Hatching eggs", name: "hatchingeggs", group: "eggs", value: false },
+export const products: Option[] = [
   {
-    label: "Hatchings NWD",
-    name: "hatchingeggs-nwd",
+    market: "Egg Products",
+    label: "Hatching eggs",
+    value: "hatchingeggs",
     group: "eggs",
-    value: false,
+    subgroup: "hatchingeggs",
   },
-  { label: "Eggs < 50", name: "eggs<50", group: "eggs", value: false },
-  { label: "Brie Camembert", name: "brie", group: "milk", value: false },
-  { label: "Emmentaler", name: "emmentaler", group: "milk", value: false },
+  {
+    market: "Egg Products",
+    label: "Hatchings NWD",
+    value: "hatchingeggs-nwd",
+    group: "eggs",
+    subgroup: "hatchingeggs",
+  },
+  { market: "Egg Products", label: "Eggs < 50", value: "eggs<50", group: "eggs" },
+  {
+    market: "Milk & Dairy Products",
+    label: "Brie Camembert",
+    value: "brie",
+    group: "milk",
+    subgroup: "cheese",
+  },
+  {
+    market: "Milk & Dairy Products",
+    label: "Emmentaler",
+    value: "emmentaler",
+    group: "milk",
+    subgroup: "cheese",
+  },
 ];
 
 export const marketsAtom = atom(markets);
