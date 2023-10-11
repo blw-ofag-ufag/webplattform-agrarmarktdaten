@@ -19,7 +19,7 @@ const DataDownloadSection = (props: Props) => {
         position: "relative",
         border: `${c.cobalt[100]} 4px solid`,
         borderRadius: "12px",
-        backgroundColor: c.cobalt[50],
+        backgroundColor: `${c.cobalt[50]}50`,
         paddingX: s(20),
         paddingBottom: s(12),
         paddingTop: s(15),
