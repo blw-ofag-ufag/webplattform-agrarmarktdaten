@@ -5,6 +5,7 @@ import {
   AccordionDetailsProps,
   AccordionProps,
   AccordionSummaryProps,
+  Box,
   Button,
   Checkbox,
   FormControlLabel,
@@ -22,7 +23,7 @@ import {
 } from "@mui/material";
 import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
-import React, { useDeferredValue, useMemo, useState } from "react";
+import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 
 export type Option = {
   label: string;
@@ -36,8 +37,11 @@ type Node<T extends Option> = {
   children: Node<T>[];
   value?: T & { score?: ScoredResult<T> };
   checked?: boolean;
+  total?: number;
   indeterminate?: boolean;
 };
+
+type ScoredOption = Option & { score?: ScoredResult<Option> };
 
 const nodeFromOption = <T extends Option>(option: T, level: number): Node<T> => ({
   id: option.value,
@@ -79,6 +83,7 @@ const stratify = <T extends Option>(
         id: key,
         level,
         checked,
+        total: allValues.length,
         indeterminate: !checked && allValues.some((c) => c.checked),
         children,
       });
@@ -98,9 +103,30 @@ const getValues = <T extends Option>(node: Node<T>): T[] => {
 };
 
 const search = <T extends Option>(items: T[], searchString: string) => {
-  const qs = new QuickScore(items, ["label"]);
+  const qs = new QuickScore(items, {
+    keys: ["label"],
+    // minimumScore: -1,
+  });
   const results = qs.search(searchString);
-  return results.filter((r) => r.score > 0.25).map((r) => ({ ...(r.item as T), score: r }));
+  return results.map((r) => ({ ...(r.item as T), score: r }));
+};
+
+const propagateValueInTree = <T extends Option>(
+  source: Node<T>[],
+  target: Node<T & { checked: boolean }>[],
+  field: keyof Node<T>
+): Node<T & { checked: boolean }>[] => {
+  return target.map((node) => {
+    const match = source.find((n) => n.id === node.id);
+    if (match) {
+      return {
+        ...node,
+        [field]: match[field],
+        children: propagateValueInTree(match.children, node.children, field),
+      };
+    }
+    return node;
+  });
 };
 
 export default function Select<T extends Option>({
@@ -117,21 +143,24 @@ export default function Select<T extends Option>({
   const [searchString, setSearchString] = useState("");
   const deferredSearch = useDeferredValue(searchString);
 
-  const filteredOptions = useMemo(() => {
+  const searchOptions = useMemo(() => {
     if (searchString === "") {
       return options;
     }
     return search(options, deferredSearch);
   }, [options, searchString, deferredSearch]);
 
+  const allItemsTree = useMemo(() => stratify(options, groups || []), [options, groups]);
+
   const itemTree = useMemo(() => {
-    const optionsWithChecked = filteredOptions.map((option) => ({
+    const optionsWithChecked = searchOptions.map((option) => ({
       ...option,
       checked: values.some((v) => v.value === option.value),
     }));
+    const tree = stratify(optionsWithChecked, groups || []);
 
-    return stratify(optionsWithChecked, groups || []);
-  }, [filteredOptions, values, groups]);
+    return propagateValueInTree(allItemsTree, tree, "total");
+  }, [searchOptions, values, groups, allItemsTree]);
 
   const onChangeItem = (node: Node<T>, checked: boolean) => {
     const targetValues = getValues(node);
@@ -202,7 +231,7 @@ export default function Select<T extends Option>({
               key={item.id}
               node={item}
               onChangeItem={onChangeItem}
-              search={deferredSearch}
+              isSearch={deferredSearch !== ""}
             />
           );
         })}
@@ -234,16 +263,24 @@ const MatchedString = <T extends Option>({
   return <span>{React.Children.toArray(substrings)}</span>;
 };
 
-const SelectItem = <T extends Option>({
+const SelectItem = <T extends ScoredOption>({
   node,
   onChangeItem,
-  search,
+  isSearch = false,
 }: {
   node: Node<T & { checked: boolean }>;
   onChangeItem: (node: Node<T>, checked: boolean) => void;
-  search?: string;
+  isSearch: boolean;
 }) => {
-  const isSearch = useMemo(() => search !== "", [search]);
+  const [expanded, setExpanded] = useState(false);
+  const hasResults = useMemo(
+    () => isSearch && getValues(node).some((v) => v.score && v.score.score > 0),
+    [isSearch, node]
+  );
+
+  useEffect(() => {
+    setExpanded(node.level === 0 || hasResults);
+  }, [node, hasResults]);
 
   if (node.children.length === 0) {
     return (
@@ -255,11 +292,16 @@ const SelectItem = <T extends Option>({
         }}
         control={<Checkbox size="small" />}
         label={
-          isSearch && node.value?.score?.matches ? (
-            <MatchedString string={node.value?.label} matches={node.value?.score?.matches.label} />
-          ) : (
-            node.value?.label
-          )
+          <Typography variant="body2">
+            {isSearch && node.value?.score?.matches ? (
+              <MatchedString
+                string={node.value?.label}
+                matches={node.value?.score?.matches.label}
+              />
+            ) : (
+              node.value?.label
+            )}
+          </Typography>
         }
         sx={{
           paddingLeft: "28px",
@@ -270,22 +312,48 @@ const SelectItem = <T extends Option>({
   }
 
   return (
-    <Accordion defaultExpanded={node.level === 0}>
+    <Accordion
+      expanded={expanded}
+      onClick={(e) => {
+        e.stopPropagation();
+        setExpanded(!expanded);
+      }}
+    >
       <AccordionSummary>
         <FormControlLabel
           checked={node.checked}
-          onChange={() => onChangeItem(node, !node.checked)}
+          onChange={() => !isSearch && onChangeItem(node, !node.checked)}
           onClick={(e) => {
             e.stopPropagation();
           }}
-          control={<Checkbox indeterminate={node.indeterminate} size="small" />}
-          label={node.value?.label || node.id}
+          control={
+            !isSearch ? (
+              <Checkbox indeterminate={node.indeterminate} size="small" />
+            ) : (
+              <Box width={12} />
+            )
+          }
+          label={
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="body2">{node.value?.label || node.id}</Typography>
+              {isSearch && (
+                <Typography variant="body2" color="grey.600">
+                  {t({ id: "filters.select.total", message: `(${node.total} total)` })}
+                </Typography>
+              )}
+            </Stack>
+          }
         />
       </AccordionSummary>
       <AccordionDetails>
         <Stack>
           {node.children.map((child) => (
-            <SelectItem node={child} key={child.id} onChangeItem={onChangeItem} />
+            <SelectItem
+              node={child}
+              key={child.id}
+              onChangeItem={onChangeItem}
+              isSearch={isSearch}
+            />
           ))}
         </Stack>
       </AccordionDetails>
