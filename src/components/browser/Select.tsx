@@ -1,9 +1,11 @@
 import { IcControlChevronUp, IcControlClose, IcSearch } from "@/icons/icons-jsx/control";
-import { t } from "@lingui/macro";
+import { Trans, t } from "@lingui/macro";
+import { Circle } from "@mui/icons-material";
 import {
   AccordionDetailsProps,
   AccordionProps,
   AccordionSummaryProps,
+  Button,
   Checkbox,
   FormControlLabel,
   IconButton,
@@ -13,6 +15,7 @@ import {
   AccordionSummary as MuiAccordionSummary,
   Stack,
   TextField,
+  Typography,
   accordionDetailsClasses,
   accordionSummaryClasses,
   inputClasses,
@@ -168,6 +171,31 @@ export default function Select<T extends Option>({
           ),
         }}
       />
+      <Stack
+        direction="row"
+        spacing={0.5}
+        divider={
+          <Circle
+            sx={{
+              color: "grey.600",
+              width: 2,
+              height: 2,
+            }}
+          />
+        }
+        alignItems="center"
+      >
+        <Button variant="text" onClick={() => onChange(options)}>
+          <Typography variant="body2">
+            <Trans id="filters.select.all">Select all</Trans>
+          </Typography>
+        </Button>
+        <Button variant="text" onClick={() => onChange([])}>
+          <Typography variant="body2">
+            <Trans id="filters.select.clear">Clear</Trans>
+          </Typography>
+        </Button>
+      </Stack>
       <Stack spacing={1}>
         {itemTree.map((item) => {
           return (
