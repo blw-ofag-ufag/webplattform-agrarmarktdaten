@@ -89,7 +89,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
       };
 
   return (
-    <Box position="relative" minHeight="100vh">
+    <Box position="relative" minHeight="100vh" display="flex" flexDirection="column">
       <LocaleSwitcher {...localeSwitcherProps} />
       <Box
         sx={{
@@ -234,8 +234,13 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
         ) : null}
         {children}
       </Box>
-      {router.pathname !== "/data" && <FooterBLW />}
-      <ScrollToTop />
+
+      {router.pathname !== "/data" && (
+        <>
+          <FooterBLW />
+          <ScrollToTop />
+        </>
+      )}
     </Box>
   );
 };
