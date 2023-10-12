@@ -4,6 +4,7 @@ import * as ns from "../../lib/namespace";
 import rdf from "rdf-ext";
 import { defaultLocale } from "@/locales/locales";
 import { Literal, NamedNode } from "@rdfjs/types";
+import { QueryClient } from "react-query";
 
 export type UseQueryOptions<T> = {
   enabled: boolean;
@@ -90,6 +91,8 @@ const useSparql = <T extends unknown>({
 
 export default useSparql;
 
+export const lindasClient = new QueryClient();
+
 const source = new Source({
   endpointUrl: "http://test.lindas.admin.ch/query",
   sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
@@ -103,34 +106,18 @@ export type CubeResult = {
   versionHistory?: string;
 };
 
-export const useCube = () => {
-  const [cubes, setCubes] = useState<CubeResult[]>([]);
-
-  useEffect(() => {
-    const run = async () => {
-      const cubes = await source.cubes();
-      console.log({ cubes });
-      //const cube = cubes[0];
-      //const view = View.fromCube(cube);
-      //const observations = await getObservations({ view, source }, {});
-
-      //console.log({ cenas });
-      const results = cubes.map((cube) => {
-        return {
-          cube,
-          iri: cube.term?.value,
-          // label: cube.out(ns.schema.name, { language: ["en", "de", "*"] }),
-          view: View.fromCube(cube),
-          versionHistory: cube.out(ns.schema.hasPart).value,
-        };
-      });
-      console.log({ results });
-
-      setCubes(results);
+export const fetchPossibleCubes = async () => {
+  const cubes = await source.cubes();
+  const results = cubes.map((cube) => {
+    return {
+      cube,
+      iri: cube.term?.value,
+      // label: cube.out(ns.schema.name, { language: ["en", "de", "*"] }),
+      view: View.fromCube(cube),
+      versionHistory: cube.out(ns.schema.hasPart).value,
     };
-    run();
-  }, []);
-  return { cubes };
+  });
+  return results;
 };
 
 export type ObservationValue = string | number | boolean;
@@ -249,7 +236,6 @@ export const getObservations = async (
   });
 
   const observations = await filterView.observations({});
-  console.log(observations);
 
   // Clean up
   filterView.clear();
@@ -262,7 +248,6 @@ export const getObservations = async (
 
   const res = observations.map(parseObservation);
 
-  //console.log(res);
   return res;
 };
 
