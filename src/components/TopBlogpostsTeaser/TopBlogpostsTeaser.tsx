@@ -165,7 +165,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
   })();
 
   return (
-    <ContentContainer sx={{ display: "flex", flexDirection: "column", mt: "40px" }}>
+    <ContentContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
       <Typography variant="h1" sx={{ width: "100%", mb: s(8) }}>
         <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
       </Typography>
@@ -173,30 +173,14 @@ export const TopBlogpostsTeaser = (props: Props) => {
         display="flex"
         sx={{
           justifyContent: "center",
-          [b.up("xxxl")]: {
-            mx: s(-16 / 2),
-          },
-          [b.up("xxl")]: {
-            mx: s(-16 / 2),
-          },
-          [b.only("xl")]: {
-            mx: s(-12 / 2),
-          },
-          [b.only("lg")]: {
-            mx: s(-10 / 2),
-          },
-          [b.only("md")]: {
-            mx: s(-9 / 2),
-          },
-          [b.only("sm")]: {
-            mx: s(-7 / 2),
-          },
-          [b.only("xs")]: {
-            mx: s(-5 / 2),
-          },
-          [b.down("xs")]: {
-            mx: s(-4 / 2),
-          },
+          [b.up("xxxl")]: { mx: s(-16 / 2) },
+          [b.up("xxl")]: { mx: s(-16 / 2) },
+          [b.only("xl")]: { mx: s(-12 / 2) },
+          [b.only("lg")]: { mx: s(-10 / 2) },
+          [b.only("md")]: { mx: s(-9 / 2) },
+          [b.only("sm")]: { mx: s(-7 / 2) },
+          [b.only("xs")]: { mx: s(-5 / 2) },
+          [b.down("xs")]: { mx: s(-4 / 2) },
         }}
       >
         {content}

@@ -11,7 +11,7 @@ import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
 import { getMarketColor } from "@/domain/colors";
 import { Grid } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
-import { s } from "@interactivethings/swiss-federal-ci";
+import { b, s } from "@interactivethings/swiss-federal-ci";
 import { useStickyBox } from "react-sticky-box";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
@@ -58,7 +58,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
       <Grid sx={{ mt: s(4), position: "relative" }}>
         <MUIGrid
           ref={stickyRef}
-          sx={{ height: "fit-content" }}
+          sx={{ height: "fit-content", [b.down("xl")]: { display: "none" } }}
           xxxl={3}
           xxl={3}
           xl={3}
