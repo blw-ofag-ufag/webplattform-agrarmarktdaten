@@ -18,9 +18,7 @@ import {
   Typography,
   accordionDetailsClasses,
   accordionSummaryClasses,
-  inputClasses,
   styled,
-  textFieldClasses,
 } from "@mui/material";
 import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
@@ -75,12 +73,13 @@ const stratify = <T extends Option>(
   for (const [key, subItems] of groupedItems) {
     const children = stratify(subItems, nextGroupingFunctions, level + 1);
     if (key) {
+      const allValues = children.flatMap((c) => getValues(c));
       const checked = children.every((c) => c.checked);
       result.push({
         id: key,
         level,
         checked,
-        indeterminate: !checked && children.some((c) => c.checked),
+        indeterminate: !checked && allValues.some((c) => c.checked),
         children,
       });
     } else {
@@ -185,7 +184,7 @@ export default function Select<T extends Option>({
         }
         alignItems="center"
       >
-        <Button variant="text" onClick={() => onChange(options)}>
+        <Button variant="text" disabled={searchString !== ""} onClick={() => onChange(options)}>
           <Typography variant="body2">
             <Trans id="filters.select.all">Select all</Trans>
           </Typography>
