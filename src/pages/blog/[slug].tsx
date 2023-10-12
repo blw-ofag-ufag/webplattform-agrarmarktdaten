@@ -33,7 +33,9 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
     return null;
   }
 
-  const formattedDate = format(new Date(blogPost.publishedDate ?? ""), "dd MMM yyyy");
+  const formattedDate = blogPost.publishedDate
+    ? format(new Date(blogPost.publishedDate), "dd MMM yyyy")
+    : null;
 
   return (
     <AppLayout
@@ -55,11 +57,13 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
           xs={4}
           xxs={4}
         >
-          <Typography variant="body1" sx={{ color: c.monochrome[500] }}>
-            <Trans id="blogpost.publishedDate">Published on</Trans>
-            &nbsp;
-            {formattedDate}
-          </Typography>
+          {formattedDate && (
+            <Typography variant="body1" sx={{ color: c.monochrome[500] }}>
+              <Trans id="blogpost.publishedDate">Published on</Trans>
+              &nbsp;
+              {formattedDate}
+            </Typography>
+          )}
           <h1 style={{ fontSize: "48px", fontWeight: 400, lineHeight: "72px", marginTop: s(8) }}>
             {blogPost.title}
           </h1>
