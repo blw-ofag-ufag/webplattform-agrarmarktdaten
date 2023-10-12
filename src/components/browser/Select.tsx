@@ -286,7 +286,7 @@ const SelectItem = <T extends ScoredOption>({
 
   useEffect(() => {
     setExpanded(node.level === 0 || hasResults);
-  }, [node, hasResults]);
+  }, [node.level, hasResults]);
 
   if (node.children.length === 0) {
     return (
@@ -318,12 +318,14 @@ const SelectItem = <T extends ScoredOption>({
   }
 
   const values = getValues(node);
+  console.log({ node, expanded });
 
   return (
     <Accordion
       expanded={expanded}
       onClick={(e) => {
         e.stopPropagation();
+        console.log({ expanded, node, hasResults });
         setExpanded(!expanded);
       }}
     >
