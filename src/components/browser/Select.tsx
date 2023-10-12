@@ -1,13 +1,14 @@
 import { IcControlChevronUp, IcControlClose, IcSearch } from "@/icons/icons-jsx/control";
 import { Trans, t } from "@lingui/macro";
-import { Circle } from "@mui/icons-material";
+import { CheckBox, CheckBoxOutlineBlank, Circle, IndeterminateCheckBox } from "@mui/icons-material";
 import {
   AccordionDetailsProps,
   AccordionProps,
   AccordionSummaryProps,
   Box,
   Button,
-  Checkbox,
+  Checkbox as MuiCheckbox,
+  CheckboxProps,
   FormControlLabel,
   IconButton,
   InputAdornment,
@@ -134,11 +135,13 @@ export default function Select<T extends Option>({
   values = [],
   groups,
   onChange,
+  colorCheckbox,
 }: {
   options: T[];
   values: T[];
   groups?: Array<(item: T) => string>;
   onChange: (newValues: T[]) => void;
+  colorCheckbox?: (item: T) => string;
 }) {
   const [searchString, setSearchString] = useState("");
   const deferredSearch = useDeferredValue(searchString);
@@ -232,6 +235,7 @@ export default function Select<T extends Option>({
               node={item}
               onChangeItem={onChangeItem}
               isSearch={deferredSearch !== ""}
+              colorCheckbox={colorCheckbox}
             />
           );
         })}
@@ -267,10 +271,12 @@ const SelectItem = <T extends ScoredOption>({
   node,
   onChangeItem,
   isSearch = false,
+  colorCheckbox = () => "primary",
 }: {
   node: Node<T & { checked: boolean }>;
   onChangeItem: (node: Node<T>, checked: boolean) => void;
   isSearch: boolean;
+  colorCheckbox?: (item: T) => string;
 }) => {
   const [expanded, setExpanded] = useState(false);
   const hasResults = useMemo(
@@ -290,7 +296,7 @@ const SelectItem = <T extends ScoredOption>({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        control={<Checkbox size="small" />}
+        control={<SelectCheckbox color={node.value && colorCheckbox(node.value)} />}
         label={
           <Typography variant="body2">
             {isSearch && node.value?.score?.matches ? (
@@ -311,6 +317,8 @@ const SelectItem = <T extends ScoredOption>({
     );
   }
 
+  const values = getValues(node);
+
   return (
     <Accordion
       expanded={expanded}
@@ -328,7 +336,7 @@ const SelectItem = <T extends ScoredOption>({
           }}
           control={
             !isSearch ? (
-              <Checkbox indeterminate={node.indeterminate} size="small" />
+              <SelectCheckbox indeterminate={node.indeterminate} color={colorCheckbox(values[0])} />
             ) : (
               <Box width={12} />
             )
@@ -353,6 +361,7 @@ const SelectItem = <T extends ScoredOption>({
               key={child.id}
               onChangeItem={onChangeItem}
               isSearch={isSearch}
+              colorCheckbox={colorCheckbox}
             />
           ))}
         </Stack>
@@ -404,3 +413,33 @@ const AccordionDetails = styled((props: AccordionDetailsProps) => (
     paddingLeft: theme.spacing(4),
   },
 }));
+
+const SelectCheckbox = ({ color, ...props }: Omit<CheckboxProps, "color"> & { color?: string }) => {
+  return (
+    <MuiCheckbox
+      size="small"
+      icon={
+        <CheckBox
+          style={{
+            color,
+          }}
+        />
+      }
+      checkedIcon={
+        <CheckBoxOutlineBlank
+          style={{
+            color,
+          }}
+        />
+      }
+      indeterminateIcon={
+        <IndeterminateCheckBox
+          style={{
+            color,
+          }}
+        />
+      }
+      {...props}
+    />
+  );
+};

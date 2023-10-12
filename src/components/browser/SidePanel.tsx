@@ -32,6 +32,7 @@ import MultiCheckbox from "./MultiCheckbox";
 import MultiCheckboxAutocomplete from "./MultiCheckboxAutocomplete";
 import TimeFilter, { previewTime } from "./TimeFilter";
 import Select from "./Select";
+import { getMarketColor } from "@/domain/colors";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -310,8 +311,11 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>Products</AccordionTitle>
-        {/*         <CountTrue values={values} show={!props.expanded} />
-         */}
+        <PreviewFilter show={!props.expanded}>
+          {values.length === products.length
+            ? t({ id: "data.filters.all", message: "All" })
+            : t({ id: "data.filters.some", message: `${values.length} of ${products.length}` })}
+        </PreviewFilter>
       </AccordionSummary>
       <AccordionDetails sx={{ mx: "-2px" }}>
         <Select
@@ -319,13 +323,8 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
           groups={[(d) => d.market, (d) => d.group, (d) => d.subgroup]}
           values={values}
           onChange={setValues}
+          colorCheckbox={(d) => getMarketColor(d.marketSlug)[1]}
         />
-        {/* <MultiCheckboxAutocomplete
-          values={values}
-          onChange={setValues}
-          groupBy={(x) => x.group}
-          placeholder="Choose products"
-        /> */}
       </AccordionDetails>
     </FilterAccordion>
   );

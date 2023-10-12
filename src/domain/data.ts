@@ -209,6 +209,7 @@ export const months: CheckboxValue[] = [
 export const products: Option[] = [
   {
     market: "Egg Products",
+    marketSlug: "eggs",
     label: "Hatching eggs",
     value: "hatchingeggs",
     group: "eggs",
@@ -216,14 +217,22 @@ export const products: Option[] = [
   },
   {
     market: "Egg Products",
+    marketSlug: "eggs",
     label: "Hatchings NWD",
     value: "hatchingeggs-nwd",
     group: "eggs",
     subgroup: "hatchingeggs",
   },
-  { market: "Egg Products", label: "Eggs < 50", value: "eggs<50", group: "eggs" },
+  {
+    market: "Egg Products",
+    marketSlug: "eggs",
+    label: "Eggs < 50",
+    value: "eggs<50",
+    group: "eggs",
+  },
   {
     market: "Milk & Dairy Products",
+    marketSlug: "milk",
     label: "Brie Camembert",
     value: "brie",
     group: "milk",
@@ -231,6 +240,7 @@ export const products: Option[] = [
   },
   {
     market: "Milk & Dairy Products",
+    marketSlug: "milk",
     label: "Emmentaler",
     value: "emmentaler",
     group: "milk",
