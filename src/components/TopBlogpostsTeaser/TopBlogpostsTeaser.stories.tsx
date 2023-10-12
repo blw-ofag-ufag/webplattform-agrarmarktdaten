@@ -29,10 +29,12 @@ export const Primary: Story = {
           alt: null,
         },
         markets: [
-          { __typename: "MarketArticleRecord", title: "Bio", slug: "bio" },
-          { __typename: "MarketArticleRecord", title: "Milk", slug: "milk" },
+          { __typename: "MarketArticleRecord", title: "Bio", slug: "bio", id: "121805521" },
+          { __typename: "MarketArticleRecord", title: "Milk", slug: "milk", id: "121805522" },
         ],
-        focusArticles: [{ __typename: "FocusArticleRecord", slug: "bio", title: "Bio" }],
+        focusArticles: [
+          { __typename: "FocusArticleRecord", slug: "bio", title: "Bio", id: "121805523" },
+        ],
         _firstPublishedAt: "5/24/2022",
       },
       {
@@ -64,10 +66,12 @@ export const Primary: Story = {
           alt: null,
         },
         markets: [
-          { __typename: "MarketArticleRecord", title: "Bio", slug: "bio" },
-          { __typename: "MarketArticleRecord", title: "Milk", slug: "milk" },
+          { __typename: "MarketArticleRecord", title: "Bio", slug: "bio", id: "121805521" },
+          { __typename: "MarketArticleRecord", title: "Milk", slug: "milk", id: "121805522" },
         ],
-        focusArticles: [{ __typename: "FocusArticleRecord", slug: "bio", title: "Bio" }],
+        focusArticles: [
+          { __typename: "FocusArticleRecord", slug: "bio", title: "Bio", id: "121805523" },
+        ],
         _firstPublishedAt: "5/24/2022",
       },
     ],
