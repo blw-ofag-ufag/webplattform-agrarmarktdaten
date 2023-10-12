@@ -1,6 +1,6 @@
 import { ExtractAtomValue } from "jotai";
 
-import { yearAtom } from "@/domain/data";
+import { timeRangeAtom } from "@/domain/data";
 import { Locale } from "@/locales/locales";
 
 export type ObservationIri = {
@@ -139,7 +139,7 @@ const selectDimensions = (dims: AgDataDimension[]) => {
 export const queryObservationIris = (
   cubes: Cube[] | undefined,
   filters: {
-    years: ExtractAtomValue<typeof yearAtom>;
+    years: ExtractAtomValue<typeof timeRangeAtom>;
   }
 ) => {
   if (!cubes || cubes.length === 0) {

@@ -14,7 +14,7 @@ import { QueryClientProvider, useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import { AppLayout } from "@/components/layout";
-import { indicatorsAtom, marketsAtom } from "@/domain/data";
+import { indicatorAtom, marketsAtom } from "@/domain/data";
 import blwTheme from "@/theme/blw";
 
 import SidePanel from "@/components/browser/SidePanel";
@@ -30,12 +30,6 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
     },
   },
 });
-
-const useCurrentIndicator = () => {
-  const [indicators] = useAtom(indicatorsAtom);
-  const indicator = indicators.find((x) => x.value);
-  return indicator;
-};
 
 export function SafeHydrate({ children }: { children: React.ReactNode }) {
   const [display, setDisplay] = useState(false);
@@ -82,7 +76,7 @@ export default function DataPage() {
 
 const DataBrowser = () => {
   // const locale = useLocale();
-  const indicator = useCurrentIndicator();
+  const indicator = useAtom(indicatorAtom);
   const [markets] = useAtom(marketsAtom);
 
   console.log({
@@ -100,8 +94,6 @@ const DataBrowser = () => {
   });
 
   console.log(dims); */
-
-  console.log(cubesQuery.data);
 
   return (
     <Stack direction="row" width="100%">

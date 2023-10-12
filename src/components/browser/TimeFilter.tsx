@@ -119,7 +119,6 @@ export default function TimeFilter({
 
     return values;
   }, [minDate, maxDate, view, timeFormat]);
-  console.log(sliderValues);
 
   return (
     <Stack gap={3}>
