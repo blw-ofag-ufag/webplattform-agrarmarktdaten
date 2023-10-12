@@ -68,11 +68,12 @@ const stratify = <T extends Option>(
   for (const [key, subItems] of groupedItems) {
     const children = stratify(subItems, nextGroupingFunctions, level + 1);
     if (key) {
+      const checked = children.every((c) => c.checked);
       result.push({
         id: key,
         level,
-        checked: children.every((c) => c.checked),
-        indeterminate: children.some((c) => c.checked),
+        checked,
+        indeterminate: !checked && children.some((c) => c.checked),
         children,
       });
     } else {
@@ -207,7 +208,7 @@ const SelectItem = <T extends Option>({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        control={<Checkbox />}
+        control={<Checkbox size="small" />}
         label={
           isSearch && node.value?.score?.matches ? (
             <MatchedString string={node.value?.label} matches={node.value?.score?.matches.label} />
@@ -224,7 +225,7 @@ const SelectItem = <T extends Option>({
   }
 
   return (
-    <Accordion expanded={true}>
+    <Accordion defaultExpanded={node.level === 0}>
       <AccordionSummary>
         <FormControlLabel
           checked={node.checked}
@@ -232,7 +233,7 @@ const SelectItem = <T extends Option>({
           onClick={(e) => {
             e.stopPropagation();
           }}
-          control={<Checkbox />}
+          control={<Checkbox indeterminate={node.indeterminate} size="small" />}
           label={node.value?.label || node.id}
         />
       </AccordionSummary>
