@@ -14,6 +14,21 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+msgid "data.filters.reset"
+msgstr "data.filters.reset"
+
+#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+msgid "data.filters.time.year"
+msgstr "data.filters.time.year"
+
+#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+msgid "data.filters.time.month"
+msgstr "data.filters.time.month"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 #~ msgid "footer.dataprotection"
 #~ msgstr "Datenschutzverordnung"
@@ -22,6 +37,11 @@ msgstr ""
 #: src/components/layout.tsx
 #~ msgid "contact.contact"
 #~ msgstr "Kontakt"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.results"
+msgstr "{resultCount, plural, one {result} other {results}}"
 
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
@@ -35,9 +55,12 @@ msgid "footer.about_us.label"
 msgstr "Über uns"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.all"
+msgstr "All"
+
+#. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
-#: src/pages/focus/[slug].tsx
-#: src/pages/methods.tsx
 msgid "button.show.all"
 msgstr "Alle Anzeigen"
 
@@ -106,6 +129,16 @@ msgstr "Alle Anzeigen"
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
 msgstr "Daten abfragen"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.action.download"
+msgstr "Download data"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.heading"
+msgstr "Filters"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -241,11 +274,18 @@ msgstr "Märkte"
 #. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 #: src/pages/blog/[slug].tsx
-#: src/pages/focus/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/methods.tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr "Neuste Blogbeiträge"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.none"
+msgstr "None"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.alert.info"
+msgstr "Our database contains Milk and Dairy Product market data. Other markets will be available soon."
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -262,6 +302,11 @@ msgstr "Report öffnen"
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.title"
 msgstr "Schweizer Kartoffelmarkt"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.action.query"
+msgstr "SPARQLE query"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
