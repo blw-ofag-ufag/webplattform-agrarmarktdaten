@@ -20,6 +20,8 @@ const extractH6s = (data?: StructuredTextGraphQlResponse) => {
   render(data, {
     renderBlock: () => null,
     renderInlineRecord: () => null,
+    metaTransformer: () => null,
+    renderLinkToRecord: () => null,
     customNodeRules: [
       renderNodeRule(isHeading, ({ node }) => {
         if (node.level === 6) {
