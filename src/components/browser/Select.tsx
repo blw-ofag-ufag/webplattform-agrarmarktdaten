@@ -336,7 +336,11 @@ const SelectItem = <T extends ScoredOption>({
           }}
           control={
             !isSearch ? (
-              <SelectCheckbox indeterminate={node.indeterminate} color={colorCheckbox(values[0])} />
+              <SelectCheckbox
+                checked={node.checked}
+                indeterminate={node.indeterminate}
+                color={colorCheckbox(values[0])}
+              />
             ) : (
               <Box width={12} />
             )
@@ -419,14 +423,14 @@ const SelectCheckbox = ({ color, ...props }: Omit<CheckboxProps, "color"> & { co
     <MuiCheckbox
       size="small"
       icon={
-        <CheckBox
+        <CheckBoxOutlineBlank
           style={{
             color,
           }}
         />
       }
       checkedIcon={
-        <CheckBoxOutlineBlank
+        <CheckBox
           style={{
             color,
           }}
