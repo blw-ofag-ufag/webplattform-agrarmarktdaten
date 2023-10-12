@@ -101,8 +101,6 @@ const DataBrowser = () => {
 
   console.log(dims); */
 
-  console.log(cubesQuery.data);
-
   return (
     <Stack direction="row" width="100%">
       <Box width="388px" flexGrow={0} flexShrink={0}>
