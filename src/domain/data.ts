@@ -2,43 +2,7 @@ import { Option } from "@/components/browser/Select";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 
-export const markets: Option[] = [
-  {
-    label: "Milk and Dairy",
-    value: "MilkDairyProducts",
-  },
-];
-
-export const addedValueValues: Option[] = [
-  { label: "Production", value: "production" },
-  { label: "Wholesale", value: "wholesale" },
-  { label: "Industry", value: "industry" },
-  {
-    label: "Pick up and gastro wholesale",
-    value: "pickupandgastrowholesale",
-  },
-  { label: "Consumption", value: "consumption" },
-  { label: "Stock exchanges", value: "stockexchanges" },
-  { label: "Storage", value: "storage" },
-];
-
-export const productionSystems: Option[] = [
-  { label: "Bio", value: "bio" },
-  { label: "Non-Bio", value: "nonbio" },
-];
-
-export type RangeOptions = {
-  min: number;
-  max: number;
-  value: [number, number];
-};
-
-export const year: RangeOptions = {
-  min: 2000,
-  max: 2020,
-  value: [2010, 2015],
-};
-
+/* Cubes: @TODO: needed? */
 export const cubeDimensions = [
   {
     iri: "http://schema.org/startDate",
@@ -157,25 +121,49 @@ export const cubeDimensions = [
   },
 ];
 
-export const indicators: (CheckboxValue & {
+/* Data Filters */
+
+export const markets: Option[] = [
+  {
+    label: "Milk and Dairy",
+    value: "MilkDairyProducts",
+  },
+];
+
+export const addedValueValues: Option[] = [
+  { label: "Production", value: "production" },
+  { label: "Wholesale", value: "wholesale" },
+  { label: "Industry", value: "industry" },
+  {
+    label: "Pick up and gastro wholesale",
+    value: "pickupandgastrowholesale",
+  },
+  { label: "Consumption", value: "consumption" },
+  { label: "Stock exchanges", value: "stockexchanges" },
+  { label: "Storage", value: "storage" },
+];
+
+export const productionSystems: Option[] = [
+  { label: "Bio", value: "bio" },
+  { label: "Non-Bio", value: "nonbio" },
+];
+
+export const indicators: (Option & {
   dimensionIri: string;
 })[] = [
   {
     label: "Price",
-    name: "price",
-    value: true,
+    value: "price",
     dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
   },
   {
     label: "Quantity",
-    name: "quantity",
-    value: false,
+    value: "quantity",
     dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/quantity>",
   },
   {
     label: "Index",
-    name: "index",
-    value: false,
+    value: "index",
     dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/index>",
   },
 ];
@@ -228,16 +216,13 @@ export const products: Option[] = [
     subgroup: "cheese",
   },
 ];
-
-export const marketsAtom = atom(markets);
-export const addedValueValuesAtom = atom(addedValueValues);
-export const productionSystemsAtom = atom(productionSystems);
-export const indicatorAtom = atom(indicators[0]);
-export const countriesAtom = atom(countries);
-export const yearAtom = atom(year);
-export const productsAtom = atom(products);
-
 /* Time  */
+
+export type RangeOptions = {
+  min: number;
+  max: number;
+  value: [number, number];
+};
 
 export type TimeView = "year" | "month";
 
@@ -252,3 +237,12 @@ export const timeRange = {
 
 export const timeViewAtom = atom<TimeView>("year");
 export const timeRangeAtom = atom<RangeOptions>(timeRange);
+
+/* Atoms */
+
+export const marketsAtom = atom(markets);
+export const addedValueValuesAtom = atom(addedValueValues);
+export const productionSystemsAtom = atom(productionSystems);
+export const indicatorAtom = atom(indicators[0]);
+export const countriesAtom = atom(countries);
+export const productsAtom = atom(products);

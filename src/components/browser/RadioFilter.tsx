@@ -16,9 +16,8 @@ export default function RadioFilter<T extends Option>({
         <FormControlLabel
           checked={option.value === value.value}
           key={option.value}
-          disableTypography
           label={<Typography variant="body2">{option.label}</Typography>}
-          name={option.name}
+          name={option.label}
           control={<Radio size="small" sx={{ padding: 1 }} />}
           onChange={() => {
             onChange(option);
