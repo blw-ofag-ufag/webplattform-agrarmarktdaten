@@ -13,6 +13,8 @@ import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
 import { sectionAtom } from "@/lib/atoms";
 import { useSetAtom } from "jotai";
+import { DataDownloadSection } from "@/components/DataDownloadSection";
+import { HighlightSection } from "@/components/HighlightSection";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
@@ -21,87 +23,109 @@ interface Props {
 const StructuredText = (props: Props) => {
   const { data } = props;
 
+  //FIXME: we have to temporarily disable SSR here due to a hydration problem with the DataDownloadSectionRecord bit.
+  // I'll take another look at this at a later point
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   let i = 0;
   return (
-    <ST
-      data={data}
-      customNodeRules={[
-        renderNodeRule(isLink, ({ node, children, key }) => {
-          return (
-            <Typography
-              variant="body1"
-              component="a"
-              sx={{ color: "inherit", textUnderlineOffset: "2px", ":hover": { color: "#4B5563" } }}
-              key={key}
-              href={node.url}
-            >
-              {children}
-            </Typography>
-          );
-        }),
-        renderNodeRule(isHeading, ({ node, children, key }) => {
-          //We don't allow h6 headers to be able to save those for the table of contents menu
-          if (node.level === 6) {
-            return null;
-          }
-          //We save the ids of h1s in order to then easily scroll to them
-          let id = undefined;
-          if (node.level === 1) {
-            i += 1;
-            id = `heading${i}`;
-            return <Header1 id={id}>{children}</Header1>;
-          }
-          return (
-            <Typography
-              key={key}
-              id={id}
-              variant={`h${node.level}`}
-              component={`h${node.level}`}
-              sx={{ mb: s(6) }}
-            >
-              {children}
-            </Typography>
-          );
-        }),
-        renderNodeRule(isParagraph, ({ children, key }) => {
-          return (
-            <Typography key={key} variant="body1" component="p" sx={{ mb: s(4) }}>
-              {children}
-            </Typography>
-          );
-        }),
-      ]}
-      renderInlineRecord={({ record }) => {
-        switch (record.__typename) {
-          case "PowerBiReportRecord":
-            const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
+    isClient && (
+      <ST
+        data={data}
+        customNodeRules={[
+          renderNodeRule(isLink, ({ node, children, key }) => {
             return (
-              <PowerBIReport
-                datasetId={powerBiReport.dataset?.datasetId ?? ""}
-                reportId={powerBiReport?.reportId ?? ""}
-                reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
-              />
+              <Typography
+                variant="body1"
+                component="a"
+                sx={{
+                  color: "inherit",
+                  textUnderlineOffset: "2px",
+                  ":hover": { color: "#4B5563" },
+                }}
+                key={key}
+                href={node.url}
+              >
+                {children}
+              </Typography>
             );
-          default:
-            return null;
-        }
-      }}
-      renderBlock={({ record }) => {
-        switch (record.__typename) {
-          case "ImageTeaserBlockRecord":
-            const image =
-              record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
-            return image?.responsiveImage ? (
-              <Box sx={{ my: s(4) }}>
-                {/*eslint-disable-next-line jsx-a11y/alt-text*/}
-                <Image data={image?.responsiveImage} />
-              </Box>
-            ) : null;
-          default:
-            return null;
-        }
-      }}
-    />
+          }),
+          renderNodeRule(isHeading, ({ node, children, key }) => {
+            //We don't allow h6 headers to be able to save those for the table of contents menu
+            if (node.level === 6) {
+              return null;
+            }
+            //We save the ids of h1s in order to then easily scroll to them
+            let id = undefined;
+            if (node.level === 1) {
+              i += 1;
+              id = `heading${i}`;
+              return <Header1 id={id}>{children}</Header1>;
+            }
+            return (
+              <Typography
+                key={key}
+                id={id}
+                variant={`h${node.level}`}
+                component={`h${node.level}`}
+                sx={{ mb: s(6) }}
+              >
+                {children}
+              </Typography>
+            );
+          }),
+          renderNodeRule(isParagraph, ({ children, key }) => {
+            return (
+              <Typography key={key} variant="body1" component="p" sx={{ mb: s(4) }}>
+                {children}
+              </Typography>
+            );
+          }),
+        ]}
+        renderInlineRecord={({ record }) => {
+          switch (record.__typename) {
+            case "PowerBiReportRecord":
+              const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
+              return (
+                <PowerBIReport
+                  key={record.id}
+                  datasetId={powerBiReport.dataset?.datasetId ?? ""}
+                  reportId={powerBiReport?.reportId ?? ""}
+                  reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
+                />
+              );
+            case "DataDownloadSectionRecord":
+              const dataDownloadSection = record as Partial<GQL.DataDownloadSectionRecord>;
+              return <DataDownloadSection key={record.id} data={dataDownloadSection} />;
+
+            case "HighlightSectionRecord":
+              const highlightSection = record as Partial<GQL.HighlightSectionRecord>;
+              return <HighlightSection key={record.id} data={highlightSection} />;
+            default:
+              return null;
+          }
+        }}
+        renderBlock={({ record }) => {
+          switch (record.__typename) {
+            case "ImageTeaserBlockRecord":
+              const image =
+                record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
+              return image?.responsiveImage ? (
+                <Box sx={{ my: s(4) }}>
+                  {/*eslint-disable-next-line jsx-a11y/alt-text*/}
+                  <Image data={image?.responsiveImage} />
+                </Box>
+              ) : null;
+            default:
+              return null;
+          }
+        }}
+      />
+    )
   );
 };
 
