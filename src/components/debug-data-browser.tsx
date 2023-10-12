@@ -4,9 +4,8 @@ import { useAtom } from "jotai";
 import {
   addedValueValuesAtom,
   countriesAtom,
-  indicatorsAtom,
+  indicatorAtom,
   marketsAtom,
-  monthsAtom,
   productionSystemsAtom,
 } from "@/domain/data";
 
@@ -20,11 +19,10 @@ const DebugCard = ({ title, value }: { title: string; value: $IntentionalAny }) 
 };
 
 const DataBrowserDebug = () => {
-  const [indicators] = useAtom(indicatorsAtom);
+  const [indicator] = useAtom(indicatorAtom);
   const [markets] = useAtom(marketsAtom);
   const [addedValueValues] = useAtom(addedValueValuesAtom);
   const [productionSystems] = useAtom(productionSystemsAtom);
-  const [monthOptions] = useAtom(monthsAtom);
   const [countriesOptions] = useAtom(countriesAtom);
   const [products] = useAtom(countriesAtom);
   return (
@@ -33,11 +31,10 @@ const DataBrowserDebug = () => {
       mx={4}
       sx={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
     >
-      <DebugCard title="Indicators" value={indicators} />
+      <DebugCard title="Indicator" value={indicator} />
       <DebugCard title="Markets" value={markets} />
       <DebugCard title="Added value" value={addedValueValues} />
       <DebugCard title="Production systems" value={productionSystems} />
-      <DebugCard title="Month options" value={monthOptions} />
       <DebugCard title="Countries options" value={countriesOptions} />
       <DebugCard title="Products" value={products} />
     </Box>
