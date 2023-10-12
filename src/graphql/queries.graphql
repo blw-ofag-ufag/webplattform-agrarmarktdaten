@@ -206,7 +206,8 @@ query AnalysisPage($locale: SiteLocale!) {
 
 query BlogPost($locale: SiteLocale!, $slug: String!) {
   blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
-    ...FullBlogPost
+    ...BlogPost
+    id
 
     _allSlugLocales {
       locale
@@ -349,8 +350,8 @@ fragment SimpleBlogPost on BlogPostRecord {
   lead
   image {
     id
-    url
     alt
+    url
   }
   markets {
     id
@@ -365,8 +366,9 @@ fragment SimpleBlogPost on BlogPostRecord {
   _firstPublishedAt
 }
 
-fragment FullBlogPost on BlogPostRecord {
+fragment BlogPost on BlogPostRecord {
   id
+  publishedDate
   title
   lead
   slug
@@ -378,6 +380,16 @@ fragment FullBlogPost on BlogPostRecord {
       id
       url
     }
+  }
+  markets {
+    id
+    title
+    slug
+  }
+  focusArticles {
+    id
+    title
+    slug
   }
   content {
     value
@@ -393,17 +405,6 @@ fragment FullBlogPost on BlogPostRecord {
       ...PowerBI
     }
   }
-  markets {
-    id
-    title
-    slug
-  }
-  focusArticles {
-    id
-    title
-    slug
-  }
-  _firstPublishedAt
 }
 
 # Blocks
@@ -451,8 +452,7 @@ fragment ImageTeaserBlock on ImageTeaserBlockRecord {
     alt
     width
     height
-    responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
-      id
+    responsiveImage(imgixParams: { fit: fill, w: 1376, h: 485.25, auto: format }) {
       sizes
       src
       width
