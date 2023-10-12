@@ -136,12 +136,14 @@ export default function Select<T extends Option>({
   groups,
   onChange,
   colorCheckbox,
+  withSearch = false,
 }: {
   options: T[];
   values: T[];
   groups?: Array<(item: T) => string>;
   onChange: (newValues: T[]) => void;
   colorCheckbox?: (item: T) => string;
+  withSearch?: boolean;
 }) {
   const [searchString, setSearchString] = useState("");
   const deferredSearch = useDeferredValue(searchString);
@@ -179,29 +181,31 @@ export default function Select<T extends Option>({
 
   return (
     <Stack spacing={2}>
-      <TextField
-        value={searchString}
-        size="small"
-        placeholder={t({ id: "filters.select.search", message: "Search" })}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={(e) => setSearchString(e.target.value)}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <IcSearch width={24} height={24} />
-            </InputAdornment>
-          ),
-          endAdornment: searchString && (
-            <InputAdornment position="end">
-              <IconButton aria-label={t({ id: "filters.aria.clear", message: "Clear" })}>
-                <IcControlClose width={12} height={12} onClick={() => setSearchString("")} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
+      {withSearch && (
+        <TextField
+          value={searchString}
+          size="small"
+          placeholder={t({ id: "filters.select.search", message: "Search" })}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) => setSearchString(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <IcSearch width={24} height={24} />
+              </InputAdornment>
+            ),
+            endAdornment: searchString && (
+              <InputAdornment position="end">
+                <IconButton aria-label={t({ id: "filters.aria.clear", message: "Clear" })}>
+                  <IcControlClose width={12} height={12} onClick={() => setSearchString("")} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      )}
       <Stack
         direction="row"
         spacing={0.5}
@@ -310,7 +314,7 @@ const SelectItem = <T extends ScoredOption>({
           </Typography>
         }
         sx={{
-          paddingLeft: "28px",
+          paddingLeft: node.level === 0 ? 0 : "28px",
           paddingTop: "4px",
         }}
       />
@@ -318,7 +322,6 @@ const SelectItem = <T extends ScoredOption>({
   }
 
   const values = getValues(node);
-  console.log({ node, expanded });
 
   return (
     <Accordion

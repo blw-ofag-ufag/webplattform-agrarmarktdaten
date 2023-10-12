@@ -2,33 +2,29 @@ import { Option } from "@/components/browser/Select";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 
-export type CheckboxValue = { label: string; name: string; value: boolean };
-
-export const markets: CheckboxValue[] = [
+export const markets: Option[] = [
   {
     label: "Milk and Dairy",
-    name: "MilkDairyProducts",
-    value: true,
+    value: "MilkDairyProducts",
   },
 ];
 
-export const addedValueValues: CheckboxValue[] = [
-  { label: "Production", name: "production", value: true },
-  { label: "Wholesale", name: "wholesale", value: true },
-  { label: "Industry", name: "industry", value: true },
+export const addedValueValues: Option[] = [
+  { label: "Production", value: "production" },
+  { label: "Wholesale", value: "wholesale" },
+  { label: "Industry", value: "industry" },
   {
     label: "Pick up and gastro wholesale",
-    name: "pickupandgastrowholesale",
-    value: true,
+    value: "pickupandgastrowholesale",
   },
-  { label: "Consumption", name: "consumption", value: true },
-  { label: "Stock exchanges", name: "stockexchanges", value: true },
-  { label: "Storage", name: "storage", value: true },
+  { label: "Consumption", value: "consumption" },
+  { label: "Stock exchanges", value: "stockexchanges" },
+  { label: "Storage", value: "storage" },
 ];
 
-export const productionSystems: CheckboxValue[] = [
-  { label: "Bio", name: "bio", value: true },
-  { label: "Non-Bio", name: "nonbio", value: true },
+export const productionSystems: Option[] = [
+  { label: "Bio", value: "bio" },
+  { label: "Non-Bio", value: "nonbio" },
 ];
 
 export type RangeOptions = {
@@ -184,26 +180,11 @@ export const indicators: (CheckboxValue & {
   },
 ];
 
-export const countries: CheckboxValue[] = [
-  { label: "Switzerland", name: "ch", value: false },
-  { label: "France", name: "fr", value: false },
-  { label: "Italy", name: "it", value: false },
-  { label: "Spain", name: "es", value: false },
-];
-
-export const months: CheckboxValue[] = [
-  { label: "Jan", name: "jan", value: true },
-  { label: "Feb", name: "feb", value: true },
-  { label: "Mar", name: "mar", value: true },
-  { label: "Apr", name: "apr", value: true },
-  { label: "May", name: "may", value: true },
-  { label: "Jun", name: "jun", value: true },
-  { label: "Jul", name: "jul", value: true },
-  { label: "Aug", name: "aug", value: true },
-  { label: "Sep", name: "sep", value: true },
-  { label: "Oct", name: "oct", value: true },
-  { label: "Nov", name: "nov", value: true },
-  { label: "Dec", name: "dec", value: true },
+export const countries: Option[] = [
+  { label: "Switzerland", value: "ch" },
+  { label: "France", value: "fr" },
+  { label: "Italy", value: "it" },
+  { label: "Spain", value: "es" },
 ];
 
 export const products: Option[] = [
@@ -251,10 +232,9 @@ export const products: Option[] = [
 export const marketsAtom = atom(markets);
 export const addedValueValuesAtom = atom(addedValueValues);
 export const productionSystemsAtom = atom(productionSystems);
-export const indicatorsAtom = atom(indicators);
+export const indicatorAtom = atom(indicators[0]);
 export const countriesAtom = atom(countries);
 export const yearAtom = atom(year);
-export const monthsAtom = atom(months);
 export const productsAtom = atom(products);
 
 /* Time  */

@@ -1,9 +1,14 @@
+import { getMarketColor } from "@/domain/colors";
 import {
-  CheckboxValue,
+  addedValueValues,
   addedValueValuesAtom,
+  countries,
   countriesAtom,
-  indicatorsAtom,
+  indicatorAtom,
+  indicators,
+  markets,
   marketsAtom,
+  productionSystems,
   productionSystemsAtom,
   products,
   productsAtom,
@@ -19,20 +24,17 @@ import {
   AccordionSummary,
   Box,
   Button,
-  Chip,
   Grow,
   Stack,
   Typography,
 } from "@mui/material";
 import { useAtom } from "jotai";
-import { PropsWithChildren, SyntheticEvent, useMemo, useState } from "react";
+import { PropsWithChildren, SyntheticEvent, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import { makeStyles } from "../style-utils";
-import MultiCheckbox from "./MultiCheckbox";
-import MultiCheckboxAutocomplete from "./MultiCheckboxAutocomplete";
+import RadioFilter from "./RadioFilter";
+import Select, { Option } from "./Select";
 import TimeFilter, { previewTime } from "./TimeFilter";
-import Select from "./Select";
-import { getMarketColor } from "@/domain/colors";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -102,7 +104,7 @@ const SidePanel = () => {
         <SidePanelButton>
           <IcControlExternal width={24} height={24} />
           <Typography variant="h5">
-            <Trans id="data.action.query">SPARQLE query</Trans>
+            <Trans id="data.action.query">SPARQL query</Trans>
           </Typography>
         </SidePanelButton>
       </Stack>
@@ -142,22 +144,57 @@ const AccordionTitle = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+const PreviewFilter = ({
+  show = true,
+  children,
+}: {
+  show: boolean;
+} & PropsWithChildren) => {
+  return (
+    <Grow in={show}>
+      <Typography variant="body2" color="grey.500" mr={1}>
+        {children}
+      </Typography>
+    </Grow>
+  );
+};
+
+const PreviewSelect = <T extends Option>({
+  options,
+  values,
+  show,
+}: {
+  options: T[];
+  values: T[];
+  show: boolean;
+}) => {
+  return (
+    <PreviewFilter show={show}>
+      {values.length === 0
+        ? t({ id: "data.filters.none", message: "None" })
+        : values.length === options.length
+        ? t({ id: "data.filters.all", message: "All" })
+        : t({
+            id: "data.filters.some",
+            message: `${values.length} of ${options.length}`,
+          })}
+    </PreviewFilter>
+  );
+};
+
 const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [values, setValues] = useAtom(indicatorsAtom);
-  const selected = useMemo(() => values.find((x) => x.value), [values]);
+  const [value, setValue] = useAtom(indicatorAtom);
 
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
-        <AccordionTitle>Indicators</AccordionTitle>
-        <Grow in={!props.expanded && !!selected}>
-          <Typography variant="body2" color="grey.500" mr={1}>
-            {selected && selected.label}
-          </Typography>
-        </Grow>
+        <AccordionTitle>
+          <Trans id="data.filters.indicator">Indicator</Trans>
+        </AccordionTitle>
+        <PreviewFilter show={!props.expanded && !!value}>{value && value.label}</PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
-        <MultiCheckbox radio values={values} onChange={setValues} />
+        <RadioFilter value={value} onChange={setValue} options={indicators} />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -180,7 +217,9 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
-        <AccordionTitle>Time</AccordionTitle>
+        <AccordionTitle>
+          <Trans id="data.filters.time">Time</Trans>
+        </AccordionTitle>
         <PreviewFilter show={!props.expanded}>
           {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
         </PreviewFilter>
@@ -199,54 +238,19 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   );
 };
 
-const FilterPreviewMultiCheckbox = ({
-  show = true,
-  selected,
-  options,
-}: {
-  show?: boolean;
-  selected: CheckboxValue[];
-  options: CheckboxValue[];
-}) => {
-  return (
-    <PreviewFilter show={show}>
-      {selected.length === 0 && <Trans id="data.filters.none">None</Trans>}
-      {selected.length === options.length && <Trans id="data.filters.all">All</Trans>}
-      {selected.length > 0 &&
-        selected.length < options.length &&
-        selected[0].label + (selected.length > 1 ? " +" + (selected.length - 1) : "")}
-    </PreviewFilter>
-  );
-};
-
-const PreviewFilter = ({
-  show = true,
-  children,
-}: {
-  show: boolean;
-} & PropsWithChildren) => {
-  return (
-    <Grow in={show}>
-      <Typography variant="body2" color="grey.500" mr={1}>
-        {children}
-      </Typography>
-    </Grow>
-  );
-};
-
 const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(marketsAtom);
-  const selected = useMemo(() => values.filter((x) => x.value), [values]);
 
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
-        <AccordionTitle>Markets</AccordionTitle>
-        <FilterPreviewMultiCheckbox show={!props.expanded} selected={selected} options={values} />
-        <CountTrue show={!props.expanded} values={values} />
+        <AccordionTitle>
+          <Trans id="data.filters.markets">Markets</Trans>
+        </AccordionTitle>
+        <PreviewSelect show={!props.expanded} values={values} options={markets} />
       </AccordionSummary>
       <AccordionDetails>
-        <MultiCheckbox values={values} onChange={setValues} />
+        <Select options={markets} values={values} onChange={setValues} />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -254,16 +258,17 @@ const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
 
 const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(addedValueValuesAtom);
-  const selected = useMemo(() => values.filter((x) => x.value), [values]);
 
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
-        <AccordionTitle>Added value</AccordionTitle>
-        <FilterPreviewMultiCheckbox show={!props.expanded} selected={selected} options={values} />
+        <AccordionTitle>
+          <Trans id="data.filters.addedValue">Added Value</Trans>
+        </AccordionTitle>
+        <PreviewSelect show={!props.expanded} values={values} options={addedValueValues} />
       </AccordionSummary>
       <AccordionDetails>
-        <MultiCheckbox values={values} onChange={setValues} />
+        <Select options={addedValueValues} values={values} onChange={setValues} />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -271,16 +276,16 @@ const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
 
 const ProductionSystemsAccordion = (props: Omit<AccordionProps, "children">) => {
   const [values, setValues] = useAtom(productionSystemsAtom);
-  const selected = useMemo(() => values.filter((x) => x.value), [values]);
-
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
-        <AccordionTitle>Production systems</AccordionTitle>
-        <FilterPreviewMultiCheckbox show={!props.expanded} selected={selected} options={values} />
+        <AccordionTitle>
+          <Trans id="data.filters.productionSystems">Production Systems</Trans>
+        </AccordionTitle>
+        <PreviewSelect show={!props.expanded} values={values} options={productionSystems} />
       </AccordionSummary>
       <AccordionDetails>
-        <MultiCheckbox values={values} onChange={setValues} />
+        <Select options={productionSystems} values={values} onChange={setValues} />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -291,15 +296,13 @@ const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
-        <AccordionTitle>Countries</AccordionTitle>
-        <CountTrue values={values} show={!props.expanded} />
+        <AccordionTitle>
+          <Trans id="data.filters.countries">Sales Region</Trans>
+        </AccordionTitle>
+        <PreviewSelect show={!props.expanded} values={values} options={countries} />
       </AccordionSummary>
       <AccordionDetails>
-        <MultiCheckboxAutocomplete
-          values={values}
-          onChange={setValues}
-          placeholder="Choose countries"
-        />
+        <Select options={countries} values={values} onChange={setValues} />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -310,15 +313,14 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
-        <AccordionTitle>Products</AccordionTitle>
-        <PreviewFilter show={!props.expanded}>
-          {values.length === products.length
-            ? t({ id: "data.filters.all", message: "All" })
-            : t({ id: "data.filters.some", message: `${values.length} of ${products.length}` })}
-        </PreviewFilter>
+        <AccordionTitle>
+          <Trans id="data.filters.products">Products</Trans>
+        </AccordionTitle>
+        <PreviewSelect show={!props.expanded} values={values} options={products} />
       </AccordionSummary>
-      <AccordionDetails sx={{ mx: "-2px" }}>
+      <AccordionDetails>
         <Select
+          withSearch
           options={products}
           groups={[(d) => d.market, (d) => d.group, (d) => d.subgroup]}
           values={values}
@@ -327,15 +329,6 @@ const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
         />
       </AccordionDetails>
     </FilterAccordion>
-  );
-};
-
-const CountTrue = ({ values, show }: { values: CheckboxValue[]; show: boolean }) => {
-  const trueValues = useMemo(() => values.filter((x) => x.value), [values]);
-  return trueValues.length === values.length || trueValues.length === 0 ? null : (
-    <Grow in={show}>
-      <Chip sx={{ color: "grey.700" }} size="small" label={trueValues.length} />
-    </Grow>
   );
 };
 
