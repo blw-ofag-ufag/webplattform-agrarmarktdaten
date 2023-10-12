@@ -62,6 +62,7 @@
     "next": "^13.4.4",
     "powerbi-client": "^2.22.3",
     "powerbi-client-react": "^1.4.0",
+    "proposal-temporal": "^0.9.0",
     "rdf-cube-view-query": "^1.12.0",
     "rdf-ext": "^2.3.0",
     "react": "^18.2.0",

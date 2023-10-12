@@ -10,6 +10,7 @@ query HomePage($locale: SiteLocale!) {
     title
     lead
     hero {
+      id
       url
     }
     seo {
@@ -141,23 +142,7 @@ query MethodsPage($locale: SiteLocale!) {
       blocks {
         id
         __typename
-        ... on ImageTeaserBlockRecord {
-          imageTeaserAsset {
-            url
-            alt
-            width
-            height
-            responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
-              sizes
-              src
-              width
-              height
-              alt
-              title
-              base64
-            }
-          }
-        }
+        ...ImageTeaserBlock
       }
       links {
         __typename
@@ -319,44 +304,13 @@ fragment FullMarketArticle on MarketArticleRecord {
     blocks {
       id
       __typename
-      ... on ImageTeaserBlockRecord {
-        imageTeaserAsset {
-          url
-          alt
-          width
-          height
-          responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
-            sizes
-            src
-            width
-            height
-            alt
-            title
-            base64
-          }
-        }
-      }
+      ...ImageTeaserBlock
     }
     links {
       __typename
-      id
-      workspace {
-        id
-        name
-        workspaceId
-      }
-      reportId
-      name
-      dataset {
-        name
-        id
-        datasetId
-        workspace {
-          workspaceId
-          name
-          id
-        }
-      }
+      ...DataDownloadSection
+      ...HighlightSection
+      ...PowerBI
     }
   }
   seo {
@@ -373,46 +327,14 @@ fragment FullFocusArticle on FocusArticleRecord {
     value
 
     blocks {
-      id
       __typename
-      ... on ImageTeaserBlockRecord {
-        imageTeaserAsset {
-          url
-          alt
-          width
-          height
-          responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
-            sizes
-            src
-            width
-            height
-            alt
-            title
-            base64
-          }
-        }
-      }
+      ...ImageTeaserBlock
     }
     links {
       __typename
-      id
-      workspace {
-        id
-        name
-        workspaceId
-      }
-      reportId
-      name
-      dataset {
-        name
-        id
-        datasetId
-        workspace {
-          workspaceId
-          name
-          id
-        }
-      }
+      ...DataDownloadSection
+      ...HighlightSection
+      ...PowerBI
     }
   }
   seo {
@@ -431,10 +353,12 @@ fragment SimpleBlogPost on BlogPostRecord {
     alt
   }
   markets {
+    id
     title
     slug
   }
   focusArticles {
+    id
     title
     slug
   }
@@ -447,6 +371,7 @@ fragment FullBlogPost on BlogPostRecord {
   lead
   slug
   authors {
+    id
     firstName
     lastName
     portrait {
@@ -454,54 +379,18 @@ fragment FullBlogPost on BlogPostRecord {
       url
     }
   }
-  image {
-    id
-    url
-  }
   content {
     value
-
     blocks {
       id
       __typename
-      ... on ImageTeaserBlockRecord {
-        imageTeaserAsset {
-          url
-          alt
-          width
-          height
-          responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
-            sizes
-            src
-            width
-            height
-            alt
-            title
-            base64
-          }
-        }
-      }
+      ...ImageTeaserBlock
     }
     links {
       __typename
-      id
-      workspace {
-        id
-        name
-        workspaceId
-      }
-      reportId
-      name
-      dataset {
-        name
-        id
-        datasetId
-        workspace {
-          workspaceId
-          name
-          id
-        }
-      }
+      ...DataDownloadSection
+      ...HighlightSection
+      ...PowerBI
     }
   }
   markets {
@@ -556,12 +445,22 @@ fragment IframeBlock on IframeBlockRecord {
 
 fragment ImageTeaserBlock on ImageTeaserBlockRecord {
   id
-  description
   imageTeaserAsset {
     id
-    title
-    alt
     url
+    alt
+    width
+    height
+    responsiveImage(imgixParams: { fit: crop, w: 300, h: 300, auto: format }) {
+      id
+      sizes
+      src
+      width
+      height
+      alt
+      title
+      base64
+    }
   }
 }
 
@@ -581,6 +480,91 @@ fragment SurveyBlock on SurveyBlockRecord {
     possibleAnswers {
       id
       answer
+    }
+  }
+}
+
+fragment PowerBI on PowerBiReportRecord {
+  id
+  workspace {
+    id
+    name
+    workspaceId
+  }
+  reportId
+  name
+  dataset {
+    name
+    id
+    datasetId
+    workspace {
+      workspaceId
+      name
+      id
+    }
+  }
+}
+
+fragment DataDownloadSection on DataDownloadSectionRecord {
+  id
+  title
+  dataDownloadItems {
+    id
+    title
+    description
+    date
+    file {
+      url
+      format
+    }
+  }
+}
+
+fragment HighlightSection on HighlightSectionRecord {
+  id
+  title
+  content {
+    # blocks {
+    #   id
+    #   __typename
+    # }
+    links {
+      __typename
+      ...HighlightSectionFileRecord
+      ...HighlightSectionLink
+    }
+    value
+  }
+}
+
+fragment HighlightSectionFileRecord on HighlightSectionFileRecord {
+  id
+  title
+  file {
+    url
+  }
+}
+
+fragment HighlightSectionLink on HighlightSectionLinkRecord {
+  id
+  title
+  link {
+    __typename
+    ... on BlogPostRecord {
+      id
+      slug
+    }
+    ... on FocusArticleRecord {
+      id
+      slug
+    }
+    ... on MarketArticleRecord {
+      id
+      slug
+    }
+    ... on MethodsPageRecord {
+      id
+      slug
     }
   }
 }

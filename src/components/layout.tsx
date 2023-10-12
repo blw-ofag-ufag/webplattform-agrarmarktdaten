@@ -16,11 +16,12 @@ import {
   b,
 } from "@interactivethings/swiss-federal-ci";
 import { t } from "@lingui/macro";
-import { Stack, Box, Link, useMediaQuery, Typography } from "@mui/material";
+import { Box, Link, useMediaQuery, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { useStickyBox } from "react-sticky-box";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
@@ -88,7 +89,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
       };
 
   return (
-    <Stack minHeight="100vh">
+    <Box position="relative" minHeight="100vh">
       <LocaleSwitcher {...localeSwitcherProps} />
       <Box
         sx={{
@@ -217,30 +218,14 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
               sx={{
                 width: "100%",
                 height: "50px",
-                [b.only("xxxl")]: {
-                  maxWidth: "1676px",
-                },
-                [b.only("xxl")]: {
-                  maxWidth: "1544px",
-                },
-                [b.only("xl")]: {
-                  maxWidth: "1152px",
-                },
-                [b.only("lg")]: {
-                  maxWidth: "928px",
-                },
-                [b.only("md")]: {
-                  maxWidth: "696px",
-                },
-                [b.only("sm")]: {
-                  maxWidth: "568px",
-                },
-                [b.only("xs")]: {
-                  maxWidth: "424px",
-                },
-                [b.down("xxs")]: {
-                  maxWidth: "340px",
-                },
+                [b.only("xxxl")]: { maxWidth: "1676px" },
+                [b.only("xxl")]: { maxWidth: "1544px" },
+                [b.only("xl")]: { maxWidth: "1152px" },
+                [b.only("lg")]: { maxWidth: "928px" },
+                [b.only("md")]: { maxWidth: "696px" },
+                [b.only("sm")]: { maxWidth: "568px" },
+                [b.only("xs")]: { maxWidth: "424px" },
+                [b.down("xxs")]: { maxWidth: "340px" },
               }}
             >
               <BackButton />
@@ -250,7 +235,8 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
         {children}
       </Box>
       {router.pathname !== "/data" && <FooterBLW />}
-    </Stack>
+      <ScrollToTop />
+    </Box>
   );
 };
 
