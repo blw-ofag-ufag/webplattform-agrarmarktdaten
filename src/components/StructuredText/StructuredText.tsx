@@ -1,5 +1,5 @@
 import * as React from "react";
-import { s } from "@interactivethings/swiss-federal-ci";
+import { s, c } from "@interactivethings/swiss-federal-ci";
 import {
   StructuredText as ST,
   renderNodeRule,
@@ -115,9 +115,12 @@ const StructuredText = (props: Props) => {
               const image =
                 record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
               return image?.responsiveImage ? (
-                <Box sx={{ my: s(4) }}>
+                <Box sx={{ my: s(5) }}>
                   {/*eslint-disable-next-line jsx-a11y/alt-text*/}
-                  <Image data={image?.responsiveImage} />
+                  <Image data={image?.responsiveImage} layout="responsive" />
+                  <Typography variant="body1" sx={{ mt: s(3), color: c.monochrome[500] }}>
+                    {image.responsiveImage.title}
+                  </Typography>
                 </Box>
               ) : null;
             default:

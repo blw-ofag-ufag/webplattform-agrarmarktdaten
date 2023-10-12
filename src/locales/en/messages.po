@@ -126,6 +126,11 @@ msgstr ""
 #~ msgstr "Go back"
 
 #. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.data"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
 msgstr ""
@@ -239,6 +244,11 @@ msgstr ""
 #~ msgid "infografik.title"
 #~ msgstr "Swiss Potato Market"
 
+#. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.data.button"
+msgstr ""
+
 #: src/components/header.tsx
 #: src/components/header.tsx
 #~ msgid "logo.swiss.confederation"
@@ -273,7 +283,6 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
-#: src/pages/blog/[slug].tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr ""
 
@@ -285,6 +294,11 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.alert.info"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/blog/[slug].tsx
+msgid "blogpost.publishedDate"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -326,3 +340,8 @@ msgstr ""
 #: src/components/header.tsx
 #~ msgid "title.agricultural.market.data"
 #~ msgstr "Agricultural Market Data"
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.data.content"
+msgstr ""

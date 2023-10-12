@@ -36,7 +36,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
     >
-      <Box sx={{ bgcolor: marketColor /* , height: "250px" */ }}>
+      <Box sx={{ bgcolor: marketColor }}>
         <Grid>
           <MUIGrid
             xxxlOffset={2}
