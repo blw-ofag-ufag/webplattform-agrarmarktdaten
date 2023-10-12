@@ -16,7 +16,8 @@ import {
   styled,
 } from "@mui/material";
 import { uniqBy } from "lodash";
-import { useMemo } from "react";
+import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
+import React, { useDeferredValue, useMemo, useState } from "react";
 
 export type Option = {
   label: string;
@@ -28,7 +29,7 @@ type Node<T extends Option> = {
   id: string;
   level: number;
   children: Node<T>[];
-  value?: T;
+  value?: T & { score?: ScoredResult<T> };
   checked?: boolean;
   indeterminate?: boolean;
 };
@@ -89,6 +90,12 @@ const getValues = <T extends Option>(node: Node<T>): T[] => {
   return node.children.flatMap(getValues);
 };
 
+const search = <T extends Option>(items: T[], searchString: string) => {
+  const qs = new QuickScore(items, ["label"]);
+  const results = qs.search(searchString);
+  return results.filter((r) => r.score > 0.25).map((r) => ({ ...(r.item as T), score: r }));
+};
+
 export default function Select<T extends Option>({
   options = [],
   values = [],
@@ -100,22 +107,30 @@ export default function Select<T extends Option>({
   groups?: Array<(item: T) => string>;
   onChange: (newValues: T[]) => void;
 }) {
+  const [searchString, setSearchString] = useState("");
+  const deferredSearch = useDeferredValue(searchString);
+
+  const filteredOptions = useMemo(() => {
+    if (searchString === "") {
+      return options;
+    }
+    return search(options, deferredSearch);
+  }, [options, searchString, deferredSearch]);
+
   const itemTree = useMemo(() => {
-    const optionsWithChecked = options.map((option) => ({
+    const optionsWithChecked = filteredOptions.map((option) => ({
       ...option,
       checked: values.some((v) => v.value === option.value),
     }));
 
     return stratify(optionsWithChecked, groups || []);
-  }, [options, values, groups]);
+  }, [filteredOptions, values, groups]);
 
   const onChangeItem = (node: Node<T>, checked: boolean) => {
     const targetValues = getValues(node);
 
     if (checked) {
       const newValues = uniqBy([...values, ...targetValues], (v) => v.value);
-
-      console.log({ targetValues, newValues });
       onChange(newValues);
     } else {
       const targetIds = targetValues.map((v) => v.value);
@@ -126,28 +141,64 @@ export default function Select<T extends Option>({
   return (
     <Stack spacing={2}>
       <TextField
+        value={searchString}
         size="small"
         placeholder={t({ id: "filters.select.search", message: "Search" })}
         InputLabelProps={{
           shrink: true,
         }}
+        onChange={(e) => setSearchString(e.target.value)}
       />
       <Stack spacing={1}>
         {itemTree.map((item) => {
-          return <SelectItem key={item.id} node={item} onChangeItem={onChangeItem} />;
+          return (
+            <SelectItem
+              key={item.id}
+              node={item}
+              onChangeItem={onChangeItem}
+              search={deferredSearch}
+            />
+          );
         })}
       </Stack>
     </Stack>
   );
 }
 
+const MatchedString = <T extends Option>({
+  string,
+  matches,
+}: {
+  string: string;
+  matches: ScoredObject<T>["matches"][string];
+}) => {
+  const substrings = [];
+  let previousEnd = 0;
+
+  for (let [start, end] of matches) {
+    const prefix = string.substring(previousEnd, start);
+    const match = <span style={{ fontWeight: "bold" }}>{string.substring(start, end)}</span>;
+
+    substrings.push(prefix, match);
+    previousEnd = end;
+  }
+
+  substrings.push(string.substring(previousEnd));
+
+  return <span>{React.Children.toArray(substrings)}</span>;
+};
+
 const SelectItem = <T extends Option>({
   node,
   onChangeItem,
+  search,
 }: {
   node: Node<T & { checked: boolean }>;
   onChangeItem: (node: Node<T>, checked: boolean) => void;
+  search?: string;
 }) => {
+  const isSearch = useMemo(() => search !== "", [search]);
+
   if (node.children.length === 0) {
     return (
       <FormControlLabel
@@ -157,7 +208,13 @@ const SelectItem = <T extends Option>({
           e.stopPropagation();
         }}
         control={<Checkbox />}
-        label={node.value?.label}
+        label={
+          isSearch && node.value?.score?.matches ? (
+            <MatchedString string={node.value?.label} matches={node.value?.score?.matches.label} />
+          ) : (
+            node.value?.label
+          )
+        }
         sx={{
           paddingLeft: "28px",
           paddingTop: "4px",
@@ -165,8 +222,9 @@ const SelectItem = <T extends Option>({
       />
     );
   }
+
   return (
-    <Accordion>
+    <Accordion expanded={true}>
       <AccordionSummary>
         <FormControlLabel
           checked={node.checked}
