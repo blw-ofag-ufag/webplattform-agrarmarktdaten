@@ -1,3 +1,15 @@
+import {
+  CheckboxValue,
+  addedValueValuesAtom,
+  countriesAtom,
+  indicatorsAtom,
+  marketsAtom,
+  productionSystemsAtom,
+  products,
+  productsAtom,
+  timeRangeAtom,
+  timeViewAtom,
+} from "@/domain/data";
 import { IcControlDownload, IcControlExternal, IcFilter } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, plural, t } from "@lingui/macro";
@@ -8,30 +20,17 @@ import {
   Box,
   Button,
   Chip,
-  ChipProps,
   Grow,
-  Slider,
   Stack,
   Typography,
 } from "@mui/material";
-import { PropsWithChildren, SyntheticEvent, useMemo, useState } from "react";
-import { makeStyles, withStyles } from "../style-utils";
-import FilterAccordion from "../filter-accordion";
-import MultiCheckboxAutocomplete from "./MultiCheckboxAutocomplete";
 import { useAtom } from "jotai";
-import {
-  CheckboxValue,
-  addedValueValuesAtom,
-  countriesAtom,
-  indicatorsAtom,
-  marketsAtom,
-  monthsAtom,
-  productionSystemsAtom,
-  products,
-  productsAtom,
-  yearAtom,
-} from "@/domain/data";
+import { PropsWithChildren, SyntheticEvent, useMemo, useState } from "react";
+import FilterAccordion from "../filter-accordion";
+import { makeStyles } from "../style-utils";
 import MultiCheckbox from "./MultiCheckbox";
+import MultiCheckboxAutocomplete from "./MultiCheckboxAutocomplete";
+import TimeFilter, { previewTime } from "./TimeFilter";
 import Select from "./Select";
 
 const useExclusiveAccordion = (defaultState: string) => {
@@ -163,112 +162,37 @@ const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
   );
 };
 
-const FilterSlider = withStyles(Slider, (theme) => ({
-  root: {
-    marginBottom: theme.spacing(6),
-    "& .MuiSlider-valueLabel": {
-      top: "3.25rem",
-      padding: "2px 4px",
-      backgroundColor: theme.palette.grey[300],
-      color: theme.palette.text.primary,
-      fontSize: "0.75rem",
-      "&:before": {
-        bottom: "auto",
-        top: "-8px",
-      },
-    },
-  },
-}));
-
-const MonthChip = (props: ChipProps) => {
-  return (
-    <Chip
-      {...props}
-      sx={{
-        minWidth: "auto",
-        height: 22,
-        "& .MuiChip-label": {
-          padding: 0,
-          textTransform: "uppercase",
-          fontWeight: "600",
-          color: "grey.700",
-        },
-        "&.MuiChip-colorPrimary": {
-          backgroundColor: "grey.500",
-        },
-      }}
-    />
-  );
-};
-
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [yearOptions, setYearOptions] = useAtom(yearAtom);
-  const [yearSliderValue, setYearSliderValue] = useState(() => [1990, new Date().getFullYear()]);
-  const handleYearSlideChangeCommitted = useEvent((ev, value: number[] | number) => {
+  const [timeRange, setTimeRange] = useAtom(timeRangeAtom);
+  const [timeView, setTimeView] = useAtom(timeViewAtom);
+
+  const handleTimeRangeChange = useEvent((value: [number, number]) => {
     if (!Array.isArray(value)) {
       return;
     }
-    setYearOptions({
-      ...yearOptions,
+    setTimeRange({
+      ...timeRange,
       value: value as [number, number],
     });
   });
-  const handleYearSlideChange = useEvent((ev, value: number[] | number) => {
-    if (!Array.isArray(value)) {
-      return;
-    }
-    setYearSliderValue(value as [number, number]);
-  });
-  const [monthOptions, setMonthOptions] = useAtom(monthsAtom);
-  const trueMonths = useMemo(() => monthOptions.filter((m) => m.value), [monthOptions]);
-  const handleToggleMonth = useEvent((i: number) => {
-    if (trueMonths.length === monthOptions.length) {
-      setMonthOptions(monthOptions.map((m, j) => ({ ...m, value: i === j ? true : false })));
-    } else {
-      setMonthOptions([
-        ...monthOptions.slice(0, i),
-        {
-          ...monthOptions[i],
-          value: !monthOptions[i].value,
-        },
-        ...monthOptions.slice(i + 1),
-      ]);
-    }
-  });
+
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>Time</AccordionTitle>
+        <PreviewFilter show={!props.expanded}>
+          {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
+        </PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
-        <AccordionTitle>Year</AccordionTitle>
-        <FilterSlider
-          disableSwap
-          min={yearOptions.min}
-          max={yearOptions.max}
-          step={1}
-          value={yearSliderValue}
-          valueLabelDisplay="on"
-          onChange={handleYearSlideChange}
-          onChangeCommitted={handleYearSlideChangeCommitted}
+        <TimeFilter
+          min={timeRange.min}
+          max={timeRange.max}
+          value={timeRange.value}
+          view={timeView}
+          onChangeRange={handleTimeRangeChange}
+          onChangeView={setTimeView}
         />
-        <AccordionTitle>Month</AccordionTitle>
-        <Box
-          display="grid"
-          sx={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(60px, 1fr))",
-            gridGap: "0.25rem",
-          }}
-        >
-          {monthOptions.map((m, i) => (
-            <MonthChip
-              key={m.name}
-              label={m.label}
-              onClick={() => handleToggleMonth(i)}
-              color={m.value && trueMonths.length !== monthOptions.length ? "primary" : undefined}
-            />
-          ))}
-        </Box>
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -284,13 +208,26 @@ const FilterPreviewMultiCheckbox = ({
   options: CheckboxValue[];
 }) => {
   return (
+    <PreviewFilter show={show}>
+      {selected.length === 0 && <Trans id="data.filters.none">None</Trans>}
+      {selected.length === options.length && <Trans id="data.filters.all">All</Trans>}
+      {selected.length > 0 &&
+        selected.length < options.length &&
+        selected[0].label + (selected.length > 1 ? " +" + (selected.length - 1) : "")}
+    </PreviewFilter>
+  );
+};
+
+const PreviewFilter = ({
+  show = true,
+  children,
+}: {
+  show: boolean;
+} & PropsWithChildren) => {
+  return (
     <Grow in={show}>
       <Typography variant="body2" color="grey.500" mr={1}>
-        {selected.length === 0 && <Trans id="data.filters.none">None</Trans>}
-        {selected.length === options.length && <Trans id="data.filters.all">All</Trans>}
-        {selected.length > 0 &&
-          selected.length < options.length &&
-          selected[0].label + (selected.length > 1 ? " +" + (selected.length - 1) : "")}
+        {children}
       </Typography>
     </Grow>
   );
