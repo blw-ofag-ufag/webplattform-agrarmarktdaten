@@ -1,4 +1,4 @@
-import { IcControlChevronUp } from "@/icons/icons-jsx/control";
+import { IcControlChevronUp, IcControlClose, IcSearch } from "@/icons/icons-jsx/control";
 import { t } from "@lingui/macro";
 import {
   AccordionDetailsProps,
@@ -6,6 +6,8 @@ import {
   AccordionSummaryProps,
   Checkbox,
   FormControlLabel,
+  IconButton,
+  InputAdornment,
   Accordion as MuiAccordion,
   AccordionDetails as MuiAccordionDetails,
   AccordionSummary as MuiAccordionSummary,
@@ -13,7 +15,9 @@ import {
   TextField,
   accordionDetailsClasses,
   accordionSummaryClasses,
+  inputClasses,
   styled,
+  textFieldClasses,
 } from "@mui/material";
 import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
@@ -149,6 +153,20 @@ export default function Select<T extends Option>({
           shrink: true,
         }}
         onChange={(e) => setSearchString(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <IcSearch width={24} height={24} />
+            </InputAdornment>
+          ),
+          endAdornment: searchString && (
+            <InputAdornment position="end">
+              <IconButton aria-label={t({ id: "filters.aria.clear", message: "Clear" })}>
+                <IcControlClose width={12} height={12} onClick={() => setSearchString("")} />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
       />
       <Stack spacing={1}>
         {itemTree.map((item) => {

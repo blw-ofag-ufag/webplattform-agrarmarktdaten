@@ -9,3 +9,4 @@ export { default as IcControlMenu } from "./IcControlMenu";
 export { default as IcControlNavDown } from "./IcControlNavDown";
 export { default as IcControlNavUp } from "./IcControlNavUp";
 export { default as IcFilter } from "./IcFilter";
+export { default as IcSearch } from "./IcSearch";
