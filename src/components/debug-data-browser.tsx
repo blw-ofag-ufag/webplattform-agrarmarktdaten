@@ -1,13 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 
-import {
-  addedValueValuesAtom,
-  countriesAtom,
-  indicatorAtom,
-  marketsAtom,
-  productionSystemsAtom,
-} from "@/domain/data";
+import { filterAtom } from "@/domain/data";
 
 const DebugCard = ({ title, value }: { title: string; value: $IntentionalAny }) => {
   return (
@@ -19,24 +13,19 @@ const DebugCard = ({ title, value }: { title: string; value: $IntentionalAny }) 
 };
 
 const DataBrowserDebug = () => {
-  const [indicator] = useAtom(indicatorAtom);
-  const [markets] = useAtom(marketsAtom);
-  const [addedValueValues] = useAtom(addedValueValuesAtom);
-  const [productionSystems] = useAtom(productionSystemsAtom);
-  const [countriesOptions] = useAtom(countriesAtom);
-  const [products] = useAtom(countriesAtom);
+  const filters = useAtomValue(filterAtom);
   return (
     <Box
       display="grid"
       mx={4}
       sx={{ gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))" }}
     >
-      <DebugCard title="Indicator" value={indicator} />
-      <DebugCard title="Markets" value={markets} />
-      <DebugCard title="Added value" value={addedValueValues} />
-      <DebugCard title="Production systems" value={productionSystems} />
-      <DebugCard title="Countries options" value={countriesOptions} />
-      <DebugCard title="Products" value={products} />
+      <DebugCard title="Indicator" value={filters.indicator} />
+      <DebugCard title="Markets" value={filters.markets} />
+      <DebugCard title="Added value" value={filters.addedValueValues} />
+      <DebugCard title="Production systems" value={filters.productionSystems} />
+      <DebugCard title="Sales Regions options" value={filters.salesRegions} />
+      <DebugCard title="Products" value={filters.products} />
     </Box>
   );
 };
