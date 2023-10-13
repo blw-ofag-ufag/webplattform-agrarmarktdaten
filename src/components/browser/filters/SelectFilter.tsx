@@ -26,12 +26,7 @@ import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
 import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 import PreviewFilter from "./PreviewFilter";
-
-export type Option = {
-  label: string;
-  value: string;
-  checked?: boolean;
-} & { [key: string]: string };
+import { Option } from "@/domain/data";
 
 type Node<T extends Option> = {
   id: string;
@@ -131,6 +126,15 @@ const propagateValueInTree = <T extends Option>(
   });
 };
 
+export type SelectProps<T extends Option> = {
+  options: T[];
+  values: T[];
+  groups?: Array<(item: T) => string>;
+  onChange: (newValues: T[]) => void;
+  colorCheckbox?: (item: T) => string;
+  withSearch?: boolean;
+};
+
 export default function Select<T extends Option>({
   options = [],
   values = [],
@@ -138,14 +142,7 @@ export default function Select<T extends Option>({
   onChange,
   colorCheckbox,
   withSearch = false,
-}: {
-  options: T[];
-  values: T[];
-  groups?: Array<(item: T) => string>;
-  onChange: (newValues: T[]) => void;
-  colorCheckbox?: (item: T) => string;
-  withSearch?: boolean;
-}) {
+}: SelectProps<T>) {
   const [searchString, setSearchString] = useState("");
   const deferredSearch = useDeferredValue(searchString);
 

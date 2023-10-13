@@ -1,7 +1,12 @@
-import { Option } from "@/components/browser/filters/SelectFilter";
 import dayjs from "dayjs";
 import { atom, ExtractAtomValue } from "jotai";
 import { atomWithHash } from "jotai-location";
+
+export type Option = {
+  label: string;
+  value: string;
+  checked?: boolean;
+} & { [key: string]: string };
 
 /* Data Filters */
 

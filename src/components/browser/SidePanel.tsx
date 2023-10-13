@@ -14,6 +14,7 @@ import {
   salesRegionsAtom,
   timeRangeAtom,
   timeViewAtom,
+  Option,
 } from "@/domain/data";
 import { IcControlDownload, IcControlExternal, IcFilter } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
@@ -27,13 +28,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useAtom } from "jotai";
+import { Atom, useAtom } from "jotai";
 import { PropsWithChildren, SyntheticEvent, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import { makeStyles } from "../style-utils";
 import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
-import Select, { PreviewSelect } from "./filters/SelectFilter";
+import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
 
 const useExclusiveAccordion = (defaultState: string) => {
@@ -97,12 +98,60 @@ const SidePanel = () => {
           </Typography>
         </Box>
         <IndicatorAccordion {...getAccordionProps("indicator")} />
-        <MarketsAccordion {...getAccordionProps("markets")} />
         <TimeAccordion {...getAccordionProps("time")} />
-        <AddedValueAccordion {...getAccordionProps("addedvalue")} />
-        <ProductionSystemsAccordion {...getAccordionProps("productionsystems")} />
-        <ProductsAccordion {...getAccordionProps("products")} />
-        <SalesRegionsAccordion {...getAccordionProps("salesRegions")} />
+        <FilterSelectAccordion
+          slots={{
+            accordion: getAccordionProps("markets"),
+            select: {
+              options: markets,
+            },
+          }}
+          filterAtom={marketsAtom}
+          title={t({ id: "data.filters.markets", message: "Markets" })}
+        />
+        <FilterSelectAccordion
+          slots={{
+            accordion: getAccordionProps("addedvalue"),
+            select: {
+              options: addedValueValues,
+            },
+          }}
+          filterAtom={addedValueValuesAtom}
+          title={t({ id: "data.filters.addedValue", message: "Added Value" })}
+        />
+        <FilterSelectAccordion
+          slots={{
+            accordion: getAccordionProps("productionsystems"),
+            select: {
+              options: productionSystems,
+            },
+          }}
+          filterAtom={productionSystemsAtom}
+          title={t({ id: "data.filters.productionSystems", message: "Production Systems" })}
+        />
+        <FilterSelectAccordion
+          slots={{
+            accordion: getAccordionProps("products"),
+            select: {
+              withSearch: true,
+              options: products,
+              groups: [(d) => d.market, (d) => d.group, (d) => d.subgroup],
+              colorCheckbox: (d) => getMarketColor(d.marketSlug)[1],
+            },
+          }}
+          filterAtom={productsAtom}
+          title={t({ id: "data.filters.products", message: "Products" })}
+        />
+        <FilterSelectAccordion
+          slots={{
+            accordion: getAccordionProps("salesRegions"),
+            select: {
+              options: salesRegions,
+            },
+          }}
+          filterAtom={salesRegionsAtom}
+          title={t({ id: "data.filters.salesRegions", message: "Sales Regions" })}
+        />
       </Box>
       <Stack direction="column">
         <SidePanelButton inverted>
@@ -144,6 +193,32 @@ const AccordionTitle = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+const FilterSelectAccordion = <T extends Option>({
+  filterAtom,
+  title,
+  slots,
+}: {
+  filterAtom: Atom<T[]>;
+  title: string;
+  slots: {
+    accordion: Omit<AccordionProps, "children">;
+    select: Omit<SelectProps<T>, "values" | "onChange">;
+  };
+}) => {
+  const [values, setValues] = useAtom(filterAtom);
+
+  return (
+    <FilterAccordion {...slots.accordion}>
+      <AccordionSummary>
+        <AccordionTitle>{title}</AccordionTitle>
+        <PreviewSelect show={!slots.accordion.expanded} values={values} options={markets} />
+      </AccordionSummary>
+      <AccordionDetails>
+        <Select values={values} onChange={setValues} {...slots.select} />
+      </AccordionDetails>
+    </FilterAccordion>
+  );
+};
 const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
   const [value, setValue] = useAtom(indicatorAtom);
 
@@ -194,100 +269,6 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
           view={timeView}
           onChangeRange={handleTimeRangeChange}
           onChangeView={setTimeView}
-        />
-      </AccordionDetails>
-    </FilterAccordion>
-  );
-};
-
-const MarketsAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [values, setValues] = useAtom(marketsAtom);
-
-  return (
-    <FilterAccordion {...props}>
-      <AccordionSummary>
-        <AccordionTitle>
-          <Trans id="data.filters.markets">Markets</Trans>
-        </AccordionTitle>
-        <PreviewSelect show={!props.expanded} values={values} options={markets} />
-      </AccordionSummary>
-      <AccordionDetails>
-        <Select options={markets} values={values} onChange={setValues} />
-      </AccordionDetails>
-    </FilterAccordion>
-  );
-};
-
-const AddedValueAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [values, setValues] = useAtom(addedValueValuesAtom);
-
-  return (
-    <FilterAccordion {...props}>
-      <AccordionSummary>
-        <AccordionTitle>
-          <Trans id="data.filters.addedValue">Added Value</Trans>
-        </AccordionTitle>
-        <PreviewSelect show={!props.expanded} values={values} options={addedValueValues} />
-      </AccordionSummary>
-      <AccordionDetails>
-        <Select options={addedValueValues} values={values} onChange={setValues} />
-      </AccordionDetails>
-    </FilterAccordion>
-  );
-};
-
-const ProductionSystemsAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [values, setValues] = useAtom(productionSystemsAtom);
-  return (
-    <FilterAccordion {...props}>
-      <AccordionSummary>
-        <AccordionTitle>
-          <Trans id="data.filters.productionSystems">Production Systems</Trans>
-        </AccordionTitle>
-        <PreviewSelect show={!props.expanded} values={values} options={productionSystems} />
-      </AccordionSummary>
-      <AccordionDetails>
-        <Select options={productionSystems} values={values} onChange={setValues} />
-      </AccordionDetails>
-    </FilterAccordion>
-  );
-};
-
-const SalesRegionsAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [values, setValues] = useAtom(salesRegionsAtom);
-  return (
-    <FilterAccordion {...props}>
-      <AccordionSummary>
-        <AccordionTitle>
-          <Trans id="data.filters.salesRegions">Sales Region</Trans>
-        </AccordionTitle>
-        <PreviewSelect show={!props.expanded} values={values} options={salesRegions} />
-      </AccordionSummary>
-      <AccordionDetails>
-        <Select options={salesRegions} values={values} onChange={setValues} />
-      </AccordionDetails>
-    </FilterAccordion>
-  );
-};
-
-const ProductsAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [values, setValues] = useAtom(productsAtom);
-  return (
-    <FilterAccordion {...props}>
-      <AccordionSummary>
-        <AccordionTitle>
-          <Trans id="data.filters.products">Products</Trans>
-        </AccordionTitle>
-        <PreviewSelect show={!props.expanded} values={values} options={products} />
-      </AccordionSummary>
-      <AccordionDetails>
-        <Select
-          withSearch
-          options={products}
-          groups={[(d) => d.market, (d) => d.group, (d) => d.subgroup]}
-          values={values}
-          onChange={setValues}
-          colorCheckbox={(d) => getMarketColor(d.marketSlug)[1]}
         />
       </AccordionDetails>
     </FilterAccordion>
