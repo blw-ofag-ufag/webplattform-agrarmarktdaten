@@ -115,7 +115,7 @@ const DataBrowser = () => {
         <Stack direction="row" justifyContent="space-between">
           <Stack direction="row" gap={1} alignItems="center">
             <Button variant="inline" startIcon={<IcControlArrowRight />}>
-              Show Filters
+              <Trans id="data.actions.showFiler">Show Filters</Trans>
             </Button>
             <Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />
             <Typography variant="body2" color="grey.600" padding={2}>
@@ -160,7 +160,9 @@ const DataBrowser = () => {
         >
           <Box px={4} py={5}>
             <Stack direction="row" justifyContent="space-between">
-              <Typography variant="h3">Metadata</Typography>
+              <Typography variant="h3">
+                <Trans id="data.metadata.title">Metadata</Trans>
+              </Typography>
               <IconButton onClick={() => setShowMetadataPanel(false)}>
                 <IcControlArrowRight />
               </IconButton>
