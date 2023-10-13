@@ -1,4 +1,14 @@
-import { Box, Button, createTheme, Paper, Stack, ThemeProvider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  createTheme,
+  Drawer,
+  IconButton,
+  Paper,
+  Stack,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
 import { QueryClientProvider } from "react-query";
@@ -63,7 +73,9 @@ export default function DataPage() {
 }
 
 const DataBrowser = () => {
+  const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   // const locale = useLocale();
+  const contentRef = React.useRef<HTMLDivElement>(null);
   const indicator = useAtom(indicatorAtom);
   const [markets] = useAtom(marketsAtom);
 
@@ -86,7 +98,7 @@ const DataBrowser = () => {
   const resultCount = 0; //placeholder
 
   return (
-    <Stack direction="row" width="100%">
+    <Stack direction="row" width="100%" ref={contentRef}>
       <Box width="388px" flexGrow={0} flexShrink={0}>
         <SidePanel />
       </Box>
@@ -117,7 +129,7 @@ const DataBrowser = () => {
             <Button size="small">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
-            <Button size="small">
+            <Button size="small" onClick={() => setShowMetadataPanel(true)}>
               <Trans id="data.actions.metadata">Metadata</Trans>
             </Button>
           </Stack>
@@ -125,6 +137,7 @@ const DataBrowser = () => {
 
         <Box flexGrow={1} minHeight={0} sx={{ overflowY: "auto" }}>
           <Paper
+            elevation={4}
             sx={{
               width: "100%",
               height: "100%",
@@ -136,6 +149,42 @@ const DataBrowser = () => {
             🚧
           </Paper>
         </Box>
+        <Drawer
+          anchor="right"
+          open={showMetadataPanel}
+          onClose={() => setShowMetadataPanel(false)}
+          PaperProps={{
+            style: {
+              width: "388px",
+              position: "absolute",
+              border: "none",
+              top: 0,
+            },
+          }}
+          slotProps={{
+            backdrop: {
+              style: {
+                position: "absolute",
+                top: 0,
+                backgroundColor: "transparent",
+              },
+            },
+          }}
+          SlideProps={{ timeout: { enter: 0, exit: 0 } }}
+          ModalProps={{
+            container: contentRef.current,
+            style: { position: "absolute", top: 0 },
+          }}
+        >
+          <Box px={4} py={5}>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography variant="h3">Metadata</Typography>
+              <IconButton onClick={() => setShowMetadataPanel(false)}>
+                <IcControlArrowRight />
+              </IconButton>
+            </Stack>
+          </Box>
+        </Drawer>
 
         {/* <>
           {cubesQuery.isLoading && <CircularProgress size={24} />}
