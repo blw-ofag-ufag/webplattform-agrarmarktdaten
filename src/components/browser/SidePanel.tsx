@@ -1,5 +1,6 @@
 import { getMarketColor } from "@/domain/colors";
 import {
+  Option,
   addedValueValues,
   addedValueValuesAtom,
   indicatorAtom,
@@ -14,24 +15,20 @@ import {
   salesRegionsAtom,
   timeRangeAtom,
   timeViewAtom,
-  Option,
 } from "@/domain/data";
-import { IcControlDownload, IcControlExternal, IcFilter } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
-import { Trans, plural, t } from "@lingui/macro";
+import { Trans, t } from "@lingui/macro";
 import {
   AccordionDetails,
   AccordionProps,
   AccordionSummary,
   Box,
-  Button,
   Stack,
   Typography,
 } from "@mui/material";
 import { Atom, useAtom } from "jotai";
-import { PropsWithChildren, SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import FilterAccordion from "../filter-accordion";
-import { makeStyles } from "../style-utils";
 import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
@@ -53,20 +50,9 @@ const useExclusiveAccordion = (defaultState: string) => {
   return { getAccordionProps };
 };
 
-const useSidePanelStyles = makeStyles()((theme) => ({
-  inverted: {
-    backgroundColor: theme.palette.grey[700],
-    color: theme.palette.grey[50],
-    "&:hover": {
-      backgroundColor: theme.palette.grey[800],
-    },
-  },
-}));
-
 const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
 
-  const resultCount = 0; // @TODO: placeholder
   return (
     <Stack
       justifyContent="space-between"
@@ -84,18 +70,10 @@ const SidePanel = () => {
           justifyContent="space-between"
         >
           <Stack direction="row" gap={0.5} alignItems="center">
-            <IcFilter width={24} height={24} />
             <Typography variant="h4">
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
           </Stack>
-
-          <Typography variant="body2" color="grey.600">
-            {`${resultCount} ${t({
-              id: "data.filters.results",
-              message: plural(resultCount, { one: "result", other: "results" }),
-            })}`}
-          </Typography>
         </Box>
         <FilterSelectAccordion
           slots={{
@@ -104,6 +82,7 @@ const SidePanel = () => {
               options: markets,
             },
           }}
+          options={markets}
           filterAtom={marketsAtom}
           title={t({ id: "data.filters.markets", message: "Markets" })}
         />
@@ -114,6 +93,7 @@ const SidePanel = () => {
               options: addedValueValues,
             },
           }}
+          options={addedValueValues}
           filterAtom={addedValueValuesAtom}
           title={t({ id: "data.filters.addedValue", message: "Added Value" })}
         />
@@ -129,6 +109,7 @@ const SidePanel = () => {
               colorCheckbox: (d) => getMarketColor(d.marketSlug)[1],
             },
           }}
+          options={products}
           filterAtom={productsAtom}
           title={t({ id: "data.filters.products", message: "Products" })}
         />
@@ -139,6 +120,7 @@ const SidePanel = () => {
               options: productionSystems,
             },
           }}
+          options={productionSystems}
           filterAtom={productionSystemsAtom}
           title={t({ id: "data.filters.productionSystems", message: "Production Systems" })}
         />
@@ -149,39 +131,12 @@ const SidePanel = () => {
               options: salesRegions,
             },
           }}
+          options={salesRegions}
           filterAtom={salesRegionsAtom}
           title={t({ id: "data.filters.salesRegions", message: "Sales Regions" })}
         />
       </Box>
-      <Stack direction="column">
-        <SidePanelButton inverted>
-          <IcControlDownload width={24} height={24} />
-          <Typography variant="h5">
-            <Trans id="data.action.download">Download data</Trans>
-          </Typography>
-        </SidePanelButton>
-        <SidePanelButton>
-          <IcControlExternal width={24} height={24} />
-          <Typography variant="h5">
-            <Trans id="data.action.query">SPARQL query</Trans>
-          </Typography>
-        </SidePanelButton>
-      </Stack>
     </Stack>
-  );
-};
-
-const SidePanelButton = ({
-  inverted = false,
-  children,
-}: { inverted?: boolean } & PropsWithChildren) => {
-  const { classes, cx } = useSidePanelStyles();
-  return (
-    <Button variant="aside" className={cx({ [classes.inverted]: inverted })}>
-      <Stack direction="row" gap={1} alignItems="center">
-        {children}
-      </Stack>
-    </Button>
   );
 };
 
@@ -197,8 +152,10 @@ const FilterSelectAccordion = <T extends Option>({
   filterAtom,
   title,
   slots,
+  options,
 }: {
   filterAtom: Atom<T[]>;
+  options: T[];
   title: string;
   slots: {
     accordion: Omit<AccordionProps, "children">;
@@ -211,7 +168,7 @@ const FilterSelectAccordion = <T extends Option>({
     <FilterAccordion {...slots.accordion}>
       <AccordionSummary>
         <AccordionTitle>{title}</AccordionTitle>
-        <PreviewSelect show={!slots.accordion.expanded} values={values} options={markets} />
+        <PreviewSelect show={!slots.accordion.expanded} values={values} options={options} />
       </AccordionSummary>
       <AccordionDetails>
         <Select values={values} onChange={setValues} {...slots.select} />

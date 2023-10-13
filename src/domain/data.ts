@@ -139,7 +139,7 @@ const optionCodec = (options: Option[]) => ({
 
 export const marketsAtom = atomWithHash("markets", markets, { ...multiOptionsCodec(markets) });
 export const addedValueValuesAtom = atomWithHash("addedValueValues", addedValueValues, {
-  ...multiOptionsCodec(markets),
+  ...multiOptionsCodec(addedValueValues),
 });
 export const productionSystemsAtom = atomWithHash("productionSystems", productionSystems, {
   ...multiOptionsCodec(productionSystems),

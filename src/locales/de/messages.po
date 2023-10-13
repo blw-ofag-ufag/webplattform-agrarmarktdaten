@@ -39,6 +39,21 @@ msgstr ""
 #~ msgstr "Kontakt"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.download"
+#~ msgstr "Download data"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.alert.info"
+#~ msgstr "Our database contains Milk and Dairy Product market data. Other markets will be available soon."
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.query"
+#~ msgstr "SPARQLE query"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} total)"
@@ -49,7 +64,7 @@ msgid "data.filters.some"
 msgstr "{0} of {1}"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
+#: src/pages/data.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {result} other {results}}"
 
@@ -156,14 +171,19 @@ msgid "homepage.section.data"
 msgstr "Data"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.hero.title"
+msgstr "Data download"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.download"
+msgstr "Data download"
+
+#. js-lingui-explicit-id
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
 msgstr "Daten abfragen"
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.action.download"
-msgstr "Download data"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -322,6 +342,16 @@ msgstr "Märkte"
 #~ msgstr "Märkte"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.metadata"
+msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.metadata.title"
+msgstr "Metadata"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
 msgstr "Month"
@@ -335,11 +365,6 @@ msgstr "Neuste Blogbeiträge"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
 msgstr "None"
-
-#. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.alert.info"
-msgstr "Our database contains Milk and Dairy Product market data. Other markets will be available soon."
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -393,9 +418,14 @@ msgid "filters.select.all"
 msgstr "Select all"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.action.query"
-msgstr "SPARQLE query"
+#: src/pages/data.tsx
+msgid "data.actions.showFiler"
+msgstr "Show Filters"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.query"
+msgstr "SPARQL query"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -430,6 +460,11 @@ msgstr "To"
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
 msgstr "Various data can be selected and downloaded via the data download, in particular price series, and in some cases also quantity and area data. Data are available from the year 2000 onwards."
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.visualize"
+msgstr "Visualize"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

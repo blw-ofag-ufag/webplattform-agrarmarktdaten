@@ -39,6 +39,21 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.download"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.alert.info"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.query"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr ""
@@ -49,7 +64,7 @@ msgid "data.filters.some"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
+#: src/pages/data.tsx
 msgid "data.filters.results"
 msgstr ""
 
@@ -156,13 +171,18 @@ msgid "homepage.section.data"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx
-msgid "article.link.data.explore"
+#: src/pages/data.tsx
+msgid "data.hero.title"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.action.download"
+#: src/pages/data.tsx
+msgid "data.actions.download"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/card-data.tsx
+msgid "article.link.data.explore"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -322,6 +342,16 @@ msgstr ""
 #~ msgstr "Markets"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.metadata"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.metadata.title"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
 msgstr ""
@@ -334,11 +364,6 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.alert.info"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -393,8 +418,13 @@ msgid "filters.select.all"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.action.query"
+#: src/pages/data.tsx
+msgid "data.actions.showFiler"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.query"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -429,6 +459,11 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.visualize"
 msgstr ""
 
 #. js-lingui-explicit-id
