@@ -7,14 +7,14 @@ export default function RadioFilter<T extends Option>({
   onChange,
 }: {
   options: T[];
-  value: T;
+  value?: T;
   onChange: (v: T) => void;
 }) {
   return (
     <Stack>
       {options.map((option) => (
         <FormControlLabel
-          checked={option.value === value.value}
+          checked={value && option.value === value.value}
           key={option.value}
           label={<Typography variant="body2">{option.label}</Typography>}
           name={option.label}
