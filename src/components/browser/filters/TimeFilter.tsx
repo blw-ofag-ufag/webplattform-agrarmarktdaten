@@ -172,7 +172,7 @@ export default function TimeFilter({
           <DatePickerField
             min={minDate}
             max={maxDate}
-            label={t({ id: "data.filters.from", message: "To" })}
+            label={t({ id: "data.filters.to", message: "To" })}
             views={view === "year" ? ["year"] : ["year", "month"]}
             format={timeFormat}
             value={dayjs.unix(value[1])}
