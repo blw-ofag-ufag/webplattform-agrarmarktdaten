@@ -137,7 +137,7 @@ export const addedValueValuesAtom = atomWithHash("addedValueValues", addedValueV
   ...multiOptionsCodec(markets),
 });
 export const productionSystemsAtom = atomWithHash("productionSystems", productionSystems, {
-  ...multiOptionsCodec(markets),
+  ...multiOptionsCodec(productionSystems),
 });
 export const indicatorAtom = atomWithHash(
   "indicator",
