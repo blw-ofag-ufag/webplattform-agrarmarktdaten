@@ -25,6 +25,7 @@ import {
 import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
 import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
+import PreviewFilter from "./PreviewFilter";
 
 export type Option = {
   label: string;
@@ -450,5 +451,28 @@ const SelectCheckbox = ({ color, ...props }: Omit<CheckboxProps, "color"> & { co
       }
       {...props}
     />
+  );
+};
+
+export const PreviewSelect = <T extends Option>({
+  options,
+  values,
+  show,
+}: {
+  options: T[];
+  values: T[];
+  show: boolean;
+}) => {
+  return (
+    <PreviewFilter show={show}>
+      {values.length === 0
+        ? t({ id: "data.filters.none", message: "None" })
+        : values.length === options.length
+        ? t({ id: "data.filters.all", message: "All" })
+        : t({
+            id: "data.filters.some",
+            message: `${values.length} of ${options.length}`,
+          })}
+    </PreviewFilter>
   );
 };

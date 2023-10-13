@@ -2,8 +2,6 @@ import { getMarketColor } from "@/domain/colors";
 import {
   addedValueValues,
   addedValueValuesAtom,
-  salesRegions,
-  salesRegionsAtom,
   indicatorAtom,
   indicators,
   markets,
@@ -12,6 +10,8 @@ import {
   productionSystemsAtom,
   products,
   productsAtom,
+  salesRegions,
+  salesRegionsAtom,
   timeRangeAtom,
   timeViewAtom,
 } from "@/domain/data";
@@ -24,7 +24,6 @@ import {
   AccordionSummary,
   Box,
   Button,
-  Grow,
   Stack,
   Typography,
 } from "@mui/material";
@@ -32,9 +31,10 @@ import { useAtom } from "jotai";
 import { PropsWithChildren, SyntheticEvent, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import { makeStyles } from "../style-utils";
-import RadioFilter from "./RadioFilter";
-import Select, { Option } from "./Select";
-import TimeFilter, { previewTime } from "./TimeFilter";
+import PreviewFilter from "./filters/PreviewFilter";
+import RadioFilter from "./filters/RadioFilter";
+import Select, { PreviewSelect } from "./filters/SelectFilter";
+import TimeFilter, { previewTime } from "./filters/TimeFilter";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -51,6 +51,16 @@ const useExclusiveAccordion = (defaultState: string) => {
   };
   return { getAccordionProps };
 };
+
+const useSidePanelStyles = makeStyles()((theme) => ({
+  inverted: {
+    backgroundColor: theme.palette.grey[700],
+    color: theme.palette.grey[50],
+    "&:hover": {
+      backgroundColor: theme.palette.grey[800],
+    },
+  },
+}));
 
 const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
@@ -112,16 +122,6 @@ const SidePanel = () => {
   );
 };
 
-const useSidePanelStyles = makeStyles()((theme) => ({
-  inverted: {
-    backgroundColor: theme.palette.grey[700],
-    color: theme.palette.grey[50],
-    "&:hover": {
-      backgroundColor: theme.palette.grey[800],
-    },
-  },
-}));
-
 const SidePanelButton = ({
   inverted = false,
   children,
@@ -141,44 +141,6 @@ const AccordionTitle = ({ children }: { children: React.ReactNode }) => {
     <Typography variant="h5" fontWeight="bold" color="grey.800">
       {children}
     </Typography>
-  );
-};
-
-const PreviewFilter = ({
-  show = true,
-  children,
-}: {
-  show: boolean;
-} & PropsWithChildren) => {
-  return (
-    <Grow in={show}>
-      <Typography variant="body2" color="grey.500" mr={1}>
-        {children}
-      </Typography>
-    </Grow>
-  );
-};
-
-const PreviewSelect = <T extends Option>({
-  options,
-  values,
-  show,
-}: {
-  options: T[];
-  values: T[];
-  show: boolean;
-}) => {
-  return (
-    <PreviewFilter show={show}>
-      {values.length === 0
-        ? t({ id: "data.filters.none", message: "None" })
-        : values.length === options.length
-        ? t({ id: "data.filters.all", message: "All" })
-        : t({
-            id: "data.filters.some",
-            message: `${values.length} of ${options.length}`,
-          })}
-    </PreviewFilter>
   );
 };
 

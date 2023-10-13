@@ -21,7 +21,7 @@ import "dayjs/locale/de";
 import "dayjs/locale/fr";
 import "dayjs/locale/it";
 import { useEffect, useMemo, useState } from "react";
-import { withStyles } from "../style-utils";
+import { withStyles } from "../../style-utils";
 
 const FilterToggleButton = withStyles(ToggleButton, (theme) => ({
   root: {

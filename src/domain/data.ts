@@ -1,4 +1,4 @@
-import { Option } from "@/components/browser/Select";
+import { Option } from "@/components/browser/filters/SelectFilter";
 import dayjs from "dayjs";
 import { atom, ExtractAtomValue } from "jotai";
 import { atomWithHash } from "jotai-location";
