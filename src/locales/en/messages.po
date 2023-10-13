@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.hero.title"
-msgstr ""
-
-#. js-lingui-explicit-id
 #: src/components/browser/TimeFilter.tsx
 #~ msgid "data.filters.reset"
 #~ msgstr ""
@@ -69,7 +64,7 @@ msgid "data.filters.some"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
+#: src/pages/data.tsx
 msgid "data.filters.results"
 msgstr ""
 
@@ -173,6 +168,16 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.download"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.hero.title"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -337,6 +342,16 @@ msgstr ""
 #~ msgstr "Markets"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.metadata"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.metadata.title"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
 msgstr ""
@@ -403,6 +418,16 @@ msgid "filters.select.all"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.showFiler"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.query"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.newsletter"
 msgstr ""
@@ -434,6 +459,11 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.visualize"
 msgstr ""
 
 #. js-lingui-explicit-id

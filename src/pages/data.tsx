@@ -137,7 +137,7 @@ const DataBrowser = () => {
               href="https://int.visualize.admin.ch/en/browse/organization/https%3A%2F%2Fregister.ld.admin.ch[…]-fur-landwirtschaft-blw?includeDrafts=true&dataSource=Int"
               target="_blank"
             >
-              <Trans id="data.actions.metadata">Visualize</Trans>
+              <Trans id="data.actions.visualize">Visualize</Trans>
             </Button>
             <Button size="small" onClick={() => setShowMetadataPanel(true)}>
               <Trans id="data.actions.metadata">Metadata</Trans>
