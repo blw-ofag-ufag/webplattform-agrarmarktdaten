@@ -1,18 +1,21 @@
 import {
+  Alert,
+  AlertTitle,
   Box,
   Button,
-  createTheme,
+  CircularProgress,
   Drawer,
+  DrawerProps,
   IconButton,
   Paper,
   Stack,
   ThemeProvider,
   Typography,
-  DrawerProps,
+  createTheme,
 } from "@mui/material";
 import { useAtom } from "jotai";
 import React, { PropsWithChildren, useEffect, useState } from "react";
-import { QueryClientProvider } from "react-query";
+import { QueryClientProvider, useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import { AppLayout } from "@/components/layout";
@@ -21,9 +24,9 @@ import blwTheme from "@/theme/blw";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
-import { plural, t, Trans } from "@lingui/macro";
+import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { lindasClient } from "./api/use-sparql";
+import { CubeResult, fetchCube, fetchObservations, lindasClient } from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -85,7 +88,13 @@ const DataBrowser = () => {
     markets,
   });
 
-  //const cubesQuery = useQuery<CubeResult[], Error>(["cubes"], fetchPossibleCubes);
+  const cubeQuery = useQuery<CubeResult, Error>({
+    queryKey: ["cube"],
+    queryFn: () =>
+      fetchCube(
+        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
+      ),
+  });
 
   /* const dims = cubes.map((cube) => {
     if (cube.view) {
@@ -97,8 +106,6 @@ const DataBrowser = () => {
   console.log(dims); */
 
   const resultCount = 0; //placeholder
-  const r = contentRef.current;
-  console.log(r);
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
@@ -156,7 +163,21 @@ const DataBrowser = () => {
               alignItems: "center",
             }}
           >
-            🚧
+            <>
+              {cubeQuery.isLoading && <CircularProgress size={24} />}
+              {cubeQuery.isError && (
+                <Alert
+                  sx={{
+                    width: "70%",
+                  }}
+                  severity="error"
+                >
+                  <AlertTitle>Error</AlertTitle>
+                  {cubeQuery.error.message}
+                </Alert>
+              )}
+              {cubeQuery.isSuccess && <Table cube={cubeQuery.data} />}
+            </>
           </Paper>
         </Box>
         <ContentDrawer
@@ -177,20 +198,6 @@ const DataBrowser = () => {
           </Box>
         </ContentDrawer>
 
-        {/* <>
-          {cubesQuery.isLoading && <CircularProgress size={24} />}
-          {cubesQuery.isError && (
-            <Alert
-              sx={{
-                width: "70%",
-              }}
-              severity="error"
-            >
-              <AlertTitle>Error</AlertTitle>
-              {cubesQuery.error.message}
-            </Alert>
-          )}
-        </> */}
         {/* <DataBrowserDebug /> */}
         {/*  <Results
           cubesQuery={cubesQuery}
@@ -235,5 +242,34 @@ const ContentDrawer = ({
     >
       {children}
     </Drawer>
+  );
+};
+
+const Table = ({ cube }: { cube: CubeResult }) => {
+  const observationsQuery = useQuery({
+    queryKey: ["observations"],
+    queryFn: () => fetchObservations(cube.view),
+  });
+  console.log(observationsQuery);
+  return (
+    <>
+      {observationsQuery.isLoading && <CircularProgress size={24} />}
+
+      {observationsQuery.isSuccess && (
+        <Stack>
+          <Box
+            sx={{
+              backgroundColor: "grey.200",
+              padding: 4,
+              border: "1px solid",
+              borderColor: "grey.300",
+            }}
+          >
+            <Typography variant="h5">{cube.iri}</Typography>
+            <Typography variant="body2">{observationsQuery.data.length} records</Typography>
+          </Box>
+        </Stack>
+      )}
+    </>
   );
 };
