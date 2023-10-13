@@ -60,6 +60,7 @@
     "graphql-tag": "^2.10.3",
     "isomorphic-unfetch": "^4.0.2",
     "jotai": "^2.4.1",
+    "jotai-location": "^0.5.1",
     "lodash": "^4.17.15",
     "make-plural": "^7.3.0",
     "next": "^13.4.4",
