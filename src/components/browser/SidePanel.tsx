@@ -2,8 +2,8 @@ import { getMarketColor } from "@/domain/colors";
 import {
   addedValueValues,
   addedValueValuesAtom,
-  countries,
-  countriesAtom,
+  salesRegions,
+  salesRegionsAtom,
   indicatorAtom,
   indicators,
   markets,
@@ -92,7 +92,7 @@ const SidePanel = () => {
         <AddedValueAccordion {...getAccordionProps("addedvalue")} />
         <ProductionSystemsAccordion {...getAccordionProps("productionsystems")} />
         <ProductsAccordion {...getAccordionProps("products")} />
-        <CountriesAccordion {...getAccordionProps("countries")} />
+        <SalesRegionsAccordion {...getAccordionProps("salesRegions")} />
       </Box>
       <Stack direction="column">
         <SidePanelButton inverted>
@@ -291,18 +291,18 @@ const ProductionSystemsAccordion = (props: Omit<AccordionProps, "children">) => 
   );
 };
 
-const CountriesAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [values, setValues] = useAtom(countriesAtom);
+const SalesRegionsAccordion = (props: Omit<AccordionProps, "children">) => {
+  const [values, setValues] = useAtom(salesRegionsAtom);
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>
-          <Trans id="data.filters.countries">Sales Region</Trans>
+          <Trans id="data.filters.salesRegions">Sales Region</Trans>
         </AccordionTitle>
-        <PreviewSelect show={!props.expanded} values={values} options={countries} />
+        <PreviewSelect show={!props.expanded} values={values} options={salesRegions} />
       </AccordionSummary>
       <AccordionDetails>
-        <Select options={countries} values={values} onChange={setValues} />
+        <Select options={salesRegions} values={values} onChange={setValues} />
       </AccordionDetails>
     </FilterAccordion>
   );
