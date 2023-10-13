@@ -172,13 +172,13 @@ msgstr "Data"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.actions.download"
+msgid "data.hero.title"
 msgstr "Data download"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.hero.title"
-msgstr "data.hero.title"
+msgid "data.actions.download"
+msgstr "Data download"
 
 #. js-lingui-explicit-id
 #: src/components/card-data.tsx

@@ -84,6 +84,7 @@ const SidePanel = () => {
               options: markets,
             },
           }}
+          options={markets}
           filterAtom={marketsAtom}
           title={t({ id: "data.filters.markets", message: "Markets" })}
         />
@@ -94,6 +95,7 @@ const SidePanel = () => {
               options: addedValueValues,
             },
           }}
+          options={addedValueValues}
           filterAtom={addedValueValuesAtom}
           title={t({ id: "data.filters.addedValue", message: "Added Value" })}
         />
@@ -104,6 +106,7 @@ const SidePanel = () => {
               options: productionSystems,
             },
           }}
+          options={productionSystems}
           filterAtom={productionSystemsAtom}
           title={t({ id: "data.filters.productionSystems", message: "Production Systems" })}
         />
@@ -117,6 +120,7 @@ const SidePanel = () => {
               colorCheckbox: (d) => getMarketColor(d.marketSlug)[1],
             },
           }}
+          options={products}
           filterAtom={productsAtom}
           title={t({ id: "data.filters.products", message: "Products" })}
         />
@@ -127,6 +131,7 @@ const SidePanel = () => {
               options: salesRegions,
             },
           }}
+          options={salesRegions}
           filterAtom={salesRegionsAtom}
           title={t({ id: "data.filters.salesRegions", message: "Sales Regions" })}
         />
@@ -147,8 +152,10 @@ const FilterSelectAccordion = <T extends Option>({
   filterAtom,
   title,
   slots,
+  options,
 }: {
   filterAtom: Atom<T[]>;
+  options: T[];
   title: string;
   slots: {
     accordion: Omit<AccordionProps, "children">;
@@ -161,7 +168,7 @@ const FilterSelectAccordion = <T extends Option>({
     <FilterAccordion {...slots.accordion}>
       <AccordionSummary>
         <AccordionTitle>{title}</AccordionTitle>
-        <PreviewSelect show={!slots.accordion.expanded} values={values} options={markets} />
+        <PreviewSelect show={!slots.accordion.expanded} values={values} options={options} />
       </AccordionSummary>
       <AccordionDetails>
         <Select values={values} onChange={setValues} {...slots.select} />

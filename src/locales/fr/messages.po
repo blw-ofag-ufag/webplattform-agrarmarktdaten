@@ -172,12 +172,12 @@ msgstr ""
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.actions.download"
+msgid "data.hero.title"
 msgstr ""
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.hero.title"
+msgid "data.actions.download"
 msgstr ""
 
 #. js-lingui-explicit-id
