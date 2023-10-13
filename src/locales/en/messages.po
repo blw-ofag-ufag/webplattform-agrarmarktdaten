@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.hero.title"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/browser/TimeFilter.tsx
 #~ msgid "data.filters.reset"
 #~ msgstr ""
@@ -36,6 +41,21 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #~ msgid "contact.contact"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.download"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.alert.info"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.query"
 #~ msgstr ""
 
 #. js-lingui-explicit-id
@@ -158,11 +178,6 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.action.download"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -337,11 +352,6 @@ msgid "data.filters.none"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.alert.info"
-msgstr ""
-
-#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.productionSystems"
 msgstr ""
@@ -390,11 +400,6 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.all"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.action.query"
 msgstr ""
 
 #. js-lingui-explicit-id
