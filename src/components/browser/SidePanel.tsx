@@ -75,8 +75,6 @@ const SidePanel = () => {
             </Typography>
           </Stack>
         </Box>
-        <IndicatorAccordion {...getAccordionProps("indicator")} />
-        <TimeAccordion {...getAccordionProps("time")} />
         <FilterSelectAccordion
           slots={{
             accordion: getAccordionProps("markets"),
@@ -99,17 +97,8 @@ const SidePanel = () => {
           filterAtom={addedValueValuesAtom}
           title={t({ id: "data.filters.addedValue", message: "Added Value" })}
         />
-        <FilterSelectAccordion
-          slots={{
-            accordion: getAccordionProps("productionsystems"),
-            select: {
-              options: productionSystems,
-            },
-          }}
-          options={productionSystems}
-          filterAtom={productionSystemsAtom}
-          title={t({ id: "data.filters.productionSystems", message: "Production Systems" })}
-        />
+        <IndicatorAccordion {...getAccordionProps("indicator")} />
+        <TimeAccordion {...getAccordionProps("time")} />
         <FilterSelectAccordion
           slots={{
             accordion: getAccordionProps("products"),
@@ -123,6 +112,17 @@ const SidePanel = () => {
           options={products}
           filterAtom={productsAtom}
           title={t({ id: "data.filters.products", message: "Products" })}
+        />
+        <FilterSelectAccordion
+          slots={{
+            accordion: getAccordionProps("productionsystems"),
+            select: {
+              options: productionSystems,
+            },
+          }}
+          options={productionSystems}
+          filterAtom={productionSystemsAtom}
+          title={t({ id: "data.filters.productionSystems", message: "Production Systems" })}
         />
         <FilterSelectAccordion
           slots={{
