@@ -8,9 +8,10 @@ import {
   Stack,
   ThemeProvider,
   Typography,
+  DrawerProps,
 } from "@mui/material";
 import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
@@ -96,6 +97,8 @@ const DataBrowser = () => {
   console.log(dims); */
 
   const resultCount = 0; //placeholder
+  const r = contentRef.current;
+  console.log(r);
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
@@ -149,32 +152,11 @@ const DataBrowser = () => {
             🚧
           </Paper>
         </Box>
-        <Drawer
+        <ContentDrawer
           anchor="right"
           open={showMetadataPanel}
           onClose={() => setShowMetadataPanel(false)}
-          PaperProps={{
-            style: {
-              width: "388px",
-              position: "absolute",
-              border: "none",
-              top: 0,
-            },
-          }}
-          slotProps={{
-            backdrop: {
-              style: {
-                position: "absolute",
-                top: 0,
-                backgroundColor: "transparent",
-              },
-            },
-          }}
-          SlideProps={{ timeout: { enter: 0, exit: 0 } }}
-          ModalProps={{
-            container: contentRef.current,
-            style: { position: "absolute", top: 0 },
-          }}
+          container={contentRef.current}
         >
           <Box px={4} py={5}>
             <Stack direction="row" justifyContent="space-between">
@@ -184,7 +166,7 @@ const DataBrowser = () => {
               </IconButton>
             </Stack>
           </Box>
-        </Drawer>
+        </ContentDrawer>
 
         {/* <>
           {cubesQuery.isLoading && <CircularProgress size={24} />}
@@ -208,5 +190,41 @@ const DataBrowser = () => {
         /> */}
       </Stack>
     </Stack>
+  );
+};
+
+const ContentDrawer = ({
+  children,
+  container,
+  ...props
+}: { container: HTMLDivElement | null } & PropsWithChildren & DrawerProps) => {
+  return (
+    <Drawer
+      PaperProps={{
+        style: {
+          width: "388px",
+          position: "absolute",
+          border: "none",
+          top: 0,
+        },
+      }}
+      slotProps={{
+        backdrop: {
+          style: {
+            position: "absolute",
+            top: 0,
+            backgroundColor: "transparent",
+          },
+        },
+      }}
+      SlideProps={{ timeout: { enter: 0, exit: 0 } }}
+      ModalProps={{
+        container,
+        style: { position: "absolute", top: 0 },
+      }}
+      {...props}
+    >
+      {children}
+    </Drawer>
   );
 };
