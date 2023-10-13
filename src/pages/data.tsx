@@ -129,8 +129,15 @@ const DataBrowser = () => {
             <Button size="small" startIcon={<IcControlDownload />}>
               <Trans id="data.actions.download">Data download</Trans>
             </Button>
-            <Button size="small">
+            <Button size="small" href="https://test.lindas.admin.ch/sparql/" target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
+            </Button>
+            <Button
+              size="small"
+              href="https://int.visualize.admin.ch/en/browse/organization/https%3A%2F%2Fregister.ld.admin.ch[…]-fur-landwirtschaft-blw?includeDrafts=true&dataSource=Int"
+              target="_blank"
+            >
+              <Trans id="data.actions.metadata">Visualize</Trans>
             </Button>
             <Button size="small" onClick={() => setShowMetadataPanel(true)}>
               <Trans id="data.actions.metadata">Metadata</Trans>
