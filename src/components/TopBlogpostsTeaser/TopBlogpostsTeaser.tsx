@@ -2,7 +2,6 @@ import NextLink from "next/link";
 import { Trans } from "@lingui/macro";
 import * as React from "react";
 import { BlogpostCard } from "@/components/BlogpostCard";
-import Grid from "@mui/material/Unstable_Grid2";
 import * as GQL from "@/graphql";
 import Carousel from "react-material-ui-carousel";
 import { Button, useMediaQuery, Box, Typography } from "@mui/material";
@@ -11,7 +10,8 @@ import LensIcon from "@mui/icons-material/Lens";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
-import { ContentContainer } from "@/components/content-container";
+import { GridContainer, GridWrap, GridWrapElement } from "@/components/Grid";
+import { useTheme } from "@mui/material/styles";
 
 interface Props {
   blogposts: GQL.SimpleBlogPostFragment[];
@@ -23,93 +23,60 @@ export const TopBlogpostsTeaser = (props: Props) => {
   const isTablet = useMediaQuery(b.between("md", "xl"));
   const isMobile = useMediaQuery(b.down("md"));
 
+  const theme = useTheme();
+
   const content = (() => {
     if (isDesktop) {
       return (
-        <Grid
-          container
-          columnSpacing={{
-            xxs: "16px",
-            xs: "20px",
-            sm: "28px",
-            md: "36px",
-            lg: "40px",
-            xl: "48px",
-            xxl: "64px",
-            xxxl: "64px",
-          }}
-          sx={{ width: "100%" }}
-          rowGap={6}
-          columns={{ xxxl: 12, xxl: 12, xl: 12, lg: 6, md: 6, sm: 4, xs: 4, xxs: 4 }}
-        >
+        <GridWrap>
           {blogposts.map((d) => (
-            <Grid key={d.id} xxxl={4} xxl={4} xl={4} lg={0} md={0} sm={0} xs={0} xxs={0}>
+            <GridWrapElement
+              key={d.id}
+              sx={{
+                textDecoration: "none",
+                [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 4 + 64px * 3)" },
+                [theme.breakpoints.only("xxl")]: { width: "calc(70px * 4 + 64px * 3)" },
+                [theme.breakpoints.only("xl")]: { width: "calc(52px * 4 + 48px * 3)" },
+                [theme.breakpoints.only("lg")]: { width: "calc(121px * 3 + 40px * 2)" },
+                [theme.breakpoints.only("md")]: { width: "calc(86px * 3 + 36px * 2)" },
+                [theme.breakpoints.only("sm")]: { width: "calc(65px * 3 + 35px * 2)" },
+                [theme.breakpoints.down("sm")]: { width: "100%" },
+              }}
+            >
               <BlogpostCard {...d} />
-            </Grid>
+            </GridWrapElement>
           ))}
-        </Grid>
+        </GridWrap>
       );
     }
     if (isTablet) {
       const cards = [];
       for (let i = 0; i < blogposts.length; i += 2) {
-        console.log(i);
         if (blogposts[i + 1]) {
           cards.push(
             <Box key={i} display="flex">
-              <Grid
-                key={blogposts[i].id}
-                xxxl={0}
-                xxl={0}
-                xl={0}
-                lg={3}
-                md={3}
-                sm={4}
-                xs={4}
-                xxs={4}
-              >
-                <BlogpostCard {...blogposts[i]} />
-              </Grid>
-              <Grid
-                key={blogposts[i + 1].id}
-                xxxl={0}
-                xxl={0}
-                xl={0}
-                lg={3}
-                md={3}
-                sm={4}
-                xs={4}
-                xxs={4}
-              >
-                <BlogpostCard {...blogposts[i + 1]} />
-              </Grid>
+              <GridWrapElement key={blogposts[i].id}>
+                <Box sx={{ mr: s(2) }}>
+                  <BlogpostCard {...blogposts[i]} />
+                </Box>
+              </GridWrapElement>
+              <GridWrapElement key={blogposts[i + 1].id}>
+                <Box sx={{ ml: s(2) }}>
+                  <BlogpostCard {...blogposts[i + 1]} />
+                </Box>
+              </GridWrapElement>
             </Box>
           );
         } else {
           cards.push(
-            <Grid key={blogposts[i].id} xxxl={0} xxl={0} xl={0} lg={3} md={3} sm={4} xs={4} xxs={4}>
+            <GridWrapElement key={blogposts[i].id}>
               <BlogpostCard {...blogposts[i]} />
-            </Grid>
+            </GridWrapElement>
           );
         }
       }
       return (
-        <Grid
-          container
-          columnSpacing={{
-            xxs: "16px",
-            xs: "20px",
-            sm: "28px",
-            md: "36px",
-            lg: "40px",
-            xl: "48px",
-            xxl: "64px",
-            xxxl: "64px",
-          }}
-          sx={{ maxWidth: "1676px", width: "100%", margin: "0 auto" }}
-          rowGap={6}
-          columns={{ xxxl: 12, xxl: 12, xl: 12, lg: 6, md: 6, sm: 4, xs: 4, xxs: 4 }}
-        >
+        <GridWrap>
           <Carousel
             autoPlay={false}
             IndicatorIcon={<LensIcon />}
@@ -125,27 +92,12 @@ export const TopBlogpostsTeaser = (props: Props) => {
           >
             {cards}
           </Carousel>
-        </Grid>
+        </GridWrap>
       );
     }
     if (isMobile) {
       return (
-        <Grid
-          container
-          columnSpacing={{
-            xxs: "16px",
-            xs: "20px",
-            sm: "28px",
-            md: "36px",
-            lg: "40px",
-            xl: "48px",
-            xxl: "64px",
-            xxxl: "64px",
-          }}
-          sx={{ maxWidth: "1676px", width: "100%", margin: "0 auto" }}
-          rowGap={6}
-          columns={{ xxxl: 12, xxl: 12, xl: 12, lg: 6, md: 6, sm: 4, xs: 4, xxs: 4 }}
-        >
+        <GridWrap>
           <Carousel
             autoPlay={false}
             IndicatorIcon={<LensIcon />}
@@ -154,37 +106,25 @@ export const TopBlogpostsTeaser = (props: Props) => {
             sx={{ width: "100%", height: "fit-content", display: "flex", flexDirection: "column" }}
           >
             {blogposts.map((d) => (
-              <Grid key={d.id} xxxl={0} xxl={0} xl={0} lg={6} md={6} sm={4} xs={4} xxs={4}>
+              <GridWrapElement
+                key={d.id}
+                sx={{ [theme.breakpoints.only("sm")]: { width: "100%" } }}
+              >
                 <BlogpostCard {...d} />
-              </Grid>
+              </GridWrapElement>
             ))}
           </Carousel>
-        </Grid>
+        </GridWrap>
       );
     }
   })();
 
   return (
-    <ContentContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
+    <GridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
       <Typography variant="h1" sx={{ width: "100%", mb: s(8) }}>
         <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
       </Typography>
-      <Box
-        display="flex"
-        sx={{
-          justifyContent: "center",
-          [b.up("xxxl")]: { mx: s(-16 / 2) },
-          [b.up("xxl")]: { mx: s(-16 / 2) },
-          [b.only("xl")]: { mx: s(-12 / 2) },
-          [b.only("lg")]: { mx: s(-10 / 2) },
-          [b.only("md")]: { mx: s(-9 / 2) },
-          [b.only("sm")]: { mx: s(-7 / 2) },
-          [b.only("xs")]: { mx: s(-5 / 2) },
-          [b.down("xs")]: { mx: s(-4 / 2) },
-        }}
-      >
-        {content}
-      </Box>
+      {content}
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: s(8) }}>
         <Box sx={{ maxWidth: "1676px", width: "100%" }}>
           <Box sx={{ display: "flex", justifyContent: "end" }}>
@@ -209,7 +149,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
           </Box>
         </Box>
       </Box>
-    </ContentContainer>
+    </GridContainer>
   );
 };
 
