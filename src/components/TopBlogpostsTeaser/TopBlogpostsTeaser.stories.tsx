@@ -35,7 +35,7 @@ export const Primary: Story = {
         focusArticles: [
           { __typename: "FocusArticleRecord", slug: "bio", title: "Bio", id: "121805523" },
         ],
-        _firstPublishedAt: "5/24/2022",
+        publishedDate: "5/24/2022",
       },
       {
         __typename: "BlogPostRecord",
@@ -51,7 +51,7 @@ export const Primary: Story = {
         },
         markets: [],
         focusArticles: [],
-        _firstPublishedAt: "5/31/2022",
+        publishedDate: "5/31/2022",
       },
       {
         __typename: "BlogPostRecord",
@@ -72,7 +72,7 @@ export const Primary: Story = {
         focusArticles: [
           { __typename: "FocusArticleRecord", slug: "bio", title: "Bio", id: "121805523" },
         ],
-        _firstPublishedAt: "5/24/2022",
+        publishedDate: "5/24/2022",
       },
     ],
   },
