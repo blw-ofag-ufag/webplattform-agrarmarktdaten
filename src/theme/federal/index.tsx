@@ -151,9 +151,9 @@ const theme = createTheme({
     },
   },
   breakpoints: {
-    values: b.values,
+    values: { ...b.values, xxxl: 1920 },
   },
-  spacing: [0, 4, 8, 12, 16, 24, 32, 64, 72],
+  spacing: [0, 4, 8, 12, 16, 24, 32, 64, 72, 84, 96],
   shape: {
     borderRadius: 2,
   },
