@@ -13,8 +13,8 @@ import {
   MenuProps,
   c,
   s,
-  b,
 } from "@interactivethings/swiss-federal-ci";
+import { useTheme } from "@mui/material/styles";
 import { t } from "@lingui/macro";
 import { Box, Link, useMediaQuery, Typography } from "@mui/material";
 import { useRouter } from "next/router";
@@ -22,7 +22,7 @@ import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { useStickyBox } from "react-sticky-box";
 import { ScrollToTop } from "@/components/ScrollToTop";
-
+import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
 
@@ -36,6 +36,7 @@ interface Props {
 }
 
 export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }: Props) => {
+  const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
   const { headerSections, menuSections } = React.useMemo(() => {
@@ -94,62 +95,19 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
       <Box
         sx={{
           borderBottom: `1px solid ${c.monochrome[200]}`,
-          [b.up("lg")]: { display: "flex", justifyContent: "center" },
+          [theme.breakpoints.up("lg")]: { display: "flex", justifyContent: "center" },
         }}
       >
-        <Header
-          shortTitle="BLW"
-          longTitle="Bundesamt für Landwirtschaft"
-          rootHref="/"
-          sections={headerSections}
-          ContentWrapperProps={{
-            sx: {
-              [b.only("xxxl")]: {
-                p: s(3),
-              },
-              [b.only("xxl")]: {
-                p: s(3),
-              },
-              [b.only("xl")]: {
-                p: s(3),
-              },
-              [b.only("lg")]: {
-                p: s(3),
-              },
-              [b.only("md")]: {
-                p: s(3),
-              },
-            },
-          }}
-          sx={{
-            borderBottom: "none",
-            px: 0,
-            [b.only("xxxl")]: {
-              maxWidth: "1676px",
-            },
-            [b.only("xxl")]: {
-              maxWidth: "1544px",
-            },
-            [b.only("xl")]: {
-              maxWidth: "1152px",
-            },
-            [b.only("lg")]: {
-              maxWidth: "928px",
-            },
-            [b.only("md")]: {
-              maxWidth: "100%",
-            },
-            [b.only("sm")]: {
-              maxWidth: "100%",
-            },
-            [b.only("xs")]: {
-              maxWidth: "100%",
-            },
-            [b.down("xxs")]: {
-              maxWidth: "100%",
-            },
-          }}
-        />
+        <GridContainer>
+          <Header
+            shortTitle="BLW"
+            longTitle="Bundesamt für Landwirtschaft"
+            rootHref="/"
+            sections={headerSections}
+            ContentWrapperProps={{ sx: { px: "0!important" } }}
+            sx={{ borderBottom: "none", px: 0, mx: 0 }}
+          />
+        </GridContainer>
       </Box>
       <Box
         ref={stickyRef}
@@ -160,40 +118,26 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
           zIndex: 10,
         }}
       >
-        <Menu
-          sx={{ borderBottom: "none" }}
-          ContentWrapperProps={{
-            sx: {
-              px: 0,
-              width: "100%",
-              [b.only("xxxl")]: {
-                maxWidth: "1676px",
+        <GridContainer>
+          <Menu
+            sx={{ borderBottom: "none", ml: "-12px" }}
+            ContentWrapperProps={{
+              sx: {
+                px: "0!important",
+                width: "100%",
+                [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
+                [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
+                [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
+                [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
+                [theme.breakpoints.only("md")]: { maxWidth: "696px" },
+                [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
+                [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
+                [theme.breakpoints.down("xxs")]: { maxWidth: "340px" },
               },
-              [b.only("xxl")]: {
-                maxWidth: "1544px",
-              },
-              [b.only("xl")]: {
-                maxWidth: "1152px",
-              },
-              [b.only("lg")]: {
-                maxWidth: "928px",
-              },
-              [b.only("md")]: {
-                maxWidth: "696px",
-              },
-              [b.only("sm")]: {
-                maxWidth: "568px",
-              },
-              [b.only("xs")]: {
-                maxWidth: "424px",
-              },
-              [b.down("xxs")]: {
-                maxWidth: "340px",
-              },
-            },
-          }}
-          sections={menuSections}
-        />
+            }}
+            sections={menuSections}
+          />
+        </GridContainer>
       </Box>
       <Box
         sx={{
@@ -218,14 +162,14 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
               sx={{
                 width: "100%",
                 height: "50px",
-                [b.only("xxxl")]: { maxWidth: "1676px" },
-                [b.only("xxl")]: { maxWidth: "1544px" },
-                [b.only("xl")]: { maxWidth: "1152px" },
-                [b.only("lg")]: { maxWidth: "928px" },
-                [b.only("md")]: { maxWidth: "696px" },
-                [b.only("sm")]: { maxWidth: "568px" },
-                [b.only("xs")]: { maxWidth: "424px" },
-                [b.down("xxs")]: { maxWidth: "340px" },
+                [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
+                [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
+                [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
+                [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
+                [theme.breakpoints.only("md")]: { maxWidth: "696px" },
+                [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
+                [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
+                [theme.breakpoints.down("xxs")]: { maxWidth: "340px" },
               }}
             >
               <BackButton />
@@ -241,10 +185,23 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
 };
 
 const FooterBLW = () => {
-  const isXXlAndUp = useMediaQuery(b.up("xxl"));
+  const theme = useTheme();
+  const isXXlAndUp = useMediaQuery(theme.breakpoints.up("xxl"));
   return (
     <Footer
-      ContentWrapperProps={{ sx: { maxWidth: "1920px" } }}
+      ContentWrapperProps={{
+        sx: {
+          px: "0!important",
+          [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
+          [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
+          [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
+          [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
+          [theme.breakpoints.only("md")]: { maxWidth: "696px" },
+          [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
+          [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
+          [theme.breakpoints.only("xxs")]: { maxWidth: "340px" },
+        },
+      }}
       bottomLinks={[
         {
           title: t({ id: "footer.impressum", message: "Impressum" }),
@@ -349,7 +306,7 @@ const FooterBLW = () => {
               display: "flex",
               flexDirection: "column",
               gap: s(10),
-              [b.only("lg")]: {
+              [theme.breakpoints.only("lg")]: {
                 flexDirection: "row",
                 justifyContent: "space-between",
               },
@@ -388,8 +345,8 @@ const FooterBLW = () => {
               sx={{
                 mt: s(10),
                 width: "100%",
-                [b.only("lg")]: { mt: 0 },
-                [b.only("md")]: { mt: s(4) },
+                [theme.breakpoints.only("lg")]: { mt: 0 },
+                [theme.breakpoints.only("md")]: { mt: s(4) },
               }}
             >
               <FooterSectionTitle title="Feedback" />
