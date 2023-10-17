@@ -1,24 +1,32 @@
-import { Trans } from "@lingui/macro";
 import {
   Alert,
   AlertTitle,
   Box,
+  Button,
   CircularProgress,
-  createTheme,
+  Drawer,
+  DrawerProps,
+  IconButton,
+  Paper,
   Stack,
   ThemeProvider,
+  Typography,
+  createTheme,
 } from "@mui/material";
 import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { QueryClientProvider, useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import { AppLayout } from "@/components/layout";
-import { indicatorsAtom, marketsAtom } from "@/domain/data";
+import { indicatorAtom, marketsAtom } from "@/domain/data";
 import blwTheme from "@/theme/blw";
 
 import SidePanel from "@/components/browser/SidePanel";
-import { CubeResult, fetchPossibleCubes, lindasClient } from "./api/use-sparql";
+import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
+import { Trans, plural, t } from "@lingui/macro";
+import { Circle } from "@mui/icons-material";
+import { CubeResult, fetchCube, fetchObservations, lindasClient } from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -30,12 +38,6 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
     },
   },
 });
-
-const useCurrentIndicator = () => {
-  const [indicators] = useAtom(indicatorsAtom);
-  const indicator = indicators.find((x) => x.value);
-  return indicator;
-};
 
 export function SafeHydrate({ children }: { children: React.ReactNode }) {
   const [display, setDisplay] = useState(false);
@@ -53,12 +55,6 @@ export default function DataPage() {
         <ThemeProvider theme={blackAndWhiteTheme}>
           <AppLayout>
             <Stack flexGrow={1} minHeight={0}>
-              <Alert severity="info">
-                <Trans id="data.alert.info">
-                  Our database contains Milk and Dairy Product market data. Other markets will be
-                  available soon.
-                </Trans>
-              </Alert>
               <Box
                 zIndex={0}
                 display="flex"
@@ -81,8 +77,10 @@ export default function DataPage() {
 }
 
 const DataBrowser = () => {
+  const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   // const locale = useLocale();
-  const indicator = useCurrentIndicator();
+  const contentRef = React.useRef<HTMLDivElement>(null);
+  const indicator = useAtom(indicatorAtom);
   const [markets] = useAtom(marketsAtom);
 
   console.log({
@@ -90,7 +88,13 @@ const DataBrowser = () => {
     markets,
   });
 
-  const cubesQuery = useQuery<CubeResult[], Error>(["cubes"], fetchPossibleCubes);
+  const cubeQuery = useQuery<CubeResult, Error>({
+    queryKey: ["cube"],
+    queryFn: () =>
+      fetchCube(
+        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
+      ),
+  });
 
   /* const dims = cubes.map((cube) => {
     if (cube.view) {
@@ -101,33 +105,99 @@ const DataBrowser = () => {
 
   console.log(dims); */
 
-  console.log(cubesQuery.data);
+  const resultCount = 0; //placeholder
 
   return (
-    <Stack direction="row" width="100%">
+    <Stack direction="row" width="100%" ref={contentRef}>
       <Box width="388px" flexGrow={0} flexShrink={0}>
         <SidePanel />
       </Box>
-      <Stack
-        bgcolor="#eee"
-        flexGrow={1}
-        minWidth={0}
-        justifyContent="center"
-        alignItems="center"
-        p="24px"
-      >
-        {cubesQuery.isLoading && <CircularProgress size={24} />}
-        {cubesQuery.isError && (
-          <Alert
+      <Stack bgcolor="#F0F4F7" flexGrow={1} minWidth={0} p="24px" gap={4}>
+        <Stack height="80px" justifyContent="flex-end">
+          <Box sx={{ width: "55px", height: "3px", backgroundColor: "#000" }} />
+          <Typography variant="h1" sx={{ fontSize: "64px" }}>
+            <Trans id="data.hero.title">Data download</Trans>
+          </Typography>
+        </Stack>
+        <Stack direction="row" justifyContent="space-between">
+          <Stack direction="row" gap={1} alignItems="center">
+            <Button variant="inline" startIcon={<IcControlArrowRight />}>
+              <Trans id="data.actions.showFiler">Show Filters</Trans>
+            </Button>
+            <Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />
+            <Typography variant="body2" color="grey.600" padding={2}>
+              {`${resultCount} ${t({
+                id: "data.filters.results",
+                message: plural(resultCount, { one: "result", other: "results" }),
+              })}`}
+            </Typography>
+          </Stack>
+          <Stack direction="row" gap={2}>
+            <Button size="small" startIcon={<IcControlDownload />}>
+              <Trans id="data.actions.download">Data download</Trans>
+            </Button>
+            <Button size="small" href="https://test.lindas.admin.ch/sparql/" target="_blank">
+              <Trans id="data.actions.query">SPARQL query</Trans>
+            </Button>
+            <Button
+              size="small"
+              href="https://int.visualize.admin.ch/en/browse/organization/https%3A%2F%2Fregister.ld.admin.ch[…]-fur-landwirtschaft-blw?includeDrafts=true&dataSource=Int"
+              target="_blank"
+            >
+              <Trans id="data.actions.visualize">Visualize</Trans>
+            </Button>
+            <Button size="small" onClick={() => setShowMetadataPanel(true)}>
+              <Trans id="data.actions.metadata">Metadata</Trans>
+            </Button>
+          </Stack>
+        </Stack>
+
+        <Box flexGrow={1} minHeight={0} sx={{ overflowY: "auto" }}>
+          <Paper
+            elevation={4}
             sx={{
-              width: "70%",
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-            severity="error"
           >
-            <AlertTitle>Error</AlertTitle>
-            {cubesQuery.error.message}
-          </Alert>
-        )}
+            <>
+              {cubeQuery.isLoading && <CircularProgress size={24} />}
+              {cubeQuery.isError && (
+                <Alert
+                  sx={{
+                    width: "70%",
+                  }}
+                  severity="error"
+                >
+                  <AlertTitle>Error</AlertTitle>
+                  {cubeQuery.error.message}
+                </Alert>
+              )}
+              {cubeQuery.isSuccess && <Table cube={cubeQuery.data} />}
+            </>
+          </Paper>
+        </Box>
+        <ContentDrawer
+          anchor="right"
+          open={showMetadataPanel}
+          onClose={() => setShowMetadataPanel(false)}
+          container={contentRef.current}
+        >
+          <Box px={4} py={5}>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography variant="h3">
+                <Trans id="data.metadata.title">Metadata</Trans>
+              </Typography>
+              <IconButton onClick={() => setShowMetadataPanel(false)}>
+                <IcControlArrowRight />
+              </IconButton>
+            </Stack>
+          </Box>
+        </ContentDrawer>
+
         {/* <DataBrowserDebug /> */}
         {/*  <Results
           cubesQuery={cubesQuery}
@@ -136,5 +206,70 @@ const DataBrowser = () => {
         /> */}
       </Stack>
     </Stack>
+  );
+};
+
+const ContentDrawer = ({
+  children,
+  container,
+  ...props
+}: { container: HTMLDivElement | null } & PropsWithChildren & DrawerProps) => {
+  return (
+    <Drawer
+      PaperProps={{
+        style: {
+          width: "388px",
+          position: "absolute",
+          border: "none",
+          top: 0,
+        },
+      }}
+      slotProps={{
+        backdrop: {
+          style: {
+            position: "absolute",
+            top: 0,
+            backgroundColor: "transparent",
+          },
+        },
+      }}
+      SlideProps={{ timeout: { enter: 0, exit: 0 } }}
+      ModalProps={{
+        container,
+        style: { position: "absolute", top: 0 },
+      }}
+      {...props}
+    >
+      {children}
+    </Drawer>
+  );
+};
+
+const Table = ({ cube }: { cube: CubeResult }) => {
+  const observationsQuery = useQuery({
+    queryKey: ["observations"],
+    queryFn: () => fetchObservations(cube.view),
+  });
+  console.log(observationsQuery);
+  return (
+    <>
+      {observationsQuery.isLoading && <CircularProgress size={24} />}
+
+      {observationsQuery.isSuccess && (
+        <Stack>
+          <Box
+            sx={{
+              backgroundColor: "grey.200",
+              padding: 4,
+              border: "1px solid",
+              borderColor: "grey.300",
+            }}
+          >
+            <Typography variant="h5">{cube.iri}</Typography>
+            <Typography variant="body2">{observationsQuery.data.length} records</Typography>
+          </Box>
+        </Stack>
+      )}
+    </>
   );
 };

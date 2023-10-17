@@ -21,7 +21,7 @@ import "dayjs/locale/de";
 import "dayjs/locale/fr";
 import "dayjs/locale/it";
 import { useEffect, useMemo, useState } from "react";
-import { withStyles } from "../style-utils";
+import { withStyles } from "../../style-utils";
 
 const FilterToggleButton = withStyles(ToggleButton, (theme) => ({
   root: {
@@ -119,7 +119,6 @@ export default function TimeFilter({
 
     return values;
   }, [minDate, maxDate, view, timeFormat]);
-  console.log(sliderValues);
 
   return (
     <Stack gap={3}>
@@ -173,7 +172,7 @@ export default function TimeFilter({
           <DatePickerField
             min={minDate}
             max={maxDate}
-            label={t({ id: "data.filters.from", message: "To" })}
+            label={t({ id: "data.filters.to", message: "To" })}
             views={view === "year" ? ["year"] : ["year", "month"]}
             format={timeFormat}
             value={dayjs.unix(value[1])}

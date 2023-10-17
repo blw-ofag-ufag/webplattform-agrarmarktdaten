@@ -8,11 +8,49 @@ msgstr ""
 "Language: en\n"
 
 #. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.reset"
+#~ msgstr ""
+
 #. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.time.year"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.time.month"
+#~ msgstr ""
+
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 #: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.download"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.alert.info"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.action.query"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.total"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.some"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {result} other {results}}"
 
@@ -29,13 +67,89 @@ msgstr "About us"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
+msgid "data.filters.addedValue"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.all"
 msgstr "All"
 
 #. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "button.show.all"
-msgstr "-"
+msgstr "Show all posts"
+
+#: src/components/card-data.tsx
+#~ msgid "article.card.data"
+#~ msgstr "Query Database"
+
+#: src/components/card-data.tsx
+#~ msgid "article.card.report.month"
+#~ msgstr "Chart of the Month"
+
+#: src/components/card-data.tsx
+#~ msgid "article.link.data.explore"
+#~ msgstr "Explore Data"
+
+#: src/components/card-data.tsx
+#~ msgid "article.link.open.report"
+#~ msgstr "Open Report"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.data"
+#~ msgstr "Data"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.infografic"
+#~ msgstr "Infografik"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.link"
+#~ msgstr "Links"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.news"
+#~ msgstr "Latest"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.section.trade"
+#~ msgstr "Trade Levels"
+
+#: src/pages/market/[slug].tsx
+#~ msgid "article.teaser.data.title"
+#~ msgstr "Data about the Potatoe Market"
+
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "button.infografic.teaser"
+#~ msgstr "See Infografics"
+
+#: src/pages/index.tsx
+#~ msgid "button.show.all"
+#~ msgstr "Show All"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.aria.clear"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.clear"
+msgstr ""
+
+#: src/components/layout.tsx
+#~ msgid "contact.contact"
+#~ msgstr "Contact"
+
+#: src/components/layout.tsx
+#~ msgid "contact.follow.us"
+#~ msgstr "Follow Us"
+
+#: src/components/back-button.tsx
+#~ msgid "cta.back"
+#~ msgstr "Go back"
 
 #. js-lingui-explicit-id
 #: src/components/card-data.tsx
@@ -68,6 +182,15 @@ msgstr "-"
 msgid "data.action.download"
 msgstr "Data download"
 
+#: src/pages/data.tsx
+msgid "data.hero.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.download"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.heading"
@@ -87,6 +210,11 @@ msgstr "Focus"
 #: src/components/layout.tsx
 msgid "contact.follow.us"
 msgstr "Stay informed"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.from"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -119,6 +247,20 @@ msgstr "Contact"
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.teaser"
 msgstr "-"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.indicator"
+msgstr ""
+
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "infografic"
+#~ msgstr "Infografic"
+
+#: src/components/homepage/infografik-teaser.tsx
+#~ msgid "infografic.date"
+#~ msgstr "2018"
 
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
@@ -142,8 +284,11 @@ msgid "homepage.section.data.button"
 msgstr "Learn more"
 
 #. js-lingui-explicit-id
-#: src/components/header.tsx
-#: src/components/header.tsx
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.markets"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.markets"
 msgstr "Markets"
@@ -154,17 +299,27 @@ msgid "homepage.section.market"
 msgstr "Markets"
 
 #. js-lingui-explicit-id
-#: src/components/header.tsx
-#: src/components/header.tsx
-#: src/components/header.tsx
-#: src/components/header.tsx
-#: src/components/layout.tsx
+#: src/pages/data.tsx
+msgid "data.actions.metadata"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.metadata.title"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.month"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr "Analysis"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
+#: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
 msgstr "None"
 
@@ -172,6 +327,15 @@ msgstr "None"
 #: src/pages/data.tsx
 msgid "data.alert.info"
 msgstr "-"
+
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.productionSystems"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.products"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/pages/blog/[slug].tsx
@@ -189,6 +353,16 @@ msgid "article.link.open.report"
 msgstr "?"
 
 #. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.control.reset"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.salesRegions"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.title"
@@ -198,6 +372,25 @@ msgstr "-"
 #: src/components/browser/SidePanel.tsx
 msgid "data.action.query"
 msgstr "SPARQL query"
+
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.search"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.all"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.showFiler"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.query"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -212,11 +405,33 @@ msgstr "Terms of use"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.id"
-msgstr "Lorem Ipsum"
+msgstr "The Federal Office for Agriculture FOAG is the Confederation's competence centre for all core issues relating to the agricultural sector. The FOAG is committed to ensuring that farmers produce high-quality food sustainably and with a focus on the market. "
 
 #. js-lingui-explicit-id
-#: src/components/header.tsx
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
-msgstr "Lorem Ipsum"
+msgstr "Various data can be selected and downloaded via the data download, in particular price series, and in some cases also quantity and area data. Data are available from the year 2000 onwards."
 
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.time"
+msgstr ""
+
+#: src/components/header.tsx
+#~ msgid "title.agricultural.market.data"
+#~ msgstr "Agricultural Market Data"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.to"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.visualize"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.year"
+msgstr ""

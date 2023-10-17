@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material/styles";
-import { breakpoints } from "@interactivethings/swiss-federal-ci";
-import federalTheme from "@/theme/federal";
 import { IcControlChevronDown } from "@/icons/icons-jsx/control";
+import federalTheme from "@/theme/federal";
+import { breakpoints } from "@interactivethings/swiss-federal-ci";
+import { createTheme } from "@mui/material/styles";
 
 declare module "@mui/material" {
   interface ButtonPropsVariantOverrides {
@@ -46,6 +46,24 @@ const theme = createTheme(federalTheme, {
           },
         },
       ],
+    },
+    MuiCheckbox: {
+      defaultProps: {
+        checkedIcon: undefined,
+        icon: undefined,
+      },
+      styleOverrides: {
+        root: {
+          color: "primary.main",
+          "&.Mui-disabled": {
+            color: "grey.500",
+            "&.Mui-checked": {
+              color: "primary.disabled",
+            },
+          },
+        },
+        checked: {},
+      },
     },
   },
 });

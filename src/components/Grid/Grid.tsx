@@ -10,7 +10,7 @@ interface Props {
   sx?: SxProps;
 }
 
-/**
+/*
  * BREAKPOINTS FOR REFERENCE
   xxs: 380,
   xs: 480,

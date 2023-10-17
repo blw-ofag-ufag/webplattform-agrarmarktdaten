@@ -33,6 +33,6 @@ export const Milk: Story = {
     focusArticles: [
       { __typename: "FocusArticleRecord", slug: "bio", title: "Bio", id: "121805521" },
     ],
-    _firstPublishedAt: "5/24/2022",
+    publishedDate: "5/24/2022",
   },
 };

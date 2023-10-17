@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Cube, Source, View, LookupSource, CubeDimension } from "rdf-cube-view-query";
-import * as ns from "../../lib/namespace";
-import rdf from "rdf-ext";
 import { defaultLocale } from "@/locales/locales";
 import { Literal, NamedNode } from "@rdfjs/types";
+import { Cube, CubeDimension, LookupSource, Source, View } from "rdf-cube-view-query";
+import rdf from "rdf-ext";
+import { useEffect, useState } from "react";
 import { QueryClient } from "react-query";
+import * as ns from "../../lib/namespace";
 
 export type UseQueryOptions<T> = {
   enabled: boolean;
@@ -118,6 +118,27 @@ export const fetchPossibleCubes = async () => {
     };
   });
   return results;
+};
+
+export const fetchObservations = async (view?: View) => {
+  if (view) {
+    const observations = await view.observations({});
+    return observations;
+  }
+  return [];
+};
+
+export const fetchCube = async (iri: string) => {
+  const cube = await source.cube(iri);
+  if (cube) {
+    return {
+      cube,
+      iri: cube.term?.value,
+      label: cube.out(ns.schema.name, { language: ["en", "de", "*"] }),
+      view: View.fromCube(cube),
+    };
+  }
+  throw Error(`Cube not found: ${iri}`);
 };
 
 export type ObservationValue = string | number | boolean;

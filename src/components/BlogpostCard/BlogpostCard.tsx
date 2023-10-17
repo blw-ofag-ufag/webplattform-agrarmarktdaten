@@ -11,7 +11,7 @@ import { useLocale } from "@/lib/use-locale";
 import Flex from "../flex";
 
 export const BlogpostCard = (props: GQL.SimpleBlogPostFragment) => {
-  const { title, lead, image, markets, slug, _firstPublishedAt } = props;
+  const { title, lead, image, markets, slug, publishedDate } = props;
   const locale = useLocale();
   const [ref, width] = useResizeObserver();
 
@@ -56,9 +56,9 @@ export const BlogpostCard = (props: GQL.SimpleBlogPostFragment) => {
             mb: s(4),
           }}
         >
-          {_firstPublishedAt && (
+          {publishedDate && (
             <Typography variant="body2" sx={{ color: c.monochrome[500] }}>
-              {i18n.date(_firstPublishedAt, { year: "numeric", month: "long", day: "numeric" })}
+              {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
             </Typography>
           )}
         </Flex>

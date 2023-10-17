@@ -65,7 +65,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
             };
           }) ?? [],
       },
-      { title: "Analysis", href: "/analysis" },
+      { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
       { title: "Data", href: "/data" },
       { title: "Methods", href: "/methods" },
     ];
@@ -90,7 +90,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
       };
 
   return (
-    <Box position="relative" minHeight="100vh">
+    <Box position="relative" minHeight="100vh" display="flex" flexDirection="column">
       <LocaleSwitcher {...localeSwitcherProps} />
       <Box
         sx={{
@@ -178,7 +178,12 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
         ) : null}
         {children}
       </Box>
-      {router.pathname !== "/data" && <FooterBLW />}
+
+      {router.pathname !== "/data" && (
+        <>
+          <FooterBLW />
+        </>
+      )}
       <ScrollToTop />
     </Box>
   );
