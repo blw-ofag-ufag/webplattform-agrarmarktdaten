@@ -6,20 +6,22 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: AMDP\n"
 "Language: de\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
 #: src/components/browser/SidePanel.tsx
 #~ msgid "data.action.download"
-#~ msgstr "Download data"
+#~ msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 #~ msgid "data.alert.info"
-#~ msgstr "Our database contains Milk and Dairy Product market data. Other markets will be available soon."
+#~ msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -68,22 +70,21 @@ msgid "button.show.all"
 msgstr "Alle Beiträge anzeigen"
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx
-#: src/components/card-data.tsx
-#: src/components/card-data.tsx
-#: src/components/card-data.tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-#: src/pages/index.tsx
 #: src/components/layout.tsx
-#: src/components/layout.tsx
-#: src/components/back-button.tsx
+msgid "menu.analysis"
+msgstr "Analyse"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.aria.clear"
+msgstr "Clear"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.clear"
+msgstr "Clear"
+
+#. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data"
 msgstr "Daten"
@@ -98,15 +99,14 @@ msgstr "Data download"
 msgid "data.actions.download"
 msgstr "Data download"
 
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.productionSystems"
+#~ msgstr "Production Systems"
+
 #. js-lingui-explicit-id
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
 msgstr "-"
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.action.download"
-msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -136,9 +136,6 @@ msgstr "From"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-#: src/components/layout.tsx
 msgid "footer.furtherinformation"
 msgstr "Weitere Informationen"
 
@@ -148,14 +145,6 @@ msgid "cta.back"
 msgstr "Zurück"
 
 #. js-lingui-explicit-id
-#: src/pages/blog/[slug].tsx
-#: src/pages/index.tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/theme/[slug].tsx
-#: src/pages/index.tsx
-#: src/pages/index.tsx
-#: src/pages/index.tsx
-#: src/pages/index.tsx
 #: src/components/layout.tsx
 msgid "footer.impressum"
 msgstr "Kontakt"
@@ -180,8 +169,6 @@ msgstr "Indicator"
 
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
 msgstr "Infografik?"
 
@@ -192,9 +179,6 @@ msgid "button.infografic.teaser"
 msgstr "Infografik Ansehen?"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "Mehr erfahren"
@@ -240,9 +224,6 @@ msgid "data.filters.none"
 msgstr "Keine"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.alert.info"
-msgstr "-"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.productionSystems"
 msgstr "Production Systems"
