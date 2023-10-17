@@ -14,6 +14,31 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.reset"
+#~ msgstr "data.filters.reset"
+
+#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.time.year"
+#~ msgstr "data.filters.time.year"
+
+#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.time.month"
+#~ msgstr "data.filters.time.month"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "footer.dataprotection"
+#~ msgstr "Datenschutzverordnung"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "contact.contact"
+#~ msgstr "Kontakt"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 #~ msgid "data.action.download"
 #~ msgstr "Daten herunterladen"
@@ -21,7 +46,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 #~ msgid "data.alert.info"
-#~ msgstr "-"
+#~ msgstr "Our database contains Milk and Dairy Product market data. Other markets will be available soon."
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -70,6 +95,15 @@ msgid "button.show.all"
 msgstr "Alle Beiträge anzeigen"
 
 #. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.aria.clear"
+msgstr "Clear"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.clear"
+msgstr "Clear"
+
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analyse"
@@ -104,9 +138,19 @@ msgstr "Data download"
 #~ msgstr "Production Systems"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.hero.title"
+msgstr "Data download"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.download"
+msgstr "Data download"
+
+#. js-lingui-explicit-id
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
-msgstr "-"
+msgstr "Daten abfragen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -127,6 +171,11 @@ msgstr "Fokus"
 #: src/components/layout.tsx
 msgid "contact.follow.us"
 msgstr "Informiert bleiben"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.from"
+msgstr "From"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
@@ -189,6 +238,11 @@ msgid "data.filters.markets"
 msgstr "Markets"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.markets"
+msgstr "Markets"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.markets"
 msgstr "Märkte"
@@ -197,6 +251,21 @@ msgstr "Märkte"
 #: src/pages/index.tsx
 msgid "homepage.section.market"
 msgstr "Märkte"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.metadata"
+msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.metadata.title"
+msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.month"
+msgstr "Month"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -224,6 +293,11 @@ msgid "data.filters.none"
 msgstr "Keine"
 
 #. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.none"
+msgstr "None"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.productionSystems"
 msgstr "Production Systems"
@@ -247,6 +321,16 @@ msgstr "Auftrag und rechtliche Grundlage"
 #: src/components/card-data.tsx
 msgid "article.link.open.report"
 msgstr "-"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.control.reset"
+msgstr "Reset"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.salesRegions"
+msgstr "Sales Regions"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

@@ -29,6 +29,21 @@ msgstr ""
 #~ msgstr ""
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "footer.dataprotection"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.time.year"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#~ msgid "data.filters.time.month"
+#~ msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 #~ msgid "data.action.download"
 #~ msgstr "Scarica i dati"
@@ -56,6 +71,16 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.results"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.some"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.filters.results"
 msgstr "{resultCount, plural, one {risultato} other {risultati}}"
 
 #. js-lingui-explicit-id
@@ -72,6 +97,11 @@ msgstr "Chi siamo"
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.addedValue"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.all"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -175,13 +205,10 @@ msgstr ""
 msgid "data.actions.download"
 msgstr ""
 
-#: src/components/browser/SidePanel.tsx
-#~ msgid "data.filters.productionSystems"
-#~ msgstr ""
-
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
-#~ msgid "data.hero.title"
-#~ msgstr ""
+msgid "data.hero.title"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/card-data.tsx
@@ -218,6 +245,11 @@ msgid "data.filters.from"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.from"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.furtherinformation"
@@ -237,6 +269,11 @@ msgstr "Contatto"
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.teaser"
 msgstr "-"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.indicator"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -266,6 +303,11 @@ msgstr "-"
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "Per saperne di più"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.markets"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -343,10 +385,25 @@ msgid "data.filters.salesRegions"
 msgstr ""
 
 #. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.control.reset"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.salesRegions"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.title"
 msgstr "-"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.search"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -388,6 +445,11 @@ msgstr "Lorem Ipsum"
 msgid "data.filters.time"
 msgstr ""
 
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.time"
+msgstr ""
+
 #: src/components/header.tsx
 #~ msgid "title.agricultural.market.data"
 #~ msgstr ""
@@ -401,6 +463,16 @@ msgstr ""
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
 msgstr "È possibile selezionare e scaricare diversi dati, in particolare le serie dei prezzi e, in alcuni casi, anche i dati relativi alle quantità e alle superfici. I dati sono disponibili a partire dall'anno 2000."
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.visualize"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.year"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx

@@ -182,9 +182,9 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
       {router.pathname !== "/data" && (
         <>
           <FooterBLW />
+          <ScrollToTop />
         </>
       )}
-      <ScrollToTop />
     </Box>
   );
 };
