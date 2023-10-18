@@ -5,6 +5,9 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { BlogpostGrid } from "@/components/BlogpostGrid";
+import { QueryClientProvider, QueryClient } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function Analysis({
   analysisPage,
@@ -13,6 +16,7 @@ export default function Analysis({
   allMarketArticles,
 }: GQL.AnalysisPageQuery) {
   return (
+    <QueryClientProvider client={queryClient}>
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero
         title={analysisPage?.title as string}
@@ -21,6 +25,7 @@ export default function Analysis({
       />
       <BlogpostGrid blogposts={allBlogPosts} isFirstPage />
     </AppLayout>
+    </QueryClientProvider>
   );
 }
 
