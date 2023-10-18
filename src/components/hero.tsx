@@ -78,9 +78,9 @@ export const Hero = (props: Props) => {
         >
           <GridContainer sx={{ mx: 0 }}>
             <GridElement
-              xxxl={8}
-              xxl={8}
-              xl={8}
+              xxxl={shifted ? 8 : 10}
+              xxl={shifted ? 8 : 10}
+              xl={shifted ? 8 : 10}
               sx={{
                 mx: 0,
                 ...(shifted && {
