@@ -14,17 +14,18 @@ export default function Analysis({
   allBlogPosts,
   allFocusArticles,
   allMarketArticles,
+  _allBlogPostsMeta,
 }: GQL.AnalysisPageQuery) {
   return (
     <QueryClientProvider client={queryClient}>
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero
-        title={analysisPage?.title as string}
-        lead={analysisPage?.lead as string}
-        bgColor={c.cobalt[100]}
-      />
-      <BlogpostGrid blogposts={allBlogPosts} isFirstPage />
-    </AppLayout>
+      <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+        <Hero
+          title={analysisPage?.title as string}
+          lead={analysisPage?.lead as string}
+          bgColor={c.cobalt[100]}
+        />
+        <BlogpostGrid blogposts={allBlogPosts} totalBlogpostCount={_allBlogPostsMeta.count} />
+      </AppLayout>
     </QueryClientProvider>
   );
 }

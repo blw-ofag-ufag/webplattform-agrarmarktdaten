@@ -5819,6 +5819,15 @@ export type AnalysisPageQueryVariables = Exact<{
 
 export type AnalysisPageQuery = { __typename: 'Query', analysisPage?: { __typename: 'AnalysisPageRecord', id: any, title?: string | null, lead?: string | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, _allBlogPostsMeta: { __typename: 'CollectionMetadata', count: number }, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }> };
 
+export type PaginatedBlogpostsQueryVariables = Exact<{
+  locale: SiteLocale;
+  first: Scalars['IntType']['input'];
+  skip: Scalars['IntType']['input'];
+}>;
+
+
+export type PaginatedBlogpostsQuery = { __typename: 'Query', allBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }> };
+
 export type BlogPostQueryVariables = Exact<{
   locale: SiteLocale;
   slug: Scalars['String']['input'];
@@ -6459,6 +6468,17 @@ ${SimpleBlogPostFragmentDoc}`;
 
 export function useAnalysisPageQuery(options: Omit<Urql.UseQueryArgs<AnalysisPageQueryVariables>, 'query'>) {
   return Urql.useQuery<AnalysisPageQuery, AnalysisPageQueryVariables>({ query: AnalysisPageDocument, ...options });
+};
+export const PaginatedBlogpostsDocument = gql`
+    query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
+  allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+    ...SimpleBlogPost
+  }
+}
+    ${SimpleBlogPostFragmentDoc}`;
+
+export function usePaginatedBlogpostsQuery(options: Omit<Urql.UseQueryArgs<PaginatedBlogpostsQueryVariables>, 'query'>) {
+  return Urql.useQuery<PaginatedBlogpostsQuery, PaginatedBlogpostsQueryVariables>({ query: PaginatedBlogpostsDocument, ...options });
 };
 export const BlogPostDocument = gql`
     query BlogPost($locale: SiteLocale!, $slug: String!) {

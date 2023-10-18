@@ -207,6 +207,12 @@ query AnalysisPage($locale: SiteLocale!) {
   }
 }
 
+query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
+  allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+    ...SimpleBlogPost
+  }
+}
+
 query BlogPost($locale: SiteLocale!, $slug: String!) {
   blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
     ...BlogPost

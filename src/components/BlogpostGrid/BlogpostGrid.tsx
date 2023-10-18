@@ -6,17 +6,44 @@ import { c } from "@interactivethings/swiss-federal-ci";
 import { Pagination } from "@/components/Pagination";
 import { useTheme } from "@mui/material/styles";
 import { GridContainer, GridElement, GridWrap, GridWrapElement } from "@/components/Grid";
+import { client } from "@/graphql";
+import { useRouter } from "next/router";
+import { useQuery } from "react-query";
 
 interface Props {
   blogposts: GQL.SimpleBlogPostFragment[];
-  isFirstPage: boolean;
+  totalBlogpostCount: number;
 }
 
 const BlogPostGrid = (props: Props) => {
-  const { blogposts, isFirstPage } = props;
-  const [current, setCurrent] = React.useState(1);
+  const { blogposts, totalBlogpostCount } = props;
+  const [page, setPage] = React.useState(1);
   const theme = useTheme();
+  const { locale } = useRouter();
   const shouldShowFullCard = useMediaQuery(theme.breakpoints.up("lg"));
+  const { data } = useQuery(
+    ["blogposts", page],
+    async () => {
+      const first = page === 1 ? 7 : 9;
+      //first page has 7 articles, the remaining ones have 9
+      const skip = page === 1 ? 0 : (page - 2) * 9 + 7;
+
+      const result = await client
+        .query<GQL.PaginatedBlogpostsQuery>(GQL.PaginatedBlogpostsDocument, { locale, first, skip })
+        .toPromise();
+
+      if (!result.data?.allBlogPosts) {
+        console.error(result.error?.toString());
+        throw new Error("Failed to fetch API");
+      }
+
+      return result.data?.allBlogPosts;
+    },
+    {
+      initialData: blogposts,
+      keepPreviousData: true,
+    }
+  );
 
   return (
     <Box sx={{ backgroundColor: c.cobalt[50], py: 8 }}>
@@ -49,8 +76,8 @@ const BlogPostGrid = (props: Props) => {
             [theme.breakpoints.only("xxs")]: { maxWidth: "340px", rowGap: "32px" },
           }}
         >
-          {blogposts.map((blogpost, i) => {
-            if (isFirstPage && i === 0 && shouldShowFullCard) {
+          {data?.map((blogpost, i) => {
+            if (page === 1 && i === 0 && shouldShowFullCard) {
               return (
                 <GridElement sx={{ width: "100%!important" }} key={blogpost.id}>
                   <BlogpostCard {...blogpost} variant="full" />
@@ -65,10 +92,11 @@ const BlogPostGrid = (props: Props) => {
           })}
           <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
             <Pagination
-              total={10}
-              current={current}
+              //first page has 7 articles, the remaining ones have 9
+              total={totalBlogpostCount < 8 ? 1 : Math.ceil((totalBlogpostCount - 7) / 9) + 1}
+              current={page}
               onChange={(_, page) => {
-                setCurrent(page);
+                setPage(page);
               }}
             />
           </Box>
