@@ -232,6 +232,12 @@ export type BlogPostModelContentField = {
   value: Scalars['JsonField']['output'];
 };
 
+export type BlogPostModelContentFieldMultiLocaleField = {
+  __typename: 'BlogPostModelContentFieldMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<BlogPostModelContentField>;
+};
+
 export type BlogPostModelContentLinksField = DataDownloadSectionRecord | HighlightSectionRecord | PowerBiReportRecord;
 
 export type BlogPostModelFilter = {
@@ -292,6 +298,7 @@ export enum BlogPostModelOrderBy {
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecord = RecordInterface & {
   __typename: 'BlogPostRecord';
+  _allContentLocales?: Maybe<Array<BlogPostModelContentFieldMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
@@ -326,6 +333,13 @@ export type BlogPostRecord = RecordInterface & {
 
 
 /** Record of type 📝Blog Post (blog_post) */
+export type BlogPostRecordAllContentLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordAllLeadLocalesArgs = {
   locale?: InputMaybe<SiteLocale>;
   markdown?: InputMaybe<Scalars['Boolean']['input']>;
@@ -355,6 +369,13 @@ export type BlogPostRecordAllTitleLocalesArgs = {
 
 /** Record of type 📝Blog Post (blog_post) */
 export type BlogPostRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 📝Blog Post (blog_post) */
+export type BlogPostRecordContentArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -3286,6 +3307,12 @@ export type MarketArticleModelContentField = {
   value: Scalars['JsonField']['output'];
 };
 
+export type MarketArticleModelContentFieldMultiLocaleField = {
+  __typename: 'MarketArticleModelContentFieldMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<MarketArticleModelContentField>;
+};
+
 export type MarketArticleModelContentLinksField = DataDownloadSectionRecord | HighlightSectionRecord | PowerBiReportRecord;
 
 export type MarketArticleModelFilter = {
@@ -3341,6 +3368,7 @@ export enum MarketArticleModelOrderBy {
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecord = RecordInterface & {
   __typename: 'MarketArticleRecord';
+  _allContentLocales?: Maybe<Array<MarketArticleModelContentFieldMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
@@ -3368,6 +3396,13 @@ export type MarketArticleRecord = RecordInterface & {
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+/** Record of type 🐄 Market Article (market_article) */
+export type MarketArticleRecordAllContentLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
 };
 
 
@@ -3401,6 +3436,13 @@ export type MarketArticleRecordAllTitleLocalesArgs = {
 
 /** Record of type 🐄 Market Article (market_article) */
 export type MarketArticleRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🐄 Market Article (market_article) */
+export type MarketArticleRecordContentArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 

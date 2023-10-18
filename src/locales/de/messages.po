@@ -4,64 +4,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: AMDP\n"
+"Project-Id-Version: AMDP NEW\n"
 "Language: de\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/TimeFilter.tsx
-#~ msgid "data.filters.reset"
-#~ msgstr "data.filters.reset"
-
-#. js-lingui-explicit-id
 #: src/components/browser/TimeFilter.tsx
-#~ msgid "data.filters.time.year"
-#~ msgstr "data.filters.time.year"
-
-#. js-lingui-explicit-id
 #: src/components/browser/TimeFilter.tsx
-#~ msgid "data.filters.time.month"
-#~ msgstr "data.filters.time.month"
-
-#. js-lingui-explicit-id
 #: src/components/layout.tsx
-#~ msgid "footer.dataprotection"
-#~ msgstr "Datenschutzverordnung"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#~ msgid "contact.contact"
-#~ msgstr "Kontakt"
-
-#. js-lingui-explicit-id
+#: src/components/browser/TimeFilter.tsx
+#: src/components/browser/TimeFilter.tsx
 #: src/components/browser/SidePanel.tsx
-#~ msgid "data.action.download"
-#~ msgstr "Daten herunterladen"
-
-#. js-lingui-explicit-id
 #: src/pages/data.tsx
-#~ msgid "data.alert.info"
-#~ msgstr "Our database contains Milk and Dairy Product market data. Other markets will be available soon."
-
-#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
-#~ msgid "data.action.query"
-#~ msgstr "SPARQLE query"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
-msgstr "({0} total)"
+msgstr "({0} insgesamt)"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.some"
-msgstr "{0} of {1}"
+msgstr "{0} von {1}"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -82,7 +54,7 @@ msgstr "Über uns"
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.addedValue"
-msgstr "Added Value"
+msgstr "Wertschöpfungsstufe"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -95,30 +67,37 @@ msgid "button.show.all"
 msgstr "Alle Beiträge anzeigen"
 
 #. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.aria.clear"
-msgstr "Clear"
-
-#. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.select.clear"
-msgstr "Clear"
-
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analyse"
 
 #. js-lingui-explicit-id
+#: src/components/card-data.tsx
+#: src/components/card-data.tsx
+#: src/components/card-data.tsx
+#: src/components/card-data.tsx
+#: src/pages/market/[slug].tsx
+#: src/pages/market/[slug].tsx
+#: src/pages/market/[slug].tsx
+#: src/pages/market/[slug].tsx
+#: src/pages/market/[slug].tsx
+#: src/pages/market/[slug].tsx
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
+#: src/pages/index.tsx
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.aria.clear"
-msgstr "Clear"
+msgstr "Filter zurücksetzen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
-msgstr "Clear"
+msgstr "Filter zurücksetzen"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+#: src/components/back-button.tsx
 #: src/pages/index.tsx
 msgid "homepage.section.data"
 msgstr "Daten"
@@ -126,38 +105,27 @@ msgstr "Daten"
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.hero.title"
-msgstr "Data download"
+msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.download"
-msgstr "Data download"
-
-#: src/components/browser/SidePanel.tsx
-#~ msgid "data.filters.productionSystems"
-#~ msgstr "Production Systems"
+msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.hero.title"
-msgstr "Data download"
-
-#. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.download"
-msgstr "Data download"
-
-#. js-lingui-explicit-id
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
-msgstr "Daten abfragen"
+msgstr "-"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.heading"
 msgstr "Filter"
 
 #. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
 #: src/pages/index.tsx
 msgid "homepage.section.theme"
 msgstr "Fokus"
@@ -175,12 +143,7 @@ msgstr "Informiert bleiben"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.from"
-msgstr "From"
-
-#. js-lingui-explicit-id
-#: src/components/browser/filters/TimeFilter.tsx
-msgid "data.filters.from"
-msgstr "From"
+msgstr "Von"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -201,25 +164,19 @@ msgstr "Kontakt"
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografik.teaser"
-msgstr "In der Schweiz wachsen auf mehr als 10'000 Hektaren Kartoffeln. Das sind etwa 14'000 Fussballfelder voller toller Knollen. Die geernteten 400'000 Tonnen landen schliesslich über das ganze Jahr hindurch auf unserem Teller."
+msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.indicator"
-msgstr "Indicator"
-
-#: src/components/homepage/infografik-teaser.tsx
-#~ msgid "infografic"
-#~ msgstr "Infografik"
-
-#: src/components/homepage/infografik-teaser.tsx
-#~ msgid "infografic.date"
-#~ msgstr "2018"
+msgstr "Kennzahl"
 
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
+#: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
-msgstr "Infografik?"
+msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
@@ -235,12 +192,7 @@ msgstr "Mehr erfahren"
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.markets"
-msgstr "Markets"
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.markets"
-msgstr "Markets"
+msgstr "Märkte"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -265,22 +217,7 @@ msgstr "Metadata"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
-msgstr "Month"
-
-#. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.metadata"
-msgstr "Metadata"
-
-#. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.metadata.title"
-msgstr "Metadata"
-
-#. js-lingui-explicit-id
-#: src/components/browser/filters/TimeFilter.tsx
-msgid "data.filters.month"
-msgstr "Month"
+msgstr "Monat"
 
 #. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
@@ -290,22 +227,17 @@ msgstr "Analysen"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
-msgstr "Keine"
-
-#. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "data.filters.none"
 msgstr "None"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.productionSystems"
-msgstr "Production Systems"
+msgstr "Produktionssystem"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.products"
-msgstr "Products"
+msgstr "Produktliste"
 
 #. js-lingui-explicit-id
 #: src/pages/blog/[slug].tsx
@@ -325,22 +257,12 @@ msgstr "-"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.control.reset"
-msgstr "Reset"
+msgstr "Zurücksetzen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.salesRegions"
-msgstr "Sales Regions"
-
-#. js-lingui-explicit-id
-#: src/components/browser/filters/TimeFilter.tsx
-msgid "data.control.reset"
-msgstr "Reset"
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.salesRegions"
-msgstr "Sales Regions"
+msgstr "Verkaufsregion"
 
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
@@ -351,22 +273,22 @@ msgstr "-"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
-msgstr "Search"
+msgstr "Suche"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.all"
-msgstr "Select all"
+msgstr "Alle auswählen"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.showFiler"
-msgstr "Show Filters"
+msgstr "Filter anzeigen"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.query"
-msgstr "SPARQL query"
+msgstr "SPARQL-Abfrage"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -386,16 +308,13 @@ msgstr "Das Bundesamt für Landwirtschaft BLW ist das Kompetenzzentrum des Bunde
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.time"
-msgstr "Time"
-
-#: src/components/header.tsx
-#~ msgid "title.agricultural.market.data"
-#~ msgstr "Agrarmarktdaten"
+msgstr "Zeitraum"
 
 #. js-lingui-explicit-id
+#: src/components/header.tsx
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.to"
-msgstr "To"
+msgstr "An"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -410,4 +329,5 @@ msgstr "Visualize"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
-msgstr "Year"
+msgstr "Jahr"
+
