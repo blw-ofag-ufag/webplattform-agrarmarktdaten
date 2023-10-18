@@ -73,7 +73,13 @@ export const BlogpostCard = (
             //   }}
             //   alt={image?.alt ?? ""}
             // />
-            <Image data={image?.responsiveImage} layout="fixed" style={{ height: "100%" }} />
+            <Box sx={{ maxHeight: "556px", minWidth: "66.66%" }}>
+              <Image
+                data={image?.responsiveImage}
+                layout="responsive"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </Box>
           )}
           <Box
             sx={{
@@ -180,7 +186,7 @@ export const BlogpostCard = (
             )} */}
             {image?.responsiveImage && (
               <Box sx={{ maxHeight: "280px", height: "100%" }}>
-                <Image data={image?.responsiveImage} layout="fill" />
+                <Image data={image?.responsiveImage} layout="responsive" />
               </Box>
             )}
           </Box>
