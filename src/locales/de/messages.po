@@ -69,7 +69,7 @@ msgstr "Alle Beiträge anzeigen"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.analysis"
-msgstr "Analyse"
+msgstr "Analysen"
 
 #. js-lingui-explicit-id
 #: src/components/card-data.tsx
