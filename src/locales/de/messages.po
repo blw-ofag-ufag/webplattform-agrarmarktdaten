@@ -6,26 +6,14 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: AMDP NEW\n"
 "Language: de\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#: src/components/browser/TimeFilter.tsx
-#: src/components/browser/TimeFilter.tsx
-#: src/components/browser/TimeFilter.tsx
-#: src/components/layout.tsx
-#: src/components/browser/TimeFilter.tsx
-#: src/components/browser/TimeFilter.tsx
-#: src/components/browser/SidePanel.tsx
-#: src/pages/data.tsx
-#: src/components/browser/SidePanel.tsx
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} insgesamt)"
@@ -72,19 +60,6 @@ msgid "menu.analysis"
 msgstr "Analysen"
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx
-#: src/components/card-data.tsx
-#: src/components/card-data.tsx
-#: src/components/card-data.tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/pages/market/[slug].tsx
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-#: src/pages/index.tsx
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.aria.clear"
 msgstr "Filter zurücksetzen"
@@ -95,9 +70,6 @@ msgid "filters.select.clear"
 msgstr "Filter zurücksetzen"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-#: src/components/back-button.tsx
 #: src/pages/index.tsx
 msgid "homepage.section.data"
 msgstr "Daten"
@@ -113,19 +85,16 @@ msgid "data.actions.download"
 msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
 msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
-#: src/components/browser/SidePanel.tsx
 msgid "data.filters.heading"
 msgstr "Filter"
 
 #. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
 #: src/pages/index.tsx
 msgid "homepage.section.theme"
 msgstr "Fokus"
@@ -172,8 +141,6 @@ msgid "data.filters.indicator"
 msgstr "Kennzahl"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
 msgstr "-"
@@ -311,7 +278,6 @@ msgid "data.filters.time"
 msgstr "Zeitraum"
 
 #. js-lingui-explicit-id
-#: src/components/header.tsx
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.to"
 msgstr "An"
@@ -330,4 +296,3 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Jahr"
-
