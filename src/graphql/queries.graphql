@@ -190,6 +190,9 @@ query AnalysisPage($locale: SiteLocale!) {
       ...FullSEO
     }
   }
+  _allBlogPostsMeta {
+    count
+  }
 
   allMarketArticles(locale: $locale) {
     ...SimpleMarketArticle

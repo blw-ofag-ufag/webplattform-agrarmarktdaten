@@ -3,8 +3,8 @@ import { Chip } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
 
 interface Props {
-  slug: string;
-  label: string;
+  slug?: string | null;
+  label?: string | null;
 }
 
 const useStyles = makeStyles()({
