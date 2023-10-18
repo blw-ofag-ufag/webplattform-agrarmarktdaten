@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { useStickyBox } from "react-sticky-box";
-import { ScrollToTop } from "@/components/ScrollToTop";
+// import { ScrollToTop } from "@/components/ScrollToTop";
 import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
@@ -182,7 +182,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
       {router.pathname !== "/data" && (
         <>
           <FooterBLW />
-          <ScrollToTop />
+          {/* <ScrollToTop /> */}
         </>
       )}
     </Box>
