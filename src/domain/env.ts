@@ -6,3 +6,5 @@ export const IS_DEV_ENVIRONMENT = process.env.NODE_ENV === "development";
 export const POWER_BI_CLIENT_ID = process.env.POWER_BI_CLIENT_ID;
 export const POWER_BI_CLIENT_SECRET = process.env.POWER_BI_CLIENT_SECRET;
 export const POWER_BI_TENANT_ID = process.env.POWER_BI_TENANT_ID;
+
+export const DATO_CMS_INCLUDE_DRAFTS = process.env.DATO_CMS_INCLUDE_DRAFTS;
