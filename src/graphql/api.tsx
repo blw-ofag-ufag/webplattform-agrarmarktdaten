@@ -3,7 +3,12 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import React from "react";
 import { Provider, createClient, dedupExchange, fetchExchange } from "urql";
 
-import { DATOCMS_API_TOKEN, DATOCMS_API_URL, IS_DEV_ENVIRONMENT } from "@/domain/env";
+import {
+  DATOCMS_API_TOKEN,
+  DATOCMS_API_URL,
+  IS_DEV_ENVIRONMENT,
+  DATO_CMS_INCLUDE_DRAFTS,
+} from "@/domain/env";
 
 const defaultExchanges = [
   dedupExchange,
@@ -30,6 +35,7 @@ export const client = createClient({
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
+      "X-Include-Drafts": DATO_CMS_INCLUDE_DRAFTS ? "true" : "",
     },
   },
   exchanges: IS_DEV_ENVIRONMENT

@@ -96,6 +96,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
       allFocusArticles: result.data.allFocusArticles,
       topBlogPosts: result.data.topBlogPosts,
     },
+    revalidate: 10,
   };
 };
 
