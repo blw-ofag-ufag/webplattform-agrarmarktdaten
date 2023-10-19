@@ -15,6 +15,7 @@ import { sectionAtom } from "@/lib/atoms";
 import { useSetAtom } from "jotai";
 import { DataDownloadSection } from "@/components/DataDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
+import NextLink from "next/link";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
@@ -111,6 +112,26 @@ const StructuredText = (props: Props) => {
         }}
         renderBlock={({ record }) => {
           switch (record.__typename) {
+            case "DataButtonRecord": {
+              const { url, label } = record as GQL.DataButtonRecord;
+              return (
+                <NextLink legacyBehavior href={url ?? ""}>
+                  <Typography
+                    sx={{
+                      px: 3,
+                      py: 2,
+                      color: c.cobalt[500],
+                      width: "fit-content",
+                      cursor: "pointer",
+                      borderRadius: "4px",
+                      ":hover": { bgcolor: c.cobalt[100] },
+                    }}
+                  >
+                    {label}
+                  </Typography>
+                </NextLink>
+              );
+            }
             case "ImageTeaserBlockRecord":
               const image =
                 record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
@@ -150,7 +171,7 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography ref={ref} id={id} variant="h1" component="h1" sx={{ mb: s(6) }}>
+    <Typography ref={ref} id={id} variant="h1" component="h1" sx={{ mb: 5, mt: 3 }}>
       {children}
     </Typography>
   );

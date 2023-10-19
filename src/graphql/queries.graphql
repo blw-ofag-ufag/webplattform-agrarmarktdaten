@@ -140,30 +140,15 @@ query MethodsPage($locale: SiteLocale!) {
     content {
       value
       blocks {
-        id
         __typename
+        ...DataButton
         ...ImageTeaserBlock
       }
       links {
         __typename
-        id
-        workspace {
-          id
-          name
-          workspaceId
-        }
-        reportId
-        name
-        dataset {
-          name
-          id
-          datasetId
-          workspace {
-            workspaceId
-            name
-            id
-          }
-        }
+        ...DataDownloadSection
+        ...HighlightSection
+        ...PowerBI
       }
     }
   }
@@ -312,8 +297,8 @@ fragment FullMarketArticle on MarketArticleRecord {
   content {
     value
     blocks {
-      id
       __typename
+      ...DataButton
       ...ImageTeaserBlock
     }
     links {
@@ -338,6 +323,7 @@ fragment FullFocusArticle on FocusArticleRecord {
 
     blocks {
       __typename
+      ...DataButton
       ...ImageTeaserBlock
     }
     links {
@@ -412,8 +398,8 @@ fragment BlogPost on BlogPostRecord {
   content {
     value
     blocks {
-      id
       __typename
+      ...DataButton
       ...ImageTeaserBlock
     }
     links {
@@ -586,4 +572,10 @@ fragment HighlightSectionLink on HighlightSectionLinkRecord {
       slug
     }
   }
+}
+
+fragment DataButton on DataButtonRecord {
+  id
+  url
+  label
 }
