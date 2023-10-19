@@ -58,5 +58,5 @@ export const getStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  return { props: result.data };
+  return { props: result.data, revalidate: 10 };
 };
