@@ -190,6 +190,9 @@ query AnalysisPage($locale: SiteLocale!) {
       ...FullSEO
     }
   }
+  _allBlogPostsMeta {
+    count
+  }
 
   allMarketArticles(locale: $locale) {
     ...SimpleMarketArticle
@@ -200,6 +203,12 @@ query AnalysisPage($locale: SiteLocale!) {
   }
 
   allBlogPosts(locale: $locale, first: 7) {
+    ...SimpleBlogPost
+  }
+}
+
+query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
+  allBlogPosts(locale: $locale, first: $first, skip: $skip) {
     ...SimpleBlogPost
   }
 }
@@ -352,6 +361,15 @@ fragment SimpleBlogPost on BlogPostRecord {
     id
     alt
     url
+    responsiveImage(imgixParams: { fit: fill, w: 1096, h: 556, auto: format }) {
+      sizes
+      src
+      width
+      height
+      alt
+      title
+      base64
+    }
   }
   markets {
     id
@@ -363,7 +381,7 @@ fragment SimpleBlogPost on BlogPostRecord {
     title
     slug
   }
-  _firstPublishedAt
+  publishedDate
 }
 
 fragment BlogPost on BlogPostRecord {
@@ -444,26 +462,6 @@ fragment IframeBlock on IframeBlockRecord {
   url
 }
 
-fragment ImageTeaserBlock on ImageTeaserBlockRecord {
-  id
-  imageTeaserAsset {
-    id
-    url
-    alt
-    width
-    height
-    responsiveImage(imgixParams: { fit: fill, w: 1376, h: 485.25, auto: format }) {
-      sizes
-      src
-      width
-      height
-      alt
-      title
-      base64
-    }
-  }
-}
-
 fragment MarkdownBlock on MarkdownBlockRecord {
   id
   content
@@ -480,6 +478,27 @@ fragment SurveyBlock on SurveyBlockRecord {
     possibleAnswers {
       id
       answer
+    }
+  }
+}
+
+fragment ImageTeaserBlock on ImageTeaserBlockRecord {
+  id
+  imageTeaserAsset {
+    customData
+    id
+    url
+    alt
+    width
+    height
+    responsiveImage(imgixParams: { fit: fill, w: 1096, h: 556, auto: format }) {
+      sizes
+      src
+      width
+      height
+      alt
+      title
+      base64
     }
   }
 }

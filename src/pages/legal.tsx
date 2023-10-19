@@ -2,45 +2,38 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { Typography } from "@mui/material";
-import { Grid } from "@/components/Grid";
-import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
-import { s } from "@interactivethings/swiss-federal-ci";
+import { GridContainer, GridElement } from "@/components/Grid";
+import { useTheme } from "@mui/material/styles";
+import { Hero } from "@/components/hero";
 
 export default function LegalPage(props: GQL.LegalPageQuery) {
   const { legalPage, allMarketArticles, allFocusArticles } = props;
+  const theme = useTheme();
   if (!legalPage?.title || !legalPage.lead) {
     return null;
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Grid sx={{ pt: "96px" }}>
-        <MUIGrid
-          xxxlOffset={2}
-          xxxl={12}
-          xxlOffset={2}
-          xxl={12}
-          xlOffset={2}
-          xl={12}
-          lg={6}
-          md={6}
-          sm={4}
-          xs={4}
-          xxs={4}
-        >
-          <Typography variant="h1" sx={{ pb: s(6) }}>
-            {legalPage.title}
-          </Typography>
-          <Typography variant="body1">{legalPage.lead}</Typography>
-        </MUIGrid>
-      </Grid>
-      <Grid sx={{ mt: "96px" }}>
-        <MUIGrid
-          xxxlOffset={2}
+      <Hero title={legalPage.title} lead={legalPage.lead} shifted />
+      <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
+        <GridElement
+          sx={{
+            [theme.breakpoints.only("xxxl")]: {
+              width: "calc(81px * 8 + 64px * 7)",
+              ml: "calc(81px * 2 + 64px * 2)",
+            },
+            [theme.breakpoints.only("xxl")]: {
+              width: "calc(70px * 8 + 64px * 7)",
+              ml: "calc(70px * 2 + 64px * 2)",
+            },
+            [theme.breakpoints.only("xl")]: {
+              width: "calc(52px * 10 + 48px * 9)",
+              ml: "calc(52px + 48px)",
+              mr: "calc(52px + 48px)",
+            },
+          }}
           xxxl={9}
-          xxlOffset={2}
           xxl={9}
-          xlOffset={2}
           xl={9}
           lg={6}
           md={6}
@@ -49,8 +42,8 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
           xxs={4}
         >
           {legalPage.content && <StructuredText data={legalPage.content} />}
-        </MUIGrid>
-      </Grid>
+        </GridElement>
+      </GridContainer>
     </AppLayout>
   );
 }

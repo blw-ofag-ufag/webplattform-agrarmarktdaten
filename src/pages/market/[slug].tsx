@@ -7,24 +7,22 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { Box } from "@mui/material";
-import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
 import { getMarketColor } from "@/domain/colors";
-import { Grid } from "@/components/Grid";
+import { GridContainer, GridElement } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
-import { b, s } from "@interactivethings/swiss-federal-ci";
 import { useStickyBox } from "react-sticky-box";
+import { useTheme } from "@mui/material/styles";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
 
+  const theme = useTheme();
   const stickyRef = useStickyBox({ offsetTop: 200 });
-  const alternates = marketArticle?._allSlugLocales?.map((loc) => {
-    return {
-      href: "/market/[slug]",
-      as: `/market/${loc.value}`,
-      locale: loc.locale as string,
-    };
-  });
+  const alternates = marketArticle?._allSlugLocales?.map((loc) => ({
+    href: "/market/[slug]",
+    as: `/market/${loc.value}`,
+    locale: loc.locale as string,
+  }));
 
   if (!marketArticle?.title || !marketArticle?.lead) {
     return null;
@@ -37,52 +35,48 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
       allFocusArticles={allFocusArticles}
     >
       <Box sx={{ bgcolor: marketColor }}>
-        <Grid>
-          <MUIGrid
-            xxxlOffset={2}
-            xxxl={12}
-            xxlOffset={2}
-            xxl={12}
-            xlOffset={2}
-            xl={12}
-            lg={6}
-            md={6}
-            sm={4}
-            xs={4}
-            xxs={4}
-          >
-            <Hero title={marketArticle.title} lead={marketArticle.lead} color={color} />
-          </MUIGrid>
-        </Grid>
+        <Hero title={marketArticle.title} lead={marketArticle.lead} color={color} shifted />
       </Box>
-      <Grid sx={{ mt: s(4), position: "relative" }}>
-        <MUIGrid
+      <GridContainer sx={{ mt: 4, position: "relative" }}>
+        <GridElement
           ref={stickyRef}
-          sx={{ height: "fit-content", [b.down("xl")]: { display: "none" } }}
-          xxxl={3}
-          xxl={3}
-          xl={3}
-          lg={0}
-          md={0}
-          sm={0}
-          xs={0}
-          xxs={0}
+          sx={{
+            height: "fit-content",
+            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 2 + 64px)" },
+            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 2 + 64px)" },
+            [theme.breakpoints.down("xxl")]: { display: "none" },
+          }}
         >
           {marketArticle.content && (
             <TableOfContents
               data={marketArticle.content}
               activeColor={marketColor}
-              sx={{
-                height: "fit-content",
-                width: "100%",
-              }}
+              sx={{ height: "fit-content", width: "100%" }}
             />
           )}
-        </MUIGrid>
-        <MUIGrid xxxl={9} xxl={9} xl={9} lg={6} md={6} sm={4} xs={4} xxs={4}>
+        </GridElement>
+        <GridElement
+          sx={{
+            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 8 + 64px * 7)", ml: "64px" },
+            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 8 + 64px * 7)", ml: "64px" },
+            [theme.breakpoints.only("xl")]: {
+              width: "calc(52px * 10 + 48px * 9)",
+              ml: "calc(52px + 48px)",
+              mr: "calc(52px + 48px)",
+            },
+          }}
+          xxxl={9}
+          xxl={9}
+          xl={9}
+          lg={6}
+          md={6}
+          sm={4}
+          xs={4}
+          xxs={4}
+        >
           {marketArticle.content && <StructuredText data={marketArticle.content} />}
-        </MUIGrid>
-      </Grid>
+        </GridElement>
+      </GridContainer>
 
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>

@@ -1,6 +1,5 @@
 import { Trans } from "@lingui/macro";
 import { Typography, Box, Card, Button } from "@mui/material";
-import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
@@ -9,6 +8,7 @@ import { client } from "@/graphql/api";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { s, c } from "@interactivethings/swiss-federal-ci";
 import { Download } from "@/icons/icons-jsx/control";
+import { GridContainer } from "@/components/Grid";
 
 export default function HomePage(props: GQL.HomePageQuery) {
   const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -19,7 +19,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} color="#ffffff" />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
-        <ContentContainer sx={{ gap: s(8), pt: s(20) }}>
+        <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h2" sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
@@ -29,9 +29,9 @@ export default function HomePage(props: GQL.HomePageQuery) {
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
-        </ContentContainer>
+        </GridContainer>
         <TopBlogpostsTeaser blogposts={topBlogPosts} />
-        <ContentContainer sx={{ gap: s(8), pt: s(20) }}>
+        <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h2" sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>
@@ -40,11 +40,19 @@ export default function HomePage(props: GQL.HomePageQuery) {
               <Box display="flex" flexDirection="column" pr="50px">
                 <Typography variant="body1">
                   <Trans id="homepage.section.data.content">
-                    Various data can be selected and downloaded via the data download, in particular price series, and
-                    in some cases also quantity and area data. Data are available from the year 2000 onwards.
+                    Various data can be selected and downloaded via the data download, in particular
+                    price series, and in some cases also quantity and area data. Data are available
+                    from the year 2000 onwards.
                   </Trans>
                 </Typography>
-                <Button sx={{ backgroundColor: c.cobalt[500], fontWeight: 700, width: "fit-content", mt: s(6) }}>
+                <Button
+                  sx={{
+                    backgroundColor: c.cobalt[500],
+                    fontWeight: 700,
+                    width: "fit-content",
+                    mt: s(6),
+                  }}
+                >
                   <Trans id="homepage.section.data.button">Learn More</Trans>
                 </Button>
               </Box>
@@ -59,11 +67,11 @@ export default function HomePage(props: GQL.HomePageQuery) {
                   justifyContent: "center",
                 }}
               >
-                <Download sx={{}} width={40} height={40} />
+                <Download width={40} height={40} />
               </Box>
             </Box>
           </Card>
-        </ContentContainer>
+        </GridContainer>
       </Box>
     </AppLayout>
   );

@@ -33,7 +33,7 @@ export const BlogPostsGrid = (props: Props) => {
 };
 
 export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
-  const { title, lead, image, markets, slug, _firstPublishedAt } = props;
+  const { title, lead, image, markets, slug, publishedDate } = props;
   const mainMarket = head(markets);
   const locale = useLocale();
 
@@ -59,7 +59,7 @@ export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
             }}
           >
             {mainMarket && <Chip label={mainMarket.title} />}
-            {_firstPublishedAt && <Chip variant="outlined" label={_firstPublishedAt} />}
+            {publishedDate && <Chip variant="outlined" label={publishedDate} />}
           </Flex>
           <Typography variant="h5">{title}</Typography>
           <Typography variant="body2" mt={2}>

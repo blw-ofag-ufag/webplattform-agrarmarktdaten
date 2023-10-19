@@ -5,6 +5,7 @@ import { s, c } from "@interactivethings/swiss-federal-ci";
 import { Temporal } from "proposal-temporal";
 import Link from "next/link";
 import { Download } from "@/icons/icons-jsx/control";
+import { Intersperse } from "@/components/Intersperse";
 
 interface Props {
   data: Partial<GQL.DataDownloadSectionRecord>;
@@ -42,47 +43,50 @@ const DataDownloadSection = (props: Props) => {
           {data.title}
         </Typography>
       </Box>
-      {data.dataDownloadItems?.map((item) => {
-        const { id, date, title, file, description } = item;
-        let formattedDate = "";
-        if (date) {
-          const date2 = Temporal.PlainDate.from(date);
-          const day = String(date2.day).padStart(2, "0");
-          const month = String(date2.month).padStart(2, "0");
-          const year = String(date2.year);
-          formattedDate = `${day}.${month}.${year}`;
-        }
-        return (
-          file?.url && (
-            <Link href={file.url} key={id} legacyBehavior>
-              <Box
-                sx={{
-                  cursor: "pointer",
-                  borderBottom: `${c.cobalt[200]} 1px solid`,
-                  py: s(4),
-                  ":hover": { backgroundColor: c.cobalt[50] },
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Download width={24} height={24} />
-                  <Typography variant="h3" sx={{ ml: s(4), color: c.cobalt[800] }}>
-                    {title}
-                  </Typography>
+      <Intersperse
+        separator={<Box sx={{ height: "1px", width: "100%", backgroundColor: c.cobalt[200] }} />}
+      >
+        {data.dataDownloadItems?.map((item) => {
+          const { id, date, title, file, description } = item;
+          let formattedDate = "";
+          if (date) {
+            const date2 = Temporal.PlainDate.from(date);
+            const day = String(date2.day).padStart(2, "0");
+            const month = String(date2.month).padStart(2, "0");
+            const year = String(date2.year);
+            formattedDate = `${day}.${month}.${year}`;
+          }
+          return (
+            file?.url && (
+              <Link href={file.url} key={id} legacyBehavior>
+                <Box
+                  sx={{
+                    cursor: "pointer",
+                    py: s(4),
+                    ":hover": { backgroundColor: c.cobalt[50] },
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Download width={24} height={24} />
+                    <Typography variant="h3" sx={{ ml: s(4), color: c.cobalt[800] }}>
+                      {title}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ ml: s(10.5), mt: s(3), color: c.cobalt[500] }}>
+                    <Typography variant="body1" sx={{ mb: s(2) }}>
+                      {description}
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                      {`${file?.format.toUpperCase()}`} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{" "}
+                      {formattedDate}
+                    </Typography>
+                  </Box>
                 </Box>
-                <Box sx={{ ml: s(10.5), mt: s(3), color: c.cobalt[500] }}>
-                  <Typography variant="body1" sx={{ mb: s(2) }}>
-                    {description}
-                  </Typography>
-                  <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                    {`${file?.format.toUpperCase()}`} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{" "}
-                    {formattedDate}
-                  </Typography>
-                </Box>
-              </Box>
-            </Link>
-          )
-        );
-      })}
+              </Link>
+            )
+          );
+        })}
+      </Intersperse>
     </Box>
   );
 };

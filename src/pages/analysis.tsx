@@ -1,26 +1,32 @@
 import React from "react";
-import { BlogMarketFilters } from "@/components/blog/BlogMarketFilters";
-import { BlogPostsGrid } from "@/components/blog/BlogPost";
-import { ContentContainer } from "@/components/content-container";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
+import { c } from "@interactivethings/swiss-federal-ci";
+import { BlogpostGrid } from "@/components/BlogpostGrid";
+import { QueryClientProvider, QueryClient } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function Analysis({
   analysisPage,
   allBlogPosts,
   allFocusArticles,
   allMarketArticles,
+  _allBlogPostsMeta,
 }: GQL.AnalysisPageQuery) {
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={analysisPage?.title as string} lead={analysisPage?.lead as string} />
-      <ContentContainer>
-        <BlogMarketFilters allMarkets={allMarketArticles} />
-        <BlogPostsGrid blogPosts={allBlogPosts} />
-      </ContentContainer>
-    </AppLayout>
+    <QueryClientProvider client={queryClient}>
+      <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+        <Hero
+          title={analysisPage?.title as string}
+          lead={analysisPage?.lead as string}
+          bgColor={c.cobalt[100]}
+        />
+        <BlogpostGrid blogposts={allBlogPosts} totalBlogpostCount={_allBlogPostsMeta.count} />
+      </AppLayout>
+    </QueryClientProvider>
   );
 }
 

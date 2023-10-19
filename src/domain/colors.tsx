@@ -49,3 +49,16 @@ export const getMarketColor = (slug?: string | null) => {
       return ["#000000", "#ACB4BD"];
   }
 };
+
+export const chipColorMap = {
+  "#DFE4E9": "#1F2937",
+  "#6C84B5": "#1F2937",
+  "#B0BDD7": "#30415E",
+  "#CFBCAA": "#5B4632",
+  "#C5E0B2": "#495B46",
+  "#FDCC95": "#7B441F",
+  "#FBCDC8": "#A8322D",
+  "#F7EBB6": "#695501",
+  "#825B40": "#F9FAFB",
+  "#AA8F1F": "#111827",
+};
