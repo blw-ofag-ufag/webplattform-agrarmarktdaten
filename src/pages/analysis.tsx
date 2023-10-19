@@ -32,9 +32,13 @@ export default function Analysis({
 
 export const getStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.AnalysisPageQuery>(GQL.AnalysisPageDocument, {
-      locale: context.locale,
-    })
+    .query<GQL.AnalysisPageQuery>(
+      GQL.AnalysisPageDocument,
+      {
+        locale: context.locale,
+      },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!result.data) {

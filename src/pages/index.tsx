@@ -79,7 +79,11 @@ export default function HomePage(props: GQL.HomePageQuery) {
 
 export const getStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.HomePageQuery>(GQL.HomePageDocument, { locale: context.locale })
+    .query<GQL.HomePageQuery>(
+      GQL.HomePageDocument,
+      { locale: context.locale },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!result.data) {

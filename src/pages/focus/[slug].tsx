@@ -78,10 +78,14 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.FocusArticlePageQuery>(GQL.FocusArticlePageDocument, {
-      locale: context.locale,
-      slug: context.params.slug,
-    })
+    .query<GQL.FocusArticlePageQuery>(
+      GQL.FocusArticlePageDocument,
+      {
+        locale: context.locale,
+        slug: context.params.slug,
+      },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!result.data) {

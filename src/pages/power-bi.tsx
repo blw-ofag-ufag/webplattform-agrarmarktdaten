@@ -26,9 +26,13 @@ const Page = (props: Props) => {
 
 export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
   const result = await client
-    .query<GQL.AllPowerBiReportsQuery>(GQL.AllPowerBiReportsDocument, {
-      locale: ctx.locale,
-    })
+    .query<GQL.AllPowerBiReportsQuery>(
+      GQL.AllPowerBiReportsDocument,
+      {
+        locale: ctx.locale,
+      },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!result.data) {

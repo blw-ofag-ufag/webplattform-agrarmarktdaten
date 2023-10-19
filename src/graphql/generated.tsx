@@ -602,6 +602,12 @@ export type DataDownloadItemRecordTitleArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
+export type DataDownloadItemRecordListListNonNullMultiLocaleField = {
+  __typename: 'DataDownloadItemRecordListListNonNullMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value: Array<DataDownloadItemRecord>;
+};
+
 export type DataDownloadSectionModelFilter = {
   AND?: InputMaybe<Array<InputMaybe<DataDownloadSectionModelFilter>>>;
   OR?: InputMaybe<Array<InputMaybe<DataDownloadSectionModelFilter>>>;
@@ -617,6 +623,7 @@ export type DataDownloadSectionModelFilter = {
   dataDownloadItems?: InputMaybe<LinksFilter>;
   id?: InputMaybe<ItemIdFilter>;
   title?: InputMaybe<StringFilter>;
+  titleNowShown?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<UpdatedAtFilter>;
 };
 
@@ -641,6 +648,8 @@ export enum DataDownloadSectionModelOrderBy {
   createdAt_DESC = 'createdAt_DESC',
   id_ASC = 'id_ASC',
   id_DESC = 'id_DESC',
+  titleNowShown_ASC = 'titleNowShown_ASC',
+  titleNowShown_DESC = 'titleNowShown_DESC',
   title_ASC = 'title_ASC',
   title_DESC = 'title_DESC',
   updatedAt_ASC = 'updatedAt_ASC',
@@ -650,6 +659,9 @@ export enum DataDownloadSectionModelOrderBy {
 /** Record of type 🗂️ Data Download Section (data_download_section) */
 export type DataDownloadSectionRecord = RecordInterface & {
   __typename: 'DataDownloadSectionRecord';
+  _allDataDownloadItemsLocales?: Maybe<Array<DataDownloadItemRecordListListNonNullMultiLocaleField>>;
+  _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allTitleNowShownLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -667,12 +679,55 @@ export type DataDownloadSectionRecord = RecordInterface & {
   dataDownloadItems: Array<DataDownloadItemRecord>;
   id: Scalars['ItemId']['output'];
   title?: Maybe<Scalars['String']['output']>;
+  titleNowShown?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
 };
 
 
 /** Record of type 🗂️ Data Download Section (data_download_section) */
+export type DataDownloadSectionRecordAllDataDownloadItemsLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Data Download Section (data_download_section) */
+export type DataDownloadSectionRecordAllTitleLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Data Download Section (data_download_section) */
+export type DataDownloadSectionRecordAllTitleNowShownLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Data Download Section (data_download_section) */
 export type DataDownloadSectionRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Data Download Section (data_download_section) */
+export type DataDownloadSectionRecordDataDownloadItemsArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Data Download Section (data_download_section) */
+export type DataDownloadSectionRecordTitleArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🗂️ Data Download Section (data_download_section) */
+export type DataDownloadSectionRecordTitleNowShownArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
