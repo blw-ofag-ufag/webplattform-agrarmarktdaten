@@ -50,7 +50,11 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
 
 export const getStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.TermsPageQuery>(GQL.TermsPageDocument, { locale: context.locale })
+    .query<GQL.TermsPageQuery>(
+      GQL.TermsPageDocument,
+      { locale: context.locale },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!result.data) {
@@ -58,5 +62,5 @@ export const getStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  return { props: result.data };
+  return { props: result.data, revalidate: 10 };
 };

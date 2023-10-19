@@ -4,15 +4,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: AMDP NEW\n"
+"Project-Id-Version: AMDP\n"
 "Language: fr\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
@@ -270,7 +273,7 @@ msgstr "Conditions d’utilisation"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.id"
-msgstr "Lorem Ipsum"
+msgstr "L’Office fédéral de l’agriculture OFAG est le centre de compétences pour la politique agricole suisse. La gestion d’un service indépendant d’observation du marché fait également partie des tâches de l’OFAG (art. 27 de la loi sur l’agriculture, LAgr). Ledit service recense et publie des indicateurs de marché tels que les prix et les quantités tout au long de la chaîne de création de valeur des principaux marchés agricoles et alimentaires de Suisse. L’objectif est d’encourager la transparence et de mettre en évidence l’évolution à long terme."
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -296,3 +299,34 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Année"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.report"
+msgstr "Rapport Agricole"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.blw"
+msgstr "L’Office fédéral de l’agriculture"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.priceindex"
+msgstr "Indice suisse des prix à la consommation"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.importpriceindex"
+msgstr "Prix à la production et à l'importation"
+

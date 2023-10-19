@@ -4,15 +4,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: AMDP NEW\n"
+"Project-Id-Version: AMDP\n"
 "Language: de\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
@@ -270,7 +273,7 @@ msgstr "Nutzungsbedingungen"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.id"
-msgstr "Das Bundesamt für Landwirtschaft BLW ist das Kompetenzzentrum des Bundes für alle Kernfragen des Agrarsektors. Das BLW setzt sich dafür ein, dass die Bäuerinnen und Bauern nachhaltig und marktorientiert hochwertige Lebensmittel produzieren."
+msgstr "Das Bundesamt für Landwirtschaft BLW ist das nationale Kompetenzzentrum für die Schweizer Agrarpolitik. Zu den Aufgaben des BLW gehört auch, eine unabhängige Marktbeobachtungsstelle zu führen (Artikel 27 Landwirtschaftsgesetz LwG). Diese erhebt und publiziert Marktindikatoren wie Preise und Mengen entlang der gesamten Wertschöpfungskette der wichtigsten Agrar- und Lebensmittelmärkte der Schweiz. Ziel ist es, die Markttransparenz zu erhöhen und langfristige Entwicklungen aufzuzeigen."
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -296,3 +299,34 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Jahr"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.report"
+msgstr "Agrarbericht"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.blw"
+msgstr "Bundesamt für Landwirtschaft"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.priceindex"
+msgstr "Landesindex der Konsumentenpreise"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.importpriceindex"
+msgstr "Produzenten- und Importpreis-Index"
+

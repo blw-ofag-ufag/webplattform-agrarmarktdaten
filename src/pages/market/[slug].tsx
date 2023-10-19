@@ -85,10 +85,14 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.MarketPageQuery>(GQL.MarketPageDocument, {
-      locale: context.locale,
-      slug: context.params.slug,
-    })
+    .query<GQL.MarketPageQuery>(
+      GQL.MarketPageDocument,
+      {
+        locale: context.locale,
+        slug: context.params.slug,
+      },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!result.data) {
@@ -103,6 +107,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
       allFocusArticles: result.data.allFocusArticles,
       topBlogPosts: result.data.topBlogPosts,
     },
+    revalidate: 10,
   };
 };
 

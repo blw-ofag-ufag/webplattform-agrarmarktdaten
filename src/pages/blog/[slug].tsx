@@ -178,10 +178,14 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
 
 export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
   const blogPostQuery = await client
-    .query<GQL.BlogPostQuery>(GQL.BlogPostDocument, {
-      locale: context.locale,
-      slug: context.params.slug,
-    })
+    .query<GQL.BlogPostQuery>(
+      GQL.BlogPostDocument,
+      {
+        locale: context.locale,
+        slug: context.params.slug,
+      },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!blogPostQuery.data) {
@@ -196,6 +200,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
       allFocusArticles: blogPostQuery.data.allFocusArticles,
       topBlogPosts: blogPostQuery.data.topBlogPosts,
     },
+    revalidate: 10,
   };
 };
 

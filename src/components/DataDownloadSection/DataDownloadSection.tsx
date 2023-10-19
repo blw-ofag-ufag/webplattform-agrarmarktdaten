@@ -63,12 +63,19 @@ const DataDownloadSection = (props: Props) => {
                   sx={{
                     cursor: "pointer",
                     py: s(4),
-                    ":hover": { backgroundColor: c.cobalt[50] },
+                    ":hover": {
+                      backgroundColor: c.cobalt[50],
+                      ".title": { textDecoration: "underline" },
+                    },
                   }}
                 >
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <Download width={24} height={24} />
-                    <Typography variant="h3" sx={{ ml: s(4), color: c.cobalt[800] }}>
+                    <Typography
+                      className="title"
+                      variant="h3"
+                      sx={{ ml: s(4), color: c.cobalt[800] }}
+                    >
                       {title}
                     </Typography>
                   </Box>

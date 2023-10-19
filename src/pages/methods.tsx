@@ -65,9 +65,13 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
 
 export const getStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.MethodsPageQuery>(GQL.MethodsPageDocument, {
-      locale: context.locale,
-    })
+    .query<GQL.MethodsPageQuery>(
+      GQL.MethodsPageDocument,
+      {
+        locale: context.locale,
+      },
+      { requestPolicy: "network-only" }
+    )
     .toPromise();
 
   if (!result.data) {
@@ -75,5 +79,5 @@ export const getStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  return { props: result.data };
+  return { props: result.data, revalidate: 10 };
 };
