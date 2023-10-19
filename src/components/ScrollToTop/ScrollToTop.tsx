@@ -10,26 +10,21 @@ const ScrollToTop = () => {
     <Fade in={trigger}>
       <Box
         sx={{
-          float: "right",
-          pointerEvents: "auto",
-          width: "fit-content",
+          width: "54px",
+          height: "54px",
           cursor: "pointer",
           backgroundColor: "#ffffff",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           padding: "14px",
           border: `1px solid ${c.cobalt[400]}`,
           borderRadius: "4px",
-          position: "sticky",
+          position: "fixed",
           bottom: 100,
           right: 20,
+          zIndex: 10,
         }}
-        onClick={() => {
-          window?.scrollTo({ top: 0, behavior: "smooth" });
-        }}
+        onClick={() => window?.scrollTo({ top: 0, behavior: "smooth" })}
       >
-        <ArrowForwardIos sx={{ transform: "rotate(-90deg)" }} />
+        <ArrowForwardIos sx={{ transform: "rotate(-90deg)" }} width={24} height={24} />
       </Box>
     </Fade>
   );
