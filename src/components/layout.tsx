@@ -191,6 +191,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
 
 const FooterBLW = () => {
   const theme = useTheme();
+  const { locale } = useRouter();
   const isXXlAndUp = useMediaQuery(theme.breakpoints.up("xxl"));
   return (
     <Footer
@@ -210,7 +211,7 @@ const FooterBLW = () => {
       bottomLinks={[
         {
           title: t({ id: "footer.impressum", message: "Impressum" }),
-          href: "",
+          href: `https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`,
         },
         {
           title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
@@ -218,7 +219,7 @@ const FooterBLW = () => {
         },
         {
           title: t({ id: "footer.about_us.label", message: "About Us" }),
-          href: "#",
+          href: `https://www.blw.admin.ch/blw/${locale}/home.html`,
         },
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
@@ -241,11 +242,20 @@ const FooterBLW = () => {
       <FooterSection>
         <FooterSectionTitle title={t({ id: "contact.follow.us", message: "Folgen Sie Uns" })} />
         <FooterSectionSocialMediaButtonGroup>
-          <FooterSectionSocialMediaButton type="twitter" href="https://www.twitter.com" />
-          <FooterSectionSocialMediaButton type="facebook" href="https://www.facebook.com" />
-          <FooterSectionSocialMediaButton type="youtube" href="https://www.youtube.com" />
-          <FooterSectionSocialMediaButton type="instagram" href="https://www.instagram.com" />
-          <FooterSectionSocialMediaButton type="linkedin" href="https://www.linkedin.com" />
+          <FooterSectionSocialMediaButton type="twitter" href="https://twitter.com/CHblw" />
+          <FooterSectionSocialMediaButton type="facebook" href="https://www.facebook.com/CHblw/" />
+          <FooterSectionSocialMediaButton
+            type="youtube"
+            href="https://www.youtube.com/channel/UCK0IXZ5UU8WmZTd122LN79A?view_as=subscriber"
+          />
+          <FooterSectionSocialMediaButton
+            type="instagram"
+            href="https://www.instagram.com/blw_ofag_ufag/"
+          />
+          <FooterSectionSocialMediaButton
+            type="linkedin"
+            href="https://www.linkedin.com/company/federal-office-for-agriculture/"
+          />
         </FooterSectionSocialMediaButtonGroup>
         <Box
           sx={{
@@ -258,7 +268,7 @@ const FooterBLW = () => {
             py: s(2.5),
           }}
         >
-          <Link href="https://www.blw.admin.ch/blw/de/home/services/newsletter.html">
+          <Link href={`https://www.blw.admin.ch/blw/${locale}/home/services/newsletter.html`}>
             <Typography sx={{ mr: 2 }}>
               {t({
                 id: "footer.newsletter",
@@ -278,29 +288,51 @@ const FooterBLW = () => {
                 message: "Further Information",
               })}
             />
-            <Link href="https://www.blw.admin.ch/blw/de/home.html" sx={{ textDecoration: "none" }}>
-              <FooterSectionButton label="Bundesamt für Landwirtschaft" />
-            </Link>
-            <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
-              <FooterSectionButton label="Agrarbericht" />
-            </Link>
             <Link
-              href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/erhebungen/lik.html"
+              href={`https://www.blw.admin.ch/blw/${locale}/home.html`}
+              target="_blank"
               sx={{ textDecoration: "none" }}
             >
-              <FooterSectionButton label="Landesindex der Konsumentenpreise" />
+              <FooterSectionButton
+                label={t({ id: "footer.blw", message: "Bundesamt für Landwirtschaft" })}
+              />
             </Link>
             <Link
-              href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/produzentenpreise-importpreise.html"
+              href={`https://2022.agrarbericht.ch/${locale}`}
+              target="_blank"
               sx={{ textDecoration: "none" }}
             >
-              <FooterSectionButton label="Produzenten- und Importpreis-Index" />
+              <FooterSectionButton label={t({ id: "footer.report", message: "Agrarbericht" })} />
+            </Link>
+            <Link
+              href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/erhebungen/lik.html`}
+              target="_blank"
+              sx={{ textDecoration: "none" }}
+            >
+              <FooterSectionButton
+                label={t({ id: "footer.priceindex", message: "Landesindex der Konsumentenpreise" })}
+              />
+            </Link>
+            <Link
+              href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/produzentenpreise-importpreise.html`}
+              target="_blank"
+              sx={{ textDecoration: "none" }}
+            >
+              <FooterSectionButton
+                label={t({
+                  id: "footer.importpriceindex",
+                  message: "Produzenten- und Importpreis-Index",
+                })}
+              />
             </Link>
           </FooterSection>
           <FooterSection>
             <FooterSectionTitle title="Feedback" />
-            <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
-              <FooterSectionButton label="Feedback" />
+            <Link
+              href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
+              target="_blank"
+            >
+              <FooterSectionButton label={t({ id: "footer.feedback", message: "Feedback" })} />
             </Link>
           </FooterSection>
         </>
@@ -325,25 +357,44 @@ const FooterBLW = () => {
                 })}
               />
               <Link
-                href="https://www.blw.admin.ch/blw/de/home.html"
+                href={`https://www.blw.admin.ch/blw/${locale}/home.html`}
+                target="_blank"
                 sx={{ textDecoration: "none" }}
               >
-                <FooterSectionButton label="Bundesamt für Landwirtschaft" />
-              </Link>
-              <Link href="https://2022.agrarbericht.ch/de" sx={{ textDecoration: "none" }}>
-                <FooterSectionButton label="Agrarbericht" />
-              </Link>
-              <Link
-                href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/erhebungen/lik.html"
-                sx={{ textDecoration: "none", textAlign: "left" }}
-              >
-                <FooterSectionButton label="Landesindex der Konsumentenpreise" />
+                <FooterSectionButton
+                  label={t({ id: "footer.blw", message: "Bundesamt für Landwirtschaft" })}
+                />
               </Link>
               <Link
-                href="https://www.bfs.admin.ch/bfs/de/home/statistiken/preise/produzentenpreise-importpreise.html"
+                href={`https://2022.agrarbericht.ch/${locale}`}
+                target="_blank"
                 sx={{ textDecoration: "none" }}
               >
-                <FooterSectionButton label="Produzenten- und Importpreis-Index" />
+                <FooterSectionButton label={t({ id: "footer.report", message: "Agrarbericht" })} />
+              </Link>
+              <Link
+                href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/erhebungen/lik.html`}
+                target="_blank"
+                sx={{ textDecoration: "none" }}
+              >
+                <FooterSectionButton
+                  label={t({
+                    id: "footer.priceindex",
+                    message: "Landesindex der Konsumentenpreise",
+                  })}
+                />
+              </Link>
+              <Link
+                href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/produzentenpreise-importpreise.html`}
+                target="_blank"
+                sx={{ textDecoration: "none" }}
+              >
+                <FooterSectionButton
+                  label={t({
+                    id: "footer.importpriceindex",
+                    message: "Produzenten- und Importpreis-Index",
+                  })}
+                />
               </Link>
             </Box>
             <Box
@@ -355,8 +406,11 @@ const FooterBLW = () => {
               }}
             >
               <FooterSectionTitle title="Feedback" />
-              <Link href="https://www.blw.admin.ch/blw/de/home.html" target="_blank">
-                <FooterSectionButton label="Kontakt" />
+              <Link
+                href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
+                target="_blank"
+              >
+                <FooterSectionButton label={t({ id: "footer.feedback", message: "Feedback" })} />
               </Link>
             </Box>
           </FooterSection>

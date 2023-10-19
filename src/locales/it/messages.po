@@ -4,15 +4,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
-"Project-Id-Version: AMDP NEW\n"
+"Project-Id-Version: AMDP\n"
 "Language: it\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
@@ -270,7 +273,7 @@ msgstr "Condizioni d’uso"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.id"
-msgstr "Lorem Ipsum"
+msgstr "L'Ufficio federale dell'agricoltura UFAG è il centro di competenza nazionale per la politica agricola svizzera. Tra i suoi compiti rientra il monitoraggio indipendente del mercato (art. 27 della legge sull'agricoltura, LAgr). L'UFAG rileva e pubblica indicatori di mercato, come prezzi e quantità, lungo l'intera catena del valore dei principali mercati agroalimentari della Svizzera. L'obiettivo è aumentare la trasparenza del mercato e mostrare l’evoluzione a lungo termine."
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -296,3 +299,34 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Anno"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.report"
+msgstr "Rapporto Agricolo"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.blw"
+msgstr "L'Ufficio federale dell'agricoltura"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.priceindex"
+msgstr "Indice nazionale dei prezzi al consumo"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.importpriceindex"
+msgstr "Indice dei prezzi alla produzione e all'importazione"
+
