@@ -1,6 +1,6 @@
 import { Box, Fade } from "@mui/material";
 import * as React from "react";
-import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
+import ChevronUp from "@/icons/icons-jsx/control/IcControlChevronUp";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { useScrollTrigger } from "@/lib/useScrollTrigger";
 
@@ -14,17 +14,20 @@ const ScrollToTop = () => {
           height: "54px",
           cursor: "pointer",
           backgroundColor: "#ffffff",
-          padding: "14px",
+          padding: "2px",
           border: `1px solid ${c.cobalt[400]}`,
           borderRadius: "4px",
           position: "fixed",
           bottom: 100,
           right: 20,
           zIndex: 10,
+          ":hover": {
+            backgroundColor: c.cobalt[100],
+          },
         }}
         onClick={() => window?.scrollTo({ top: 0, behavior: "smooth" })}
       >
-        <ArrowForwardIos sx={{ transform: "rotate(-90deg)" }} width={24} height={24} />
+        <ChevronUp width={48} height={48} />
       </Box>
     </Fade>
   );
