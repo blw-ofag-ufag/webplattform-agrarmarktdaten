@@ -12,6 +12,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { GridContainer, GridWrap, GridWrapElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
+import { useRouter } from "next/router";
 
 interface Props {
   blogposts: GQL.SimpleBlogPostFragment[];
@@ -23,6 +24,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
   const isTablet = useMediaQuery(b.between("md", "xl"));
   const isMobile = useMediaQuery(b.down("md"));
 
+  const { locale } = useRouter();
   const theme = useTheme();
 
   const content = (() => {
@@ -128,7 +130,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: s(8) }}>
         <Box sx={{ maxWidth: "1676px", width: "100%" }}>
           <Box sx={{ display: "flex", justifyContent: "end" }}>
-            <NextLink href="/blog" legacyBehavior>
+            <NextLink href={`${locale}/analysis`} legacyBehavior>
               <Button
                 sx={{
                   display: "flex",
