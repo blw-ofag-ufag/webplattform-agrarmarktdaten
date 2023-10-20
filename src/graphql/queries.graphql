@@ -42,6 +42,16 @@ query HomePage($locale: SiteLocale!) {
   }
 }
 
+query DataPage($locale: SiteLocale!) {
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+}
+
 query LegalPage($locale: SiteLocale!) {
   legalPage(locale: $locale) {
     id

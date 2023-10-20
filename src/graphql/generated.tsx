@@ -623,7 +623,7 @@ export type DataDownloadSectionModelFilter = {
   dataDownloadItems?: InputMaybe<LinksFilter>;
   id?: InputMaybe<ItemIdFilter>;
   title?: InputMaybe<StringFilter>;
-  titleNowShown?: InputMaybe<StringFilter>;
+  titleNotShown?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<UpdatedAtFilter>;
 };
 
@@ -648,8 +648,8 @@ export enum DataDownloadSectionModelOrderBy {
   createdAt_DESC = 'createdAt_DESC',
   id_ASC = 'id_ASC',
   id_DESC = 'id_DESC',
-  titleNowShown_ASC = 'titleNowShown_ASC',
-  titleNowShown_DESC = 'titleNowShown_DESC',
+  titleNotShown_ASC = 'titleNotShown_ASC',
+  titleNotShown_DESC = 'titleNotShown_DESC',
   title_ASC = 'title_ASC',
   title_DESC = 'title_DESC',
   updatedAt_ASC = 'updatedAt_ASC',
@@ -661,7 +661,7 @@ export type DataDownloadSectionRecord = RecordInterface & {
   __typename: 'DataDownloadSectionRecord';
   _allDataDownloadItemsLocales?: Maybe<Array<DataDownloadItemRecordListListNonNullMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
-  _allTitleNowShownLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allTitleNotShownLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -679,7 +679,7 @@ export type DataDownloadSectionRecord = RecordInterface & {
   dataDownloadItems: Array<DataDownloadItemRecord>;
   id: Scalars['ItemId']['output'];
   title?: Maybe<Scalars['String']['output']>;
-  titleNowShown?: Maybe<Scalars['String']['output']>;
+  titleNotShown?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -699,7 +699,7 @@ export type DataDownloadSectionRecordAllTitleLocalesArgs = {
 
 
 /** Record of type 🗂️ Data Download Section (data_download_section) */
-export type DataDownloadSectionRecordAllTitleNowShownLocalesArgs = {
+export type DataDownloadSectionRecordAllTitleNotShownLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -726,7 +726,7 @@ export type DataDownloadSectionRecordTitleArgs = {
 
 
 /** Record of type 🗂️ Data Download Section (data_download_section) */
-export type DataDownloadSectionRecordTitleNowShownArgs = {
+export type DataDownloadSectionRecordTitleNotShownArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -5869,6 +5869,13 @@ export type HomePageQueryVariables = Exact<{
 
 export type HomePageQuery = { __typename: 'Query', homePage?: { __typename: 'HomePageRecord', id: any, title?: string | null, lead?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, hero?: { __typename: 'FileField', id: any, url: string } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, lead?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }> };
 
+export type DataPageQueryVariables = Exact<{
+  locale: SiteLocale;
+}>;
+
+
+export type DataPageQuery = { __typename: 'Query', allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+
 export type LegalPageQueryVariables = Exact<{
   locale: SiteLocale;
 }>;
@@ -6364,6 +6371,21 @@ ${SimpleBlogPostFragmentDoc}`;
 
 export function useHomePageQuery(options: Omit<Urql.UseQueryArgs<HomePageQueryVariables>, 'query'>) {
   return Urql.useQuery<HomePageQuery, HomePageQueryVariables>({ query: HomePageDocument, ...options });
+};
+export const DataPageDocument = gql`
+    query DataPage($locale: SiteLocale!) {
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+}
+    ${SimpleMarketArticleFragmentDoc}
+${SimpleFocusArticleFragmentDoc}`;
+
+export function useDataPageQuery(options: Omit<Urql.UseQueryArgs<DataPageQueryVariables>, 'query'>) {
+  return Urql.useQuery<DataPageQuery, DataPageQueryVariables>({ query: DataPageDocument, ...options });
 };
 export const LegalPageDocument = gql`
     query LegalPage($locale: SiteLocale!) {

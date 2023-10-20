@@ -17,7 +17,8 @@ import { useAtom } from "jotai";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { QueryClientProvider, useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-
+import * as GQL from "@/graphql";
+import { client } from "@/graphql/api";
 import { AppLayout } from "@/components/layout";
 import { indicatorAtom, marketsAtom } from "@/domain/data";
 import blwTheme from "@/theme/blw";
@@ -47,13 +48,14 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
   return display ? <>{children}</> : null;
 }
 
-export default function DataPage() {
+export default function DataPage(props: GQL.DataPageQuery) {
+  const { allMarketArticles, allFocusArticles } = props;
   return (
     <SafeHydrate>
       <QueryClientProvider client={lindasClient}>
         <ReactQueryDevtools />
         <ThemeProvider theme={blackAndWhiteTheme}>
-          <AppLayout>
+          <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
             <Stack flexGrow={1} minHeight={0}>
               <Box
                 zIndex={0}
@@ -272,4 +274,21 @@ const Table = ({ cube }: { cube: CubeResult }) => {
       )}
     </>
   );
+};
+
+export const getStaticProps = async (context: $FixMe) => {
+  const result = await client
+    .query<GQL.DataPageQuery>(
+      GQL.DataPageDocument,
+      { locale: context.locale },
+      { requestPolicy: "network-only" }
+    )
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  return { props: result.data };
 };
