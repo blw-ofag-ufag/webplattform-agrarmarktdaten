@@ -6,7 +6,6 @@ import { StructuredText } from "@/components/StructuredText";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
-import { Box } from "@mui/material";
 import { getMarketColor } from "@/domain/colors";
 import { GridContainer, GridElement } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -35,9 +34,13 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
       allFocusArticles={allFocusArticles}
       showBackButton
     >
-      <Box sx={{ bgcolor: marketColor }}>
-        <Hero title={marketArticle.title} lead={marketArticle.lead} color={color} shifted />
-      </Box>
+      <Hero
+        title={marketArticle.title}
+        lead={marketArticle.lead}
+        bgColor={marketColor}
+        color={color}
+        shifted
+      />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}
