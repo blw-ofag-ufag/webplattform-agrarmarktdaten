@@ -45,8 +45,9 @@ export const Hero = (props: Props) => {
         sx={{
           flexDirection: "column",
           justifyContent: "end",
-          height: hero ? "400px" : "250px",
-          pb: s(18),
+          [theme.breakpoints.up("xxl")]: { height: hero ? "400px" : "250px", pb: s(18) },
+          [theme.breakpoints.down("xxl")]: { height: "280px", pb: s(13) },
+
           width: "100%",
           backgroundColor: bgColor,
           backgroundImage: `url(${hero})`,
@@ -55,10 +56,12 @@ export const Hero = (props: Props) => {
           backgroundPosition: "center",
         }}
       >
-        <GridContainer sx={{ flexDirection: "column", alignItems: "center" }}>
+        <GridContainer sx={{ height: "100%" }}>
           <GridElement
             sx={{
-              pt: hero ? "228px" : "125px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "end",
               ...(shifted && {
                 [theme.breakpoints.only("xxxl")]: { ml: "calc(81px * 2 + 64px * 2)" },
                 [theme.breakpoints.only("xxl")]: { ml: "calc(70px * 2 + 64px * 2)" },
