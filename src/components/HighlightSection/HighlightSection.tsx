@@ -3,6 +3,8 @@ import * as GQL from "@/graphql";
 import { s, c } from "@interactivethings/swiss-federal-ci";
 import { StructuredText, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
 import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {
   data: Partial<GQL.HighlightSectionRecord>;
@@ -10,6 +12,7 @@ interface Props {
 
 const HighlightSection = (props: Props) => {
   const { data } = props;
+  const { locale } = useRouter();
   return (
     <Box
       key={data.id}
@@ -95,23 +98,72 @@ const HighlightSection = (props: Props) => {
                 const sectionLink = record as Partial<GQL.HighlightSectionLinkRecord>;
                 switch (sectionLink.link?.__typename) {
                   case "BlogPostRecord":
+                    return (
+                      <NextLink href={`/${locale}/blog/${sectionLink.link.slug}`}>
+                        <Button
+                          sx={{
+                            bgcolor: c.cobalt[500],
+                            mr: s(3),
+                            px: s(3),
+                            py: s(2),
+                            lineHeight: "18px",
+                            minHeight: "auto",
+                          }}
+                        >
+                          {sectionLink.title}
+                        </Button>
+                      </NextLink>
+                    );
                   case "FocusArticleRecord":
+                    return (
+                      <NextLink href={`/${locale}/focus/${sectionLink.link.slug}`}>
+                        <Button
+                          sx={{
+                            bgcolor: c.cobalt[500],
+                            mr: s(3),
+                            px: s(3),
+                            py: s(2),
+                            lineHeight: "18px",
+                            minHeight: "auto",
+                          }}
+                        >
+                          {sectionLink.title}
+                        </Button>
+                      </NextLink>
+                    );
                   case "MarketArticleRecord":
+                    return (
+                      <NextLink href={`/${locale}/market/${sectionLink.link.slug}`}>
+                        <Button
+                          sx={{
+                            bgcolor: c.cobalt[500],
+                            mr: s(3),
+                            px: s(3),
+                            py: s(2),
+                            lineHeight: "18px",
+                            minHeight: "auto",
+                          }}
+                        >
+                          {sectionLink.title}
+                        </Button>
+                      </NextLink>
+                    );
                   case "MethodsPageRecord":
                     return (
-                      <Button
-                        href={sectionLink.link.slug ?? "#"}
-                        sx={{
-                          bgcolor: c.cobalt[500],
-                          mr: s(3),
-                          px: s(3),
-                          py: s(2),
-                          lineHeight: "18px",
-                          minHeight: "auto",
-                        }}
-                      >
-                        {sectionLink.title}
-                      </Button>
+                      <NextLink href={`/${locale}/methods`}>
+                        <Button
+                          sx={{
+                            bgcolor: c.cobalt[500],
+                            mr: s(3),
+                            px: s(3),
+                            py: s(2),
+                            lineHeight: "18px",
+                            minHeight: "auto",
+                          }}
+                        >
+                          {sectionLink.title}
+                        </Button>
+                      </NextLink>
                     );
                 }
               default:
