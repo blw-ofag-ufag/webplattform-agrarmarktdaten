@@ -215,7 +215,8 @@ const FooterBLW = () => {
         },
         {
           title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
-          href: "/legal",
+          external: false,
+          href: `/${locale}/legal`,
         },
         {
           title: t({ id: "footer.about_us.label", message: "About Us" }),
@@ -223,7 +224,8 @@ const FooterBLW = () => {
         },
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
-          href: "/terms-and-conditions",
+          external: false,
+          href: `/${locale}/terms-and-condition`,
         },
       ]}
       nCols={isXXlAndUp ? 4 : 3}
@@ -294,6 +296,7 @@ const FooterBLW = () => {
               sx={{ textDecoration: "none" }}
             >
               <FooterSectionButton
+                iconName="external"
                 label={t({ id: "footer.blw", message: "Bundesamt für Landwirtschaft" })}
               />
             </Link>
@@ -302,7 +305,10 @@ const FooterBLW = () => {
               target="_blank"
               sx={{ textDecoration: "none" }}
             >
-              <FooterSectionButton label={t({ id: "footer.report", message: "Agrarbericht" })} />
+              <FooterSectionButton
+                iconName="external"
+                label={t({ id: "footer.report", message: "Agrarbericht" })}
+              />
             </Link>
             <Link
               href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/erhebungen/lik.html`}
@@ -310,6 +316,7 @@ const FooterBLW = () => {
               sx={{ textDecoration: "none" }}
             >
               <FooterSectionButton
+                iconName="external"
                 label={t({ id: "footer.priceindex", message: "Landesindex der Konsumentenpreise" })}
               />
             </Link>
@@ -319,6 +326,7 @@ const FooterBLW = () => {
               sx={{ textDecoration: "none" }}
             >
               <FooterSectionButton
+                iconName="external"
                 label={t({
                   id: "footer.importpriceindex",
                   message: "Produzenten- und Importpreis-Index",
@@ -332,7 +340,10 @@ const FooterBLW = () => {
               href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
               target="_blank"
             >
-              <FooterSectionButton label={t({ id: "footer.feedback", message: "Feedback" })} />
+              <FooterSectionButton
+                iconName="external"
+                label={t({ id: "footer.feedback", message: "Feedback" })}
+              />
             </Link>
           </FooterSection>
         </>
@@ -362,6 +373,7 @@ const FooterBLW = () => {
                 sx={{ textDecoration: "none" }}
               >
                 <FooterSectionButton
+                  iconName="external"
                   label={t({ id: "footer.blw", message: "Bundesamt für Landwirtschaft" })}
                 />
               </Link>
@@ -370,7 +382,10 @@ const FooterBLW = () => {
                 target="_blank"
                 sx={{ textDecoration: "none" }}
               >
-                <FooterSectionButton label={t({ id: "footer.report", message: "Agrarbericht" })} />
+                <FooterSectionButton
+                  iconName="external"
+                  label={t({ id: "footer.report", message: "Agrarbericht" })}
+                />
               </Link>
               <Link
                 href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/erhebungen/lik.html`}
@@ -378,6 +393,7 @@ const FooterBLW = () => {
                 sx={{ textDecoration: "none" }}
               >
                 <FooterSectionButton
+                  iconName="external"
                   label={t({
                     id: "footer.priceindex",
                     message: "Landesindex der Konsumentenpreise",
@@ -390,6 +406,7 @@ const FooterBLW = () => {
                 sx={{ textDecoration: "none" }}
               >
                 <FooterSectionButton
+                  iconName="external"
                   label={t({
                     id: "footer.importpriceindex",
                     message: "Produzenten- und Importpreis-Index",
@@ -410,7 +427,10 @@ const FooterBLW = () => {
                 href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
                 target="_blank"
               >
-                <FooterSectionButton label={t({ id: "footer.feedback", message: "Feedback" })} />
+                <FooterSectionButton
+                  iconName="external"
+                  label={t({ id: "footer.feedback", message: "Feedback" })}
+                />
               </Link>
             </Box>
           </FooterSection>
