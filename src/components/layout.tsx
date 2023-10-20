@@ -33,9 +33,11 @@ interface Props {
   allMarkets?: GQL.SimpleMarketArticleFragment[];
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
   alternates?: { href: string; as: string; locale: string }[];
+  showBackButton?: boolean;
 }
 
-export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }: Props) => {
+export const AppLayout = (props: Props) => {
+  const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
@@ -148,7 +150,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
           minHeight: 0,
         }}
       >
-        {!["/", "/data"].includes(router.pathname) ? (
+        {showBackButton && (
           <Box
             sx={{
               position: "absolute",
@@ -175,7 +177,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
               <BackButton />
             </Box>
           </Box>
-        ) : null}
+        )}
         {children}
       </Box>
 
@@ -225,7 +227,7 @@ const FooterBLW = () => {
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
           external: false,
-          href: `/${locale}/terms-and-condition`,
+          href: `/${locale}/terms-and-conditions`,
         },
       ]}
       nCols={isXXlAndUp ? 4 : 3}
