@@ -6,16 +6,13 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: AMDP\n"
 "Language: de\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
@@ -48,6 +45,12 @@ msgid "data.filters.addedValue"
 msgstr "Wertschöpfungsstufe"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.report"
+msgstr "Agrarbericht"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.all"
 msgstr "Alle"
@@ -61,6 +64,12 @@ msgstr "Alle Beiträge anzeigen"
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analysen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.blw"
+msgstr "Bundesamt für Landwirtschaft"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -91,6 +100,12 @@ msgstr "Daten herunterladen"
 #: src/components/card-data.tsx
 msgid "article.link.data.explore"
 msgstr "-"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -155,6 +170,12 @@ msgid "button.infografic.teaser"
 msgstr "Infografik Ansehen?"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.priceindex"
+msgstr "Landesindex der Konsumentenpreise"
+
+#. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "Mehr erfahren"
@@ -208,6 +229,12 @@ msgstr "Produktionssystem"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.products"
 msgstr "Produktliste"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.importpriceindex"
+msgstr "Produzenten- und Importpreis-Index"
 
 #. js-lingui-explicit-id
 #: src/pages/blog/[slug].tsx
@@ -299,34 +326,3 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Jahr"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.report"
-msgstr "Agrarbericht"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.blw"
-msgstr "Bundesamt für Landwirtschaft"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.feedback"
-msgstr "Feedback"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.priceindex"
-msgstr "Landesindex der Konsumentenpreise"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.importpriceindex"
-msgstr "Produzenten- und Importpreis-Index"
-
