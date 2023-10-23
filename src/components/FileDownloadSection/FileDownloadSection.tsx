@@ -8,10 +8,10 @@ import { Download } from "@/icons/icons-jsx/control";
 import { Intersperse } from "@/components/Intersperse";
 
 interface Props {
-  data: Partial<GQL.DataDownloadSectionRecord>;
+  data: Partial<GQL.FileDownloadSectionRecord>;
 }
 
-const DataDownloadSection = (props: Props) => {
+const FileDownloadSection = (props: Props) => {
   const { data } = props;
   return (
     <Box
@@ -46,7 +46,7 @@ const DataDownloadSection = (props: Props) => {
       <Intersperse
         separator={<Box sx={{ height: "1px", width: "100%", backgroundColor: c.cobalt[200] }} />}
       >
-        {data.dataDownloadItems?.map((item) => {
+        {data.fileDownloadItems?.map((item) => {
           const { id, date, title, file, description } = item;
           let formattedDate = "";
           if (date) {
@@ -98,4 +98,4 @@ const DataDownloadSection = (props: Props) => {
   );
 };
 
-export default DataDownloadSection;
+export default FileDownloadSection;

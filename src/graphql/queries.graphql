@@ -156,7 +156,7 @@ query MethodsPage($locale: SiteLocale!) {
       }
       links {
         __typename
-        ...DataDownloadSection
+        ...FileDownloadSection
         ...HighlightSection
         ...PowerBI
       }
@@ -313,7 +313,7 @@ fragment FullMarketArticle on MarketArticleRecord {
     }
     links {
       __typename
-      ...DataDownloadSection
+      ...FileDownloadSection
       ...HighlightSection
       ...PowerBI
     }
@@ -338,7 +338,7 @@ fragment FullFocusArticle on FocusArticleRecord {
     }
     links {
       __typename
-      ...DataDownloadSection
+      ...FileDownloadSection
       ...HighlightSection
       ...PowerBI
     }
@@ -414,7 +414,7 @@ fragment BlogPost on BlogPostRecord {
     }
     links {
       __typename
-      ...DataDownloadSection
+      ...FileDownloadSection
       ...HighlightSection
       ...PowerBI
     }
@@ -520,10 +520,10 @@ fragment PowerBI on PowerBiReportRecord {
   }
 }
 
-fragment DataDownloadSection on DataDownloadSectionRecord {
+fragment FileDownloadSection on FileDownloadSectionRecord {
   id
   title
-  dataDownloadItems {
+  fileDownloadItems {
     id
     title
     description

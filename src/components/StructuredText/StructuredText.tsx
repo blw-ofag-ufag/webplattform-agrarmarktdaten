@@ -13,7 +13,7 @@ import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
 import { sectionAtom } from "@/lib/atoms";
 import { useSetAtom } from "jotai";
-import { DataDownloadSection } from "@/components/DataDownloadSection";
+import { FileDownloadSection } from "@/components/FileDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
 
@@ -24,7 +24,7 @@ interface Props {
 const StructuredText = (props: Props) => {
   const { data } = props;
 
-  //FIXME: we have to temporarily disable SSR here due to a hydration problem with the DataDownloadSectionRecord bit.
+  //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
   const [isClient, setIsClient] = React.useState(false);
 
@@ -65,7 +65,11 @@ const StructuredText = (props: Props) => {
             if (node.level === 1) {
               i += 1;
               id = `heading${i}`;
-              return <Header1 id={id}>{children}</Header1>;
+              return (
+                <Header1 key={id} id={id}>
+                  {children}
+                </Header1>
+              );
             }
             return (
               <Typography
@@ -99,9 +103,9 @@ const StructuredText = (props: Props) => {
                   reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
                 />
               );
-            case "DataDownloadSectionRecord":
-              const dataDownloadSection = record as Partial<GQL.DataDownloadSectionRecord>;
-              return <DataDownloadSection key={record.id} data={dataDownloadSection} />;
+            case "FileDownloadSectionRecord":
+              const fileDownloadSection = record as Partial<GQL.FileDownloadSectionRecord>;
+              return <FileDownloadSection key={record.id} data={fileDownloadSection} />;
 
             case "HighlightSectionRecord":
               const highlightSection = record as Partial<GQL.HighlightSectionRecord>;
