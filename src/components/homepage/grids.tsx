@@ -3,11 +3,9 @@ import NextLink from "next/link";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { getMarketColor } from "@/domain/colors";
 import { GridWrap, GridWrapElement } from "@/components/Grid";
-
+import { useTheme } from "@mui/material/styles";
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
-
-const CARD_HEIGHT = 176;
 
 interface Props {
   type: "market" | "focus";
@@ -56,12 +54,14 @@ const GridCard = ({
 
 const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) => {
   const [color, bgColor] = getMarketColor(slug);
+  const theme = useTheme();
   return (
     <Card
       elevation={4}
       sx={{
         width: "100%",
-        height: CARD_HEIGHT,
+        [theme.breakpoints.up("xxl")]: { height: "176px", pb: s(18) },
+        [theme.breakpoints.down("xxl")]: { height: "120px", pb: s(18) },
         borderRadius: s(2),
         ":hover": { backgroundColor: bgColor, color },
       }}
@@ -70,7 +70,7 @@ const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) =>
       <Box sx={{ width: "48px", height: "3px", bgcolor: color, ml: s(8) }} />
       <Typography
         component="h2"
-        sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}
+        sx={{ mt: s(2), mx: s(8), fontWeight: "bold", lineHeight: "heading" }}
       >
         {title}
       </Typography>
@@ -79,12 +79,14 @@ const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) =>
 };
 
 const ThemeCard = ({ title }: { title: string }) => {
+  const theme = useTheme();
   return (
     <Card
       elevation={4}
       sx={{
         width: "100%",
-        height: CARD_HEIGHT,
+        [theme.breakpoints.up("xxl")]: { height: "176px", pb: s(18) },
+        [theme.breakpoints.down("xxl")]: { height: "120px", pb: s(18) },
         borderRadius: s(2),
         ":hover": { backgroundColor: "#ACB4BD" },
       }}
