@@ -9,6 +9,13 @@ query HomePage($locale: SiteLocale!) {
     id
     title
     lead
+    leadNew {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
     hero {
       id
       url
@@ -58,6 +65,13 @@ query LegalPage($locale: SiteLocale!) {
     title
     slug
     lead
+    leadNew {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
     content {
       value
     }
@@ -77,6 +91,13 @@ query TermsPage($locale: SiteLocale!) {
     title
     slug
     lead
+    leadNew {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
     content {
       value
     }
@@ -144,6 +165,13 @@ query MethodsPage($locale: SiteLocale!) {
     id
     title
     lead
+    leadNew {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
     seo {
       ...FullSEO
     }
@@ -181,6 +209,13 @@ query AnalysisPage($locale: SiteLocale!) {
     id
     title
     lead
+    leadNew {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
     seo {
       ...FullSEO
     }
@@ -304,6 +339,13 @@ fragment FullMarketArticle on MarketArticleRecord {
   title
   slug
   lead
+  leadNew {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
   content {
     value
     blocks {
@@ -328,6 +370,13 @@ fragment FullFocusArticle on FocusArticleRecord {
   title
   slug
   lead
+  leadNew {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
   content {
     value
 
@@ -588,4 +637,37 @@ fragment DataButton on DataButtonRecord {
   id
   url
   label
+}
+
+fragment InternalLink on RecordInterface {
+  ... on HomePageRecord {
+    id
+  }
+  ... on AboutPageRecord {
+    id
+  }
+  ... on AnalysisPageRecord {
+    id
+  }
+  ... on FocusArticleRecord {
+    id
+    slug
+  }
+  ... on LegalPageRecord {
+    id
+  }
+  ... on MarketArticleRecord {
+    id
+    slug
+  }
+  ... on MethodsPageRecord {
+    id
+  }
+  ... on TermsPageRecord {
+    id
+  }
+  ... on BlogPostRecord {
+    id
+    slug
+  }
 }

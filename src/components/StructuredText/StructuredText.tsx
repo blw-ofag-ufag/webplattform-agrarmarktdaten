@@ -40,6 +40,7 @@ const StructuredText = (props: Props) => {
         customNodeRules={[
           renderNodeRule(isLink, ({ node, children, key }) => {
             return (
+              <NextLink key={key} legacyBehavior href={node.url}>
               <Typography
                 variant="body1"
                 component="a"
@@ -48,11 +49,10 @@ const StructuredText = (props: Props) => {
                   textUnderlineOffset: "2px",
                   ":hover": { color: "#4B5563" },
                 }}
-                key={key}
-                href={node.url}
               >
                 {children}
               </Typography>
+              </NextLink>
             );
           }),
           renderNodeRule(isHeading, ({ node, children, key }) => {
@@ -113,6 +113,49 @@ const StructuredText = (props: Props) => {
             default:
               return null;
           }
+        }}
+        renderLinkToRecord={({ record, children, transformedMeta }) => {
+          let url = "";
+          switch (record.__typename) {
+            case "BlogPostRecord": {
+              url += `/blog/${record.slug}`;
+            }
+            case "TermsPageRecord": {
+              url += `/terms`;
+            }
+            case "MethodsPageRecord": {
+              url += `/methods`;
+            }
+            case "MarketArticleRecord": {
+              url += `/market/${record.slug}`;
+            }
+            case "LegalPageRecord": {
+              url += `/legal`;
+            }
+            case "FocusArticleRecord": {
+              url += `/focus/${record.slug}`;
+            }
+            case "AnalysisPageRecord": {
+              url += `/analysis`;
+            }
+          }
+          return (
+            <NextLink {...transformedMeta} legacyBehavior href={url}>
+              <Typography
+                variant="body1"
+                component="a"
+                sx={{
+                  color: "inherit",
+                  textUnderlineOffset: "2px",
+                  ":hover": { color: "#4B5563" },
+                }}
+                key={record.id}
+                href={url}
+              >
+                {children}
+              </Typography>
+            </NextLink>
+          );
         }}
         renderBlock={({ record }) => {
           switch (record.__typename) {

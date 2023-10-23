@@ -1,8 +1,10 @@
 import { Box, Typography } from "@mui/material";
-import { s, c } from "@interactivethings/swiss-federal-ci";
+import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
 import { GridContainer, GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
+import { StructuredTextGraphQlResponse } from "react-datocms";
+import { StructuredText } from "@/components/StructuredText";
 
 const useStyles = makeStyles()({
   market: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles()({
 type Props = {
   variant?: "regular" | "market";
   title: string;
-  lead?: string;
+  lead?: StructuredTextGraphQlResponse;
   hero?: string;
   color?: string;
   bgColor?: string;
@@ -89,9 +91,7 @@ export const Hero = (props: Props) => {
                 }),
               }}
             >
-              <Typography variant="subtitle1" sx={{ color: c.monochrome[800] }}>
-                {lead}
-              </Typography>
+              <StructuredText data={lead} />
             </GridElement>
           </GridContainer>
         </Box>

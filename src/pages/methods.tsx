@@ -13,12 +13,12 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
   const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useStickyBox({ offsetTop: 200 });
   const theme = useTheme();
-  if (!methodsPage?.title || !methodsPage.lead) {
+  if (!methodsPage?.title || !methodsPage.leadNew) {
     return null;
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shifted />
+      <Hero title={methodsPage.title} lead={methodsPage.leadNew} bgColor="#DFE4E9" shifted />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}

@@ -9,12 +9,12 @@ import { Hero } from "@/components/hero";
 export default function LegalPage(props: GQL.LegalPageQuery) {
   const { legalPage, allMarketArticles, allFocusArticles } = props;
   const theme = useTheme();
-  if (!legalPage?.title || !legalPage.lead) {
+  if (!legalPage?.title || !legalPage.leadNew) {
     return null;
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
-      <Hero title={legalPage.title} lead={legalPage.lead} shifted />
+      <Hero title={legalPage.title} lead={legalPage.leadNew} shifted />
       <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
         <GridElement
           sx={{
