@@ -161,7 +161,7 @@ const theme = createTheme({
 
   typography: {
     fontFamily: [
-      "NotoSans",
+      "Noto Sans",
       "FrutigerNeue",
       "-apple-system",
       "BlinkMacSystemFont",
