@@ -25,6 +25,7 @@ const useStyles = makeStyles<void, "full" | "third">()(
       height: "100%",
       minHeight: "556px",
       maxHeight: "556px",
+      overflow: "hidden",
     },
 
     third: {
