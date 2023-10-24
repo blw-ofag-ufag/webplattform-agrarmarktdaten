@@ -16,7 +16,6 @@ import { useSetAtom } from "jotai";
 import { FileDownloadSection } from "@/components/FileDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
 import { makeStyles } from "../style-utils";
 
 interface Props {
@@ -33,7 +32,6 @@ const useStyles = makeStyles()({
 
 const StructuredText = (props: Props) => {
   const { data } = props;
-  const { locale } = useRouter();
   const { classes } = useStyles();
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
@@ -122,31 +120,31 @@ const StructuredText = (props: Props) => {
           let url = "";
           switch (record.__typename) {
             case "BlogPostRecord": {
-              url += `/${locale}/blog/${record.slug}`;
+              url += `/blog/${record.slug}`;
               break;
             }
             case "TermsPageRecord": {
-              url += `/${locale}/terms`;
+              url += `/terms`;
               break;
             }
             case "MethodsPageRecord": {
-              url += `/${locale}/methods`;
+              url += `/methods`;
               break;
             }
             case "MarketArticleRecord": {
-              url += `/${locale}/market/${record.slug}`;
+              url += `/market/${record.slug}`;
               break;
             }
             case "LegalPageRecord": {
-              url += `/${locale}/legal`;
+              url += `/legal`;
               break;
             }
             case "FocusArticleRecord": {
-              url += `/${locale}/focus/${record.slug}`;
+              url += `/focus/${record.slug}`;
               break;
             }
             case "AnalysisPageRecord": {
-              url += `/${locale}/analysis`;
+              url += `/analysis`;
               break;
             }
           }
