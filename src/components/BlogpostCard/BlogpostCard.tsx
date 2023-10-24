@@ -69,6 +69,8 @@ const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
     boxShadow: e[6],
     borderRadius: s(2),
     cursor: "pointer",
+
+    "--px": s(7),
   },
 
   imageThird: {
@@ -93,15 +95,15 @@ const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
   publishedDateThird: {
     alignItems: "center",
     justifyContent: "space-between",
-    paddingLeft: s(7),
-    paddingRight: s(7),
+    paddingLeft: "var(--px)",
+    paddingRight: "var(--px)",
 
     marginBottom: s(4),
   },
 
   titleThird: {
-    paddingLeft: s(7),
-    paddingRight: s(7),
+    paddingLeft: "var(--px)",
+    paddingRight: "var(--px)",
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "-webkit-box",
@@ -111,8 +113,8 @@ const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
   },
 
   marketChipsThird: {
-    paddingLeft: s(7),
-    paddingRight: s(7),
+    paddingLeft: "var(--px)",
+    paddingRight: "var(--px)",
     marginTop: s(4),
     minHeight: "42px",
     display: "flex",
@@ -123,8 +125,8 @@ const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
 
   leadThird: {
     marginTop: "auto",
-    paddingLeft: s(7),
-    paddingRight: s(7),
+    paddingLeft: "var(--px)",
+    paddingRight: "var(--px)",
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "-webkit-box",
