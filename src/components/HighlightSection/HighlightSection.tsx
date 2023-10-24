@@ -165,7 +165,10 @@ const HighlightSection = (props: Props) => {
                         </Button>
                       </NextLink>
                     );
+                  default:
+                    return null;
                 }
+                break;
               default:
                 return null;
             }
