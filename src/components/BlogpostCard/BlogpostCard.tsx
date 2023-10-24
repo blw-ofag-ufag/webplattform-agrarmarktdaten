@@ -184,7 +184,7 @@ export const BlogpostCard = (
   if (variant === "full") {
     return (
       <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-        <Box className={classes.full}>
+        <div className={classes.full}>
           {image?.responsiveImage && (
             <Box sx={{ maxHeight: "556px", minWidth: "66.66%" }}>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -195,7 +195,7 @@ export const BlogpostCard = (
               />
             </Box>
           )}
-          <Box className={classes.publishedDate}>
+          <div className={classes.publishedDate}>
             {publishedDate && (
               <Typography variant="body2" color="textSecondary">
                 {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
@@ -210,19 +210,19 @@ export const BlogpostCard = (
             >
               {title}
             </Typography>
-            <Box className={classes.marketChips}>
+            <div className={classes.marketChips}>
               {[...markets, ...focusArticles].slice(0, 2).map(({ slug, title }) => (
                 <MarketChip key={slug} slug={slug} label={title} />
               ))}
-            </Box>
+            </div>
 
             <Box sx={{ pt: 4 }}>
               <Typography variant="body1" color="textPrimary" className={classes.lead}>
                 {leadCard}
               </Typography>
             </Box>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </NextLink>
     );
   }
@@ -230,17 +230,17 @@ export const BlogpostCard = (
   if (variant === "third") {
     return (
       <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-        <Box className={classes.third}>
-          <Box className={classes.image}>
+        <div className={classes.third}>
+          <div className={classes.image}>
             {image?.responsiveImage && (
               <Box sx={{ maxHeight: "280px", height: "100%" }}>
                 {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 <Image data={image?.responsiveImage} layout="responsive" />
               </Box>
             )}
-          </Box>
+          </div>
 
-          <Box className={classes.content}>
+          <div className={classes.content}>
             <Flex className={classes.publishedDate}>
               {publishedDate && (
                 <Typography variant="body2" color="textSecondary" sx={{ mt: 0 }}>
@@ -257,14 +257,13 @@ export const BlogpostCard = (
             >
               {title}
             </Typography>
-            <Flex className={classes.marketChips}>
+            <div className={classes.marketChips}>
               {[...markets, ...focusArticles].slice(0, 2).map(({ slug, title }) => (
                 <MarketChip key={slug} slug={slug} label={title} />
               ))}
-            </Flex>
+            </div>
             <Typography
               variant="body2"
-              mt={2}
               className={classes.lead}
               color="textPrimary"
               sx={{
@@ -279,8 +278,8 @@ export const BlogpostCard = (
             >
               {leadCard}
             </Typography>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </NextLink>
     );
   }
