@@ -12,128 +12,138 @@ import Flex from "../flex";
 import { lineClamp } from "../../utils/lineClamp";
 import { makeStyles } from "@/components/style-utils";
 
-const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
-  containerFull: {
-    display: "flex",
-    width: "100%",
-    minWidth: "100%",
-    borderRadius: s(2),
-    backgroundColor: "#FFF",
-    boxShadow: e[6],
-    cursor: "pointer",
-    height: "100%",
-    minHeight: "556px",
-    maxHeight: "556px",
-  },
+const useStyles = makeStyles<void, "full" | "third">()(
+  ({ spacing: s, shadows: e }, _params, classes) => ({
+    full: {
+      display: "flex",
+      width: "100%",
+      minWidth: "100%",
+      borderRadius: s(2),
+      backgroundColor: "#FFF",
+      boxShadow: e[6],
+      cursor: "pointer",
+      height: "100%",
+      minHeight: "556px",
+      maxHeight: "556px",
+    },
 
-  publishedDateFull: {
-    paddingRight: s(20),
-    paddingLeft: s(16),
-    paddingTop: s(10),
-    width: "100%",
-    overflowY: "hidden",
-    height: "100%",
-  },
+    third: {
+      maxWidth: "100%",
+      boxShadow: e[6],
+      borderRadius: s(2),
+      cursor: "pointer",
 
-  titleFull: {
-    lineHeight: "48px",
-    marginTop: s(4),
-    fontWeight: 700,
-    textOverflow: "ellipsis",
-    display: "-webkit-box",
-    WebkitLineClamp: "3",
-    lineClamp: "3",
-    WebkitBoxOrient: "vertical",
-  },
+      "--px": s(7),
+    },
 
-  marketChipsFull: {
-    marginTop: s(4),
-    display: "flex",
-    columnGap: s(4),
-    rowGap: s(2),
-    flexWrap: "wrap",
-  },
+    publishedDate: {
+      [`.${classes.full} &`]: {
+        paddingRight: s(20),
+        paddingLeft: s(16),
+        paddingTop: s(10),
+        width: "100%",
+        overflowY: "hidden",
+        height: "100%",
+      },
+      [`.${classes.third} &`]: {
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingLeft: "var(--px)",
+        paddingRight: "var(--px)",
 
-  leadFull: {
-    fontSize: "18px",
-    textOverflow: "ellipsis",
-    display: "-webkit-box",
-    WebkitLineClamp: "7",
-    lineClamp: "7",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-  },
+        marginBottom: s(4),
+      },
+    },
 
-  containerThird: {
-    maxWidth: "100%",
-    boxShadow: e[6],
-    borderRadius: s(2),
-    cursor: "pointer",
+    title: {
+      [`.${classes.full} &`]: {
+        lineHeight: "48px",
+        marginTop: s(4),
+        fontWeight: 700,
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        WebkitLineClamp: "3",
+        lineClamp: "3",
+        WebkitBoxOrient: "vertical",
+      },
 
-    "--px": s(7),
-  },
+      [`.${classes.third} &`]: {
+        paddingLeft: "var(--px)",
+        paddingRight: "var(--px)",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        WebkitLineClamp: "2",
+        lineClamp: "2",
+        WebkitBoxOrient: "vertical",
+      },
+    },
 
-  imageThird: {
-    position: "relative",
-    overflow: "hidden",
-    minWidth: "100%",
-    aspectRatio: 16 / 9,
-    borderTopLeftRadius: s(2),
-    borderTopRightRadius: s(2),
-  },
+    marketChips: {
+      [`.${classes.full} &`]: {
+        marginTop: s(4),
+        display: "flex",
+        columnGap: s(4),
+        rowGap: s(2),
+        flexWrap: "wrap",
+      },
+      [`.${classes.third} &`]: {
+        paddingLeft: "var(--px)",
+        paddingRight: "var(--px)",
+        marginTop: s(4),
+        minHeight: "42px",
+        display: "flex",
+        columnGap: s(4),
+        rowGap: s(2),
+        flexWrap: "wrap",
+      },
+    },
 
-  contentThird: {
-    paddingBottom: s(9),
-    paddingTop: s(9),
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "302px",
-    maxHeight: "302px",
-    height: "100%",
-  },
+    lead: {
+      [`.${classes.full} &`]: {
+        fontSize: "18px",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        WebkitLineClamp: "7",
+        lineClamp: "7",
+        WebkitBoxOrient: "vertical",
+        overflow: "hidden",
+      },
+      [`.${classes.third} &`]: {
+        marginTop: "auto",
+        paddingLeft: "var(--px)",
+        paddingRight: "var(--px)",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        WebkitBoxOrient: "vertical",
+      },
+    },
 
-  publishedDateThird: {
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingLeft: "var(--px)",
-    paddingRight: "var(--px)",
+    image: {
+      [`.${classes.third} &`]: {
+        position: "relative",
+        overflow: "hidden",
+        minWidth: "100%",
+        aspectRatio: 16 / 9,
+        borderTopLeftRadius: s(2),
+        borderTopRightRadius: s(2),
+      },
+    },
 
-    marginBottom: s(4),
-  },
-
-  titleThird: {
-    paddingLeft: "var(--px)",
-    paddingRight: "var(--px)",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    display: "-webkit-box",
-    WebkitLineClamp: "2",
-    lineClamp: "2",
-    WebkitBoxOrient: "vertical",
-  },
-
-  marketChipsThird: {
-    paddingLeft: "var(--px)",
-    paddingRight: "var(--px)",
-    marginTop: s(4),
-    minHeight: "42px",
-    display: "flex",
-    columnGap: s(4),
-    rowGap: s(2),
-    flexWrap: "wrap",
-  },
-
-  leadThird: {
-    marginTop: "auto",
-    paddingLeft: "var(--px)",
-    paddingRight: "var(--px)",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    display: "-webkit-box",
-    ...lineClamp("4"),
-    WebkitBoxOrient: "vertical",
-  },
-}));
+    content: {
+      [`.${classes.third} &`]: {
+        paddingBottom: s(9),
+        paddingTop: s(9),
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "302px",
+        maxHeight: "302px",
+        height: "100%",
+      },
+    },
+  })
+);
 
 export const BlogpostCard = (
   props: GQL.SimpleBlogPostFragment & { variant?: "full" | "half" | "third" }
@@ -174,7 +184,7 @@ export const BlogpostCard = (
   if (variant === "full") {
     return (
       <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-        <Box className={classes.containerFull}>
+        <Box className={classes.full}>
           {image?.responsiveImage && (
             <Box sx={{ maxHeight: "556px", minWidth: "66.66%" }}>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -185,7 +195,7 @@ export const BlogpostCard = (
               />
             </Box>
           )}
-          <Box className={classes.publishedDateFull}>
+          <Box className={classes.publishedDate}>
             {publishedDate && (
               <Typography variant="body2" color="textSecondary">
                 {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
@@ -196,18 +206,18 @@ export const BlogpostCard = (
               variant="h1"
               component="div"
               color="textPrimary"
-              className={classes.titleFull}
+              className={classes.title}
             >
               {title}
             </Typography>
-            <Box className={classes.marketChipsFull}>
+            <Box className={classes.marketChips}>
               {[...markets, ...focusArticles].slice(0, 2).map(({ slug, title }) => (
                 <MarketChip key={slug} slug={slug} label={title} />
               ))}
             </Box>
 
             <Box sx={{ pt: 4 }}>
-              <Typography variant="body1" color="textPrimary" className={classes.leadFull}>
+              <Typography variant="body1" color="textPrimary" className={classes.lead}>
                 {leadCard}
               </Typography>
             </Box>
@@ -220,8 +230,8 @@ export const BlogpostCard = (
   if (variant === "third") {
     return (
       <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-        <Box className={classes.containerThird}>
-          <Box className={classes.imageThird}>
+        <Box className={classes.third}>
+          <Box className={classes.image}>
             {image?.responsiveImage && (
               <Box sx={{ maxHeight: "280px", height: "100%" }}>
                 {/* eslint-disable-next-line jsx-a11y/alt-text */}
@@ -230,8 +240,8 @@ export const BlogpostCard = (
             )}
           </Box>
 
-          <Box className={classes.contentThird}>
-            <Flex className={classes.publishedDateThird}>
+          <Box className={classes.content}>
+            <Flex className={classes.publishedDate}>
               {publishedDate && (
                 <Typography variant="body2" color="textSecondary" sx={{ mt: 0 }}>
                   {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
@@ -243,11 +253,11 @@ export const BlogpostCard = (
               variant="h1"
               component="div"
               color="textPrimary"
-              className={classes.titleThird}
+              className={classes.title}
             >
               {title}
             </Typography>
-            <Flex className={classes.marketChipsThird}>
+            <Flex className={classes.marketChips}>
               {[...markets, ...focusArticles].slice(0, 2).map(({ slug, title }) => (
                 <MarketChip key={slug} slug={slug} label={title} />
               ))}
@@ -255,7 +265,7 @@ export const BlogpostCard = (
             <Typography
               variant="body2"
               mt={2}
-              className={classes.leadThird}
+              className={classes.lead}
               color="textPrimary"
               sx={{
                 [theme.breakpoints.up("lg")]: lineClamp(titleHeight > 48 ? "2" : "4"),
