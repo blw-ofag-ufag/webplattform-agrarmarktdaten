@@ -121,24 +121,31 @@ const StructuredText = (props: Props) => {
           switch (record.__typename) {
             case "BlogPostRecord": {
               url += `/${locale}/blog/${record.slug}`;
+              break;
             }
             case "TermsPageRecord": {
               url += `/${locale}/terms`;
+              break;
             }
             case "MethodsPageRecord": {
               url += `/${locale}/methods`;
+              break;
             }
             case "MarketArticleRecord": {
               url += `/${locale}/market/${record.slug}`;
+              break;
             }
             case "LegalPageRecord": {
               url += `/${locale}/legal`;
+              break;
             }
             case "FocusArticleRecord": {
               url += `/${locale}/focus/${record.slug}`;
+              break;
             }
             case "AnalysisPageRecord": {
               url += `/${locale}/analysis`;
+              break;
             }
           }
           return (
