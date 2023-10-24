@@ -13,13 +13,13 @@ import { lineClamp } from "../../utils/lineClamp";
 import { makeStyles } from "@/components/style-utils";
 
 const useStyles = makeStyles<void, "full" | "third">()(
-  ({ spacing: s, shadows: e }, _params, classes) => ({
+  ({ spacing: s, shadows: e, palette: c }, _params, classes) => ({
     full: {
       display: "flex",
       width: "100%",
       minWidth: "100%",
       borderRadius: s(2),
-      backgroundColor: "#FFF",
+      backgroundColor: c.background.paper,
       boxShadow: e[6],
       cursor: "pointer",
       height: "100%",
@@ -31,6 +31,7 @@ const useStyles = makeStyles<void, "full" | "third">()(
     third: {
       maxWidth: "100%",
       boxShadow: e[6],
+      backgroundColor: c.background.paper,
       borderRadius: s(2),
       cursor: "pointer",
 
