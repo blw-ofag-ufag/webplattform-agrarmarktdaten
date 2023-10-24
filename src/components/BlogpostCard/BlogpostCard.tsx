@@ -60,20 +60,6 @@ export const BlogpostCard = (
           }}
         >
           {image?.responsiveImage && (
-            // <Image
-            //   src={image?.url}
-            //   width={width}
-            //   height={300}
-            //   style={{
-            //     objectFit: "cover",
-            //     borderTopLeftRadius: s(2),
-            //     borderBottomLeftRadius: s(2),
-            //     minWidth: "66.6%",
-            //     width: "66.6%",
-            //     height: "auto",
-            //   }}
-            //   alt={image?.alt ?? ""}
-            // />
             <Box sx={{ maxHeight: "556px", minWidth: "66.66%" }}>
               <Image
                 data={image?.responsiveImage}
@@ -170,21 +156,6 @@ export const BlogpostCard = (
               borderTopRightRadius: s(2),
             }}
           >
-            {/* {image?.url && (
-              <Image
-                src={image?.url}
-                width={width}
-                height={300}
-                style={{
-                  objectFit: "cover",
-                  aspectRatio: 16 / 9,
-                  minWidth: "100%",
-                  width: "100%",
-                  height: "auto",
-                }}
-                alt={image?.alt ?? ""}
-              />
-            )} */}
             {image?.responsiveImage && (
               <Box sx={{ maxHeight: "280px", height: "100%" }}>
                 <Image data={image?.responsiveImage} layout="responsive" />
