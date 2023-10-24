@@ -10,6 +10,7 @@ import { MarketChip } from "@/components/MarketChip";
 import { useTheme } from "@mui/material/styles";
 
 import Flex from "../flex";
+import { lineClamp } from "../../utils/lineClamp";
 
 export const BlogpostCard = (
   props: GQL.SimpleBlogPostFragment & { variant?: "full" | "half" | "third" }
@@ -259,42 +260,15 @@ export const BlogpostCard = (
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
-                WebkitLineClamp: "4",
-                lineClamp: "4",
+                ...lineClamp("4"),
                 WebkitBoxOrient: "vertical",
-                [theme.breakpoints.only("xxxl")]: {
-                  WebkitLineClamp: titleHeight > 48 ? "2" : "4",
-                  lineClamp: titleHeight > 48 ? "2" : "4",
-                },
-                [theme.breakpoints.only("xxl")]: {
-                  WebkitLineClamp: titleHeight > 48 ? "2" : "4",
-                  lineClamp: titleHeight > 48 ? "2" : "4",
-                },
-                [theme.breakpoints.only("xl")]: {
-                  WebkitLineClamp: titleHeight > 48 ? "2" : "4",
-                  lineClamp: titleHeight > 48 ? "2" : "4",
-                },
-                [theme.breakpoints.only("lg")]: {
-                  WebkitLineClamp: titleHeight > 48 ? "2" : "4",
-                  lineClamp: titleHeight > 48 ? "2" : "4",
-                },
-                [theme.breakpoints.only("md")]: {
-                  WebkitLineClamp: titleHeight > 36 ? "3" : "4",
-                  lineClamp: titleHeight > 36 ? "3" : "4",
-                },
-                [theme.breakpoints.only("sm")]: {
-                  WebkitLineClamp: titleHeight > 36 ? "4" : "5",
-                  lineClamp: titleHeight > 36 ? "4" : "5",
-                },
-                [theme.breakpoints.only("xs")]: {
-                  WebkitLineClamp: titleHeight > 36 ? "4" : "6",
-                  lineClamp: titleHeight > 36 ? "4" : "6",
-                },
+                [theme.breakpoints.up("lg")]: lineClamp(titleHeight > 48 ? "2" : "4"),
+
+                [theme.breakpoints.up("md")]: lineClamp(titleHeight > 36 ? "3" : "4"),
+                [theme.breakpoints.only("sm")]: lineClamp(titleHeight > 36 ? "4" : "5"),
+                [theme.breakpoints.only("xs")]: lineClamp(titleHeight > 36 ? "4" : "6"),
                 //TODO: check this one out once I have this breakpoint solved
-                [theme.breakpoints.only("xxs")]: {
-                  WebkitLineClamp: titleHeight > 36 ? "4" : "4",
-                  lineClamp: titleHeight > 36 ? "4" : "4",
-                },
+                [theme.breakpoints.only("xxs")]: lineClamp(titleHeight > 36 ? "4" : "4"),
               }}
             >
               {leadCard}
