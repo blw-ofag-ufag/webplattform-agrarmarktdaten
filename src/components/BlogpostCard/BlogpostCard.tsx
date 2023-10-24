@@ -61,6 +61,7 @@ export const BlogpostCard = (
         >
           {image?.responsiveImage && (
             <Box sx={{ maxHeight: "556px", minWidth: "66.66%" }}>
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
               <Image
                 data={image?.responsiveImage}
                 layout="responsive"
@@ -158,6 +159,7 @@ export const BlogpostCard = (
           >
             {image?.responsiveImage && (
               <Box sx={{ maxHeight: "280px", height: "100%" }}>
+                {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 <Image data={image?.responsiveImage} layout="responsive" />
               </Box>
             )}
