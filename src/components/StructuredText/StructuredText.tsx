@@ -16,6 +16,7 @@ import { useSetAtom } from "jotai";
 import { FileDownloadSection } from "@/components/FileDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
@@ -23,6 +24,7 @@ interface Props {
 
 const StructuredText = (props: Props) => {
   const { data } = props;
+  const { locale } = useRouter();
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
@@ -41,17 +43,17 @@ const StructuredText = (props: Props) => {
           renderNodeRule(isLink, ({ node, children, key }) => {
             return (
               <NextLink key={key} legacyBehavior href={node.url}>
-              <Typography
-                variant="body1"
-                component="a"
-                sx={{
-                  color: "inherit",
-                  textUnderlineOffset: "2px",
-                  ":hover": { color: "#4B5563" },
-                }}
-              >
-                {children}
-              </Typography>
+                <Typography
+                  variant="body1"
+                  component="a"
+                  sx={{
+                    color: "inherit",
+                    textUnderlineOffset: "2px",
+                    ":hover": { color: "#4B5563" },
+                  }}
+                >
+                  {children}
+                </Typography>
               </NextLink>
             );
           }),
@@ -118,25 +120,25 @@ const StructuredText = (props: Props) => {
           let url = "";
           switch (record.__typename) {
             case "BlogPostRecord": {
-              url += `/blog/${record.slug}`;
+              url += `/${locale}/blog/${record.slug}`;
             }
             case "TermsPageRecord": {
-              url += `/terms`;
+              url += `/${locale}/terms`;
             }
             case "MethodsPageRecord": {
-              url += `/methods`;
+              url += `/${locale}/methods`;
             }
             case "MarketArticleRecord": {
-              url += `/market/${record.slug}`;
+              url += `/${locale}/market/${record.slug}`;
             }
             case "LegalPageRecord": {
-              url += `/legal`;
+              url += `/${locale}/legal`;
             }
             case "FocusArticleRecord": {
-              url += `/focus/${record.slug}`;
+              url += `/${locale}/focus/${record.slug}`;
             }
             case "AnalysisPageRecord": {
-              url += `/analysis`;
+              url += `/${locale}/analysis`;
             }
           }
           return (
