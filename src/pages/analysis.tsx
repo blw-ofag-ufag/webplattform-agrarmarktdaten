@@ -16,14 +16,13 @@ export default function Analysis({
   allMarketArticles,
   _allBlogPostsMeta,
 }: GQL.AnalysisPageQuery) {
+  if (!analysisPage?.title || !analysisPage?.lead) {
+    return null;
+  }
   return (
     <QueryClientProvider client={queryClient}>
       <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-        <Hero
-          title={analysisPage?.title as string}
-          lead={analysisPage?.lead as string}
-          bgColor={c.cobalt[100]}
-        />
+        <Hero title={analysisPage?.title} lead={analysisPage?.lead} bgColor={c.cobalt[100]} />
         <BlogpostGrid blogposts={allBlogPosts} totalBlogpostCount={_allBlogPostsMeta.count} />
       </AppLayout>
     </QueryClientProvider>

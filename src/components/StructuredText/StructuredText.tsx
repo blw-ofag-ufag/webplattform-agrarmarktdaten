@@ -16,13 +16,23 @@ import { useSetAtom } from "jotai";
 import { FileDownloadSection } from "@/components/FileDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
+import { makeStyles } from "../style-utils";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
 }
 
+const useStyles = makeStyles()({
+  link: {
+    color: "inherit",
+    textUnderlineOffset: "2px",
+    ":hover": { color: c.monochrome[600] },
+  },
+});
+
 const StructuredText = (props: Props) => {
   const { data } = props;
+  const { classes } = useStyles();
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
@@ -40,19 +50,11 @@ const StructuredText = (props: Props) => {
         customNodeRules={[
           renderNodeRule(isLink, ({ node, children, key }) => {
             return (
-              <Typography
-                variant="body1"
-                component="a"
-                sx={{
-                  color: "inherit",
-                  textUnderlineOffset: "2px",
-                  ":hover": { color: "#4B5563" },
-                }}
-                key={key}
-                href={node.url}
-              >
-                {children}
-              </Typography>
+              <NextLink key={key} legacyBehavior href={node.url}>
+                <Typography variant="body1" component="a" className={classes.link}>
+                  {children}
+                </Typography>
+              </NextLink>
             );
           }),
           renderNodeRule(isHeading, ({ node, children, key }) => {
@@ -113,6 +115,52 @@ const StructuredText = (props: Props) => {
             default:
               return null;
           }
+        }}
+        renderLinkToRecord={({ record, children, transformedMeta }) => {
+          let url = "";
+          switch (record.__typename) {
+            case "BlogPostRecord": {
+              url += `/blog/${record.slug}`;
+              break;
+            }
+            case "TermsPageRecord": {
+              url += `/terms`;
+              break;
+            }
+            case "MethodsPageRecord": {
+              url += `/methods`;
+              break;
+            }
+            case "MarketArticleRecord": {
+              url += `/market/${record.slug}`;
+              break;
+            }
+            case "LegalPageRecord": {
+              url += `/legal`;
+              break;
+            }
+            case "FocusArticleRecord": {
+              url += `/focus/${record.slug}`;
+              break;
+            }
+            case "AnalysisPageRecord": {
+              url += `/analysis`;
+              break;
+            }
+          }
+          return (
+            <NextLink {...transformedMeta} legacyBehavior href={url}>
+              <Typography
+                variant="body1"
+                component="a"
+                className={classes.link}
+                key={record.id}
+                href={url}
+              >
+                {children}
+              </Typography>
+            </NextLink>
+          );
         }}
         renderBlock={({ record }) => {
           switch (record.__typename) {

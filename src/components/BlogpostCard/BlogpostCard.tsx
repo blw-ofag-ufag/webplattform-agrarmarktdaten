@@ -16,7 +16,7 @@ export const BlogpostCard = (
 ) => {
   const {
     title,
-    lead,
+    leadCard,
     image,
     markets,
     focusArticles,
@@ -135,7 +135,7 @@ export const BlogpostCard = (
                   overflow: "hidden",
                 }}
               >
-                {lead}
+                {leadCard}
               </Typography>
             </Box>
           </Box>
@@ -297,7 +297,7 @@ export const BlogpostCard = (
                 },
               }}
             >
-              {lead}
+              {leadCard}
             </Typography>
           </Box>
         </Box>
