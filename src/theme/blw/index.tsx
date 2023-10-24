@@ -1,6 +1,6 @@
 import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 import federalTheme from "@/theme/federal";
-import { breakpoints, c, s } from "@interactivethings/swiss-federal-ci";
+import { breakpoints, c, s, t } from "@interactivethings/swiss-federal-ci";
 import { createTheme } from "@mui/material/styles";
 
 declare module "@mui/material" {
@@ -72,7 +72,7 @@ const theme = createTheme(federalTheme, {
 // TODO Open an issue on swiss federal ci
 Object.assign(theme.palette, c);
 theme.spacing = s;
-
+Object.assign(theme.typography, t);
 theme.palette.text.secondary = theme.palette.monochrome[500];
 
 export default theme;
