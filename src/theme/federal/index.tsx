@@ -130,14 +130,6 @@ const theme = createTheme({
       main: "#a82824",
       light: "#f2dede",
     },
-    organization: {
-      main: "#006699",
-      light: "#d8e8ef", // same as primaryLight
-    },
-    category: {
-      main: "#3c763d",
-      light: "#DFF0D8", // same as successLight
-    },
     grey: {
       100: "#FFFFFF",
       200: "#F5F5F5",
@@ -219,12 +211,6 @@ theme.typography = merge(theme.typography, {
     lineHeight: [18, 20],
     fontSize: [12, 14],
   }),
-  // table: {
-  //   fontFamily: "body",
-  //   lineHeight: [2, 4, 4],
-  //   fontWeight: "regular",
-  //   fontSize: [2, 3, 3],
-  // },
   caption: createTypographyVariant(theme, {
     fontSize: [10, 12],
     lineHeight: [16, 18],
