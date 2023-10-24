@@ -13,6 +13,7 @@
         "varsIgnorePattern": "^_",
         "ignoreRestSiblings": true
       }
-    ]
+    ],
+    "no-fallthrough": "error"
   }
 }
