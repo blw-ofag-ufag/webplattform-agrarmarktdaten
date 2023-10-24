@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Typography } from "@mui/material";
 import NextLink from "next/link";
-import { e, s, c, t } from "@interactivethings/swiss-federal-ci";
+import { e, s, c } from "@interactivethings/swiss-federal-ci";
 import { i18n } from "@lingui/core";
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
@@ -86,13 +86,13 @@ export const BlogpostCard = (
             )}
             <Typography
               ref={titleRef}
-              variant="body2"
+              variant="h1"
+              component="div"
               sx={{
                 lineHeight: "48px",
                 mt: s(4),
                 fontWeight: 700,
                 color: c.monochrome[800],
-                typography: t.h1,
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
                 WebkitLineClamp: "3",
@@ -193,11 +193,11 @@ export const BlogpostCard = (
             </Flex>
             <Typography
               ref={titleRef}
-              variant="body2"
+              variant="h1"
+              component="div"
               sx={{
                 color: c.monochrome[800],
                 px: s(7),
-                typography: t.h1,
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
