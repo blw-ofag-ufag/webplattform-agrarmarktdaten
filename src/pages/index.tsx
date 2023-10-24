@@ -12,17 +12,12 @@ import { GridContainer } from "@/components/Grid";
 
 export default function HomePage(props: GQL.HomePageQuery) {
   const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
-  if (!homePage?.title || !homePage.leadNew) {
+  if (!homePage?.title || !homePage.lead) {
     return null;
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero
-        title={homePage.title}
-        lead={homePage.leadNew}
-        hero={homePage.hero?.url}
-        color="#ffffff"
-      />
+      <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} color="#ffffff" />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h2" sx={{ fontWeight: 700 }}>

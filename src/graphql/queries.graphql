@@ -8,8 +8,7 @@ query HomePage($locale: SiteLocale!) {
     }
     id
     title
-    lead
-    leadNew {
+    lead {
       value
       links {
         __typename
@@ -64,8 +63,7 @@ query LegalPage($locale: SiteLocale!) {
     id
     title
     slug
-    lead
-    leadNew {
+    lead {
       value
       links {
         __typename
@@ -90,8 +88,7 @@ query TermsPage($locale: SiteLocale!) {
   termsPage(locale: $locale) {
     title
     slug
-    lead
-    leadNew {
+    lead {
       value
       links {
         __typename
@@ -164,8 +161,7 @@ query MethodsPage($locale: SiteLocale!) {
     }
     id
     title
-    lead
-    leadNew {
+    lead {
       value
       links {
         __typename
@@ -208,8 +204,7 @@ query AnalysisPage($locale: SiteLocale!) {
   analysisPage(locale: $locale) {
     id
     title
-    lead
-    leadNew {
+    lead {
       value
       links {
         __typename
@@ -338,8 +333,7 @@ fragment FullMarketArticle on MarketArticleRecord {
   id
   title
   slug
-  lead
-  leadNew {
+  lead {
     value
     links {
       __typename
@@ -369,8 +363,7 @@ fragment FullFocusArticle on FocusArticleRecord {
   id
   title
   slug
-  lead
-  leadNew {
+  lead {
     value
     links {
       __typename
@@ -401,7 +394,7 @@ fragment SimpleBlogPost on BlogPostRecord {
   id
   title
   slug
-  lead
+  leadCard
   image {
     id
     alt
@@ -433,7 +426,14 @@ fragment BlogPost on BlogPostRecord {
   id
   publishedDate
   title
-  lead
+  leadCard
+  lead {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
   slug
   authors {
     id

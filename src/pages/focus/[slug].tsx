@@ -15,7 +15,7 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useStickyBox({ offsetTop: 200 });
   const theme = useTheme();
-  if (!focusArticle?.title || !focusArticle?.leadNew) {
+  if (!focusArticle?.title || !focusArticle?.lead) {
     return null;
   }
 
@@ -32,7 +32,7 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
       allFocusArticles={allFocusArticles}
       showBackButton
     >
-      <Hero title={focusArticle.title} lead={focusArticle.leadNew} bgColor="#ACB4BD" shifted />
+      <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shifted />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}

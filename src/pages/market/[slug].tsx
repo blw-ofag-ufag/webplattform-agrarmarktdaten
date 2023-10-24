@@ -23,7 +23,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
     locale: loc.locale as string,
   }));
 
-  if (!marketArticle?.title || !marketArticle?.leadNew) {
+  if (!marketArticle?.title || !marketArticle?.lead) {
     return null;
   }
   const [color, marketColor] = getMarketColor(marketArticle.slug);
@@ -36,7 +36,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
     >
       <Hero
         title={marketArticle.title}
-        lead={marketArticle.leadNew}
+        lead={marketArticle.lead}
         bgColor={marketColor}
         color={color}
         shifted

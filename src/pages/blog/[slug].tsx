@@ -114,9 +114,9 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
                 );
               })}
             </Box>
-            <Typography variant="h6" sx={{ mt: s(8), color: c.monochrome[800], fontWeight: 400 }}>
-              {blogPost.lead}
-            </Typography>
+            <Box sx={{ mt: s(8), color: c.monochrome[800], fontWeight: 400 }}>
+              <StructuredText data={blogPost.lead} />
+            </Box>
             {blogPost.authors.length > 0 && (
               <Box
                 sx={{

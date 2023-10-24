@@ -33,7 +33,7 @@ export const BlogPostsGrid = (props: Props) => {
 };
 
 export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
-  const { title, lead, image, markets, slug, publishedDate } = props;
+  const { title, leadCard, image, markets, slug, publishedDate } = props;
   const mainMarket = head(markets);
   const locale = useLocale();
 
@@ -63,7 +63,7 @@ export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
           </Flex>
           <Typography variant="h5">{title}</Typography>
           <Typography variant="body2" mt={2}>
-            {lead}
+            {leadCard}
           </Typography>
         </Box>
       </Link>
