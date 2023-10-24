@@ -17,14 +17,24 @@ import { FileDownloadSection } from "@/components/FileDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { makeStyles } from "../style-utils";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
 }
 
+const useStyles = makeStyles()({
+  link: {
+    color: "inherit",
+    textUnderlineOffset: "2px",
+    ":hover": { color: c.monochrome[600] },
+  },
+});
+
 const StructuredText = (props: Props) => {
   const { data } = props;
   const { locale } = useRouter();
+  const { classes } = useStyles();
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
@@ -43,15 +53,7 @@ const StructuredText = (props: Props) => {
           renderNodeRule(isLink, ({ node, children, key }) => {
             return (
               <NextLink key={key} legacyBehavior href={node.url}>
-                <Typography
-                  variant="body1"
-                  component="a"
-                  sx={{
-                    color: "inherit",
-                    textUnderlineOffset: "2px",
-                    ":hover": { color: "#4B5563" },
-                  }}
-                >
+                <Typography variant="body1" component="a" className={classes.link}>
                   {children}
                 </Typography>
               </NextLink>
@@ -153,11 +155,7 @@ const StructuredText = (props: Props) => {
               <Typography
                 variant="body1"
                 component="a"
-                sx={{
-                  color: "inherit",
-                  textUnderlineOffset: "2px",
-                  ":hover": { color: "#4B5563" },
-                }}
+                className={classes.link}
                 key={record.id}
                 href={url}
               >
