@@ -42,6 +42,10 @@ export const BlogpostCard = (
     return () => window.removeEventListener("resize", updateSize);
   }, [setTitleHeight]);
 
+  if (variant === "half") {
+    return null;
+  }
+
   if (variant === "full") {
     return (
       <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
@@ -130,10 +134,6 @@ export const BlogpostCard = (
         </Box>
       </NextLink>
     );
-  }
-
-  if (variant === "half") {
-    return null;
   }
 
   if (variant === "third") {
