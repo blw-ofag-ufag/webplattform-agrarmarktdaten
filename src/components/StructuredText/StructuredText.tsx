@@ -7,7 +7,7 @@ import {
   Image,
 } from "react-datocms";
 import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, TypographyProps } from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
@@ -20,6 +20,7 @@ import { makeStyles } from "../style-utils";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
+  paragraphTypographyProps: TypographyProps;
 }
 
 const useStyles = makeStyles()({
@@ -30,8 +31,12 @@ const useStyles = makeStyles()({
   },
 });
 
+const defaultParagraphTypographyProps = {
+  variant: "body1",
+};
+
 const StructuredText = (props: Props) => {
-  const { data } = props;
+  const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
   const { classes } = useStyles();
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
@@ -51,7 +56,12 @@ const StructuredText = (props: Props) => {
           renderNodeRule(isLink, ({ node, children, key }) => {
             return (
               <NextLink key={key} legacyBehavior href={node.url}>
-                <Typography variant="body1" component="a" data-debug-good className={classes.link}>
+                <Typography
+                  variant="inherit"
+                  component="a"
+                  data-debug-good
+                  className={classes.link}
+                >
                   {children}
                 </Typography>
               </NextLink>
@@ -88,7 +98,13 @@ const StructuredText = (props: Props) => {
           }),
           renderNodeRule(isParagraph, ({ children, key }) => {
             return (
-              <Typography data-debug-good key={key} variant="body1" component="p" sx={{ mb: s(4) }}>
+              <Typography
+                data-debug-good
+                key={key}
+                component="p"
+                sx={{ mb: s(4) }}
+                {...paragraphTypographyProps}
+              >
                 {children}
               </Typography>
             );
@@ -152,7 +168,7 @@ const StructuredText = (props: Props) => {
           return (
             <NextLink {...transformedMeta} legacyBehavior href={url}>
               <Typography
-                variant="body1"
+                variant="inherit"
                 component="a"
                 data-debug-good
                 className={classes.link}

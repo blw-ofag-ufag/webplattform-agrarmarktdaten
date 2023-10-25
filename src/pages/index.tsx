@@ -23,6 +23,9 @@ export default function HomePage(props: GQL.HomePageQuery) {
         hero={homePage.hero?.url}
         color="#ffffff"
         titleTypographyProps={{ variant: "display1" }}
+        leadStructuredTextProps={{
+          paragraphTypographyProps: { variant: "h3", fontWeight: "normal" },
+        }}
       />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>

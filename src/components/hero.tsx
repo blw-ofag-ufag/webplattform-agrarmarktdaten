@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, TypographyProps } from "@mui/material";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
 import { GridContainer, GridElement } from "@/components/Grid";
@@ -27,6 +27,7 @@ type Props = {
   shifted?: boolean;
 
   titleTypographyProps?: TypographyProps;
+  leadStructuredTextProps?: React.ComponentProps<typeof StructuredText>;
 };
 
 export const Hero = (props: Props) => {
@@ -39,6 +40,7 @@ export const Hero = (props: Props) => {
     bgColor = "transparent",
     shifted = false,
     titleTypographyProps,
+    leadStructuredTextProps,
   } = props;
   const { classes } = useStyles();
   const theme = useTheme();
@@ -103,7 +105,7 @@ export const Hero = (props: Props) => {
                 }),
               }}
             >
-              <StructuredText data={lead} />
+              <StructuredText data={lead} {...leadStructuredTextProps} />
             </GridElement>
           </GridContainer>
         </Box>
