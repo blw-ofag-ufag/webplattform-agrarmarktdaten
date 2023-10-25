@@ -7,7 +7,7 @@ import {
   Image,
 } from "react-datocms";
 import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
-import { Typography, Box, TypographyProps } from "@mui/material";
+import { Typography, Box, TypographyOwnProps } from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
@@ -20,7 +20,7 @@ import { makeStyles } from "../style-utils";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
-  paragraphTypographyProps: TypographyProps;
+  paragraphTypographyProps?: TypographyOwnProps;
 }
 
 const useStyles = makeStyles()({
@@ -99,8 +99,9 @@ const StructuredText = (props: Props) => {
           renderNodeRule(isParagraph, ({ children, key }) => {
             return (
               <Typography
-                data-debug-good
                 key={key}
+                /** @ts-ignore */
+                variant="body1"
                 component="p"
                 sx={{ mb: s(4) }}
                 {...paragraphTypographyProps}

@@ -120,7 +120,7 @@ export const AppLayout = (props: Props) => {
           zIndex: 10,
         }}
       >
-        <GridContainer className="debug-warn">
+        <GridContainer>
           <Menu
             sx={{ borderBottom: "none", ml: "-12px" }}
             ContentWrapperProps={{
