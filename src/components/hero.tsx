@@ -25,6 +25,8 @@ type Props = {
    * Whether the content of the hero should have a left margin of 2 columns on the 3xl and 2xl breakpoints.
    */
   shifted?: boolean;
+
+  titleTypographyProps?: TypographyProps;
 };
 
 export const Hero = (props: Props) => {
@@ -36,6 +38,7 @@ export const Hero = (props: Props) => {
     color = "#000000",
     bgColor = "transparent",
     shifted = false,
+    titleTypographyProps,
   } = props;
   const { classes } = useStyles();
   const theme = useTheme();
@@ -71,7 +74,13 @@ export const Hero = (props: Props) => {
             }}
           >
             <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
-            <Typography data-debug-good variant="display2" component="h1" sx={{ color }}>
+            <Typography
+              data-debug-good
+              variant="display2"
+              component="h1"
+              sx={{ color }}
+              {...titleTypographyProps}
+            >
               {title}
             </Typography>
           </GridElement>

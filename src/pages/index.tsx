@@ -17,7 +17,13 @@ export default function HomePage(props: GQL.HomePageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} color="#ffffff" />
+      <Hero
+        title={homePage.title}
+        lead={homePage.lead}
+        hero={homePage.hero?.url}
+        color="#ffffff"
+        titleTypographyProps={{ variant: "display1" }}
+      />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
