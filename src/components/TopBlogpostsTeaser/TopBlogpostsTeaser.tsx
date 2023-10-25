@@ -121,7 +121,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
 
   return (
     <GridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
-      <Typography variant="h1" sx={{ width: "100%", mb: s(8) }}>
+      <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
         <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
       </Typography>
       {content}

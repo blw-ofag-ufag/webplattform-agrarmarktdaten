@@ -51,7 +51,7 @@ const StructuredText = (props: Props) => {
           renderNodeRule(isLink, ({ node, children, key }) => {
             return (
               <NextLink key={key} legacyBehavior href={node.url}>
-                <Typography variant="body1" component="a" className={classes.link}>
+                <Typography variant="body1" component="a" data-debug-good className={classes.link}>
                   {children}
                 </Typography>
               </NextLink>
@@ -77,6 +77,7 @@ const StructuredText = (props: Props) => {
               <Typography
                 key={key}
                 id={id}
+                data-debug-good
                 variant={`h${node.level}`}
                 component={`h${node.level}`}
                 sx={{ mb: s(6) }}
@@ -87,7 +88,7 @@ const StructuredText = (props: Props) => {
           }),
           renderNodeRule(isParagraph, ({ children, key }) => {
             return (
-              <Typography key={key} variant="body1" component="p" sx={{ mb: s(4) }}>
+              <Typography data-debug-good key={key} variant="body1" component="p" sx={{ mb: s(4) }}>
                 {children}
               </Typography>
             );
@@ -153,6 +154,7 @@ const StructuredText = (props: Props) => {
               <Typography
                 variant="body1"
                 component="a"
+                data-debug-good
                 className={classes.link}
                 key={record.id}
                 href={url}
@@ -223,7 +225,7 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography ref={ref} id={id} variant="h1" component="h1" sx={{ mb: 5, mt: 3 }}>
+    <Typography ref={ref} id={id} data-debug-good variant="h1" component="h1" sx={{ mb: 5, mt: 3 }}>
       {children}
     </Typography>
   );

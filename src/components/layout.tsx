@@ -120,7 +120,7 @@ export const AppLayout = (props: Props) => {
           zIndex: 10,
         }}
       >
-        <GridContainer>
+        <GridContainer className="debug-warn">
           <Menu
             sx={{ borderBottom: "none", ml: "-12px" }}
             ContentWrapperProps={{
@@ -182,10 +182,10 @@ export const AppLayout = (props: Props) => {
       </Box>
 
       {router.pathname !== "/data" && (
-        <>
+        <div className="debug-warn">
           <FooterBLW />
           <ScrollToTop />
-        </>
+        </div>
       )}
     </Box>
   );
