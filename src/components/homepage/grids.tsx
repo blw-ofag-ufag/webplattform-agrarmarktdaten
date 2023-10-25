@@ -68,10 +68,7 @@ const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) =>
     >
       <Box sx={{ bgcolor: bgColor, width: "100%", height: "20px", mb: s(5.5) }} />
       <Box sx={{ width: "48px", height: "3px", bgcolor: color, ml: s(8) }} />
-      <Typography
-        component="h2"
-        sx={{ mt: s(2), mx: s(8), fontWeight: "bold", lineHeight: "heading" }}
-      >
+      <Typography data-debug-good variant="h2" component="h3" sx={{ mt: s(2), mx: s(8) }}>
         {title}
       </Typography>
     </Card>
@@ -93,10 +90,7 @@ const ThemeCard = ({ title }: { title: string }) => {
     >
       <Box sx={{ bgcolor: "#ACB4BD", width: "100%", height: "20px", mb: s(5.5) }} />
       <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
-      <Typography
-        component="h2"
-        sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}
-      >
+      <Typography variant="h2" component="h3" data-debug-good sx={{ mt: s(2), ml: s(8) }}>
         {title}
       </Typography>
     </Card>

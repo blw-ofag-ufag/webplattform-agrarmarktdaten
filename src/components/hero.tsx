@@ -71,7 +71,7 @@ export const Hero = (props: Props) => {
             }}
           >
             <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
-            <Typography variant="h1" sx={{ color, fontSize: "64px" }}>
+            <Typography data-debug-good variant="display2" component="h1" sx={{ color }}>
               {title}
             </Typography>
           </GridElement>
