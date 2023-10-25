@@ -22,9 +22,7 @@ const useStyles = makeStyles<void, "full" | "third">()(
       backgroundColor: c.background.paper,
       boxShadow: e[6],
       cursor: "pointer",
-      height: "100%",
-      minHeight: "556px",
-      maxHeight: "556px",
+      height: "556px",
       overflow: "hidden",
     },
 
@@ -42,10 +40,10 @@ const useStyles = makeStyles<void, "full" | "third">()(
       [`.${classes.full} &`]: {
         paddingRight: s(20),
         paddingLeft: s(16),
-        paddingTop: s(10),
+        paddingTop: s(2),
+        marginBottom: s(4),
         width: "100%",
         overflowY: "hidden",
-        height: "100%",
       },
       [`.${classes.third} &`]: {
         alignItems: "center",
@@ -60,7 +58,6 @@ const useStyles = makeStyles<void, "full" | "third">()(
     title: {
       [`.${classes.full} &`]: {
         lineHeight: "48px",
-        marginTop: s(4),
         fontWeight: 700,
         textOverflow: "ellipsis",
         display: "-webkit-box",
@@ -134,6 +131,11 @@ const useStyles = makeStyles<void, "full" | "third">()(
     },
 
     content: {
+      [`.${classes.full} &`]: {
+        display: "flex",
+        flexDirection: "column",
+        padding: s(5, 7),
+      },
       [`.${classes.third} &`]: {
         paddingBottom: s(9),
         paddingTop: s(9),
@@ -197,12 +199,16 @@ export const BlogpostCard = (
               />
             </Box>
           )}
-          <div className={classes.publishedDate}>
-            {publishedDate && (
+          <div className={classes.content}>
+            <div className={classes.publishedDate}>
               <Typography variant="body3" data-debug-good color="textSecondary">
-                {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
+                {publishedDate ? (
+                  i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })
+                ) : (
+                  <>&nbsp;</>
+                )}
               </Typography>
-            )}
+            </div>
             <Typography
               ref={titleRef}
               variant="h1"
