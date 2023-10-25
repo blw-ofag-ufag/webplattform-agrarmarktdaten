@@ -54,6 +54,14 @@ const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
     borderRadius: s(2),
     "&:hover": { backgroundColor: `var(--bgColor)`, color: "var(--color)" },
   },
+
+  borderTop: {
+    backgroundColor: "var(--bgColor)",
+    width: "100%",
+    height: "20px",
+    marginBottom: s(5),
+  },
+  dash: { backgroundColor: "var(--color)", width: "48px", height: "3px", marginLeft: s(6) },
 }));
 
 const GridCard = ({
@@ -70,8 +78,8 @@ const GridCard = ({
   const style = { "--bgColor": bgColor, "--color": color } as React.CSSProperties;
   return (
     <Card className={classes.card} style={style}>
-      <Box sx={{ bgcolor: "var(--bgColor)", width: "100%", height: "20px", mb: s(5.5) }} />
-      <Box sx={{ bgcolor: "var(--color)", width: "48px", height: "3px", ml: s(8) }} />
+      <Box className={classes.borderTop} />
+      <Box className={classes.dash} />
       <Typography data-debug-good variant="h2" component="h3" sx={{ mt: s(2), mx: s(8), mb: s(6) }}>
         {title}
       </Typography>
