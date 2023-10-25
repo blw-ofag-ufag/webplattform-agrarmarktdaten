@@ -95,7 +95,7 @@ const ThemeCard = ({ title }: { title: string }) => {
       <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
       <Typography
         component="h2"
-        sx={{ mt: s(2), ml: s(8), fontWeight: "bold", lineHeight: "heading" }}
+        sx={{ mt: s(2), mx: s(8), fontWeight: "bold", lineHeight: "heading" }}
       >
         {title}
       </Typography>

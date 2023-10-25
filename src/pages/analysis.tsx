@@ -22,7 +22,12 @@ export default function Analysis({
   return (
     <QueryClientProvider client={queryClient}>
       <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-        <Hero title={analysisPage?.title} lead={analysisPage?.lead} bgColor={c.cobalt[100]} />
+        <Hero
+          title={analysisPage?.title}
+          lead={analysisPage?.lead}
+          bgColor={c.cobalt[100]}
+          shiftedRight
+        />
         <BlogpostGrid blogposts={allBlogPosts} totalBlogpostCount={_allBlogPostsMeta.count} />
       </AppLayout>
     </QueryClientProvider>

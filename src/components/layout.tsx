@@ -129,12 +129,12 @@ export const AppLayout = (props: Props) => {
                 width: "100%",
                 [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
                 [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
-                [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
-                [theme.breakpoints.only("md")]: { maxWidth: "696px" },
-                [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
-                [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
-                [theme.breakpoints.down("xxs")]: { maxWidth: "340px" },
+                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
+                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
+                [theme.breakpoints.only("md")]: { paddingX: "36px" },
+                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
+                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
+                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
               },
             }}
             sections={menuSections}
@@ -166,12 +166,12 @@ export const AppLayout = (props: Props) => {
                 height: "50px",
                 [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
                 [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
-                [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
-                [theme.breakpoints.only("md")]: { maxWidth: "696px" },
-                [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
-                [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
-                [theme.breakpoints.down("xxs")]: { maxWidth: "340px" },
+                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
+                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
+                [theme.breakpoints.only("md")]: { paddingX: "36px" },
+                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
+                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
+                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
               }}
             >
               <BackButton />
@@ -199,15 +199,14 @@ const FooterBLW = () => {
     <Footer
       ContentWrapperProps={{
         sx: {
-          px: "0!important",
-          [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-          [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-          [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
-          [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
-          [theme.breakpoints.only("md")]: { maxWidth: "696px" },
-          [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
-          [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
-          [theme.breakpoints.only("xxs")]: { maxWidth: "340px" },
+          [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px", px: "0!important" },
+          [theme.breakpoints.only("xxl")]: { maxWidth: "1544px", px: "0!important" },
+          [theme.breakpoints.only("xl")]: { paddingX: "64px" },
+          [theme.breakpoints.only("lg")]: { paddingX: "48px" },
+          [theme.breakpoints.only("md")]: { paddingX: "36px" },
+          [theme.breakpoints.only("sm")]: { paddingX: "36px" },
+          [theme.breakpoints.only("xs")]: { paddingX: "28px" },
+          [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
         },
       }}
       bottomLinks={[
