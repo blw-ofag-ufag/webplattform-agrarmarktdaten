@@ -26,10 +26,15 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         {/* PWA primary color, background of the page on Safari (cobalt[600]). */}
         <meta name="theme-color" content="2f4356" />
         <link rel="shortcut icon" href="/favicon.ico" />
+
+        {/* The following lines need to be in sync with storybook/main.js:previewHead */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500;700&display=swap"
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Noto+Sans&display=optional"
         />
+
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
       </Head>
