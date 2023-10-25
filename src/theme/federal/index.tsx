@@ -68,7 +68,9 @@ const createTypographyVariant = (theme: Theme, spec: Record<string, $Intentional
   for (let i = 0; i < spec.fontSize.length; i++) {
     const lineHeight = `${spec.lineHeight[i]}px`;
     const fontSize = `${spec.fontSize[i]}px`;
-    res[theme.breakpoints.up(breakpoints[i])] = {
+    res[
+      i === 0 ? theme.breakpoints.down(breakpoints[i + 1]) : theme.breakpoints.up(breakpoints[i])
+    ] = {
       fontSize,
       lineHeight,
     };
