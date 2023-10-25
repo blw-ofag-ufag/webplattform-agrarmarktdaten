@@ -199,15 +199,16 @@ export const BlogpostCard = (
           )}
           <div className={classes.publishedDate}>
             {publishedDate && (
-              <Typography variant="body2" color="textSecondary">
+              <Typography variant="body3" data-debug-good color="textSecondary">
                 {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
               </Typography>
             )}
             <Typography
               ref={titleRef}
               variant="h1"
-              component="div"
+              component="h2"
               color="textPrimary"
+              data-debug-good
               className={classes.title}
             >
               {title}
@@ -219,7 +220,7 @@ export const BlogpostCard = (
             </div>
 
             <Box sx={{ pt: 4 }}>
-              <Typography variant="body1" color="textPrimary" className={classes.lead}>
+              <Typography data-debug-good variant="body1" color="textPrimary" className={classes.lead}>
                 {leadCard}
               </Typography>
             </Box>
@@ -245,17 +246,18 @@ export const BlogpostCard = (
           <div className={classes.content}>
             <Flex className={classes.publishedDate}>
               {publishedDate && (
-                <Typography variant="body2" color="textSecondary" sx={{ mt: 0 }}>
+                <Typography variant="body3" data-debug-good color="textSecondary" sx={{ mt: 0 }}>
                   {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
                 </Typography>
               )}
             </Flex>
             <Typography
               ref={titleRef}
-              variant="h1"
-              component="div"
+              variant="h2"
+              fontWeight="bold"
               color="textPrimary"
               className={classes.title}
+              data-debug-good
             >
               {title}
             </Typography>
@@ -265,7 +267,8 @@ export const BlogpostCard = (
               ))}
             </div>
             <Typography
-              variant="body2"
+              variant="body1"
+              data-debug-good
               className={classes.lead}
               color="textPrimary"
               sx={{
