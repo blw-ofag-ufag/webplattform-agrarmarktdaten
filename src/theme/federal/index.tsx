@@ -142,6 +142,7 @@ const theme = createTheme({
       900: "#000000",
     },
     cobalt: c.cobalt,
+    red: c.red,
   },
   breakpoints: {
     values: { ...b.values, xxxl: 1920 },
