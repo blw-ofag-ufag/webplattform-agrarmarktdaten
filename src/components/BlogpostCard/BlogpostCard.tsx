@@ -32,8 +32,9 @@ const useStyles = makeStyles<void, "full" | "third">()(
       backgroundColor: c.background.paper,
       borderRadius: s(2),
       cursor: "pointer",
+      overflow: "hidden",
 
-      "--px": s(7),
+      "--px": s(6),
     },
 
     publishedDate: {
@@ -109,7 +110,6 @@ const useStyles = makeStyles<void, "full" | "third">()(
         overflow: "hidden",
       },
       [`.${classes.third} &`]: {
-        marginTop: "auto",
         paddingLeft: "var(--px)",
         paddingRight: "var(--px)",
         overflow: "hidden",
@@ -125,8 +125,6 @@ const useStyles = makeStyles<void, "full" | "third">()(
         overflow: "hidden",
         minWidth: "100%",
         aspectRatio: 16 / 9,
-        borderTopLeftRadius: s(2),
-        borderTopRightRadius: s(2),
       },
     },
 
@@ -137,8 +135,8 @@ const useStyles = makeStyles<void, "full" | "third">()(
         padding: s(5, 7),
       },
       [`.${classes.third} &`]: {
-        paddingBottom: s(9),
-        paddingTop: s(9),
+        paddingBottom: s(5),
+        paddingTop: s(5),
         display: "flex",
         flexDirection: "column",
         minHeight: "302px",
@@ -226,7 +224,12 @@ export const BlogpostCard = (
             </div>
 
             <Box sx={{ pt: 4 }}>
-              <Typography data-debug-good variant="body1" color="textPrimary" className={classes.lead}>
+              <Typography
+                data-debug-good
+                variant="body1"
+                color="textPrimary"
+                className={classes.lead}
+              >
                 {leadCard}
               </Typography>
             </Box>
@@ -251,11 +254,13 @@ export const BlogpostCard = (
 
           <div className={classes.content}>
             <Flex className={classes.publishedDate}>
-              {publishedDate && (
-                <Typography variant="body3" data-debug-good color="textSecondary" sx={{ mt: 0 }}>
-                  {i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })}
-                </Typography>
-              )}
+              <Typography variant="body3" data-debug-good color="textSecondary" sx={{ mt: 0 }}>
+                {publishedDate ? (
+                  i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })
+                ) : (
+                  <>&nbsp;</>
+                )}
+              </Typography>
             </Flex>
             <Typography
               ref={titleRef}
