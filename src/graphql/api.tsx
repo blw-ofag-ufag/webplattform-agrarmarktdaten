@@ -1,7 +1,7 @@
 import "isomorphic-unfetch";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import React from "react";
-import { Provider, createClient, dedupExchange, fetchExchange } from "urql";
+import { Provider, createClient, fetchExchange } from "urql";
 
 import {
   DATOCMS_API_TOKEN,
@@ -11,7 +11,6 @@ import {
 } from "@/domain/env";
 
 const defaultExchanges = [
-  dedupExchange,
   cacheExchange({
     schema: require("./schema.json"),
     keys: {
