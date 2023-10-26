@@ -14,6 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/components/card-data.tsx
+#~ msgid "article.link.data.explore"
+#~ msgstr "-"
+
+#. js-lingui-explicit-id
+#: src/components/card-data.tsx
+#~ msgid "article.link.open.report"
+#~ msgstr "-"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} totale)"
@@ -95,11 +105,6 @@ msgstr "Scarica i dati"
 #: src/pages/data.tsx
 msgid "data.actions.download"
 msgstr "Scarica i dati"
-
-#. js-lingui-explicit-id
-#: src/components/card-data.tsx
-msgid "article.link.data.explore"
-msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -245,11 +250,6 @@ msgstr "Pubblicato il"
 #: src/components/layout.tsx
 msgid "footer.legal"
 msgstr "Missione e base giuridica"
-
-#. js-lingui-explicit-id
-#: src/components/card-data.tsx
-msgid "article.link.open.report"
-msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
