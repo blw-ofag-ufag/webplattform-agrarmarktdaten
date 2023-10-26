@@ -26,11 +26,27 @@ declare module "@mui/material" {
   interface PaletteOptions {
     cobalt: FederalColor;
     red: FederalColor;
+    scale?: {
+      blue: FederalColor;
+      brown: FederalColor;
+      green: FederalColor;
+      orange: FederalColor;
+      red: FederalColor;
+      yellow: FederalColor;
+    };
   }
 
   interface Palette {
     cobalt: FederalColor;
     red: FederalColor;
+    scale: {
+      blue: FederalColor;
+      brown: FederalColor;
+      green: FederalColor;
+      orange: FederalColor;
+      red: FederalColor;
+      yellow: FederalColor;
+    };
   }
 }
 
