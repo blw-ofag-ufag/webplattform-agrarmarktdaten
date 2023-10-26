@@ -1,4 +1,5 @@
 import { makeStyles } from "@/components/style-utils";
+import { ResponsiveFontMediaQueries, makeResponsiveFontMediaQueries } from "@/theme/federal";
 import { FederalColor } from "@/theme/federal/theme-augmentation";
 import {
   Typography as MuiTypography,
@@ -39,18 +40,13 @@ const useStyles = makeStyles()(({ palette: c }) => ({
   },
 }));
 
-const mediaQueries = {
-  mobile: "@media (min-width:480px)",
-  desktop: "@media (min-width:768px)",
-} as const;
-
 type FederalThemeFontSpec = {
   fontSize: number;
   lineHeight: number;
 };
 
 type ResponsiveFederalThemeFontSpec = Record<
-  (typeof mediaQueries)[keyof typeof mediaQueries],
+  ResponsiveFontMediaQueries[keyof ResponsiveFontMediaQueries],
   FederalThemeFontSpec
 >;
 
@@ -61,10 +57,10 @@ export const TypographyRowBlock = ({
 }) => {
   const theme = useTheme();
   const responsiveSpec = theme.typography[variant] as ResponsiveFederalThemeFontSpec;
+  const mediaQueries = makeResponsiveFontMediaQueries(theme);
   const mobileSpec = responsiveSpec[mediaQueries.mobile] as FederalThemeFontSpec;
   const desktopSpec = responsiveSpec[mediaQueries.desktop] as FederalThemeFontSpec;
   if (!mobileSpec || !desktopSpec) {
-    console.log("responsive spec", responsiveSpec, mobileSpec, desktopSpec);
     return (
       <MuiTypography color="error" variant="body2">
         Variant {variant} is lacking mobile or desktop spec
