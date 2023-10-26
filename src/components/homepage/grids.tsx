@@ -3,13 +3,15 @@ import NextLink from "next/link";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { getMarketColor } from "@/domain/colors";
 import { GridWrap, GridWrapElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
+import { makeStyles } from "@/components/style-utils";
+
+export type GridEntry = GQL.SimpleMarketArticleFragment | GQL.SimpleFocusArticleFragment;
 
 interface Props {
   type: "market" | "focus";
-  entries: GQL.SimpleMarketArticleFragment[] | GQL.SimpleFocusArticleFragment[];
+  entries: GridEntry[];
 }
 
 export const CardsGrid = ({ type, entries }: Props) => {
@@ -36,6 +38,32 @@ export const CardsGrid = ({ type, entries }: Props) => {
   );
 };
 
+const getCardColors = (type: "market" | "focus", slug?: string | null) => {
+  switch (type) {
+    case "market":
+      return getMarketColor(slug);
+    case "focus":
+      return ["black", "#ACB4BD"];
+  }
+};
+
+const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
+  card: {
+    width: "100%",
+    boxShadow: e[4],
+    borderRadius: s(2),
+    "&:hover": { backgroundColor: `var(--bgColor)`, color: "var(--color)" },
+  },
+
+  borderTop: {
+    backgroundColor: "var(--bgColor)",
+    width: "100%",
+    height: "20px",
+    marginBottom: s(5),
+  },
+  dash: { backgroundColor: "var(--color)", width: "48px", height: "3px", marginLeft: s(6) },
+}));
+
 const GridCard = ({
   title,
   type,
@@ -45,58 +73,14 @@ const GridCard = ({
   type: "market" | "focus";
   slug?: string | null;
 }) => {
-  return type === "market" ? (
-    <MarketCard title={title} slug={slug} />
-  ) : type === "focus" ? (
-    <ThemeCard title={title} />
-  ) : null;
-};
-
-const MarketCard = ({ title, slug }: { title: string; slug?: string | null }) => {
-  const [color, bgColor] = getMarketColor(slug);
-  const theme = useTheme();
+  const { classes } = useStyles();
+  const [color, bgColor] = getCardColors(type, slug);
+  const style = { "--bgColor": bgColor, "--color": color } as React.CSSProperties;
   return (
-    <Card
-      elevation={4}
-      sx={{
-        width: "100%",
-        [theme.breakpoints.up("xxl")]: { height: "176px", pb: s(18) },
-        [theme.breakpoints.down("xxl")]: { height: "120px", pb: s(18) },
-        borderRadius: s(2),
-        ":hover": { backgroundColor: bgColor, color },
-      }}
-    >
-      <Box sx={{ bgcolor: bgColor, width: "100%", height: "20px", mb: s(5.5) }} />
-      <Box sx={{ width: "48px", height: "3px", bgcolor: color, ml: s(8) }} />
-      <Typography
-        component="h2"
-        sx={{ mt: s(2), mx: s(8), fontWeight: "bold", lineHeight: "heading" }}
-      >
-        {title}
-      </Typography>
-    </Card>
-  );
-};
-
-const ThemeCard = ({ title }: { title: string }) => {
-  const theme = useTheme();
-  return (
-    <Card
-      elevation={4}
-      sx={{
-        width: "100%",
-        [theme.breakpoints.up("xxl")]: { height: "176px", pb: s(18) },
-        [theme.breakpoints.down("xxl")]: { height: "120px", pb: s(18) },
-        borderRadius: s(2),
-        ":hover": { backgroundColor: "#ACB4BD" },
-      }}
-    >
-      <Box sx={{ bgcolor: "#ACB4BD", width: "100%", height: "20px", mb: s(5.5) }} />
-      <Box sx={{ width: "48px", height: "3px", bgcolor: "black", ml: s(8) }} />
-      <Typography
-        component="h2"
-        sx={{ mt: s(2), mx: s(8), fontWeight: "bold", lineHeight: "heading" }}
-      >
+    <Card className={classes.card} style={style}>
+      <Box className={classes.borderTop} />
+      <Box className={classes.dash} />
+      <Typography data-debug-good variant="h2" component="h3" sx={{ mt: s(2), mx: s(8), mb: s(6) }}>
         {title}
       </Typography>
     </Card>

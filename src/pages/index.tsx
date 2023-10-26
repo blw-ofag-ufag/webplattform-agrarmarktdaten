@@ -17,28 +17,37 @@ export default function HomePage(props: GQL.HomePageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={homePage.title} lead={homePage.lead} hero={homePage.hero?.url} color="#ffffff" />
+      <Hero
+        title={homePage.title}
+        lead={homePage.lead}
+        hero={homePage.hero?.url}
+        color="#ffffff"
+        titleTypographyProps={{ variant: "display1" }}
+        leadStructuredTextProps={{
+          paragraphTypographyProps: { variant: "h3", fontWeight: "normal" },
+        }}
+      />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
-          <Typography variant="h2" sx={{ fontWeight: 700 }}>
+          <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={homePage.markets} />
 
-          <Typography variant="h2" sx={{ fontWeight: 700 }}>
+          <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </GridContainer>
         <TopBlogpostsTeaser blogposts={topBlogPosts} />
         <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
-          <Typography variant="h2" sx={{ fontWeight: 700 }}>
+          <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>
           <Card sx={{ p: s(8) }}>
             <Box display="flex" alignItems="center">
               <Box display="flex" flexDirection="column" pr="50px">
-                <Typography variant="body1">
+                <Typography variant="body1" data-debug-good>
                   <Trans id="homepage.section.data.content">
                     Various data can be selected and downloaded via the data download, in particular
                     price series, and in some cases also quantity and area data. Data are available
