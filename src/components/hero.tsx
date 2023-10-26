@@ -14,8 +14,11 @@ const useStyles = makeStyles<{
   root: {
     flexDirection: "column",
     justifyContent: "end",
-    [theme.breakpoints.up("xxl")]: { height: params.hero ? "400px" : "250px", pb: s(18) },
-    [theme.breakpoints.down("xxl")]: { height: "280px", pb: s(13) },
+    [theme.breakpoints.up("xxl")]: {
+      height: params.hero ? "400px" : "250px",
+      paddingBottom: s(18),
+    },
+    [theme.breakpoints.down("xxl")]: { height: "280px", paddingBottom: s(13) },
 
     width: "100%",
     backgroundColor: params.bgColor,
