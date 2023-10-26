@@ -40,12 +40,12 @@ export const GridContainer = ({ children, sx, ...rest }: Props) => {
       sx={{
         [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
         [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-        [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
-        [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
-        [theme.breakpoints.only("md")]: { maxWidth: "696px" },
-        [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
-        [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
-        [theme.breakpoints.only("xxs")]: { maxWidth: "340px" },
+        [theme.breakpoints.only("xl")]: { paddingX: "64px" },
+        [theme.breakpoints.only("lg")]: { paddingX: "48px" },
+        [theme.breakpoints.only("md")]: { paddingX: "36px" },
+        [theme.breakpoints.only("sm")]: { paddingX: "36px" },
+        [theme.breakpoints.only("xs")]: { paddingX: "28px" },
+        [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
         margin: "0 auto",
         width: "100%",
         ...sx,
@@ -121,10 +121,18 @@ export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
         textDecoration: "none",
         [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 4 + 64px * 3)" },
         [theme.breakpoints.only("xxl")]: { width: "calc(70px * 4 + 64px * 3)" },
-        [theme.breakpoints.only("xl")]: { width: "calc(52px * 4 + 48px * 3)" },
-        [theme.breakpoints.only("lg")]: { width: "calc(121px * 3 + 40px * 2)" },
-        [theme.breakpoints.only("md")]: { width: "calc(86px * 3 + 36px * 2)" },
-        [theme.breakpoints.only("sm")]: { width: "calc(65px * 3 + 35px * 2)" },
+        [theme.breakpoints.only("xl")]: {
+          width: "calc(((100% - 48px * 11) / 12) * 4 + 48px * 3)",
+        },
+        [theme.breakpoints.only("lg")]: {
+          width: "calc(((100% - 40px * 11) / 12) * 4 + 40px * 3)",
+        },
+        [theme.breakpoints.only("md")]: {
+          width: "calc(((100% - 36px * 11) / 12) * 4 + 36px * 3)",
+        },
+        [theme.breakpoints.only("sm")]: {
+          width: "calc(((100% - 35px * 11) / 12) * 4 + 35px * 3)",
+        },
         [theme.breakpoints.down("sm")]: { width: "100%" },
         ...sx,
       }}

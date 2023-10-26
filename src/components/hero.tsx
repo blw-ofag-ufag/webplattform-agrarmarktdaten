@@ -24,8 +24,8 @@ type Props = {
   /**
    * Whether the content of the hero should have a left margin of 2 columns on the 3xl and 2xl breakpoints.
    */
-  shifted?: boolean;
-
+  shiftedLeft?: boolean;
+  shiftedRight?: boolean;
   titleTypographyProps?: TypographyProps;
   leadStructuredTextProps?: React.ComponentProps<typeof StructuredText>;
 };
@@ -38,7 +38,8 @@ export const Hero = (props: Props) => {
     hero,
     color = "#000000",
     bgColor = "transparent",
-    shifted = false,
+    shiftedLeft = false,
+    shiftedRight = false,
     titleTypographyProps,
     leadStructuredTextProps,
   } = props;
@@ -69,9 +70,12 @@ export const Hero = (props: Props) => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "end",
-              ...(shifted && {
-                [theme.breakpoints.only("xxxl")]: { ml: "calc(81px * 2 + 64px * 2)" },
-                [theme.breakpoints.only("xxl")]: { ml: "calc(70px * 2 + 64px * 2)" },
+              ...(shiftedLeft && {
+                [theme.breakpoints.only("xxxl")]: { px: "calc(81px * 2 + 64px * 2)" },
+                [theme.breakpoints.only("xxl")]: { px: "calc(70px * 2 + 64px * 2)" },
+                [theme.breakpoints.only("xl")]: {
+                  px: "calc(((100% - 48px * 11) / 12) + 48px)",
+                },
               }),
             }}
           >
@@ -94,14 +98,15 @@ export const Hero = (props: Props) => {
         >
           <GridContainer sx={{ mx: 0 }}>
             <GridElement
-              xxxl={shifted ? 8 : 10}
-              xxl={shifted ? 8 : 10}
-              xl={shifted ? 8 : 10}
+              xxxl={shiftedLeft ? 8 : 10}
+              xxl={shiftedLeft ? 8 : 10}
+              xl={shiftedRight ? 10 : 12}
               sx={{
                 mx: 0,
-                ...(shifted && {
-                  [theme.breakpoints.only("xxxl")]: { ml: "calc(81px * 2 + 64px * 2)" },
-                  [theme.breakpoints.only("xxl")]: { ml: "calc(70px * 2 + 64px * 2)" },
+                ...(shiftedLeft && {
+                  [theme.breakpoints.only("xxxl")]: { pl: "calc(81px * 2 + 64px * 2)" },
+                  [theme.breakpoints.only("xxl")]: { pl: "calc(70px * 2 + 64px * 2)" },
+                  [theme.breakpoints.only("xl")]: { px: "calc(((100% - 48px * 11) / 12) + 48px)" },
                 }),
               }}
             >

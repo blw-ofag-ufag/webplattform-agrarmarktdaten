@@ -30,19 +30,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
       return (
         <GridWrap>
           {blogposts.map((d) => (
-            <GridWrapElement
-              key={d.id}
-              sx={{
-                textDecoration: "none",
-                [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 4 + 64px * 3)" },
-                [theme.breakpoints.only("xxl")]: { width: "calc(70px * 4 + 64px * 3)" },
-                [theme.breakpoints.only("xl")]: { width: "calc(52px * 4 + 48px * 3)" },
-                [theme.breakpoints.only("lg")]: { width: "calc(121px * 3 + 40px * 2)" },
-                [theme.breakpoints.only("md")]: { width: "calc(86px * 3 + 36px * 2)" },
-                [theme.breakpoints.only("sm")]: { width: "calc(65px * 3 + 35px * 2)" },
-                [theme.breakpoints.down("sm")]: { width: "100%" },
-              }}
-            >
+            <GridWrapElement key={d.id}>
               <BlogpostCard {...d} />
             </GridWrapElement>
           ))}
@@ -55,13 +43,35 @@ export const TopBlogpostsTeaser = (props: Props) => {
         if (blogposts[i + 1]) {
           cards.push(
             <Box key={i} display="flex">
-              <GridWrapElement key={blogposts[i].id}>
-                <Box sx={{ mr: s(2) }}>
+              <GridWrapElement
+                key={blogposts[i].id}
+                sx={{
+                  [theme.breakpoints.only("lg")]: { width: "50%" },
+                  [theme.breakpoints.only("md")]: { width: "50%" },
+                }}
+              >
+                <Box
+                  sx={{
+                    [theme.breakpoints.only("lg")]: { mr: "20px" },
+                    [theme.breakpoints.only("md")]: { mr: "18px" },
+                  }}
+                >
                   <BlogpostCard {...blogposts[i]} />
                 </Box>
               </GridWrapElement>
-              <GridWrapElement key={blogposts[i + 1].id}>
-                <Box sx={{ ml: s(2) }}>
+              <GridWrapElement
+                key={blogposts[i + 1].id}
+                sx={{
+                  [theme.breakpoints.only("lg")]: { width: "50%" },
+                  [theme.breakpoints.only("md")]: { width: "50%" },
+                }}
+              >
+                <Box
+                  sx={{
+                    [theme.breakpoints.only("lg")]: { ml: "20px" },
+                    [theme.breakpoints.only("md")]: { ml: "18px" },
+                  }}
+                >
                   <BlogpostCard {...blogposts[i + 1]} />
                 </Box>
               </GridWrapElement>
@@ -69,8 +79,21 @@ export const TopBlogpostsTeaser = (props: Props) => {
           );
         } else {
           cards.push(
-            <GridWrapElement key={blogposts[i].id}>
-              <BlogpostCard {...blogposts[i]} />
+            <GridWrapElement
+              key={blogposts[i].id}
+              sx={{
+                [theme.breakpoints.only("lg")]: { width: "50%" },
+                [theme.breakpoints.only("md")]: { width: "50%" },
+              }}
+            >
+              <Box
+                sx={{
+                  [theme.breakpoints.only("lg")]: { mr: "20px" },
+                  [theme.breakpoints.only("md")]: { mr: "18px" },
+                }}
+              >
+                <BlogpostCard {...blogposts[i]} />
+              </Box>
             </GridWrapElement>
           );
         }

@@ -18,7 +18,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shifted />
+      <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}
@@ -41,14 +41,12 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
             [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 8 + 64px * 7)", ml: "64px" },
             [theme.breakpoints.only("xxl")]: { width: "calc(70px * 8 + 64px * 7)", ml: "64px" },
             [theme.breakpoints.only("xl")]: {
-              width: "calc(52px * 10 + 48px * 9)",
-              ml: "calc(52px + 48px)",
-              mr: "calc(52px + 48px)",
+              px: "calc(((100% - 48px * 11) / 12) + 48px)",
             },
           }}
           xxxl={9}
           xxl={9}
-          xl={9}
+          xl={12}
           lg={6}
           md={6}
           sm={4}

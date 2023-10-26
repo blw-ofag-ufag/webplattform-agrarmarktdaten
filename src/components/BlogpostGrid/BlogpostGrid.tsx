@@ -20,7 +20,7 @@ const BlogPostGrid = (props: Props) => {
   const [page, setPage] = React.useState(1);
   const theme = useTheme();
   const { locale } = useRouter();
-  const shouldShowFullCard = useMediaQuery(theme.breakpoints.up("lg"));
+  const isLargeOrBigger = useMediaQuery(theme.breakpoints.up("lg"));
   const { data } = useQuery(
     ["blogposts", page],
     async () => {
@@ -52,32 +52,10 @@ const BlogPostGrid = (props: Props) => {
           sx={{
             [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
             [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-            [theme.breakpoints.only("xl")]: {
-              maxWidth: "1152px",
-              columnGap: "48px",
-              rowGap: "32px",
-            },
-            [theme.breakpoints.only("lg")]: {
-              maxWidth: "928px",
-              columnGap: "40px",
-              rowGap: "32px",
-            },
-            [theme.breakpoints.only("md")]: {
-              maxWidth: "696px",
-              columnGap: "36px",
-              rowGap: "32px",
-            },
-            [theme.breakpoints.only("sm")]: {
-              maxWidth: "568px",
-              columnGap: "35px",
-              rowGap: "32px",
-            },
-            [theme.breakpoints.only("xs")]: { maxWidth: "424px", rowGap: "32px" },
-            [theme.breakpoints.only("xxs")]: { maxWidth: "340px", rowGap: "32px" },
           }}
         >
           {data?.map((blogpost, i) => {
-            if (page === 1 && i === 0 && shouldShowFullCard) {
+            if (page === 1 && i === 0 && isLargeOrBigger) {
               return (
                 <GridElement sx={{ width: "100%!important" }} key={blogpost.id}>
                   <BlogpostCard {...blogpost} variant="full" />
@@ -85,7 +63,14 @@ const BlogPostGrid = (props: Props) => {
               );
             }
             return (
-              <GridWrapElement key={blogpost.id}>
+              <GridWrapElement
+                key={blogpost.id}
+                sx={{
+                  [theme.breakpoints.only("md")]: { width: "100%" },
+                  [theme.breakpoints.only("sm")]: { width: "100%" },
+                  [theme.breakpoints.down("sm")]: { width: "100%" },
+                }}
+              >
                 <BlogpostCard {...blogpost} />
               </GridWrapElement>
             );
