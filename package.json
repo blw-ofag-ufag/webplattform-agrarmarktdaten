@@ -124,6 +124,7 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-storybook": "^0.6.13",
     "eslint-plugin-unused-imports": "^3.0.0",
+    "eslint-plugin-interactive-things": "link:./eslint/interactive-things",
     "husky": ">=6",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
