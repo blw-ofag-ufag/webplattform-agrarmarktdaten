@@ -1,3 +1,4 @@
+import { makeStyles } from "@/components/style-utils";
 import { FederalColor } from "@/theme/federal/theme-augmentation";
 import {
   Typography as MuiTypography,
@@ -10,6 +11,33 @@ import {
   Color,
   rgbToHex,
 } from "@mui/material";
+
+const useStyles = makeStyles()(({ palette: c }) => ({
+  swatch: {
+    border: "0px solid",
+    borderColor: c.grey[600],
+    overflow: "hidden",
+    borderRadius: "4px",
+    width: 80,
+    marginBottom: 1,
+    backgroundColor: "#F2F2F2",
+  },
+
+  swatchColor: {
+    height: 63,
+    margin: "1px",
+    display: "block",
+    borderRadius: "4px",
+  },
+
+  typography: {
+    alignItems: "center",
+    display: "flex",
+    margin: [0, 1],
+    fontSize: 8,
+    lineHeight: "12px",
+  },
+}));
 
 const mediaQueries = {
   mobile: "@media (min-width:480px)",
@@ -70,6 +98,7 @@ export const StorybookSectionTitle = ({ children }: { children: React.ReactNode 
 };
 
 export const PaletteBlock = ({ name, value }: { name: string; value: Color | FederalColor }) => {
+  const { classes } = useStyles();
   if (typeof value === "object") {
     const keys = Object.keys(value);
 
@@ -88,38 +117,9 @@ export const PaletteBlock = ({ name, value }: { name: string; value: Color | Fed
           {keys.map((k) => {
             const v = value[k as unknown as keyof typeof value];
             return (
-              <Box
-                sx={{
-                  border: "0px solid",
-                  borderColor: "grey.600",
-                  overflow: "hidden",
-                  borderRadius: "4px",
-                  width: 80,
-                  mb: 1,
-                  backgroundColor: "#F2F2F2",
-                }}
-                key={k}
-              >
-                <Box
-                  sx={{
-                    height: 63,
-                    m: "1px",
-                    display: "block",
-                    backgroundColor: v,
-                    borderRadius: "4px",
-                  }}
-                />
-                <MuiTypography
-                  variant="caption"
-                  display="block"
-                  sx={{
-                    alignItems: "center",
-                    display: "flex",
-                    m: [0, 1],
-                    fontSize: 8,
-                    lineHeight: "12px",
-                  }}
-                >
+              <Box key={k} className={classes.swatch}>
+                <Box className={classes.swatchColor} sx={{ backgroundColor: v }} />
+                <MuiTypography variant="caption" display="block" className={classes.typography}>
                   {k}
                   <br />
                   {rgbToHex(v)}

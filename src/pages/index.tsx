@@ -6,11 +6,32 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
-import { s, c } from "@interactivethings/swiss-federal-ci";
+import { s } from "@interactivethings/swiss-federal-ci";
 import { Download } from "@/icons/icons-jsx/control";
 import { GridContainer } from "@/components/Grid";
+import { makeStyles } from "@/components/style-utils";
+
+const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
+  root0: {
+    backgroundColor: c.cobalt[500],
+    fontWeight: 700,
+    width: "fit-content",
+    marginTop: s(6),
+  },
+
+  root1: {
+    backgroundColor: c.cobalt[100],
+    borderRadius: 80,
+    minWidth: "80px",
+    height: "80px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+}));
 
 export default function HomePage(props: GQL.HomePageQuery) {
+  const { classes } = useStyles();
   const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   if (!homePage?.title || !homePage.lead) {
     return null;
@@ -54,28 +75,11 @@ export default function HomePage(props: GQL.HomePageQuery) {
                     from the year 2000 onwards.
                   </Trans>
                 </Typography>
-                <Button
-                  sx={{
-                    backgroundColor: c.cobalt[500],
-                    fontWeight: 700,
-                    width: "fit-content",
-                    mt: s(6),
-                  }}
-                >
+                <Button className={classes.root0}>
                   <Trans id="homepage.section.data.button">Learn More</Trans>
                 </Button>
               </Box>
-              <Box
-                sx={{
-                  backgroundColor: c.cobalt[100],
-                  borderRadius: 80,
-                  minWidth: "80px",
-                  height: "80px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <Box className={classes.root1}>
                 <Download width={40} height={40} />
               </Box>
             </Box>
