@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, TypographyProps } from "@mui/material";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
 import { GridContainer, GridElement } from "@/components/Grid";
@@ -25,6 +25,9 @@ type Props = {
    * Whether the content of the hero should have a left margin of 2 columns on the 3xl and 2xl breakpoints.
    */
   shifted?: boolean;
+
+  titleTypographyProps?: TypographyProps;
+  leadStructuredTextProps?: React.ComponentProps<typeof StructuredText>;
 };
 
 export const Hero = (props: Props) => {
@@ -36,6 +39,8 @@ export const Hero = (props: Props) => {
     color = "#000000",
     bgColor = "transparent",
     shifted = false,
+    titleTypographyProps,
+    leadStructuredTextProps,
   } = props;
   const { classes } = useStyles();
   const theme = useTheme();
@@ -71,7 +76,13 @@ export const Hero = (props: Props) => {
             }}
           >
             <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
-            <Typography variant="h1" sx={{ color, fontSize: "64px" }}>
+            <Typography
+              data-debug-good
+              variant="display2"
+              component="h1"
+              sx={{ color }}
+              {...titleTypographyProps}
+            >
               {title}
             </Typography>
           </GridElement>
@@ -94,7 +105,7 @@ export const Hero = (props: Props) => {
                 }),
               }}
             >
-              <StructuredText data={lead} />
+              <StructuredText data={lead} {...leadStructuredTextProps} />
             </GridElement>
           </GridContainer>
         </Box>

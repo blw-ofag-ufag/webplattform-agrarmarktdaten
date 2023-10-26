@@ -1,0 +1,136 @@
+import { FederalColor } from "@/theme/federal/theme-augmentation";
+import {
+  Typography as MuiTypography,
+  Box,
+  Stack,
+  TableCell,
+  useTheme,
+  TableRow,
+  TypographyProps,
+  Color,
+  rgbToHex,
+} from "@mui/material";
+
+const mediaQueries = {
+  mobile: "@media (min-width:480px)",
+  desktop: "@media (min-width:768px)",
+} as const;
+
+type FederalThemeFontSpec = {
+  fontSize: number;
+  lineHeight: number;
+};
+
+type ResponsiveFederalThemeFontSpec = Record<
+  (typeof mediaQueries)[keyof typeof mediaQueries],
+  FederalThemeFontSpec
+>;
+
+export const TypographyRowBlock = ({
+  variant,
+}: {
+  variant: Exclude<TypographyProps["variant"], undefined | "tag" | "inherit">;
+}) => {
+  const theme = useTheme();
+  const responsiveSpec = theme.typography[variant] as ResponsiveFederalThemeFontSpec;
+  const mobileSpec = responsiveSpec[mediaQueries.mobile] as FederalThemeFontSpec;
+  const desktopSpec = responsiveSpec[mediaQueries.desktop] as FederalThemeFontSpec;
+  if (!mobileSpec || !desktopSpec) {
+    console.log("responsive spec", responsiveSpec, mobileSpec, desktopSpec);
+    return (
+      <MuiTypography color="error" variant="body2">
+        Variant {variant} is lacking mobile or desktop spec
+      </MuiTypography>
+    );
+  }
+  return (
+    <TableRow>
+      <TableCell>
+        <MuiTypography variant={variant} display="block">
+          {variant}
+        </MuiTypography>
+      </TableCell>
+      <TableCell>
+        {desktopSpec.fontSize} / {desktopSpec.lineHeight}
+      </TableCell>
+
+      <TableCell>
+        {mobileSpec.fontSize} / {mobileSpec.lineHeight}
+      </TableCell>
+    </TableRow>
+  );
+};
+
+export const StorybookSection = ({ children }: { children: React.ReactNode }) => {
+  return <Stack spacing={2}>{children}</Stack>;
+};
+
+export const StorybookSectionTitle = ({ children }: { children: React.ReactNode }) => {
+  return <MuiTypography variant="h3">{children}</MuiTypography>;
+};
+
+export const PaletteBlock = ({ name, value }: { name: string; value: Color | FederalColor }) => {
+  if (typeof value === "object") {
+    const keys = Object.keys(value);
+
+    return (
+      <Box sx={{ p: 1 }}>
+        <MuiTypography variant="h5" gutterBottom>
+          {name}
+        </MuiTypography>
+        <Box
+          sx={{
+            display: "grid",
+            gap: "0.5rem",
+            gridTemplateColumns: "repeat(auto-fill, minmax(5rem, 1fr))",
+          }}
+        >
+          {keys.map((k) => {
+            const v = value[k as unknown as keyof typeof value];
+            return (
+              <Box
+                sx={{
+                  border: "0px solid",
+                  borderColor: "grey.600",
+                  overflow: "hidden",
+                  borderRadius: "4px",
+                  width: 80,
+                  mb: 1,
+                  backgroundColor: "#F2F2F2",
+                }}
+                key={k}
+              >
+                <Box
+                  sx={{
+                    height: 63,
+                    m: "1px",
+                    display: "block",
+                    backgroundColor: v,
+                    borderRadius: "4px",
+                  }}
+                />
+                <MuiTypography
+                  variant="caption"
+                  display="block"
+                  sx={{
+                    alignItems: "center",
+                    display: "flex",
+                    m: [0, 1],
+                    fontSize: 8,
+                    lineHeight: "12px",
+                  }}
+                >
+                  {k}
+                  <br />
+                  {rgbToHex(v)}
+                </MuiTypography>
+              </Box>
+            );
+          })}
+        </Box>
+      </Box>
+    );
+  } else {
+    return <>{value}</>;
+  }
+};

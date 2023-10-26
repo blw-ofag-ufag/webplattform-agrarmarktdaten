@@ -182,10 +182,10 @@ export const AppLayout = (props: Props) => {
       </Box>
 
       {router.pathname !== "/data" && (
-        <>
+        <div className="debug-warn">
           <FooterBLW />
           <ScrollToTop />
-        </>
+        </div>
       )}
     </Box>
   );
