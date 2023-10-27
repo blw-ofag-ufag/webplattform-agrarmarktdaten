@@ -117,7 +117,12 @@ export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
     width: `calc( ${span} * var(${vars.columnWidth}) + ${span - 1} * var(${
       vars.columnGutterWidth
     }))`,
-    marginLeft: spanOrUndefined !== undefined ? `calc( ${offset} * var(${vars.offset}))` : null,
+    marginLeft:
+      spanOrUndefined !== undefined
+        ? `calc( ${offset} * var(${vars.columnWidth}) + ${offset - 1} * var(${
+            vars.columnGutterWidth
+          }))`
+        : null,
   };
 };
 
