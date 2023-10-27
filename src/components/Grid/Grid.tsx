@@ -47,7 +47,7 @@ const specs: Record<
   },
 
   xl: {
-    totalWidth: 1152,
+    totalWidth: 1280,
     offset: 32,
     nbColumns: 12,
     columnGutterWidth: 48,
@@ -56,7 +56,7 @@ const specs: Record<
   },
 
   lg: {
-    totalWidth: 928,
+    totalWidth: 1024,
     offset: 48,
     nbColumns: 6,
     columnGutterWidth: 40,
@@ -65,7 +65,7 @@ const specs: Record<
   },
 
   md: {
-    totalWidth: 696,
+    totalWidth: 768,
     offset: 36,
     nbColumns: 6,
     columnGutterWidth: 36,
@@ -74,7 +74,7 @@ const specs: Record<
   },
 
   sm: {
-    totalWidth: 568,
+    totalWidth: 640,
     offset: 36,
     nbColumns: 6,
     columnGutterWidth: 36,
@@ -83,7 +83,7 @@ const specs: Record<
   },
 
   xs: {
-    totalWidth: 424,
+    totalWidth: 480,
     offset: 28,
     nbColumns: 4,
     columnGutterWidth: 28,
@@ -92,7 +92,7 @@ const specs: Record<
   },
 
   xxs: {
-    totalWidth: 340,
+    totalWidth: 380,
     offset: 20,
     nbColumns: 4,
     columnGutterWidth: 20,
@@ -105,7 +105,7 @@ export const vars = {
   offset: "--BLWGrid-offset",
   columnWidth: "--BLWGrid-columnWidth",
   columnGutterWidth: "--BLWGrid-columnGutterWidth",
-  rowGutterWidth: "--BLWGrid-columnGutterWidth",
+  rowGutterWidth: "--BLWGrid-rowGutterWidth",
 };
 
 export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
@@ -121,18 +121,6 @@ export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
   };
 };
 
-/*
- * BREAKPOINTS FOR REFERENCE
-  xxs: 380,
-  xs: 480,
-  sm: 640,
-  md: 768,
-  lg: 1024,
-  xl: 1280,
-  xxl: 1544,
-  xxxl: 1920,
- */
-
 const useStyles = makeStyles<{ disableItemMargin?: boolean }>()((theme, { disableItemMargin }) => {
   const specEntries = Object.entries(specs);
   const gridResponsive = Object.fromEntries(
@@ -141,6 +129,7 @@ const useStyles = makeStyles<{ disableItemMargin?: boolean }>()((theme, { disabl
         theme.breakpoints.only(bp as Breakpoint),
         {
           maxWidth: values.totalWidth,
+          boxSizing: "border-box",
           [vars.offset]: `${values.offset}px`,
           [vars.columnWidth]: `${values.columnWidth}px`,
           [vars.columnGutterWidth]: `${values.columnGutterWidth}px`,
