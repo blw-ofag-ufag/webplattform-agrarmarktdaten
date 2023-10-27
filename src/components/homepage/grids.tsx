@@ -47,12 +47,21 @@ const getCardColors = (type: "market" | "focus", slug?: string | null) => {
   }
 };
 
-const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
+const useStyles = makeStyles()(({ spacing: s, shadows: e, breakpoints: b }) => ({
   card: {
     width: "100%",
+    height: "100%",
     boxShadow: e[4],
     borderRadius: s(2),
-    "&:hover": { backgroundColor: `var(--bgColor)`, color: "var(--color)" },
+    "--dashColor": "black",
+    "&:hover": {
+      backgroundColor: `var(--bgColor)`,
+      color: "var(--color)",
+      "--dashColor": "var(--color)",
+    },
+
+    [b.up("xxl")]: { height: "176px" },
+    [b.down("xxl")]: { height: "120px" },
   },
 
   borderTop: {
@@ -61,7 +70,7 @@ const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
     height: "20px",
     marginBottom: s(5),
   },
-  dash: { backgroundColor: "var(--color)", width: "48px", height: "3px", marginLeft: s(6) },
+  dash: { backgroundColor: "var(--dashColor)", width: "48px", height: "3px", marginLeft: s(6) },
 }));
 
 const GridCard = ({
