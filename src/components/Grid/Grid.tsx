@@ -1,15 +1,113 @@
 import * as React from "react";
-import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
 import { SxProps } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { useTheme } from "@mui/material/styles";
+import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
+
+import { Breakpoint, useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { makeStyles } from "@/components/style-utils";
 
 interface Props {
   children: React.ReactNode;
   sx?: SxProps;
   className?: string;
 }
+
+/**
+ * Definitions from Sketch file
+ * @see https://www.sketch.com/s/81803335-dd26-42f1-a505-6845270a91b7/p/6000F394-096F-4CAD-96D6-3F8056F9DE4B/canvas
+ */
+const specs: Record<
+  Breakpoint,
+  {
+    totalWidth: number;
+    offset: number;
+    nbColumns: number;
+    gutterWidth: number;
+    columnWidth: number;
+  }
+> = {
+  xxxl: {
+    totalWidth: 1676,
+    offset: 0,
+    nbColumns: 12,
+    gutterWidth: 64,
+    columnWidth: 81,
+  },
+
+  xxl: {
+    totalWidth: 1544,
+    offset: 0,
+    nbColumns: 12,
+    gutterWidth: 64,
+    columnWidth: 70,
+  },
+
+  xl: {
+    totalWidth: 1152,
+    offset: 64,
+    nbColumns: 12,
+    gutterWidth: 48,
+    columnWidth: 52,
+  },
+
+  lg: {
+    totalWidth: 928,
+    offset: 48,
+    nbColumns: 6,
+    gutterWidth: 40,
+    columnWidth: 121,
+  },
+
+  md: {
+    totalWidth: 696,
+    offset: 36,
+    nbColumns: 6,
+    gutterWidth: 36,
+    columnWidth: 86,
+  },
+
+  sm: {
+    totalWidth: 568,
+    offset: 36,
+    nbColumns: 6,
+    gutterWidth: 36,
+    columnWidth: 65,
+  },
+
+  xs: {
+    totalWidth: 424,
+    offset: 28,
+    nbColumns: 4,
+    gutterWidth: 28,
+    columnWidth: 85,
+  },
+
+  xxs: {
+    totalWidth: 340,
+    offset: 20,
+    nbColumns: 4,
+    gutterWidth: 20,
+    columnWidth: 70,
+  },
+};
+
+export const vars = {
+  offset: "--BLWGrid-offset",
+  columnWidth: "--BLWGrid-columnWidth",
+  gutterWidth: "--BLWGrid-gutterWidth",
+};
+
+export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
+  const span = spanOrUndefined === undefined ? offsetOrSpan : spanOrUndefined;
+  const offset = spanOrUndefined === undefined ? 0 : offsetOrSpan;
+
+  return {
+    flexShrink: 0,
+    width: `calc( ${span} * var(${vars.columnWidth}) + ${span - 1} * var(${vars.gutterWidth}))`,
+    marginLeft: spanOrUndefined !== undefined ? `calc( ${offset} * var(${vars.offset}))` : null,
+  };
+};
 
 /*
  * BREAKPOINTS FOR REFERENCE
@@ -22,6 +120,57 @@ interface Props {
   xxl: 1544,
   xxxl: 1920,
  */
+
+const useStyles = makeStyles<{ disableItemMargin?: boolean }>()((theme, { disableItemMargin }) => {
+  const specEntries = Object.entries(specs);
+  const gridResponsive = Object.fromEntries(
+    specEntries.map(([bp, values]) => {
+      return [
+        theme.breakpoints.only(bp as Breakpoint),
+        {
+          maxWidth: values.totalWidth,
+          [vars.offset]: `${values.offset}px`,
+          [vars.columnWidth]: `${values.columnWidth}px`,
+          [vars.gutterWidth]: `${values.gutterWidth}px`,
+        },
+      ];
+    })
+  );
+
+  return {
+    grid: {
+      display: "flex",
+      marginLeft: "auto",
+      marginRight: "auto",
+      width: "100%",
+      paddingLeft: `var(${vars.offset})`,
+      paddingRight: `var(${vars.offset})`,
+      position: "relative",
+      zIndex: 1,
+      "&& > * + *": disableItemMargin
+        ? {}
+        : {
+            marginLeft: `var(${vars.gutterWidth})`,
+          },
+      ...gridResponsive,
+    },
+  };
+});
+
+export const NewGridContainer = ({
+  children,
+  className,
+  disableItemMargin,
+  ...rest
+}: Props & { disableItemMargin?: boolean }) => {
+  const { classes, cx } = useStyles({ disableItemMargin });
+
+  return (
+    <Box className={cx(classes.grid, className)} {...rest}>
+      {children}
+    </Box>
+  );
+};
 
 export const GridContainer = ({ children, sx, ...rest }: Props) => {
   const theme = useTheme();
@@ -39,6 +188,7 @@ export const GridContainer = ({ children, sx, ...rest }: Props) => {
         xxxl: "64px",
       }}
       sx={{
+        border: "1px solid red",
         [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
         [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
         [theme.breakpoints.only("xl")]: { paddingX: "64px" },
