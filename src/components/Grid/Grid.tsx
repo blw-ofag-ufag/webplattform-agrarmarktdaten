@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 interface Props {
   children: React.ReactNode;
   sx?: SxProps;
+  className?: string;
 }
 
 /*

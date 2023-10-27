@@ -97,11 +97,6 @@ msgid "data.actions.download"
 msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx
-msgid "article.link.data.explore"
-msgstr "-"
-
-#. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.feedback"
@@ -245,11 +240,6 @@ msgstr "Pubblicato il"
 #: src/components/layout.tsx
 msgid "footer.legal"
 msgstr "Missione e base giuridica"
-
-#. js-lingui-explicit-id
-#: src/components/card-data.tsx
-msgid "article.link.open.report"
-msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

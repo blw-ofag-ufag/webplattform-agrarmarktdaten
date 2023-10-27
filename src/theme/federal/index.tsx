@@ -3,7 +3,7 @@
  */
 import { b, c } from "@interactivethings/swiss-federal-ci";
 import { Fade, Grow } from "@mui/material";
-import { Breakpoint, Theme, createTheme } from "@mui/material/styles";
+import { Theme, createTheme } from "@mui/material/styles";
 import { merge, omit } from "lodash";
 
 import SvgIcCheckboxActive from "@/theme/federal/icons/IcCheckboxActive";
@@ -55,20 +55,31 @@ const isSafari15 =
     ? navigator.userAgent.match(/Version[/\s]([\d]+)/g)?.[0]?.split("/")?.[1] === "15"
     : false;
 
-const breakpoints = ["xs", "md"] as Breakpoint[];
+export const makeResponsiveFontMediaQueries = (theme: Theme) => ({
+  mobile: theme.breakpoints.down("md"),
+  desktop: theme.breakpoints.up("md"),
+});
+
+export type ResponsiveFontMediaQueries = ReturnType<typeof makeResponsiveFontMediaQueries>;
 
 const createTypographyVariant = (theme: Theme, spec: Record<string, $IntentionalAny>) => {
+  const responsiveFontMediaQueries = makeResponsiveFontMediaQueries(theme);
   const res = omit(spec, ["lineHeight", "fontSize"]);
-  for (let i = 0; i < spec.fontSize.length; i++) {
-    const lineHeight = `${spec.lineHeight[i]}px`;
-    const fontSize = `${spec.fontSize[i]}px`;
-    res[
-      i === 0 ? theme.breakpoints.down(breakpoints[i + 1]) : theme.breakpoints.up(breakpoints[i])
-    ] = {
-      fontSize,
-      lineHeight,
-    };
+
+  if (!res.fontFamily) {
+    res.fontFamily = theme.typography.fontFamily;
   }
+
+  res[responsiveFontMediaQueries.mobile] = {
+    fontSize: `${spec.fontSize[0]}px`,
+    lineHeight: `${spec.lineHeight[0]}px`,
+  };
+
+  res[responsiveFontMediaQueries.desktop] = {
+    fontSize: `${spec.fontSize[1]}px`,
+    lineHeight: `${spec.lineHeight[1]}px`,
+  };
+
   return res;
 };
 
