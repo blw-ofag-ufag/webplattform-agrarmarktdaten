@@ -1508,6 +1508,7 @@ export type HighlightSectionModelFilter = {
   createdAt?: InputMaybe<CreatedAtFilter>;
   id?: InputMaybe<ItemIdFilter>;
   title?: InputMaybe<StringFilter>;
+  titleNotShown?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<UpdatedAtFilter>;
 };
 
@@ -1532,6 +1533,8 @@ export enum HighlightSectionModelOrderBy {
   createdAt_DESC = 'createdAt_DESC',
   id_ASC = 'id_ASC',
   id_DESC = 'id_DESC',
+  titleNotShown_ASC = 'titleNotShown_ASC',
+  titleNotShown_DESC = 'titleNotShown_DESC',
   title_ASC = 'title_ASC',
   title_DESC = 'title_DESC',
   updatedAt_ASC = 'updatedAt_ASC',
@@ -1543,6 +1546,7 @@ export type HighlightSectionRecord = RecordInterface & {
   __typename: 'HighlightSectionRecord';
   _allContentLocales?: Maybe<Array<HighlightSectionModelContentFieldMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allTitleNotShownLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -1560,6 +1564,7 @@ export type HighlightSectionRecord = RecordInterface & {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
   title?: Maybe<Scalars['String']['output']>;
+  titleNotShown?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -1573,6 +1578,13 @@ export type HighlightSectionRecordAllContentLocalesArgs = {
 
 /** Record of type 👀 Highlight Section (highlight_section) */
 export type HighlightSectionRecordAllTitleLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 👀 Highlight Section (highlight_section) */
+export type HighlightSectionRecordAllTitleNotShownLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -1593,6 +1605,13 @@ export type HighlightSectionRecordContentArgs = {
 
 /** Record of type 👀 Highlight Section (highlight_section) */
 export type HighlightSectionRecordTitleArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 👀 Highlight Section (highlight_section) */
+export type HighlightSectionRecordTitleNotShownArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -6055,7 +6074,7 @@ export type AnalysisPageQueryVariables = Exact<{
 }>;
 
 
-export type AnalysisPageQuery = { __typename: 'Query', analysisPage?: { __typename: 'AnalysisPageRecord', id: any, title?: string | null, lead?: { __typename: 'AnalysisPageModelLeadField', value: any, links: Array<{ __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, _allBlogPostsMeta: { __typename: 'CollectionMetadata', count: number }, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, allBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, leadCard?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }> };
+export type AnalysisPageQuery = { __typename: 'Query', analysisPage?: { __typename: 'AnalysisPageRecord', id: any, title?: string | null, lead?: { __typename: 'AnalysisPageModelLeadField', value: any, links: Array<{ __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, seo?: { __typename: 'SeoField', title?: string | null, description?: string | null, twitterCard?: string | null, image?: { __typename: 'FileField', id: any, url: string } | null } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
 
 export type PaginatedFilteredBlogpostsQueryVariables = Exact<{
   locale: SiteLocale;
@@ -6874,24 +6893,17 @@ export const AnalysisPageDocument = gql`
       ...FullSEO
     }
   }
-  _allBlogPostsMeta {
-    count
-  }
   allMarketArticles(locale: $locale) {
     ...SimpleMarketArticle
   }
   allFocusArticles(locale: $locale) {
     ...SimpleFocusArticle
   }
-  allBlogPosts(locale: $locale, first: 7) {
-    ...SimpleBlogPost
-  }
 }
     ${InternalLinkFragmentDoc}
 ${FullSeoFragmentDoc}
 ${SimpleMarketArticleFragmentDoc}
-${SimpleFocusArticleFragmentDoc}
-${SimpleBlogPostFragmentDoc}`;
+${SimpleFocusArticleFragmentDoc}`;
 
 export function useAnalysisPageQuery(options: Omit<Urql.UseQueryArgs<AnalysisPageQueryVariables>, 'query'>) {
   return Urql.useQuery<AnalysisPageQuery, AnalysisPageQueryVariables>({ query: AnalysisPageDocument, ...options });

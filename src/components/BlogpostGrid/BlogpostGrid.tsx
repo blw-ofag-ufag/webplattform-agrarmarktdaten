@@ -17,8 +17,6 @@ import dynamic from "next/dynamic";
 const Controls = dynamic(() => import("./internal/Controls"), { ssr: false });
 
 interface Props {
-  blogposts: GQL.SimpleBlogPostFragment[];
-  totalBlogpostCount: number;
   markets: GQL.SimpleMarketArticleFragment[];
   focusArticles: GQL.SimpleFocusArticleFragment[];
 }
@@ -71,10 +69,7 @@ const BlogPostGrid = (props: Props) => {
 
       return result.data;
     },
-    {
-      // initialData: blogposts,
-      keepPreviousData: true,
-    }
+    { keepPreviousData: true }
   );
 
   return (

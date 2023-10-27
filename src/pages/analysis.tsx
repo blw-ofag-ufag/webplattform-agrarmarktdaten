@@ -11,10 +11,8 @@ const queryClient = new QueryClient();
 
 export default function Analysis({
   analysisPage,
-  allBlogPosts,
   allFocusArticles,
   allMarketArticles,
-  _allBlogPostsMeta,
 }: GQL.AnalysisPageQuery) {
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
@@ -28,12 +26,7 @@ export default function Analysis({
           bgColor={c.cobalt[100]}
           shiftedRight
         />
-        <BlogpostGrid
-          blogposts={allBlogPosts}
-          markets={allMarketArticles}
-          focusArticles={allFocusArticles}
-          totalBlogpostCount={_allBlogPostsMeta.count}
-        />
+        <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
       </AppLayout>
     </QueryClientProvider>
   );

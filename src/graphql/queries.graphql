@@ -215,9 +215,6 @@ query AnalysisPage($locale: SiteLocale!) {
       ...FullSEO
     }
   }
-  _allBlogPostsMeta {
-    count
-  }
 
   allMarketArticles(locale: $locale) {
     ...SimpleMarketArticle
@@ -225,10 +222,6 @@ query AnalysisPage($locale: SiteLocale!) {
 
   allFocusArticles(locale: $locale) {
     ...SimpleFocusArticle
-  }
-
-  allBlogPosts(locale: $locale, first: 7) {
-    ...SimpleBlogPost
   }
 }
 
