@@ -4,6 +4,15 @@ import * as GQL from "@/graphql";
 // import { Box } from "@mui/material";
 import { GridContainer, GridElement } from "@/components/Grid";
 import DoneIcon from "@mui/icons-material/Done";
+import { makeStyles } from "@/components/style-utils";
+import { Typography } from "@mui/material";
+
+const useStyles = makeStyles()(() => ({
+  menuItem: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+}));
 
 interface Props {
   markets: GQL.SimpleMarketArticleFragment[];
@@ -23,6 +32,7 @@ const Controls = (props: Props) => {
     selectedFocusArticle,
     onSelectFocusArticle,
   } = props;
+  const { classes } = useStyles();
   return (
     <GridContainer>
       <GridElement xxxl={4} xxl={4} xl={4}>
@@ -31,12 +41,17 @@ const Controls = (props: Props) => {
           onChange={onSelectMarket}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
+          renderValue={(value) => {
+            const marketTitle = markets.filter((m) => m.id === value)[0]?.title;
+            return <Typography variant="body1">{marketTitle ?? "All"}</Typography>;
+          }}
         >
-          <MenuItem value="all" divider>
-            <em>All</em>
+          <MenuItem className={classes.menuItem} value="all" divider>
+            All
+            {selectedMarket === "all" && <DoneIcon />}
           </MenuItem>
           {markets.map((market) => (
-            <MenuItem key={market.id} value={market.id} divider>
+            <MenuItem className={classes.menuItem} key={market.id} value={market.id} divider>
               {market.title}
               {selectedMarket === market.id && <DoneIcon />}
             </MenuItem>
@@ -49,9 +64,13 @@ const Controls = (props: Props) => {
           onChange={onSelectFocusArticle}
           displayEmpty
           inputProps={{ "aria-label": "Without label" }}
+          renderValue={(value) => {
+            const focusArticleTitle = focusArticles.filter((m) => m.id === value)[0]?.title;
+            return <Typography variant="body1">{focusArticleTitle ?? "All"}</Typography>;
+          }}
         >
           <MenuItem value="all" divider>
-            <em>All</em>
+            All
           </MenuItem>
           {focusArticles.map((focusArticle) => (
             <MenuItem key={focusArticle.id} value={focusArticle.id} divider>
