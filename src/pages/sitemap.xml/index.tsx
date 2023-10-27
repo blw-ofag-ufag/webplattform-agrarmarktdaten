@@ -3,7 +3,7 @@ import * as GQL from "@/graphql";
 import { Locale } from "@/locales/locales";
 import { GetServerSideProps } from "next";
 
-const EXTERNAL_DATA_URL = "https://www.agrimarketdata.ch";
+const DOMAIN = "https://blw-agricultural-market-data-platform.vercel.app";
 
 interface Paths {
   locale: Locale;
@@ -19,7 +19,7 @@ function generateSiteMap(blogposts: Paths[]) {
         .map(({ locale, params: { slug } }) => {
           return `
         <url>
-            <loc>${`${EXTERNAL_DATA_URL}/${locale}/blog/${slug}`}</loc>
+            <loc>${`${DOMAIN}/${locale}/blog/${slug}`}</loc>
         </url>
       `;
         })
