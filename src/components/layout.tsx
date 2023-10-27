@@ -28,6 +28,7 @@ import { locales } from "@/locales/locales";
 
 import { BackButton } from "./back-button";
 import { vars } from "@/components/Grid/Grid";
+import { makeStyles } from "@/components/style-utils";
 
 interface Props {
   children: React.ReactNode;
@@ -37,7 +38,19 @@ interface Props {
   showBackButton?: boolean;
 }
 
+const useStyles = makeStyles()({
+  backButton: {
+    position: "absolute",
+    width: "100%",
+    zIndex: 10,
+    height: "50px",
+    display: "flex",
+    justifyContent: "center",
+  },
+});
+
 export const AppLayout = (props: Props) => {
+  const { classes } = useStyles();
   const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
   const theme = useTheme();
   const router = useRouter();
@@ -145,15 +158,7 @@ export const AppLayout = (props: Props) => {
         }}
       >
         {showBackButton && (
-          <Box
-            sx={{
-              position: "absolute",
-              width: "100%",
-              height: "50px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
+          <div className={classes.backButton}>
             <GridContainer
               sx={{
                 width: "100%",
@@ -162,7 +167,7 @@ export const AppLayout = (props: Props) => {
             >
               <BackButton />
             </GridContainer>
-          </Box>
+          </div>
         )}
         {children}
       </Box>
