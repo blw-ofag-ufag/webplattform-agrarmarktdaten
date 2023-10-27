@@ -172,43 +172,6 @@ export const NewGridContainer = ({
   );
 };
 
-export const GridContainer = ({ children, sx, ...rest }: Props) => {
-  const theme = useTheme();
-  return (
-    <MUIGrid
-      container
-      columnSpacing={{
-        xxs: "16px",
-        xs: "20px",
-        sm: "28px",
-        md: "36px",
-        lg: "40px",
-        xl: "48px",
-        xxl: "64px",
-        xxxl: "64px",
-      }}
-      sx={{
-        border: "1px solid red",
-        [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-        [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-        [theme.breakpoints.only("xl")]: { paddingX: "64px" },
-        [theme.breakpoints.only("lg")]: { paddingX: "48px" },
-        [theme.breakpoints.only("md")]: { paddingX: "36px" },
-        [theme.breakpoints.only("sm")]: { paddingX: "36px" },
-        [theme.breakpoints.only("xs")]: { paddingX: "28px" },
-        [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
-        margin: "0 auto",
-        width: "100%",
-        ...sx,
-      }}
-      columns={{ xxxl: 12, xxl: 12, xl: 12, lg: 6, md: 6, sm: 4, xs: 4, xxs: 4 }}
-      {...rest}
-    >
-      {children}
-    </MUIGrid>
-  );
-};
-
 //FIXME: there is probably a more elegant way to do this
 interface GridElementProps extends Props {
   xxxl?: number;
@@ -293,5 +256,3 @@ export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
     </Box>
   );
 };
-
-export default GridContainer;
