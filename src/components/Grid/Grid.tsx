@@ -24,8 +24,8 @@ const specs: Record<
     nbColumns: number;
 
     rowGutterWidth: number;
-    columnGutterWidth: number;
     columnWidth: number;
+    columnGutterWidth: number;
   }
 > = {
   xxxl: {
@@ -33,8 +33,8 @@ const specs: Record<
     offset: 32,
     nbColumns: 12,
     columnGutterWidth: 64,
-    rowGutterWidth: 64,
     columnWidth: 81,
+    rowGutterWidth: 64,
   },
 
   xxl: {
@@ -42,8 +42,8 @@ const specs: Record<
     offset: 32,
     nbColumns: 12,
     columnGutterWidth: 64,
-    rowGutterWidth: 40,
     columnWidth: 70,
+    rowGutterWidth: 40,
   },
 
   xl: {
@@ -51,8 +51,8 @@ const specs: Record<
     offset: 64,
     nbColumns: 12,
     columnGutterWidth: 48,
-    rowGutterWidth: 40,
     columnWidth: 52,
+    rowGutterWidth: 40,
   },
 
   lg: {
@@ -60,8 +60,8 @@ const specs: Record<
     offset: 48,
     nbColumns: 6,
     columnGutterWidth: 40,
-    rowGutterWidth: 40,
     columnWidth: 121,
+    rowGutterWidth: 40,
   },
 
   md: {
@@ -69,8 +69,8 @@ const specs: Record<
     offset: 36,
     nbColumns: 6,
     columnGutterWidth: 36,
-    rowGutterWidth: 40,
     columnWidth: 86,
+    rowGutterWidth: 40,
   },
 
   sm: {
@@ -78,8 +78,8 @@ const specs: Record<
     offset: 36,
     nbColumns: 6,
     columnGutterWidth: 36,
-    rowGutterWidth: 40,
     columnWidth: 65,
+    rowGutterWidth: 40,
   },
 
   xs: {
@@ -87,8 +87,8 @@ const specs: Record<
     offset: 28,
     nbColumns: 4,
     columnGutterWidth: 28,
-    rowGutterWidth: 40,
     columnWidth: 85,
+    rowGutterWidth: 40,
   },
 
   xxs: {
@@ -96,8 +96,8 @@ const specs: Record<
     offset: 20,
     nbColumns: 4,
     columnGutterWidth: 20,
-    rowGutterWidth: 40,
     columnWidth: 70,
+    rowGutterWidth: 40,
   },
 };
 
