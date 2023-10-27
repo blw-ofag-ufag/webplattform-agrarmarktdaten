@@ -5,7 +5,7 @@ import { GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { StructuredTextGraphQlResponse } from "react-datocms";
 import { StructuredText } from "@/components/StructuredText";
-import { NewGridContainer, gridColumn } from "@/components/Grid/Grid";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 const useStyles = makeStyles<{
   shiftedLeft: boolean;
@@ -96,7 +96,7 @@ export const Hero = (props: Props) => {
   return (
     <>
       <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)}>
-        <NewGridContainer sx={{ height: "100%" }}>
+        <GridContainer sx={{ height: "100%" }}>
           {shiftedLeft ? shifter : null}
           <GridElement
             className={classes.gridElement}
@@ -119,11 +119,11 @@ export const Hero = (props: Props) => {
             </Typography>
           </GridElement>
           {shiftedRight ? shifter : null}
-        </NewGridContainer>
+        </GridContainer>
       </Box>
       {lead && (
         <Box className={classes.lead}>
-          <NewGridContainer>
+          <GridContainer>
             {shiftedLeft ? shifter : null}
 
             <GridElement
@@ -135,7 +135,7 @@ export const Hero = (props: Props) => {
               <StructuredText data={lead} {...leadStructuredTextProps} />
             </GridElement>
             {shiftedRight ? shifter : null}
-          </NewGridContainer>
+          </GridContainer>
         </Box>
       )}
     </>

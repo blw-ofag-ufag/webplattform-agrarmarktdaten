@@ -11,7 +11,7 @@ import { GridElement } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
 import { useTheme } from "@mui/material/styles";
-import { NewGridContainer, gridColumn } from "@/components/Grid/Grid";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -42,7 +42,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
         color={color}
         shiftedLeft
       />
-      <NewGridContainer sx={{ mt: 4, position: "relative" }}>
+      <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}
           sx={{
@@ -68,7 +68,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
         >
           {marketArticle.content && <StructuredText data={marketArticle.content} />}
         </GridElement>
-      </NewGridContainer>
+      </GridContainer>
 
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>

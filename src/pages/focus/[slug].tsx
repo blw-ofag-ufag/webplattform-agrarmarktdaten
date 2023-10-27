@@ -10,7 +10,7 @@ import { GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
-import { NewGridContainer, gridColumn } from "@/components/Grid/Grid";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -34,7 +34,7 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
       showBackButton
     >
       <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shiftedLeft />
-      <NewGridContainer sx={{ mt: 4, position: "relative" }}>
+      <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}
           sx={{
@@ -60,7 +60,7 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
         >
           {focusArticle.content && <StructuredText data={focusArticle.content} />}
         </GridElement>
-      </NewGridContainer>
+      </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );

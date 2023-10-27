@@ -16,7 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import { getMarketColor } from "@/domain/colors";
 import { Intersperse } from "@/components/Intersperse";
 import { useTheme } from "@mui/material/styles";
-import { NewGridContainer, gridColumn } from "@/components/Grid/Grid";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
   const { blogPost, topBlogPosts, allMarketArticles, allFocusArticles } = props;
@@ -44,7 +44,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
       allFocusArticles={allFocusArticles}
       showBackButton
     >
-      <NewGridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
+      <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
         <GridElement
           sx={{
             [theme.breakpoints.down("xxxl")]: gridColumn(2, 9),
@@ -154,7 +154,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
           </Box>
           {blogPost.content && <StructuredText data={blogPost.content} />}
         </GridElement>
-      </NewGridContainer>
+      </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );
