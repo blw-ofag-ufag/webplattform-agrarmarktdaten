@@ -232,9 +232,39 @@ query AnalysisPage($locale: SiteLocale!) {
   }
 }
 
-query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
-  allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+query paginatedFilteredBlogposts(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $marketFilter: ItemId
+  $focusFilter: ItemId
+) {
+  blogposts: allBlogPosts(
+    locale: $locale
+    first: $first
+    skip: $skip
+    filter: {
+      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+    }
+  ) {
     ...SimpleBlogPost
+  }
+  blogpostCount: _allBlogPostsMeta(
+    locale: $locale
+    filter: {
+      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+    }
+  ) {
+    count
+  }
+}
+
+query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
+  blogposts: allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+    ...SimpleBlogPost
+  }
+  blogpostCount: _allBlogPostsMeta(locale: $locale) {
+    count
   }
 }
 

@@ -8,6 +8,7 @@ import { merge, omit } from "lodash";
 
 import SvgIcCheckboxActive from "@/theme/federal/icons/IcCheckboxActive";
 import SvgIcCheckboxDefault from "@/theme/federal/icons/IcCheckboxDefault";
+import { IcControlChevronUp } from "@/icons/icons-jsx/control";
 import shadows from "@/theme/federal/shadows";
 
 import debugStyles from "./debug";
@@ -732,21 +733,64 @@ theme.components = {
       },
     },
   },
+  MuiSelect: {
+    defaultProps: {
+      IconComponent: IcControlChevronUp,
+    },
+    styleOverrides: {
+      root: {
+        width: "100%",
+        height: "48px",
+        backgroundColor: "#ffffff",
+        // border: `1px solid ${theme.palette.cobalt[200]}`,
+        "&:hover": {
+          // backgroundColor: theme.palette.,
+          backgroundColor: c.monochrome[100],
+          // border: `1px solid ${theme.palette.cobalt[200]}`,
+        },
+        borderRadius: 4,
+        "&.MuiSelect-select": {
+          border: "none",
+          "&:hover": {},
+        },
+        "&.MuiSelect-icon": {
+          width: "34px",
+          height: "34px",
+        },
+        // ".MuiListItem-root": {
+        // },
+      },
+    },
+  },
+  MuiMenu: {
+    styleOverrides: {
+      root: {
+        paddingY: 0,
+      },
+    },
+  },
+  MuiMenuItem: {
+    styleOverrides: {
+      root: {
+        height: "48px",
+      },
+    },
+  },
   MuiCssBaseline: {
     styleOverrides: `
           svg {
             display: block
           }
-  
+
           [tabindex="-1"]:focus { outline: 0; }
-      
+
           fieldset {
             border: 0;
             padding: 0.01em 0 0 0;
             margin: 0;
             minWidth: 0;
           }
-    
+
           html {
             margin: 0;
             padding: 0;

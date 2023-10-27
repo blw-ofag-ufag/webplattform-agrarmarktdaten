@@ -28,7 +28,12 @@ export default function Analysis({
           bgColor={c.cobalt[100]}
           shiftedRight
         />
-        <BlogpostGrid blogposts={allBlogPosts} totalBlogpostCount={_allBlogPostsMeta.count} />
+        <BlogpostGrid
+          blogposts={allBlogPosts}
+          markets={allMarketArticles}
+          focusArticles={allFocusArticles}
+          totalBlogpostCount={_allBlogPostsMeta.count}
+        />
       </AppLayout>
     </QueryClientProvider>
   );

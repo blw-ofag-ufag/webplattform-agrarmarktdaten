@@ -12120,6 +12120,11 @@ minizlib@^2.1.1:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
+mitt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.1.tgz#ea36cf0cc30403601ae074c8f77b7092cdab36d1"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
+
 mixme@^0.5.1:
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/mixme/-/mixme-0.5.9.tgz#a5a58e17354632179ff3ce5b0fc130899c8ba81c"
@@ -12234,6 +12239,13 @@ neo-async@^2.5.0, neo-async@^2.6.1, neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+next-usequerystate@^1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/next-usequerystate/-/next-usequerystate-1.8.4.tgz#81125aa3dd5a0c6afbc21da8c1f663ee2e0a0350"
+  integrity sha512-V4xMh87cu950Zy1Jpw/H8GwWxAeAmqnLNJ8hAl5bdEWpyZV4UIKdkJePKMCUy1+h254EXGmY83BuCGJOASJRVg==
+  dependencies:
+    mitt "^3.0.1"
 
 next@^13.4.4:
   version "13.4.19"
