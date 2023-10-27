@@ -30,7 +30,7 @@ const specs: Record<
 > = {
   xxxl: {
     totalWidth: 1676,
-    offset: 32,
+    offset: 0,
     nbColumns: 12,
     columnGutterWidth: 64,
     columnWidth: 81,
@@ -39,7 +39,7 @@ const specs: Record<
 
   xxl: {
     totalWidth: 1544,
-    offset: 32,
+    offset: 0,
     nbColumns: 12,
     columnGutterWidth: 64,
     columnWidth: 70,
