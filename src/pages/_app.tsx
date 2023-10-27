@@ -10,6 +10,9 @@ import { LocaleProvider } from "@/lib/use-locale";
 import { i18n, Locale } from "@/locales/locales";
 import blwTheme from "@/theme/blw";
 import { createEmotionCache } from "@/theme/emotion-cache";
+import { setup as setupMatomo, useMatomo } from "@/utils/matomo";
+
+setupMatomo();
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -25,6 +28,8 @@ export default function App({
 }: MyAppProps) {
   const router = useRouter();
   const locale = (router.locale || "de") as Locale;
+  useMatomo();
+
   if (i18n.locale !== locale) {
     i18n.activate(locale);
   }
