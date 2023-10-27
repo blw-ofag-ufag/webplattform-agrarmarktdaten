@@ -2,7 +2,7 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { NewGridContainer, GridElement } from "@/components/Grid";
+import { GridContainer, GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { Hero } from "@/components/hero";
 import { gridColumn } from "@/components/Grid/Grid";
@@ -16,7 +16,7 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
       <Hero title={termsPage.title} lead={termsPage.lead} shiftedLeft />
-      <NewGridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
+      <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
         <GridElement
           sx={{
             [theme.breakpoints.down("xxxl")]: gridColumn(2, 9),
@@ -26,7 +26,7 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
         >
           {termsPage.content && <StructuredText data={termsPage.content} />}
         </GridElement>
-      </NewGridContainer>
+      </GridContainer>
     </AppLayout>
   );
 }

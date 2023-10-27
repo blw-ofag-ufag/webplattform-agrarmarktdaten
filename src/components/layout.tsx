@@ -22,7 +22,7 @@ import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { useStickyBox } from "react-sticky-box";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { NewGridContainer } from "@/components/Grid";
+import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
 
@@ -101,7 +101,7 @@ export const AppLayout = (props: Props) => {
           [theme.breakpoints.up("lg")]: { display: "flex", justifyContent: "center" },
         }}
       >
-        <NewGridContainer disableItemMargin>
+        <GridContainer disableItemMargin>
           <Header
             shortTitle="BLW"
             longTitle="Bundesamt für Landwirtschaft"
@@ -110,7 +110,7 @@ export const AppLayout = (props: Props) => {
             ContentWrapperProps={{ sx: { px: "0!important" } }}
             sx={{ borderBottom: "none", px: 0, mx: 0 }}
           />
-        </NewGridContainer>
+        </GridContainer>
       </Box>
       <Box
         ref={stickyRef}
@@ -121,7 +121,7 @@ export const AppLayout = (props: Props) => {
           zIndex: 10,
         }}
       >
-        <NewGridContainer>
+        <GridContainer>
           <Menu
             sx={{ borderBottom: "none", ml: "-12px" }}
             ContentWrapperProps={{
@@ -133,7 +133,7 @@ export const AppLayout = (props: Props) => {
             }}
             sections={menuSections}
           />
-        </NewGridContainer>
+        </GridContainer>
       </Box>
       <Box
         sx={{
@@ -154,14 +154,14 @@ export const AppLayout = (props: Props) => {
               justifyContent: "center",
             }}
           >
-            <NewGridContainer
+            <GridContainer
               sx={{
                 width: "100%",
                 height: "50px",
               }}
             >
               <BackButton />
-            </NewGridContainer>
+            </GridContainer>
           </Box>
         )}
         {children}

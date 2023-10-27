@@ -4,7 +4,7 @@ import { AppLayout } from "@/components/layout";
 import { Hero } from "@/components/hero";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
-import { NewGridContainer, GridElement } from "@/components/Grid";
+import { GridContainer, GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
@@ -20,7 +20,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
-      <NewGridContainer sx={{ mt: 4, position: "relative" }}>
+      <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}
           sx={{
@@ -46,7 +46,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
         >
           {methodsPage.content && <StructuredText data={methodsPage.content} />}
         </GridElement>
-      </NewGridContainer>
+      </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>
   );

@@ -8,7 +8,7 @@ import { client } from "@/graphql/api";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { Download } from "@/icons/icons-jsx/control";
-import { NewGridContainer } from "@/components/Grid";
+import { GridContainer } from "@/components/Grid";
 import { makeStyles } from "@/components/style-utils";
 
 const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
@@ -49,7 +49,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
         }}
       />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
-        <NewGridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
+        <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
@@ -59,9 +59,9 @@ export default function HomePage(props: GQL.HomePageQuery) {
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
-        </NewGridContainer>
+        </GridContainer>
         <TopBlogpostsTeaser blogposts={topBlogPosts} />
-        <NewGridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
+        <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>
@@ -84,7 +84,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
               </Box>
             </Box>
           </Card>
-        </NewGridContainer>
+        </GridContainer>
       </Box>
     </AppLayout>
   );

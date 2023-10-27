@@ -10,7 +10,7 @@ import LensIcon from "@mui/icons-material/Lens";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
-import { GridWrap, GridWrapElement, NewGridContainer } from "@/components/Grid";
+import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 
 interface Props {
@@ -143,7 +143,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
   })();
 
   return (
-    <NewGridContainer
+    <GridContainer
       disableItemMargin
       sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}
     >
@@ -175,7 +175,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
           </Box>
         </Box>
       </Box>
-    </NewGridContainer>
+    </GridContainer>
   );
 };
 

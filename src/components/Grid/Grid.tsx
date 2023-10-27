@@ -170,7 +170,7 @@ const useStyles = makeStyles<{ disableItemMargin?: boolean }>()((theme, { disabl
   };
 });
 
-export const NewGridContainer = ({
+export const GridContainer = ({
   children,
   className,
   disableItemMargin,
