@@ -14,16 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx
-#~ msgid "article.link.data.explore"
-#~ msgstr "-"
-
-#. js-lingui-explicit-id
-#: src/components/card-data.tsx
-#~ msgid "article.link.open.report"
-#~ msgstr "-"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} insgesamt)"
