@@ -172,38 +172,27 @@ export const NewGridContainer = ({
   );
 };
 
-//FIXME: there is probably a more elegant way to do this
-interface GridElementProps extends Props {
-  xxxl?: number;
-  xxl?: number;
-  xl?: number;
-  lg?: number;
-  md?: number;
-  sm?: number;
-  xs?: number;
-  xxs?: number;
-}
-
-export const GridElement = React.forwardRef<HTMLDivElement, GridElementProps>(
-  ({ children, sx, ...rest }, ref) => (
-    <Grid
-      ref={ref}
-      component="div"
-      xxxl={12}
-      xxl={12}
-      xl={12}
-      lg={6}
-      md={6}
-      sm={4}
-      xs={4}
-      xxs={4}
-      sx={{ padding: 0, ...sx }}
-      {...rest}
-    >
-      {children}
-    </Grid>
-  )
-);
+export const GridElement = React.forwardRef<
+  HTMLDivElement,
+  Props & Partial<Record<Breakpoint, number>>
+>(({ children, sx, ...rest }, ref) => (
+  <Grid
+    ref={ref}
+    component="div"
+    xxxl={12}
+    xxl={12}
+    xl={12}
+    lg={6}
+    md={6}
+    sm={4}
+    xs={4}
+    xxs={4}
+    sx={{ padding: 0, ...sx }}
+    {...rest}
+  >
+    {children}
+  </Grid>
+));
 
 export const GridWrap = ({ children, sx, ...rest }: Props) => {
   const theme = useTheme();
