@@ -13,8 +13,8 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
     return null;
   }
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={termsPage.title} lead={termsPage.lead} shifted />
+    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
+      <Hero title={termsPage.title} lead={termsPage.lead} shiftedLeft />
       <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
         <GridElement
           sx={{

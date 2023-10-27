@@ -1,64 +1,72 @@
-export const getMarketColor = (slug?: string | null) => {
-  switch (slug) {
-    case "milch-und-milchprodukte":
-    case "lait-et-produits-laitiers":
-    case "latte-e-latticini":
-    case "milk":
-      return ["#000000", "#6C84B5"];
-    case "milch-und-fleischersatzprodukte":
-    case "lait-et-substituts-de-viande":
-    case "sostituti-del-latte-e-della-carne":
-    case "milk-and-meat-substitutes":
-      return ["#000000", "#B0BDD7"];
-    case "fruchte-gemuese-speisepilze":
-    case "fruits-et-legumes":
-    case "frutta-e-verdura":
-    case "fruits-and-vegetables":
-      return ["#000000", "#A9D18D"];
-    case "fleisch":
-    case "viande":
-    case "carne":
-    case "meat":
-      return ["#000000", "#F47769"];
-    case "getreide":
-    case "pain-et-ceraales":
-    case "pane-e-cereali":
-    case "bread-and-cereals":
-      return ["#000000", "#F9B067"];
-    case "eier":
-    case "oeufs":
-    case "uova":
-    case "eggs":
-      return ["#000000", "#EDD15A"];
-    case "futtermittel":
-    case "alimentation":
-    case "alimentazione":
-    case "feed":
-      return ["#ffffff", "#6B503F"];
-    case "kartoffeln":
-    case "pommes-de-terre":
-    case "patate":
-    case "potatoes":
-      return ["#000000", "#9C7958"];
-    case "olsaaten":
-    case "graines-oleagineuses":
-    case "semi-oleosi":
-    case "oil-seeds":
-      return ["#000000", "#AA8F1F"];
-    default:
-      return ["#000000", "#ACB4BD"];
-  }
+import { getMarketFromSlug } from "@/domain/market";
+
+export const colorsPerMarket = {
+  milk: {
+    backgroundColor: "#6C84B5",
+    contrastText: "#000000",
+    dashColor: "#6C84B5",
+    color: "#1F2937",
+  },
+  "milk-and-meat-substitutes": {
+    backgroundColor: "#B0BDD7",
+    contrastText: "#000000",
+    dashColor: "#B0BDD7",
+    color: "#30415E",
+  },
+  "fruits-and-vegetables": {
+    backgroundColor: "#C5E0B2",
+    contrastText: "#000000",
+    dashColor: "#A9D18D",
+    color: "#495B46",
+  },
+  meat: {
+    backgroundColor: "#FBCDC8",
+    contrastText: "#000000",
+    dashColor: "#F47769",
+    color: "#A8322D",
+  },
+
+  "bread-and-cereals": {
+    backgroundColor: "#FDCC95",
+    contrastText: "#000000",
+    dashColor: "#F9B067",
+    color: "#7B441F",
+  },
+  eggs: {
+    backgroundColor: "#F7EBB6",
+    contrastText: "#000000",
+    dashColor: "#EDD15A",
+    color: "#695501",
+  },
+  feed: {
+    backgroundColor: "#825B40",
+    contrastText: "#FFFFFF",
+    dashColor: "#6B503F",
+    color: "#F9FAFB",
+  },
+  potatoes: {
+    backgroundColor: "#CFBCAA",
+    contrastText: "#000000",
+    dashColor: "#9C7958",
+    color: "#5B4632",
+  },
+
+  "oil-seeds": {
+    backgroundColor: "#AA8F1F",
+    contrastText: "#000000",
+    dashColor: "#AA8F1F",
+    color: "#111827",
+  },
+  default: {
+    backgroundColor: "#DFE4E9",
+    contrastText: "#000000",
+    dashColor: "#ACB4BD",
+    color: "#1F2937",
+  },
 };
 
-export const chipColorMap = {
-  "#DFE4E9": "#1F2937",
-  "#6C84B5": "#1F2937",
-  "#B0BDD7": "#30415E",
-  "#CFBCAA": "#5B4632",
-  "#C5E0B2": "#495B46",
-  "#FDCC95": "#7B441F",
-  "#FBCDC8": "#A8322D",
-  "#F7EBB6": "#695501",
-  "#825B40": "#F9FAFB",
-  "#AA8F1F": "#111827",
+export const getMarketColor = (slug?: string | null) => {
+  const market = getMarketFromSlug(slug);
+  const colors = colorsPerMarket[market];
+  return [colors.contrastText, colors.dashColor];
 };

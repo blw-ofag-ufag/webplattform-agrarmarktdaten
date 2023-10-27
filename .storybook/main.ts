@@ -11,6 +11,20 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
   ],
+  previewHead: (head) => {
+    // Need to be in sync with what's in _document
+    return `
+      ${head}
+
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet"
+      />
+
+    `;
+  },
   framework: {
     name: "@storybook/nextjs",
     options: {},

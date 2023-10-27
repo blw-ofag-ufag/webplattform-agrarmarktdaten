@@ -33,9 +33,11 @@ interface Props {
   allMarkets?: GQL.SimpleMarketArticleFragment[];
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
   alternates?: { href: string; as: string; locale: string }[];
+  showBackButton?: boolean;
 }
 
-export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }: Props) => {
+export const AppLayout = (props: Props) => {
+  const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
@@ -127,12 +129,12 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
                 width: "100%",
                 [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
                 [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
-                [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
-                [theme.breakpoints.only("md")]: { maxWidth: "696px" },
-                [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
-                [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
-                [theme.breakpoints.down("xxs")]: { maxWidth: "340px" },
+                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
+                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
+                [theme.breakpoints.only("md")]: { paddingX: "36px" },
+                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
+                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
+                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
               },
             }}
             sections={menuSections}
@@ -148,7 +150,7 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
           minHeight: 0,
         }}
       >
-        {!["/", "/data"].includes(router.pathname) ? (
+        {showBackButton && (
           <Box
             sx={{
               position: "absolute",
@@ -164,26 +166,26 @@ export const AppLayout = ({ children, allMarkets, allFocusArticles, alternates }
                 height: "50px",
                 [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
                 [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
-                [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
-                [theme.breakpoints.only("md")]: { maxWidth: "696px" },
-                [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
-                [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
-                [theme.breakpoints.down("xxs")]: { maxWidth: "340px" },
+                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
+                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
+                [theme.breakpoints.only("md")]: { paddingX: "36px" },
+                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
+                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
+                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
               }}
             >
               <BackButton />
             </Box>
           </Box>
-        ) : null}
+        )}
         {children}
       </Box>
 
       {router.pathname !== "/data" && (
-        <>
+        <div className="debug-warn">
           <FooterBLW />
           <ScrollToTop />
-        </>
+        </div>
       )}
     </Box>
   );
@@ -197,15 +199,14 @@ const FooterBLW = () => {
     <Footer
       ContentWrapperProps={{
         sx: {
-          px: "0!important",
-          [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-          [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-          [theme.breakpoints.only("xl")]: { maxWidth: "1152px" },
-          [theme.breakpoints.only("lg")]: { maxWidth: "928px" },
-          [theme.breakpoints.only("md")]: { maxWidth: "696px" },
-          [theme.breakpoints.only("sm")]: { maxWidth: "568px" },
-          [theme.breakpoints.only("xs")]: { maxWidth: "424px" },
-          [theme.breakpoints.only("xxs")]: { maxWidth: "340px" },
+          [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px", px: "0!important" },
+          [theme.breakpoints.only("xxl")]: { maxWidth: "1544px", px: "0!important" },
+          [theme.breakpoints.only("xl")]: { paddingX: "64px" },
+          [theme.breakpoints.only("lg")]: { paddingX: "48px" },
+          [theme.breakpoints.only("md")]: { paddingX: "36px" },
+          [theme.breakpoints.only("sm")]: { paddingX: "36px" },
+          [theme.breakpoints.only("xs")]: { paddingX: "28px" },
+          [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
         },
       }}
       bottomLinks={[
@@ -215,7 +216,8 @@ const FooterBLW = () => {
         },
         {
           title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
-          href: "/legal",
+          external: false,
+          href: `/${locale}/legal`,
         },
         {
           title: t({ id: "footer.about_us.label", message: "About Us" }),
@@ -223,7 +225,8 @@ const FooterBLW = () => {
         },
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
-          href: "/terms-and-conditions",
+          external: false,
+          href: `/${locale}/terms-and-conditions`,
         },
       ]}
       nCols={isXXlAndUp ? 4 : 3}
@@ -294,6 +297,7 @@ const FooterBLW = () => {
               sx={{ textDecoration: "none" }}
             >
               <FooterSectionButton
+                iconName="external"
                 label={t({ id: "footer.blw", message: "Bundesamt für Landwirtschaft" })}
               />
             </Link>
@@ -302,7 +306,10 @@ const FooterBLW = () => {
               target="_blank"
               sx={{ textDecoration: "none" }}
             >
-              <FooterSectionButton label={t({ id: "footer.report", message: "Agrarbericht" })} />
+              <FooterSectionButton
+                iconName="external"
+                label={t({ id: "footer.report", message: "Agrarbericht" })}
+              />
             </Link>
             <Link
               href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/erhebungen/lik.html`}
@@ -310,6 +317,7 @@ const FooterBLW = () => {
               sx={{ textDecoration: "none" }}
             >
               <FooterSectionButton
+                iconName="external"
                 label={t({ id: "footer.priceindex", message: "Landesindex der Konsumentenpreise" })}
               />
             </Link>
@@ -319,6 +327,7 @@ const FooterBLW = () => {
               sx={{ textDecoration: "none" }}
             >
               <FooterSectionButton
+                iconName="external"
                 label={t({
                   id: "footer.importpriceindex",
                   message: "Produzenten- und Importpreis-Index",
@@ -332,7 +341,10 @@ const FooterBLW = () => {
               href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
               target="_blank"
             >
-              <FooterSectionButton label={t({ id: "footer.feedback", message: "Feedback" })} />
+              <FooterSectionButton
+                iconName="external"
+                label={t({ id: "footer.feedback", message: "Feedback" })}
+              />
             </Link>
           </FooterSection>
         </>
@@ -362,6 +374,7 @@ const FooterBLW = () => {
                 sx={{ textDecoration: "none" }}
               >
                 <FooterSectionButton
+                  iconName="external"
                   label={t({ id: "footer.blw", message: "Bundesamt für Landwirtschaft" })}
                 />
               </Link>
@@ -370,7 +383,10 @@ const FooterBLW = () => {
                 target="_blank"
                 sx={{ textDecoration: "none" }}
               >
-                <FooterSectionButton label={t({ id: "footer.report", message: "Agrarbericht" })} />
+                <FooterSectionButton
+                  iconName="external"
+                  label={t({ id: "footer.report", message: "Agrarbericht" })}
+                />
               </Link>
               <Link
                 href={`https://www.bfs.admin.ch/bfs/${locale}/home/statistiken/preise/erhebungen/lik.html`}
@@ -378,6 +394,7 @@ const FooterBLW = () => {
                 sx={{ textDecoration: "none" }}
               >
                 <FooterSectionButton
+                  iconName="external"
                   label={t({
                     id: "footer.priceindex",
                     message: "Landesindex der Konsumentenpreise",
@@ -390,6 +407,7 @@ const FooterBLW = () => {
                 sx={{ textDecoration: "none" }}
               >
                 <FooterSectionButton
+                  iconName="external"
                   label={t({
                     id: "footer.importpriceindex",
                     message: "Produzenten- und Importpreis-Index",
@@ -410,7 +428,10 @@ const FooterBLW = () => {
                 href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
                 target="_blank"
               >
-                <FooterSectionButton label={t({ id: "footer.feedback", message: "Feedback" })} />
+                <FooterSectionButton
+                  iconName="external"
+                  label={t({ id: "footer.feedback", message: "Feedback" })}
+                />
               </Link>
             </Box>
           </FooterSection>

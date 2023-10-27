@@ -6,7 +6,6 @@ import { StructuredText } from "@/components/StructuredText";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
-import { Box } from "@mui/material";
 import { getMarketColor } from "@/domain/colors";
 import { GridContainer, GridElement } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -33,10 +32,15 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
+      showBackButton
     >
-      <Box sx={{ bgcolor: marketColor }}>
-        <Hero title={marketArticle.title} lead={marketArticle.lead} color={color} shifted />
-      </Box>
+      <Hero
+        title={marketArticle.title}
+        lead={marketArticle.lead}
+        bgColor={marketColor}
+        color={color}
+        shiftedLeft
+      />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <GridElement
           ref={stickyRef}
@@ -60,14 +64,12 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
             [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 8 + 64px * 7)", ml: "64px" },
             [theme.breakpoints.only("xxl")]: { width: "calc(70px * 8 + 64px * 7)", ml: "64px" },
             [theme.breakpoints.only("xl")]: {
-              width: "calc(52px * 10 + 48px * 9)",
-              ml: "calc(52px + 48px)",
-              mr: "calc(52px + 48px)",
+              px: "calc(((100% - 48px * 11) / 12) + 48px)",
             },
           }}
           xxxl={9}
           xxl={9}
-          xl={9}
+          xl={12}
           lg={6}
           md={6}
           sm={4}

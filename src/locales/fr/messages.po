@@ -6,16 +6,13 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: AMDP\n"
 "Language: fr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
@@ -48,6 +45,12 @@ msgid "data.filters.addedValue"
 msgstr "Valeur ajoutée"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.report"
+msgstr "Rapport Agricole"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.all"
 msgstr "Tous"
@@ -61,6 +64,12 @@ msgstr "Afficher tous les posts"
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analyse"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.blw"
+msgstr "L’Office fédéral de l’agriculture"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -88,9 +97,10 @@ msgid "data.actions.download"
 msgstr "Télécharger des données"
 
 #. js-lingui-explicit-id
-#: src/components/card-data.tsx
-msgid "article.link.data.explore"
-msgstr "-"
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -155,6 +165,12 @@ msgid "button.infografic.teaser"
 msgstr "-"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.priceindex"
+msgstr "Indice suisse des prix à la consommation"
+
+#. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "En savoir plus"
@@ -210,6 +226,12 @@ msgid "data.filters.products"
 msgstr "Liste des produits"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.importpriceindex"
+msgstr "Prix à la production et à l'importation"
+
+#. js-lingui-explicit-id
 #: src/pages/blog/[slug].tsx
 msgid "blogpost.publishedDate"
 msgstr "Publié le"
@@ -218,11 +240,6 @@ msgstr "Publié le"
 #: src/components/layout.tsx
 msgid "footer.legal"
 msgstr "Mission et base légale"
-
-#. js-lingui-explicit-id
-#: src/components/card-data.tsx
-msgid "article.link.open.report"
-msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
@@ -299,34 +316,3 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Année"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.report"
-msgstr "Rapport Agricole"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.blw"
-msgstr "L’Office fédéral de l’agriculture"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.feedback"
-msgstr "Feedback"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.priceindex"
-msgstr "Indice suisse des prix à la consommation"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.importpriceindex"
-msgstr "Prix à la production et à l'importation"
-

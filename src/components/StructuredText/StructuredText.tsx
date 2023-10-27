@@ -7,24 +7,39 @@ import {
   Image,
 } from "react-datocms";
 import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, TypographyOwnProps } from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
 import { sectionAtom } from "@/lib/atoms";
 import { useSetAtom } from "jotai";
-import { DataDownloadSection } from "@/components/DataDownloadSection";
+import { FileDownloadSection } from "@/components/FileDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
+import { makeStyles } from "../style-utils";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
+  paragraphTypographyProps?: TypographyOwnProps;
 }
 
-const StructuredText = (props: Props) => {
-  const { data } = props;
+const useStyles = makeStyles()({
+  link: {
+    color: "inherit",
+    textUnderlineOffset: "2px",
+    ":hover": { color: c.monochrome[600] },
+  },
+});
 
-  //FIXME: we have to temporarily disable SSR here due to a hydration problem with the DataDownloadSectionRecord bit.
+const defaultParagraphTypographyProps = {
+  variant: "body1",
+};
+
+const StructuredText = (props: Props) => {
+  const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
+  const { classes } = useStyles();
+
+  //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
   const [isClient, setIsClient] = React.useState(false);
 
@@ -40,19 +55,16 @@ const StructuredText = (props: Props) => {
         customNodeRules={[
           renderNodeRule(isLink, ({ node, children, key }) => {
             return (
-              <Typography
-                variant="body1"
-                component="a"
-                sx={{
-                  color: "inherit",
-                  textUnderlineOffset: "2px",
-                  ":hover": { color: "#4B5563" },
-                }}
-                key={key}
-                href={node.url}
-              >
-                {children}
-              </Typography>
+              <NextLink key={key} legacyBehavior href={node.url}>
+                <Typography
+                  variant="inherit"
+                  component="a"
+                  data-debug-good
+                  className={classes.link}
+                >
+                  {children}
+                </Typography>
+              </NextLink>
             );
           }),
           renderNodeRule(isHeading, ({ node, children, key }) => {
@@ -65,12 +77,17 @@ const StructuredText = (props: Props) => {
             if (node.level === 1) {
               i += 1;
               id = `heading${i}`;
-              return <Header1 id={id}>{children}</Header1>;
+              return (
+                <Header1 key={id} id={id}>
+                  {children}
+                </Header1>
+              );
             }
             return (
               <Typography
                 key={key}
                 id={id}
+                data-debug-good
                 variant={`h${node.level}`}
                 component={`h${node.level}`}
                 sx={{ mb: s(6) }}
@@ -81,7 +98,14 @@ const StructuredText = (props: Props) => {
           }),
           renderNodeRule(isParagraph, ({ children, key }) => {
             return (
-              <Typography key={key} variant="body1" component="p" sx={{ mb: s(4) }}>
+              <Typography
+                key={key}
+                /** @ts-ignore */
+                variant="body1"
+                component="p"
+                sx={{ mb: s(4) }}
+                {...paragraphTypographyProps}
+              >
                 {children}
               </Typography>
             );
@@ -99,9 +123,9 @@ const StructuredText = (props: Props) => {
                   reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
                 />
               );
-            case "DataDownloadSectionRecord":
-              const dataDownloadSection = record as Partial<GQL.DataDownloadSectionRecord>;
-              return <DataDownloadSection key={record.id} data={dataDownloadSection} />;
+            case "FileDownloadSectionRecord":
+              const fileDownloadSection = record as Partial<GQL.FileDownloadSectionRecord>;
+              return <FileDownloadSection key={record.id} data={fileDownloadSection} />;
 
             case "HighlightSectionRecord":
               const highlightSection = record as Partial<GQL.HighlightSectionRecord>;
@@ -109,6 +133,53 @@ const StructuredText = (props: Props) => {
             default:
               return null;
           }
+        }}
+        renderLinkToRecord={({ record, children, transformedMeta }) => {
+          let url = "";
+          switch (record.__typename) {
+            case "BlogPostRecord": {
+              url += `/blog/${record.slug}`;
+              break;
+            }
+            case "TermsPageRecord": {
+              url += `/terms`;
+              break;
+            }
+            case "MethodsPageRecord": {
+              url += `/methods`;
+              break;
+            }
+            case "MarketArticleRecord": {
+              url += `/market/${record.slug}`;
+              break;
+            }
+            case "LegalPageRecord": {
+              url += `/legal`;
+              break;
+            }
+            case "FocusArticleRecord": {
+              url += `/focus/${record.slug}`;
+              break;
+            }
+            case "AnalysisPageRecord": {
+              url += `/analysis`;
+              break;
+            }
+          }
+          return (
+            <NextLink {...transformedMeta} legacyBehavior href={url}>
+              <Typography
+                variant="inherit"
+                component="a"
+                data-debug-good
+                className={classes.link}
+                key={record.id}
+                href={url}
+              >
+                {children}
+              </Typography>
+            </NextLink>
+          );
         }}
         renderBlock={({ record }) => {
           switch (record.__typename) {
@@ -171,7 +242,7 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography ref={ref} id={id} variant="h1" component="h1" sx={{ mb: 5, mt: 3 }}>
+    <Typography ref={ref} id={id} data-debug-good variant="h1" component="h1" sx={{ mb: 5, mt: 3 }}>
       {children}
     </Typography>
   );

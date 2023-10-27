@@ -21,7 +21,18 @@ import "dayjs/locale/de";
 import "dayjs/locale/fr";
 import "dayjs/locale/it";
 import { useEffect, useMemo, useState } from "react";
-import { withStyles } from "../../style-utils";
+import { makeStyles, withStyles } from "../../style-utils";
+
+const useStyles = makeStyles()(({ palette: c }) => ({
+  divider: {
+    position: "relative",
+    bottom: "20px",
+    width: "12px",
+    height: "1px",
+    border: "none",
+    backgroundColor: c.grey[800],
+  },
+}));
 
 const FilterToggleButton = withStyles(ToggleButton, (theme) => ({
   root: {
@@ -87,6 +98,7 @@ export default function TimeFilter({
   onChangeRange?: (newValues: [number, number]) => void;
   onChangeView?: (newGranularity: TimeView) => void;
 }) {
+  const { classes } = useStyles();
   const minDate = useMemo(() => dayjs.unix(min), [min]);
   const maxDate = useMemo(() => dayjs.unix(max), [max]);
   const [sliderRange, setSliderRange] = useState(value);
@@ -158,17 +170,7 @@ export default function TimeFilter({
               if (date) onChangeRange([date.unix(), value[1]]);
             }}
           />
-          <Divider
-            orientation="horizontal"
-            sx={{
-              position: "relative",
-              bottom: "20px",
-              width: "12px",
-              height: "1px",
-              border: "none",
-              backgroundColor: "grey.800",
-            }}
-          />
+          <Divider orientation="horizontal" className={classes.divider} />
           <DatePickerField
             min={minDate}
             max={maxDate}
