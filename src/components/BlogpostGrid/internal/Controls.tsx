@@ -1,7 +1,6 @@
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import * as GQL from "@/graphql";
-// import { Box } from "@mui/material";
 import { GridContainer, GridElement } from "@/components/Grid";
 import DoneIcon from "@mui/icons-material/Done";
 import { makeStyles } from "@/components/style-utils";

@@ -28,7 +28,7 @@ function Intersperse({ separator, children }: Props) {
 
 export default Intersperse;
 
-export function intersperse<T>(separator: Separator<T>, arr: T[]): T[] {
+function intersperse<T>(separator: Separator<T>, arr: T[]): T[] {
   if (arr.length === 0) {
     return [];
   } else {
