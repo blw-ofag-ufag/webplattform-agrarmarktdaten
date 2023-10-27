@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SxProps } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { default as MUIGrid } from "@mui/material/Unstable_Grid2";
 
 import { Breakpoint, useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
@@ -23,23 +22,27 @@ const specs: Record<
     totalWidth: number;
     offset: number;
     nbColumns: number;
-    gutterWidth: number;
+
+    rowGutterWidth: number;
+    columnGutterWidth: number;
     columnWidth: number;
   }
 > = {
   xxxl: {
     totalWidth: 1676,
-    offset: 0,
+    offset: 32,
     nbColumns: 12,
-    gutterWidth: 64,
+    columnGutterWidth: 64,
+    rowGutterWidth: 64,
     columnWidth: 81,
   },
 
   xxl: {
     totalWidth: 1544,
-    offset: 0,
+    offset: 32,
     nbColumns: 12,
-    gutterWidth: 64,
+    columnGutterWidth: 64,
+    rowGutterWidth: 40,
     columnWidth: 70,
   },
 
@@ -47,7 +50,8 @@ const specs: Record<
     totalWidth: 1152,
     offset: 64,
     nbColumns: 12,
-    gutterWidth: 48,
+    columnGutterWidth: 48,
+    rowGutterWidth: 40,
     columnWidth: 52,
   },
 
@@ -55,7 +59,8 @@ const specs: Record<
     totalWidth: 928,
     offset: 48,
     nbColumns: 6,
-    gutterWidth: 40,
+    columnGutterWidth: 40,
+    rowGutterWidth: 40,
     columnWidth: 121,
   },
 
@@ -63,7 +68,8 @@ const specs: Record<
     totalWidth: 696,
     offset: 36,
     nbColumns: 6,
-    gutterWidth: 36,
+    columnGutterWidth: 36,
+    rowGutterWidth: 40,
     columnWidth: 86,
   },
 
@@ -71,7 +77,8 @@ const specs: Record<
     totalWidth: 568,
     offset: 36,
     nbColumns: 6,
-    gutterWidth: 36,
+    columnGutterWidth: 36,
+    rowGutterWidth: 40,
     columnWidth: 65,
   },
 
@@ -79,7 +86,8 @@ const specs: Record<
     totalWidth: 424,
     offset: 28,
     nbColumns: 4,
-    gutterWidth: 28,
+    columnGutterWidth: 28,
+    rowGutterWidth: 40,
     columnWidth: 85,
   },
 
@@ -87,7 +95,8 @@ const specs: Record<
     totalWidth: 340,
     offset: 20,
     nbColumns: 4,
-    gutterWidth: 20,
+    columnGutterWidth: 20,
+    rowGutterWidth: 40,
     columnWidth: 70,
   },
 };
@@ -95,7 +104,8 @@ const specs: Record<
 export const vars = {
   offset: "--BLWGrid-offset",
   columnWidth: "--BLWGrid-columnWidth",
-  gutterWidth: "--BLWGrid-gutterWidth",
+  columnGutterWidth: "--BLWGrid-columnGutterWidth",
+  rowGutterWidth: "--BLWGrid-columnGutterWidth",
 };
 
 export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
@@ -104,7 +114,9 @@ export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
 
   return {
     flexShrink: 0,
-    width: `calc( ${span} * var(${vars.columnWidth}) + ${span - 1} * var(${vars.gutterWidth}))`,
+    width: `calc( ${span} * var(${vars.columnWidth}) + ${span - 1} * var(${
+      vars.columnGutterWidth
+    }))`,
     marginLeft: spanOrUndefined !== undefined ? `calc( ${offset} * var(${vars.offset}))` : null,
   };
 };
@@ -131,7 +143,8 @@ const useStyles = makeStyles<{ disableItemMargin?: boolean }>()((theme, { disabl
           maxWidth: values.totalWidth,
           [vars.offset]: `${values.offset}px`,
           [vars.columnWidth]: `${values.columnWidth}px`,
-          [vars.gutterWidth]: `${values.gutterWidth}px`,
+          [vars.columnGutterWidth]: `${values.columnGutterWidth}px`,
+          [vars.rowGutterWidth]: `${values.rowGutterWidth}px`,
         },
       ];
     })
@@ -150,7 +163,7 @@ const useStyles = makeStyles<{ disableItemMargin?: boolean }>()((theme, { disabl
       "&& > * + *": disableItemMargin
         ? {}
         : {
-            marginLeft: `var(${vars.gutterWidth})`,
+            marginLeft: `var(${vars.columnGutterWidth})`,
           },
       ...gridResponsive,
     },
@@ -195,18 +208,13 @@ export const GridElement = React.forwardRef<
 ));
 
 export const GridWrap = ({ children, sx, ...rest }: Props) => {
-  const theme = useTheme();
   return (
     <Box
       sx={{
         display: "flex",
         flexWrap: "wrap",
-        [theme.breakpoints.up("xxl")]: { columnGap: "64px", rowGap: "40px" },
-        [theme.breakpoints.only("xl")]: { columnGap: "48px", rowGap: "32px" },
-        [theme.breakpoints.only("lg")]: { columnGap: "40px", rowGap: "32px" },
-        [theme.breakpoints.only("md")]: { columnGap: "36px", rowGap: "32px" },
-        [theme.breakpoints.only("sm")]: { columnGap: "35px", rowGap: "32px" },
-        [theme.breakpoints.down("sm")]: { rowGap: "32px" },
+        columnGap: `var(${vars.columnGutterWidth})`,
+        rowGap: `var(${vars.rowGutterWidth})`,
         ...sx,
       }}
       {...rest}
@@ -222,20 +230,8 @@ export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
     <Box
       sx={{
         textDecoration: "none",
-        [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 4 + 64px * 3)" },
-        [theme.breakpoints.only("xxl")]: { width: "calc(70px * 4 + 64px * 3)" },
-        [theme.breakpoints.only("xl")]: {
-          width: "calc(((100% - 48px * 11) / 12) * 4 + 48px * 3)",
-        },
-        [theme.breakpoints.only("lg")]: {
-          width: "calc(((100% - 40px * 11) / 12) * 4 + 40px * 3)",
-        },
-        [theme.breakpoints.only("md")]: {
-          width: "calc(((100% - 36px * 11) / 12) * 4 + 36px * 3)",
-        },
-        [theme.breakpoints.only("sm")]: {
-          width: "calc(((100% - 35px * 11) / 12) * 4 + 35px * 3)",
-        },
+        [theme.breakpoints.down("xxxl")]: gridColumn(3),
+        [theme.breakpoints.down("xl")]: gridColumn(4),
         [theme.breakpoints.down("sm")]: { width: "100%" },
         ...sx,
       }}
