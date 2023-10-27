@@ -5,7 +5,7 @@ import { BlogpostCard } from "@/components/BlogpostCard";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { Pagination } from "@/components/Pagination";
 import { useTheme } from "@mui/material/styles";
-import { GridContainer, GridElement, GridWrap, GridWrapElement } from "@/components/Grid";
+import { GridElement, GridWrap, GridWrapElement, NewGridContainer } from "@/components/Grid";
 import { client } from "@/graphql";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
@@ -47,7 +47,7 @@ const BlogPostGrid = (props: Props) => {
 
   return (
     <Box sx={{ backgroundColor: c.cobalt[50], py: 8 }}>
-      <GridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
+      <NewGridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
         <GridWrap
           sx={{
             [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
@@ -86,7 +86,7 @@ const BlogPostGrid = (props: Props) => {
             />
           </Box>
         </GridWrap>
-      </GridContainer>
+      </NewGridContainer>
     </Box>
   );
 };

@@ -2,9 +2,10 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, GridElement } from "@/components/Grid";
+import { NewGridContainer, GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { Hero } from "@/components/hero";
+import { gridColumn } from "@/components/Grid/Grid";
 
 export default function LegalPage(props: GQL.LegalPageQuery) {
   const { legalPage, allMarketArticles, allFocusArticles } = props;
@@ -15,35 +16,23 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
       <Hero title={legalPage.title} lead={legalPage.lead} shiftedLeft />
-      <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
+      <NewGridContainer
+        sx={{
+          mt: 4,
+          mb: 8,
+          position: "relative",
+        }}
+      >
         <GridElement
           sx={{
-            [theme.breakpoints.only("xxxl")]: {
-              width: "calc(81px * 8 + 64px * 7)",
-              ml: "calc(81px * 2 + 64px * 2)",
-            },
-            [theme.breakpoints.only("xxl")]: {
-              width: "calc(70px * 8 + 64px * 7)",
-              ml: "calc(70px * 2 + 64px * 2)",
-            },
-            [theme.breakpoints.only("xl")]: {
-              width: "calc(52px * 10 + 48px * 9)",
-              ml: "calc(52px + 48px)",
-              mr: "calc(52px + 48px)",
-            },
+            [theme.breakpoints.down("xxxl")]: gridColumn(2, 9),
+            [theme.breakpoints.down("xxl")]: gridColumn(12),
+            [theme.breakpoints.down("xl")]: gridColumn(12),
           }}
-          xxxl={9}
-          xxl={9}
-          xl={9}
-          lg={6}
-          md={6}
-          sm={4}
-          xs={4}
-          xxs={4}
         >
           {legalPage.content && <StructuredText data={legalPage.content} />}
         </GridElement>
-      </GridContainer>
+      </NewGridContainer>
     </AppLayout>
   );
 }

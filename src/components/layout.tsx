@@ -22,11 +22,12 @@ import React from "react";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { useStickyBox } from "react-sticky-box";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import { GridContainer } from "@/components/Grid";
+import { NewGridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
 
 import { BackButton } from "./back-button";
+import { vars } from "@/components/Grid/Grid";
 
 interface Props {
   children: React.ReactNode;
@@ -100,7 +101,7 @@ export const AppLayout = (props: Props) => {
           [theme.breakpoints.up("lg")]: { display: "flex", justifyContent: "center" },
         }}
       >
-        <GridContainer>
+        <NewGridContainer disableItemMargin>
           <Header
             shortTitle="BLW"
             longTitle="Bundesamt für Landwirtschaft"
@@ -109,7 +110,7 @@ export const AppLayout = (props: Props) => {
             ContentWrapperProps={{ sx: { px: "0!important" } }}
             sx={{ borderBottom: "none", px: 0, mx: 0 }}
           />
-        </GridContainer>
+        </NewGridContainer>
       </Box>
       <Box
         ref={stickyRef}
@@ -120,26 +121,19 @@ export const AppLayout = (props: Props) => {
           zIndex: 10,
         }}
       >
-        <GridContainer>
+        <NewGridContainer>
           <Menu
             sx={{ borderBottom: "none", ml: "-12px" }}
             ContentWrapperProps={{
               sx: {
                 px: "0!important",
                 width: "100%",
-                [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-                [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
-                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
-                [theme.breakpoints.only("md")]: { paddingX: "36px" },
-                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
-                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
-                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
+                [theme.breakpoints.down("xl")]: { paddingX: `var(${vars.offset})` },
               },
             }}
             sections={menuSections}
           />
-        </GridContainer>
+        </NewGridContainer>
       </Box>
       <Box
         sx={{
@@ -160,22 +154,14 @@ export const AppLayout = (props: Props) => {
               justifyContent: "center",
             }}
           >
-            <Box
+            <NewGridContainer
               sx={{
                 width: "100%",
                 height: "50px",
-                [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-                [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
-                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
-                [theme.breakpoints.only("md")]: { paddingX: "36px" },
-                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
-                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
-                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
               }}
             >
               <BackButton />
-            </Box>
+            </NewGridContainer>
           </Box>
         )}
         {children}
