@@ -123,10 +123,19 @@ export const TopBlogpostsTeaser = (props: Props) => {
         <GridWrap>
           <Carousel
             autoPlay={false}
-            IndicatorIcon={<LensIcon />}
+            IndicatorIcon={<LensIcon className="indicatorIcon" fontSize="inherit" />}
             NextIcon={<ArrowForwardIosIcon />}
             PrevIcon={<ArrowBackIosIcon />}
-            sx={{ width: "100%", height: "fit-content", display: "flex", flexDirection: "column" }}
+            sx={{
+              width: "100%",
+              height: "fit-content",
+              display: "flex",
+              flexDirection: "column",
+
+              "& .indicatorIcon": {
+                fontSize: "1rem",
+              },
+            }}
           >
             {blogposts.map((d) => (
               <GridWrapElement
