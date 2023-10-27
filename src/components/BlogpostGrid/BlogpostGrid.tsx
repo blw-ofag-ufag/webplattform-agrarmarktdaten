@@ -5,7 +5,7 @@ import { BlogpostCard } from "@/components/BlogpostCard";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { Pagination } from "@/components/Pagination";
 import { useTheme } from "@mui/material/styles";
-import { GridContainer, GridElement, GridWrap, GridWrapElement } from "@/components/Grid";
+import { GridElement, GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { client } from "@/graphql";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";

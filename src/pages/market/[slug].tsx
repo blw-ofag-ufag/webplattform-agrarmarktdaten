@@ -7,10 +7,11 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { getMarketColor } from "@/domain/colors";
-import { GridContainer, GridElement } from "@/components/Grid";
+import { GridElement } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
 import { useTheme } from "@mui/material/styles";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -46,8 +47,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
           ref={stickyRef}
           sx={{
             height: "fit-content",
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 2 + 64px)" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 2 + 64px)" },
+            [theme.breakpoints.down("xxxl")]: gridColumn(2),
             [theme.breakpoints.down("xxl")]: { display: "none" },
           }}
         >
@@ -61,20 +61,10 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
         </GridElement>
         <GridElement
           sx={{
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xl")]: {
-              px: "calc(((100% - 48px * 11) / 12) + 48px)",
-            },
+            [theme.breakpoints.up("xl")]: gridColumn(2, 9),
+            [theme.breakpoints.between("sm", "xl")]: gridColumn(6),
+            [theme.breakpoints.down("sm")]: gridColumn(4),
           }}
-          xxxl={9}
-          xxl={9}
-          xl={12}
-          lg={6}
-          md={6}
-          sm={4}
-          xs={4}
-          xxs={4}
         >
           {marketArticle.content && <StructuredText data={marketArticle.content} />}
         </GridElement>

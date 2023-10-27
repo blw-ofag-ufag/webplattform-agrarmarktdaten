@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { GridContainer, GridElement } from "@/components/Grid";
+import { GridElement } from "@/components/Grid";
 import { AppLayout } from "@/components/layout";
 import { client } from "@/graphql";
 import * as GQL from "@/graphql";
@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import { getMarketColor } from "@/domain/colors";
 import { Intersperse } from "@/components/Intersperse";
 import { useTheme } from "@mui/material/styles";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
   const { blogPost, topBlogPosts, allMarketArticles, allFocusArticles } = props;
@@ -46,28 +47,10 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
       <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
         <GridElement
           sx={{
-            [theme.breakpoints.only("xxxl")]: {
-              width: "calc(81px * 8 + 64px * 7)",
-              ml: "calc(81px * 2 + 64px * 2)",
-            },
-            [theme.breakpoints.only("xxl")]: {
-              width: "calc(70px * 8 + 64px * 7)",
-              ml: "calc(70px * 2 + 64px * 2)",
-            },
-            [theme.breakpoints.only("xl")]: {
-              width: "calc(52px * 10 + 48px * 9)",
-              ml: "calc(52px + 48px)",
-              mr: "calc(52px + 48px)",
-            },
+            [theme.breakpoints.between("xl", "xxxl")]: gridColumn(2, 9),
+            [theme.breakpoints.between("sm", "lg")]: gridColumn(4),
+            [theme.breakpoints.down("sm")]: gridColumn(4),
           }}
-          xxxl={9}
-          xxl={9}
-          xl={9}
-          lg={6}
-          md={6}
-          sm={4}
-          xs={4}
-          xxs={4}
         >
           <Box sx={{ mb: 10 }}>
             {formattedDate && (

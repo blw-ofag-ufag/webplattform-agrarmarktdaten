@@ -6,10 +6,11 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, GridElement } from "@/components/Grid";
+import { GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -37,10 +38,10 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
         <GridElement
           ref={stickyRef}
           sx={{
-            height: "fit-content",
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 2 + 64px)" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 2 + 64px)" },
-            [theme.breakpoints.down("xxl")]: { display: "none" },
+            [theme.breakpoints.between("xl", "xxxl")]: gridColumn(2),
+            [theme.breakpoints.down("xl")]: {
+              display: "none",
+            },
           }}
         >
           {focusArticle.content && (
@@ -52,20 +53,10 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
         </GridElement>
         <GridElement
           sx={{
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xl")]: {
-              px: "calc(((100% - 48px * 11) / 12) + 48px)",
-            },
+            [theme.breakpoints.between("xl", "xxxl")]: gridColumn(2, 9),
+            [theme.breakpoints.between("sm", "xl")]: gridColumn(4),
+            [theme.breakpoints.down("sm")]: gridColumn(4),
           }}
-          xxxl={9}
-          xxl={9}
-          xl={12}
-          lg={6}
-          md={6}
-          sm={4}
-          xs={4}
-          xxs={4}
         >
           {focusArticle.content && <StructuredText data={focusArticle.content} />}
         </GridElement>

@@ -1,10 +1,11 @@
 import { Box, Typography, TypographyProps } from "@mui/material";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
-import { GridContainer, GridElement } from "@/components/Grid";
+import { GridElement } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { StructuredTextGraphQlResponse } from "react-datocms";
 import { StructuredText } from "@/components/StructuredText";
+import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 
 const useStyles = makeStyles<{
   shiftedLeft: boolean;
@@ -32,13 +33,6 @@ const useStyles = makeStyles<{
     display: "flex",
     flexDirection: "column",
     justifyContent: "end",
-    ...(params.shiftedLeft && {
-      [theme.breakpoints.only("xxxl")]: { px: "calc(81px * 2 + 64px * 2)" },
-      [theme.breakpoints.only("xxl")]: { px: "calc(70px * 2 + 64px * 2)" },
-      [theme.breakpoints.only("xl")]: {
-        px: "calc(((100% - 48px * 11) / 12) + 48px)",
-      },
-    }),
   },
 
   lead: {
@@ -88,11 +82,32 @@ export const Hero = (props: Props) => {
   const { classes, cx } = useStyles({ hero, bgColor, shiftedLeft });
   const theme = useTheme();
 
+  const shifter = (
+    <Box
+      sx={{
+        [theme.breakpoints.up("xl")]: gridColumn(2),
+        [theme.breakpoints.down("xl")]: {
+          display: "none",
+        },
+      }}
+    />
+  );
+
   return (
     <>
       <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)}>
         <GridContainer sx={{ height: "100%" }}>
-          <GridElement className={classes.gridElement}>
+          {shiftedLeft ? shifter : null}
+          <GridElement
+            className={classes.gridElement}
+            sx={{
+              [theme.breakpoints.between("xl", "xxxl")]: gridColumn(
+                12 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)
+              ),
+              [theme.breakpoints.between("sm", "xl")]: gridColumn(6),
+              [theme.breakpoints.down("sm")]: gridColumn(4),
+            }}
+          >
             <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
             <Typography
               data-debug-good
@@ -104,26 +119,26 @@ export const Hero = (props: Props) => {
               {title}
             </Typography>
           </GridElement>
+          {shiftedRight ? shifter : null}
         </GridContainer>
       </Box>
       {lead && (
         <Box className={classes.lead}>
-          <GridContainer sx={{ mx: 0 }}>
+          <GridContainer>
+            {shiftedLeft ? shifter : null}
+
             <GridElement
-              xxxl={shiftedLeft ? 8 : 10}
-              xxl={shiftedLeft ? 8 : 10}
-              xl={shiftedRight ? 10 : 12}
               sx={{
-                mx: 0,
-                ...(shiftedLeft && {
-                  [theme.breakpoints.only("xxxl")]: { pl: "calc(81px * 2 + 64px * 2)" },
-                  [theme.breakpoints.only("xxl")]: { pl: "calc(70px * 2 + 64px * 2)" },
-                  [theme.breakpoints.only("xl")]: { px: "calc(((100% - 48px * 11) / 12) + 48px)" },
-                }),
+                [theme.breakpoints.up("xl")]: gridColumn(
+                  12 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)
+                ),
+                [theme.breakpoints.between("sm", "xl")]: gridColumn(6),
+                [theme.breakpoints.down("sm")]: gridColumn(4),
               }}
             >
               <StructuredText data={lead} {...leadStructuredTextProps} />
             </GridElement>
+            {shiftedRight ? shifter : null}
           </GridContainer>
         </Box>
       )}

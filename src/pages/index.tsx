@@ -49,7 +49,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
         }}
       />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
-        <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
+        <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
@@ -61,7 +61,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </GridContainer>
         <TopBlogpostsTeaser blogposts={topBlogPosts} />
-        <GridContainer sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
+        <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>

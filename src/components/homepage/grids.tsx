@@ -60,8 +60,8 @@ const useStyles = makeStyles()(({ spacing: s, shadows: e, breakpoints: b }) => (
       "--dashColor": "var(--color)",
     },
 
-    [b.up("xxl")]: { height: "176px" },
-    [b.down("xxl")]: { height: "120px" },
+    [b.up("xxl")]: { minHeight: "176px" },
+    [b.down("xxl")]: { minHeight: "120px" },
   },
 
   borderTop: {
