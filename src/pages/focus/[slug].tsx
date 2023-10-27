@@ -38,8 +38,8 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
         <GridElement
           ref={stickyRef}
           sx={{
-            [theme.breakpoints.down("xxxl")]: gridColumn(2),
-            [theme.breakpoints.down("lg")]: {
+            [theme.breakpoints.between("xl", "xxxl")]: gridColumn(2),
+            [theme.breakpoints.down("xl")]: {
               display: "none",
             },
           }}
@@ -53,8 +53,8 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
         </GridElement>
         <GridElement
           sx={{
-            [theme.breakpoints.down("xxxl")]: gridColumn(2, 9),
-            [theme.breakpoints.down("lg")]: gridColumn(6),
+            [theme.breakpoints.between("xl", "xxxl")]: gridColumn(2, 9),
+            [theme.breakpoints.between("sm", "xl")]: gridColumn(4),
             [theme.breakpoints.down("sm")]: gridColumn(4),
           }}
         >
