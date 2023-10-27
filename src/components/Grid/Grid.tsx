@@ -48,7 +48,7 @@ const specs: Record<
 
   xl: {
     totalWidth: 1152,
-    offset: 64,
+    offset: 32,
     nbColumns: 12,
     columnGutterWidth: 48,
     columnWidth: 52,
@@ -230,7 +230,7 @@ export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
     <Box
       sx={{
         textDecoration: "none",
-        [theme.breakpoints.down("xxxl")]: gridColumn(3),
+        [theme.breakpoints.down("xxxl")]: gridColumn(4),
         [theme.breakpoints.down("xl")]: gridColumn(4),
         [theme.breakpoints.down("sm")]: { width: "100%" },
         ...sx,
