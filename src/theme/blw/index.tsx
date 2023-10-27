@@ -2,7 +2,8 @@ import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 import federalTheme from "@/theme/federal";
 import { breakpoints } from "@interactivethings/swiss-federal-ci";
 import { createTheme } from "@mui/material/styles";
-import colors from "../../assets/mui-color-tokens.json";
+
+import colors from "@/assets/mui-color-tokens.json";
 
 declare module "@mui/material" {
   interface ButtonPropsVariantOverrides {
