@@ -101,10 +101,11 @@ export const Hero = (props: Props) => {
           <GridElement
             className={classes.gridElement}
             sx={{
-              [theme.breakpoints.down("xxxl")]: gridColumn(
+              [theme.breakpoints.between("xl", "xxxl")]: gridColumn(
                 12 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)
               ),
-              [theme.breakpoints.down("xl")]: gridColumn(12),
+              [theme.breakpoints.between("sm", "lg")]: gridColumn(6),
+              [theme.breakpoints.down("sm")]: gridColumn(4),
             }}
           >
             <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
@@ -128,8 +129,9 @@ export const Hero = (props: Props) => {
 
             <GridElement
               sx={{
-                [theme.breakpoints.down("xxxl")]: gridColumn(8),
-                [theme.breakpoints.down("xl")]: gridColumn(12),
+                [theme.breakpoints.between("xl", "xxxl")]: gridColumn(8),
+                [theme.breakpoints.between("sm", "lg")]: gridColumn(6),
+                [theme.breakpoints.down("sm")]: gridColumn(4),
               }}
             >
               <StructuredText data={lead} {...leadStructuredTextProps} />
