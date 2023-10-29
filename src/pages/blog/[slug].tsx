@@ -66,17 +66,14 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
             <Box sx={{ display: "flex", gap: "16px" }}>
               {blogPost.markets.map(({ slug, title }) => {
                 return (
-                  <Chip
+                  <MarketChip
                     key={slug}
+                    label={title}
+                    slug={slug}
                     sx={{
-                      backgroundColor: getMarketColor(slug),
-                      color: "#ffffff",
-                      lineHeight: "18px",
-                      fontSize: "14px",
                       paddingX: "18px",
                       paddingY: "6px",
                     }}
-                    label={title}
                   />
                 );
               })}
