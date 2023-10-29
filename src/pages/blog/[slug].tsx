@@ -16,7 +16,6 @@ import { Intersperse } from "@/components/Intersperse";
 import { useTheme } from "@mui/material/styles";
 import { GridContainer, gridColumn } from "@/components/Grid/Grid";
 import { MarketChip } from "@/components/MarketChip";
-import { useMemo } from "react";
 import { Avatars } from "../../components/Avatars";
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
