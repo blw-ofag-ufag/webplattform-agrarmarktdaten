@@ -12,7 +12,7 @@ import { lineClamp } from "../../utils/lineClamp";
 import { makeStyles } from "@/components/style-utils";
 
 const useStyles = makeStyles<void, "full" | "third">()(
-  ({ spacing: s, shadows: e, palette: c }, _params, classes) => ({
+  ({ spacing: s, shadows: e, palette: c, breakpoints: b }, _params, classes) => ({
     card: {
       overflow: "hidden",
       boxShadow: e[6],
@@ -29,6 +29,16 @@ const useStyles = makeStyles<void, "full" | "third">()(
       width: "100%",
       minWidth: "100%",
       height: "556px",
+
+      [`${b.between("xl", "xxxl")}`]: {
+        height: 556,
+      },
+      [`${b.between("sm", "lg")}`]: {
+        height: 418,
+      },
+      [`${b.down("sm")}`]: {
+        height: 556,
+      },
     },
 
     third: {
@@ -127,8 +137,9 @@ const useStyles = makeStyles<void, "full" | "third">()(
         overflow: "hidden",
         aspectRatio: 16 / 9,
         maxHeight: "556px",
-        minWidth: "66.66%",
+        width: "66.66%",
         height: "100%",
+        flexShrink: 0,
       },
       [`.${classes.third} &`]: {
         position: "relative",

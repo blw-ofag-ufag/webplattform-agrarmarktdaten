@@ -47,13 +47,11 @@ const BlogPostGrid = (props: Props) => {
 
   return (
     <Box sx={{ backgroundColor: c.cobalt[50], py: 8 }}>
-      <GridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
-        <GridWrap
-          sx={{
-            [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-            [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-          }}
-        >
+      <GridContainer
+        sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}
+        disableItemMargin
+      >
+        <GridWrap>
           {data?.map((blogpost, i) => {
             if (page === 1 && i === 0 && isLargeOrBigger) {
               return (
@@ -63,14 +61,7 @@ const BlogPostGrid = (props: Props) => {
               );
             }
             return (
-              <GridWrapElement
-                key={blogpost.id}
-                sx={{
-                  [theme.breakpoints.only("md")]: { width: "100%" },
-                  [theme.breakpoints.only("sm")]: { width: "100%" },
-                  [theme.breakpoints.down("sm")]: { width: "100%" },
-                }}
-              >
+              <GridWrapElement key={blogpost.id}>
                 <BlogpostCard {...blogpost} />
               </GridWrapElement>
             );
