@@ -145,6 +145,7 @@ const useStyles = makeStyles<void, "full" | "third">()(
         display: "flex",
         flexDirection: "column",
         padding: s(5, 7),
+        flexShrink: 0,
       },
       [`.${classes.third} &`]: {
         paddingBottom: s(5),
