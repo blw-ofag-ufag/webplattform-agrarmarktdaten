@@ -1,6 +1,5 @@
 import * as React from "react";
 import { SxProps } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
 
 import { Breakpoint, useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
@@ -125,7 +124,7 @@ export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
         ? `calc( ${offset} * var(${vars.columnWidth}) + ${offset - 1} * var(${
             vars.columnGutterWidth
           }))`
-        : null,
+        : undefined,
   };
 };
 
@@ -181,28 +180,6 @@ export const GridContainer = ({
     </Box>
   );
 };
-
-export const GridElement = React.forwardRef<
-  HTMLDivElement,
-  Props & Partial<Record<Breakpoint, number>>
->(({ children, sx, ...rest }, ref) => (
-  <Grid
-    ref={ref}
-    component="div"
-    xxxl={12}
-    xxl={12}
-    xl={12}
-    lg={6}
-    md={6}
-    sm={4}
-    xs={4}
-    xxs={4}
-    sx={{ padding: 0, ...sx }}
-    {...rest}
-  >
-    {children}
-  </Grid>
-));
 
 export const GridWrap = ({ children, sx, ...rest }: Props) => {
   return (

@@ -7,22 +7,21 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { getMarketColor } from "@/domain/colors";
-import { GridElement } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
-import { useTheme } from "@mui/material/styles";
-import { GridContainer, gridColumn } from "@/components/Grid/Grid";
+import { GridContainer } from "@/components/Grid/Grid";
+import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
 
-  const theme = useTheme();
   const stickyRef = useStickyBox({ offsetTop: 200 });
   const alternates = marketArticle?._allSlugLocales?.map((loc) => ({
     href: "/market/[slug]",
     as: `/market/${loc.value}`,
     locale: loc.locale as string,
   }));
+  const { classes } = useLayoutStyles();
 
   if (!marketArticle?.title || !marketArticle?.lead) {
     return null;
@@ -43,14 +42,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
         shiftedLeft
       />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <GridElement
-          ref={stickyRef}
-          sx={{
-            height: "fit-content",
-            [theme.breakpoints.down("xxxl")]: gridColumn(2),
-            [theme.breakpoints.down("xxl")]: { display: "none" },
-          }}
-        >
+        <div className={classes.aside} ref={stickyRef}>
           {marketArticle.content && (
             <TableOfContents
               data={marketArticle.content}
@@ -58,16 +50,10 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
               sx={{ height: "fit-content", width: "100%" }}
             />
           )}
-        </GridElement>
-        <GridElement
-          sx={{
-            [theme.breakpoints.up("xl")]: gridColumn(2, 9),
-            [theme.breakpoints.between("sm", "xl")]: gridColumn(6),
-            [theme.breakpoints.down("sm")]: gridColumn(4),
-          }}
-        >
+        </div>
+        <div className={classes.content}>
           {marketArticle.content && <StructuredText data={marketArticle.content} />}
-        </GridElement>
+        </div>
       </GridContainer>
 
       <TopBlogpostsTeaser blogposts={topBlogPosts} />

@@ -1,14 +1,12 @@
 import { Box, Typography, TypographyProps } from "@mui/material";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
-import { GridElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
 import { StructuredTextGraphQlResponse } from "react-datocms";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, gridColumn } from "@/components/Grid/Grid";
+import { GridContainer } from "@/components/Grid/Grid";
+import { useHeroStyles } from "@/components/useLayoutStyles";
 
 const useStyles = makeStyles<{
-  shiftedLeft: boolean;
   hero: string | undefined;
   bgColor: string | undefined;
 }>()((theme, params) => ({
@@ -79,35 +77,19 @@ export const Hero = (props: Props) => {
     titleTypographyProps,
     leadStructuredTextProps,
   } = props;
-  const { classes, cx } = useStyles({ hero, bgColor, shiftedLeft });
-  const theme = useTheme();
-
-  const shifter = (
-    <Box
-      sx={{
-        [theme.breakpoints.up("xl")]: gridColumn(2),
-        [theme.breakpoints.down("xl")]: {
-          display: "none",
-        },
-      }}
-    />
-  );
+  const { classes, cx } = useStyles({ hero, bgColor });
+  const { classes: herolayoutClasses } = useHeroStyles({
+    shiftedLeft,
+    shiftedRight,
+  });
+  const shifter = <div className={herolayoutClasses.shifter} />;
 
   return (
     <>
       <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)}>
         <GridContainer sx={{ height: "100%" }}>
           {shiftedLeft ? shifter : null}
-          <GridElement
-            className={classes.gridElement}
-            sx={{
-              [theme.breakpoints.between("xl", "xxxl")]: gridColumn(
-                12 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)
-              ),
-              [theme.breakpoints.between("sm", "lg")]: gridColumn(6),
-              [theme.breakpoints.down("sm")]: gridColumn(4),
-            }}
-          >
+          <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>
             <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
             <Typography
               data-debug-good
@@ -118,7 +100,7 @@ export const Hero = (props: Props) => {
             >
               {title}
             </Typography>
-          </GridElement>
+          </div>
           {shiftedRight ? shifter : null}
         </GridContainer>
       </Box>
@@ -127,17 +109,9 @@ export const Hero = (props: Props) => {
           <GridContainer>
             {shiftedLeft ? shifter : null}
 
-            <GridElement
-              sx={{
-                [theme.breakpoints.between("xl", "xxxl")]: gridColumn(
-                  12 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)
-                ),
-                [theme.breakpoints.between("sm", "lg")]: gridColumn(6),
-                [theme.breakpoints.down("sm")]: gridColumn(4),
-              }}
-            >
+            <div className={herolayoutClasses.heroContent}>
               <StructuredText data={lead} {...leadStructuredTextProps} />
-            </GridElement>
+            </div>
             {shiftedRight ? shifter : null}
           </GridContainer>
         </Box>
