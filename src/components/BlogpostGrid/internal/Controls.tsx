@@ -6,6 +6,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import { makeStyles } from "@/components/style-utils";
 import { Typography, FormLabel } from "@mui/material";
 import { SortBy } from "../BlogpostGrid";
+import { Trans } from "@lingui/macro";
 
 const useStyles = makeStyles()(() => ({
   menuItem: {
@@ -41,7 +42,9 @@ const Controls = (props: Props) => {
     <>
       <GridContainer>
         <GridElement xxxl={4} xxl={4} xl={4}>
-          <FormLabel>Market</FormLabel>
+          <FormLabel>
+            <Trans id="filter.market">Market</Trans>
+          </FormLabel>
           <Select
             value={selectedMarket}
             onChange={onSelectMarket}
@@ -53,7 +56,7 @@ const Controls = (props: Props) => {
             }}
           >
             <MenuItem className={classes.menuItem} value="all" divider>
-              All
+              <Trans id="select.all">All</Trans>
               {selectedMarket === "all" && <DoneIcon />}
             </MenuItem>
             {markets.map((market) => (
@@ -65,7 +68,9 @@ const Controls = (props: Props) => {
           </Select>
         </GridElement>
         <GridElement xxxl={4} xxl={4} xl={4}>
-          <FormLabel>Focus</FormLabel>
+          <FormLabel>
+            <Trans id="filter.focus">Focus</Trans>
+          </FormLabel>
           <Select
             value={selectedFocusArticle}
             onChange={onSelectFocusArticle}
@@ -77,7 +82,7 @@ const Controls = (props: Props) => {
             }}
           >
             <MenuItem value="all" divider>
-              All
+              <Trans id="select.all">All</Trans>
             </MenuItem>
             {focusArticles.map((focusArticle) => (
               <MenuItem key={focusArticle.id} value={focusArticle.id} divider>
@@ -89,7 +94,9 @@ const Controls = (props: Props) => {
       </GridContainer>
       <GridContainer>
         <GridElement xxxl={4} xxl={4} xl={4}>
-          <FormLabel>Sort by: </FormLabel>
+          <FormLabel>
+            <Trans id="sort.labe">Sort by:</Trans>&nbsp;
+          </FormLabel>
           <Select
             value={sortBy}
             onChange={(e) => onSelectSortBy(e.target.value as SortBy)}
