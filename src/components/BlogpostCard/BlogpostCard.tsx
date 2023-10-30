@@ -30,10 +30,10 @@ const useStyles = makeStyles<void, "full" | "third">()(
       minWidth: "100%",
       height: "556px",
 
-      [`${b.between("xl", "xxxl")}`]: {
+      [`${b.up("xl")}`]: {
         height: 556,
       },
-      [`${b.between("sm", "lg")}`]: {
+      [`${b.between("sm", "xl")}`]: {
         height: 418,
       },
       [`${b.down("sm")}`]: {
