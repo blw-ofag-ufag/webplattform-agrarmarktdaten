@@ -36,9 +36,7 @@ export const getStaticProps = async (context: $FixMe) => {
   const result = await client
     .query<GQL.AnalysisPageQuery>(
       GQL.AnalysisPageDocument,
-      {
-        locale: context.locale,
-      },
+      { locale: context.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();

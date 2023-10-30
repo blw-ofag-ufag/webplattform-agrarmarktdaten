@@ -3329,6 +3329,145 @@ export type InUseFilter = {
   eq?: InputMaybe<Scalars['BooleanType']['input']>;
 };
 
+export type InfoPageModelContentBlocksField = DataButtonRecord | ImageTeaserBlockRecord;
+
+export type InfoPageModelContentField = {
+  __typename: 'InfoPageModelContentField';
+  blocks: Array<InfoPageModelContentBlocksField>;
+  links: Array<InfoPageModelContentLinksField>;
+  value: Scalars['JsonField']['output'];
+};
+
+export type InfoPageModelContentFieldMultiLocaleField = {
+  __typename: 'InfoPageModelContentFieldMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<InfoPageModelContentField>;
+};
+
+export type InfoPageModelContentLinksField = FileDownloadSectionRecord | HighlightSectionRecord | PowerBiReportRecord;
+
+export type InfoPageModelLeadField = {
+  __typename: 'InfoPageModelLeadField';
+  blocks: Array<Scalars['String']['output']>;
+  links: Array<InfoPageModelLeadLinksField>;
+  value: Scalars['JsonField']['output'];
+};
+
+export type InfoPageModelLeadFieldMultiLocaleField = {
+  __typename: 'InfoPageModelLeadFieldMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<InfoPageModelLeadField>;
+};
+
+export type InfoPageModelLeadLinksField = AnalysisPageRecord | BlogPostRecord | FocusArticleRecord | HomePageRecord | LegalPageRecord | MarketArticleRecord | MethodsPageRecord | TermsPageRecord;
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecord = RecordInterface & {
+  __typename: 'InfoPageRecord';
+  _allContentLocales?: Maybe<Array<InfoPageModelContentFieldMultiLocaleField>>;
+  _allLeadLocales?: Maybe<Array<InfoPageModelLeadFieldMultiLocaleField>>;
+  _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
+  _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  content?: Maybe<InfoPageModelContentField>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ItemId']['output'];
+  lead?: Maybe<InfoPageModelLeadField>;
+  seo?: Maybe<SeoField>;
+  slug?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordAllContentLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordAllLeadLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordAllSeoLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordAllSlugLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordAllTitleLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordContentArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordLeadArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordSeoArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordSlugArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type ℹ️ Info Page (info_page) */
+export type InfoPageRecordTitleArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
 /** Specifies how to filter by ID */
 export type ItemIdFilter = {
   /** Search the record with the specified ID */
@@ -3699,6 +3838,12 @@ export type MethodsPageModelContentField = {
   value: Scalars['JsonField']['output'];
 };
 
+export type MethodsPageModelContentFieldMultiLocaleField = {
+  __typename: 'MethodsPageModelContentFieldMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<MethodsPageModelContentField>;
+};
+
 export type MethodsPageModelContentLinksField = FileDownloadSectionRecord | HighlightSectionRecord | PowerBiReportRecord;
 
 export type MethodsPageModelLeadField = {
@@ -3719,6 +3864,7 @@ export type MethodsPageModelLeadLinksField = AnalysisPageRecord | BlogPostRecord
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecord = RecordInterface & {
   __typename: 'MethodsPageRecord';
+  _allContentLocales?: Maybe<Array<MethodsPageModelContentFieldMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<MethodsPageModelLeadFieldMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
@@ -3744,6 +3890,13 @@ export type MethodsPageRecord = RecordInterface & {
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+/** Record of type 🧪 Methods Page (methods_page) */
+export type MethodsPageRecordAllContentLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
 };
 
 
@@ -3777,6 +3930,13 @@ export type MethodsPageRecordAllTitleLocalesArgs = {
 
 /** Record of type 🧪 Methods Page (methods_page) */
 export type MethodsPageRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🧪 Methods Page (methods_page) */
+export type MethodsPageRecordContentArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -4465,6 +4625,8 @@ export type Query = {
   /** Returns the single instance record */
   homePage?: Maybe<HomePageRecord>;
   /** Returns the single instance record */
+  infoPage?: Maybe<InfoPageRecord>;
+  /** Returns the single instance record */
   legalPage?: Maybe<LegalPageRecord>;
   /** Returns a specific record */
   marketArticle?: Maybe<MarketArticleRecord>;
@@ -4889,6 +5051,13 @@ export type QueryHomeArgs = {
 
 /** The query root for this schema */
 export type QueryHomePageArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** The query root for this schema */
+export type QueryInfoPageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -6082,6 +6251,7 @@ export type PaginatedFilteredBlogpostsQueryVariables = Exact<{
   skip: Scalars['IntType']['input'];
   marketFilter?: InputMaybe<Scalars['ItemId']['input']>;
   focusFilter?: InputMaybe<Scalars['ItemId']['input']>;
+  orderBy?: InputMaybe<Array<InputMaybe<BlogPostModelOrderBy>> | InputMaybe<BlogPostModelOrderBy>>;
 }>;
 
 
@@ -6091,6 +6261,7 @@ export type PaginatedBlogpostsQueryVariables = Exact<{
   locale: SiteLocale;
   first: Scalars['IntType']['input'];
   skip: Scalars['IntType']['input'];
+  orderBy?: InputMaybe<Array<InputMaybe<BlogPostModelOrderBy>> | InputMaybe<BlogPostModelOrderBy>>;
 }>;
 
 
@@ -6202,6 +6373,8 @@ type InternalLinkIframeBlockRecordFragment = { __typename: 'IframeBlockRecord' }
 
 type InternalLinkImageTeaserBlockRecordFragment = { __typename: 'ImageTeaserBlockRecord' };
 
+type InternalLinkInfoPageRecordFragment = { __typename: 'InfoPageRecord' };
+
 type InternalLinkLegalPageRecordFragment = { __typename: 'LegalPageRecord', id: any };
 
 type InternalLinkMarkdownBlockRecordFragment = { __typename: 'MarkdownBlockRecord' };
@@ -6234,7 +6407,7 @@ type InternalLinkTermsPageRecordFragment = { __typename: 'TermsPageRecord', id: 
 
 type InternalLinkThemeRecordFragment = { __typename: 'ThemeRecord' };
 
-export type InternalLinkFragment = InternalLinkAboutPageRecordFragment | InternalLinkAnalysisPageRecordFragment | InternalLinkBlogPostRecordFragment | InternalLinkDataButtonRecordFragment | InternalLinkDownloadTeaserAssetRecordFragment | InternalLinkDownloadTeaserBlockRecordFragment | InternalLinkExternalVideoBlockRecordFragment | InternalLinkFileDownloadItemRecordFragment | InternalLinkFileDownloadSectionRecordFragment | InternalLinkFocusArticleRecordFragment | InternalLinkGalleryBlockRecordFragment | InternalLinkHighlightSectionFileRecordFragment | InternalLinkHighlightSectionLinkRecordFragment | InternalLinkHighlightSectionRecordFragment | InternalLinkHomePageRecordFragment | InternalLinkHomeRecordFragment | InternalLinkIframeBlockRecordFragment | InternalLinkImageTeaserBlockRecordFragment | InternalLinkLegalPageRecordFragment | InternalLinkMarkdownBlockRecordFragment | InternalLinkMarketArticleRecordFragment | InternalLinkMethodsPageRecordFragment | InternalLinkNewsfeedRecordFragment | InternalLinkPersonRecordFragment | InternalLinkPotatoInfographicRecordFragment | InternalLinkPowerBiDatasetRecordFragment | InternalLinkPowerBiReportRecordFragment | InternalLinkPowerBiWorkspaceRecordFragment | InternalLinkSimplePageRecordFragment | InternalLinkSurveyAnswerRecordFragment | InternalLinkSurveyBlockRecordFragment | InternalLinkSurveyQuestionRecordFragment | InternalLinkTermsPageRecordFragment | InternalLinkThemeRecordFragment;
+export type InternalLinkFragment = InternalLinkAboutPageRecordFragment | InternalLinkAnalysisPageRecordFragment | InternalLinkBlogPostRecordFragment | InternalLinkDataButtonRecordFragment | InternalLinkDownloadTeaserAssetRecordFragment | InternalLinkDownloadTeaserBlockRecordFragment | InternalLinkExternalVideoBlockRecordFragment | InternalLinkFileDownloadItemRecordFragment | InternalLinkFileDownloadSectionRecordFragment | InternalLinkFocusArticleRecordFragment | InternalLinkGalleryBlockRecordFragment | InternalLinkHighlightSectionFileRecordFragment | InternalLinkHighlightSectionLinkRecordFragment | InternalLinkHighlightSectionRecordFragment | InternalLinkHomePageRecordFragment | InternalLinkHomeRecordFragment | InternalLinkIframeBlockRecordFragment | InternalLinkImageTeaserBlockRecordFragment | InternalLinkInfoPageRecordFragment | InternalLinkLegalPageRecordFragment | InternalLinkMarkdownBlockRecordFragment | InternalLinkMarketArticleRecordFragment | InternalLinkMethodsPageRecordFragment | InternalLinkNewsfeedRecordFragment | InternalLinkPersonRecordFragment | InternalLinkPotatoInfographicRecordFragment | InternalLinkPowerBiDatasetRecordFragment | InternalLinkPowerBiReportRecordFragment | InternalLinkPowerBiWorkspaceRecordFragment | InternalLinkSimplePageRecordFragment | InternalLinkSurveyAnswerRecordFragment | InternalLinkSurveyBlockRecordFragment | InternalLinkSurveyQuestionRecordFragment | InternalLinkTermsPageRecordFragment | InternalLinkThemeRecordFragment;
 
 export const SimpleMarketArticleFragmentDoc = gql`
     fragment SimpleMarketArticle on MarketArticleRecord {
@@ -6909,12 +7082,13 @@ export function useAnalysisPageQuery(options: Omit<Urql.UseQueryArgs<AnalysisPag
   return Urql.useQuery<AnalysisPageQuery, AnalysisPageQueryVariables>({ query: AnalysisPageDocument, ...options });
 };
 export const PaginatedFilteredBlogpostsDocument = gql`
-    query paginatedFilteredBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $marketFilter: ItemId, $focusFilter: ItemId) {
+    query paginatedFilteredBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $marketFilter: ItemId, $focusFilter: ItemId, $orderBy: [BlogPostModelOrderBy]) {
   blogposts: allBlogPosts(
     locale: $locale
     first: $first
     skip: $skip
     filter: {OR: [{markets: {anyIn: [$marketFilter]}}, {focusArticles: {anyIn: [$focusFilter]}}]}
+    orderBy: $orderBy
   ) {
     ...SimpleBlogPost
   }
@@ -6931,8 +7105,13 @@ export function usePaginatedFilteredBlogpostsQuery(options: Omit<Urql.UseQueryAr
   return Urql.useQuery<PaginatedFilteredBlogpostsQuery, PaginatedFilteredBlogpostsQueryVariables>({ query: PaginatedFilteredBlogpostsDocument, ...options });
 };
 export const PaginatedBlogpostsDocument = gql`
-    query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
-  blogposts: allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+    query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $orderBy: [BlogPostModelOrderBy]) {
+  blogposts: allBlogPosts(
+    locale: $locale
+    first: $first
+    skip: $skip
+    orderBy: $orderBy
+  ) {
     ...SimpleBlogPost
   }
   blogpostCount: _allBlogPostsMeta(locale: $locale) {

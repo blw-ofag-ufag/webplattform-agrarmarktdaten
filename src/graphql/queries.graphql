@@ -231,6 +231,7 @@ query paginatedFilteredBlogposts(
   $skip: IntType!
   $marketFilter: ItemId
   $focusFilter: ItemId
+  $orderBy: [BlogPostModelOrderBy]
 ) {
   blogposts: allBlogPosts(
     locale: $locale
@@ -239,6 +240,7 @@ query paginatedFilteredBlogposts(
     filter: {
       OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
     }
+    orderBy: $orderBy
   ) {
     ...SimpleBlogPost
   }
@@ -252,8 +254,13 @@ query paginatedFilteredBlogposts(
   }
 }
 
-query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
-  blogposts: allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+query paginatedBlogposts(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $orderBy: [BlogPostModelOrderBy]
+) {
+  blogposts: allBlogPosts(locale: $locale, first: $first, skip: $skip, orderBy: $orderBy) {
     ...SimpleBlogPost
   }
   blogpostCount: _allBlogPostsMeta(locale: $locale) {

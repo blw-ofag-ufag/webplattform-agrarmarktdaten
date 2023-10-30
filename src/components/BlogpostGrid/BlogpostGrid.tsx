@@ -10,11 +10,20 @@ import { client } from "@/graphql";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
 import { SelectChangeEvent } from "@mui/material/Select";
-
-import { useQueryState, parseAsString, parseAsInteger } from "next-usequerystate";
+import {
+  useQueryState,
+  parseAsString,
+  parseAsInteger,
+  parseAsStringEnum,
+} from "next-usequerystate";
 import dynamic from "next/dynamic";
 
 const Controls = dynamic(() => import("./internal/Controls"), { ssr: false });
+
+export enum SortBy {
+  Newest = "publishedDate_ASC",
+  Oldest = "publishedDate_DESC",
+}
 
 interface Props {
   markets: GQL.SimpleMarketArticleFragment[];
@@ -29,6 +38,10 @@ const BlogPostGrid = (props: Props) => {
   const shouldShowFullCard = useMediaQuery(theme.breakpoints.up("lg"));
   const [market, setMarket] = useQueryState("market", parseAsString.withDefault("all"));
   const [focusArticle, setFocusArticle] = useQueryState("focus", parseAsString.withDefault("all"));
+  const [order, setOrder] = useQueryState(
+    "order",
+    parseAsStringEnum(Object.values(SortBy)).withDefault(SortBy.Newest)
+  );
 
   const handleMarketChange = (event: SelectChangeEvent) => {
     setMarket(event.target.value as string);
@@ -39,7 +52,7 @@ const BlogPostGrid = (props: Props) => {
   };
 
   const { data } = useQuery(
-    ["blogposts", page, market, focusArticle],
+    ["blogposts", page, market, focusArticle, order],
     async () => {
       const first = page === 1 ? 7 : 9;
       //first page has 7 articles, the remaining ones have 9
@@ -56,6 +69,7 @@ const BlogPostGrid = (props: Props) => {
             locale,
             first,
             skip,
+            orderBy: order,
             ...(market !== "all" && { marketFilter: market }),
             ...(focusArticle !== "all" && { focusFilter: focusArticle }),
           }
@@ -81,6 +95,8 @@ const BlogPostGrid = (props: Props) => {
         onSelectMarket={handleMarketChange}
         selectedFocusArticle={focusArticle}
         onSelectFocusArticle={handleFocusArticleChange}
+        sortBy={order}
+        onSelectSortBy={setOrder}
       />
       <GridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
         <GridWrap
