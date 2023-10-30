@@ -130,6 +130,7 @@ export const fetchObservations = async (view?: View) => {
 
 export const fetchCube = async (iri: string) => {
   const cube = await source.cube(iri);
+  console.log({ cube });
   if (cube) {
     return {
       cube,

@@ -98,6 +98,8 @@ const DataBrowser = () => {
       ),
   });
 
+  console.log({ cubeQuery });
+
   /* const dims = cubes.map((cube) => {
     if (cube.view) {
       const dim = getCubeDimension(cube.view, "product", { locale });
