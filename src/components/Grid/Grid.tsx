@@ -48,7 +48,10 @@ const specs: Record<
 
   xl: {
     totalWidth: 1280,
-    offset: 32,
+
+    // Not 64 since there seems to be a rounding error somewhere
+    offset: 63,
+
     nbColumns: 12,
     columnGutterWidth: 48,
     columnWidth: 52,
@@ -224,9 +227,11 @@ export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
     <Box
       sx={{
         textDecoration: "none",
-        [theme.breakpoints.down("xxxl")]: gridColumn(4),
-        [theme.breakpoints.down("xl")]: gridColumn(4),
-        [theme.breakpoints.down("sm")]: { width: "100%" },
+        [theme.breakpoints.between("xl", "xxxl")]: gridColumn(4),
+        [theme.breakpoints.only("lg")]: gridColumn(2),
+        [theme.breakpoints.down("md")]: {
+          width: "100%",
+        },
         ...sx,
       }}
       {...rest}

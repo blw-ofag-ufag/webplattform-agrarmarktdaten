@@ -104,7 +104,7 @@ export const Hero = (props: Props) => {
               [theme.breakpoints.between("xl", "xxxl")]: gridColumn(
                 12 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)
               ),
-              [theme.breakpoints.between("sm", "xl")]: gridColumn(6),
+              [theme.breakpoints.between("sm", "lg")]: gridColumn(6),
               [theme.breakpoints.down("sm")]: gridColumn(4),
             }}
           >
@@ -129,10 +129,10 @@ export const Hero = (props: Props) => {
 
             <GridElement
               sx={{
-                [theme.breakpoints.up("xl")]: gridColumn(
+                [theme.breakpoints.between("xl", "xxxl")]: gridColumn(
                   12 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)
                 ),
-                [theme.breakpoints.between("sm", "xl")]: gridColumn(6),
+                [theme.breakpoints.between("sm", "lg")]: gridColumn(6),
                 [theme.breakpoints.down("sm")]: gridColumn(4),
               }}
             >

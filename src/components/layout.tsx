@@ -49,9 +49,13 @@ const useStyles = makeStyles()({
   },
 });
 
+// Forbid English for the moment
+export const isAuthorizedLocale = (locale: string) => locale !== "en";
+
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
   const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
+
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
@@ -95,14 +99,16 @@ export const AppLayout = (props: Props) => {
 
   const localeSwitcherProps = alternates
     ? {
-        alternates: alternates.map((d) => ({
-          locale: d.locale,
-          pathname: d.href,
-          href: d.as,
-        })),
+        alternates: alternates
+          .map((d) => ({
+            locale: d.locale,
+            pathname: d.href,
+            href: d.as,
+          }))
+          .filter((x) => isAuthorizedLocale(x.locale)),
       }
     : {
-        locales,
+        locales: locales.filter((x) => isAuthorizedLocale(x)),
       };
 
   return (
