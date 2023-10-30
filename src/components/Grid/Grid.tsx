@@ -5,7 +5,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Breakpoint, useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
-import { MediaQueryDebug } from "@/components/MediaQueryDebug";
 
 interface Props {
   children: React.ReactNode;
