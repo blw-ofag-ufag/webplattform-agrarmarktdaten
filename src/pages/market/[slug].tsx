@@ -61,8 +61,8 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
         </GridElement>
         <GridElement
           sx={{
-            [theme.breakpoints.down("xxxl")]: gridColumn(2, 9),
-            [theme.breakpoints.down("lg")]: gridColumn(6),
+            [theme.breakpoints.up("xl")]: gridColumn(2, 9),
+            [theme.breakpoints.between("sm", "xl")]: gridColumn(6),
             [theme.breakpoints.down("sm")]: gridColumn(4),
           }}
         >

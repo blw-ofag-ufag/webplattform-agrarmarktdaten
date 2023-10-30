@@ -48,7 +48,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
         <GridElement
           sx={{
             [theme.breakpoints.between("xl", "xxxl")]: gridColumn(2, 9),
-            [theme.breakpoints.between("sm", "lg")]: gridColumn(6),
+            [theme.breakpoints.between("sm", "lg")]: gridColumn(4),
             [theme.breakpoints.down("sm")]: gridColumn(4),
           }}
         >
