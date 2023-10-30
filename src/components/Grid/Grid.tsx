@@ -204,11 +204,9 @@ export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
     <Box
       sx={{
         textDecoration: "none",
-        [theme.breakpoints.between("xl", "xxxl")]: gridColumn(4),
-        [theme.breakpoints.only("lg")]: gridColumn(2),
-        [theme.breakpoints.down("md")]: {
-          width: "100%",
-        },
+        [theme.breakpoints.up("xl")]: gridColumn(4),
+        [theme.breakpoints.between("sm", "xl")]: gridColumn(3),
+        [theme.breakpoints.down("md")]: gridColumn(4),
         ...sx,
       }}
       {...rest}
