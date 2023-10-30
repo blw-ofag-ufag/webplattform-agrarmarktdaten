@@ -128,6 +128,12 @@ export const fetchObservations = async (view?: View) => {
   return [];
 };
 
+export const helloWorld = () => {
+  return {
+    message: "Hello World",
+  };
+};
+
 export const fetchCube = async (iri: string) => {
   const cube = await source.cube(iri);
   console.log({ cube });

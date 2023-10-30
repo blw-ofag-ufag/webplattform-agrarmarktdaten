@@ -1,3 +1,8 @@
+import { AppLayout } from "@/components/layout";
+import { indicatorAtom, marketsAtom } from "@/domain/data";
+import * as GQL from "@/graphql";
+import { client } from "@/graphql/api";
+import blwTheme from "@/theme/blw";
 import {
   Alert,
   AlertTitle,
@@ -17,17 +22,12 @@ import { useAtom } from "jotai";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { QueryClientProvider, useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import * as GQL from "@/graphql";
-import { client } from "@/graphql/api";
-import { AppLayout } from "@/components/layout";
-import { indicatorAtom, marketsAtom } from "@/domain/data";
-import blwTheme from "@/theme/blw";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { CubeResult, fetchCube, fetchObservations, lindasClient } from "./api/use-sparql";
+import { CubeResult, fetchObservations, helloWorld, lindasClient } from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -90,12 +90,9 @@ const DataBrowser = () => {
     markets,
   });
 
-  const cubeQuery = useQuery<CubeResult, Error>({
+  const cubeQuery = useQuery<any, Error>({
     queryKey: ["cube"],
-    queryFn: () =>
-      fetchCube(
-        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
-      ),
+    queryFn: () => helloWorld(),
   });
 
   console.log({ cubeQuery });
