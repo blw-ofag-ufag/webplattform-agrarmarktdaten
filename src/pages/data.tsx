@@ -27,7 +27,7 @@ import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { CubeResult, fetchObservations, helloWorld, lindasClient } from "./api/use-sparql";
+import { CubeResult, fetchCube, fetchObservations, lindasClient } from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -92,7 +92,10 @@ const DataBrowser = () => {
 
   const cubeQuery = useQuery<any, Error>({
     queryKey: ["cube"],
-    queryFn: () => helloWorld(),
+    queryFn: () =>
+      fetchCube(
+        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
+      ),
   });
 
   console.log({ cubeQuery });

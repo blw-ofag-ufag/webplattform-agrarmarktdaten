@@ -94,7 +94,7 @@ export default useSparql;
 export const lindasClient = new QueryClient();
 
 const source = new Source({
-  endpointUrl: "http://test.lindas.admin.ch/query",
+  endpointUrl: "https://test.lindas.admin.ch/query",
   sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
 });
 
@@ -128,12 +128,14 @@ export const fetchObservations = async (view?: View) => {
   return [];
 };
 
+// this works
 export const helloWorld = () => {
   return {
     message: "Hello World",
   };
 };
 
+// this doesn't work
 export const fetchCube = async (iri: string) => {
   const cube = await source.cube(iri);
   console.log({ cube });
