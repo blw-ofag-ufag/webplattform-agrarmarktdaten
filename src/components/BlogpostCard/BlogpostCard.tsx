@@ -81,6 +81,10 @@ const useStyles = makeStyles<void, "full" | "third">()(
         WebkitLineClamp: "2",
         lineClamp: "2",
         WebkitBoxOrient: "vertical",
+
+        // Prevent title to completely disappear due to
+        // gridTemplateRow auto
+        minHeight: "1.5em",
       },
     },
 
