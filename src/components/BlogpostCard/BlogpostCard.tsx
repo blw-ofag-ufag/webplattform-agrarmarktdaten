@@ -130,10 +130,9 @@ const useStyles = makeStyles<void, "full" | "third">()(
       [`.${classes.full} &`]: {
         position: "relative",
         overflow: "hidden",
-        aspectRatio: 16 / 9,
         maxHeight: "556px",
-        width: "66.66%",
-        height: "100%",
+        minHeight: "100%",
+        minWidth: "100%",
       },
       [`.${classes.third} &`]: {
         position: "relative",
@@ -204,7 +203,7 @@ export const BlogpostCard = (
       >
         <div className={classes.image}>
           {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          {image?.responsiveImage && <Image data={image?.responsiveImage} layout="responsive" />}
+          {image?.responsiveImage && <Image data={image?.responsiveImage} layout="fill" />}
         </div>
 
         <div className={classes.content}>
