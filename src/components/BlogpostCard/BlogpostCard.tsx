@@ -127,16 +127,15 @@ const useStyles = makeStyles<void, "full" | "third">()(
     },
 
     image: {
+      position: "relative",
+      overflow: "hidden",
+
       [`.${classes.full} &`]: {
-        position: "relative",
-        overflow: "hidden",
         maxHeight: "556px",
         minHeight: "100%",
         minWidth: "100%",
       },
       [`.${classes.third} &`]: {
-        position: "relative",
-        overflow: "hidden",
         minWidth: "100%",
         aspectRatio: 16 / 9,
         maxHeight: "280px",
