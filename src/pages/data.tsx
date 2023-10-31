@@ -27,7 +27,13 @@ import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { CubeResult, fetchCube, fetchObservations, lindasClient } from "./api/use-sparql";
+import {
+  CubeResult,
+  fetchCube,
+  fetchDimensions,
+  fetchObservations,
+  lindasClient,
+} from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -98,16 +104,18 @@ const DataBrowser = () => {
       ),
   });
 
-  console.log({ cubeQuery });
-
-  /* const dims = cubes.map((cube) => {
-    if (cube.view) {
-      const dim = getCubeDimension(cube.view, "product", { locale });
-      console.log(dim);
-    }
+  const dimensionsQuery = useQuery<any, Error>({
+    queryKey: ["dimensions"],
+    queryFn: () =>
+      fetchDimensions(
+        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
+      ),
   });
 
-  console.log(dims); */
+  console.log({
+    dimensionsQuery,
+    cubeQuery,
+  });
 
   const resultCount = 0; //placeholder
 
@@ -254,7 +262,7 @@ const Table = ({ cube }: { cube: CubeResult }) => {
     queryKey: ["observations"],
     queryFn: () => fetchObservations(cube.view),
   });
-  console.log(observationsQuery);
+  console.log({ observationsQuery });
   return (
     <>
       {observationsQuery.isLoading && <CircularProgress size={24} />}

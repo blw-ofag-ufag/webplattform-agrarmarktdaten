@@ -93,7 +93,7 @@ export default useSparql;
 
 export const lindasClient = new QueryClient();
 
-const source = new Source({
+const amdpSource = new Source({
   endpointUrl: "https://test.lindas.admin.ch/query",
   sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
 });
@@ -107,7 +107,7 @@ export type CubeResult = {
 };
 
 export const fetchPossibleCubes = async () => {
-  const cubes = await source.cubes();
+  const cubes = await amdpSource.cubes();
   const results = cubes.map((cube) => {
     return {
       cube,
@@ -128,23 +128,102 @@ export const fetchObservations = async (view?: View) => {
   return [];
 };
 
-// this works
-export const helloWorld = () => {
-  return {
-    message: "Hello World",
-  };
+export const agricultureNs = rdf.namespace("https://agriculture.ld.admin.ch/foag/property/");
+
+export const getDimensions = (view: View) => {
+  const dimensions = view.dimensions.map((d) => {
+    const cubeDimension = d.cubeDimensions[0];
+    const iri = cubeDimension.path?.value;
+    const min = cubeDimension.minInclusive?.value;
+    const max = cubeDimension.maxInclusive?.value;
+    const name = getName(cubeDimension, { locale: defaultLocale });
+
+    return {
+      iri,
+      name,
+      min,
+      max,
+      datatype: cubeDimension.datatype,
+      dimension: d,
+    };
+  });
+  return dimensions;
 };
 
-// this doesn't work
-export const fetchCube = async (iri: string) => {
-  const cube = await source.cube(iri);
-  console.log({ cube });
+const amdpDimensions = [
+  "market",
+  "cost-component",
+  "currency",
+  "data-method",
+  "data-source",
+  "date",
+  "foreign-trade",
+  "key-indicator-type",
+  "production-system",
+  "product",
+  "product-group",
+  "product-subgroup",
+  "product-origin",
+  "product-properties",
+  "sales-region",
+  "unit",
+  "usage",
+  "value-chain-detail",
+  "value-chain",
+  //"price",
+];
+
+export const fetchDimensions = async (iri: string) => {
+  const cube = await amdpSource.cube(iri);
   if (cube) {
+    const view = View.fromCube(cube);
+
+    const dataDimensions = amdpDimensions.map(async (dimensionKey) => {
+      const values = await getDimensionValuesAndLabels({
+        cube,
+        dimensionKey,
+      });
+      return {
+        values,
+        key: dimensionKey,
+        dimension: view.dimension({
+          cubeDimension: agricultureNs[dimensionKey],
+        }),
+      };
+    });
+
+    return {
+      dimensions: dataDimensions,
+    };
+  }
+  throw Error(`Cube not found: ${iri}`);
+};
+
+export const fetchCube = async (iri: string) => {
+  const cube = await amdpSource.cube(iri);
+  if (cube) {
+    const view = View.fromCube(cube);
+    const dimensions = view.dimensions;
+    const dataDimensions = getDimensionValuesAndLabels({
+      cube,
+      dimensionKey: "product",
+    });
+
+    const marketDimension = view.dimension({
+      cubeDimension: agricultureNs.market,
+    });
+
+    const markets = marketDimension?.cubeDimensions[0].in;
+
+    const customView = new View({ dimensions });
     return {
       cube,
       iri: cube.term?.value,
       label: cube.out(ns.schema.name, { language: ["en", "de", "*"] }),
-      view: View.fromCube(cube),
+      view: customView,
+      dimensions,
+      markets,
+      dataDimensions,
     };
   }
   throw Error(`Cube not found: ${iri}`);
@@ -338,6 +417,7 @@ export const getDimensionValuesAndLabels = async ({
 }): Promise<{ id: string; name: string; view: View; source: Source }[]> => {
   const view = getView(cube);
   const source = cube.source;
+
   const lookup = LookupSource.fromSource(source);
 
   const queryFilters = filters
