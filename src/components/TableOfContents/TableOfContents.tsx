@@ -4,9 +4,9 @@ import { render, renderNodeRule } from "datocms-structured-text-to-html-string";
 import { isHeading, Heading } from "datocms-structured-text-utils";
 import { Box } from "@mui/material";
 import { SxProps } from "@mui/material";
-import { s, c } from "@interactivethings/swiss-federal-ci";
 import { sectionAtom } from "@/lib/atoms";
 import { useAtomValue } from "jotai";
+import { makeStyles } from "@/components/style-utils";
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
@@ -34,11 +34,32 @@ const extractH6s = (data?: StructuredTextGraphQlResponse) => {
   return { value: { schema: "dast", document: { type: "root", children: h6s } } } as const;
 };
 
+const useStyles = makeStyles<{
+  activeColor: string;
+}>()(({ spacing: s, palette: c }, { activeColor }) => ({
+  tocEntry: {
+    boxSizing: "border-box",
+    padding: s(4),
+    width: "100%",
+    borderBottom: `1px solid ${c.cobalt[100]}`,
+    cursor: "pointer",
+    "&:hover": { backgroundColor: c.cobalt[50] },
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
+  tocEntryActive: {
+    borderLeft: `solid ${activeColor} 2px`,
+    marginLeft: "-2px",
+  },
+}));
+
 const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
   const { data, activeColor = "#ACB4BD", sx } = props;
   const toc = React.useMemo(() => extractH6s(data), [data]);
 
   const activeSection = useAtomValue(sectionAtom);
+  const { classes, cx } = useStyles({ activeColor });
 
   if (toc) {
     let i = 0;
@@ -53,16 +74,10 @@ const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
               return ((i) => (
                 <Box
                   key={key}
-                  sx={{
-                    borderLeft: activeSection === `heading${i}` ? `solid ${activeColor} 2px` : "",
-                    marginLeft: activeSection === `heading${i}` ? "-2px" : 0,
-                    boxSizing: "border-box",
-                    padding: s(4),
-                    width: "100%",
-                    borderBottom: `1px solid ${c.cobalt[100]}`,
-                    cursor: "pointer",
-                    ":hover": { backgroundColor: c.cobalt[50] },
-                  }}
+                  className={cx(
+                    classes.tocEntry,
+                    activeSection === `heading${i}` ? classes.tocEntryActive : null
+                  )}
                   onClick={() => {
                     const elem = document.getElementById(`heading${i}`);
                     const elementPosition = elem?.getBoundingClientRect().top;
