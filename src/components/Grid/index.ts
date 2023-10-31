@@ -1,1 +1,1 @@
-export { GridContainer, GridElement, GridWrap, GridWrapElement } from "./Grid";
+export { GridContainer, GridWrap, GridWrapElement } from "./Grid";

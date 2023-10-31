@@ -4,16 +4,15 @@ import { AppLayout } from "@/components/layout";
 import { Hero } from "@/components/hero";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, GridElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
+import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
-import { gridColumn } from "@/components/Grid/Grid";
+import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
   const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useStickyBox({ offsetTop: 200 });
-  const theme = useTheme();
+  const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
@@ -21,31 +20,17 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <GridElement
-          ref={stickyRef}
-          sx={{
-            height: "fit-content",
-            [theme.breakpoints.down("xxxl")]: gridColumn(2),
-            [theme.breakpoints.down("xxl")]: { display: "none" },
-          }}
-        >
+        <div ref={stickyRef} className={classes.aside}>
           {methodsPage.content && (
             <TableOfContents
               data={methodsPage.content}
               sx={{ height: "fit-content", width: "100%" }}
             />
           )}
-        </GridElement>
-        <GridElement
-          sx={{
-            [theme.breakpoints.down("xxxl")]: gridColumn(9),
-            [theme.breakpoints.down("xl")]: gridColumn(12),
-            [theme.breakpoints.down("lg")]: gridColumn(6),
-            [theme.breakpoints.down("sm")]: gridColumn(4),
-          }}
-        >
+        </div>
+        <div className={classes.content}>
           {methodsPage.content && <StructuredText data={methodsPage.content} />}
-        </GridElement>
+        </div>
       </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>

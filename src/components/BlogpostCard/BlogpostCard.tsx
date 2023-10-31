@@ -30,10 +30,10 @@ const useStyles = makeStyles<void, "full" | "third">()(
       minWidth: "100%",
       height: "556px",
 
-      [`${b.between("xl", "xxxl")}`]: {
+      [`${b.up("xl")}`]: {
         height: 556,
       },
-      [`${b.between("sm", "lg")}`]: {
+      [`${b.between("sm", "xl")}`]: {
         height: 418,
       },
       [`${b.down("sm")}`]: {
@@ -81,6 +81,10 @@ const useStyles = makeStyles<void, "full" | "third">()(
         WebkitLineClamp: "2",
         lineClamp: "2",
         WebkitBoxOrient: "vertical",
+
+        // Prevent title to completely disappear due to
+        // gridTemplateRow auto
+        minHeight: "1.5em",
       },
     },
 
@@ -123,17 +127,15 @@ const useStyles = makeStyles<void, "full" | "third">()(
     },
 
     image: {
+      position: "relative",
+      overflow: "hidden",
+
       [`.${classes.full} &`]: {
-        position: "relative",
-        overflow: "hidden",
-        aspectRatio: 16 / 9,
         maxHeight: "556px",
-        width: "66.66%",
-        height: "100%",
+        minHeight: "100%",
+        minWidth: "100%",
       },
       [`.${classes.third} &`]: {
-        position: "relative",
-        overflow: "hidden",
         minWidth: "100%",
         aspectRatio: 16 / 9,
         maxHeight: "280px",
@@ -200,7 +202,7 @@ export const BlogpostCard = (
       >
         <div className={classes.image}>
           {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          {image?.responsiveImage && <Image data={image?.responsiveImage} layout="responsive" />}
+          {image?.responsiveImage && <Image data={image?.responsiveImage} layout="fill" />}
         </div>
 
         <div className={classes.content}>

@@ -2,14 +2,14 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, GridElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
+import { GridContainer } from "@/components/Grid";
 import { Hero } from "@/components/hero";
-import { gridColumn } from "@/components/Grid/Grid";
+import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function LegalPage(props: GQL.TermsPageQuery) {
   const { termsPage, allMarketArticles, allFocusArticles } = props;
-  const theme = useTheme();
+  const { classes } = useLayoutStyles();
+
   if (!termsPage?.title || !termsPage.lead) {
     return null;
   }
@@ -17,15 +17,9 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
       <Hero title={termsPage.title} lead={termsPage.lead} shiftedLeft />
       <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
-        <GridElement
-          sx={{
-            [theme.breakpoints.down("xxxl")]: gridColumn(2, 9),
-            [theme.breakpoints.down("lg")]: gridColumn(6),
-            [theme.breakpoints.down("sm")]: gridColumn(4),
-          }}
-        >
+        <div className={classes.content}>
           {termsPage.content && <StructuredText data={termsPage.content} />}
-        </GridElement>
+        </div>
       </GridContainer>
     </AppLayout>
   );

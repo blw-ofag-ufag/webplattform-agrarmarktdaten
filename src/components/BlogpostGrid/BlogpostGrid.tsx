@@ -5,7 +5,7 @@ import { BlogpostCard } from "@/components/BlogpostCard";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { Pagination } from "@/components/Pagination";
 import { useTheme } from "@mui/material/styles";
-import { GridElement, GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
+import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { client } from "@/graphql";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
@@ -53,16 +53,12 @@ const BlogPostGrid = (props: Props) => {
       >
         <GridWrap>
           {data?.map((blogpost, i) => {
-            if (page === 1 && i === 0 && isLargeOrBigger) {
-              return (
-                <GridElement sx={{ width: "100%!important" }} key={blogpost.id}>
-                  <BlogpostCard {...blogpost} variant="full" />
-                </GridElement>
-              );
-            }
             return (
-              <GridWrapElement key={blogpost.id}>
-                <BlogpostCard {...blogpost} />
+              <GridWrapElement key={blogpost.id} full={page === 1 && i === 0 && isLargeOrBigger}>
+                <BlogpostCard
+                  {...blogpost}
+                  variant={page === 1 && i === 0 && isLargeOrBigger ? "full" : "third"}
+                />
               </GridWrapElement>
             );
           })}
