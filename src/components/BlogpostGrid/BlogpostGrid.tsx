@@ -53,16 +53,12 @@ const BlogPostGrid = (props: Props) => {
       >
         <GridWrap>
           {data?.map((blogpost, i) => {
-            if (page === 1 && i === 0 && isLargeOrBigger) {
-              return (
-                <div key={blogpost.id}>
-                  <BlogpostCard {...blogpost} variant="full" />
-                </div>
-              );
-            }
             return (
-              <GridWrapElement key={blogpost.id}>
-                <BlogpostCard {...blogpost} />
+              <GridWrapElement key={blogpost.id} full={page === 1 && i === 0 && isLargeOrBigger}>
+                <BlogpostCard
+                  {...blogpost}
+                  variant={page === 1 && i === 0 && isLargeOrBigger ? "full" : "third"}
+                />
               </GridWrapElement>
             );
           })}

@@ -198,14 +198,14 @@ export const GridWrap = ({ children, sx, ...rest }: Props) => {
   );
 };
 
-export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
+export const GridWrapElement = ({ children, sx, full, ...rest }: Props & { full?: boolean }) => {
   const theme = useTheme();
   return (
     <Box
       sx={{
         textDecoration: "none",
-        [theme.breakpoints.up("xl")]: gridColumn(4),
-        [theme.breakpoints.between("sm", "xl")]: gridColumn(3),
+        [theme.breakpoints.up("xl")]: gridColumn(full ? 12 : 4),
+        [theme.breakpoints.between("sm", "xl")]: gridColumn(full ? 6 : 3),
         [theme.breakpoints.down("md")]: gridColumn(4),
         ...sx,
       }}
