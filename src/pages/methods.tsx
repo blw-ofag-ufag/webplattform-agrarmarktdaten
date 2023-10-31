@@ -4,15 +4,15 @@ import { AppLayout } from "@/components/layout";
 import { Hero } from "@/components/hero";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, GridElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
+import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
+import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
   const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useStickyBox({ offsetTop: 200 });
-  const theme = useTheme();
+  const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
@@ -20,41 +20,17 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
       <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <GridElement
-          ref={stickyRef}
-          sx={{
-            height: "fit-content",
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 2 + 64px)" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 2 + 64px)" },
-            [theme.breakpoints.down("xxl")]: { display: "none" },
-          }}
-        >
+        <div ref={stickyRef} className={classes.aside}>
           {methodsPage.content && (
             <TableOfContents
               data={methodsPage.content}
               sx={{ height: "fit-content", width: "100%" }}
             />
           )}
-        </GridElement>
-        <GridElement
-          sx={{
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xl")]: {
-              px: "calc(((100% - 48px * 11) / 12) + 48px)",
-            },
-          }}
-          xxxl={9}
-          xxl={9}
-          xl={12}
-          lg={6}
-          md={6}
-          sm={4}
-          xs={4}
-          xxs={4}
-        >
+        </div>
+        <div className={classes.content}>
           {methodsPage.content && <StructuredText data={methodsPage.content} />}
-        </GridElement>
+        </div>
       </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>

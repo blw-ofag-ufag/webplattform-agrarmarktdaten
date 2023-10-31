@@ -1,11 +1,12 @@
 {
   "extends": ["next", "plugin:storybook/recommended"],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["unused-imports", "import", "@typescript-eslint"],
+  "plugins": ["unused-imports", "import", "@typescript-eslint", "interactive-things"],
   "rules": {
     "react/display-name": "off",
     "unused-imports/no-unused-imports-ts": "error",
     "no-unused-vars": "off",
+    "interactive-things/no-large-sx": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -15,5 +16,14 @@
       }
     ],
     "no-fallthrough": "error"
-  }
+  },
+
+  "overrides": [
+    {
+      "files": ["src/components/infografik/**/*.ts", "src/components/infografik/**/*.tsx"],
+      "rules": {
+        "interactive-things/no-large-sx": "off"
+      }
+    }
+  ]
 }

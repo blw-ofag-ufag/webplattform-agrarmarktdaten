@@ -10,6 +10,7 @@ export const InfografikTeaser = () => {
     <NextLink href="/infografik" passHref legacyBehavior>
       <Flex
         component="a"
+        // eslint-disable-next-line interactive-things/no-large-sx
         sx={{
           flexDirection: "column",
           justifyContent: "center",

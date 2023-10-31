@@ -1,11 +1,12 @@
 import { makeStyles } from "@/components/style-utils";
-import { Chip } from "@mui/material";
+import { Chip, ChipProps } from "@mui/material";
 
 import { colorsPerMarket } from "@/domain/colors";
 import { getMarketFromSlug } from "@/domain/market";
 interface Props {
   slug?: string | null;
   label?: string | null;
+  sx?: ChipProps["sx"];
 }
 
 const useStyles = makeStyles()({
@@ -19,10 +20,10 @@ const useStyles = makeStyles()({
 });
 
 const MarketChip = (props: Props) => {
-  const { slug, label } = props;
+  const { slug, label, ...rest } = props;
   const { classes, cx } = useStyles();
   const market = getMarketFromSlug(slug);
-  return <Chip label={label} className={cx(classes.chip, classes[market])} />;
+  return <Chip label={label} className={cx(classes.chip, classes[market])} {...rest} />;
 };
 
 export default MarketChip;

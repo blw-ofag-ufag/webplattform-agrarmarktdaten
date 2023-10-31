@@ -1,18 +1,52 @@
 import { Box, Typography, TypographyProps } from "@mui/material";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
-import { GridContainer, GridElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
 import { StructuredTextGraphQlResponse } from "react-datocms";
 import { StructuredText } from "@/components/StructuredText";
+import { GridContainer } from "@/components/Grid/Grid";
+import { useHeroStyles } from "@/components/useLayoutStyles";
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles<{
+  hero: string | undefined;
+  bgColor: string | undefined;
+}>()((theme, params) => ({
+  root: {
+    flexDirection: "column",
+    justifyContent: "end",
+    [theme.breakpoints.up("xxl")]: {
+      height: params.hero ? "400px" : "250px",
+      paddingBottom: s(18),
+    },
+    [theme.breakpoints.down("xxl")]: { height: "280px", paddingBottom: s(13) },
+
+    width: "100%",
+    backgroundColor: params.bgColor,
+    backgroundImage: `url(${params.hero})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  },
+
+  gridElement: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "end",
+  },
+
+  lead: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "64px",
+    paddingBottom: "96px",
+  },
+
   market: {
     borderTopRightRadius: "110px",
     borderBottomLeftRadius: "110px",
-    mt: 9,
+    marginTop: theme.spacing(9),
   },
-});
+}));
 
 type Props = {
   variant?: "regular" | "market";
@@ -43,42 +77,19 @@ export const Hero = (props: Props) => {
     titleTypographyProps,
     leadStructuredTextProps,
   } = props;
-  const { classes } = useStyles();
-  const theme = useTheme();
+  const { classes, cx } = useStyles({ hero, bgColor });
+  const { classes: herolayoutClasses } = useHeroStyles({
+    shiftedLeft,
+    shiftedRight,
+  });
+  const shifter = <div className={herolayoutClasses.shifter} />;
 
   return (
     <>
-      <Box
-        className={variant === "market" ? classes.market : undefined}
-        sx={{
-          flexDirection: "column",
-          justifyContent: "end",
-          [theme.breakpoints.up("xxl")]: { height: hero ? "400px" : "250px", pb: s(18) },
-          [theme.breakpoints.down("xxl")]: { height: "280px", pb: s(13) },
-
-          width: "100%",
-          backgroundColor: bgColor,
-          backgroundImage: `url(${hero})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-        }}
-      >
+      <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)}>
         <GridContainer sx={{ height: "100%" }}>
-          <GridElement
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "end",
-              ...(shiftedLeft && {
-                [theme.breakpoints.only("xxxl")]: { px: "calc(81px * 2 + 64px * 2)" },
-                [theme.breakpoints.only("xxl")]: { px: "calc(70px * 2 + 64px * 2)" },
-                [theme.breakpoints.only("xl")]: {
-                  px: "calc(((100% - 48px * 11) / 12) + 48px)",
-                },
-              }),
-            }}
-          >
+          {shiftedLeft ? shifter : null}
+          <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>
             <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
             <Typography
               data-debug-good
@@ -89,29 +100,19 @@ export const Hero = (props: Props) => {
             >
               {title}
             </Typography>
-          </GridElement>
+          </div>
+          {shiftedRight ? shifter : null}
         </GridContainer>
       </Box>
       {lead && (
-        <Box
-          sx={{ width: "100%", display: "flex", justifyContent: "center", pt: "64px", pb: "96px" }}
-        >
-          <GridContainer sx={{ mx: 0 }}>
-            <GridElement
-              xxxl={shiftedLeft ? 8 : 10}
-              xxl={shiftedLeft ? 8 : 10}
-              xl={shiftedRight ? 10 : 12}
-              sx={{
-                mx: 0,
-                ...(shiftedLeft && {
-                  [theme.breakpoints.only("xxxl")]: { pl: "calc(81px * 2 + 64px * 2)" },
-                  [theme.breakpoints.only("xxl")]: { pl: "calc(70px * 2 + 64px * 2)" },
-                  [theme.breakpoints.only("xl")]: { px: "calc(((100% - 48px * 11) / 12) + 48px)" },
-                }),
-              }}
-            >
+        <Box className={classes.lead}>
+          <GridContainer>
+            {shiftedLeft ? shifter : null}
+
+            <div className={herolayoutClasses.heroContent}>
               <StructuredText data={lead} {...leadStructuredTextProps} />
-            </GridElement>
+            </div>
+            {shiftedRight ? shifter : null}
           </GridContainer>
         </Box>
       )}

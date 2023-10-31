@@ -10,7 +10,7 @@ import LensIcon from "@mui/icons-material/Lens";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
-import { GridContainer, GridWrap, GridWrapElement } from "@/components/Grid";
+import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 
 interface Props {
@@ -123,10 +123,19 @@ export const TopBlogpostsTeaser = (props: Props) => {
         <GridWrap>
           <Carousel
             autoPlay={false}
-            IndicatorIcon={<LensIcon />}
+            IndicatorIcon={<LensIcon className="indicatorIcon" fontSize="inherit" />}
             NextIcon={<ArrowForwardIosIcon />}
             PrevIcon={<ArrowBackIosIcon />}
-            sx={{ width: "100%", height: "fit-content", display: "flex", flexDirection: "column" }}
+            sx={{
+              width: "100%",
+              height: "fit-content",
+              display: "flex",
+              flexDirection: "column",
+
+              "& .indicatorIcon": {
+                fontSize: "1rem",
+              },
+            }}
           >
             {blogposts.map((d) => (
               <GridWrapElement
@@ -143,7 +152,10 @@ export const TopBlogpostsTeaser = (props: Props) => {
   })();
 
   return (
-    <GridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
+    <GridContainer
+      disableItemMargin
+      sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}
+    >
       <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
         <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
       </Typography>

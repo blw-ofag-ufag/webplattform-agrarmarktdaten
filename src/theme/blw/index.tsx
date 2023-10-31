@@ -3,6 +3,8 @@ import federalTheme from "@/theme/federal";
 import { breakpoints } from "@interactivethings/swiss-federal-ci";
 import { createTheme } from "@mui/material/styles";
 
+import colors from "@/assets/mui-color-tokens.json";
+
 declare module "@mui/material" {
   interface ButtonPropsVariantOverrides {
     aside: true;
@@ -10,6 +12,18 @@ declare module "@mui/material" {
 }
 
 const theme = createTheme(federalTheme, {
+  palette: {
+    ...federalTheme,
+    scale: {
+      blue: colors.blue,
+      brown: colors.brown,
+      green: colors.green,
+      orange: colors.orange,
+      red: colors.red,
+      yellow: colors.yellow,
+    },
+  },
+
   breakpoints: {
     values: breakpoints,
   },

@@ -27,6 +27,8 @@ import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
 
 import { BackButton } from "./back-button";
+import { vars } from "@/components/Grid/Grid";
+import { makeStyles } from "@/components/style-utils";
 
 interface Props {
   children: React.ReactNode;
@@ -36,8 +38,24 @@ interface Props {
   showBackButton?: boolean;
 }
 
+const useStyles = makeStyles()({
+  backButton: {
+    position: "absolute",
+    width: "100%",
+    zIndex: 10,
+    height: "50px",
+    display: "flex",
+    justifyContent: "center",
+  },
+});
+
+// Forbid English for the moment
+export const isAuthorizedLocale = (locale: string) => locale !== "en";
+
 export const AppLayout = (props: Props) => {
+  const { classes } = useStyles();
   const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
+
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
@@ -81,14 +99,16 @@ export const AppLayout = (props: Props) => {
 
   const localeSwitcherProps = alternates
     ? {
-        alternates: alternates.map((d) => ({
-          locale: d.locale,
-          pathname: d.href,
-          href: d.as,
-        })),
+        alternates: alternates
+          .map((d) => ({
+            locale: d.locale,
+            pathname: d.href,
+            href: d.as,
+          }))
+          .filter((x) => isAuthorizedLocale(x.locale)),
       }
     : {
-        locales,
+        locales: locales.filter((x) => isAuthorizedLocale(x)),
       };
 
   return (
@@ -101,7 +121,7 @@ export const AppLayout = (props: Props) => {
           [theme.breakpoints.up("lg")]: { display: "flex", justifyContent: "center" },
         }}
       >
-        <GridContainer>
+        <GridContainer disableItemMargin>
           <Header
             shortTitle="BLW"
             longTitle="Bundesamt für Landwirtschaft"
@@ -128,14 +148,7 @@ export const AppLayout = (props: Props) => {
               sx: {
                 px: "0!important",
                 width: "100%",
-                [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-                [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
-                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
-                [theme.breakpoints.only("md")]: { paddingX: "36px" },
-                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
-                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
-                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
+                [theme.breakpoints.down("xl")]: { paddingX: `var(${vars.offset})` },
               },
             }}
             sections={menuSections}
@@ -152,32 +165,16 @@ export const AppLayout = (props: Props) => {
         }}
       >
         {showBackButton && (
-          <Box
-            sx={{
-              position: "absolute",
-              width: "100%",
-              height: "50px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Box
+          <div className={classes.backButton}>
+            <GridContainer
               sx={{
                 width: "100%",
                 height: "50px",
-                [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-                [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-                [theme.breakpoints.only("xl")]: { paddingX: "64px" },
-                [theme.breakpoints.only("lg")]: { paddingX: "48px" },
-                [theme.breakpoints.only("md")]: { paddingX: "36px" },
-                [theme.breakpoints.only("sm")]: { paddingX: "36px" },
-                [theme.breakpoints.only("xs")]: { paddingX: "28px" },
-                [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
               }}
             >
               <BackButton />
-            </Box>
-          </Box>
+            </GridContainer>
+          </div>
         )}
         {children}
       </Box>

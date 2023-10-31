@@ -6,15 +6,15 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, GridElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
+import { GridContainer } from "@/components/Grid/Grid";
+import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useStickyBox({ offsetTop: 200 });
-  const theme = useTheme();
+  const { classes } = useLayoutStyles();
   if (!focusArticle?.title || !focusArticle?.lead) {
     return null;
   }
@@ -34,41 +34,17 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
     >
       <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <GridElement
-          ref={stickyRef}
-          sx={{
-            height: "fit-content",
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 2 + 64px)" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 2 + 64px)" },
-            [theme.breakpoints.down("xxl")]: { display: "none" },
-          }}
-        >
+        <div className={classes.aside} ref={stickyRef}>
           {focusArticle.content && (
             <TableOfContents
               data={focusArticle.content}
               sx={{ height: "fit-content", width: "100%" }}
             />
           )}
-        </GridElement>
-        <GridElement
-          sx={{
-            [theme.breakpoints.only("xxxl")]: { width: "calc(81px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xxl")]: { width: "calc(70px * 8 + 64px * 7)", ml: "64px" },
-            [theme.breakpoints.only("xl")]: {
-              px: "calc(((100% - 48px * 11) / 12) + 48px)",
-            },
-          }}
-          xxxl={9}
-          xxl={9}
-          xl={12}
-          lg={6}
-          md={6}
-          sm={4}
-          xs={4}
-          xxs={4}
-        >
+        </div>
+        <div className={classes.content}>
           {focusArticle.content && <StructuredText data={focusArticle.content} />}
-        </GridElement>
+        </div>
       </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>

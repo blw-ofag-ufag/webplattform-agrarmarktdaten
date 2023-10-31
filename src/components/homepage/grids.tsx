@@ -47,22 +47,54 @@ const getCardColors = (type: "market" | "focus", slug?: string | null) => {
   }
 };
 
-const useStyles = makeStyles()(({ spacing: s, shadows: e }) => ({
-  card: {
-    width: "100%",
-    boxShadow: e[4],
-    borderRadius: s(2),
-    "&:hover": { backgroundColor: `var(--bgColor)`, color: "var(--color)" },
-  },
+const useStyles = makeStyles<void, "card">()(
+  ({ spacing: s, shadows: e, breakpoints: b }, _params, classes) => ({
+    card: {
+      width: "100%",
+      height: "100%",
+      boxShadow: e[4],
+      borderRadius: s(2),
+      "--dashColor": "black",
+      "&:hover": {
+        // backgroundColor: `var(--bgColor)`,
+        color: "var(--color)",
+        "--dashColor": "var(--color)",
+      },
 
-  borderTop: {
-    backgroundColor: "var(--bgColor)",
-    width: "100%",
-    height: "20px",
-    marginBottom: s(5),
-  },
-  dash: { backgroundColor: "var(--color)", width: "48px", height: "3px", marginLeft: s(6) },
-}));
+      [b.up("xxl")]: { minHeight: "176px" },
+      [b.down("xxl")]: { minHeight: "120px" },
+    },
+
+    borderTop: {
+      backgroundColor: "var(--bgColor)",
+      width: "100%",
+      height: "20px",
+      marginBottom: s(5),
+      transition: "transform 0.5s ease",
+      zIndex: -1,
+
+      [`.${classes.card}:hover &`]: {
+        transform: "scaleY(30)",
+      },
+    },
+
+    text: {
+      zIndex: 1,
+      position: "relative",
+      transition: "color 0.3s ease",
+    },
+
+    dash: {
+      position: "relative",
+      zIndex: 1,
+      backgroundColor: "var(--dashColor)",
+      transition: "background-color 0.3s ease",
+      width: "48px",
+      height: "3px",
+      marginLeft: s(6),
+    },
+  })
+);
 
 const GridCard = ({
   title,
@@ -80,7 +112,13 @@ const GridCard = ({
     <Card className={classes.card} style={style}>
       <Box className={classes.borderTop} />
       <Box className={classes.dash} />
-      <Typography data-debug-good variant="h2" component="h3" sx={{ mt: s(2), mx: s(8), mb: s(6) }}>
+      <Typography
+        className={classes.text}
+        data-debug-good
+        variant="h2"
+        component="h3"
+        sx={{ mt: s(2), mx: s(8), mb: s(6) }}
+      >
         {title}
       </Typography>
     </Card>

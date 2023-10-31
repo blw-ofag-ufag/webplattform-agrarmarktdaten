@@ -1,6 +1,6 @@
-User-agent: *
+#User-agent: *
 # For now, disallow everything
-Disallow: /
+#Disallow: /
 
 ## More specific rules for later
 # Disallow: /api/

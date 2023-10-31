@@ -5,7 +5,7 @@ import { BlogpostCard } from "@/components/BlogpostCard";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { Pagination } from "@/components/Pagination";
 import { useTheme } from "@mui/material/styles";
-import { GridContainer, GridElement, GridWrap, GridWrapElement } from "@/components/Grid";
+import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { client } from "@/graphql";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
@@ -98,31 +98,18 @@ const BlogPostGrid = (props: Props) => {
         sortBy={order}
         onSelectSortBy={setOrder}
       />
-      <GridContainer sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}>
-        <GridWrap
-          sx={{
-            [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px" },
-            [theme.breakpoints.only("xxl")]: { maxWidth: "1544px" },
-          }}
-        >
+      <GridContainer
+        sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}
+        disableItemMargin
+      >
+        <GridWrap>
           {data?.blogposts?.map((blogpost, i) => {
-            if (page === 1 && i === 0 && shouldShowFullCard) {
-              return (
-                <GridElement sx={{ width: "100%!important" }} key={blogpost.id}>
-                  <BlogpostCard {...blogpost} variant="full" />
-                </GridElement>
-              );
-            }
             return (
-              <GridWrapElement
-                key={blogpost.id}
-                sx={{
-                  [theme.breakpoints.only("md")]: { width: "100%" },
-                  [theme.breakpoints.only("sm")]: { width: "100%" },
-                  [theme.breakpoints.down("sm")]: { width: "100%" },
-                }}
-              >
-                <BlogpostCard {...blogpost} />
+              <GridWrapElement key={blogpost.id} full={page === 1 && i === 0 && shouldShowFullCard}>
+                <BlogpostCard
+                  {...blogpost}
+                  variant={page === 1 && i === 0 && shouldShowFullCard ? "full" : "third"}
+                />
               </GridWrapElement>
             );
           })}
