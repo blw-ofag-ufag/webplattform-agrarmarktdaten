@@ -200,6 +200,53 @@ query MethodsPage($locale: SiteLocale!) {
   }
 }
 
+query InfoPage($locale: SiteLocale!) {
+  infoPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    seo {
+      ...FullSEO
+    }
+    content {
+      value
+      blocks {
+        __typename
+        ...DataButton
+        ...ImageTeaserBlock
+      }
+      links {
+        __typename
+        ...FileDownloadSection
+        ...HighlightSection
+        ...PowerBI
+      }
+    }
+  }
+
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+    ...SimpleBlogPost
+  }
+}
+
 query AnalysisPage($locale: SiteLocale!) {
   analysisPage(locale: $locale) {
     id

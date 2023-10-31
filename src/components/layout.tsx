@@ -86,8 +86,9 @@ export const AppLayout = (props: Props) => {
           }) ?? [],
       },
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
-      { title: "Data", href: "/data" },
-      { title: "Methods", href: "/methods" },
+      { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
+      { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
+      { title: t({ id: "menu.info", message: "Info" }), href: "/info" },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
