@@ -11,4 +11,5 @@ export const DATO_CMS_INCLUDE_DRAFTS = process.env.NEXT_PUBLIC_DATO_CMS_INCLUDE_
 
 // Access the build trigger page to get the build trigger id at: https://blw-agricultural-market-data-platform.admin.datocms.com/project_settings/build_triggers/7249/edit
 // Check the url for the actual id
-export const SEARCH_BUILD_TRIGGER = IS_PROD_ENVIRONMENT ? 7249 : 30119;
+// export const SEARCH_BUILD_TRIGGER = IS_PROD_ENVIRONMENT ? 7249 : 30119;
+export const SEARCH_BUILD_TRIGGER = 7249;
