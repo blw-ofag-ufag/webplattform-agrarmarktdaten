@@ -42,7 +42,7 @@ const useStyles = makeStyles()({
   backButton: {
     position: "absolute",
     width: "100%",
-    zIndex: 10,
+    zIndex: 2,
     height: "50px",
     display: "flex",
     justifyContent: "center",
