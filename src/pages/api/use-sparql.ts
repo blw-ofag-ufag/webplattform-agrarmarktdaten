@@ -1,5 +1,7 @@
 import { defaultLocale } from "@/locales/locales";
+import { NamespaceBuilder } from "@rdfjs/namespace";
 import { Literal, NamedNode } from "@rdfjs/types";
+import { uniqBy } from "lodash";
 import { Cube, CubeDimension, LookupSource, Source, View } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
 import { useEffect, useState } from "react";
@@ -147,10 +149,10 @@ export const getDimensions = (view: View) => {
       dimension: d,
     };
   });
-  return dimensions;
+  return uniqBy(dimensions, "iri");
 };
 
-const amdpDimensions = [
+/* const amdpProperties = [
   "market",
   "cost-component",
   "currency",
@@ -170,27 +172,47 @@ const amdpDimensions = [
   "usage",
   "value-chain-detail",
   "value-chain",
-  //"price",
 ];
 
-export const fetchDimensions = async (iri: string) => {
+const amdpMeasures = ["price"]; */
+
+export const fetchDimensions = async (iri: string, locale: string) => {
   const cube = await amdpSource.cube(iri);
   if (cube) {
     const view = View.fromCube(cube);
 
-    const dataDimensions = amdpDimensions.map(async (dimensionKey) => {
-      const values = await getDimensionValuesAndLabels({
-        cube,
-        dimensionKey,
-      });
-      return {
-        values,
-        key: dimensionKey,
-        dimension: view.dimension({
-          cubeDimension: agricultureNs[dimensionKey],
-        }),
-      };
-    });
+    const dimensions = getDimensions(view);
+
+    const dataDimensions = await Promise.all(
+      dimensions.map(async (dimension) => {
+        if (!dimension.iri) return null;
+        const dimensionType = ns.getDimensionTypeFromIri({ iri: dimension.iri });
+        if (dimensionType === "property") {
+          const values = await getDimensionValuesAndLabels({
+            cube,
+            dimensionKey: ns.stripNamespaceFromIri({ iri: dimension.iri }),
+            namespace: ns.amdpProperty,
+            locale,
+          });
+          return {
+            type: dimensionType,
+            values,
+            ...dimension,
+          };
+        }
+
+        if (dimensionType === "measure") {
+          return {
+            type: dimensionType,
+            ...dimension,
+          };
+        }
+
+        return {
+          ...dimension,
+        };
+      })
+    );
 
     return {
       dimensions: dataDimensions,
@@ -207,6 +229,7 @@ export const fetchCube = async (iri: string) => {
     const dataDimensions = getDimensionValuesAndLabels({
       cube,
       dimensionKey: "product",
+      namespace: ns.amdpProperty,
     });
 
     const marketDimension = view.dimension({
@@ -284,7 +307,7 @@ const parseRDFLiteral = (value: Literal): ObservationValue => {
   }
 };
 
-export const parseObservation = (d: Record<string, Literal | NamedNode<string>>) => {
+/* export const parseObservation = (d: Record<string, Literal | NamedNode<string>>) => {
   const parsed: { [k: string]: string | number | boolean } = {};
   const amdpDimensionPrefix = ns.amdpDimension().value;
   for (const [k, v] of Object.entries(d)) {
@@ -299,14 +322,14 @@ export const parseObservation = (d: Record<string, Literal | NamedNode<string>>)
   }
   return parsed;
 };
-
+ */
 export const getSparqlEditorUrl = (query: string): string | null => {
   return process.env.SPARQL_EDITOR
     ? `${process.env.SPARQL_EDITOR}#query=${encodeURIComponent(query)}`
     : query;
 };
 
-export const getObservations = async (
+/* export const getObservations = async (
   { view, source }: { view: View; source: Source },
   {
     filters,
@@ -358,37 +381,7 @@ export const getObservations = async (
   const res = observations.map(parseObservation);
 
   return res;
-};
-
-export const getCubeDimension = (
-  view: View,
-  dimensionKey: string,
-  { locale }: { locale: string }
-) => {
-  const viewDimension = view.dimension({
-    cubeDimension: ns.amdpDimension(dimensionKey),
-  });
-
-  const cubeDimension = viewDimension?.cubeDimensions[0];
-
-  if (!cubeDimension) {
-    throw Error(`getCubeDimension: No dimension for '${dimensionKey}'`);
-  }
-
-  const iri = cubeDimension.path?.value;
-  const min = cubeDimension.minInclusive?.value;
-  const max = cubeDimension.maxInclusive?.value;
-  const name = getName(cubeDimension, { locale });
-
-  return {
-    iri,
-    name,
-    min,
-    max,
-    datatype: cubeDimension.datatype,
-    dimension: viewDimension,
-  };
-};
+}; */
 
 export const getName = (node: Cube | CubeDimension, { locale }: { locale: string }) => {
   const term =
@@ -409,12 +402,16 @@ export const getView = (cube: Cube): View => View.fromCube(cube);
 export const getDimensionValuesAndLabels = async ({
   cube,
   dimensionKey,
+  namespace,
   filters,
+  locale = defaultLocale,
 }: {
   cube: Cube;
   dimensionKey: string;
+  namespace: NamespaceBuilder<string>;
   filters?: Filters;
-}): Promise<{ id: string; name: string; view: View; source: Source }[]> => {
+  locale?: string;
+}): Promise<{ iri: string; name: string; view: View; source: Source }[]> => {
   const view = getView(cube);
   const source = cube.source;
 
@@ -422,14 +419,14 @@ export const getDimensionValuesAndLabels = async ({
 
   const queryFilters = filters
     ? Object.entries(filters).flatMap(([dim, filterValues]) =>
-        filterValues ? buildDimensionFilter(view, dim, filterValues) ?? [] : []
+        filterValues ? buildDimensionFilter(namespace, view, dim, filterValues) ?? [] : []
       )
     : [];
 
   const lookupView = new View({ parent: source, filters: queryFilters });
 
   const dimension = view.dimension({
-    cubeDimension: ns.amdpDimension(dimensionKey),
+    cubeDimension: namespace(dimensionKey),
   });
 
   if (!dimension) {
@@ -440,8 +437,9 @@ export const getDimensionValuesAndLabels = async ({
     source: lookup,
     path: ns.schema.name,
     join: dimension,
-    as: ns.amdpDimension(`${dimensionKey}Label`),
+    as: namespace(`${dimensionKey}Label`),
   });
+
   lookupView.addDimension(dimension).addDimension(labelDimension);
 
   const observations = await lookupView.observations({});
@@ -450,14 +448,19 @@ export const getDimensionValuesAndLabels = async ({
   lookup.clear();
 
   return observations.flatMap((obs) => {
-    // Filter out "empty" observations
-    return obs[ns.amdpDimension(dimensionKey).value]
+    if (!obs[namespace(dimensionKey).value]) {
+      return [];
+    }
+
+    if ((obs[namespace(`${dimensionKey}Label`).value] as Literal).language !== locale) {
+      return [];
+    }
+
+    return obs[namespace(dimensionKey).value]
       ? [
           {
-            id: ns.stripNamespaceFromIri({
-              iri: obs[ns.amdpDimension(dimensionKey).value].value as string,
-            }),
-            name: obs[ns.amdpDimension(`${dimensionKey}Label`).value].value as string,
+            iri: obs[namespace(dimensionKey).value].value as string,
+            name: obs[namespace(`${dimensionKey}Label`).value].value as string,
             view,
             source,
           },
@@ -466,9 +469,14 @@ export const getDimensionValuesAndLabels = async ({
   });
 };
 
-export const buildDimensionFilter = (view: View, dimensionKey: string, filters: string[]) => {
+export const buildDimensionFilter = (
+  namespace: NamespaceBuilder<string>,
+  view: View,
+  dimensionKey: string,
+  filters: string[]
+) => {
   const viewDimension = view.dimension({
-    cubeDimension: ns.amdpDimension(dimensionKey),
+    cubeDimension: namespace(dimensionKey),
   });
 
   const cubeDimension = viewDimension?.cubeDimensions[0];

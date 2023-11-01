@@ -19,12 +19,13 @@ import {
   createTheme,
 } from "@mui/material";
 import { useAtom } from "jotai";
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { QueryClientProvider, useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
+import { useLocale } from "@/lib/use-locale";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import {
@@ -90,10 +91,12 @@ const DataBrowser = () => {
   const contentRef = React.useRef<HTMLDivElement>(null);
   const indicator = useAtom(indicatorAtom);
   const [markets] = useAtom(marketsAtom);
+  const locale = useLocale();
 
   console.log({
     indicator,
     markets,
+    locale,
   });
 
   const cubeQuery = useQuery<any, Error>({
@@ -105,10 +108,12 @@ const DataBrowser = () => {
   });
 
   const dimensionsQuery = useQuery<any, Error>({
-    queryKey: ["dimensions"],
+    queryKey: ["dimensions", locale],
+
     queryFn: () =>
       fetchDimensions(
-        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
+        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month",
+        locale
       ),
   });
 
@@ -188,7 +193,9 @@ const DataBrowser = () => {
                   {cubeQuery.error.message}
                 </Alert>
               )}
-              {cubeQuery.isSuccess && <Table cube={cubeQuery.data} />}
+              {cubeQuery.isSuccess && dimensionsQuery.isSuccess && (
+                <Table cube={cubeQuery.data} dimensions={dimensionsQuery.data.dimensions} />
+              )}
             </>
           </Paper>
         </Box>
@@ -257,12 +264,42 @@ const ContentDrawer = ({
   );
 };
 
-const Table = ({ cube }: { cube: CubeResult }) => {
+const Table = ({ cube, dimensions }: { cube: CubeResult; dimensions: any }) => {
   const observationsQuery = useQuery({
     queryKey: ["observations"],
     queryFn: () => fetchObservations(cube.view),
   });
-  console.log({ observationsQuery });
+
+  const parsedObservations = useMemo(() => {
+    if (!observationsQuery.data) return [];
+
+    return observationsQuery.data.map((observation: any) => {
+      const parsedObservation: any = {};
+
+      Object.keys(observation).forEach((key) => {
+        const dimension = dimensions.find((d: any) => key === d.iri);
+        if (dimension) {
+          if (dimension.type === "property") {
+            const value = dimension.values.find((v: any) => v.iri === observation[key].value);
+            if (value) {
+              parsedObservation[dimension.iri] = value.name;
+            } else {
+              console.error("Value not parsed", key, observation[key].value);
+              parsedObservation[dimension.iri] = "Error: Missing label";
+            }
+          }
+          if (dimensions.type === "measure") {
+            parsedObservation[dimension.iri] = observation[key].value;
+          }
+        } else {
+          parsedObservation[key] = observation[key];
+        }
+      });
+      return parsedObservation;
+    });
+  }, [observationsQuery.data, dimensions]);
+
+  console.log({ parsedObservations });
   return (
     <>
       {observationsQuery.isLoading && <CircularProgress size={24} />}
