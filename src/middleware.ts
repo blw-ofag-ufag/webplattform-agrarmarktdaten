@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 const PUBLIC_FILE = /\.(.*)$/;
 
 const productionUrls = [
-  "agrimarketdata.ch",
-  "dati-agrimercato.ch",
-  "donnees-agrimarche.ch",
-  "agrarmarktdaten.ch",
+  "www.agrimarketdata.ch",
+  "www.dati-agrimercato.ch",
+  "www.donnees-agrimarche.ch",
+  "www.agrarmarktdaten.ch",
 ];
 
 export function middleware(req: NextRequest) {
@@ -14,10 +14,7 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const { pathname } = url;
 
-  console.log({ host: url.host });
-
   if (!productionUrls.some((prodUrl) => url.host.startsWith(prodUrl))) {
-    console.log("did not match production urls");
     return NextResponse.next();
   }
 
