@@ -14,7 +14,10 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl;
   const { pathname } = url;
 
+  console.log({ host: url.host });
+
   if (!productionUrls.some((prodUrl) => url.host.startsWith(prodUrl))) {
+    console.log("did not match production urls");
     return NextResponse.next();
   }
 
