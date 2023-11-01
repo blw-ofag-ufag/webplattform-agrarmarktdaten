@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { GridElement } from "@/components/Grid";
 import { AppLayout } from "@/components/layout";
 import { client } from "@/graphql";
 import * as GQL from "@/graphql";
@@ -12,15 +11,15 @@ import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { s, c } from "@interactivethings/swiss-federal-ci";
 import { format } from "date-fns";
 import Chip from "@mui/material/Chip";
-import Avatar from "@mui/material/Avatar";
-import { getMarketColor } from "@/domain/colors";
 import { Intersperse } from "@/components/Intersperse";
-import { useTheme } from "@mui/material/styles";
-import { GridContainer, gridColumn } from "@/components/Grid/Grid";
+import { GridContainer } from "@/components/Grid/Grid";
+import { MarketChip } from "@/components/MarketChip";
+import { Avatars } from "../../components/Avatars";
+import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
   const { blogPost, topBlogPosts, allMarketArticles, allFocusArticles } = props;
-  const theme = useTheme();
+  const { classes } = useLayoutStyles();
   const alternates = blogPost
     ? blogPost?._allSlugLocales?.map((loc) => ({
         href: "/blog/[slug]",
@@ -45,13 +44,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
       showBackButton
     >
       <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
-        <GridElement
-          sx={{
-            [theme.breakpoints.between("xl", "xxxl")]: gridColumn(2, 9),
-            [theme.breakpoints.between("sm", "lg")]: gridColumn(4),
-            [theme.breakpoints.down("sm")]: gridColumn(4),
-          }}
-        >
+        <div className={classes.content}>
           <Box sx={{ mb: 10 }}>
             {formattedDate && (
               <Typography variant="body1" sx={{ color: c.monochrome[500] }}>
@@ -66,17 +59,14 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
             <Box sx={{ display: "flex", gap: "16px" }}>
               {blogPost.markets.map(({ slug, title }) => {
                 return (
-                  <Chip
+                  <MarketChip
                     key={slug}
+                    label={title}
+                    slug={slug}
                     sx={{
-                      backgroundColor: getMarketColor(slug),
-                      color: "#ffffff",
-                      lineHeight: "18px",
-                      fontSize: "14px",
                       paddingX: "18px",
                       paddingY: "6px",
                     }}
-                    label={title}
                   />
                 );
               })}
@@ -109,28 +99,18 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
                   display: "flex",
                   position: "relative",
                   height: "88px",
+                  alignItems: "center",
+                  gap: "1rem",
                 }}
               >
-                {blogPost.authors.map((author, i) => {
-                  return (
-                    <Avatar
-                      sx={{
-                        border: "2px solid #fff",
-                        position: "absolute",
-                        top: 13,
-                        left: `${i * 40}px`,
-                        width: "56px",
-                        height: "56px",
-                      }}
-                      key={`${author.firstName} ${author.lastName}`}
-                      alt={`${author.firstName} ${author.lastName}`}
-                      src={author.portrait?.url}
-                    />
-                  );
-                })}
+                <Avatars
+                  avatars={blogPost.authors.map((x) => ({
+                    url: x.portrait?.url,
+                    alt: `${x.firstName} ${x.lastName}`,
+                  }))}
+                />
                 <Box
                   sx={{
-                    marginLeft: `${blogPost.authors.length * 60}px`,
                     display: "flex",
                     alignItems: "center",
                   }}
@@ -138,11 +118,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
                   <Intersperse separator=",&nbsp;">
                     {blogPost.authors.map((author) => {
                       return (
-                        <Typography
-                          variant="body1"
-                          sx={{ color: c.monochrome[800] }}
-                          key={`${author.firstName} ${author.lastName}`}
-                        >
+                        <Typography variant="body1" key={`${author.firstName} ${author.lastName}`}>
                           {`${author.firstName} ${author.lastName}`}
                         </Typography>
                       );
@@ -153,7 +129,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
             )}
           </Box>
           {blogPost.content && <StructuredText data={blogPost.content} />}
-        </GridElement>
+        </div>
       </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
     </AppLayout>

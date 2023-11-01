@@ -42,16 +42,20 @@ const useStyles = makeStyles()({
   backButton: {
     position: "absolute",
     width: "100%",
-    zIndex: 10,
+    zIndex: 2,
     height: "50px",
     display: "flex",
     justifyContent: "center",
   },
 });
 
+// Forbid English for the moment
+export const isAuthorizedLocale = (locale: string) => locale !== "en";
+
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
   const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
+
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
@@ -82,8 +86,9 @@ export const AppLayout = (props: Props) => {
           }) ?? [],
       },
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
-      { title: "Data", href: "/data" },
-      { title: "Methods", href: "/methods" },
+      { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
+      { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
+      { title: t({ id: "menu.info", message: "Info" }), href: "/info" },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
@@ -95,14 +100,16 @@ export const AppLayout = (props: Props) => {
 
   const localeSwitcherProps = alternates
     ? {
-        alternates: alternates.map((d) => ({
-          locale: d.locale,
-          pathname: d.href,
-          href: d.as,
-        })),
+        alternates: alternates
+          .map((d) => ({
+            locale: d.locale,
+            pathname: d.href,
+            href: d.as,
+          }))
+          .filter((x) => isAuthorizedLocale(x.locale)),
       }
     : {
-        locales,
+        locales: locales.filter((x) => isAuthorizedLocale(x)),
       };
 
   return (

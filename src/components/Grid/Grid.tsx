@@ -1,6 +1,5 @@
 import * as React from "react";
 import { SxProps } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
 
 import { Breakpoint, useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
@@ -12,22 +11,21 @@ interface Props {
   className?: string;
 }
 
+type BreakpointSpec = {
+  totalWidth: number;
+  offset: number;
+  nbColumns: number;
+
+  rowGutterWidth: number;
+  columnWidth: number;
+  columnGutterWidth: number;
+};
+
 /**
  * Definitions from Sketch file
  * @see https://www.sketch.com/s/81803335-dd26-42f1-a505-6845270a91b7/p/6000F394-096F-4CAD-96D6-3F8056F9DE4B/canvas
  */
-const specs: Record<
-  Breakpoint,
-  {
-    totalWidth: number;
-    offset: number;
-    nbColumns: number;
-
-    rowGutterWidth: number;
-    columnWidth: number;
-    columnGutterWidth: number;
-  }
-> = {
+export const specs: Record<Breakpoint, BreakpointSpec> = {
   xxxl: {
     totalWidth: 1676,
     offset: 0,
@@ -48,7 +46,7 @@ const specs: Record<
 
   xl: {
     totalWidth: 1280,
-    offset: 32,
+    offset: 64,
     nbColumns: 12,
     columnGutterWidth: 48,
     columnWidth: 52,
@@ -57,7 +55,7 @@ const specs: Record<
 
   lg: {
     totalWidth: 1024,
-    offset: 48,
+    offset: 49,
     nbColumns: 6,
     columnGutterWidth: 40,
     columnWidth: 121,
@@ -75,7 +73,7 @@ const specs: Record<
 
   sm: {
     totalWidth: 640,
-    offset: 36,
+    offset: 35,
     nbColumns: 6,
     columnGutterWidth: 36,
     columnWidth: 65,
@@ -122,7 +120,7 @@ export const gridColumn = (offsetOrSpan: number, spanOrUndefined?: number) => {
         ? `calc( ${offset} * var(${vars.columnWidth}) + ${offset - 1} * var(${
             vars.columnGutterWidth
           }))`
-        : null,
+        : undefined,
   };
 };
 
@@ -179,28 +177,6 @@ export const GridContainer = ({
   );
 };
 
-export const GridElement = React.forwardRef<
-  HTMLDivElement,
-  Props & Partial<Record<Breakpoint, number>>
->(({ children, sx, ...rest }, ref) => (
-  <Grid
-    ref={ref}
-    component="div"
-    xxxl={12}
-    xxl={12}
-    xl={12}
-    lg={6}
-    md={6}
-    sm={4}
-    xs={4}
-    xxs={4}
-    sx={{ padding: 0, ...sx }}
-    {...rest}
-  >
-    {children}
-  </Grid>
-));
-
 export const GridWrap = ({ children, sx, ...rest }: Props) => {
   return (
     <Box
@@ -218,15 +194,15 @@ export const GridWrap = ({ children, sx, ...rest }: Props) => {
   );
 };
 
-export const GridWrapElement = ({ children, sx, ...rest }: Props) => {
+export const GridWrapElement = ({ children, sx, full, ...rest }: Props & { full?: boolean }) => {
   const theme = useTheme();
   return (
     <Box
       sx={{
         textDecoration: "none",
-        [theme.breakpoints.down("xxxl")]: gridColumn(4),
-        [theme.breakpoints.down("xl")]: gridColumn(4),
-        [theme.breakpoints.down("sm")]: { width: "100%" },
+        [theme.breakpoints.up("xl")]: gridColumn(full ? 12 : 4),
+        [theme.breakpoints.between("sm", "xl")]: gridColumn(full ? 6 : 3),
+        [theme.breakpoints.down("md")]: gridColumn(4),
         ...sx,
       }}
       {...rest}

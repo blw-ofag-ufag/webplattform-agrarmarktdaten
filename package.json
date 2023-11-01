@@ -2,7 +2,7 @@
   "name": "blw-agricultural-market-data-platform",
   "version": "0.1.0",
   "repository": "git@github.com:interactivethings/blw-agricultural-market-data-platform.git",
-  "author": "Jeremy Stucki <jeremy@interactivethings.com>",
+  "author": "Interactive Things <we@interactivethings.com>",
   "license": "MIT",
   "private": true,
   "scripts": {

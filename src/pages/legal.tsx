@@ -2,14 +2,13 @@ import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { StructuredText } from "@/components/StructuredText";
-import { GridContainer, GridElement } from "@/components/Grid";
-import { useTheme } from "@mui/material/styles";
+import { GridContainer } from "@/components/Grid";
 import { Hero } from "@/components/hero";
-import { gridColumn } from "@/components/Grid/Grid";
+import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function LegalPage(props: GQL.LegalPageQuery) {
   const { legalPage, allMarketArticles, allFocusArticles } = props;
-  const theme = useTheme();
+  const { classes } = useLayoutStyles();
   if (!legalPage?.title || !legalPage.lead) {
     return null;
   }
@@ -23,15 +22,9 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
           position: "relative",
         }}
       >
-        <GridElement
-          sx={{
-            [theme.breakpoints.down("xxxl")]: gridColumn(2, 9),
-            [theme.breakpoints.down("xxl")]: gridColumn(12),
-            [theme.breakpoints.down("xl")]: gridColumn(12),
-          }}
-        >
+        <div className={classes.content}>
           {legalPage.content && <StructuredText data={legalPage.content} />}
-        </GridElement>
+        </div>
       </GridContainer>
     </AppLayout>
   );

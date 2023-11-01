@@ -9,27 +9,27 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { useStickyBox } from "react-sticky-box";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
 
-export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+export default function InfoPage(props: GQL.InfoPageQuery) {
+  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useStickyBox({ offsetTop: 200 });
   const { classes } = useLayoutStyles();
-  if (!methodsPage?.title || !methodsPage.lead) {
+  if (!infoPage?.title || !infoPage.lead) {
     return null;
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-      <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
+      <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <div ref={stickyRef} className={classes.aside}>
-          {methodsPage.content && (
+          {infoPage.content && (
             <TableOfContents
-              data={methodsPage.content}
+              data={infoPage.content}
               sx={{ height: "fit-content", width: "100%" }}
             />
           )}
         </div>
         <div className={classes.content}>
-          {methodsPage.content && <StructuredText data={methodsPage.content} />}
+          {infoPage.content && <StructuredText data={infoPage.content} />}
         </div>
       </GridContainer>
       <TopBlogpostsTeaser blogposts={topBlogPosts} />
@@ -39,8 +39,8 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
 
 export const getStaticProps = async (context: $FixMe) => {
   const result = await client
-    .query<GQL.MethodsPageQuery>(
-      GQL.MethodsPageDocument,
+    .query<GQL.InfoPageQuery>(
+      GQL.InfoPageDocument,
       {
         locale: context.locale,
       },

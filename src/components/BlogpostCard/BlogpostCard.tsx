@@ -6,13 +6,12 @@ import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
 import { Image } from "react-datocms";
 import { MarketChip } from "@/components/MarketChip";
-import { useTheme } from "@mui/material/styles";
 
-import { lineClamp } from "../../utils/lineClamp";
 import { makeStyles } from "@/components/style-utils";
+import { useLineClamping, isHTMLElement } from "../../utils/clamp";
 
 const useStyles = makeStyles<void, "full" | "third">()(
-  ({ spacing: s, shadows: e, palette: c }, _params, classes) => ({
+  ({ spacing: s, shadows: e, palette: c, breakpoints: b }, _params, classes) => ({
     card: {
       overflow: "hidden",
       boxShadow: e[6],
@@ -25,10 +24,21 @@ const useStyles = makeStyles<void, "full" | "third">()(
       },
     },
     full: {
-      display: "flex",
+      display: "grid",
+      gridTemplateColumns: "2fr 1fr",
       width: "100%",
       minWidth: "100%",
       height: "556px",
+
+      [`${b.up("xl")}`]: {
+        height: 556,
+      },
+      [`${b.between("sm", "xl")}`]: {
+        height: 418,
+      },
+      [`${b.down("sm")}`]: {
+        height: 556,
+      },
     },
 
     third: {
@@ -58,13 +68,8 @@ const useStyles = makeStyles<void, "full" | "third">()(
 
     title: {
       [`.${classes.full} &`]: {
-        lineHeight: "48px",
-        fontWeight: 700,
+        overflow: "hidden",
         textOverflow: "ellipsis",
-        display: "-webkit-box",
-        WebkitLineClamp: "3",
-        lineClamp: "3",
-        WebkitBoxOrient: "vertical",
       },
 
       [`.${classes.third} &`]: {
@@ -76,6 +81,10 @@ const useStyles = makeStyles<void, "full" | "third">()(
         WebkitLineClamp: "2",
         lineClamp: "2",
         WebkitBoxOrient: "vertical",
+
+        // Prevent title to completely disappear due to
+        // gridTemplateRow auto
+        minHeight: "1.5em",
       },
     },
 
@@ -105,10 +114,6 @@ const useStyles = makeStyles<void, "full" | "third">()(
       [`.${classes.full} &`]: {
         fontSize: "18px",
         textOverflow: "ellipsis",
-        display: "-webkit-box",
-        WebkitLineClamp: "7",
-        lineClamp: "7",
-        WebkitBoxOrient: "vertical",
         overflow: "hidden",
       },
       [`.${classes.third} &`]: {
@@ -122,17 +127,15 @@ const useStyles = makeStyles<void, "full" | "third">()(
     },
 
     image: {
+      position: "relative",
+      overflow: "hidden",
+
       [`.${classes.full} &`]: {
-        position: "relative",
-        overflow: "hidden",
-        aspectRatio: 16 / 9,
         maxHeight: "556px",
-        minWidth: "66.66%",
-        height: "100%",
+        minHeight: "100%",
+        minWidth: "100%",
       },
       [`.${classes.third} &`]: {
-        position: "relative",
-        overflow: "hidden",
         minWidth: "100%",
         aspectRatio: 16 / 9,
         maxHeight: "280px",
@@ -142,9 +145,12 @@ const useStyles = makeStyles<void, "full" | "third">()(
 
     content: {
       [`.${classes.full} &`]: {
-        display: "flex",
-        flexDirection: "column",
+        display: "grid",
+        gridTemplateRows: "min-content auto min-content auto",
         padding: s(5, 7),
+        flexGrow: 0,
+        flexShrink: 0,
+        overflow: "hidden",
       },
       [`.${classes.third} &`]: {
         paddingBottom: s(5),
@@ -158,6 +164,8 @@ const useStyles = makeStyles<void, "full" | "third">()(
     },
   })
 );
+
+const clampedClassName = "clamped";
 
 export const BlogpostCard = (
   props: GQL.SimpleBlogPostFragment & { variant?: "full" | "half" | "third" }
@@ -173,21 +181,12 @@ export const BlogpostCard = (
     variant = "third",
   } = props;
   const locale = useLocale();
-  const titleRef = React.useRef<HTMLDivElement>(null);
-  const theme = useTheme();
-
-  const [titleHeight, setTitleHeight] = React.useState(0);
-
-  React.useEffect(() => {
-    function updateSize() {
-      if (titleRef?.current?.clientHeight && titleRef.current?.clientHeight > 0) {
-        setTitleHeight(titleRef.current?.clientHeight);
-      }
-    }
-    window.addEventListener("resize", updateSize);
-    updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, [setTitleHeight]);
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  useLineClamping(() => {
+    return cardRef.current
+      ? Array.from(cardRef.current.querySelectorAll(`.${clampedClassName}`)).filter(isHTMLElement)
+      : [];
+  });
 
   const { classes, cx } = useStyles();
 
@@ -197,10 +196,13 @@ export const BlogpostCard = (
 
   return (
     <NextLink href="/blog/[slug]" as={`/blog/${slug}`} locale={locale} passHref legacyBehavior>
-      <div className={cx(classes.card, variant === "third" ? classes.third : classes.full)}>
+      <div
+        className={cx(classes.card, variant === "third" ? classes.third : classes.full)}
+        ref={cardRef}
+      >
         <div className={classes.image}>
           {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          {image?.responsiveImage && <Image data={image?.responsiveImage} layout="responsive" />}
+          {image?.responsiveImage && <Image data={image?.responsiveImage} layout="fill" />}
         </div>
 
         <div className={classes.content}>
@@ -214,10 +216,9 @@ export const BlogpostCard = (
             </Typography>
           </div>
           <Typography
-            ref={titleRef}
             variant={variant === "full" ? "h1" : "h2"}
             component="h2"
-            className={classes.title}
+            className={cx(classes.title, clampedClassName)}
             data-debug-good
           >
             {title}
@@ -230,16 +231,7 @@ export const BlogpostCard = (
           <Typography
             variant="body1"
             data-debug-good
-            className={classes.lead}
-            sx={{
-              [theme.breakpoints.up("lg")]: lineClamp(titleHeight > 48 ? "2" : "4"),
-
-              [theme.breakpoints.up("md")]: lineClamp(titleHeight > 36 ? "3" : "4"),
-              [theme.breakpoints.only("sm")]: lineClamp(titleHeight > 36 ? "4" : "5"),
-              [theme.breakpoints.only("xs")]: lineClamp(titleHeight > 36 ? "4" : "6"),
-              //TODO: check this one out once I have this breakpoint solved
-              [theme.breakpoints.only("xxs")]: lineClamp(titleHeight > 36 ? "4" : "4"),
-            }}
+            className={cx(classes.lead, clampedClassName)}
           >
             {leadCard}
           </Typography>
