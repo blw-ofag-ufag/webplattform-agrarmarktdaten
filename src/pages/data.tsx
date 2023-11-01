@@ -18,6 +18,7 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useAtom } from "jotai";
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 import { QueryClientProvider, useQuery } from "react-query";
@@ -28,13 +29,7 @@ import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/contro
 import { useLocale } from "@/lib/use-locale";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import {
-  CubeResult,
-  fetchCube,
-  fetchDimensions,
-  fetchObservations,
-  lindasClient,
-} from "./api/use-sparql";
+import { fetchCube, fetchDimensions, fetchObservations, lindasClient } from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -109,7 +104,6 @@ const DataBrowser = () => {
 
   const dimensionsQuery = useQuery<any, Error>({
     queryKey: ["dimensions", locale],
-
     queryFn: () =>
       fetchDimensions(
         "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month",
@@ -117,12 +111,16 @@ const DataBrowser = () => {
       ),
   });
 
-  console.log({
-    dimensionsQuery,
-    cubeQuery,
+  const observationsQuery = useQuery({
+    queryKey: [
+      "observations",
+      "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month",
+    ],
+    queryFn: () => fetchObservations(cubeQuery.data.view),
+    enabled: cubeQuery.isSuccess,
   });
 
-  const resultCount = 0; //placeholder
+  const resultCount = observationsQuery.data?.length;
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
@@ -143,10 +141,15 @@ const DataBrowser = () => {
             </Button>
             <Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />
             <Typography variant="body2" color="grey.600" padding={2}>
-              {`${resultCount} ${t({
-                id: "data.filters.results",
-                message: plural(resultCount, { one: "result", other: "results" }),
-              })}`}
+              {observationsQuery.isLoading && <Trans id="data.filters.loading">Loading </Trans>}
+              {!observationsQuery.isLoading && (
+                <>
+                  {`${resultCount} ${t({
+                    id: "data.filters.results",
+                    message: plural(resultCount ?? 0, { one: "result", other: "results" }),
+                  })}`}
+                </>
+              )}
             </Typography>
           </Stack>
           <Stack direction="row" gap={2}>
@@ -193,8 +196,17 @@ const DataBrowser = () => {
                   {cubeQuery.error.message}
                 </Alert>
               )}
+
               {cubeQuery.isSuccess && dimensionsQuery.isSuccess && (
-                <Table cube={cubeQuery.data} dimensions={dimensionsQuery.data.dimensions} />
+                <>
+                  {observationsQuery.isLoading && <CircularProgress size={24} />}
+                  {observationsQuery.isSuccess && (
+                    <Table
+                      observations={observationsQuery.data}
+                      dimensions={dimensionsQuery.data.dimensions}
+                    />
+                  )}
+                </>
               )}
             </>
           </Paper>
@@ -264,16 +276,11 @@ const ContentDrawer = ({
   );
 };
 
-const Table = ({ cube, dimensions }: { cube: CubeResult; dimensions: any }) => {
-  const observationsQuery = useQuery({
-    queryKey: ["observations"],
-    queryFn: () => fetchObservations(cube.view),
-  });
-
+const Table = ({ observations, dimensions }: { observations: any[]; dimensions: any }) => {
   const parsedObservations = useMemo(() => {
-    if (!observationsQuery.data) return [];
+    if (!observations) return [];
 
-    return observationsQuery.data.map((observation: any) => {
+    return observations.map((observation: any, index: number) => {
       const parsedObservation: any = {};
 
       Object.keys(observation).forEach((key) => {
@@ -295,32 +302,22 @@ const Table = ({ cube, dimensions }: { cube: CubeResult; dimensions: any }) => {
           parsedObservation[key] = observation[key];
         }
       });
+      parsedObservation["id"] = index;
       return parsedObservation;
     });
-  }, [observationsQuery.data, dimensions]);
+  }, [observations, dimensions]);
 
-  console.log({ parsedObservations });
-  return (
-    <>
-      {observationsQuery.isLoading && <CircularProgress size={24} />}
+  const columns: GridColDef[] = useMemo(() => {
+    return dimensions.map((dimension: any) => {
+      return {
+        field: dimension.iri,
+        headerName: dimension.name,
+        //width: 200,
+      };
+    });
+  }, [dimensions]);
 
-      {observationsQuery.isSuccess && (
-        <Stack>
-          <Box
-            sx={{
-              backgroundColor: "grey.200",
-              padding: 4,
-              border: "1px solid",
-              borderColor: "grey.300",
-            }}
-          >
-            <Typography variant="h5">{cube.iri}</Typography>
-            <Typography variant="body2">{observationsQuery.data.length} records</Typography>
-          </Box>
-        </Stack>
-      )}
-    </>
-  );
+  return <DataGrid rows={parsedObservations} columns={columns} autoPageSize />;
 };
 
 export const getStaticProps = async (context: $FixMe) => {
