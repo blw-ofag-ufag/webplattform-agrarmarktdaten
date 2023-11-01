@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 const PUBLIC_FILE = /\.(.*)$/;
 
 const productionUrls = [
-  "https://www.agrimarketdata.ch",
-  "https://www.dati-agrimercato.ch",
-  "https://www.donnees-agrimarche.ch",
-  "https://www.agrarmarktdaten.ch",
+  "agrimarketdata.ch",
+  "dati-agrimercato.ch",
+  "donnees-agrimarche.ch",
+  "agrarmarktdaten.ch",
 ];
 
 export function middleware(req: NextRequest) {
