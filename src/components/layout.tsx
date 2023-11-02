@@ -68,22 +68,26 @@ export const AppLayout = (props: Props) => {
       {
         title: t({ id: "menu.markets", message: "Märkte" }),
         sections:
-          allMarkets?.map((market) => {
+          allMarkets
+            ?.map((market) => {
             return {
               title: market.title as string,
               href: `/market/${market.slug}`,
             };
-          }) ?? [],
+            })
+            .sort((a, b) => a.title.localeCompare(b.title)) ?? [],
       },
       {
         title: t({ id: "menu.focus", message: "Fokus" }),
         sections:
-          allFocusArticles?.map((focus) => {
+          allFocusArticles
+            ?.map((focus) => {
             return {
               title: focus.title as string,
               href: `/focus/${focus.slug}`,
             };
-          }) ?? [],
+            })
+            .sort((a, b) => a.title.localeCompare(b.title)) ?? [],
       },
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
       { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
