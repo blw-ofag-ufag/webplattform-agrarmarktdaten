@@ -86,8 +86,8 @@ export const AppLayout = (props: Props) => {
           }) ?? [],
       },
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
-      { title: "Data", href: "/data" },
-      { title: "Methods", href: "/methods" },
+      { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
+      { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
@@ -123,7 +123,7 @@ export const AppLayout = (props: Props) => {
         <GridContainer disableItemMargin>
           <Header
             shortTitle="BLW"
-            longTitle="Bundesamt für Landwirtschaft"
+            longTitle={t({ id: "header.longTitle", message: "Bundesamt für Landwirtschaft" })}
             rootHref="/"
             sections={headerSections}
             ContentWrapperProps={{ sx: { px: "0!important" } }}
