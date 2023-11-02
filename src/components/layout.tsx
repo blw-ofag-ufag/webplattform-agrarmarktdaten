@@ -124,7 +124,7 @@ export const AppLayout = (props: Props) => {
         <GridContainer disableItemMargin>
           <Header
             closeLabel={t({ id: "header.close", message: "Close" })}
-            shortTitle="BLW"
+            shortTitle={t({ id: "header.shortTitle", message: "BLW" })}
             longTitle={t({ id: "header.longTitle", message: "Bundesamt für Landwirtschaft" })}
             rootHref="/"
             sections={headerSections}
