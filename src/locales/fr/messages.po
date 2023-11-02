@@ -6,13 +6,16 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: AMDP\n"
 "Language: fr\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
@@ -45,12 +48,6 @@ msgid "data.filters.addedValue"
 msgstr "Valeur ajoutée"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.report"
-msgstr "Rapport Agricole"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.all"
 msgstr "Tous"
@@ -63,18 +60,7 @@ msgstr "Afficher tous les posts"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.analysis"
-msgstr "Analyse"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "header.longTitle"
-msgstr ""
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.blw"
-msgstr "L’Office fédéral de l’agriculture"
+msgstr "Analyses"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -85,16 +71,6 @@ msgstr "Réinitialiser les filtres"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
 msgstr "Réinitialiser les filtres"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "header.close"
-msgstr "Fermer"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.data"
-msgstr "Données"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -110,12 +86,6 @@ msgstr "Télécharger des données"
 #: src/pages/data.tsx
 msgid "data.actions.download"
 msgstr "Télécharger des données"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.feedback"
-msgstr "Feedback"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -169,11 +139,6 @@ msgid "data.filters.indicator"
 msgstr "Indicateur"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.info"
-msgstr "Informations"
-
-#. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
 msgstr "-"
@@ -183,12 +148,6 @@ msgstr "-"
 #: src/components/homepage/infografik-teaser.tsx
 msgid "button.infografic.teaser"
 msgstr "-"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.priceindex"
-msgstr "Indice suisse des prix à la consommation"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -221,11 +180,6 @@ msgid "data.metadata.title"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.methods"
-msgstr ""
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
 msgstr "Mois"
@@ -233,7 +187,7 @@ msgstr "Mois"
 #. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "homepage.section.latestBlogPosts"
-msgstr "Analyse"
+msgstr "Analyses"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -243,18 +197,12 @@ msgstr "Aucun"
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.productionSystems"
-msgstr "Systèmes de production"
+msgstr "Système de production"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.products"
 msgstr "Liste des produits"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.importpriceindex"
-msgstr "Prix à la production et à l'importation"
 
 #. js-lingui-explicit-id
 #: src/pages/blog/[slug].tsx
@@ -285,12 +233,12 @@ msgstr "-"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
-msgstr "Chercher"
+msgstr "Recherche"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.all"
-msgstr "Sélectionner tous"
+msgstr "Sélectionner tout"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -315,7 +263,7 @@ msgstr "Conditions d’utilisation"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "footer.id"
-msgstr "L’Office fédéral de l’agriculture OFAG est le centre de compétences pour la politique agricole suisse. La gestion d’un service indépendant d’observation du marché fait également partie des tâches de l’OFAG (art. 27 de la loi sur l’agriculture, LAgr). Ledit service recense et publie des indicateurs de marché tels que les prix et les quantités tout au long de la chaîne de création de valeur des principaux marchés agricoles et alimentaires de Suisse. L’objectif est d’encourager la transparence et de mettre en évidence l’évolution à long terme."
+msgstr "L’Office fédéral de l’agriculture OFAG est le centre de compétences pour la politique agricole suisse. L'une des tâches de l'OFAG, est d'assurer l'observervation indépendante du marché (art. 27 de la loi sur l’agriculture, LAgr). Ceci consiste à recenser et publier des indicateurs de marché tels que les prix et les quantités tout au long de la chaîne de création de valeur ajoutée des principaux marchés agricoles et alimentaires de Suisse. L’objectif est d’accroître la transparence du marché et de mettre en évidence les évolutions à long terme."
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -341,3 +289,59 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Année"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.report"
+msgstr "Rapport Agricole"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.blw"
+msgstr "L’Office fédéral de l’agriculture"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.priceindex"
+msgstr "Indice suisse des prix à la consommation"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.importpriceindex"
+msgstr "Prix à la production et à l'importation"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr "Office fédéral de l'agriculture OFAG"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.data"
+msgstr "Données"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.info"
+msgstr "Informations"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.methods"
+msgstr "Méthodes"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Fermer"
+
