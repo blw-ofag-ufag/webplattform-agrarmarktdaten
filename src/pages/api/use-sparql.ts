@@ -103,12 +103,9 @@ export const fetchPossibleCubes = async (): Promise<CubeResult[]> => {
   return results;
 };
 
-export const fetchObservations = async (view?: View) => {
-  if (view) {
-    const observations = await view.observations({});
-    return observations;
-  }
-  throw Error(`View not provided`);
+export const fetchObservations = async (view: View, dimensions: DimensionsResult) => {
+  const observations = await view.observations({});
+  return parseObservations(observations, dimensions);
 };
 
 export const getDimensions = async (
@@ -267,6 +264,67 @@ export const getName = (node: Cube | CubeDimension, { locale }: { locale: string
       .terms.find((term) => term.termType === "Literal" && term.language === defaultLocale);
 
   return term?.value ?? "---";
+};
+
+export const parseObservations = (observations: $FixMe, dimensions: DimensionsResult) => {
+  return observations.map((observation: any, index: number) => {
+    const parsedObservation: any = {};
+
+    Object.keys(observation).forEach((key) => {
+      const type = ns.getDimensionTypeFromIri({ iri: key });
+
+      if (type === "measure") {
+        const dimension = dimensions.measure.find((d: any) => key === d.iri);
+        if (dimension) {
+          parsedObservation[key] = observation[key].value;
+        } else {
+          console.error(`Parsing Error: ${key} dimension not found`);
+          parsedObservation[key] = observation[key];
+        }
+      }
+
+      if (type === "property") {
+        const dimension = dimensions.property.find((d: any) => key === d.iri);
+        if (dimension) {
+          parsedObservation[key] = observation[key].value;
+        } else {
+          console.error(`Parsing Error: ${key} dimension not found`);
+          parsedObservation[key] = observation[key];
+        }
+      }
+
+      if (type === "property") {
+        const dimension = dimensions.property.find((d: any) => key === d.iri);
+        if (dimension) {
+          const value = dimension.values.find((v: any) => v.iri === observation[key].value);
+          if (value) {
+            parsedObservation[key] = value.name;
+          } else {
+            console.error(
+              `Parsing Error: Unknown value ${observation[key].value} for dimension ${key}.`
+            );
+            parsedObservation[key] = observation[key].value;
+          }
+        } else {
+          console.error(`Parsing Error: ${key} dimension not found`);
+          parsedObservation[key] = observation[key];
+        }
+      }
+
+      if (type === "other") {
+        const dimension = dimensions.other.find((d: any) => key === d.iri);
+        if (dimension) {
+          parsedObservation[key] = observation[key].value;
+        } else {
+          console.error(`Parsing Error: ${key} dimension not found`);
+          parsedObservation[key] = observation[key];
+        }
+      }
+    });
+
+    parsedObservation["id"] = index;
+    return parsedObservation;
+  });
 };
 
 /* Not currently being used */

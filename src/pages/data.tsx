@@ -26,7 +26,6 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
-import { getDimensionTypeFromIri } from "@/lib/namespace";
 import { useLocale } from "@/lib/use-locale";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
@@ -124,8 +123,15 @@ const DataBrowser = () => {
       "observations",
       "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month",
     ],
-    enabled: cubeQuery.isSuccess,
-    queryFn: () => fetchObservations(cubeQuery.data?.view),
+    enabled: cubeQuery.isSuccess && dimensionsQuery.isSuccess,
+    queryFn: () => {
+      const view = cubeQuery.data?.view;
+      const dimensions = dimensionsQuery.data;
+      if (view && dimensions) {
+        return fetchObservations(view, dimensions);
+      }
+      throw Error("Need view and dimensions to fetch observations");
+    },
   });
 
   const resultCount = observationsQuery.data?.length;
@@ -288,72 +294,9 @@ const Table = ({
   observations,
   dimensions,
 }: {
-  observations: any[];
+  observations: $FixMe[];
   dimensions: DimensionsResult;
 }) => {
-  const parsedObservations = useMemo(() => {
-    if (!observations) return [];
-
-    return observations.map((observation: any, index: number) => {
-      const parsedObservation: any = {};
-
-      Object.keys(observation).forEach((key) => {
-        const type = getDimensionTypeFromIri({ iri: key });
-
-        if (type === "measure") {
-          const dimension = dimensions.measure.find((d: any) => key === d.iri);
-          if (dimension) {
-            parsedObservation[key] = observation[key].value;
-          } else {
-            console.error(`Parsing Error: ${key} dimension not found`);
-            parsedObservation[key] = observation[key];
-          }
-        }
-
-        if (type === "property") {
-          const dimension = dimensions.property.find((d: any) => key === d.iri);
-          if (dimension) {
-            parsedObservation[key] = observation[key].value;
-          } else {
-            console.error(`Parsing Error: ${key} dimension not found`);
-            parsedObservation[key] = observation[key];
-          }
-        }
-
-        if (type === "property") {
-          const dimension = dimensions.property.find((d: any) => key === d.iri);
-          if (dimension) {
-            const value = dimension.values.find((v: any) => v.iri === observation[key].value);
-            if (value) {
-              parsedObservation[key] = value.name;
-            } else {
-              console.error(
-                `Parsing Error: Unknown value ${observation[key].value} for dimension ${key}.`
-              );
-              parsedObservation[key] = observation[key].value;
-            }
-          } else {
-            console.error(`Parsing Error: ${key} dimension not found`);
-            parsedObservation[key] = observation[key];
-          }
-        }
-
-        if (type === "other") {
-          const dimension = dimensions.other.find((d: any) => key === d.iri);
-          if (dimension) {
-            parsedObservation[key] = observation[key].value;
-          } else {
-            console.error(`Parsing Error: ${key} dimension not found`);
-            parsedObservation[key] = observation[key];
-          }
-        }
-      });
-
-      parsedObservation["id"] = index;
-      return parsedObservation;
-    });
-  }, [observations, dimensions]);
-
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
@@ -366,7 +309,7 @@ const Table = ({
       });
   }, [dimensions]);
 
-  return <DataGrid rows={parsedObservations} columns={columns} autoPageSize />;
+  return <DataGrid rows={observations} columns={columns} autoPageSize />;
 };
 
 export const getStaticProps = async (context: $FixMe) => {
