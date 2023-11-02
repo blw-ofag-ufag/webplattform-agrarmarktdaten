@@ -58,6 +58,16 @@ export const stripNamespaceFromIri = ({ iri }: { iri: string }): string => {
   return matches[1];
 };
 
+export const getIriForDimension = (type: DimensionType, id: string) => {
+  if (type === "measure") {
+    return amdpMeasure(id);
+  }
+  if (type === "property") {
+    return amdpProperty(id);
+  }
+  return id;
+};
+
 export const getDimensionTypeFromIri = ({ iri }: { iri: string }): DimensionType => {
   const matches = iri.replace(amdp.name, "").match(/(property|measure)(?=\/([a-zA-Z]|-)+$)/);
 

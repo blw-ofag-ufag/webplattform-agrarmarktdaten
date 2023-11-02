@@ -1,6 +1,9 @@
+import { localeAtom } from "@/lib/use-locale";
+import { fetchCube, fetchDimensions, fetchObservations } from "@/pages/api/use-sparql";
 import dayjs from "dayjs";
-import { atom, ExtractAtomValue } from "jotai";
+import { ExtractAtomValue, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
+import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
 
 export type Option = {
   label: string;
@@ -137,6 +140,35 @@ const optionCodec = (options: Option[]) => ({
 
 /* Atoms */
 
+export const cubePathAtom = atom(
+  "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
+);
+
+export const [dimensionsAtom, dimensionsStatusAtom] = atomsWithQuery((get) => ({
+  queryKey: ["dimensions", get(localeAtom)],
+  queryFn: () => fetchDimensions(get(cubePathAtom), get(localeAtom)),
+}));
+
+export const [cubeAtom, cubeStatusAtom] = atomsWithQuery((get) => ({
+  queryKey: ["cube", get(cubePathAtom)],
+  queryFn: () => fetchCube(get(cubePathAtom)),
+}));
+
+export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(async (get) => {
+  const cube = await get(cubeAtom);
+  const dimensions = await get(dimensionsAtom);
+
+  return {
+    queryKey: ["observations", get(cubePathAtom)],
+    queryFn: () => {
+      if (cube.view && dimensions) {
+        return fetchObservations(cube.view, dimensions);
+      }
+      throw Error("Need view and dimensions to fetch observations");
+    },
+  };
+});
+
 export const marketsAtom = atomWithHash("markets", markets, { ...multiOptionsCodec(markets) });
 export const addedValueValuesAtom = atomWithHash("addedValueValues", addedValueValues, {
   ...multiOptionsCodec(addedValueValues),
@@ -215,121 +247,77 @@ export const filterAtom = atom(
   }
 );
 
-/* Cubes: @TODO: needed? */
-export const cubeDimensions = [
-  {
-    iri: "http://schema.org/startDate",
-    label: "Date",
-    name: "startDate",
+export const dataDimensions = {
+  price: {
+    type: "measure",
+    id: "price",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/date-type",
-    label: "Date Type",
-    name: "date-type",
+  costComponent: {
+    type: "property",
+    id: "cost-component",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/cost-component",
-    label: "Cost Component",
-    name: "cost-component",
+  currency: {
+    type: "property",
+    id: "currency",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/currency",
-    label: "Currency",
-    name: "currency",
+  dataMethod: {
+    type: "property",
+    id: "data-method",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/data-method",
-    label: "Data Method",
-    name: "data-method",
+  dataSource: {
+    type: "property",
+    id: "data-source",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/data-source",
-    label: "Data Source",
-    name: "data-source",
+  date: {
+    type: "property",
+    id: "date",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/date",
-    label: "Date",
-    name: "date",
+  foreignTrade: {
+    type: "property",
+    id: "foreign-trade",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/foreign-trade",
-    label: "Foreign Trade",
-    name: "foreign-trade",
+  keyIndicatorType: {
+    type: "property",
+    id: "key-indicator-type",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/key-indicator-type",
-    label: "Key Indicator Type",
-    name: "key-indicator-type",
+  market: {
+    type: "property",
+    id: "market",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/market",
-    label: "Market",
-    name: "market",
+  product: {
+    type: "property",
+    id: "product",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/product",
-    label: "Product",
-    name: "product",
+  productGroup: {
+    type: "property",
+    id: "product-group",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/product-group",
-    label: "Product Group",
-    name: "product-group",
+  productionSystem: {
+    type: "property",
+    id: "product-system",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/production-system",
-    label: "Production System",
-    name: "production-system",
+  productOrigin: {
+    type: "property",
+    id: "product-origin",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/product-origin",
-    label: "Product Origin",
-    name: "product-origin",
+  salesRegion: {
+    type: "property",
+    id: "sales-region",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/product-properties",
-    label: "Product Properties",
-    name: "product-properties",
+  unit: {
+    type: "property",
+    id: "unit",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/product-subgroup",
-    label: "Product Subgroup",
-    name: "product-subgroup",
+  usage: {
+    type: "property",
+    id: "usage",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/sales-region",
-    label: "Sales Region",
-    name: "sales-region",
+  valueChainDetail: {
+    type: "property",
+    id: "value-chain-detail",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/unit",
-    label: "Unit",
-    name: "unit",
+  valueChain: {
+    type: "property",
+    id: "value-chain",
   },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/usage",
-    label: "Usage",
-    name: "usage",
-  },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/value-chain-detail",
-    label: "Value Chain Detail",
-    name: "value-chain-detail",
-  },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/property/value-chain",
-    label: "Value Chain",
-    name: "value-chain",
-  },
-  {
-    iri: "https://agriculture.ld.admin.ch/foag/measure/price",
-    label: "Price",
-    name: "price",
-  },
-  {
-    iri: "https://cube.link/observedBy",
-    label: "Observed By",
-    name: "observedBy",
-  },
-];
+};

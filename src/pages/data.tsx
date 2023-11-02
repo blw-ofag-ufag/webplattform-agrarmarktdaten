@@ -1,5 +1,11 @@
 import { AppLayout } from "@/components/layout";
-import { indicatorAtom, marketsAtom } from "@/domain/data";
+import {
+  dimensionsAtom,
+  indicatorAtom,
+  marketsAtom,
+  observationsAtom,
+  observationsStatusAtom,
+} from "@/domain/data";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import blwTheme from "@/theme/blw";
@@ -19,9 +25,9 @@ import {
   createTheme,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { QueryClientProvider, useQuery } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import SidePanel from "@/components/browser/SidePanel";
@@ -29,14 +35,7 @@ import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/contro
 import { useLocale } from "@/lib/use-locale";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import {
-  CubeResult,
-  DimensionsResult,
-  fetchCube,
-  fetchDimensions,
-  fetchObservations,
-  lindasClient,
-} from "./api/use-sparql";
+import { DimensionsResult, lindasClient } from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -94,6 +93,10 @@ const DataBrowser = () => {
   const indicator = useAtom(indicatorAtom);
   const [markets] = useAtom(marketsAtom);
   const locale = useLocale();
+  const observations = useAtomValue(observationsAtom);
+  const dimensions = useAtomValue(dimensionsAtom);
+  const observationsQueryStatus = useAtomValue(observationsStatusAtom);
+  console.log({ observations, observationsQueryStatus });
 
   console.log({
     indicator,
@@ -101,40 +104,7 @@ const DataBrowser = () => {
     locale,
   });
 
-  const cubeQuery = useQuery<CubeResult, Error>({
-    queryKey: ["cube"],
-    queryFn: () =>
-      fetchCube(
-        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
-      ),
-  });
-
-  const dimensionsQuery = useQuery<DimensionsResult, Error>({
-    queryKey: ["dimensions", locale],
-    queryFn: () =>
-      fetchDimensions(
-        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month",
-        locale
-      ),
-  });
-
-  const observationsQuery = useQuery({
-    queryKey: [
-      "observations",
-      "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month",
-    ],
-    enabled: cubeQuery.isSuccess && dimensionsQuery.isSuccess,
-    queryFn: () => {
-      const view = cubeQuery.data?.view;
-      const dimensions = dimensionsQuery.data;
-      if (view && dimensions) {
-        return fetchObservations(view, dimensions);
-      }
-      throw Error("Need view and dimensions to fetch observations");
-    },
-  });
-
-  const resultCount = observationsQuery.data?.length;
+  const resultCount = observations.length;
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
@@ -155,8 +125,10 @@ const DataBrowser = () => {
             </Button>
             <Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />
             <Typography variant="body2" color="grey.600" padding={2}>
-              {observationsQuery.isLoading && <Trans id="data.filters.loading">Loading </Trans>}
-              {!observationsQuery.isLoading && (
+              {observationsQueryStatus.isLoading && (
+                <Trans id="data.filters.loading">Loading </Trans>
+              )}
+              {!observationsQueryStatus.isSuccess && (
                 <>
                   {`${resultCount} ${t({
                     id: "data.filters.results",
@@ -198,8 +170,8 @@ const DataBrowser = () => {
             }}
           >
             <>
-              {cubeQuery.isLoading && <CircularProgress size={24} />}
-              {cubeQuery.isError && (
+              {observationsQueryStatus.isLoading && <CircularProgress size={24} />}
+              {observationsQueryStatus.isError && (
                 <Alert
                   sx={{
                     width: "70%",
@@ -207,19 +179,12 @@ const DataBrowser = () => {
                   severity="error"
                 >
                   <AlertTitle>Error</AlertTitle>
-                  {cubeQuery.error.message}
                 </Alert>
               )}
 
-              {cubeQuery.isSuccess && dimensionsQuery.isSuccess && dimensionsQuery.data && (
+              {observationsQueryStatus.isSuccess && (
                 <>
-                  {observationsQuery.isLoading && <CircularProgress size={24} />}
-                  {observationsQuery.isSuccess && (
-                    <Table
-                      observations={observationsQuery.data}
-                      dimensions={dimensionsQuery.data}
-                    />
-                  )}
+                  <Table observations={observations} dimensions={dimensions} />
                 </>
               )}
             </>
@@ -297,6 +262,7 @@ const Table = ({
   observations: $FixMe[];
   dimensions: DimensionsResult;
 }) => {
+  console.log({ observations });
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()

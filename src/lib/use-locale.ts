@@ -1,11 +1,8 @@
-import { createContext, useContext } from "react";
-
 import { defaultLocale, Locale } from "@/locales/locales";
+import { atom, useAtomValue } from "jotai";
 
-const LocaleContext = createContext<Locale>(defaultLocale);
-
-export const LocaleProvider = LocaleContext.Provider;
+export const localeAtom = atom<Locale>(defaultLocale);
 
 export const useLocale = () => {
-  return useContext(LocaleContext);
+  return useAtomValue(localeAtom);
 };
