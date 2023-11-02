@@ -4,13 +4,12 @@ import {
   SelectChangeEvent,
   Typography,
   FormLabel,
-  Box,
   Autocomplete,
   TextField,
   InputAdornment,
 } from "@mui/material";
 import * as GQL from "@/graphql";
-import { GridContainer, GridWrap, GridWrapElement /* , GridElement */ } from "@/components/Grid";
+import { GridContainer, GridWrap, GridWrapElement } from "@/components/Grid";
 import DoneIcon from "@mui/icons-material/Done";
 import { makeStyles } from "@/components/style-utils";
 import { SortBy } from "../BlogpostGrid";
@@ -22,6 +21,7 @@ import { SchemaTypes } from "@datocms/cma-client-browser";
 import { useRouter } from "next/router";
 import { useDebounce } from "@/lib/useDebounce";
 import SearchIcon from "@/icons/icons-jsx/control/IcSearch";
+import { t } from "@lingui/macro";
 
 const useStyles = makeStyles()((theme) => ({
   menuItem: {
@@ -29,8 +29,42 @@ const useStyles = makeStyles()((theme) => ({
     justifyContent: "space-between",
   },
   label: {
-    color: theme.palette.text.primary,
-    marginBottom: "6px",
+    color: theme.palette.monochrome[800],
+    fontSize: "18px!important",
+    marginBottom: "8px",
+  },
+  searchField: {
+    paddingLeft: 0,
+  },
+  sortRoot: {
+    display: "flex",
+    alignItems: "center",
+  },
+  sortLabel: {
+    color: theme.palette.monochrome[400],
+    fontSize: "14px!important",
+    marginRight: "5px",
+  },
+  //Could not add a new variant in the there so styled things here for the moment
+  selectNaked: {
+    backgroundColor: "transparent",
+    width: "fit-content",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& .MuiSelect-icon": {
+      fontSize: "1rem",
+    },
+    ".MuiInputBase-input": {
+      paddingRight: "25px!important",
+    },
+    ".MuiOutlinedInput-input": {
+      fontSize: "14px",
+      padding: 0,
+    },
+  },
+  sortContainer: {
+    marginTop: "10px",
   },
 }));
 
@@ -71,7 +105,7 @@ const Controls = (props: Props) => {
   const { locale, push } = useRouter();
   const [searchString, setSearchString] = React.useState("");
   const [searchOptions, setSearchOptions] = React.useState([] as SchemaTypes.SearchResult[]);
-  const debouncedSearchString = useDebounce(searchString, 200);
+  const [debouncedSearchString, setDebouncedSearchString] = useDebounce(searchString, 50);
 
   React.useEffect(() => {
     const search = async () => {
@@ -166,11 +200,13 @@ const Controls = (props: Props) => {
 
             <Autocomplete
               id="search"
-              open
               getOptionLabel={(option) => option.attributes?.highlight.body?.[0] ?? ""}
+              popupIcon={null}
               onInputChange={(e, value, reason) => {
                 if (reason === "reset") {
                   setSearchOptions([]);
+                  //We need to manually clear this otherwise if the user types too fast it won't clear and we get unwanted results
+                  setDebouncedSearchString("");
                 }
               }}
               renderOption={(props, option) => {
@@ -195,6 +231,7 @@ const Controls = (props: Props) => {
                   push(option?.attributes.url);
                 }
               }}
+              noOptionsText={t({ id: "search.noOptions", message: "No Options" })}
               options={searchOptions.map((option) => option)}
               renderInput={(params) => (
                 <TextField
@@ -204,6 +241,7 @@ const Controls = (props: Props) => {
                   value={searchString}
                   InputLabelProps={{ shrink: false }}
                   InputProps={{
+                    ...params.InputProps,
                     startAdornment: (
                       <InputAdornment position="start">
                         <SearchIcon width={24} height={24} color={"#596978"} />
@@ -217,15 +255,16 @@ const Controls = (props: Props) => {
           </GridWrapElement>
         </GridWrap>
       </GridContainer>
-      <GridContainer>
+      <GridContainer className={classes.sortContainer}>
         <GridWrap>
-          <GridWrapElement>
+          <GridWrapElement className={classes.sortRoot}>
             <FormLabel>
-              <Typography variant="body1" className={classes.label}>
+              <Typography variant="body1" className={classes.sortLabel}>
                 <Trans id="sort.labe">Sort by:</Trans>&nbsp;
               </Typography>
             </FormLabel>
             <Select
+              className={classes.selectNaked}
               value={sortBy}
               onChange={(e) => onSelectSortBy(e.target.value as SortBy)}
               displayEmpty

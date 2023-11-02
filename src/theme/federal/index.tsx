@@ -8,7 +8,7 @@ import { merge, omit } from "lodash";
 
 import SvgIcCheckboxActive from "@/theme/federal/icons/IcCheckboxActive";
 import SvgIcCheckboxDefault from "@/theme/federal/icons/IcCheckboxDefault";
-import { IcControlChevronUp } from "@/icons/icons-jsx/control";
+import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 import shadows from "@/theme/federal/shadows";
 
 import debugStyles from "./debug";
@@ -152,6 +152,7 @@ const theme = createTheme({
       900: "#000000",
     },
     cobalt: c.cobalt,
+    monochrome: c.monochrome,
     red: c.red,
   },
   breakpoints: {
@@ -746,19 +747,19 @@ theme.components = {
   },
   MuiSelect: {
     defaultProps: {
-      IconComponent: IcControlChevronUp,
+      IconComponent: IcControlChevronDown,
     },
     styleOverrides: {
       root: {
         width: "100%",
         height: "48px",
         backgroundColor: "#ffffff",
+        borderRadius: 4,
         "&:hover": {
           backgroundColor: c.monochrome[100],
         },
-        borderRadius: 4,
-        "&-MuiButtonBase-root-MuiMenuItem-root-menuItem.Mui-selected": {
-          backgroundColor: "red",
+        [`& .MuiOutlinedInput-notchedOutline`]: {
+          border: `1px solid ${theme.palette.cobalt[200]}`,
         },
         "& .MuiSelect-icon": {
           fontSize: "2rem",
@@ -767,7 +768,13 @@ theme.components = {
           color: "cobalt.400",
         },
       },
-      // .MuiSelect-icon
+    },
+  },
+  MuiList: {
+    styleOverrides: {
+      root: {
+        padding: 0,
+      },
     },
   },
   MuiMenu: {
@@ -781,6 +788,15 @@ theme.components = {
     styleOverrides: {
       root: {
         height: "48px",
+        "&.Mui-selected": {
+          backgroundColor: "transparent",
+        },
+        "&.Mui-selected:hover": {
+          backgroundColor: c.monochrome[100],
+        },
+        "&.Mui-selected.Mui-focusVisible": {
+          backgroundColor: "transparent",
+        },
       },
     },
   },
@@ -788,13 +804,18 @@ theme.components = {
     styleOverrides: {
       root: {
         [`& .${autocompleteClasses.inputRoot}`]: {
-          paddingTop: 5,
-          paddingBottom: 5,
+          paddingTop: 3,
+          paddingBottom: 3,
           backgroundColor: "white",
         },
+        [`& .MuiOutlinedInput-notchedOutline`]: {
+          border: `1px solid ${theme.palette.cobalt[200]}`,
+        },
         [`& .${autocompleteClasses.input}`]: {
-          // paddingTop: 0,
-          // paddingBottom: 0,
+          fontSize: "18px",
+        },
+        [`& .MuiOutlinedInput-root.MuiAutocomplete-input`]: {
+          paddingLeft: 0,
         },
       },
     },

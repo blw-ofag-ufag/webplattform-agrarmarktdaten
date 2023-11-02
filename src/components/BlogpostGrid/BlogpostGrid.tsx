@@ -99,7 +99,7 @@ const BlogPostGrid = (props: Props) => {
         onSelectSortBy={setOrder}
       />
       <GridContainer
-        sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}
+        sx={{ display: "flex", flexDirection: "column", mt: "10px", mb: "40px" }}
         disableItemMargin
       >
         <GridWrap>
