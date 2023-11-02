@@ -268,7 +268,10 @@ const FooterBLW = () => {
             py: s(2.5),
           }}
         >
-          <Link href={`https://www.blw.admin.ch/blw/${locale}/home/services/newsletter.html`}>
+          <Link
+            href={`https://www.blw.admin.ch/blw/${locale}/home/services/newsletter.html`}
+            target="_blank"
+          >
             <Typography sx={{ mr: 2 }}>
               {t({
                 id: "footer.newsletter",
