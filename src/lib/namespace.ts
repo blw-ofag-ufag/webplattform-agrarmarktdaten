@@ -1,3 +1,4 @@
+import { DimensionType } from "@/pages/api/use-sparql";
 import namespace from "@rdfjs/namespace";
 
 export {
@@ -57,11 +58,7 @@ export const stripNamespaceFromIri = ({ iri }: { iri: string }): string => {
   return matches[1];
 };
 
-export const getDimensionTypeFromIri = ({
-  iri,
-}: {
-  iri: string;
-}): "property" | "measure" | string => {
+export const getDimensionTypeFromIri = ({ iri }: { iri: string }): DimensionType => {
   const matches = iri.replace(amdp.name, "").match(/(property|measure)(?=\/([a-zA-Z]|-)+$)/);
 
   if (!matches) {

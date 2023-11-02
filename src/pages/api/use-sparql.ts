@@ -2,96 +2,10 @@ import { defaultLocale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
 import { Literal, NamedNode } from "@rdfjs/types";
 import { uniqBy } from "lodash";
-import { Cube, CubeDimension, LookupSource, Source, View } from "rdf-cube-view-query";
+import { Cube, CubeDimension, Dimension, LookupSource, Source, View } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
-import { useEffect, useState } from "react";
-import { QueryClient } from "react-query";
 import * as ns from "../../lib/namespace";
-
-export type UseQueryOptions<T> = {
-  enabled: boolean;
-  onSuccess?: (data: T) => void;
-  onError?: (err: unknown) => void;
-  key: string;
-  fetch: (key: string) => Promise<T>;
-};
-
-export type UseQueryResult<T> = {
-  executionTime: number | undefined;
-  error: unknown | undefined;
-  fetching: boolean;
-  data: T | undefined;
-};
-
-export type SparqlQueryResult<T> = {
-  sparqlQuery: string | undefined;
-} & UseQueryResult<T>;
-
-const fetchSparql = async (query: string) => {
-  const body = JSON.stringify({ query });
-  const res = await fetch("/api/sparql", {
-    method: "post",
-    body,
-  }).then((resp) => resp.json());
-  return res;
-};
-
-/**
- * Same API as possible as react-query
- * @TODO let's see if we keep this or we use react-query or urql
- */
-const useQuery = <T extends unknown>({
-  key,
-  fetch,
-  onSuccess,
-  onError,
-  enabled,
-}: UseQueryOptions<T>): UseQueryResult<T> => {
-  const [data, setData] = useState<T>();
-  const [fetching, setFetching] = useState(true);
-  const [executionTime, setExecutionTime] = useState<number>();
-  const [error, setError] = useState<unknown>();
-
-  useEffect(() => {
-    if (enabled === false) {
-      return;
-    }
-    setFetching(true);
-    const run = async () => {
-      const start = Date.now();
-      try {
-        const res = await fetch(key);
-        setData(res);
-        setFetching(false);
-        setError(undefined);
-        setExecutionTime(Date.now() - start);
-        onSuccess?.(res);
-      } catch (e) {
-        setError(e);
-        onError?.(e);
-      }
-    };
-    run();
-    // Important not to have onSuccess / onError here
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [enabled, fetch, key]);
-  return { data, fetching, executionTime, error };
-};
-
-const useSparql = <T extends unknown>({
-  query,
-  ...options
-}: { query?: string } & Omit<UseQueryOptions<T>, "key" | "fetch">): SparqlQueryResult<T> => {
-  const res = useQuery<T>({
-    key: query || "",
-    fetch: fetchSparql,
-    ...options,
-    enabled: !!(query && options.enabled),
-  });
-  return { ...res, sparqlQuery: query };
-};
-
-export default useSparql;
+import { QueryClient } from "react-query";
 
 export const lindasClient = new QueryClient();
 
@@ -100,21 +14,57 @@ const amdpSource = new Source({
   sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
 });
 
+type Filters = { [key: string]: string[] | null | undefined } | null;
+
 export type CubeResult = {
   cube: Cube;
   iri?: string;
-  //label: string;
   view?: View;
   versionHistory?: string;
 };
 
-export const fetchPossibleCubes = async () => {
+export type DimensionType = "property" | "measure" | string;
+
+export type DimensionResult = {
+  dimension: Dimension;
+  name: string;
+  iri?: string;
+  min?: number;
+  max?: number;
+  datatype?: CubeDimension["datatype"];
+  type?: DimensionType;
+};
+
+export const fetchSparql = async (query: string) => {
+  const body = JSON.stringify({ query });
+  const res = await fetch("/api/sparql", {
+    method: "post",
+    body,
+  }).then((resp) => resp.json());
+  return res;
+};
+
+export const fetchCube = async (iri: string): Promise<CubeResult> => {
+  const cube = await amdpSource.cube(iri);
+  if (cube) {
+    const view = View.fromCube(cube);
+
+    return {
+      cube,
+      iri: cube.term?.value,
+      view,
+      versionHistory: cube.out(ns.schema.hasPart).value,
+    };
+  }
+  throw Error(`Cube not found: ${iri}`);
+};
+
+export const fetchPossibleCubes = async (): Promise<CubeResult[]> => {
   const cubes = await amdpSource.cubes();
   const results = cubes.map((cube) => {
     return {
       cube,
       iri: cube.term?.value,
-      // label: cube.out(ns.schema.name, { language: ["en", "de", "*"] }),
       view: View.fromCube(cube),
       versionHistory: cube.out(ns.schema.hasPart).value,
     };
@@ -130,14 +80,12 @@ export const fetchObservations = async (view?: View) => {
   return [];
 };
 
-export const agricultureNs = rdf.namespace("https://agriculture.ld.admin.ch/foag/property/");
-
-export const getDimensions = (view: View) => {
+export const getDimensions = (view: View): DimensionResult[] => {
   const dimensions = view.dimensions.map((d) => {
     const cubeDimension = d.cubeDimensions[0];
     const iri = cubeDimension.path?.value;
-    const min = cubeDimension.minInclusive?.value;
-    const max = cubeDimension.maxInclusive?.value;
+    const min = cubeDimension.minInclusive ? +cubeDimension.minInclusive.value : undefined;
+    const max = cubeDimension.maxInclusive ? +cubeDimension.maxInclusive.value : undefined;
     const name = getName(cubeDimension, { locale: defaultLocale });
 
     return {
@@ -151,30 +99,6 @@ export const getDimensions = (view: View) => {
   });
   return uniqBy(dimensions, "iri");
 };
-
-/* const amdpProperties = [
-  "market",
-  "cost-component",
-  "currency",
-  "data-method",
-  "data-source",
-  "date",
-  "foreign-trade",
-  "key-indicator-type",
-  "production-system",
-  "product",
-  "product-group",
-  "product-subgroup",
-  "product-origin",
-  "product-properties",
-  "sales-region",
-  "unit",
-  "usage",
-  "value-chain-detail",
-  "value-chain",
-];
-
-const amdpMeasures = ["price"]; */
 
 export const fetchDimensions = async (iri: string, locale: string) => {
   const cube = await amdpSource.cube(iri);
@@ -220,184 +144,6 @@ export const fetchDimensions = async (iri: string, locale: string) => {
   }
   throw Error(`Cube not found: ${iri}`);
 };
-
-export const fetchCube = async (iri: string) => {
-  const cube = await amdpSource.cube(iri);
-  if (cube) {
-    const view = View.fromCube(cube);
-    const dimensions = view.dimensions;
-    const dataDimensions = getDimensionValuesAndLabels({
-      cube,
-      dimensionKey: "product",
-      namespace: ns.amdpProperty,
-    });
-
-    const marketDimension = view.dimension({
-      cubeDimension: agricultureNs.market,
-    });
-
-    const markets = marketDimension?.cubeDimensions[0].in;
-
-    const customView = new View({ dimensions });
-    return {
-      cube,
-      iri: cube.term?.value,
-      label: cube.out(ns.schema.name, { language: ["en", "de", "*"] }),
-      view: customView,
-      dimensions,
-      markets,
-      dataDimensions,
-    };
-  }
-  throw Error(`Cube not found: ${iri}`);
-};
-
-export type ObservationValue = string | number | boolean;
-
-/**
- * Parse observation values (values returned from query.execute()) to native JS types
- *
- * @param observationValue
- */
-export const parseObservationValue = (value: Literal | NamedNode): ObservationValue => {
-  // Parse literals to native JS types
-  if (value.termType === "Literal") {
-    return parseRDFLiteral(value);
-  }
-
-  // Return the IRI of named nodes
-  return value.value;
-};
-
-const xmlSchema = "http://www.w3.org/2001/XMLSchema#";
-const parseRDFLiteral = (value: Literal): ObservationValue => {
-  const v = value.value;
-  const dt = value.datatype.value.replace(xmlSchema, "");
-  switch (dt) {
-    case "string":
-      return v;
-    case "boolean":
-      return v === "true" ? true : false;
-    case "float":
-    case "integer":
-    case "long":
-    case "double":
-    case "decimal":
-    case "nonPositiveInteger":
-    case "nonNegativeInteger":
-    case "negativeInteger":
-    case "int":
-    case "unsignedLong":
-    case "positiveInteger":
-    case "short":
-    case "unsignedInt":
-    case "byte":
-    case "unsignedShort":
-    case "unsignedByte":
-      return +v;
-    // TODO: Figure out how to preserve granularity of date (maybe include interval?)
-    // case "date":
-    // case "time":
-    // case "dateTime":
-    // case "gYear":
-    // case "gYearMonth":
-    //   return new Date(v);
-    default:
-      return v;
-  }
-};
-
-/* export const parseObservation = (d: Record<string, Literal | NamedNode<string>>) => {
-  const parsed: { [k: string]: string | number | boolean } = {};
-  const amdpDimensionPrefix = ns.amdpDimension().value;
-  for (const [k, v] of Object.entries(d)) {
-    const key = k.replace(amdpDimensionPrefix, "");
-
-    const parsedValue = parseObservationValue(v);
-
-    parsed[key] =
-      typeof parsedValue === "string"
-        ? ns.stripNamespaceFromIri({ iri: parsedValue })
-        : parsedValue;
-  }
-  return parsed;
-};
- */
-export const getSparqlEditorUrl = (query: string): string | null => {
-  return process.env.SPARQL_EDITOR
-    ? `${process.env.SPARQL_EDITOR}#query=${encodeURIComponent(query)}`
-    : query;
-};
-
-/* export const getObservations = async (
-  { view, source }: { view: View; source: Source },
-  {
-    filters,
-    dimensions,
-  }: {
-    filters?: Filters;
-    dimensions?: string[];
-  }
-) => {
-  const queryFilters = filters
-    ? Object.entries(filters).flatMap(([dimensionKey, filterValues]) =>
-        filterValues ? buildDimensionFilter(view, dimensionKey, filterValues) ?? [] : []
-      )
-    : [];
-
-  const lookupSource = LookupSource.fromSource(source);
-
-  const filterViewDimensions = dimensions
-    ? dimensions.flatMap((d) => {
-        const dimension = view.dimension({
-          cubeDimension: ns.amdpDimension(d),
-        });
-        return dimension ? [dimension] : [];
-      })
-    : view.dimensions;
-
-  const filterView = new View({
-    dimensions: filterViewDimensions,
-    filters: queryFilters,
-  });
-
-  console.log("> getObservations");
-
-  console.log({
-    query: getSparqlEditorUrl(filterView.observationsQuery({}).query.toString()),
-  });
-
-  const observations = await filterView.observations({});
-
-  // Clean up
-  filterView.clear();
-  lookupSource.clear();
-
-  // Workaround for faulty empty query result
-  if (observations.length === 1 && Object.values(observations[0]).some((v) => v === undefined)) {
-    return [];
-  }
-
-  const res = observations.map(parseObservation);
-
-  return res;
-}; */
-
-export const getName = (node: Cube | CubeDimension, { locale }: { locale: string }) => {
-  const term =
-    node
-      .out(ns.schema`name`)
-      .terms.find((term) => term.termType === "Literal" && term.language === locale) ??
-    node
-      .out(ns.schema`name`)
-      .terms.find((term) => term.termType === "Literal" && term.language === defaultLocale);
-
-  return term?.value ?? "---";
-};
-
-type Filters = { [key: string]: string[] | null | undefined } | null;
-
-export const getView = (cube: Cube): View => View.fromCube(cube);
 
 export const getDimensionValuesAndLabels = async ({
   cube,
@@ -468,6 +214,137 @@ export const getDimensionValuesAndLabels = async ({
       : [];
   });
 };
+
+export const getName = (node: Cube | CubeDimension, { locale }: { locale: string }) => {
+  const term =
+    node
+      .out(ns.schema`name`)
+      .terms.find((term) => term.termType === "Literal" && term.language === locale) ??
+    node
+      .out(ns.schema`name`)
+      .terms.find((term) => term.termType === "Literal" && term.language === defaultLocale);
+
+  return term?.value ?? "---";
+};
+
+/* Not currently being used */
+
+export const getSparqlEditorUrl = (query: string): string | null => {
+  return process.env.SPARQL_EDITOR
+    ? `${process.env.SPARQL_EDITOR}#query=${encodeURIComponent(query)}`
+    : query;
+};
+
+export type ObservationValue = string | number | boolean;
+
+/**
+ * Parse observation values (values returned from query.execute()) to native JS types
+ *
+ * @param observationValue
+ */
+export const parseObservationValue = (value: Literal | NamedNode): ObservationValue => {
+  // Parse literals to native JS types
+  if (value.termType === "Literal") {
+    return parseRDFLiteral(value);
+  }
+
+  // Return the IRI of named nodes
+  return value.value;
+};
+
+const xmlSchema = "http://www.w3.org/2001/XMLSchema#";
+const parseRDFLiteral = (value: Literal): ObservationValue => {
+  const v = value.value;
+  const dt = value.datatype.value.replace(xmlSchema, "");
+  switch (dt) {
+    case "string":
+      return v;
+    case "boolean":
+      return v === "true" ? true : false;
+    case "float":
+    case "integer":
+    case "long":
+    case "double":
+    case "decimal":
+    case "nonPositiveInteger":
+    case "nonNegativeInteger":
+    case "negativeInteger":
+    case "int":
+    case "unsignedLong":
+    case "positiveInteger":
+    case "short":
+    case "unsignedInt":
+    case "byte":
+    case "unsignedShort":
+    case "unsignedByte":
+      return +v;
+    // TODO: Figure out how to preserve granularity of date (maybe include interval?)
+    // case "date":
+    // case "time":
+    // case "dateTime":
+    // case "gYear":
+    // case "gYearMonth":
+    //   return new Date(v);
+    default:
+      return v;
+  }
+};
+
+export const getObservations = async (
+  { view, source }: { view: View; source: Source },
+  {
+    filters,
+    dimensions,
+  }: {
+    filters?: Filters;
+    dimensions?: string[];
+  }
+) => {
+  const queryFilters = filters
+    ? Object.entries(filters).flatMap(([dimensionKey, filterValues]) =>
+        filterValues
+          ? buildDimensionFilter(ns.amdpProperty, view, dimensionKey, filterValues) ?? []
+          : []
+      )
+    : [];
+
+  const lookupSource = LookupSource.fromSource(source);
+
+  const filterViewDimensions = dimensions
+    ? dimensions.flatMap((d) => {
+        const dimension = view.dimension({
+          cubeDimension: ns.amdpProperty(d),
+        });
+        return dimension ? [dimension] : [];
+      })
+    : view.dimensions;
+
+  const filterView = new View({
+    dimensions: filterViewDimensions,
+    filters: queryFilters,
+  });
+
+  console.log("> getObservations");
+
+  console.log({
+    query: getSparqlEditorUrl(filterView.observationsQuery({}).query.toString()),
+  });
+
+  const observations = await filterView.observations({});
+
+  // Clean up
+  filterView.clear();
+  lookupSource.clear();
+
+  // Workaround for faulty empty query result
+  if (observations.length === 1 && Object.values(observations[0]).some((v) => v === undefined)) {
+    return [];
+  }
+
+  return observations;
+};
+
+export const getView = (cube: Cube): View => View.fromCube(cube);
 
 export const buildDimensionFilter = (
   namespace: NamespaceBuilder<string>,
