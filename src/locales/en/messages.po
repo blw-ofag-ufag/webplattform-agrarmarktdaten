@@ -67,6 +67,11 @@ msgstr "Analysis"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.blw"
 msgstr "Federal Office for Agriculture"
@@ -80,6 +85,16 @@ msgstr "Reset filters"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
 msgstr "Reset filters"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.data"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -154,6 +169,11 @@ msgid "data.filters.indicator"
 msgstr "Indicator"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.info"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
 msgstr "-"
@@ -199,6 +219,11 @@ msgstr "Metadata"
 #: src/pages/data.tsx
 msgid "data.metadata.title"
 msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.methods"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

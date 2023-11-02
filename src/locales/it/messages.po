@@ -67,6 +67,11 @@ msgstr "Analisi"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.blw"
 msgstr "L'Ufficio federale dell'agricoltura"
@@ -80,6 +85,11 @@ msgstr "Ripristina i filtri"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
 msgstr "Ripristina i filtri"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Chiudi"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx

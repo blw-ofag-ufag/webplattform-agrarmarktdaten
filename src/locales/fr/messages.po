@@ -67,6 +67,11 @@ msgstr "Analyse"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.blw"
 msgstr "L’Office fédéral de l’agriculture"
@@ -80,6 +85,11 @@ msgstr "Réinitialiser les filtres"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
 msgstr "Réinitialiser les filtres"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Fermer"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx

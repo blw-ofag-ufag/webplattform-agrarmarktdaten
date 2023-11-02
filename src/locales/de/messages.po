@@ -67,6 +67,11 @@ msgstr "Analysen"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr "Bundesamt für Landwirtschaft"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "footer.blw"
 msgstr "Bundesamt für Landwirtschaft"
@@ -80,6 +85,11 @@ msgstr "Filter zurücksetzen"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
 msgstr "Filter zurücksetzen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Schliessen"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
