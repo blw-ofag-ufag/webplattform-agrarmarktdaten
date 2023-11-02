@@ -42,7 +42,7 @@ const useStyles = makeStyles()({
   backButton: {
     position: "absolute",
     width: "100%",
-    zIndex: 10,
+    zIndex: 2,
     height: "50px",
     display: "flex",
     justifyContent: "center",
@@ -88,6 +88,7 @@ export const AppLayout = (props: Props) => {
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
       { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
       { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
+      { title: t({ id: "menu.info", message: "Info" }), href: "/info" },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,

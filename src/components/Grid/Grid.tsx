@@ -11,22 +11,21 @@ interface Props {
   className?: string;
 }
 
+type BreakpointSpec = {
+  totalWidth: number;
+  offset: number;
+  nbColumns: number;
+
+  rowGutterWidth: number;
+  columnWidth: number;
+  columnGutterWidth: number;
+};
+
 /**
  * Definitions from Sketch file
  * @see https://www.sketch.com/s/81803335-dd26-42f1-a505-6845270a91b7/p/6000F394-096F-4CAD-96D6-3F8056F9DE4B/canvas
  */
-const specs: Record<
-  Breakpoint,
-  {
-    totalWidth: number;
-    offset: number;
-    nbColumns: number;
-
-    rowGutterWidth: number;
-    columnWidth: number;
-    columnGutterWidth: number;
-  }
-> = {
+export const specs: Record<Breakpoint, BreakpointSpec> = {
   xxxl: {
     totalWidth: 1676,
     offset: 0,
@@ -47,10 +46,7 @@ const specs: Record<
 
   xl: {
     totalWidth: 1280,
-
-    // Not 64 since there seems to be a rounding error somewhere
-    offset: 63,
-
+    offset: 64,
     nbColumns: 12,
     columnGutterWidth: 48,
     columnWidth: 52,
@@ -59,7 +55,7 @@ const specs: Record<
 
   lg: {
     totalWidth: 1024,
-    offset: 48,
+    offset: 49,
     nbColumns: 6,
     columnGutterWidth: 40,
     columnWidth: 121,
@@ -77,7 +73,7 @@ const specs: Record<
 
   sm: {
     totalWidth: 640,
-    offset: 36,
+    offset: 35,
     nbColumns: 6,
     columnGutterWidth: 36,
     columnWidth: 65,
