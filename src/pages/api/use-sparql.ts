@@ -4,8 +4,8 @@ import { Literal, NamedNode } from "@rdfjs/types";
 import { uniqBy } from "lodash";
 import { Cube, CubeDimension, Dimension, LookupSource, Source, View } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
-import * as ns from "../../lib/namespace";
 import { QueryClient } from "react-query";
+import * as ns from "../../lib/namespace";
 
 export const lindasClient = new QueryClient();
 
@@ -23,17 +23,48 @@ export type CubeResult = {
   versionHistory?: string;
 };
 
-export type DimensionType = "property" | "measure" | string;
-
-export type DimensionResult = {
-  dimension: Dimension;
+export type DimensionType = "property" | "measure" | "other";
+export type DimensionValue = {
+  iri: string;
   name: string;
-  iri?: string;
-  min?: number;
-  max?: number;
-  datatype?: CubeDimension["datatype"];
-  type?: DimensionType;
+  view: View;
+  source: Source;
 };
+
+export type BaseDimension = {
+  iri: string;
+  dimension: Dimension;
+  datatype?: CubeDimension["datatype"];
+  name: string;
+  type: DimensionType;
+};
+
+export type PropertyDimension = BaseDimension & {
+  type: "property";
+  values: DimensionValue[];
+};
+
+export type MeasureDimension = BaseDimension & {
+  min: number;
+  max: number;
+  type: "measure";
+};
+export type DimensionsResult = {
+  property: PropertyDimension[];
+  measure: MeasureDimension[];
+  other: BaseDimension[];
+};
+
+export type UseQueryResult<T> = {
+  executionTime: number | undefined;
+  error: unknown | undefined;
+  fetching: boolean;
+  data: T | undefined;
+};
+
+export type SparqlQueryResult<T> = {
+  sparqlQuery: string | undefined;
+} & UseQueryResult<T>;
 
 export const fetchSparql = async (query: string) => {
   const body = JSON.stringify({ query });
@@ -77,90 +108,101 @@ export const fetchObservations = async (view?: View) => {
     const observations = await view.observations({});
     return observations;
   }
-  return [];
+  throw Error(`View not provided`);
 };
 
-export const getDimensions = (view: View): DimensionResult[] => {
-  const dimensions = view.dimensions.map((d) => {
-    const cubeDimension = d.cubeDimensions[0];
-    const iri = cubeDimension.path?.value;
-    const min = cubeDimension.minInclusive ? +cubeDimension.minInclusive.value : undefined;
-    const max = cubeDimension.maxInclusive ? +cubeDimension.maxInclusive.value : undefined;
-    const name = getName(cubeDimension, { locale: defaultLocale });
+export const getDimensions = async (
+  view: View,
+  locale: string = defaultLocale
+): Promise<(PropertyDimension | MeasureDimension | BaseDimension)[]> => {
+  const dimensions = await Promise.all(
+    view.dimensions.flatMap(async (d) => {
+      const cubeDimension = d.cubeDimensions[0];
+      const name = getName(cubeDimension, { locale });
+      const datatype = cubeDimension.datatype;
+      const iri = cubeDimension.path?.value;
 
-    return {
-      iri,
-      name,
-      min,
-      max,
-      datatype: cubeDimension.datatype,
-      dimension: d,
-    };
-  });
-  return uniqBy(dimensions, "iri");
+      if (!iri) {
+        console.error("Dimension without valid path", cubeDimension);
+        return null;
+      }
+      const baseDimension = {
+        name,
+        iri,
+        datatype,
+        dimension: d,
+        type: "other" as const,
+      };
+
+      const type = ns.getDimensionTypeFromIri({ iri });
+
+      if (type === "measure") {
+        const min = cubeDimension.minInclusive ? +cubeDimension.minInclusive.value : undefined;
+        const max = cubeDimension.maxInclusive ? +cubeDimension.maxInclusive.value : undefined;
+
+        return {
+          ...baseDimension,
+          iri,
+          type,
+          min,
+          max,
+        } as MeasureDimension;
+      }
+
+      if (type === "property") {
+        const values = await getDimensionValuesAndLabels({
+          view,
+          source: amdpSource,
+          dimensionKey: ns.stripNamespaceFromIri({ iri }),
+          namespace: ns.amdpProperty,
+          locale: defaultLocale,
+        });
+
+        return {
+          ...baseDimension,
+          iri,
+          type,
+          values,
+        } as PropertyDimension;
+      }
+
+      return baseDimension;
+    })
+  );
+
+  const validDimensions = dimensions.flatMap((d) => (d ? [d] : []));
+  return uniqBy(validDimensions, "iri");
 };
 
-export const fetchDimensions = async (iri: string, locale: string) => {
+export const fetchDimensions = async (iri: string, locale: string): Promise<DimensionsResult> => {
   const cube = await amdpSource.cube(iri);
   if (cube) {
     const view = View.fromCube(cube);
-
-    const dimensions = getDimensions(view);
-
-    const dataDimensions = await Promise.all(
-      dimensions.map(async (dimension) => {
-        if (!dimension.iri) return null;
-        const dimensionType = ns.getDimensionTypeFromIri({ iri: dimension.iri });
-        if (dimensionType === "property") {
-          const values = await getDimensionValuesAndLabels({
-            cube,
-            dimensionKey: ns.stripNamespaceFromIri({ iri: dimension.iri }),
-            namespace: ns.amdpProperty,
-            locale,
-          });
-          return {
-            type: dimensionType,
-            values,
-            ...dimension,
-          };
-        }
-
-        if (dimensionType === "measure") {
-          return {
-            type: dimensionType,
-            ...dimension,
-          };
-        }
-
-        return {
-          ...dimension,
-        };
-      })
-    );
-
+    const dimensions = await getDimensions(view, locale);
     return {
-      dimensions: dataDimensions,
+      property: dimensions.filter((d) => d.type === "property") as PropertyDimension[],
+      measure: dimensions.filter((d) => d.type === "measure") as MeasureDimension[],
+      other: dimensions.filter((d) => d.type === "other"),
     };
   }
   throw Error(`Cube not found: ${iri}`);
 };
 
 export const getDimensionValuesAndLabels = async ({
-  cube,
+  view,
+  source,
   dimensionKey,
   namespace,
   filters,
   locale = defaultLocale,
 }: {
-  cube: Cube;
+  view: View;
+  source: Source;
   dimensionKey: string;
   namespace: NamespaceBuilder<string>;
   filters?: Filters;
   locale?: string;
 }): Promise<{ iri: string; name: string; view: View; source: Source }[]> => {
-  const view = getView(cube);
-  const source = cube.source;
-
   const lookup = LookupSource.fromSource(source);
 
   const queryFilters = filters

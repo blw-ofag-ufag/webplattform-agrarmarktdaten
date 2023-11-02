@@ -63,8 +63,8 @@ export const getDimensionTypeFromIri = ({ iri }: { iri: string }): DimensionType
 
   if (!matches) {
     // Warn?
-    return iri;
+    return "other";
   }
 
-  return matches[1];
+  return matches[1] as DimensionType;
 };

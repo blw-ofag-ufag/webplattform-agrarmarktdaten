@@ -26,10 +26,18 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
+import { getDimensionTypeFromIri } from "@/lib/namespace";
 import { useLocale } from "@/lib/use-locale";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { fetchCube, fetchDimensions, fetchObservations, lindasClient } from "./api/use-sparql";
+import {
+  CubeResult,
+  DimensionsResult,
+  fetchCube,
+  fetchDimensions,
+  fetchObservations,
+  lindasClient,
+} from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -94,7 +102,7 @@ const DataBrowser = () => {
     locale,
   });
 
-  const cubeQuery = useQuery<any, Error>({
+  const cubeQuery = useQuery<CubeResult, Error>({
     queryKey: ["cube"],
     queryFn: () =>
       fetchCube(
@@ -102,7 +110,7 @@ const DataBrowser = () => {
       ),
   });
 
-  const dimensionsQuery = useQuery<any, Error>({
+  const dimensionsQuery = useQuery<DimensionsResult, Error>({
     queryKey: ["dimensions", locale],
     queryFn: () =>
       fetchDimensions(
@@ -116,8 +124,8 @@ const DataBrowser = () => {
       "observations",
       "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month",
     ],
-    queryFn: () => fetchObservations(cubeQuery.data.view),
     enabled: cubeQuery.isSuccess,
+    queryFn: () => fetchObservations(cubeQuery.data?.view),
   });
 
   const resultCount = observationsQuery.data?.length;
@@ -197,13 +205,13 @@ const DataBrowser = () => {
                 </Alert>
               )}
 
-              {cubeQuery.isSuccess && dimensionsQuery.isSuccess && (
+              {cubeQuery.isSuccess && dimensionsQuery.isSuccess && dimensionsQuery.data && (
                 <>
                   {observationsQuery.isLoading && <CircularProgress size={24} />}
                   {observationsQuery.isSuccess && (
                     <Table
                       observations={observationsQuery.data}
-                      dimensions={dimensionsQuery.data.dimensions}
+                      dimensions={dimensionsQuery.data}
                     />
                   )}
                 </>
@@ -276,7 +284,13 @@ const ContentDrawer = ({
   );
 };
 
-const Table = ({ observations, dimensions }: { observations: any[]; dimensions: any }) => {
+const Table = ({
+  observations,
+  dimensions,
+}: {
+  observations: any[];
+  dimensions: DimensionsResult;
+}) => {
   const parsedObservations = useMemo(() => {
     if (!observations) return [];
 
@@ -284,37 +298,72 @@ const Table = ({ observations, dimensions }: { observations: any[]; dimensions: 
       const parsedObservation: any = {};
 
       Object.keys(observation).forEach((key) => {
-        const dimension = dimensions.find((d: any) => key === d.iri);
-        if (dimension) {
-          if (dimension.type === "property") {
+        const type = getDimensionTypeFromIri({ iri: key });
+
+        if (type === "measure") {
+          const dimension = dimensions.measure.find((d: any) => key === d.iri);
+          if (dimension) {
+            parsedObservation[key] = observation[key].value;
+          } else {
+            console.error(`Parsing Error: ${key} dimension not found`);
+            parsedObservation[key] = observation[key];
+          }
+        }
+
+        if (type === "property") {
+          const dimension = dimensions.property.find((d: any) => key === d.iri);
+          if (dimension) {
+            parsedObservation[key] = observation[key].value;
+          } else {
+            console.error(`Parsing Error: ${key} dimension not found`);
+            parsedObservation[key] = observation[key];
+          }
+        }
+
+        if (type === "property") {
+          const dimension = dimensions.property.find((d: any) => key === d.iri);
+          if (dimension) {
             const value = dimension.values.find((v: any) => v.iri === observation[key].value);
             if (value) {
-              parsedObservation[dimension.iri] = value.name;
+              parsedObservation[key] = value.name;
             } else {
-              console.error("Value not parsed", key, observation[key].value);
-              parsedObservation[dimension.iri] = "Error: Missing label";
+              console.error(
+                `Parsing Error: Unknown value ${observation[key].value} for dimension ${key}.`
+              );
+              parsedObservation[key] = observation[key].value;
             }
+          } else {
+            console.error(`Parsing Error: ${key} dimension not found`);
+            parsedObservation[key] = observation[key];
           }
-          if (dimensions.type === "measure") {
-            parsedObservation[dimension.iri] = observation[key].value;
+        }
+
+        if (type === "other") {
+          const dimension = dimensions.other.find((d: any) => key === d.iri);
+          if (dimension) {
+            parsedObservation[key] = observation[key].value;
+          } else {
+            console.error(`Parsing Error: ${key} dimension not found`);
+            parsedObservation[key] = observation[key];
           }
-        } else {
-          parsedObservation[key] = observation[key];
         }
       });
+
       parsedObservation["id"] = index;
       return parsedObservation;
     });
   }, [observations, dimensions]);
 
   const columns: GridColDef[] = useMemo(() => {
-    return dimensions.map((dimension: any) => {
-      return {
-        field: dimension.iri,
-        headerName: dimension.name,
-        //width: 200,
-      };
-    });
+    return Object.values(dimensions)
+      .flat()
+      .map((dimension) => {
+        return {
+          field: dimension.iri,
+          headerName: dimension.name,
+          //width: 200,
+        };
+      });
   }, [dimensions]);
 
   return <DataGrid rows={parsedObservations} columns={columns} autoPageSize />;
