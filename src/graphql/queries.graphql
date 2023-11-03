@@ -227,9 +227,7 @@ query InfoPage($locale: SiteLocale!) {
       }
       links {
         __typename
-        ...FileDownloadSection
-        ...HighlightSection
-        ...PowerBI
+        ...InternalLink
       }
     }
   }
