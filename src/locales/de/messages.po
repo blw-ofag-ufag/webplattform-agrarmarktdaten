@@ -323,7 +323,7 @@ msgstr "Produzenten- und Importpreis-Index"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "header.longTitle"
-msgstr "Bundesamt für Landwirtschaft"
+msgstr "Bundesamt für Landwirtschaft BLW"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
