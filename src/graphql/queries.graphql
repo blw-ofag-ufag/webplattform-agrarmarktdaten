@@ -320,6 +320,10 @@ query AllPowerBIReports($locale: SiteLocale!) {
     workspace {
       workspaceId
     }
+    pages {
+      name
+      pageId
+    }
   }
 }
 
@@ -614,6 +618,11 @@ fragment PowerBI on PowerBiReportRecord {
       name
       id
     }
+  }
+  pages {
+    name
+    id
+    pageId
   }
 }
 
