@@ -62,6 +62,7 @@ type Props = {
   shiftedRight?: boolean;
   titleTypographyProps?: TypographyProps;
   leadStructuredTextProps?: React.ComponentProps<typeof StructuredText>;
+  showTitleLine?: boolean;
 };
 
 export const Hero = (props: Props) => {
@@ -76,6 +77,7 @@ export const Hero = (props: Props) => {
     shiftedRight = false,
     titleTypographyProps,
     leadStructuredTextProps,
+    showTitleLine = true,
   } = props;
   const { classes, cx } = useStyles({ hero, bgColor });
   const { classes: herolayoutClasses } = useHeroStyles({
@@ -90,7 +92,7 @@ export const Hero = (props: Props) => {
         <GridContainer sx={{ height: "100%" }}>
           {shiftedLeft ? shifter : null}
           <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>
-            <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />
+            {showTitleLine && <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />}
             <Typography
               data-debug-good
               variant="display2"
