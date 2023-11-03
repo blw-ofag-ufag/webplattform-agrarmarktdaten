@@ -3,7 +3,7 @@ import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
 import React from "react";
 
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { makeStyles } from "./style-utils";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
@@ -18,12 +18,25 @@ const CONFIG: models.IReportEmbedConfiguration = {
   tokenType: models.TokenType.Embed,
 };
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
   root: {
     aspectRatio: "16/9",
     width: "100%",
   },
-});
+  navigationContainer: {
+    width: "100%",
+    overflowX: "auto",
+  },
+  navigationContent: {
+    display: "flex",
+    gap: theme.spacing(2),
+    width: "fit-content",
+    padding: theme.spacing(4),
+  },
+  navigationButton: {
+    whiteSpace: "nowrap",
+  },
+}));
 
 const getEmbedUrl = (reportId: string, reportWorkspaceId: string) => {
   return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}`;
@@ -95,22 +108,20 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
         }}
       />
       {report && activePage && (
-        <Box sx={{ width: "100%", overflowX: "auto" }}>
-          <Box sx={{ display: "flex", gap: 2, width: "fit-content", p: 4 }}>
+        <div className={classes.navigationContainer}>
+          <div className={classes.navigationContent}>
             {pages.map((page) => (
               <Button
                 key={page.id}
+                className={classes.navigationButton}
                 variant={page.id === activePage.id ? "contained" : "outlined"}
-                onClick={() => {
-                  setActivePage(page);
-                }}
-                sx={{ whiteSpace: "nowrap" }}
+                onClick={() => setActivePage(page)}
               >
                 {page.name}
               </Button>
             ))}
-          </Box>
-        </Box>
+          </div>
+        </div>
       )}
     </>
   );
