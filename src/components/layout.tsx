@@ -39,6 +39,9 @@ interface Props {
 }
 
 const useStyles = makeStyles()({
+  headerContainer: {
+    zIndex: 10,
+  },
   backButton: {
     position: "absolute",
     width: "100%",
@@ -70,10 +73,10 @@ export const AppLayout = (props: Props) => {
         sections:
           allMarkets
             ?.map((market) => {
-            return {
-              title: market.title as string,
-              href: `/market/${market.slug}`,
-            };
+              return {
+                title: market.title as string,
+                href: `/market/${market.slug}`,
+              };
             })
             .sort((a, b) => a.title.localeCompare(b.title)) ?? [],
       },
@@ -82,10 +85,10 @@ export const AppLayout = (props: Props) => {
         sections:
           allFocusArticles
             ?.map((focus) => {
-            return {
-              title: focus.title as string,
-              href: `/focus/${focus.slug}`,
-            };
+              return {
+                title: focus.title as string,
+                href: `/focus/${focus.slug}`,
+              };
             })
             .sort((a, b) => a.title.localeCompare(b.title)) ?? [],
       },
@@ -125,7 +128,7 @@ export const AppLayout = (props: Props) => {
           [theme.breakpoints.up("lg")]: { display: "flex", justifyContent: "center" },
         }}
       >
-        <GridContainer disableItemMargin>
+        <GridContainer disableItemMargin className={classes.headerContainer}>
           <Header
             closeLabel={t({ id: "header.close", message: "Close" })}
             shortTitle={t({ id: "header.shortTitle", message: "BLW" })}
