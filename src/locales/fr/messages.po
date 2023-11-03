@@ -63,6 +63,11 @@ msgid "menu.analysis"
 msgstr "Analyses"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr "Office fédéral de l'agriculture OFAG"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.aria.clear"
 msgstr "Réinitialiser les filtres"
@@ -73,8 +78,18 @@ msgid "filters.select.clear"
 msgstr "Réinitialiser les filtres"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Fermer"
+
+#. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data"
+msgstr "Données"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.data"
 msgstr "Données"
 
 #. js-lingui-explicit-id
@@ -139,6 +154,11 @@ msgid "data.filters.indicator"
 msgstr "Indicateur"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.info"
+msgstr "Informations"
+
+#. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
 msgstr "-"
@@ -178,6 +198,11 @@ msgstr "Metadata"
 #: src/pages/data.tsx
 msgid "data.metadata.title"
 msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.methods"
+msgstr "Méthodes"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

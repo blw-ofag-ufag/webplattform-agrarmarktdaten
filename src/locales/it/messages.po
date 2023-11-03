@@ -78,6 +78,11 @@ msgid "homepage.section.data"
 msgstr "Dati"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.data"
+msgstr "Dati"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.hero.title"
 msgstr "Scarica i dati"
@@ -139,6 +144,11 @@ msgid "data.filters.indicator"
 msgstr "Indicatore"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.info"
+msgstr "Info"
+
+#. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
 msgid "infografic"
 msgstr "-"
@@ -178,6 +188,11 @@ msgstr "Metadata"
 #: src/pages/data.tsx
 msgid "data.metadata.title"
 msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.methods"
+msgstr "Metodi"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

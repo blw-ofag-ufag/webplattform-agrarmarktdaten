@@ -15,7 +15,7 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
-      <Hero title={termsPage.title} lead={termsPage.lead} shiftedLeft />
+      <Hero title={termsPage.title} lead={termsPage.lead} shiftedLeft showTitleLine={false} />
       <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
         <div className={classes.content}>
           {termsPage.content && <StructuredText data={termsPage.content} />}
