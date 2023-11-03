@@ -338,7 +338,7 @@ msgstr "Info"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.methods"
-msgstr "Methods"
+msgstr "Methoden"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
