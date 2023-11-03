@@ -25,6 +25,7 @@ const HighlightSection = (props: Props) => {
         paddingBottom: s(12),
         paddingTop: s(15),
         marginTop: s(10),
+        marginBottom: s(10),
       }}
     >
       <Box
