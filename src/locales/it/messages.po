@@ -37,8 +37,8 @@ msgid "infografic.date"
 msgstr "-"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.about_us.label"
 msgstr "Chi siamo"
 
@@ -78,11 +78,6 @@ msgid "homepage.section.data"
 msgstr "Dati"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.data"
-msgstr "Dati"
-
-#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.hero.title"
 msgstr "Scarica i dati"
@@ -108,7 +103,7 @@ msgid "menu.focus"
 msgstr "Focus"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "contact.follow.us"
 msgstr "Rimanere informati"
 
@@ -118,8 +113,8 @@ msgid "data.filters.from"
 msgstr "Da"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.furtherinformation"
 msgstr "Ulteriori informazioni"
 
@@ -129,7 +124,7 @@ msgid "cta.back"
 msgstr "Indietro"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.impressum"
 msgstr "Contatto"
 
@@ -142,11 +137,6 @@ msgstr "-"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.indicator"
 msgstr "Indicatore"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.info"
-msgstr "Info"
 
 #. js-lingui-explicit-id
 #: src/components/homepage/infografik-teaser.tsx
@@ -190,11 +180,6 @@ msgid "data.metadata.title"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.methods"
-msgstr "Metodi"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
 msgstr "Mese"
@@ -225,7 +210,7 @@ msgid "blogpost.publishedDate"
 msgstr "Pubblicato il"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.legal"
 msgstr "Missione e base giuridica"
 
@@ -266,17 +251,17 @@ msgid "data.actions.query"
 msgstr "SPARQL query"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.newsletter"
 msgstr "Abbonarsi alla newsletter"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.terms"
 msgstr "Condizioni d’uso"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.id"
 msgstr "L'Ufficio federale dell'agricoltura UFAG è il centro di competenza nazionale per la politica agricola svizzera. Tra i suoi compiti rientra il monitoraggio indipendente del mercato (art. 27 della legge sull'agricoltura, LAgr). L'UFAG rileva e pubblica indicatori di mercato, come prezzi e quantità, lungo l'intera catena del valore dei principali mercati agroalimentari della Svizzera. L'obiettivo è aumentare la trasparenza del mercato e mostrare l’evoluzione a lungo termine."
 
@@ -306,32 +291,32 @@ msgid "data.filters.year"
 msgstr "Anno"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.report"
 msgstr "Rapporto Agricolo"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.blw"
 msgstr "L'Ufficio federale dell'agricoltura"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.feedback"
 msgstr "Feedback"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.priceindex"
 msgstr "Indice nazionale dei prezzi al consumo"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.importpriceindex"
 msgstr "Indice dei prezzi alla produzione e all'importazione"
 
@@ -357,6 +342,7 @@ msgstr "Metodi"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
+#: src/components/layout.tsx
 msgid "header.close"
 msgstr "Chiudi"
 
@@ -364,4 +350,34 @@ msgstr "Chiudi"
 #: src/components/layout.tsx
 msgid "header.shortTitle"
 msgstr "UFAG"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Filters.tsx
+msgid "select.all"
+msgstr "Seleziona tutto"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.focus"
+msgstr "Focus"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.market"
+msgstr "Mercato"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.noOptions"
+msgstr "Nessuna opzione"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.label"
+msgstr "Ricerca"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Sort.tsx
+msgid "sort.labe"
+msgstr "Ordina per"
 
