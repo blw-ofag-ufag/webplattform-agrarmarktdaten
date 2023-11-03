@@ -149,6 +149,7 @@ export const AppLayout = (props: Props) => {
         <GridContainer>
           <Menu
             sx={{ borderBottom: "none", ml: "-12px" }}
+            closeLabel={t({ id: "header.close", message: "Close" })}
             ContentWrapperProps={{
               sx: {
                 px: "0!important",
