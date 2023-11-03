@@ -22,6 +22,8 @@ module.exports = withBundleAnalyzer(
       defaultLocale,
     },
 
+    transpilePackages: ["jotai-devtools"],
+
     pageExtensions: ["js", "ts", "tsx", "mdx"],
 
     images: {
