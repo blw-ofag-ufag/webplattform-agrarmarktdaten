@@ -11,10 +11,8 @@ const queryClient = new QueryClient();
 
 export default function Analysis({
   analysisPage,
-  allBlogPosts,
   allFocusArticles,
   allMarketArticles,
-  _allBlogPostsMeta,
 }: GQL.AnalysisPageQuery) {
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
@@ -28,7 +26,7 @@ export default function Analysis({
           bgColor={c.cobalt[100]}
           shiftedRight
         />
-        <BlogpostGrid blogposts={allBlogPosts} totalBlogpostCount={_allBlogPostsMeta.count} />
+        <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
       </AppLayout>
     </QueryClientProvider>
   );
@@ -38,9 +36,7 @@ export const getStaticProps = async (context: $FixMe) => {
   const result = await client
     .query<GQL.AnalysisPageQuery>(
       GQL.AnalysisPageDocument,
-      {
-        locale: context.locale,
-      },
+      { locale: context.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();

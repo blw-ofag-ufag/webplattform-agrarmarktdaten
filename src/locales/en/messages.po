@@ -6,13 +6,16 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: AMDP\n"
 "Language: en\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
 
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
+#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
@@ -45,12 +48,6 @@ msgid "data.filters.addedValue"
 msgstr "Added value"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.report"
-msgstr "Agricultural report"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.all"
 msgstr "All"
@@ -64,22 +61,6 @@ msgstr "Show all posts"
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analysis"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "header.shortTitle"
-msgstr "FOAG"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.blw"
-msgstr "Federal Office for Agriculture"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "header.longTitle"
-msgstr "Federal Office for Agriculture FOAG"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -115,12 +96,6 @@ msgstr "Data download"
 #: src/pages/data.tsx
 msgid "data.actions.download"
 msgstr "Data download"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.feedback"
-msgstr "Feedback"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -190,12 +165,6 @@ msgid "button.infografic.teaser"
 msgstr "-"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.priceindex"
-msgstr "National Consumer Price Index"
-
-#. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "Learn more"
@@ -254,12 +223,6 @@ msgstr "Production system"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.products"
 msgstr "Product list"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "footer.importpriceindex"
-msgstr "Producer and Import Price Index"
 
 #. js-lingui-explicit-id
 #: src/pages/blog/[slug].tsx
@@ -346,3 +309,64 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Year"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.report"
+msgstr "Agricultural report"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.blw"
+msgstr "Federal Office for Agriculture"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.priceindex"
+msgstr "National Consumer Price Index"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "footer.importpriceindex"
+msgstr "Producer and Import Price Index"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr "Federal Office for Agriculture FOAG"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.data"
+msgstr "Data"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.info"
+msgstr "Info"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.methods"
+msgstr "Methods"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Close"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.shortTitle"
+msgstr "FOAG"
+

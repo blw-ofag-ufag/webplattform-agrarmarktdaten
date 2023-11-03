@@ -1,0 +1,286 @@
+import {
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Typography,
+  FormLabel,
+  Autocomplete,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
+import * as GQL from "@/graphql";
+import { GridContainer, GridWrap, GridWrapElement } from "@/components/Grid";
+import DoneIcon from "@mui/icons-material/Done";
+import { makeStyles } from "@/components/style-utils";
+import { SortBy } from "../BlogpostGrid";
+import { Trans } from "@lingui/macro";
+import { SEARCH_BUILD_TRIGGER } from "@/domain/env";
+import { client } from "@/lib/dato";
+import * as React from "react";
+import { SchemaTypes } from "@datocms/cma-client-browser";
+import { useRouter } from "next/router";
+import { useDebounce } from "@/lib/useDebounce";
+import SearchIcon from "@/icons/icons-jsx/control/IcSearch";
+import { t } from "@lingui/macro";
+
+const useStyles = makeStyles()((theme) => ({
+  menuItem: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  label: {
+    color: theme.palette.monochrome[800],
+    fontSize: "18px!important",
+    marginBottom: "8px",
+  },
+  searchField: {
+    paddingLeft: 0,
+  },
+  sortRoot: {
+    display: "flex",
+    alignItems: "center",
+  },
+  sortLabel: {
+    color: theme.palette.monochrome[400],
+    fontSize: "14px!important",
+    marginRight: "5px",
+  },
+  //Could not add a new variant in the there so styled things here for the moment
+  selectNaked: {
+    backgroundColor: "transparent",
+    width: "fit-content",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+    "& .MuiSelect-icon": {
+      fontSize: "1rem",
+    },
+    ".MuiInputBase-input": {
+      paddingRight: "25px!important",
+    },
+    ".MuiOutlinedInput-input": {
+      fontSize: "14px",
+      padding: 0,
+    },
+  },
+  sortContainer: {
+    marginTop: "10px",
+  },
+}));
+
+function highlightMatches(string: string, highlight: string) {
+  return string.replace(/\[h\](.+?)\[\/h\]/g, function (_a, b) {
+    const div = document.createElement("div");
+    div.innerHTML = highlight;
+    //@ts-ignore
+    div.children[0].innerText = b;
+    return div.children[0].outerHTML;
+  });
+}
+
+interface Props {
+  markets: GQL.SimpleMarketArticleFragment[];
+  selectedMarket: string;
+  onSelectMarket: (e: SelectChangeEvent) => void;
+  focusArticles: GQL.SimpleFocusArticleFragment[];
+  selectedFocusArticle: string;
+  onSelectFocusArticle: (e: SelectChangeEvent) => void;
+  sortBy: SortBy;
+  onSelectSortBy: (sortBy: SortBy) => void;
+}
+
+const Controls = (props: Props) => {
+  const {
+    markets,
+    focusArticles,
+    selectedMarket,
+    onSelectMarket,
+    selectedFocusArticle,
+    onSelectFocusArticle,
+    sortBy,
+    onSelectSortBy,
+  } = props;
+  const { classes } = useStyles();
+
+  const { locale, push } = useRouter();
+  const [searchString, setSearchString] = React.useState("");
+  const [searchOptions, setSearchOptions] = React.useState([] as SchemaTypes.SearchResult[]);
+  const [debouncedSearchString, setDebouncedSearchString] = useDebounce(searchString, 50);
+
+  React.useEffect(() => {
+    const search = async () => {
+      const { data } = await client.searchResults.rawList({
+        filter: {
+          fuzzy: true,
+          query: debouncedSearchString,
+          build_trigger_id: `${SEARCH_BUILD_TRIGGER}`,
+          locale,
+        },
+        page: { limit: 20, offset: 0 },
+      });
+      return data;
+    };
+
+    search().then((searchResults) => {
+      setSearchOptions(searchResults);
+    });
+  }, [debouncedSearchString, locale]);
+
+  return (
+    <>
+      <GridContainer>
+        <GridWrap>
+          <GridWrapElement>
+            <FormLabel>
+              <Typography variant="body1" className={classes.label}>
+                <Trans id="filter.market">Market</Trans>
+              </Typography>
+            </FormLabel>
+            <Select
+              value={selectedMarket}
+              onChange={onSelectMarket}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              renderValue={(value) => {
+                const marketTitle = markets.filter((m) => m.id === value)[0]?.title;
+                return <Typography variant="body1">{marketTitle ?? "All"}</Typography>;
+              }}
+            >
+              <MenuItem className={classes.menuItem} value="all" divider>
+                <Trans id="select.all">All</Trans>
+                {selectedMarket === "all" && <DoneIcon />}
+              </MenuItem>
+              {markets.map((market) => (
+                <MenuItem className={classes.menuItem} key={market.id} value={market.id} divider>
+                  {market.title}
+                  {selectedMarket === market.id && <DoneIcon />}
+                </MenuItem>
+              ))}
+            </Select>
+          </GridWrapElement>
+          <GridWrapElement>
+            <FormLabel>
+              <Typography variant="body1" className={classes.label}>
+                <Trans id="filter.focus">Focus</Trans>
+              </Typography>
+            </FormLabel>
+            <Select
+              value={selectedFocusArticle}
+              onChange={onSelectFocusArticle}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+              renderValue={(value) => {
+                const focusArticleTitle = focusArticles.filter((m) => m.id === value)[0]?.title;
+                return <Typography variant="body1">{focusArticleTitle ?? "All"}</Typography>;
+              }}
+            >
+              <MenuItem value="all" divider className={classes.menuItem}>
+                <Trans id="select.all">All</Trans>
+                {selectedFocusArticle === "all" && <DoneIcon />}
+              </MenuItem>
+              {focusArticles.map((focusArticle) => (
+                <MenuItem
+                  key={focusArticle.id}
+                  value={focusArticle.id}
+                  divider
+                  className={classes.menuItem}
+                >
+                  {focusArticle.title}
+                  {selectedFocusArticle === focusArticle.id && <DoneIcon />}
+                </MenuItem>
+              ))}
+            </Select>
+          </GridWrapElement>
+          <GridWrapElement>
+            <FormLabel>
+              <Typography variant="body1" className={classes.label}>
+                <Trans id="search.label">Search</Trans>
+              </Typography>
+            </FormLabel>
+
+            <Autocomplete
+              id="search"
+              getOptionLabel={(option) => option.attributes?.highlight.body?.[0] ?? ""}
+              popupIcon={null}
+              onInputChange={(e, value, reason) => {
+                if (reason === "reset") {
+                  setSearchOptions([]);
+                  //We need to manually clear this otherwise if the user types too fast it won't clear and we get unwanted results
+                  setDebouncedSearchString("");
+                }
+              }}
+              renderOption={(props, option) => {
+                if (option.attributes?.highlight.body?.[0]) {
+                  const highlight = highlightMatches(
+                    option.attributes?.highlight.body?.[0],
+                    "<strong></strong>"
+                  );
+                  return (
+                    <MenuItem
+                      {...props}
+                      key={option.id}
+                      sx={{ whiteSpace: "normal", height: "fit-content" }}
+                    >
+                      <span dangerouslySetInnerHTML={{ __html: highlight }} />
+                    </MenuItem>
+                  );
+                }
+              }}
+              onChange={(_e, option) => {
+                if (option?.attributes.url) {
+                  push(option?.attributes.url);
+                }
+              }}
+              noOptionsText={t({ id: "search.noOptions", message: "No Options" })}
+              options={searchOptions.map((option) => option)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Search"
+                  variant="outlined"
+                  value={searchString}
+                  InputLabelProps={{ shrink: false }}
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon width={24} height={24} color={"#596978"} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  onChange={(e) => setSearchString(e.target.value)}
+                />
+              )}
+            />
+          </GridWrapElement>
+        </GridWrap>
+      </GridContainer>
+      <GridContainer className={classes.sortContainer}>
+        <GridWrap>
+          <GridWrapElement className={classes.sortRoot}>
+            <FormLabel>
+              <Typography variant="body1" className={classes.sortLabel}>
+                <Trans id="sort.labe">Sort by:</Trans>&nbsp;
+              </Typography>
+            </FormLabel>
+            <Select
+              className={classes.selectNaked}
+              value={sortBy}
+              onChange={(e) => onSelectSortBy(e.target.value as SortBy)}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              {(Object.keys(SortBy) as Array<keyof typeof SortBy>).map((sortByElem) => (
+                <MenuItem key={sortByElem} value={SortBy[sortByElem]} divider>
+                  {sortByElem}
+                </MenuItem>
+              ))}
+            </Select>
+          </GridWrapElement>
+        </GridWrap>
+      </GridContainer>
+    </>
+  );
+};
+
+export default Controls;

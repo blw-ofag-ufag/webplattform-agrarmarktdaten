@@ -92,8 +92,9 @@ export const AppLayout = (props: Props) => {
 
   return (
     <Box position="relative" minHeight="100vh" display="flex" flexDirection="column">
-      <LocaleSwitcher {...localeSwitcherProps} />
+      <LocaleSwitcher {...localeSwitcherProps} data-datocms-noindex />
       <Box
+        data-datocms-noindex
         sx={{
           borderBottom: `1px solid ${c.monochrome[200]}`,
           [theme.breakpoints.up("lg")]: { display: "flex", justifyContent: "center" },
@@ -120,7 +121,7 @@ export const AppLayout = (props: Props) => {
           zIndex: 10,
         }}
       >
-        <GridContainer>
+        <GridContainer data-datocms-noindex>
           <Menu
             sx={{ borderBottom: "none", ml: "-12px" }}
             closeLabel={t({ id: "header.close", message: "Close" })}
