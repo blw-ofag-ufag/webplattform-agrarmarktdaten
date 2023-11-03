@@ -227,6 +227,7 @@ query InfoPage($locale: SiteLocale!) {
       }
       links {
         __typename
+        ...InternalLink
         ...FileDownloadSection
         ...HighlightSection
         ...PowerBI
@@ -716,5 +717,8 @@ fragment InternalLink on RecordInterface {
   ... on BlogPostRecord {
     id
     slug
+  }
+  ... on DataPageRecord {
+    id
   }
 }
