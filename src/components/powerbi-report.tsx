@@ -46,7 +46,7 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
   const [accessToken, setAccessToken] = React.useState<string | undefined>(undefined);
   const [config, setConfig] = React.useState(CONFIG);
   const [report, setReport] = React.useState<Report | undefined>(undefined);
-  const [activePage, setActivePage] = React.useState<PowerBIPage>(pages[0]);
+  const [activePage, setActivePage] = React.useState<PowerBIPage | undefined>(pages[0]);
   const { classes } = useStyles();
 
   React.useEffect(() => {
@@ -72,14 +72,18 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
         embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
         tokenType: models.TokenType.Embed,
         accessToken,
-        // pageName is actually pageId, and displayPageName is actually pageName
-        pageName: activePage.id,
-        settings: {
-          navContentPaneEnabled: false,
-        },
+        ...(activePage
+          ? {
+              // pageName is actually pageId, and displayPageName is actually pageName
+              pageName: activePage.id,
+              settings: {
+                navContentPaneEnabled: false,
+              },
+            }
+          : {}),
       });
     }
-  }, [accessToken, activePage.id, reportId, reportWorkspaceId]);
+  }, [accessToken, activePage, reportId, reportWorkspaceId]);
 
   return (
     <>
@@ -90,7 +94,7 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
           setReport(embedObject as Report);
         }}
       />
-      {report && (
+      {report && activePage && (
         <Box sx={{ width: "100%", overflowX: "auto" }}>
           <Box sx={{ display: "flex", gap: 2, width: "fit-content", p: 4 }}>
             {pages.map((page) => (
