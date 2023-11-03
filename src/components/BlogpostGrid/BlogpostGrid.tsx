@@ -21,8 +21,8 @@ import dynamic from "next/dynamic";
 const Controls = dynamic(() => import("./internal/Controls"), { ssr: false });
 
 export enum SortBy {
-  Newest = "publishedDate_ASC",
-  Oldest = "publishedDate_DESC",
+  Newest = "publishedDate_DESC",
+  Oldest = "publishedDate_ASC",
 }
 
 interface Props {
