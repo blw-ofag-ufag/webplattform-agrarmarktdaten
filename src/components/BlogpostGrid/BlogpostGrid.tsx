@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { client } from "@/graphql";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 interface Props {
   blogposts: GQL.SimpleBlogPostFragment[];
@@ -21,9 +21,9 @@ const BlogPostGrid = (props: Props) => {
   const theme = useTheme();
   const { locale } = useRouter();
   const isLargeOrBigger = useMediaQuery(theme.breakpoints.up("lg"));
-  const { data } = useQuery(
-    ["blogposts", page],
-    async () => {
+  const { data } = useQuery({
+    queryKey: ["blogposts", page],
+    queryFn: async () => {
       const first = page === 1 ? 7 : 9;
       //first page has 7 articles, the remaining ones have 9
       const skip = page === 1 ? 0 : (page - 2) * 9 + 7;
@@ -39,11 +39,9 @@ const BlogPostGrid = (props: Props) => {
 
       return result.data?.allBlogPosts;
     },
-    {
-      initialData: blogposts,
-      keepPreviousData: true,
-    }
-  );
+    placeholderData: keepPreviousData,
+    initialData: blogposts,
+  });
 
   return (
     <Box sx={{ backgroundColor: c.cobalt[50], py: 8 }}>

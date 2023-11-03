@@ -25,17 +25,17 @@ import {
   createTheme,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtom, useAtomValue } from "jotai";
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { useLocale } from "@/lib/use-locale";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { DimensionsResult, lindasClient } from "./api/use-sparql";
+import { DimensionsResult } from "./api/use-sparql";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -48,6 +48,19 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
   },
 });
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
+
+/* const HydrateAtoms = ({ children }: PropsWithChildren) => {
+  useHydrateAtoms([[queryClientAtom, queryClient]]);
+  return children;
+};
+ */
 export function SafeHydrate({ children }: { children: React.ReactNode }) {
   const [display, setDisplay] = useState(false);
   useEffect(() => {
@@ -60,35 +73,32 @@ export default function DataPage(props: GQL.DataPageQuery) {
   const { allMarketArticles, allFocusArticles } = props;
   return (
     <SafeHydrate>
-      <QueryClientProvider client={lindasClient}>
-        <ReactQueryDevtools />
-        <ThemeProvider theme={blackAndWhiteTheme}>
-          <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-            <Stack flexGrow={1} minHeight={0}>
-              <Box
-                zIndex={0}
-                display="flex"
-                //justifyContent="stretch"
-                flexGrow={1}
-                minHeight={0}
-                sx={{
-                  borderTop: "1px solid",
-                  borderColor: "grey.300",
-                }}
-              >
-                <DataBrowser />
-              </Box>
-            </Stack>
-          </AppLayout>
-        </ThemeProvider>
-      </QueryClientProvider>
+      <ThemeProvider theme={blackAndWhiteTheme}>
+        <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+          <Stack flexGrow={1} minHeight={0}>
+            <Box
+              zIndex={0}
+              display="flex"
+              //justifyContent="stretch"
+              flexGrow={1}
+              minHeight={0}
+              sx={{
+                borderTop: "1px solid",
+                borderColor: "grey.300",
+              }}
+            >
+              <DataBrowser />
+            </Box>
+          </Stack>
+        </AppLayout>
+      </ThemeProvider>
+      <ReactQueryDevtools client={queryClient} />
     </SafeHydrate>
   );
 }
 
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
-  // const locale = useLocale();
   const contentRef = React.useRef<HTMLDivElement>(null);
   const indicator = useAtom(indicatorAtom);
   const [markets] = useAtom(marketsAtom);
