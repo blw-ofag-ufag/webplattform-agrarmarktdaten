@@ -6,17 +6,16 @@ import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 
 import { GraphqlProvider } from "@/graphql/api";
-import { localeAtom } from "@/lib/use-locale";
 import { i18n, Locale } from "@/locales/locales";
 import blwTheme from "@/theme/blw";
 import { createEmotionCache } from "@/theme/emotion-cache";
 import { setup as setupMatomo, useMatomo } from "@/utils/matomo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Provider, useSetAtom } from "jotai";
-import { PropsWithChildren, useEffect } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Provider } from "jotai";
 import { queryClientAtom } from "jotai-tanstack-query";
 import { useHydrateAtoms } from "jotai/react/utils";
+import { PropsWithChildren } from "react";
 
 setupMatomo();
 
@@ -39,12 +38,8 @@ export default function App({
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
   const router = useRouter();
-  const setLocale = useSetAtom(localeAtom);
 
   const locale = (router.locale || "de") as Locale;
-  useEffect(() => {
-    setLocale(locale);
-  }, [locale, setLocale]);
 
   useMatomo();
 
