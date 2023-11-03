@@ -718,4 +718,7 @@ fragment InternalLink on RecordInterface {
     id
     slug
   }
+  ... on DataPageRecord {
+    id
+  }
 }

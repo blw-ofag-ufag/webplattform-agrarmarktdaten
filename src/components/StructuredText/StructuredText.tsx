@@ -165,6 +165,10 @@ const StructuredText = (props: Props) => {
               url += `/analysis`;
               break;
             }
+            case "DataPageRecord": {
+              url += `/data`;
+              break;
+            }
           }
           return (
             <NextLink {...transformedMeta} legacyBehavior href={url}>
