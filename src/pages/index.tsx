@@ -48,6 +48,8 @@ export default function HomePage(props: GQL.HomePageQuery) {
         leadStructuredTextProps={{
           paragraphTypographyProps: { variant: "h3", fontWeight: "normal" },
         }}
+        // We vertically position the background on top so that sky is always visible
+        sx={{ "&&": { backgroundPosition: "center top" } }}
       />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
