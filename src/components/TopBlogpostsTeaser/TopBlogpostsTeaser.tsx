@@ -12,6 +12,16 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
+import { makeStyles } from "@/components/style-utils";
+
+const useStyles = makeStyles()(({ palette: c }) => ({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    mt: "40px",
+    mb: "40px",
+  },
+}));
 
 interface Props {
   blogposts: GQL.SimpleBlogPostFragment[];
@@ -22,6 +32,8 @@ export const TopBlogpostsTeaser = (props: Props) => {
   const isDesktop = useMediaQuery(b.up("xl"));
   const isTablet = useMediaQuery(b.between("md", "xl"));
   const isMobile = useMediaQuery(b.down("md"));
+
+  const { classes } = useStyles();
 
   const theme = useTheme();
 
@@ -152,10 +164,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
   })();
 
   return (
-    <GridContainer
-      disableItemMargin
-      sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}
-    >
+    <GridContainer disableItemMargin className={classes.container}>
       <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
         <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
       </Typography>
