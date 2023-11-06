@@ -14,7 +14,7 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
   }
   return (
     <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
-      <Hero title={legalPage.title} lead={legalPage.lead} shiftedLeft showTitleLine={false} />
+      <Hero title={legalPage.title} lead={legalPage.lead} showTitleLine={false} />
       <GridContainer
         sx={{
           mt: 4,
