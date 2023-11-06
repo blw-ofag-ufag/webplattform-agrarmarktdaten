@@ -20,7 +20,7 @@ jobs:
       - run: yarn typecheck
 
       - name: "Wait Vercel deploy"
-        uses: interactivethings/ixt-scripts@main/.github/workflows/wait-vercel-deploy
+        uses: interactivethings/ixt-scripts/.github/workflows/wait-vercel-deploy@main
         id: deployment-url
         env:
           VERCEL_PROJECT: QmZSbL5YTcU238YSiotopwWT6jVmV3BXbgRKVxjtZnJK35
