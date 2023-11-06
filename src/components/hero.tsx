@@ -1,4 +1,4 @@
-import { Box, Typography, TypographyProps } from "@mui/material";
+import { Box, BoxProps, Typography, TypographyProps } from "@mui/material";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
 import { StructuredTextGraphQlResponse } from "react-datocms";
@@ -63,6 +63,7 @@ type Props = {
   titleTypographyProps?: TypographyProps;
   leadStructuredTextProps?: React.ComponentProps<typeof StructuredText>;
   showTitleLine?: boolean;
+  sx?: BoxProps["sx"];
 };
 
 export const Hero = (props: Props) => {
@@ -78,6 +79,7 @@ export const Hero = (props: Props) => {
     titleTypographyProps,
     leadStructuredTextProps,
     showTitleLine = true,
+    sx,
   } = props;
   const { classes, cx } = useStyles({ hero, bgColor });
   const { classes: herolayoutClasses } = useHeroStyles({
@@ -88,7 +90,7 @@ export const Hero = (props: Props) => {
 
   return (
     <>
-      <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)}>
+      <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)} sx={sx}>
         <GridContainer sx={{ height: "100%" }}>
           {shiftedLeft ? shifter : null}
           <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>

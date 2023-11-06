@@ -10,6 +10,7 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { Download } from "@/icons/icons-jsx/control";
 import { GridContainer } from "@/components/Grid";
 import { makeStyles } from "@/components/style-utils";
+import Link from "next/link";
 
 const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
   root0: {
@@ -47,6 +48,8 @@ export default function HomePage(props: GQL.HomePageQuery) {
         leadStructuredTextProps={{
           paragraphTypographyProps: { variant: "h3", fontWeight: "normal" },
         }}
+        // We vertically position the background on top so that sky is always visible
+        sx={{ "&&": { backgroundPosition: "center top" } }}
       />
       <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
         <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
@@ -75,7 +78,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
                     from the year 2000 onwards.
                   </Trans>
                 </Typography>
-                <Button className={classes.root0}>
+                <Button className={classes.root0} component={Link} href="/data">
                   <Trans id="homepage.section.data.button">Learn More</Trans>
                 </Button>
               </Box>
