@@ -146,7 +146,7 @@ const useStyles = makeStyles<void, "full" | "third">()(
     content: {
       [`.${classes.full} &`]: {
         display: "grid",
-        gridTemplateRows: "min-content auto min-content auto",
+        gridTemplateRows: "min-content min-content min-content auto",
         padding: s(5, 7),
         flexGrow: 0,
         flexShrink: 0,
