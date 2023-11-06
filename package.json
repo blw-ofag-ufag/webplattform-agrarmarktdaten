@@ -25,7 +25,8 @@
     "postversion": "git push --follow-tags",
     "icons:transform": "svgr -d src/icons/icons-jsx src/icons/icons-svg --replace-attr-values '#000=currentColor' --icon",
     "prepare": "husky install",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "postinstall": "yarn graphql:codegen; yarn locales:compile"
   },
   "dependencies": {
     "@babel/standalone": "^7.8.4",

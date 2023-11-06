@@ -21,7 +21,6 @@ jobs:
       - run: yarn typecheck
 
       - name: Wait for Vercel deploy
-
         env:
           VERCEL_PROJECT: QmZSbL5YTcU238YSiotopwWT6jVmV3BXbgRKVxjtZnJK35
           VERCEL_TEAM: team_QR1NbYAXZYW9kP1RAF8UIjLl
