@@ -1,13 +1,9 @@
-import React from "react";
+import { BlogpostGrid } from "@/components/BlogpostGrid";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { c } from "@interactivethings/swiss-federal-ci";
-import { BlogpostGrid } from "@/components/BlogpostGrid";
-import { QueryClientProvider, QueryClient } from "react-query";
-
-const queryClient = new QueryClient();
 
 export default function Analysis({
   analysisPage,
@@ -18,17 +14,15 @@ export default function Analysis({
     return null;
   }
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-        <Hero
-          title={analysisPage?.title}
-          lead={analysisPage?.lead}
-          bgColor={c.cobalt[100]}
-          shiftedRight
-        />
-        <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
-      </AppLayout>
-    </QueryClientProvider>
+    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+      <Hero
+        title={analysisPage?.title}
+        lead={analysisPage?.lead}
+        bgColor={c.cobalt[100]}
+        shiftedRight
+      />
+      <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
+    </AppLayout>
   );
 }
 

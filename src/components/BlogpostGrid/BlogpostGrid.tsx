@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { client } from "@/graphql";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { SelectChangeEvent } from "@mui/material/Select";
 import {
   useQueryState,
@@ -51,9 +51,9 @@ const BlogPostGrid = (props: Props) => {
     setFocusArticle(event.target.value as string);
   };
 
-  const { data } = useQuery(
-    ["blogposts", page, market, focusArticle, order],
-    async () => {
+  const { data } = useQuery({
+    queryKey: ["blogposts", page, market, focusArticle, order],
+    queryFn: async () => {
       const first = page === 1 ? 7 : 9;
       //first page has 7 articles, the remaining ones have 9
       const skip = page === 1 ? 0 : (page - 2) * 9 + 7;
@@ -83,8 +83,8 @@ const BlogPostGrid = (props: Props) => {
 
       return result.data;
     },
-    { keepPreviousData: true }
-  );
+    placeholderData: keepPreviousData,
+  });
 
   return (
     <Box sx={{ backgroundColor: c.cobalt[50], py: 8 }}>
