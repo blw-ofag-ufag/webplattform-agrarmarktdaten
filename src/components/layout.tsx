@@ -91,7 +91,13 @@ export const AppLayout = (props: Props) => {
       };
 
   return (
-    <Box position="relative" minHeight="100vh" display="flex" flexDirection="column">
+    <Box
+      component="main"
+      position="relative"
+      minHeight="100vh"
+      display="flex"
+      flexDirection="column"
+    >
       <LocaleSwitcher {...localeSwitcherProps} data-datocms-noindex />
       <Box
         data-datocms-noindex
@@ -158,12 +164,12 @@ export const AppLayout = (props: Props) => {
           </div>
         )}
         {children}
+        {router.pathname !== "/data" ? <ScrollToTop /> : null}
       </Box>
 
       {router.pathname !== "/data" && (
         <div className="debug-warn">
           <Footer />
-          <ScrollToTop />
         </div>
       )}
     </Box>

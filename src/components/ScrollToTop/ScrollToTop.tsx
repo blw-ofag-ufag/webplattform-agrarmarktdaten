@@ -1,40 +1,58 @@
-import { Box, Fade } from "@mui/material";
 import * as React from "react";
 import ChevronUp from "@/icons/icons-jsx/control/IcControlChevronUp";
-import { useScrollTrigger } from "@/lib/useScrollTrigger";
 import { makeStyles } from "@/components/style-utils";
+import { IconButton } from "@mui/material";
 
-const useStyles = makeStyles()(({ palette: c }) => ({
-  root: {
-    width: "54px",
-    height: "54px",
-    cursor: "pointer",
+const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => ({
+  wrapper: {
+    "--buttonPadding": "1rem",
+    "--buttonSize": "64px",
+
+    [b.down("xl")]: {
+      "--buttonSize": "2.625rem",
+    },
+
+    position: "absolute",
+
+    // Should start after the fold
+    top: "80vh",
+    bottom: "calc(-1 * (var(--buttonSize) + var(--buttonPadding)))",
+    width: "var(--buttonSize)",
+    right: "var(--buttonPadding)",
+  },
+  scrollToTop: {
+    top: "calc(100vh - 5rem)",
+    width: "var(--buttonSize)",
+    height: "var(--buttonSize)",
+
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+
     backgroundColor: c.background.paper,
-    padding: "2px",
     border: `1px solid ${c.cobalt[400]}`,
     borderRadius: "4px",
-    position: "fixed",
-    bottom: 100,
-    right: 20,
-    zIndex: 10,
     "&:hover": {
       backgroundColor: c.cobalt[100],
     },
+
+    boxShadow: z[12],
+
+    position: "sticky",
   },
 }));
 
 const ScrollToTop = () => {
   const { classes } = useStyles();
-  const trigger = useScrollTrigger({ threshold: 200 });
   return (
-    <Fade in={trigger}>
-      <Box
+    <div className={classes.wrapper}>
+      <IconButton
         onClick={() => window?.scrollTo({ top: 0, behavior: "smooth" })}
-        className={classes.root}
+        className={classes.scrollToTop}
       >
         <ChevronUp width={48} height={48} />
-      </Box>
-    </Fade>
+      </IconButton>
+    </div>
   );
 };
 
