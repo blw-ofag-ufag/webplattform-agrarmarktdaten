@@ -2,6 +2,7 @@ import { chromium, devices } from "playwright";
 import { breakpoints } from "@interactivethings/swiss-federal-ci";
 
 const main = async () => {
+  const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
   const browser = await chromium.launch({
     headless: false,
   });
@@ -17,7 +18,7 @@ const main = async () => {
     });
 
     const page = await pageContext.newPage();
-    await page.goto(`http://localhost:3000/${url}`);
+    await page.goto(`${baseURL}/${url}`);
 
     for (const [name, width] of Object.entries(breakpoints)) {
       // Set viewport size for the current breakpoint
