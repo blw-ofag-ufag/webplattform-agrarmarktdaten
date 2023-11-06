@@ -1,7 +1,7 @@
 import { chromium, devices } from "playwright";
 import { breakpoints } from "@interactivethings/swiss-federal-ci";
 
-(async () => {
+const main = async () => {
   const browser = await chromium.launch({
     headless: false,
   });
@@ -37,4 +37,9 @@ import { breakpoints } from "@interactivethings/swiss-federal-ci";
   }
 
   await browser.close();
-})();
+};
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
