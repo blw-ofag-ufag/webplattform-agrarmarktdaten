@@ -90,7 +90,7 @@ const StructuredText = (props: Props) => {
                 data-debug-good
                 variant={`h${node.level}`}
                 component={`h${node.level}`}
-                sx={{ mb: s(6) }}
+                sx={{ mt: 6, mb: 4 }}
               >
                 {children}
               </Typography>
@@ -163,6 +163,10 @@ const StructuredText = (props: Props) => {
             }
             case "AnalysisPageRecord": {
               url += `/analysis`;
+              break;
+            }
+            case "DataPageRecord": {
+              url += `/data`;
               break;
             }
           }
@@ -242,7 +246,7 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography ref={ref} id={id} data-debug-good variant="h1" component="h1" sx={{ mb: 5, mt: 3 }}>
+    <Typography ref={ref} id={id} data-debug-good variant="h1" component="h1" sx={{ mb: 5, mt: 5 }}>
       {children}
     </Typography>
   );

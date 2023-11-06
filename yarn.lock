@@ -1457,6 +1457,28 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
+"@datocms/cma-client-browser@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@datocms/cma-client-browser/-/cma-client-browser-3.0.1.tgz#0eaa1dd7a40450639735dbbca0abb8f53bb74f21"
+  integrity sha512-UmpOVI21FfbAs71cskhKBg2LzzsYVqxPs1lgUw+LwqU8JOayxzWX9L2I8qylp++TTV0DSb2xX+TRXnuF3oHFiQ==
+  dependencies:
+    "@datocms/cma-client" "^3.0.1"
+    "@datocms/rest-client-utils" "^3.0.1"
+
+"@datocms/cma-client@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@datocms/cma-client/-/cma-client-3.0.1.tgz#3bd12c401d958d2540a3056430dbe1c3d44e6977"
+  integrity sha512-wRGnNaD/wsv3dQlbsHZ9MDEpWYk6PyYERwSweRARq9keHQqkUSxwX0116Ubh5gjETyFdkUdRCCINmppiuv78yQ==
+  dependencies:
+    "@datocms/rest-client-utils" "^3.0.1"
+
+"@datocms/rest-client-utils@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@datocms/rest-client-utils/-/rest-client-utils-3.0.1.tgz#52249addf6769e18d775b00a9382cc38f4660041"
+  integrity sha512-+LzQynt4TghFclPjREbAY9AfaksYFD2kOR5oIhOZL9xLnFz8d4eKJbph8IFkZd314vBFjyM9cby+ScEZpQkr3Q==
+  dependencies:
+    async-scheduler "^1.4.4"
+
 "@discoveryjs/json-ext@^0.5.3":
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
@@ -6641,6 +6663,11 @@ async-limiter@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
   integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
+
+async-scheduler@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/async-scheduler/-/async-scheduler-1.4.4.tgz#68004f38483eb78457268d22c8fa02c90cd22202"
+  integrity sha512-KVWlF6WKlUGJA8FOJYVVk7xDm3PxITWXp9hTeDsXMtUPvItQ2x6g2rIeNAa0TtAiiWvHJqhyA3wo+pj0rA7Ldg==
 
 async@^3.2.3:
   version "3.2.4"
@@ -12418,6 +12445,11 @@ minizlib@^2.1.1:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
+mitt@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.1.tgz#ea36cf0cc30403601ae074c8f77b7092cdab36d1"
+  integrity sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==
+
 mixme@^0.5.1:
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/mixme/-/mixme-0.5.9.tgz#a5a58e17354632179ff3ce5b0fc130899c8ba81c"
@@ -12525,6 +12557,13 @@ neo-async@^2.5.0, neo-async@^2.6.1, neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+next-usequerystate@^1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/next-usequerystate/-/next-usequerystate-1.8.4.tgz#81125aa3dd5a0c6afbc21da8c1f663ee2e0a0350"
+  integrity sha512-V4xMh87cu950Zy1Jpw/H8GwWxAeAmqnLNJ8hAl5bdEWpyZV4UIKdkJePKMCUy1+h254EXGmY83BuCGJOASJRVg==
+  dependencies:
+    mitt "^3.0.1"
 
 next@^13.4.4:
   version "13.4.19"

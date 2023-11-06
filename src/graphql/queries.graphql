@@ -227,6 +227,7 @@ query InfoPage($locale: SiteLocale!) {
       }
       links {
         __typename
+        ...InternalLink
         ...FileDownloadSection
         ...HighlightSection
         ...PowerBI
@@ -262,9 +263,6 @@ query AnalysisPage($locale: SiteLocale!) {
       ...FullSEO
     }
   }
-  _allBlogPostsMeta {
-    count
-  }
 
   allMarketArticles(locale: $locale) {
     ...SimpleMarketArticle
@@ -273,15 +271,48 @@ query AnalysisPage($locale: SiteLocale!) {
   allFocusArticles(locale: $locale) {
     ...SimpleFocusArticle
   }
+}
 
-  allBlogPosts(locale: $locale, first: 7) {
+query paginatedFilteredBlogposts(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $marketFilter: ItemId
+  $focusFilter: ItemId
+  $orderBy: [BlogPostModelOrderBy]
+) {
+  blogposts: allBlogPosts(
+    locale: $locale
+    first: $first
+    skip: $skip
+    filter: {
+      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+    }
+    orderBy: $orderBy
+  ) {
     ...SimpleBlogPost
+  }
+  blogpostCount: _allBlogPostsMeta(
+    locale: $locale
+    filter: {
+      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+    }
+  ) {
+    count
   }
 }
 
-query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
-  allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+query paginatedBlogposts(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $orderBy: [BlogPostModelOrderBy]
+) {
+  blogposts: allBlogPosts(locale: $locale, first: $first, skip: $skip, orderBy: $orderBy) {
     ...SimpleBlogPost
+  }
+  blogpostCount: _allBlogPostsMeta(locale: $locale) {
+    count
   }
 }
 
@@ -716,5 +747,8 @@ fragment InternalLink on RecordInterface {
   ... on BlogPostRecord {
     id
     slug
+  }
+  ... on DataPageRecord {
+    id
   }
 }
