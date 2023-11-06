@@ -106,7 +106,6 @@ const DataBrowser = () => {
   const observations = useAtomValue(observationsAtom);
   const dimensions = useAtomValue(dimensionsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
-  console.log({ observations, observationsQueryStatus });
 
   console.log({
     indicator,
@@ -272,13 +271,12 @@ const Table = ({
   observations: $FixMe[];
   dimensions: DimensionsResult;
 }) => {
-  console.log({ observations });
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
       .map((dimension) => {
         return {
-          field: dimension.iri,
+          field: dimension.key ?? dimension.iri,
           headerName: dimension.name,
           //width: 200,
         };

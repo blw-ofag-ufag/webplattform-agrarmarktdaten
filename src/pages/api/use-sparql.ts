@@ -1,3 +1,4 @@
+import { DataDimension, Measure, Property, dimensionIriMap } from "@/domain/data";
 import { defaultLocale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
 import { Literal, NamedNode } from "@rdfjs/types";
@@ -34,17 +35,20 @@ export type BaseDimension = {
   datatype?: CubeDimension["datatype"];
   name: string;
   type: DimensionType;
+  key?: DataDimension;
 };
 
 export type PropertyDimension = BaseDimension & {
   type: "property";
   values: DimensionValue[];
+  key: Property;
 };
 
 export type MeasureDimension = BaseDimension & {
   min: number;
   max: number;
   type: "measure";
+  key: Measure;
 };
 export type DimensionsResult = {
   property: PropertyDimension[];
@@ -140,6 +144,7 @@ export const getDimensions = async (
           type,
           min,
           max,
+          key: dimensionIriMap?.[iri]?.key,
         } as MeasureDimension;
       }
 
@@ -149,7 +154,7 @@ export const getDimensions = async (
           source: amdpSource,
           dimensionKey: ns.stripNamespaceFromIri({ iri }),
           namespace: ns.amdpProperty,
-          locale: defaultLocale,
+          locale,
         });
 
         return {
@@ -157,6 +162,7 @@ export const getDimensions = async (
           iri,
           type,
           values,
+          key: dimensionIriMap?.[iri]?.key,
         } as PropertyDimension;
       }
 
@@ -269,11 +275,11 @@ export const parseObservations = (observations: $FixMe, dimensions: DimensionsRe
 
     Object.keys(observation).forEach((key) => {
       const type = ns.getDimensionTypeFromIri({ iri: key });
-
       if (type === "measure") {
         const dimension = dimensions.measure.find((d: any) => key === d.iri);
         if (dimension) {
-          parsedObservation[key] = observation[key].value;
+          const dimensionKey = dimensionIriMap?.[dimension.iri]?.key ?? key;
+          parsedObservation[dimensionKey] = observation[key].value;
         } else {
           console.error(`Parsing Error: ${key} dimension not found`);
           parsedObservation[key] = observation[key];
@@ -283,24 +289,15 @@ export const parseObservations = (observations: $FixMe, dimensions: DimensionsRe
       if (type === "property") {
         const dimension = dimensions.property.find((d: any) => key === d.iri);
         if (dimension) {
-          parsedObservation[key] = observation[key].value;
-        } else {
-          console.error(`Parsing Error: ${key} dimension not found`);
-          parsedObservation[key] = observation[key];
-        }
-      }
-
-      if (type === "property") {
-        const dimension = dimensions.property.find((d: any) => key === d.iri);
-        if (dimension) {
+          const dimensionKey = dimensionIriMap?.[dimension.iri]?.key ?? key;
           const value = dimension.values.find((v: any) => v.iri === observation[key].value);
           if (value) {
-            parsedObservation[key] = value.name;
+            parsedObservation[dimensionKey] = value.name;
           } else {
             console.error(
               `Parsing Error: Unknown value ${observation[key].value} for dimension ${key}.`
             );
-            parsedObservation[key] = observation[key].value;
+            parsedObservation[dimensionKey] = observation[key].value;
           }
         } else {
           console.error(`Parsing Error: ${key} dimension not found`);
