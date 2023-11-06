@@ -4,21 +4,21 @@ import { breakpoints } from "@interactivethings/swiss-federal-ci";
 const main = async () => {
   const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
   const browser = await chromium.launch({
-    headless: false,
+    headless: !!process.env.CI,
   });
 
   // List of pages to visit
-  const urls = ["/analysis", "/methods", "/data", "/"];
+  const routes = ["/analysis", "/methods", "/data", "/"];
 
-  for (const url of urls) {
-    const pageName = url === "/" ? "home" : url.replace("/", ""); // Name for the screenshot file
+  for (const route of routes) {
+    const pageName = route === "/" ? "home" : route.replace("/", ""); // Name for the screenshot file
 
     const pageContext = await browser.newContext({
       ...devices["Desktop 1920x1080"], // Set an initial viewport size
     });
 
     const page = await pageContext.newPage();
-    await page.goto(`${baseURL}/${url}`);
+    await page.goto(`${baseURL}${route}`);
 
     for (const [name, width] of Object.entries(breakpoints)) {
       // Set viewport size for the current breakpoint
