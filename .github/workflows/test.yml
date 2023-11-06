@@ -60,7 +60,7 @@ jobs:
         shell: bash
         if: steps.playwright-cache.outputs.cache-hit != 'true'
 
-      # - name: Run playwright
-      #   env:
-      #     PLAYWRIGHT_BASE_URL: ${{ steps.wait-vercel.outputs.DEPLOYMENT_URL }}
-      #   run: node scripts/e2e-screenshots.mjs
+      - name: Run playwright
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.wait-vercel.outputs.DEPLOYMENT_URL }}
+        run: node scripts/e2e-screenshots.mjs
