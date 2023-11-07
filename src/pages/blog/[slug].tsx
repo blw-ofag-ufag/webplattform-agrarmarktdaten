@@ -73,6 +73,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
       showBackButton
     >
       <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
+        <div className={layoutClasses.aside} />
         <div className={layoutClasses.content}>
           <Box sx={{ mb: 10 }}>
             {formattedDate && (
