@@ -6,7 +6,12 @@ const ASIDE_NB_COLUMNS = 2;
 
 export const useLayoutStyles = makeStyles()((theme) => ({
   aside: {
-    [theme.breakpoints.up("xl")]: gridColumn(ASIDE_NB_COLUMNS),
+    [theme.breakpoints.up("xl")]: {
+      ...gridColumn(ASIDE_NB_COLUMNS),
+      // Prevent table of contents to stick to footer when at bottom
+      // of the page
+      paddingBottom: 124,
+    },
     [theme.breakpoints.down("xl")]: { display: "none" },
     height: "fit-content",
   },
