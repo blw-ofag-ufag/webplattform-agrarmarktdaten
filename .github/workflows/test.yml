@@ -64,3 +64,9 @@ jobs:
         env:
           PLAYWRIGHT_BASE_URL: ${{ steps.wait-vercel.outputs.DEPLOYMENT_URL }}
         run: node scripts/e2e-screenshots.mjs
+
+      - name: Upload snapshots to argos-ci.com
+        continue-on-error: true
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        run: pnpm exec argos upload ./snapshots
