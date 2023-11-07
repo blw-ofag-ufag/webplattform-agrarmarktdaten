@@ -6,46 +6,58 @@ import { Temporal } from "proposal-temporal";
 import Link from "next/link";
 import { Download } from "@/icons/icons-jsx/control";
 import { Intersperse } from "@/components/Intersperse";
+import { makeStyles } from "@/components/style-utils";
+
+const useStyles = makeStyles()(({ palette: c }) => ({
+  root: {
+    position: "relative",
+    border: `${c.cobalt[100]} 4px solid`,
+    borderRadius: "12px",
+    backgroundColor: `${c.cobalt[50]}`,
+    paddingX: s(20),
+    paddingBottom: s(12),
+    paddingTop: s(15),
+    marginTop: s(10),
+  },
+
+  legend: {
+    position: "absolute",
+    top: -15,
+    left: 80,
+    backgroundColor: c.cobalt[100],
+    width: "fit-content",
+    borderRadius: 100,
+    padding: s(3, 1),
+  },
+
+  separator: {
+    height: "1px",
+    width: "100%",
+    backgroundColor: c.cobalt[200],
+  },
+
+  title: {
+    fontWeight: 700,
+    color: c.cobalt[800],
+  },
+}));
 
 interface Props {
   data: Partial<GQL.FileDownloadSectionRecord>;
+  className?: string;
 }
 
 const FileDownloadSection = (props: Props) => {
+  const { classes, cx } = useStyles();
   const { data } = props;
   return (
-    <Box
-      key={data.id}
-      sx={{
-        position: "relative",
-        border: `${c.cobalt[100]} 4px solid`,
-        borderRadius: "12px",
-        backgroundColor: `${c.cobalt[50]}50`,
-        paddingX: s(20),
-        paddingBottom: s(12),
-        paddingTop: s(15),
-        marginTop: s(10),
-      }}
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          top: -15,
-          left: 80,
-          backgroundColor: c.cobalt[100],
-          width: "fit-content",
-          borderRadius: 100,
-          paddingY: s(1),
-          paddingX: s(3),
-        }}
-      >
-        <Typography variant="body2" sx={{ fontWeight: 700, color: c.cobalt[800] }}>
+    <Box key={data.id} className={cx(classes.root, props.className)}>
+      <Box className={classes.legend}>
+        <Typography variant="body2" className={classes.title}>
           {data.title}
         </Typography>
       </Box>
-      <Intersperse
-        separator={<Box sx={{ height: "1px", width: "100%", backgroundColor: c.cobalt[200] }} />}
-      >
+      <Intersperse separator={<div className={classes.separator} />}>
         {data.fileDownloadItems?.map((item) => {
           const { id, date, title, file, description } = item;
           let formattedDate = "";
