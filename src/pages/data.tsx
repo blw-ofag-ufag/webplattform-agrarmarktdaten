@@ -49,11 +49,6 @@ const queryClient = new QueryClient({
   },
 });
 
-/* const HydrateAtoms = ({ children }: PropsWithChildren) => {
-  useHydrateAtoms([[queryClientAtom, queryClient]]);
-  return children;
-};
- */
 export function SafeHydrate({ children }: { children: React.ReactNode }) {
   const [display, setDisplay] = useState(false);
   useEffect(() => {

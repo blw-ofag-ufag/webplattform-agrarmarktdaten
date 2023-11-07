@@ -1,5 +1,5 @@
 import { FormControlLabel, Radio, Stack, Typography } from "@mui/material";
-import { Option } from "@/domain/data";
+import { Option } from "@/domain/filters";
 
 export default function RadioFilter<T extends Option>({
   options,
