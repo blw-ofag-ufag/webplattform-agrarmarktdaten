@@ -27,6 +27,8 @@ const main = async () => {
         height: 1080,
       });
 
+      await page.waitForLoadState("networkidle");
+
       // Take a screenshot and save it with page name and breakpoint name
       const screenshotPath = `screenshots/${pageName}-${name}.png`; // You can adjust the path as needed
       await page.screenshot({ path: screenshotPath });
