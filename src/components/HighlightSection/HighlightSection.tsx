@@ -18,8 +18,6 @@ const useStyles = makeStyles()(({ palette: c }) => ({
     paddingRight: s(20),
     paddingBottom: s(12),
     paddingTop: s(15),
-    marginTop: s(10),
-    marginBottom: s(10),
   },
 
   legend: {
@@ -43,7 +41,7 @@ const useStyles = makeStyles()(({ palette: c }) => ({
 
 interface Props {
   data: Partial<GQL.HighlightSectionRecord>;
-  className: string;
+  className?: string;
 }
 
 const HighlightSection = (props: Props) => {

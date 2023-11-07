@@ -133,6 +133,11 @@ const useStyles = makeStyles<
         marginTop: "0.5rem",
       },
     },
+
+    specialSection: {
+      marginTop: 64,
+      marginBottom: 64,
+    },
   };
 });
 
@@ -236,11 +241,23 @@ const StructuredText = (props: Props) => {
                 );
               case "FileDownloadSectionRecord":
                 const fileDownloadSection = record as Partial<GQL.FileDownloadSectionRecord>;
-                return <FileDownloadSection key={record.id} data={fileDownloadSection} />;
+                return (
+                  <FileDownloadSection
+                    key={record.id}
+                    data={fileDownloadSection}
+                    className={classes.specialSection}
+                  />
+                );
 
               case "HighlightSectionRecord":
                 const highlightSection = record as Partial<GQL.HighlightSectionRecord>;
-                return <HighlightSection key={record.id} data={highlightSection} />;
+                return (
+                  <HighlightSection
+                    key={record.id}
+                    data={highlightSection}
+                    className={classes.specialSection}
+                  />
+                );
               default:
                 return null;
             }

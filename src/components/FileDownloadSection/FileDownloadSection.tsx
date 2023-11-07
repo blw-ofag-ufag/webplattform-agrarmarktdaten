@@ -17,7 +17,6 @@ const useStyles = makeStyles()(({ palette: c }) => ({
     paddingX: s(20),
     paddingBottom: s(12),
     paddingTop: s(15),
-    marginTop: s(10),
   },
 
   legend: {
