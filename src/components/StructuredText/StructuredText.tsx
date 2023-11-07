@@ -7,7 +7,14 @@ import {
   Image,
 } from "react-datocms";
 import { isHeading, isParagraph, isLink, isList } from "datocms-structured-text-utils";
-import { Typography, Box, TypographyOwnProps, List, BoxProps } from "@mui/material";
+import {
+  Typography,
+  Box,
+  TypographyOwnProps,
+  List,
+  BoxProps,
+  TypographyProps,
+} from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
@@ -147,7 +154,7 @@ const defaultParagraphTypographyProps = {
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
-  paragraphTypographyProps?: TypographyOwnProps;
+  paragraphTypographyProps?: TypographyOwnProps & { component?: TypographyProps["component"] };
   debug?: boolean;
   sx?: BoxProps["sx"];
 }

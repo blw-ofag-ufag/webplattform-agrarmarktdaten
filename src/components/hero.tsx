@@ -114,7 +114,12 @@ export const Hero = (props: Props) => {
             {shiftedLeft ? shifter : null}
 
             <div className={herolayoutClasses.heroContent}>
-              <StructuredText data={lead} {...leadStructuredTextProps} />
+              <StructuredText
+                paragraphTypographyProps={{ variant: "h3", component: "p", fontWeight: "regular" }}
+                data={lead}
+                {...leadStructuredTextProps}
+                sx={{ "&&": { pb: 0 } }}
+              />
             </div>
             {shiftedRight ? shifter : null}
           </GridContainer>
