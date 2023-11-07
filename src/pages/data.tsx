@@ -1,11 +1,5 @@
 import { AppLayout } from "@/components/layout";
-import {
-  dimensionsAtom,
-  indicatorAtom,
-  marketsAtom,
-  observationsAtom,
-  observationsStatusAtom,
-} from "@/domain/data";
+import { dimensionsAtom, observationsAtom, observationsStatusAtom } from "@/domain/data";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import blwTheme from "@/theme/blw";
@@ -27,12 +21,11 @@ import {
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
-import { useLocale } from "@/lib/use-locale";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import { DimensionsResult } from "./api/use-sparql";
@@ -100,18 +93,9 @@ export default function DataPage(props: GQL.DataPageQuery) {
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
-  const indicator = useAtom(indicatorAtom);
-  const [markets] = useAtom(marketsAtom);
-  const locale = useLocale();
   const observations = useAtomValue(observationsAtom);
   const dimensions = useAtomValue(dimensionsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
-
-  console.log({
-    indicator,
-    markets,
-    locale,
-  });
 
   const resultCount = observations.length;
 
@@ -137,7 +121,7 @@ const DataBrowser = () => {
               {observationsQueryStatus.isLoading && (
                 <Trans id="data.filters.loading">Loading </Trans>
               )}
-              {!observationsQueryStatus.isSuccess && (
+              {observationsQueryStatus.isSuccess && (
                 <>
                   {`${resultCount} ${t({
                     id: "data.filters.results",

@@ -1,23 +1,16 @@
-import { getMarketColor } from "@/domain/colors";
 import {
   Option,
-  addedValueValues,
-  addedValueValuesAtom,
+  Property,
+  dimensionsAtom,
+  filterAtom,
+  filtersValuesHashAtomsAtom,
   indicatorAtom,
   indicators,
-  markets,
-  marketsAtom,
-  productionSystems,
-  productionSystemsAtom,
-  products,
-  productsAtom,
-  salesRegions,
-  salesRegionsAtom,
   timeRangeAtom,
   timeViewAtom,
 } from "@/domain/data";
 import useEvent from "@/lib/use-event";
-import { Trans, t } from "@lingui/macro";
+import { Trans } from "@lingui/macro";
 import {
   AccordionDetails,
   AccordionProps,
@@ -26,7 +19,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Atom, useAtom } from "jotai";
+import { Atom, useAtom, useAtomValue } from "jotai";
 import { SyntheticEvent, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import PreviewFilter from "./filters/PreviewFilter";
@@ -52,6 +45,10 @@ const useExclusiveAccordion = (defaultState: string) => {
 
 const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
+  const dimensions = useAtomValue(dimensionsAtom);
+  const filters = useAtomValue(filterAtom);
+  const filtersValuesHashAtoms = useAtomValue(filtersValuesHashAtomsAtom);
+  console.log({ dimensions });
 
   return (
     <Stack
@@ -75,7 +72,29 @@ const SidePanel = () => {
             </Typography>
           </Stack>
         </Box>
-        <FilterSelectAccordion
+        {Object.entries(filters).map(([key, value]) => {
+          console.log({ key, value });
+          const filterAtom = filtersValuesHashAtoms[key as Property];
+          if (!filterAtom) {
+            return null;
+          }
+          return (
+            <FilterSelectAccordion
+              key={key}
+              slots={{
+                accordion: getAccordionProps(key),
+                select: {
+                  withSearch: value.config.search,
+                  options: value.options,
+                },
+              }}
+              options={value.options}
+              filterAtom={filterAtom}
+              title={value.name}
+            />
+          );
+        })}
+        {/* <FilterSelectAccordion
           slots={{
             accordion: getAccordionProps("markets"),
             select: {
@@ -96,10 +115,10 @@ const SidePanel = () => {
           options={addedValueValues}
           filterAtom={addedValueValuesAtom}
           title={t({ id: "data.filters.addedValue", message: "Added Value" })}
-        />
+        /> */}
         <IndicatorAccordion {...getAccordionProps("indicator")} />
         <TimeAccordion {...getAccordionProps("time")} />
-        <FilterSelectAccordion
+        {/* <FilterSelectAccordion
           slots={{
             accordion: getAccordionProps("products"),
             select: {
@@ -134,7 +153,7 @@ const SidePanel = () => {
           options={salesRegions}
           filterAtom={salesRegionsAtom}
           title={t({ id: "data.filters.salesRegions", message: "Sales Regions" })}
-        />
+        /> */}
       </Box>
     </Stack>
   );

@@ -7,9 +7,10 @@ import {
   fetchObservations,
 } from "@/pages/api/use-sparql";
 import dayjs from "dayjs";
-import { ExtractAtomValue, atom } from "jotai";
+import { Atom, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
+import { atomFamily } from "jotai/vanilla/utils";
 
 export type Option = {
   label: string;
@@ -112,6 +113,7 @@ export const products: Option[] = [
     subgroup: "cheese",
   },
 ];
+
 /* Time  */
 
 export type RangeOptions = {
@@ -175,84 +177,6 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(as
   };
 });
 
-export const marketsAtom = atomWithHash("markets", markets, { ...multiOptionsCodec(markets) });
-export const addedValueValuesAtom = atomWithHash("addedValueValues", addedValueValues, {
-  ...multiOptionsCodec(addedValueValues),
-});
-export const productionSystemsAtom = atomWithHash("productionSystems", productionSystems, {
-  ...multiOptionsCodec(productionSystems),
-});
-export const indicatorAtom = atomWithHash(
-  "indicator",
-  {
-    label: "Price",
-    value: "price",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
-  },
-  {
-    ...optionCodec(indicators),
-  }
-);
-export const salesRegionsAtom = atomWithHash("salesRegions", salesRegions, {
-  ...multiOptionsCodec(salesRegions),
-});
-export const productsAtom = atomWithHash("products", products, { ...multiOptionsCodec(products) });
-
-export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");
-export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
-
-/* Filter Atom */
-
-export type Filters = {
-  markets: ExtractAtomValue<typeof marketsAtom>;
-  addedValueValues: ExtractAtomValue<typeof addedValueValuesAtom>;
-  productionSystems: ExtractAtomValue<typeof productionSystemsAtom>;
-  indicator: ExtractAtomValue<typeof indicatorAtom>;
-  salesRegions: ExtractAtomValue<typeof salesRegionsAtom>;
-  products: ExtractAtomValue<typeof productsAtom>;
-  timeRange: ExtractAtomValue<typeof timeRangeAtom>;
-  timeView: ExtractAtomValue<typeof timeViewAtom>;
-};
-
-export const filterAtom = atom(
-  (get) => ({
-    markets: get(marketsAtom),
-    addedValueValues: get(addedValueValuesAtom),
-    productionSystems: get(productionSystemsAtom),
-    indicator: get(indicatorAtom),
-    salesRegions: get(salesRegionsAtom),
-    products: get(productsAtom),
-    timeRange: get(timeRangeAtom),
-    timeView: get(timeViewAtom),
-  }),
-  (_, set, filters: Partial<Filters>) => {
-    if (filters.markets) {
-      set(marketsAtom, filters.markets);
-    }
-    if (filters.addedValueValues) {
-      set(addedValueValuesAtom, filters.addedValueValues);
-    }
-    if (filters.productionSystems) {
-      set(productionSystemsAtom, filters.productionSystems);
-    }
-    if (filters.indicator) {
-      set(indicatorAtom, filters.indicator);
-    }
-    if (filters.salesRegions) {
-      set(salesRegionsAtom, filters.salesRegions);
-    }
-    if (filters.products) {
-      set(productsAtom, filters.products);
-    }
-    if (filters.timeRange) {
-      set(timeRangeAtom, filters.timeRange);
-    }
-    if (filters.timeView) {
-      set(timeViewAtom, filters.timeView);
-    }
-  }
-);
-
 /* Data Dimensions */
 
 export const measures = ["price", "quantity", "index"] as const;
@@ -268,7 +192,7 @@ export const properties = [
   "market",
   "product",
   "productGroup",
-  "productSystem",
+  "productionSystem",
   "productOrigin",
   "salesRegion",
   "unit",
@@ -354,10 +278,10 @@ export const dataDimensions: {
     id: "product-group",
     iri: amdpProperty("product-group").value,
   },
-  productSystem: {
+  productionSystem: {
     type: "property",
-    id: "product-system",
-    iri: amdpProperty("product-system").value,
+    id: "production-system",
+    iri: amdpProperty("production-system").value,
   },
   productOrigin: {
     type: "property",
@@ -407,3 +331,108 @@ export const dimensionIriMap: IriMap = Object.entries(dataDimensions).reduce(
   },
   {} as IriMap
 );
+
+/* Filter Atom */
+
+export const filterAtomFamily = atomFamily(
+  ({ key, options, type }: { key: Property; options: Option[]; type: "single" | "multi" }) => {
+    if (type === "single" && options.length > 0) {
+      return atomWithHash(key, options[0], {
+        ...optionCodec(options),
+      });
+    } else {
+      return atomWithHash(key, options, {
+        ...multiOptionsCodec(options),
+      });
+    }
+  },
+  (a, b) => a.key === b.key
+);
+
+export const indicatorAtom = atomWithHash(
+  "indicator",
+  {
+    label: "Price",
+    value: "price",
+    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
+  },
+  {
+    ...optionCodec(indicators),
+  }
+);
+
+export const productsAtom = atomWithHash("products", products, { ...multiOptionsCodec(products) });
+
+export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");
+export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
+
+export type FilterConfig = { key: Property; type: "multi" | "single"; search: boolean };
+export const filters: FilterConfig[] = [
+  {
+    key: "market",
+    type: "multi",
+    search: false,
+  },
+  {
+    key: "salesRegion",
+    type: "multi",
+    search: true,
+  },
+  {
+    key: "productionSystem",
+    type: "multi",
+    search: false,
+  },
+  {
+    key: "valueChain",
+    type: "multi",
+    search: false,
+  },
+];
+
+export type Filters = Partial<{
+  [key in Property]: {
+    config: FilterConfig;
+    options: Option[];
+    name: string;
+  };
+}>;
+
+export const filterAtom = atom<Filters | Promise<Filters>>(async (get) => {
+  const dimensions = await get(dimensionsAtom);
+  const dimensionStatus = get(dimensionsStatusAtom);
+
+  const filtersMap: Filters = {};
+
+  if (dimensionStatus.isSuccess) {
+    filters.forEach((filter) => {
+      const dim = dimensions.property.find((d) => d.key === filter.key);
+      if (dim) {
+        filtersMap[filter.key] = {
+          config: filter,
+          options: dim.values.map((v) => ({
+            label: v.name,
+            value: v.iri,
+          })),
+          name: dim.name,
+        };
+      }
+    });
+  }
+  return filtersMap;
+});
+
+export const filtersValuesHashAtomsAtom = atom(async (get) => {
+  const configs = await get(filterAtom);
+  const filterValuesAtom: Partial<{ [key in Property]: Atom<$FixMe> }> = {};
+
+  filters.forEach((f) => {
+    const filterConfig = configs[f.key];
+    if (filterConfig) {
+      const a = filterAtomFamily({ key: f.key, options: filterConfig.options, type: f.type });
+      filterValuesAtom[f.key] = a;
+    }
+  });
+
+  return filterValuesAtom;
+});
