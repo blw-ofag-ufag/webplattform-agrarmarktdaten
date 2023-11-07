@@ -26,7 +26,8 @@
     "icons:transform": "svgr -d src/icons/icons-jsx src/icons/icons-svg --replace-attr-values '#000=currentColor' --icon",
     "prepare": "husky install",
     "build-storybook": "storybook build",
-    "postinstall": "yarn graphql:codegen; yarn locales:compile"
+    "postinstall": "yarn graphql:codegen; yarn locales:compile",
+    "e2e:screenshots": "node ./scripts/e2e-screenshots.mjs"
   },
   "dependencies": {
     "@babel/standalone": "^7.8.4",
