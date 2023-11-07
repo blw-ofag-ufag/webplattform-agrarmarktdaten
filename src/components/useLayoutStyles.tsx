@@ -1,5 +1,6 @@
 import { gridColumn } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
+import { useStickyBox } from "react-sticky-box";
 
 const ASIDE_NB_COLUMNS = 2;
 
@@ -31,3 +32,7 @@ export const useHeroStyles = makeStyles<{ shiftedLeft: boolean; shiftedRight: bo
     },
   })
 );
+
+export const useTableOfContentsSticky = () => {
+  return useStickyBox({ offsetTop: 200 });
+};
