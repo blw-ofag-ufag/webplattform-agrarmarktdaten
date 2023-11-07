@@ -8,7 +8,7 @@ import {
 } from "@interactivethings/swiss-federal-ci";
 import { useTheme } from "@mui/material/styles";
 import { t } from "@lingui/macro";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useStickyBox } from "react-sticky-box";
@@ -172,6 +172,14 @@ export const AppLayout = (props: Props) => {
           <Footer />
         </div>
       )}
+    </Box>
+  );
+};
+
+export const CalloutSection = (props: BoxProps) => {
+  return (
+    <Box {...props} sx={{ backgroundColor: "cobalt.50", py: "6rem", ...props.sx }}>
+      {props.children}
     </Box>
   );
 };
