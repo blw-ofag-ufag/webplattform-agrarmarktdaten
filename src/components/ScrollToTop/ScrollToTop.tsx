@@ -19,6 +19,7 @@ const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => (
     bottom: "calc(-1 * (var(--buttonSize) + var(--buttonPadding)))",
     width: "var(--buttonSize)",
     right: "var(--buttonPadding)",
+    zIndex: 1,
   },
   scrollToTop: {
     top: "calc(100vh - 5rem)",
