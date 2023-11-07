@@ -7,7 +7,7 @@ import {
   Image,
 } from "react-datocms";
 import { isHeading, isParagraph, isLink, isList } from "datocms-structured-text-utils";
-import { Typography, Box, TypographyOwnProps, List } from "@mui/material";
+import { Typography, Box, TypographyOwnProps, List, BoxProps } from "@mui/material";
 import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
@@ -18,12 +18,6 @@ import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
 import { makeStyles } from "../style-utils";
 import { CSSInterpolation } from "tss-react";
-
-interface Props {
-  data?: StructuredTextGraphQlResponse;
-  paragraphTypographyProps?: TypographyOwnProps;
-  debug?: boolean;
-}
 
 const debugStyles = {
   position: "absolute" as "absolute",
@@ -151,6 +145,13 @@ const defaultParagraphTypographyProps = {
   variant: "body1",
 };
 
+interface Props {
+  data?: StructuredTextGraphQlResponse;
+  paragraphTypographyProps?: TypographyOwnProps;
+  debug?: boolean;
+  sx?: BoxProps["sx"];
+}
+
 const StructuredText = (props: Props) => {
   const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
   const { classes } = useStyles({ debug: props.debug });
@@ -167,7 +168,7 @@ const StructuredText = (props: Props) => {
 
   return (
     isClient && (
-      <div className={classes.content}>
+      <Box className={classes.content} sx={props.sx}>
         <ST
           data={data}
           customNodeRules={[
@@ -358,7 +359,7 @@ const StructuredText = (props: Props) => {
             }
           }}
         />
-      </div>
+      </Box>
     )
   );
 };
