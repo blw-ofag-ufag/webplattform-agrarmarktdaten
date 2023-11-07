@@ -36,7 +36,7 @@ const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => (
       backgroundColor: c.cobalt[100],
     },
 
-    boxShadow: z[12],
+    boxShadow: z.xl,
 
     position: "sticky",
   },
