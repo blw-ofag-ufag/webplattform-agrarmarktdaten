@@ -51,7 +51,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
         // We vertically position the background on top so that sky is always visible
         sx={{ "&&": { backgroundPosition: "center top" } }}
       />
-      <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
+      <Box sx={{ bgcolor: "cobalt.50", pb: "92px" }}>
         <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
