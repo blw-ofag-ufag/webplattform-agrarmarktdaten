@@ -18,13 +18,13 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
   return {
     card: {
       overflow: "hidden",
-      boxShadow: e[6],
+      boxShadow: e.lg,
       backgroundColor: c.background.paper,
       borderRadius: s(2),
       cursor: "pointer",
-      transition: "box-shadow 0.5s ease",
+      transition: "box-shadow 0.3s ease",
       "&:hover": {
-        boxShadow: e[12],
+        boxShadow: e.xxl,
       },
     },
     full: {
