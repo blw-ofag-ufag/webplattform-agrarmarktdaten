@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "next",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build": "lingui compile && next build",
+    "storybook:build": "storybook build -o public/storybook",
+    "build": "lingui compile && next build && yarn storybook:build",
     "export": "lingui compile && next build && next export -o build",
     "start": "next start -p $PORT",
     "lint": "eslint .",
@@ -25,7 +26,6 @@
     "postversion": "git push --follow-tags",
     "icons:transform": "svgr -d src/icons/icons-jsx src/icons/icons-svg --replace-attr-values '#000=currentColor' --icon",
     "prepare": "husky install",
-    "build-storybook": "storybook build",
     "postinstall": "yarn graphql:codegen; yarn locales:compile",
     "e2e:screenshots": "node ./scripts/e2e-screenshots.mjs"
   },
