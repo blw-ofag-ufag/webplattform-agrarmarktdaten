@@ -71,6 +71,9 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
     },
 
     title: {
+      [`.${classes.card}:hover &`]: {
+        textDecoration: "underline",
+      },
       [`.${classes.full} &`]: {
         overflow: "hidden",
         textOverflow: "ellipsis",
