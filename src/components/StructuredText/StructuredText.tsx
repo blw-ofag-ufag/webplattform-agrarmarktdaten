@@ -81,6 +81,12 @@ const useStyles = makeStyles<
   return {
     content: {
       color: theme.palette.monochrome[800],
+      paddingBottom: 124,
+
+      "& img": {
+        marginTop: 32,
+        marginBottom: 32,
+      },
     },
     link: {
       color: "inherit",
