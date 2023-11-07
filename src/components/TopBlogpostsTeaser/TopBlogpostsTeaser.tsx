@@ -15,14 +15,14 @@ import { useTheme } from "@mui/material/styles";
 import { makeStyles } from "@/components/style-utils";
 import { CalloutSection } from "@/components/layout";
 
-const useStyles = makeStyles()(({ palette: c }) => ({
+const useStyles = makeStyles()({
   container: {
     display: "flex",
     flexDirection: "column",
-    mt: "40px",
-    mb: "40px",
+    marginTop: "40px",
+    marginBottom: "40px",
   },
-}));
+});
 
 interface Props {
   blogposts: GQL.SimpleBlogPostFragment[];

@@ -346,7 +346,7 @@ const StructuredText = (props: Props) => {
                 const image =
                   record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
                 return image?.responsiveImage ? (
-                  <Box sx={{ my: s(5) }}>
+                  <Box sx={{ my: "32px" }}>
                     {/*eslint-disable-next-line jsx-a11y/alt-text*/}
                     <Image data={image?.responsiveImage} layout="responsive" />
                     <Typography variant="body1" sx={{ mt: s(3), color: c.monochrome[500] }}>
