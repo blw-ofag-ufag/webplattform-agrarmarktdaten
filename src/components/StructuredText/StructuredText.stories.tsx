@@ -31,4 +31,5 @@ export const StructuredText = () => {
 };
 export default {
   component: StructuredTextComponent,
+  title: "Design System / Content",
 };
