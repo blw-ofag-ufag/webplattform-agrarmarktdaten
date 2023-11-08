@@ -31,7 +31,7 @@ export const useHeroStyles = makeStyles<{ shiftedLeft: boolean; shiftedRight: bo
       },
     },
     heroContent: {
-      [theme.breakpoints.up("xl")]: gridColumn(9),
+      [theme.breakpoints.up("xl")]: gridColumn(10),
       [theme.breakpoints.down("xl")]: gridColumn(6),
       [theme.breakpoints.down("lg")]: gridColumn(4),
     },
