@@ -57,8 +57,8 @@ const isSafari15 =
     : false;
 
 export const makeResponsiveFontMediaQueries = (theme: Theme) => ({
-  mobile: theme.breakpoints.down("md"),
-  desktop: theme.breakpoints.up("md"),
+  mobile: theme.breakpoints.down("xxl"),
+  desktop: theme.breakpoints.up("xxl"),
 });
 
 export type ResponsiveFontMediaQueries = ReturnType<typeof makeResponsiveFontMediaQueries>;
@@ -217,23 +217,23 @@ theme.typography = merge(theme.typography, {
     fontWeight: 700,
   }),
   body1: createTypographyVariant(theme, {
-    fontSize: [14, 16],
-    lineHeight: [22, 24],
+    fontSize: [16, 18],
+    lineHeight: [28, 28],
     fontWeight: "regular",
   }),
   body2: createTypographyVariant(theme, {
-    fontSize: [12, 14],
-    lineHeight: [18, 20],
+    fontSize: [14, 16],
+    lineHeight: [22, 24],
     fontWeight: "regular",
-  }),
-  tag: createTypographyVariant(theme, {
-    lineHeight: [18, 20],
-    fontSize: [12, 14],
   }),
   body3: createTypographyVariant(theme, {
     fontSize: [12, 14],
     lineHeight: [18, 18],
     fontWeight: "normal",
+  }),
+  tag: createTypographyVariant(theme, {
+    lineHeight: [18, 20],
+    fontSize: [12, 14],
   }),
   display1: createTypographyVariant(theme, {
     fontSize: [38, 64],

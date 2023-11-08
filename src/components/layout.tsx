@@ -8,7 +8,7 @@ import {
 } from "@interactivethings/swiss-federal-ci";
 import { useTheme } from "@mui/material/styles";
 import { t } from "@lingui/macro";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useStickyBox } from "react-sticky-box";
@@ -91,7 +91,13 @@ export const AppLayout = (props: Props) => {
       };
 
   return (
-    <Box position="relative" minHeight="100vh" display="flex" flexDirection="column">
+    <Box
+      component="main"
+      position="relative"
+      minHeight="100vh"
+      display="flex"
+      flexDirection="column"
+    >
       <LocaleSwitcher {...localeSwitcherProps} data-datocms-noindex />
       <Box
         data-datocms-noindex
@@ -158,14 +164,22 @@ export const AppLayout = (props: Props) => {
           </div>
         )}
         {children}
+        {router.pathname !== "/data" ? <ScrollToTop /> : null}
       </Box>
 
       {router.pathname !== "/data" && (
         <div className="debug-warn">
           <Footer />
-          <ScrollToTop />
         </div>
       )}
+    </Box>
+  );
+};
+
+export const CalloutSection = (props: BoxProps) => {
+  return (
+    <Box {...props} sx={{ backgroundColor: "cobalt.50", py: "6rem", ...props.sx }}>
+      {props.children}
     </Box>
   );
 };

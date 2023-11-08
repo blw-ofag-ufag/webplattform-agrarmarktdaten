@@ -3,13 +3,14 @@ import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
-import { c } from "@interactivethings/swiss-federal-ci";
+import { useTheme } from "@mui/material";
 
 export default function Analysis({
   analysisPage,
   allFocusArticles,
   allMarketArticles,
 }: GQL.AnalysisPageQuery) {
+  const theme = useTheme();
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
   }
@@ -18,7 +19,7 @@ export default function Analysis({
       <Hero
         title={analysisPage?.title}
         lead={analysisPage?.lead}
-        bgColor={c.cobalt[100]}
+        bgColor={theme.palette.cobalt[100]}
         shiftedRight
       />
       <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
