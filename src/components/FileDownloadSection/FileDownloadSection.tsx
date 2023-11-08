@@ -6,44 +6,20 @@ import Link from "next/link";
 import { Download } from "@/icons/icons-jsx/control";
 import { Intersperse } from "@/components/Intersperse";
 import { makeStyles } from "@/components/style-utils";
+import { NamedCallout } from "@/components/NamedCallout";
 
 const useStyles = makeStyles<void, "fileTitle" | "file">()(
   ({ palette: c, spacing: s }, _params, classes) => ({
-    root: {
-      position: "relative",
-      border: `${c.cobalt[100]} 4px solid`,
-      borderRadius: "12px",
-      backgroundColor: `${c.cobalt[50]}`,
-      paddingLeft: "4.375rem",
-      paddingRight: "4.375rem",
-      paddingBottom: "3rem",
-      paddingTop: "3rem",
-    },
-
-    legend: {
-      position: "absolute",
-      top: -15,
-      left: 80,
-      backgroundColor: c.cobalt[100],
-      width: "fit-content",
-      borderRadius: "9999px",
-      padding: "0.375rem 1.125rem",
-    },
-
     separator: {
       height: "1px",
       width: "100%",
       backgroundColor: c.cobalt[200],
-    },
-
-    title: {
-      fontWeight: 700,
-      color: c.cobalt[800],
+      margin: "1rem 0",
     },
 
     file: {
       cursor: "pointer",
-      padding: s(4, 0),
+      padding: s(2, 0),
       "&:hover": {
         backgroundColor: c.cobalt[50],
         [`& .${classes.fileTitle}`]: { textDecoration: "underline" },
@@ -79,15 +55,10 @@ interface Props {
 }
 
 const FileDownloadSection = (props: Props) => {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
   const { data } = props;
   return (
-    <Box key={data.id} className={cx(classes.root, props.className)}>
-      <Box className={classes.legend}>
-        <Typography variant="body2" className={classes.title}>
-          {data.title}
-        </Typography>
-      </Box>
+    <NamedCallout title={data.title}>
       <Intersperse separator={<div className={classes.separator} />}>
         {data.fileDownloadItems?.map((item) => {
           const { id, date, title, file, description } = item;
@@ -125,7 +96,7 @@ const FileDownloadSection = (props: Props) => {
           );
         })}
       </Intersperse>
-    </Box>
+    </NamedCallout>
   );
 };
 

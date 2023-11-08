@@ -1,35 +1,14 @@
-import { Typography, Box, Button } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import * as GQL from "@/graphql";
-import { s, c } from "@interactivethings/swiss-federal-ci";
+import { s } from "@interactivethings/swiss-federal-ci";
 import { StructuredText, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
 import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { makeStyles } from "@/components/style-utils";
+import { NamedCallout } from "@/components/NamedCallout";
 
 const useStyles = makeStyles()(({ palette: c }) => ({
-  // To dedupe with FileDownloadSection
-  root: {
-    position: "relative",
-    border: `${c.cobalt[100]} 4px solid`,
-    borderRadius: "12px",
-    backgroundColor: `${c.cobalt[50]}50`,
-    paddingLeft: s(20),
-    paddingRight: s(20),
-    paddingBottom: s(12),
-    paddingTop: s(15),
-  },
-
-  legend: {
-    position: "absolute",
-    top: -15,
-    left: 80,
-    backgroundColor: c.cobalt[100],
-    width: "fit-content",
-    borderRadius: 100,
-    padding: s(1, 3),
-  },
-
   button: {
     backgroundColor: c.cobalt[500],
     marginRight: s(3),
@@ -45,16 +24,11 @@ interface Props {
 }
 
 const HighlightSection = (props: Props) => {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
   const { data } = props;
   const { locale } = useRouter();
   return (
-    <Box key={data.id} className={cx(classes.root, props.className)}>
-      <Box className={classes.legend}>
-        <Typography variant="body2" sx={{ fontWeight: 700, color: c.cobalt[800] }}>
-          {data.title}
-        </Typography>
-      </Box>
+    <NamedCallout title={data.title}>
       {data.content && (
         <StructuredText
           data={
@@ -133,7 +107,7 @@ const HighlightSection = (props: Props) => {
           }}
         />
       )}
-    </Box>
+    </NamedCallout>
   );
 };
 
