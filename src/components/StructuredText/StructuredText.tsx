@@ -137,7 +137,7 @@ const useStyles = makeStyles<
       },
 
       "& > li + li": {
-        marginTop: "0.5rem",
+        marginTop: "0.25rem",
       },
     },
 
