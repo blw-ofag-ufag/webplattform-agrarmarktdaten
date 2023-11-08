@@ -24,7 +24,16 @@ const preview: Preview = {
       );
     },
   ],
+
   parameters: {
+    options: {
+      showRoots: true,
+      storySort: {
+        method: "alphabetical",
+        includeNames: true,
+        order: ["Overview", "Design System", "Components"],
+      },
+    },
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {
