@@ -57,8 +57,8 @@ const isSafari15 =
     : false;
 
 export const makeResponsiveFontMediaQueries = (theme: Theme) => ({
-  mobile: theme.breakpoints.down("md"),
-  desktop: theme.breakpoints.up("md"),
+  mobile: theme.breakpoints.down("xxl"),
+  desktop: theme.breakpoints.up("xxl"),
 });
 
 export type ResponsiveFontMediaQueries = ReturnType<typeof makeResponsiveFontMediaQueries>;
