@@ -69,4 +69,4 @@ jobs:
         continue-on-error: true
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
-        run: pnpm exec argos upload ./screenshots
+        run: yarn argos upload ./screenshots
