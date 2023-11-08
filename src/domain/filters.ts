@@ -1,5 +1,5 @@
 import { atomFamily } from "jotai/vanilla/utils";
-import { Property, dimensionsAtom, dimensionsStatusAtom } from "@/domain/data";
+import { Measure, Property, dimensionsAtom, dimensionsStatusAtom } from "@/domain/data";
 import { atomWithHash } from "jotai-location";
 import { Atom, atom } from "jotai";
 import dayjs from "dayjs";
@@ -17,23 +17,29 @@ export const markets: Option[] = [
   },
 ];
 
-export const indicators: (Option & {
+export type IndicatorOption = Option & {
   dimensionIri: string;
-})[] = [
+  key: Measure;
+};
+
+export const indicators: IndicatorOption[] = [
   {
     label: "Price",
-    value: "price",
+    value: "Price",
     dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
+    key: "price",
   },
   {
     label: "Quantity",
-    value: "quantity",
+    value: "Quantity",
     dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/quantity>",
+    key: "quantity",
   },
   {
     label: "Index",
-    value: "index",
+    value: "Index",
     dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/index>",
+    key: "index",
   },
 ];
 
@@ -82,7 +88,7 @@ export const products: Option[] = [
 
 /* Codecs */
 
-const multiOptionsCodec = (options: Option[]) => ({
+const multiOptionsCodec = <T extends Option>(options: T[]) => ({
   serialize: (value: Option[]) => value.map((v) => v.value).join(","),
   deserialize: (value: string) => {
     const values = value.split(",");
@@ -90,7 +96,7 @@ const multiOptionsCodec = (options: Option[]) => ({
   },
 });
 
-const optionCodec = (options: Option[]) => ({
+const optionCodec = <T extends Option>(options: T[]) => ({
   serialize: (value?: Option) => (value ? value.value : ""),
   deserialize: (value: string) => options.find((o) => o.value === value),
 });
@@ -131,17 +137,9 @@ export const timeRange = {
 
 /* Atoms */
 
-export const indicatorAtom = atomWithHash(
-  "indicator",
-  {
-    label: "Price",
-    value: "price",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
-  },
-  {
-    ...optionCodec(indicators),
-  }
-);
+export const indicatorAtom = atomWithHash("indicator", indicators[0], {
+  ...optionCodec(indicators),
+});
 
 export const productsAtom = atomWithHash("products", products, { ...multiOptionsCodec(products) });
 export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");

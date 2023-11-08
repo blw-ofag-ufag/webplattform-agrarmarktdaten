@@ -1,4 +1,4 @@
-import { amdpMeasure, amdpProperty } from "@/lib/namespace";
+import { amdp, amdpMeasure, amdpProperty } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import {
   DimensionType,
@@ -8,12 +8,24 @@ import {
 } from "@/pages/api/use-sparql";
 import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
+import { indicatorAtom, indicators, timeViewAtom } from "./filters";
+
+export const capitalizeFirstLetter = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 /* Atoms */
 
-export const cubePathAtom = atom(
-  "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
-);
+export const cubePathAtom = atom((get) => {
+  const indicator = get(indicatorAtom);
+  const timeView = get(timeViewAtom);
+  const cubePath = amdp(
+    `cube/MilkDairyProducts/Consumption_${capitalizeFirstLetter(
+      indicator?.key || indicators[0].key
+    )}_${capitalizeFirstLetter(timeView)}`
+  ).value;
+  return cubePath;
+});
 
 export const [dimensionsAtom, dimensionsStatusAtom] = atomsWithQuery((get) => ({
   queryKey: ["dimensions", get(localeAtom)],
