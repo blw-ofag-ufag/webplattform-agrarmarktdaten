@@ -25,6 +25,7 @@ import { HighlightSection } from "@/components/HighlightSection";
 import NextLink from "next/link";
 import { makeStyles } from "../style-utils";
 import { CSSInterpolation } from "tss-react";
+import { OpenInNew } from "@mui/icons-material";
 
 const debugStyles = {
   position: "absolute" as "absolute",
@@ -180,6 +181,8 @@ const StructuredText = (props: Props) => {
           data={data}
           customNodeRules={[
             renderNodeRule(isLink, ({ node, children, key }) => {
+              const target = node.meta?.find((e) => e.id === "target")?.value;
+              const rel = node.meta?.find((e) => e.id === "rel")?.value;
               return (
                 <NextLink key={key} legacyBehavior href={node.url}>
                   <Typography
@@ -187,8 +190,15 @@ const StructuredText = (props: Props) => {
                     component="a"
                     data-debug-good
                     className={classes.link}
+                    rel={rel}
+                    target={target}
                   >
                     {children}
+                    {target === "_blank" ? (
+                      <Box display="inline-block" component="span" fontSize="0.85em" ml="0.25rem">
+                        <OpenInNew fontSize="inherit" />
+                      </Box>
+                    ) : null}
                   </Typography>
                 </NextLink>
               );
