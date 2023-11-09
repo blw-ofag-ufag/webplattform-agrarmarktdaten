@@ -22,7 +22,6 @@ import { vars } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
-import Flex from "@/components/flex";
 
 interface Props {
   children: React.ReactNode;
@@ -141,18 +140,18 @@ export const AppLayout = (props: Props) => {
               },
             }}
           >
-            {menuSections.map((section) => (
-              <MenuButton key={section.href} {...section} />
+            {menuSections.map((section, i) => (
+              <MenuButton key={i} {...section} />
             ))}
             <Box display="flex" flexGrow={1} />
             <MenuButton
-              title={
-                <Flex alignItems="center" gap="0.25rem">
-                  {t({ id: "menu.info", message: "Info" })}
-                  <IcInfoCircle />
-                </Flex>
-              }
+              title={t({ id: "menu.info", message: "Info" })}
               href="/analysis"
+              endIcon={
+                <Box sx={{ ml: 1 }}>
+                  <IcInfoCircle fontSize={16} />
+                </Box>
+              }
             />
           </MenuContainer>
         </GridContainer>
