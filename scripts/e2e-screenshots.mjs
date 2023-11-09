@@ -8,7 +8,7 @@ const main = async () => {
   });
 
   // List of pages to visit
-  const routes = ["/analysis", "/methods", "/data", "/"];
+  const routes = ["/analysis", "/methods", "/en/blog/demo-de", "/"];
 
   for (const route of routes) {
     const pageName = route === "/" ? "home" : route.replace("/", ""); // Name for the screenshot file
