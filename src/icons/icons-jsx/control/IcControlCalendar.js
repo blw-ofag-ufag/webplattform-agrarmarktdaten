@@ -1,12 +1,6 @@
 import * as React from "react";
 const SvgIcControlCalendar = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="1em"
-    height="1em"
-    viewBox="0 0 24 24"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
     <g fill="#1F2937" fillRule="nonzero">
       <path
         stroke="#1F2937"

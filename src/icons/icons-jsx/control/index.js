@@ -11,4 +11,6 @@ export { default as IcControlNavDown } from "./IcControlNavDown";
 export { default as IcControlNavUp } from "./IcControlNavUp";
 export { default as Download } from "./Download";
 export { default as IcFilter } from "./IcFilter";
+export { default as IcInfoCircle } from "./IcInfoCircle";
+export { default as IcInfoCircleFilled } from "./IcInfoCircleFilled";
 export { default as IcSearch } from "./IcSearch";
