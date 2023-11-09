@@ -146,7 +146,7 @@ export const AppLayout = (props: Props) => {
             <Box display="flex" flexGrow={1} />
             <MenuButton
               title={t({ id: "menu.info", message: "Info" })}
-              href="/analysis"
+              href="/info"
               endIcon={
                 <Box sx={{ ml: 1 }}>
                   <IcInfoCircle fontSize={16} />
