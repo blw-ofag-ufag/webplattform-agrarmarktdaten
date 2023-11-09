@@ -8,9 +8,14 @@ const main = async () => {
   });
 
   // List of pages to visit
-  const routes = ["/analysis", "/methods", "/en/blog/demo-de", "/"];
+  const routes = [
+    { route: "/analysis", fullPage: false },
+    { route: "/methods", fullPage: false },
+    { route: "/en/blog/demo-de", fullPage: true },
+    { route: "/", fullPage: true },
+  ];
 
-  for (const route of routes) {
+  for (const { route, fullPage } of routes) {
     const pageName = route === "/" ? "home" : route.replace("/", ""); // Name for the screenshot file
 
     const pageContext = await browser.newContext({
@@ -31,7 +36,7 @@ const main = async () => {
 
       // Take a screenshot and save it with page name and breakpoint name
       const screenshotPath = `screenshots/${pageName}-${name}.png`; // You can adjust the path as needed
-      await page.screenshot({ path: screenshotPath });
+      await page.screenshot({ path: screenshotPath, fullPage });
 
       console.log(`Screenshot taken: ${screenshotPath}`);
     }
