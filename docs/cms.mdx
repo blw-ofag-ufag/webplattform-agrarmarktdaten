@@ -1,0 +1,23 @@
+import { Meta, Controls } from "@storybook/blocks";
+
+<Meta title="Overview / Dato CMS" />
+
+# Dato CMS
+
+Dato CMS serves as the content management system for the website, allowing for the easy management and publication of content.
+
+## Editing content
+
+Editing content occurs through the [Dato dashboard](https://blw-agricultural-market-data-platform.admin.datocms.com/editor). The content must be edited in all languages. The CMS is organized according to the structure of the website.
+
+## Why Dato CMS ?
+
+Compared to other CMS, DatoCMS offers several advantages, among them:
+
+- **Localization**: It has a simple interface to support multiple languages. By now, only German and English are available, but it would be simple to add other languages.
+- **Revision history**: It is straightforward to revert an unwanted change and go back to a previous version of the webplatform content.
+- **Scheduled publication**: A content update can be published instantly, or scheduled for a planned future release.
+- **API-based content access**: The connection between content items and their presentational components is achieved by accessing the content via a GraphQL API, which allows for separation of concerns between content management and display an application/website. This approach integrates seamlessly with the frontend technologies React and Next.js.
+- **Content modeling** Instead of composing pages with generic content blocks, content is structured in domain-specific models (e.g. markets, reports) that can be linked together and integrated flexibly by a frontend (or even multiple frontends with different functionality).
+
+These unique properties of DatoCMS make it especially suited for the Market Data Platform which aims to integrate a variety of unique content types and structures. Achieving the same flexibility and separation of concerns is not directly possible with "traditional" CMS solutions like Wordpress or Adobe Experience Manager, and reproducing a similar result would require significantly more effort in development and maintenance. **Therefore the recommendation from a technological and cost standpoint is to use DatoCMS.**
