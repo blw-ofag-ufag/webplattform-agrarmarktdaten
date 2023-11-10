@@ -1,31 +1,31 @@
-import * as React from "react";
-import { s, c } from "@interactivethings/swiss-federal-ci";
-import {
-  StructuredText as ST,
-  renderNodeRule,
-  StructuredTextGraphQlResponse,
-  Image,
-} from "react-datocms";
-import { isHeading, isParagraph, isLink, isList } from "datocms-structured-text-utils";
-import {
-  Typography,
-  Box,
-  TypographyOwnProps,
-  List,
-  BoxProps,
-  TypographyProps,
-} from "@mui/material";
-import { PowerBIReport } from "@/components/powerbi-report";
-import * as GQL from "@/graphql";
-import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
-import { sectionAtom } from "@/lib/atoms";
-import { useSetAtom } from "jotai";
 import { FileDownloadSection } from "@/components/FileDownloadSection";
 import { HighlightSection } from "@/components/HighlightSection";
-import NextLink from "next/link";
-import { makeStyles } from "../style-utils";
-import { CSSInterpolation } from "tss-react";
+import { PowerBIReport } from "@/components/powerbi-report";
+import * as GQL from "@/graphql";
+import { sectionAtom } from "@/lib/atoms";
+import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
+import { c, s } from "@interactivethings/swiss-federal-ci";
 import { OpenInNew } from "@mui/icons-material";
+import {
+  Box,
+  BoxProps,
+  List,
+  Typography,
+  TypographyOwnProps,
+  TypographyProps,
+} from "@mui/material";
+import { isHeading, isLink, isList, isParagraph } from "datocms-structured-text-utils";
+import { useSetAtom } from "jotai";
+import NextLink from "next/link";
+import * as React from "react";
+import {
+  Image,
+  StructuredText as ST,
+  StructuredTextGraphQlResponse,
+  renderNodeRule,
+} from "react-datocms";
+import { CSSInterpolation } from "tss-react";
+import { makeStyles } from "../style-utils";
 
 const debugStyles = {
   position: "absolute" as "absolute",
@@ -261,6 +261,9 @@ const StructuredText = (props: Props) => {
                     datasetId={powerBiReport.dataset?.datasetId ?? ""}
                     reportId={powerBiReport?.reportId ?? ""}
                     reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
+                    pages={
+                      powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? []
+                    }
                   />
                 );
               case "FileDownloadSectionRecord":
