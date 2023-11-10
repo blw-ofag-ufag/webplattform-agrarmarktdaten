@@ -1,3 +1,4 @@
+import { DimensionType } from "@/pages/api/use-sparql";
 import namespace from "@rdfjs/namespace";
 
 export {
@@ -25,7 +26,8 @@ export const cubeMeta = namespace("https://cube.link/meta/");
 export const view = namespace("https://cube.link/view/");
 
 export const amdp = namespace("https://agriculture.ld.admin.ch/foag/");
-export const amdpDimension = namespace("https://agriculture.ld.admin.ch/foag/property/");
+export const amdpProperty = namespace("https://agriculture.ld.admin.ch/foag/property/");
+export const amdpMeasure = namespace("https://agriculture.ld.admin.ch/foag/measure/");
 
 export const energyPricing = namespace(
   "https://energy.ld.admin.ch/elcom/electricity-price/dimension/"
@@ -46,7 +48,7 @@ export const addNamespaceToID = ({ dimension, id }: { dimension: string; id: str
 };
 
 export const stripNamespaceFromIri = ({ iri }: { iri: string }): string => {
-  const matches = iri.match(/\/([a-zA-Z0-9]+)$/);
+  const matches = iri.match(/\/(([a-zA-Z0-9]|-)+)$/);
 
   if (!matches) {
     // Warn?
@@ -54,4 +56,25 @@ export const stripNamespaceFromIri = ({ iri }: { iri: string }): string => {
   }
 
   return matches[1];
+};
+
+export const getIriForDimension = (type: DimensionType, id: string) => {
+  if (type === "measure") {
+    return amdpMeasure(id);
+  }
+  if (type === "property") {
+    return amdpProperty(id);
+  }
+  return id;
+};
+
+export const getDimensionTypeFromIri = ({ iri }: { iri: string }): DimensionType => {
+  const matches = iri.replace(amdp.name, "").match(/(property|measure)(?=\/([a-zA-Z]|-)+$)/);
+
+  if (!matches) {
+    // Warn?
+    return "other";
+  }
+
+  return matches[1] as DimensionType;
 };

@@ -55,4 +55,5 @@ export const Typography = () => (
 
 export default {
   component: Typography,
+  title: "Design System / Theme",
 };

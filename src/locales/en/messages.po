@@ -19,23 +19,18 @@ msgid "filters.select.total"
 msgstr "({0} total)"
 
 #. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "data.filters.some"
-msgstr "{0} of {1}"
-
-#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {result} other {results}}"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografic.date"
-msgstr "-"
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.some"
+msgstr "{0} of {1}"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.about_us.label"
 msgstr "About us"
 
@@ -45,10 +40,15 @@ msgid "data.filters.addedValue"
 msgstr "Added value"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.report"
 msgstr "Agricultural report"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Filters.tsx
+msgid "select.all"
+msgstr "Select all"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -71,8 +71,8 @@ msgid "header.shortTitle"
 msgstr "FOAG"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.blw"
 msgstr "Federal Office for Agriculture"
 
@@ -93,17 +93,18 @@ msgstr "Reset filters"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
+#: src/components/layout.tsx
 msgid "header.close"
 msgstr "Close"
 
 #. js-lingui-explicit-id
-#: src/pages/index.tsx
-msgid "homepage.section.data"
+#: src/components/layout.tsx
+msgid "menu.data"
 msgstr "Data"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.data"
+#: src/pages/index.tsx
+msgid "homepage.section.data"
 msgstr "Data"
 
 #. js-lingui-explicit-id
@@ -117,8 +118,8 @@ msgid "data.actions.download"
 msgstr "Data download"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.feedback"
 msgstr "Feedback"
 
@@ -126,6 +127,11 @@ msgstr "Feedback"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.heading"
 msgstr "Filters"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.focus"
+msgstr "Focus"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -138,7 +144,7 @@ msgid "menu.focus"
 msgstr "Focus"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "contact.follow.us"
 msgstr "Stay informed"
 
@@ -148,8 +154,8 @@ msgid "data.filters.from"
 msgstr "From"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.furtherinformation"
 msgstr "Further information"
 
@@ -159,14 +165,9 @@ msgid "cta.back"
 msgstr "Back"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.impressum"
 msgstr "Contact"
-
-#. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografik.teaser"
-msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -179,19 +180,8 @@ msgid "menu.info"
 msgstr "Info"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografic"
-msgstr "-"
-
-#. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-msgid "button.infografic.teaser"
-msgstr "-"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.priceindex"
 msgstr "National Consumer Price Index"
 
@@ -199,6 +189,16 @@ msgstr "National Consumer Price Index"
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "Learn more"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.filters.loading"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.market"
+msgstr "Market"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -241,6 +241,11 @@ msgid "homepage.section.latestBlogPosts"
 msgstr "Analysis"
 
 #. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.noOptions"
+msgstr "No options"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
 msgstr "None"
@@ -256,8 +261,8 @@ msgid "data.filters.products"
 msgstr "Product list"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.importpriceindex"
 msgstr "Producer and Import Price Index"
 
@@ -267,7 +272,7 @@ msgid "blogpost.publishedDate"
 msgstr "Published on"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.legal"
 msgstr "Mandate and legal basis"
 
@@ -282,10 +287,9 @@ msgid "data.filters.salesRegions"
 msgstr "Sales region"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografik.title"
-msgstr "-"
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.label"
+msgstr "Search"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -303,22 +307,27 @@ msgid "data.actions.showFiler"
 msgstr "Show filters"
 
 #. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Sort.tsx
+msgid "sort.labe"
+msgstr "Sort by"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.query"
 msgstr "SPARQL query"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.newsletter"
 msgstr "Subscribe to newsletter"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.terms"
 msgstr "Terms of use"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.id"
 msgstr "The Federal Office for Agriculture FOAG is the national centre of competence for Swiss agricultural policy. The tasks of the FOAG also include running an independent market observatory (Article 27 of the Agriculture Act LwG). It collects and publishes market indicators such as prices and quantities along the entire value chain of the most important agricultural and food markets in Switzerland. The aim is to increase market transparency and highlight long-term developments."
 

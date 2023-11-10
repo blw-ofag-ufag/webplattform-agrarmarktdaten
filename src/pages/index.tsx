@@ -10,16 +10,17 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { Download } from "@/icons/icons-jsx/control";
 import { GridContainer } from "@/components/Grid";
 import { makeStyles } from "@/components/style-utils";
+import Link from "next/link";
 
-const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
-  root0: {
+const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
+  button: {
     backgroundColor: c.cobalt[500],
     fontWeight: 700,
     width: "fit-content",
     marginTop: s(6),
   },
 
-  root1: {
+  downloadIcon: {
     backgroundColor: c.cobalt[100],
     borderRadius: 80,
     minWidth: "80px",
@@ -27,6 +28,11 @@ const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  card: {
+    boxShadow: e.lg,
+    borderRadius: s(2),
   },
 }));
 
@@ -47,8 +53,10 @@ export default function HomePage(props: GQL.HomePageQuery) {
         leadStructuredTextProps={{
           paragraphTypographyProps: { variant: "h3", fontWeight: "normal" },
         }}
+        // We vertically position the background on top so that sky is always visible
+        sx={{ "&&": { backgroundPosition: "center top" } }}
       />
-      <Box sx={{ bgcolor: "#f9f9f9", pb: "92px" }}>
+      <Box sx={{ bgcolor: "cobalt.50", pb: "92px" }}>
         <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
@@ -65,7 +73,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>
-          <Card sx={{ p: s(8) }}>
+          <Card sx={{ p: s(8) }} className={classes.card}>
             <Box display="flex" alignItems="center">
               <Box display="flex" flexDirection="column" pr="50px">
                 <Typography variant="body1" data-debug-good>
@@ -75,11 +83,11 @@ export default function HomePage(props: GQL.HomePageQuery) {
                     from the year 2000 onwards.
                   </Trans>
                 </Typography>
-                <Button className={classes.root0}>
+                <Button className={classes.button} component={Link} href="/data">
                   <Trans id="homepage.section.data.button">Learn More</Trans>
                 </Button>
               </Box>
-              <Box className={classes.root1}>
+              <Box className={classes.downloadIcon}>
                 <Download width={40} height={40} />
               </Box>
             </Box>

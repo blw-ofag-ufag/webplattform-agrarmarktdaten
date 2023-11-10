@@ -6,12 +6,11 @@ import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
-import { useStickyBox } from "react-sticky-box";
-import { useLayoutStyles } from "@/components/useLayoutStyles";
+import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function InfoPage(props: GQL.InfoPageQuery) {
   const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
-  const stickyRef = useStickyBox({ offsetTop: 200 });
+  const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!infoPage?.title || !infoPage.lead) {
     return null;

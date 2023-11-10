@@ -1,4 +1,4 @@
-import type { Color, Theme } from "@mui/material";
+import type { Color, Shadows, Theme } from "@mui/material";
 
 export interface ThemeModule {
   theme: Theme;
@@ -25,6 +25,7 @@ declare module "@mui/material" {
 
   interface PaletteOptions {
     cobalt: FederalColor;
+    monochrome: FederalColor;
     red: FederalColor;
     scale?: {
       blue: FederalColor;
@@ -38,6 +39,7 @@ declare module "@mui/material" {
 
   interface Palette {
     cobalt: FederalColor;
+    monochrome: FederalColor;
     red: FederalColor;
     scale: {
       blue: FederalColor;
@@ -47,6 +49,25 @@ declare module "@mui/material" {
       red: FederalColor;
       yellow: FederalColor;
     };
+  }
+}
+
+declare module "@mui/material/styles" {
+  type BLWShadows = {
+    sm: string;
+    base: string;
+    md: string;
+
+    /** Default card shadow */
+    lg: string;
+    xl: string;
+
+    /** Hovered card shadow */
+    xxl: string;
+  };
+
+  interface Theme {
+    shadows: BLWShadows & Shadows;
   }
 }
 

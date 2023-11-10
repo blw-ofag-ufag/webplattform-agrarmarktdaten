@@ -8,14 +8,13 @@ import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { getMarketColor } from "@/domain/colors";
 import { TableOfContents } from "@/components/TableOfContents";
-import { useStickyBox } from "react-sticky-box";
 import { GridContainer } from "@/components/Grid/Grid";
-import { useLayoutStyles } from "@/components/useLayoutStyles";
+import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
 
-  const stickyRef = useStickyBox({ offsetTop: 200 });
+  const stickyRef = useTableOfContentsSticky();
   const alternates = marketArticle?._allSlugLocales?.map((loc) => ({
     href: "/market/[slug]",
     as: `/market/${loc.value}`,

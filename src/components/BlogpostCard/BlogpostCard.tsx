@@ -10,17 +10,21 @@ import { MarketChip } from "@/components/MarketChip";
 import { makeStyles } from "@/components/style-utils";
 import { useLineClamping, isHTMLElement } from "../../utils/clamp";
 
-const useStyles = makeStyles<void, "full" | "third">()(
-  ({ spacing: s, shadows: e, palette: c, breakpoints: b }, _params, classes) => ({
+const useStyles = makeStyles<void, "full" | "third" | "card">()((
+  { spacing: s, shadows: e, palette: c, breakpoints: b },
+  _params,
+  classes
+) => {
+  return {
     card: {
       overflow: "hidden",
-      boxShadow: e[6],
+      boxShadow: e.lg,
       backgroundColor: c.background.paper,
       borderRadius: s(2),
       cursor: "pointer",
-      transition: "box-shadow 0.5s ease",
+      transition: "box-shadow 0.3s ease",
       "&:hover": {
-        boxShadow: e[12],
+        boxShadow: e.xxl,
       },
     },
     full: {
@@ -67,6 +71,9 @@ const useStyles = makeStyles<void, "full" | "third">()(
     },
 
     title: {
+      [`.${classes.card}:hover &`]: {
+        textDecoration: "underline",
+      },
       [`.${classes.full} &`]: {
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -146,7 +153,7 @@ const useStyles = makeStyles<void, "full" | "third">()(
     content: {
       [`.${classes.full} &`]: {
         display: "grid",
-        gridTemplateRows: "min-content auto min-content auto",
+        gridTemplateRows: "min-content min-content min-content auto",
         padding: s(5, 7),
         flexGrow: 0,
         flexShrink: 0,
@@ -162,8 +169,8 @@ const useStyles = makeStyles<void, "full" | "third">()(
         height: "100%",
       },
     },
-  })
-);
+  };
+});
 
 const clampedClassName = "clamped";
 

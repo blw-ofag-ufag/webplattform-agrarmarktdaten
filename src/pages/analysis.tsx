@@ -1,36 +1,29 @@
-import React from "react";
+import { BlogpostGrid } from "@/components/BlogpostGrid";
 import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
-import { c } from "@interactivethings/swiss-federal-ci";
-import { BlogpostGrid } from "@/components/BlogpostGrid";
-import { QueryClientProvider, QueryClient } from "react-query";
-
-const queryClient = new QueryClient();
+import { useTheme } from "@mui/material";
 
 export default function Analysis({
   analysisPage,
-  allBlogPosts,
   allFocusArticles,
   allMarketArticles,
-  _allBlogPostsMeta,
 }: GQL.AnalysisPageQuery) {
+  const theme = useTheme();
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
   }
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-        <Hero
-          title={analysisPage?.title}
-          lead={analysisPage?.lead}
-          bgColor={c.cobalt[100]}
-          shiftedRight
-        />
-        <BlogpostGrid blogposts={allBlogPosts} totalBlogpostCount={_allBlogPostsMeta.count} />
-      </AppLayout>
-    </QueryClientProvider>
+    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+      <Hero
+        title={analysisPage?.title}
+        lead={analysisPage?.lead}
+        bgColor={theme.palette.cobalt[100]}
+        shiftedRight
+      />
+      <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
+    </AppLayout>
   );
 }
 
@@ -38,9 +31,7 @@ export const getStaticProps = async (context: $FixMe) => {
   const result = await client
     .query<GQL.AnalysisPageQuery>(
       GQL.AnalysisPageDocument,
-      {
-        locale: context.locale,
-      },
+      { locale: context.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();

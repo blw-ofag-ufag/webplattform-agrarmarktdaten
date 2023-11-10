@@ -326,7 +326,6 @@ const SelectItem = <T extends ScoredOption>({
       expanded={expanded}
       onClick={(e) => {
         e.stopPropagation();
-        console.log({ expanded, node, hasResults });
         setExpanded(!expanded);
       }}
     >
