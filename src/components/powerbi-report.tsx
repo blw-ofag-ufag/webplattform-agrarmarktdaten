@@ -4,6 +4,7 @@ import * as models from "powerbi-models";
 import React from "react";
 
 import { Button } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
@@ -104,43 +105,43 @@ type PowerBIConfigProps = {
 
 const usePowerBIEmbedConfig = (props: PowerBIConfigProps) => {
   const { datasetId, reportId, reportWorkspaceId, activePage } = props;
-  const [accessToken, setAccessToken] = React.useState<string | undefined>(undefined);
-  const [config, setConfig] = React.useState(CONFIG);
+  const { data: accessToken } = useQuery({
+    queryKey: ["powerbi", "accessToken", reportId, datasetId],
+    queryFn: async () => {
+      const embedToken = await fetch("/api/powerbi/report", {
+        method: "POST",
+        body: JSON.stringify({
+          datasets: [{ id: datasetId }],
+          reports: [{ id: reportId }],
+        }),
+      }).then((d) => d.json());
 
-  React.useEffect(() => {
-    const run = async () => {
-      if (accessToken) {
-        const navigationProps = activePage
-          ? {
-              // pageName is actually pageId, and displayPageName is actually pageName
-              pageName: activePage.id,
-              settings: {
-                navContentPaneEnabled: false,
-              },
-            }
-          : {};
-        setConfig({
-          type: "report",
-          id: reportId,
-          embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
-          tokenType: models.TokenType.Embed,
-          accessToken,
-          ...navigationProps,
-        });
-      } else {
-        const embedToken = await fetch("/api/powerbi/report", {
-          method: "POST",
-          body: JSON.stringify({
-            datasets: [{ id: datasetId }],
-            reports: [{ id: reportId }],
-          }),
-        }).then((d) => d.json());
-        setAccessToken(embedToken.token);
-      }
+      return embedToken.token;
+    },
+  });
+
+  return React.useMemo(() => {
+    if (!accessToken) {
+      return CONFIG;
+    }
+
+    const navigationProps = activePage
+      ? {
+          // pageName is actually pageId, and displayPageName is actually pageName
+          pageName: activePage.id,
+          settings: {
+            navContentPaneEnabled: false,
+          },
+        }
+      : {};
+
+    return {
+      type: "report",
+      id: reportId,
+      embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
+      tokenType: models.TokenType.Embed,
+      accessToken,
+      ...navigationProps,
     };
-
-    run();
-  }, [accessToken, activePage, datasetId, reportId, reportWorkspaceId]);
-
-  return config;
+  }, [accessToken, activePage, reportId, reportWorkspaceId]);
 };
