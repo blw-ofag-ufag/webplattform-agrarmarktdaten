@@ -2,13 +2,20 @@ import { amdp, amdpMeasure, amdpProperty } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import {
   DimensionType,
+  Filter,
   fetchCube,
   fetchDimensions,
   fetchObservations,
 } from "@/pages/api/use-sparql";
 import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
-import { indicatorAtom, indicators, timeViewAtom } from "./filters";
+import {
+  FilterConfig,
+  filtersSelectionAtomsAtom,
+  indicatorAtom,
+  indicators,
+  timeViewAtom,
+} from "./filters";
 
 export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -40,12 +47,27 @@ export const [cubeAtom, cubeStatusAtom] = atomsWithQuery((get) => ({
 export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(async (get) => {
   const cube = await get(cubeAtom);
   const dimensions = await get(dimensionsAtom);
+  const filterSelections = await get(filtersSelectionAtomsAtom);
+  const filters = Object.entries(filterSelections).reduce((acc, [key, atom]) => {
+    const selectedValues = get(atom);
+    console.log({ selectedValues });
+    if (selectedValues) {
+      acc.push({
+        dimensionIri: dataDimensions[key as Property].iri,
+        key: key as Property,
+        values: selectedValues.map((v) => v.value),
+      });
+    }
+    return acc;
+  }, [] as Filter[]);
+
+  console.log({ filters });
 
   return {
-    queryKey: ["observations", get(cubePathAtom)],
+    queryKey: ["observations", get(cubePathAtom), JSON.stringify(filters)],
     queryFn: () => {
       if (cube.view && dimensions) {
-        return fetchObservations(cube.view, dimensions);
+        return fetchObservations(cube.view, dimensions, filters);
       }
       throw Error("Need view and dimensions to fetch observations");
     },

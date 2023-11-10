@@ -104,8 +104,30 @@ export const fetchPossibleCubes = async (): Promise<CubeResult[]> => {
   return results;
 };
 
-export const fetchObservations = async (view: View, dimensions: DimensionsResult) => {
-  const observations = await view.observations({});
+export type Filter = {
+  dimensionIri: string;
+  values: string[];
+  key: Property;
+};
+
+export const fetchObservations = async (
+  view: View,
+  dimensions: DimensionsResult,
+  filters: Filter[] = []
+) => {
+  console.log("> fetchObservations");
+
+  const queryFilters = filters.map((f) => buildDimensionFilter(view, f.dimensionIri, f.values));
+
+  const customView = new View({
+    parent: amdpSource,
+    dimensions: view.dimensions,
+    filters: queryFilters.flatMap((f) => (f ? [f] : [])),
+  });
+
+  console.log(customView.observationsQuery().query.toString());
+  const observations = await customView.observations({});
+
   return parseObservations(observations, dimensions);
 };
 
@@ -440,39 +462,25 @@ export const getObservations = async (
 
 export const getView = (cube: Cube): View => View.fromCube(cube);
 
-export const buildDimensionFilter = (
-  namespace: NamespaceBuilder<string>,
-  view: View,
-  dimensionKey: string,
-  filters: string[]
-) => {
+export const buildDimensionFilter = (view: View, dimensionIri: string, filters: string[]) => {
   const viewDimension = view.dimension({
-    cubeDimension: namespace(dimensionKey),
+    cubeDimension: dimensionIri,
   });
 
   const cubeDimension = viewDimension?.cubeDimensions[0];
 
   if (!(viewDimension && cubeDimension)) {
-    console.warn(`buildDimensionFilter: No dimension for '${dimensionKey}'`);
+    console.warn(`buildDimensionFilter: No dimension for '${dimensionIri}'`);
     return;
   }
 
   const { datatype } = cubeDimension;
 
-  const dimensionFilter =
-    filters.length === 1
-      ? viewDimension.filter.eq(
-          datatype
-            ? rdf.literal(filters[0], datatype)
-            : rdf.namedNode(ns.addNamespaceToID({ id: filters[0], dimension: dimensionKey }))
-        )
-      : viewDimension.filter.in(
-          filters.map((f) => {
-            return datatype
-              ? rdf.literal(f, datatype)
-              : rdf.namedNode(ns.addNamespaceToID({ id: f, dimension: dimensionKey }));
-          })
-        );
+  const dimensionFilter = viewDimension.filter.in(
+    filters.map((f) => {
+      return datatype ? rdf.literal(f, datatype) : rdf.namedNode(f);
+    })
+  );
 
   return dimensionFilter;
 };
