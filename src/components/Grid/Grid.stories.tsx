@@ -113,4 +113,5 @@ export const Audit = () => {
 
 export default {
   component: GridContainerComponent,
+  title: "Design System / Grid",
 };
