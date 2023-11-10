@@ -1,23 +1,15 @@
-import { getMarketColor } from "@/domain/colors";
+import { Property } from "@/domain/data";
 import {
   Option,
-  addedValueValues,
-  addedValueValuesAtom,
+  filtersSelectionAtomsAtom,
+  filtersSpecAtom,
   indicatorAtom,
   indicators,
-  markets,
-  marketsAtom,
-  productionSystems,
-  productionSystemsAtom,
-  products,
-  productsAtom,
-  salesRegions,
-  salesRegionsAtom,
   timeRangeAtom,
   timeViewAtom,
-} from "@/domain/data";
+} from "@/domain/filters";
 import useEvent from "@/lib/use-event";
-import { Trans, t } from "@lingui/macro";
+import { Trans } from "@lingui/macro";
 import {
   AccordionDetails,
   AccordionProps,
@@ -26,7 +18,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Atom, useAtom } from "jotai";
+import { Atom, useAtom, useAtomValue } from "jotai";
 import { SyntheticEvent, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import PreviewFilter from "./filters/PreviewFilter";
@@ -52,6 +44,8 @@ const useExclusiveAccordion = (defaultState: string) => {
 
 const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
+  const filtersSpec = useAtomValue(filtersSpecAtom);
+  const filterSelectionAtoms = useAtomValue(filtersSelectionAtomsAtom);
 
   return (
     <Stack
@@ -75,66 +69,31 @@ const SidePanel = () => {
             </Typography>
           </Stack>
         </Box>
-        <FilterSelectAccordion
-          slots={{
-            accordion: getAccordionProps("markets"),
-            select: {
-              options: markets,
-            },
-          }}
-          options={markets}
-          filterAtom={marketsAtom}
-          title={t({ id: "data.filters.markets", message: "Markets" })}
-        />
-        <FilterSelectAccordion
-          slots={{
-            accordion: getAccordionProps("addedvalue"),
-            select: {
-              options: addedValueValues,
-            },
-          }}
-          options={addedValueValues}
-          filterAtom={addedValueValuesAtom}
-          title={t({ id: "data.filters.addedValue", message: "Added Value" })}
-        />
         <IndicatorAccordion {...getAccordionProps("indicator")} />
         <TimeAccordion {...getAccordionProps("time")} />
-        <FilterSelectAccordion
-          slots={{
-            accordion: getAccordionProps("products"),
-            select: {
-              withSearch: true,
-              options: products,
-              groups: [(d) => d.market, (d) => d.group, (d) => d.subgroup],
-              colorCheckbox: (d) => getMarketColor(d.marketSlug)[1],
-            },
-          }}
-          options={products}
-          filterAtom={productsAtom}
-          title={t({ id: "data.filters.products", message: "Products" })}
-        />
-        <FilterSelectAccordion
-          slots={{
-            accordion: getAccordionProps("productionsystems"),
-            select: {
-              options: productionSystems,
-            },
-          }}
-          options={productionSystems}
-          filterAtom={productionSystemsAtom}
-          title={t({ id: "data.filters.productionSystems", message: "Production Systems" })}
-        />
-        <FilterSelectAccordion
-          slots={{
-            accordion: getAccordionProps("salesRegions"),
-            select: {
-              options: salesRegions,
-            },
-          }}
-          options={salesRegions}
-          filterAtom={salesRegionsAtom}
-          title={t({ id: "data.filters.salesRegions", message: "Sales Regions" })}
-        />
+
+        {/* Property filters */}
+        {Object.entries(filtersSpec).map(([key, value]) => {
+          const filterAtom = filterSelectionAtoms[key as Property];
+          if (!filterAtom) {
+            return null;
+          }
+          return (
+            <FilterSelectAccordion
+              key={key}
+              slots={{
+                accordion: getAccordionProps(key),
+                select: {
+                  withSearch: value.config.search,
+                  options: value.options,
+                },
+              }}
+              options={value.options}
+              filterAtom={filterAtom}
+              title={value.name}
+            />
+          );
+        })}
       </Box>
     </Stack>
   );

@@ -1,4 +1,4 @@
-import { TimeView } from "@/domain/data";
+import { TimeView } from "@/domain/filters";
 import { IcControlCalendar } from "@/icons/icons-jsx/control";
 import { useLocale } from "@/lib/use-locale";
 import { Trans, t } from "@lingui/macro";

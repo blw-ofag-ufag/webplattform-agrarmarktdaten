@@ -1,6 +1,6 @@
 import { ExtractAtomValue } from "jotai";
 
-import { timeRangeAtom } from "@/domain/data";
+import { timeRangeAtom } from "@/domain/filters";
 import { Locale } from "@/locales/locales";
 
 export type ObservationIri = {

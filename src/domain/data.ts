@@ -1,4 +1,4 @@
-import { amdpMeasure, amdpProperty } from "@/lib/namespace";
+import { amdp, amdpMeasure, amdpProperty } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import {
   DimensionType,
@@ -6,149 +6,26 @@ import {
   fetchDimensions,
   fetchObservations,
 } from "@/pages/api/use-sparql";
-import dayjs from "dayjs";
-import { ExtractAtomValue, atom } from "jotai";
-import { atomWithHash } from "jotai-location";
+import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
+import { indicatorAtom, indicators, timeViewAtom } from "./filters";
 
-export type Option = {
-  label: string;
-  value: string;
-  checked?: boolean;
-} & { [key: string]: string };
-
-/* Data Filters */
-
-export const markets: Option[] = [
-  {
-    label: "Milk and Dairy",
-    value: "MilkDairyProducts",
-  },
-];
-
-export const addedValueValues: Option[] = [
-  { label: "Production", value: "production" },
-  { label: "Wholesale", value: "wholesale" },
-  { label: "Industry", value: "industry" },
-  {
-    label: "Pick up and gastro wholesale",
-    value: "pickupandgastrowholesale",
-  },
-  { label: "Consumption", value: "consumption" },
-  { label: "Stock exchanges", value: "stockexchanges" },
-  { label: "Storage", value: "storage" },
-];
-
-export const productionSystems: Option[] = [
-  { label: "Bio", value: "bio" },
-  { label: "Non-Bio", value: "nonbio" },
-];
-
-export const indicators: (Option & {
-  dimensionIri: string;
-})[] = [
-  {
-    label: "Price",
-    value: "price",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
-  },
-  {
-    label: "Quantity",
-    value: "quantity",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/quantity>",
-  },
-  {
-    label: "Index",
-    value: "index",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/index>",
-  },
-];
-
-export const salesRegions: Option[] = [
-  { label: "Switzerland", value: "ch" },
-  { label: "France", value: "fr" },
-  { label: "Italy", value: "it" },
-  { label: "Spain", value: "es" },
-];
-
-export const products: Option[] = [
-  {
-    market: "Egg Products",
-    marketSlug: "eggs",
-    label: "Hatching eggs",
-    value: "hatchingeggs",
-    group: "eggs",
-    subgroup: "hatchingeggs",
-  },
-  {
-    market: "Egg Products",
-    marketSlug: "eggs",
-    label: "Hatchings NWD",
-    value: "hatchingeggs-nwd",
-    group: "eggs",
-    subgroup: "hatchingeggs",
-  },
-  {
-    market: "Egg Products",
-    marketSlug: "eggs",
-    label: "Eggs < 50",
-    value: "eggs<50",
-    group: "eggs",
-  },
-  {
-    market: "Milk & Dairy Products",
-    marketSlug: "milk",
-    label: "Brie Camembert",
-    value: "brie",
-    group: "milk",
-    subgroup: "cheese",
-  },
-  {
-    market: "Milk & Dairy Products",
-    marketSlug: "milk",
-    label: "Emmentaler",
-    value: "emmentaler",
-    group: "milk",
-    subgroup: "cheese",
-  },
-];
-/* Time  */
-
-export type RangeOptions = {
-  min: number;
-  max: number;
-  value: [number, number];
+export const capitalizeFirstLetter = (string: string): string => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
-
-export type TimeView = "year" | "month";
-
-const MIN_DATE = dayjs("2020-01");
-const MAX_DATE = dayjs("2023-01");
-
-export const timeRange = {
-  min: MIN_DATE.unix(),
-  max: MAX_DATE.unix(),
-  value: [MIN_DATE.unix(), MAX_DATE.unix()] as [number, number],
-};
-
-const multiOptionsCodec = (options: Option[]) => ({
-  serialize: (value: Option[]) => value.map((v) => v.value).join(","),
-  deserialize: (value: string) => {
-    const values = value.split(",");
-    return options.filter((p) => values.includes(p.value));
-  },
-});
-
-const optionCodec = (options: Option[]) => ({
-  serialize: (value?: Option) => (value ? value.value : ""),
-  deserialize: (value: string) => options.find((o) => o.value === value),
-});
 
 /* Atoms */
 
-export const cubePathAtom = atom(
-  "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
-);
+export const cubePathAtom = atom((get) => {
+  const indicator = get(indicatorAtom);
+  const timeView = get(timeViewAtom);
+  const cubePath = amdp(
+    `cube/MilkDairyProducts/Consumption_${capitalizeFirstLetter(
+      indicator?.key || indicators[0].key
+    )}_${capitalizeFirstLetter(timeView)}`
+  ).value;
+  return cubePath;
+});
 
 export const [dimensionsAtom, dimensionsStatusAtom] = atomsWithQuery((get) => ({
   queryKey: ["dimensions", get(localeAtom)],
@@ -175,84 +52,6 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(as
   };
 });
 
-export const marketsAtom = atomWithHash("markets", markets, { ...multiOptionsCodec(markets) });
-export const addedValueValuesAtom = atomWithHash("addedValueValues", addedValueValues, {
-  ...multiOptionsCodec(addedValueValues),
-});
-export const productionSystemsAtom = atomWithHash("productionSystems", productionSystems, {
-  ...multiOptionsCodec(productionSystems),
-});
-export const indicatorAtom = atomWithHash(
-  "indicator",
-  {
-    label: "Price",
-    value: "price",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
-  },
-  {
-    ...optionCodec(indicators),
-  }
-);
-export const salesRegionsAtom = atomWithHash("salesRegions", salesRegions, {
-  ...multiOptionsCodec(salesRegions),
-});
-export const productsAtom = atomWithHash("products", products, { ...multiOptionsCodec(products) });
-
-export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");
-export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
-
-/* Filter Atom */
-
-export type Filters = {
-  markets: ExtractAtomValue<typeof marketsAtom>;
-  addedValueValues: ExtractAtomValue<typeof addedValueValuesAtom>;
-  productionSystems: ExtractAtomValue<typeof productionSystemsAtom>;
-  indicator: ExtractAtomValue<typeof indicatorAtom>;
-  salesRegions: ExtractAtomValue<typeof salesRegionsAtom>;
-  products: ExtractAtomValue<typeof productsAtom>;
-  timeRange: ExtractAtomValue<typeof timeRangeAtom>;
-  timeView: ExtractAtomValue<typeof timeViewAtom>;
-};
-
-export const filterAtom = atom(
-  (get) => ({
-    markets: get(marketsAtom),
-    addedValueValues: get(addedValueValuesAtom),
-    productionSystems: get(productionSystemsAtom),
-    indicator: get(indicatorAtom),
-    salesRegions: get(salesRegionsAtom),
-    products: get(productsAtom),
-    timeRange: get(timeRangeAtom),
-    timeView: get(timeViewAtom),
-  }),
-  (_, set, filters: Partial<Filters>) => {
-    if (filters.markets) {
-      set(marketsAtom, filters.markets);
-    }
-    if (filters.addedValueValues) {
-      set(addedValueValuesAtom, filters.addedValueValues);
-    }
-    if (filters.productionSystems) {
-      set(productionSystemsAtom, filters.productionSystems);
-    }
-    if (filters.indicator) {
-      set(indicatorAtom, filters.indicator);
-    }
-    if (filters.salesRegions) {
-      set(salesRegionsAtom, filters.salesRegions);
-    }
-    if (filters.products) {
-      set(productsAtom, filters.products);
-    }
-    if (filters.timeRange) {
-      set(timeRangeAtom, filters.timeRange);
-    }
-    if (filters.timeView) {
-      set(timeViewAtom, filters.timeView);
-    }
-  }
-);
-
 /* Data Dimensions */
 
 export const measures = ["price", "quantity", "index"] as const;
@@ -268,7 +67,7 @@ export const properties = [
   "market",
   "product",
   "productGroup",
-  "productSystem",
+  "productionSystem",
   "productOrigin",
   "salesRegion",
   "unit",
@@ -354,10 +153,10 @@ export const dataDimensions: {
     id: "product-group",
     iri: amdpProperty("product-group").value,
   },
-  productSystem: {
+  productionSystem: {
     type: "property",
-    id: "product-system",
-    iri: amdpProperty("product-system").value,
+    id: "production-system",
+    iri: amdpProperty("production-system").value,
   },
   productOrigin: {
     type: "property",
