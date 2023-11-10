@@ -56,52 +56,20 @@ type PowerBIReportProps = {
 
 export const PowerBIReport = (props: PowerBIReportProps) => {
   const { datasetId, reportId, reportWorkspaceId, pages } = props;
-  const [accessToken, setAccessToken] = React.useState<string | undefined>(undefined);
-  const [config, setConfig] = React.useState(CONFIG);
   const [report, setReport] = React.useState<Report | undefined>(undefined);
   const [activePage, setActivePage] = React.useState<PowerBIPage | undefined>(pages[0]);
+  const embedConfig = usePowerBIEmbedConfig({
+    datasetId,
+    reportId,
+    reportWorkspaceId,
+    activePage,
+  });
   const { classes } = useStyles();
-
-  React.useEffect(() => {
-    const fetchReport = async () => {
-      const embedToken = await fetch("/api/powerbi/report", {
-        method: "POST",
-        body: JSON.stringify({
-          datasets: [{ id: datasetId }],
-          reports: [{ id: reportId }],
-        }),
-      }).then((d) => d.json());
-      setAccessToken(embedToken.token);
-    };
-
-    fetchReport();
-  }, [datasetId, reportId]);
-
-  React.useEffect(() => {
-    if (accessToken) {
-      setConfig({
-        type: "report",
-        id: reportId,
-        embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
-        tokenType: models.TokenType.Embed,
-        accessToken,
-        ...(activePage
-          ? {
-              // pageName is actually pageId, and displayPageName is actually pageName
-              pageName: activePage.id,
-              settings: {
-                navContentPaneEnabled: false,
-              },
-            }
-          : {}),
-      });
-    }
-  }, [accessToken, activePage, reportId, reportWorkspaceId]);
 
   return (
     <>
       <PowerBIEmbed
-        embedConfig={config}
+        embedConfig={embedConfig}
         cssClassName={classes.root}
         getEmbeddedComponent={(embedObject) => {
           setReport(embedObject as Report);
@@ -125,4 +93,54 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
       )}
     </>
   );
+};
+
+type PowerBIConfigProps = {
+  datasetId: string;
+  reportId: string;
+  reportWorkspaceId: string;
+  activePage?: PowerBIPage;
+};
+
+const usePowerBIEmbedConfig = (props: PowerBIConfigProps) => {
+  const { datasetId, reportId, reportWorkspaceId, activePage } = props;
+  const [accessToken, setAccessToken] = React.useState<string | undefined>(undefined);
+  const [config, setConfig] = React.useState(CONFIG);
+
+  React.useEffect(() => {
+    const run = async () => {
+      if (accessToken) {
+        const navigationProps = activePage
+          ? {
+              // pageName is actually pageId, and displayPageName is actually pageName
+              pageName: activePage.id,
+              settings: {
+                navContentPaneEnabled: false,
+              },
+            }
+          : {};
+        setConfig({
+          type: "report",
+          id: reportId,
+          embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
+          tokenType: models.TokenType.Embed,
+          accessToken,
+          ...navigationProps,
+        });
+      } else {
+        const embedToken = await fetch("/api/powerbi/report", {
+          method: "POST",
+          body: JSON.stringify({
+            datasets: [{ id: datasetId }],
+            reports: [{ id: reportId }],
+          }),
+        }).then((d) => d.json());
+        setAccessToken(embedToken.token);
+      }
+    };
+
+    run();
+  }, [accessToken, activePage, datasetId, reportId, reportWorkspaceId]);
+
+  return config;
 };
