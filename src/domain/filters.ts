@@ -101,7 +101,7 @@ const optionCodec = <T extends Option>(options: T[]) => ({
   deserialize: (value: string) => options.find((o) => o.value === value),
 });
 
-export const filterAtomFamily = atomFamily(
+export const filterWithHashAtomFamily = atomFamily(
   ({ key, options, type }: { key: Property; options: Option[]; type: "single" | "multi" }) => {
     if (type === "single" && options.length > 0) {
       return atomWithHash(key, options[0], optionCodec(options));
@@ -171,7 +171,11 @@ export type Filters = Partial<{
   };
 }>;
 
-export const filterAtom = atom<Filters | Promise<Filters>>(async (get) => {
+/**
+ * Atom that contains the filters specification and available options in an object.
+ * This atom does not contain the selected values. Use `filtersSelectionAtomsAtom` for that.
+ */
+export const filtersSpecAtom = atom<Filters | Promise<Filters>>(async (get) => {
   const dimensions = await get(dimensionsAtom);
   const dimensionStatus = get(dimensionsStatusAtom);
 
@@ -195,15 +199,23 @@ export const filterAtom = atom<Filters | Promise<Filters>>(async (get) => {
   return filtersMap;
 });
 
-export const filtersValuesHashAtomsAtom = atom(async (get) => {
-  const configs = await get(filterAtom);
+/**
+ * Atom that contains the atoms of the selected values for each data property.
+ * The atoms are created dynamically with `filterWIthHashAtomFamily` based on the filters configuration.
+ * This atom does not contain the filters specification (name, options, ...), use `filtersSpecAtom` for that.
+ */
+export const filtersSelectionAtomsAtom = atom(async (get) => {
+  const configs = await get(filtersSpecAtom);
   const filterValuesAtom: Partial<{ [key in Property]: Atom<$FixMe> }> = {};
 
   filters.forEach((f) => {
     const filterConfig = configs[f.key];
     if (filterConfig) {
-      const a = filterAtomFamily({ key: f.key, options: filterConfig.options, type: f.type });
-      filterValuesAtom[f.key] = a;
+      filterValuesAtom[f.key] = filterWithHashAtomFamily({
+        key: f.key,
+        options: filterConfig.options,
+        type: f.type,
+      });
     }
   });
 

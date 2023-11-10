@@ -1,8 +1,8 @@
 import { Property } from "@/domain/data";
 import {
   Option,
-  filterAtom,
-  filtersValuesHashAtomsAtom,
+  filtersSelectionAtomsAtom,
+  filtersSpecAtom,
   indicatorAtom,
   indicators,
   timeRangeAtom,
@@ -44,8 +44,8 @@ const useExclusiveAccordion = (defaultState: string) => {
 
 const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
-  const filters = useAtomValue(filterAtom);
-  const filtersValuesHashAtoms = useAtomValue(filtersValuesHashAtomsAtom);
+  const filtersSpec = useAtomValue(filtersSpecAtom);
+  const filterSelectionAtoms = useAtomValue(filtersSelectionAtomsAtom);
 
   return (
     <Stack
@@ -73,8 +73,8 @@ const SidePanel = () => {
         <TimeAccordion {...getAccordionProps("time")} />
 
         {/* Property filters */}
-        {Object.entries(filters).map(([key, value]) => {
-          const filterAtom = filtersValuesHashAtoms[key as Property];
+        {Object.entries(filtersSpec).map(([key, value]) => {
+          const filterAtom = filterSelectionAtoms[key as Property];
           if (!filterAtom) {
             return null;
           }
