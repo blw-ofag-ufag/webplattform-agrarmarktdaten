@@ -9,13 +9,7 @@ import {
 } from "@/pages/api/use-sparql";
 import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
-import {
-  FilterConfig,
-  filtersSelectionAtomsAtom,
-  indicatorAtom,
-  indicators,
-  timeViewAtom,
-} from "./filters";
+import { filtersSelectionAtomsAtom, indicatorAtom, indicators, timeViewAtom } from "./filters";
 
 export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -50,7 +44,7 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(as
   const filterSelections = await get(filtersSelectionAtomsAtom);
   const filters = Object.entries(filterSelections).reduce((acc, [key, atom]) => {
     const selectedValues = get(atom);
-    console.log({ selectedValues });
+
     if (selectedValues) {
       acc.push({
         dimensionIri: dataDimensions[key as Property].iri,
@@ -60,8 +54,6 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(as
     }
     return acc;
   }, [] as Filter[]);
-
-  console.log({ filters });
 
   return {
     queryKey: ["observations", get(cubePathAtom), JSON.stringify(filters)],

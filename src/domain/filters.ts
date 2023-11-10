@@ -1,8 +1,15 @@
 import { atomFamily } from "jotai/vanilla/utils";
-import { Measure, Property, dimensionsAtom, dimensionsStatusAtom } from "@/domain/data";
+import {
+  DataDimension,
+  Measure,
+  Property,
+  dimensionsAtom,
+  dimensionsStatusAtom,
+} from "@/domain/data";
 import { atomWithHash } from "jotai-location";
 import { Atom, atom } from "jotai";
 import dayjs from "dayjs";
+import { Dimension } from "rdf-cube-view-query";
 
 export type Option = {
   label: string;
@@ -133,18 +140,26 @@ export const timeRange = {
 
 /* Atoms */
 
-export const indicatorAtom = atomWithHash("indicator", indicators[0], optionCodec(indicators));
-
-export const productsAtom = atomWithHash("products", products, multiOptionsCodec(products));
-export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");
-export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
-
-export type FilterConfig = { key: Property; type: "multi" | "single"; search: boolean };
+export type FilterConfig = {
+  key: Property;
+  type: "multi" | "single";
+  search?: boolean;
+  options?: Option[];
+};
 export const filters: FilterConfig[] = [
   {
     key: "market",
-    type: "multi",
-    search: false,
+    type: "single",
+    options: [{ value: "MilkDairyProducts", label: "Milk and Dairy" }],
+  },
+  {
+    key: "valueChain",
+    type: "single",
+    options: [
+      { value: "Consumption", label: "Consumption" },
+      { value: "Production", label: "Production" },
+      { value: "Index", label: "Index" },
+    ],
   },
   {
     key: "salesRegion",
@@ -171,6 +186,11 @@ export type Filters = Partial<{
   };
 }>;
 
+export const indicatorAtom = atomWithHash("indicator", indicators[0], optionCodec(indicators));
+export const productsAtom = atomWithHash("products", products, multiOptionsCodec(products));
+export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");
+export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
+
 /**
  * Atom that contains the filters specification and available options in an object.
  * This atom does not contain the selected values. Use `filtersSelectionAtomsAtom` for that.
@@ -187,10 +207,12 @@ export const filtersSpecAtom = atom<Filters | Promise<Filters>>(async (get) => {
       if (dim) {
         filtersMap[filter.key] = {
           config: filter,
-          options: dim.values.map((v) => ({
-            label: v.name,
-            value: v.iri,
-          })),
+          options:
+            filter.options ??
+            dim.values.map((v) => ({
+              label: v.name,
+              value: v.iri,
+            })),
           name: dim.name,
         };
       }
@@ -206,7 +228,7 @@ export const filtersSpecAtom = atom<Filters | Promise<Filters>>(async (get) => {
  */
 export const filtersSelectionAtomsAtom = atom(async (get) => {
   const configs = await get(filtersSpecAtom);
-  const filterValuesAtom: Partial<{ [key in Property]: Atom<$FixMe> }> = {};
+  const filterValuesAtom: Partial<{ [key in Property]: Atom<Option | Option[] | undefined> }> = {};
 
   filters.forEach((f) => {
     const filterConfig = configs[f.key];

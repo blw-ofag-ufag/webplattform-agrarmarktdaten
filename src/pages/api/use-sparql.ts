@@ -7,6 +7,9 @@ import { Cube, CubeDimension, Dimension, LookupSource, Source, View } from "rdf-
 import rdf from "rdf-ext";
 import * as ns from "../../lib/namespace";
 
+const SCHEMA_PUBLISHER =
+  "<https://register.ld.admin.ch/opendataswiss/org/bundesamt-fur-landwirtschaft-blw>";
+
 const amdpSource = new Source({
   endpointUrl: "https://test.lindas.admin.ch/query",
   sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
@@ -483,4 +486,28 @@ export const buildDimensionFilter = (view: View, dimensionIri: string, filters: 
   );
 
   return dimensionFilter;
+};
+
+const queryValuesAndLabelsForDimension = ({
+  dimensionIri,
+  locale,
+}: {
+  dimensionIri: string;
+  locale: string;
+}) => {
+  return `
+  PREFIX cube: <https://cube.link/>
+  PREFIX schema: <http://schema.org/>
+  PREFIX sh: <http://www.w3.org/ns/shacl#>
+  PREFIX meta: <https://cube.link/meta/>
+  
+  SELECT DISTINCT ?value ?valueName WHERE {
+      ?cube schema:publisher ${SCHEMA_PUBLISHER} .
+      ?cube cube:observationSet ?observationSet.
+      ?observationSet cube:observation ?observation.
+      ?observation <${dimensionIri}> ?value.
+      ?value schema:name ?valueName.
+      
+      FILTER (LANGMATCHES(LANG(?valueName), ${locale}))
+  }`;
 };
