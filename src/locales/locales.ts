@@ -1,11 +1,6 @@
 // If translations get too big, we should load them dynamically. But for now it's fine.
 import { i18n } from "@lingui/core";
-import {
-  de as pluralsDe,
-  en as pluralsEn,
-  fr as pluralsFr,
-  it as pluralsIt,
-} from "make-plural/plurals";
+import { de as pluralsDe, fr as pluralsFr, it as pluralsIt } from "make-plural/plurals";
 
 import { messages as catalogDe } from "@/locales/de/messages.js";
 // import { messages as catalogEn } from "@/locales/en/messages.js";
@@ -17,13 +12,13 @@ export const defaultLocale = "de";
 export type Locale = "de" | "fr" | "it" | "en";
 
 // The order specified here will determine the fallback order when strings are not available in the preferred language
-export const locales: Locale[] = ["de", "fr", "it", "en"];
+export const locales: Locale[] = ["de", "fr", "it" /* "en" */];
 
 i18n.loadLocaleData({
   de: { plurals: pluralsDe },
   fr: { plurals: pluralsFr },
   it: { plurals: pluralsIt },
-  en: { plurals: pluralsEn },
+  // en: { plurals: pluralsEn },
 });
 i18n.load({
   de: catalogDe,
