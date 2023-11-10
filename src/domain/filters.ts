@@ -104,13 +104,9 @@ const optionCodec = <T extends Option>(options: T[]) => ({
 export const filterAtomFamily = atomFamily(
   ({ key, options, type }: { key: Property; options: Option[]; type: "single" | "multi" }) => {
     if (type === "single" && options.length > 0) {
-      return atomWithHash(key, options[0], {
-        ...optionCodec(options),
-      });
+      return atomWithHash(key, options[0], optionCodec(options));
     } else {
-      return atomWithHash(key, options, {
-        ...multiOptionsCodec(options),
-      });
+      return atomWithHash(key, options, multiOptionsCodec(options));
     }
   },
   (a, b) => a.key === b.key
@@ -137,11 +133,9 @@ export const timeRange = {
 
 /* Atoms */
 
-export const indicatorAtom = atomWithHash("indicator", indicators[0], {
-  ...optionCodec(indicators),
-});
+export const indicatorAtom = atomWithHash("indicator", indicators[0], optionCodec(indicators));
 
-export const productsAtom = atomWithHash("products", products, { ...multiOptionsCodec(products) });
+export const productsAtom = atomWithHash("products", products, multiOptionsCodec(products));
 export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");
 export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
 
