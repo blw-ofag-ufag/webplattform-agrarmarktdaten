@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SxProps } from "@mui/material";
 
-import { Breakpoint, useTheme } from "@mui/material/styles";
+import { Breakpoint } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
 
@@ -162,6 +162,26 @@ const useStyles = makeStyles<{ disableItemMargin?: boolean }>()((theme, { disabl
   };
 });
 
+const useGridStyles = makeStyles()({
+  grid: {
+    display: "flex",
+    flexWrap: "wrap",
+    columnGap: `var(${vars.columnGutterWidth})`,
+    rowGap: `var(${vars.rowGutterWidth})`,
+  },
+});
+
+export const useGridElementStyles = makeStyles<{ full?: boolean | undefined }>()(
+  (theme, { full }) => ({
+    gridElement: {
+      textDecoration: "none",
+      [theme.breakpoints.up("xl")]: gridColumn(full ? 12 : 4),
+      [theme.breakpoints.between("sm", "xl")]: gridColumn(full ? 6 : 3),
+      [theme.breakpoints.down("md")]: gridColumn(4),
+    },
+  })
+);
+
 export const GridContainer = ({
   children,
   className,
@@ -178,35 +198,18 @@ export const GridContainer = ({
 };
 
 export const GridWrap = ({ children, sx, ...rest }: Props) => {
+  const { classes } = useGridStyles();
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        columnGap: `var(${vars.columnGutterWidth})`,
-        rowGap: `var(${vars.rowGutterWidth})`,
-        ...sx,
-      }}
-      {...rest}
-    >
+    <Box {...rest} className={classes.grid} sx={sx}>
       {children}
     </Box>
   );
 };
 
 export const GridWrapElement = ({ children, sx, full, ...rest }: Props & { full?: boolean }) => {
-  const theme = useTheme();
+  const { classes } = useGridElementStyles({ full });
   return (
-    <Box
-      sx={{
-        textDecoration: "none",
-        [theme.breakpoints.up("xl")]: gridColumn(full ? 12 : 4),
-        [theme.breakpoints.between("sm", "xl")]: gridColumn(full ? 6 : 3),
-        [theme.breakpoints.down("md")]: gridColumn(4),
-        ...sx,
-      }}
-      {...rest}
-    >
+    <Box {...rest} className={classes.gridElement} sx={sx}>
       {children}
     </Box>
   );

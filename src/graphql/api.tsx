@@ -15,7 +15,28 @@ const defaultExchanges = [
     schema: require("./schema.json"),
     keys: {
       VideoField: (parent) => String(parent.url),
+
+      // For fields without id or _id, we must disable the cache
       StringMultiLocaleField: () => null,
+      AnalysisPageModelLeadField: () => null,
+      AnalysisPageModelLeadFieldMultiLocaleField: () => null,
+      BlogPostModelLeadField: () => null,
+      BlogPostModelLeadFieldMultiLocaleField: () => null,
+      FocusArticleModelLeadField: () => null,
+      FocusArticleModelLeadFieldMultiLocaleField: () => null,
+      HomePageModelLeadField: () => null,
+      HomePageModelLeadFieldMultiLocaleField: () => null,
+      InfoPageModelLeadField: () => null,
+      InfoPageModelLeadFieldMultiLocaleField: () => null,
+      LegalPageModelLeadField: () => null,
+      LegalPageModelLeadFieldMultiLocaleField: () => null,
+      MarketArticleModelLeadField: () => null,
+      MarketArticleModelLeadFieldMultiLocaleField: () => null,
+      MethodsPageModelLeadField: () => null,
+      MethodsPageModelLeadFieldMultiLocaleField: () => null,
+      TermsPageModelLeadField: () => null,
+      TermsPageModelLeadFieldMultiLocaleField: () => null,
+      ResponsiveImage: () => null,
     },
     resolvers: {
       BlogPostRecord: {

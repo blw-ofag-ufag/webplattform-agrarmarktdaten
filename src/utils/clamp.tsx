@@ -9,6 +9,7 @@ const applyLineClamping = function (clampedElements: HTMLElement[]) {
     Object.assign(element.style, {
       WebkitLineClamp: "",
       height: "",
+      maxHeight: "",
     });
   });
 
@@ -26,6 +27,7 @@ const applyLineClamping = function (clampedElements: HTMLElement[]) {
         WebkitLineClamp: lines,
         // Necessary since line clamping only applies the ellipsis
         height: `${lines * lineHeight}px`,
+        maxHeight: `${lines * lineHeight}px`,
       };
 
       Object.assign(element.style, style);
