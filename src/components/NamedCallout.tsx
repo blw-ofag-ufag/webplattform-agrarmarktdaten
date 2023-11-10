@@ -5,6 +5,7 @@ import { makeStyles } from "@/components/style-utils";
 const useNamedCalloutStyles = makeStyles()(({ palette: c }) => ({
   root: {
     position: "relative",
+    paddingTop: "1rem",
   },
 
   content: {
@@ -15,9 +16,6 @@ const useNamedCalloutStyles = makeStyles()(({ palette: c }) => ({
     paddingRight: "4.375rem",
     paddingBottom: "3rem",
     paddingTop: "3rem",
-
-    // Account for legend
-    marginTop: "1rem",
   },
 
   legend: {
