@@ -8,7 +8,7 @@ import {
 } from "make-plural/plurals";
 
 import { messages as catalogDe } from "@/locales/de/messages.js";
-import { messages as catalogEn } from "@/locales/en/messages.js";
+// import { messages as catalogEn } from "@/locales/en/messages.js";
 import { messages as catalogFr } from "@/locales/fr/messages.js";
 import { messages as catalogIt } from "@/locales/it/messages.js";
 
@@ -29,7 +29,7 @@ i18n.load({
   de: catalogDe,
   fr: catalogFr,
   it: catalogIt,
-  en: catalogEn,
+  // en: catalogEn,
 });
 i18n.activate(defaultLocale);
 
