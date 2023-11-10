@@ -65,7 +65,7 @@ const useStyles = makeStyles<void, "card">()(
       },
 
       [b.up("xxl")]: { minHeight: "176px" },
-      [b.down("xxl")]: { minHeight: "120px" },
+      [b.down("xxl")]: { minHeight: "135px" },
 
       // For the colored border to be properly cut of by the border radius
       isolation: "isolate",
