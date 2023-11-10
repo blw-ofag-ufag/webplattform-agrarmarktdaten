@@ -7,13 +7,12 @@ import { client } from "@/graphql";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
 import { TableOfContents } from "@/components/TableOfContents";
-import { useStickyBox } from "react-sticky-box";
 import { GridContainer } from "@/components/Grid/Grid";
-import { useLayoutStyles } from "@/components/useLayoutStyles";
+import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
-  const stickyRef = useStickyBox({ offsetTop: 200 });
+  const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!focusArticle?.title || !focusArticle?.lead) {
     return null;

@@ -1,16 +1,72 @@
 name: Tests CI
 
-on: pull_request
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
+          cache: "yarn"
       - run: yarn install
       - run: yarn lint
-      # - run: yarn typecheck
+      - run: yarn typecheck
+
+      - name: Sets DEPLOY_SHA environment variable
+        run: |
+          if [[ "${{ github.event_name }}" == 'pull_request' ]]; then
+            echo "DEPLOY_SHA=${{ github.event.pull_request.head.sha }}" > ${{ github.env }}
+          else
+            echo "DEPLOY_SHA=${{ github.sha }}" > ${{ github.env }}
+          fi
+
+      - name: Wait for Vercel deploy
+        env:
+          VERCEL_PROJECT: QmZSbL5YTcU238YSiotopwWT6jVmV3BXbgRKVxjtZnJK35
+          VERCEL_TEAM: team_QR1NbYAXZYW9kP1RAF8UIjLl
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        id: wait-vercel
+        run:
+          npx --package @interactivethings/scripts wait-for-vercel-deploy ${DEPLOY_SHA} --project $VERCEL_PROJECT --team $VERCEL_TEAM  | tee /tmp/output-wait-for-vercel-deploy.txt
+          cat /tmp/output-wait-for-vercel-deploy.txt | grep DEPLOYMENT_URL >> $GITHUB_OUTPUT
+
+      - name: Get installed Playwright version
+        id: playwright-version
+        shell: bash
+        run: echo "PLAYWRIGHT_VERSION=1.31.2" >> $GITHUB_ENV
+
+      - name: Cache playwright binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - run: npx playwright install --with-deps chromium
+        shell: bash
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+
+      - run: npx playwright install-deps
+        shell: bash
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+
+      - name: Run playwright
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.wait-vercel.outputs.DEPLOYMENT_URL }}
+        run: node scripts/e2e-screenshots.mjs
+
+      - name: Upload snapshots to argos-ci.com
+        continue-on-error: true
+        env:
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+        run: yarn run argos upload ./screenshots

@@ -6,25 +6,17 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: AMDP\n"
 "Language: it\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
-#. js-lingui-explicit-id
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} totale)"
-
-#. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "data.filters.some"
-msgstr "{0} di {1}"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -32,9 +24,9 @@ msgid "data.filters.results"
 msgstr "{resultCount, plural, one {risultato} other {risultati}}"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografic.date"
-msgstr "-"
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.some"
+msgstr "{0} di {1}"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -46,6 +38,17 @@ msgstr "Chi siamo"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.addedValue"
 msgstr "Valore aggiunto"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.report"
+msgstr "Rapporto Agricolo"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Filters.tsx
+msgid "select.all"
+msgstr "Seleziona tutto"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -63,6 +66,22 @@ msgid "menu.analysis"
 msgstr "Analisi"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.shortTitle"
+msgstr "UFAG"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.blw"
+msgstr "L'Ufficio federale dell'agricoltura"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr "Ufficio federale dell'agricoltura UFAG"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.aria.clear"
 msgstr "Ripristina i filtri"
@@ -71,6 +90,17 @@ msgstr "Ripristina i filtri"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
 msgstr "Azzera i filtri"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Chiudi"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.data"
+msgstr "Dati"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -88,9 +118,20 @@ msgid "data.actions.download"
 msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.heading"
 msgstr "Filtri"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.focus"
+msgstr "Focus"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -129,30 +170,35 @@ msgid "footer.impressum"
 msgstr "Contatto"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografik.teaser"
-msgstr "-"
-
-#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.indicator"
 msgstr "Indicatore"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografic"
-msgstr "-"
+#: src/components/layout.tsx
+msgid "menu.info"
+msgstr "Info"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-msgid "button.infografic.teaser"
-msgstr "-"
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.priceindex"
+msgstr "Indice nazionale dei prezzi al consumo"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "Per saperne di più"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.filters.loading"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.market"
+msgstr "Mercato"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -180,6 +226,11 @@ msgid "data.metadata.title"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.methods"
+msgstr "Metodi"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
 msgstr "Mese"
@@ -188,6 +239,11 @@ msgstr "Mese"
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr "Analisi"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.noOptions"
+msgstr "Nessuna opzione"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -203,6 +259,12 @@ msgstr "Sistema di produzione"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.products"
 msgstr "Elenco prodotti"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.importpriceindex"
+msgstr "Indice dei prezzi alla produzione e all'importazione"
 
 #. js-lingui-explicit-id
 #: src/pages/blog/[slug].tsx
@@ -225,10 +287,9 @@ msgid "data.filters.salesRegions"
 msgstr "Regione di vendita"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografik.title"
-msgstr "-"
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.label"
+msgstr "Ricerca"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -244,6 +305,11 @@ msgstr "Seleziona tutto"
 #: src/pages/data.tsx
 msgid "data.actions.showFiler"
 msgstr "Mostra filtri"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Sort.tsx
+msgid "sort.labe"
+msgstr "Ordina per"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -289,95 +355,3 @@ msgstr "Visualize"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Anno"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-#: src/components/Footer/Footer.tsx
-msgid "footer.report"
-msgstr "Rapporto Agricolo"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-#: src/components/Footer/Footer.tsx
-msgid "footer.blw"
-msgstr "L'Ufficio federale dell'agricoltura"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-#: src/components/Footer/Footer.tsx
-msgid "footer.feedback"
-msgstr "Feedback"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-#: src/components/Footer/Footer.tsx
-msgid "footer.priceindex"
-msgstr "Indice nazionale dei prezzi al consumo"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-#: src/components/Footer/Footer.tsx
-msgid "footer.importpriceindex"
-msgstr "Indice dei prezzi alla produzione e all'importazione"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "header.longTitle"
-msgstr "Ufficio federale dell'agricoltura UFAG"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.data"
-msgstr "Dati"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.info"
-msgstr "Info"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.methods"
-msgstr "Metodi"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
-msgid "header.close"
-msgstr "Chiudi"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "header.shortTitle"
-msgstr "UFAG"
-
-#. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Filters.tsx
-msgid "select.all"
-msgstr "Seleziona tutto"
-
-#. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Controls.tsx
-msgid "filter.focus"
-msgstr "Focus"
-
-#. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Controls.tsx
-msgid "filter.market"
-msgstr "Mercato"
-
-#. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Search.tsx
-msgid "search.noOptions"
-msgstr "Nessuna opzione"
-
-#. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Search.tsx
-msgid "search.label"
-msgstr "Ricerca"
-
-#. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Sort.tsx
-msgid "sort.labe"
-msgstr "Ordina per"
-

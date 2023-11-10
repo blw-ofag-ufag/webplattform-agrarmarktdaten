@@ -99,7 +99,7 @@ const DataBrowser = () => {
       <Box width="388px" flexGrow={0} flexShrink={0}>
         <SidePanel />
       </Box>
-      <Stack bgcolor="#F0F4F7" flexGrow={1} minWidth={0} p="24px" gap={4}>
+      <Stack bgcolor="cobalt.50" flexGrow={1} minWidth={0} p="24px" gap={4}>
         <Stack height="80px" justifyContent="flex-end">
           <Box sx={{ width: "55px", height: "3px", backgroundColor: "#000" }} />
           <Typography variant="h1" sx={{ fontSize: "64px" }}>
