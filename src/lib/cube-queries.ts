@@ -2,6 +2,7 @@ import { ExtractAtomValue } from "jotai";
 
 import { timeRangeAtom } from "@/domain/filters";
 import { Locale } from "@/locales/locales";
+import { amdpProperty } from "./namespace";
 
 export type ObservationIri = {
   observation: string;
@@ -330,4 +331,94 @@ export const queryDateExtent = (cubes: Cube[] | undefined) => {
   `;
 
   return res;
+};
+
+/* NEW */
+
+export const queryValuesAndLabelsForDimension = ({
+  availableCubesIri,
+  dimensionIri,
+  locale,
+}: {
+  availableCubesIri?: string[];
+  dimensionIri: string;
+  locale: string;
+}) => {
+  return `
+  PREFIX cube: <https://cube.link/>
+  PREFIX schema: <http://schema.org/>
+  PREFIX sh: <http://www.w3.org/ns/shacl#>
+  PREFIX meta: <https://cube.link/meta/>
+
+  SELECT DISTINCT ?value ?name
+  FROM <${agDataBase}> 
+  WHERE {
+    ${
+      availableCubesIri
+        ? `VALUES (?cube) {
+        ${availableCubesIri.map((d) => `(<${d}>)`).join("\n")}
+      }`
+        : "?cube a cube:Cube ."
+    }
+    ?cube cube:observationSet ?observationSet .
+    ?observationSet cube:observation ?observation .
+    ?observation <${dimensionIri}> ?value .
+    ?value schema:name ?name .
+
+    FILTER (LANGMATCHES(LANG(?name), "${locale}"))
+  }`;
+};
+
+export const queryAvailableCubes = {};
+
+export const queryAvailableMeasureForValueChain = ({
+  valueChainIri,
+}: {
+  valueChainIri: string;
+}) => {
+  return `
+  PREFIX sh: <http://www.w3.org/ns/shacl#>
+  PREFIX cube: <https://cube.link/>
+  PREFIX schema: <http://schema.org/>
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+  SELECT DISTINCT ?dimension
+  FROM <${agDataBase}> 
+  WHERE {
+      ?cube a cube:Cube .
+      ?cube cube:observationConstraint ?shape .
+      ?shape ?prop ?blankNode .
+      ?blankNode sh:path ?dimension .
+      ?cube cube:observationSet ?observationSet .
+      ?observationSet cube:observation ?observation .
+      ?observation <${amdpProperty("valueChain").value}> <${valueChainIri}> . 
+      
+      FILTER (strstarts(str(?dimension), 'https://agriculture.ld.admin.ch/foag/measure'))
+    }
+  `;
+};
+
+export const queryCubes = () => {
+  return `
+  PREFIX cube: <https://cube.link/>
+  PREFIX sh: <http://www.w3.org/ns/shacl#>
+  
+  SELECT ?cube ?measure ?valueChain ?market
+  FROM ${agDataBase}
+  WHERE {
+    ?cube
+    a cube:Cube ; 
+    cube:observationConstraint ?shape .
+    ?shape ?p ?blankNode .
+    ?blankNode sh:path ?measure .
+    ?cube cube:observationSet ?observationSet .
+    ?observationSet cube:observation ?observation .
+    ?observation ${amdpProperty("valueChain").value} ?valueChain .
+    ?observation ${amdpProperty("market").value} ?market .
+    
+    FILTER (
+      contains(str(?measure), "https://agriculture.ld.admin.ch/foag/measure/")
+  }
+  `;
 };

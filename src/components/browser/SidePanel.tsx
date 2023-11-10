@@ -1,9 +1,9 @@
-import { Property } from "@/domain/data";
+import { Property, dimensionsAtom, measureOptionsAtom, valueChainOptionsAtom } from "@/domain/data";
 import {
   Option,
   filtersSelectionAtomsAtom,
   filtersSpecAtom,
-  indicatorAtom,
+  valueChainSelectionAtomAtom,
   indicators,
   timeRangeAtom,
   timeViewAtom,
@@ -46,6 +46,9 @@ const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
   const filtersSpec = useAtomValue(filtersSpecAtom);
   const filterSelectionAtoms = useAtomValue(filtersSelectionAtomsAtom);
+  const measureOptions = useAtomValue(measureOptionsAtom);
+  console.log({ measureOptions });
+  console.log({ filtersSpec });
 
   return (
     <Stack
@@ -69,7 +72,7 @@ const SidePanel = () => {
             </Typography>
           </Stack>
         </Box>
-        <IndicatorAccordion {...getAccordionProps("indicator")} />
+        <ValueChainAccordion {...getAccordionProps("valueChain")} />
         <TimeAccordion {...getAccordionProps("time")} />
 
         {/* Property filters */}
@@ -135,19 +138,28 @@ const FilterSelectAccordion = <T extends Option>({
     </FilterAccordion>
   );
 };
-const IndicatorAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [value, setValue] = useAtom(indicatorAtom);
+const ValueChainAccordion = (props: Omit<AccordionProps, "children">) => {
+  const valueChainOptions = useAtomValue(valueChainOptionsAtom);
+  const valueChainAtom = useAtomValue(valueChainSelectionAtomAtom);
+  const [value, setValue] = useAtom(valueChainAtom);
+  const dimensions = useAtomValue(dimensionsAtom);
+
+  const options = valueChainOptions.map((option) => ({
+    value: option.value,
+    label: option.name,
+  }));
+  const valueChainDimension = dimensions.property.find((p) => p.key === "valueChain");
 
   return (
     <FilterAccordion {...props}>
       <AccordionSummary>
         <AccordionTitle>
-          <Trans id="data.filters.indicator">Indicator</Trans>
+          <Trans id="data.filters.indicator">{valueChainDimension?.name}</Trans>
         </AccordionTitle>
         <PreviewFilter show={!props.expanded && !!value}>{value && value.label}</PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
-        <RadioFilter value={value} onChange={setValue} options={indicators} />
+        <RadioFilter value={value} onChange={setValue} options={options} />
       </AccordionDetails>
     </FilterAccordion>
   );

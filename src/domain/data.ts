@@ -1,3 +1,7 @@
+import {
+  queryAvailableMeasureForValueChain,
+  queryValuesAndLabelsForDimension,
+} from "@/lib/cube-queries";
 import { amdp, amdpMeasure, amdpProperty } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import {
@@ -6,10 +10,11 @@ import {
   fetchCube,
   fetchDimensions,
   fetchObservations,
+  fetchSparql,
 } from "@/pages/api/use-sparql";
 import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
-import { filtersSelectionAtomsAtom, indicatorAtom, indicators, timeViewAtom } from "./filters";
+import { filtersSelectionAtomsAtom, timeViewAtom, valueChainSelectionAtomAtom } from "./filters";
 
 export const capitalizeFirstLetter = (string: string): string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -17,26 +22,65 @@ export const capitalizeFirstLetter = (string: string): string => {
 
 /* Atoms */
 
-export const cubePathAtom = atom((get) => {
-  const indicator = get(indicatorAtom);
+export const valueChainMap = {
+  "https://agriculture.ld.admin.ch/foag/value-chain/1": "Production",
+  "https://agriculture.ld.admin.ch/foag/value-chain/6": "Consumption",
+  "https://agriculture.ld.admin.ch/foag/value-chain/2": "WholesaleProcessing",
+};
+
+export const cubePathAtom = atom(async (get) => {
   const timeView = get(timeViewAtom);
+  const valueChainSelectionAtom = await get(valueChainSelectionAtomAtom);
+  const valueChain = get(valueChainSelectionAtom);
+  /* const valueChainCubeKey =
+    valueChainMap[
+      (valueChain
+        ? valueChain[0].value
+        : "https://agriculture.ld.admin.ch/foag/value-chain/1") as keyof typeof valueChainMap
+    ];
   const cubePath = amdp(
-    `cube/MilkDairyProducts/Consumption_${capitalizeFirstLetter(
-      indicator?.key || indicators[0].key
+    `cube/MilkDairyProducts/${valueChainCubeKey}_${capitalizeFirstLetter(
+      valueChainCubeKey
     )}_${capitalizeFirstLetter(timeView)}`
-  ).value;
-  return cubePath;
+  ).value; */
+  return amdp("cube/MilkDairyProducts/Consumption_Price_Year").value;
 });
 
-export const [dimensionsAtom, dimensionsStatusAtom] = atomsWithQuery((get) => ({
-  queryKey: ["dimensions", get(localeAtom)],
-  queryFn: () => fetchDimensions(get(cubePathAtom), get(localeAtom)),
+export const [valueChainOptionsAtom, valueChainOptionsStatusAtom] = atomsWithQuery((get) => ({
+  queryKey: ["valueChain", get(localeAtom)],
+  queryFn: () =>
+    fetchSparql(
+      queryValuesAndLabelsForDimension({
+        dimensionIri: amdpProperty("value-chain").value,
+        locale: get(localeAtom),
+      })
+    ),
 }));
 
-export const [cubeAtom, cubeStatusAtom] = atomsWithQuery((get) => ({
-  queryKey: ["cube", get(cubePathAtom)],
-  queryFn: () => fetchCube(get(cubePathAtom)),
-}));
+export const [measureOptionsAtom, measureOptionsStatusAtom] = atomsWithQueryAsync(async (get) => {
+  const valueChainSelectionAtom = await get(valueChainSelectionAtomAtom);
+  const valueChain = get(valueChainSelectionAtom);
+  return {
+    queryKey: ["measures", "@TODO"],
+    queryFn: () => {},
+  };
+});
+
+export const [dimensionsAtom, dimensionsStatusAtom] = atomsWithQueryAsync(async (get) => {
+  const cubePath = await get(cubePathAtom);
+  return {
+    queryKey: ["dimensions", get(localeAtom)],
+    queryFn: () => fetchDimensions(cubePath, get(localeAtom)),
+  };
+});
+
+export const [cubeAtom, cubeStatusAtom] = atomsWithQueryAsync(async (get) => {
+  const cubePath = await get(cubePathAtom);
+  return {
+    queryKey: ["cube", cubePath],
+    queryFn: () => fetchCube(cubePath),
+  };
+});
 
 export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(async (get) => {
   const cube = await get(cubeAtom);
@@ -56,7 +100,11 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync(as
   }, [] as Filter[]);
 
   return {
-    queryKey: ["observations", get(cubePathAtom), JSON.stringify(filters)],
+    queryKey: [
+      "observations",
+      "cube/MilkDairyProducts/Consumption_Price_Year",
+      JSON.stringify(filters),
+    ],
     queryFn: () => {
       if (cube.view && dimensions) {
         return fetchObservations(cube.view, dimensions, filters);

@@ -87,7 +87,8 @@
     "react-sticky-box": "^2.0.4",
     "sparql-http-client": "^2.4.0",
     "tss-react": "^4.9.0",
-    "urql": "^4.0.5"
+    "urql": "^4.0.5",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",

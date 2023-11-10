@@ -1,15 +1,14 @@
-import { atomFamily } from "jotai/vanilla/utils";
 import {
-  DataDimension,
   Measure,
   Property,
   dimensionsAtom,
   dimensionsStatusAtom,
+  valueChainOptionsAtom,
 } from "@/domain/data";
-import { atomWithHash } from "jotai-location";
-import { Atom, atom } from "jotai";
 import dayjs from "dayjs";
-import { Dimension } from "rdf-cube-view-query";
+import { Atom, atom } from "jotai";
+import { atomWithHash } from "jotai-location";
+import { atomFamily } from "jotai/vanilla/utils";
 
 export type Option = {
   label: string;
@@ -21,32 +20,6 @@ export const markets: Option[] = [
   {
     label: "Milk and Dairy",
     value: "MilkDairyProducts",
-  },
-];
-
-export type IndicatorOption = Option & {
-  dimensionIri: string;
-  key: Measure;
-};
-
-export const indicators: IndicatorOption[] = [
-  {
-    label: "Price",
-    value: "Price",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/price>",
-    key: "price",
-  },
-  {
-    label: "Quantity",
-    value: "Quantity",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/quantity>",
-    key: "quantity",
-  },
-  {
-    label: "Index",
-    value: "Index",
-    dimensionIri: "<https://agriculture.ld.admin.ch/foag/measure/index>",
-    key: "index",
   },
 ];
 
@@ -104,14 +77,19 @@ const multiOptionsCodec = <T extends Option>(options: T[]) => ({
 });
 
 const optionCodec = <T extends Option>(options: T[]) => ({
-  serialize: (value?: Option) => (value ? value.value : ""),
-  deserialize: (value: string) => options.find((o) => o.value === value),
+  serialize: (value?: [Option]) => (value ? value[0].value : ""),
+  deserialize: (value: string) => {
+    const option = options.find((o) => o.value === value);
+    if (option) {
+      return [option] as [Option];
+    }
+  },
 });
 
 export const filterWithHashAtomFamily = atomFamily(
   ({ key, options, type }: { key: Property; options: Option[]; type: "single" | "multi" }) => {
     if (type === "single" && options.length > 0) {
-      return atomWithHash(key, options[0], optionCodec(options));
+      return atomWithHash(key, [options[0]], optionCodec(options));
     } else {
       return atomWithHash(key, options, multiOptionsCodec(options));
     }
@@ -144,23 +122,9 @@ export type FilterConfig = {
   key: Property;
   type: "multi" | "single";
   search?: boolean;
-  options?: Option[];
 };
+
 export const filters: FilterConfig[] = [
-  {
-    key: "market",
-    type: "single",
-    options: [{ value: "MilkDairyProducts", label: "Milk and Dairy" }],
-  },
-  {
-    key: "valueChain",
-    type: "single",
-    options: [
-      { value: "Consumption", label: "Consumption" },
-      { value: "Production", label: "Production" },
-      { value: "Index", label: "Index" },
-    ],
-  },
   {
     key: "salesRegion",
     type: "multi",
@@ -168,11 +132,6 @@ export const filters: FilterConfig[] = [
   },
   {
     key: "productionSystem",
-    type: "multi",
-    search: false,
-  },
-  {
-    key: "valueChain",
     type: "multi",
     search: false,
   },
@@ -186,7 +145,11 @@ export type Filters = Partial<{
   };
 }>;
 
-export const indicatorAtom = atomWithHash("indicator", indicators[0], optionCodec(indicators));
+export const valueChainSelectionAtomAtom = atom(async (get) => {
+  const valueChainOptions = await get(valueChainOptionsAtom);
+  return atomWithHash("valueChain", [valueChainOptions[0]], optionCodec(valueChainOptions));
+});
+
 export const productsAtom = atomWithHash("products", products, multiOptionsCodec(products));
 export const timeViewAtom = atomWithHash<TimeView>("timeView", "year");
 export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
@@ -207,12 +170,10 @@ export const filtersSpecAtom = atom<Filters | Promise<Filters>>(async (get) => {
       if (dim) {
         filtersMap[filter.key] = {
           config: filter,
-          options:
-            filter.options ??
-            dim.values.map((v) => ({
-              label: v.name,
-              value: v.iri,
-            })),
+          options: dim.values.map((v) => ({
+            label: v.name,
+            value: v.iri,
+          })),
           name: dim.name,
         };
       }
@@ -228,7 +189,7 @@ export const filtersSpecAtom = atom<Filters | Promise<Filters>>(async (get) => {
  */
 export const filtersSelectionAtomsAtom = atom(async (get) => {
   const configs = await get(filtersSpecAtom);
-  const filterValuesAtom: Partial<{ [key in Property]: Atom<Option | Option[] | undefined> }> = {};
+  const filterValuesAtom: Partial<{ [key in Property]: Atom<Option[] | undefined> }> = {};
 
   filters.forEach((f) => {
     const filterConfig = configs[f.key];

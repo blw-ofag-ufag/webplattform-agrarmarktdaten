@@ -1,5 +1,10 @@
 import { AppLayout } from "@/components/layout";
-import { dimensionsAtom, observationsAtom, observationsStatusAtom } from "@/domain/data";
+import {
+  dimensionsAtom,
+  observationsAtom,
+  observationsStatusAtom,
+  valueChainAtom,
+} from "@/domain/data";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import blwTheme from "@/theme/blw";
@@ -29,6 +34,7 @@ import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/contro
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import { DimensionsResult } from "./api/use-sparql";
+import { cubesAtom } from "@/domain/cubes";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -91,8 +97,9 @@ const DataBrowser = () => {
   const observations = useAtomValue(observationsAtom);
   const dimensions = useAtomValue(dimensionsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
-
   const resultCount = observations.length;
+  const cubesList = useAtomValue(cubesAtom);
+  console.log({ cubesList });
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
