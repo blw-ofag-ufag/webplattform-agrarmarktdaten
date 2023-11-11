@@ -18,17 +18,16 @@ const useStyles = makeStyles()(({ palette: c }) => ({
   },
 }));
 
-interface Props {
-  data: Partial<GQL.HighlightSectionRecord>;
-  className?: string;
-}
-
-const HighlightSection = (props: Props) => {
+const HighlightSection = (
+  props: {
+    data: Partial<GQL.HighlightSectionRecord>;
+  } & Omit<React.ComponentProps<typeof NamedCallout>, "data">
+) => {
   const { classes } = useStyles();
-  const { data } = props;
+  const { data, ...rest } = props;
   const { locale } = useRouter();
   return (
-    <NamedCallout title={data.title}>
+    <NamedCallout title={data.title} {...rest}>
       {data.content && (
         <StructuredText
           data={

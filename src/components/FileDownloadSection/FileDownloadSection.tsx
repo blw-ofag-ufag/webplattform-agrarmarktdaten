@@ -49,16 +49,15 @@ const useStyles = makeStyles<void, "fileTitle" | "file">()(
   })
 );
 
-interface Props {
-  data: Partial<GQL.FileDownloadSectionRecord>;
-  className?: string;
-}
-
-const FileDownloadSection = (props: Props) => {
+const FileDownloadSection = (
+  props: {
+    data: Partial<GQL.FileDownloadSectionRecord>;
+  } & Omit<React.ComponentProps<typeof NamedCallout>, "data">
+) => {
   const { classes } = useStyles();
-  const { data } = props;
+  const { data, ...rest } = props;
   return (
-    <NamedCallout title={data.title}>
+    <NamedCallout title={data.title} {...rest}>
       <Intersperse separator={<div className={classes.separator} />}>
         {data.fileDownloadItems?.map((item) => {
           const { id, date, title, file, description } = item;
