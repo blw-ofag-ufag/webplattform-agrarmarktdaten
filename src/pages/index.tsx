@@ -56,20 +56,36 @@ export default function HomePage(props: GQL.HomePageQuery) {
         // We vertically position the background on top so that sky is always visible
         sx={{ "&&": { backgroundPosition: "center top" } }}
       />
-      <Box sx={{ bgcolor: "cobalt.50", pb: "92px" }}>
-        <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
+      <Box
+        sx={{
+          bgcolor: "cobalt.50",
+          pt: "5rem",
+          pb: "92px",
+          "& > * + *": { mt: "80px" },
+        }}
+      >
+        {/* Markets */}
+        <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={homePage.markets} />
+        </GridContainer>
 
+        {/* Focus */}
+
+        <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
         </GridContainer>
+
+        {/* Analysis */}
         <TopBlogpostsTeaser blogposts={topBlogPosts} />
-        <GridContainer disableItemMargin sx={{ gap: s(8), pt: s(20), flexDirection: "column" }}>
+
+        {/* Data */}
+        <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
           <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>
@@ -87,9 +103,9 @@ export default function HomePage(props: GQL.HomePageQuery) {
                   <Trans id="homepage.section.data.button">Learn More</Trans>
                 </Button>
               </Box>
-              <Box className={classes.downloadIcon}>
-                <Download width={40} height={40} />
-              </Box>
+              <div className={classes.downloadIcon}>
+                <Download width={32} height={32} />
+              </div>
             </Box>
           </Card>
         </GridContainer>
