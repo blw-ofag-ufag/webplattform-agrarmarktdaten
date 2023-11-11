@@ -6,12 +6,11 @@ import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
-import { useStickyBox } from "react-sticky-box";
-import { useLayoutStyles } from "@/components/useLayoutStyles";
+import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
   const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
-  const stickyRef = useStickyBox({ offsetTop: 200 });
+  const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;

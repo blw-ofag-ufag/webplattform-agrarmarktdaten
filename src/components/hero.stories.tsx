@@ -22,4 +22,5 @@ export const HeroBackgroundIamge = () => {
 
 export default {
   component: Hero,
+  title: "components / Hero",
 };

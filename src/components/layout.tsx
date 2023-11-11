@@ -2,13 +2,14 @@ import {
   Header,
   HeaderProps,
   LocaleSwitcher,
-  Menu,
   MenuProps,
   c,
+  MenuContainer,
+  MenuButton,
 } from "@interactivethings/swiss-federal-ci";
 import { useTheme } from "@mui/material/styles";
 import { t } from "@lingui/macro";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useStickyBox } from "react-sticky-box";
@@ -20,6 +21,7 @@ import { BackButton } from "./back-button";
 import { vars } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
+import { IcInfoCircle } from "@/icons/icons-jsx/control";
 
 interface Props {
   children: React.ReactNode;
@@ -70,7 +72,6 @@ export const AppLayout = (props: Props) => {
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
       { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
       { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
-      { title: t({ id: "menu.info", message: "Info" }), href: "/info" },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
@@ -91,7 +92,13 @@ export const AppLayout = (props: Props) => {
       };
 
   return (
-    <Box position="relative" minHeight="100vh" display="flex" flexDirection="column">
+    <Box
+      component="main"
+      position="relative"
+      minHeight="100vh"
+      display="flex"
+      flexDirection="column"
+    >
       <LocaleSwitcher {...localeSwitcherProps} data-datocms-noindex />
       <Box
         data-datocms-noindex
@@ -122,7 +129,7 @@ export const AppLayout = (props: Props) => {
         }}
       >
         <GridContainer data-datocms-noindex>
-          <Menu
+          <MenuContainer
             sx={{ borderBottom: "none", ml: "-12px" }}
             closeLabel={t({ id: "header.close", message: "Close" })}
             ContentWrapperProps={{
@@ -132,8 +139,21 @@ export const AppLayout = (props: Props) => {
                 [theme.breakpoints.down("xl")]: { paddingX: `var(${vars.offset})` },
               },
             }}
-            sections={menuSections}
-          />
+          >
+            {menuSections.map((section, i) => (
+              <MenuButton key={i} {...section} />
+            ))}
+            <Box display="flex" flexGrow={1} />
+            <MenuButton
+              title={t({ id: "menu.info", message: "Info" })}
+              href="/info"
+              endIcon={
+                <Box sx={{ ml: 1 }}>
+                  <IcInfoCircle fontSize={16} />
+                </Box>
+              }
+            />
+          </MenuContainer>
         </GridContainer>
       </Box>
       <Box
@@ -158,14 +178,22 @@ export const AppLayout = (props: Props) => {
           </div>
         )}
         {children}
+        {router.pathname !== "/data" ? <ScrollToTop /> : null}
       </Box>
 
       {router.pathname !== "/data" && (
         <div className="debug-warn">
           <Footer />
-          <ScrollToTop />
         </div>
       )}
+    </Box>
+  );
+};
+
+export const CalloutSection = (props: BoxProps) => {
+  return (
+    <Box {...props} sx={{ backgroundColor: "cobalt.50", py: "6rem", ...props.sx }}>
+      {props.children}
     </Box>
   );
 };

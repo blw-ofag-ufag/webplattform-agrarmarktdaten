@@ -52,17 +52,23 @@ const useStyles = makeStyles<void, "card">()(
     card: {
       width: "100%",
       height: "100%",
-      boxShadow: e[4],
+      boxShadow: e.lg,
       borderRadius: s(2),
       "--dashColor": "black",
+      overflow: "hidden",
+      position: "relative",
       "&:hover": {
+        boxShadow: e.xxl,
         // backgroundColor: `var(--bgColor)`,
         color: "var(--color)",
         "--dashColor": "var(--color)",
       },
 
       [b.up("xxl")]: { minHeight: "176px" },
-      [b.down("xxl")]: { minHeight: "120px" },
+      [b.down("xxl")]: { minHeight: "135px" },
+
+      // For the colored border to be properly cut of by the border radius
+      isolation: "isolate",
     },
 
     borderTop: {
@@ -70,11 +76,14 @@ const useStyles = makeStyles<void, "card">()(
       width: "100%",
       height: "20px",
       marginBottom: s(5),
-      transition: "transform 0.5s ease",
+      transition: "transform 0.3s ease-out",
+      transform: "scaleY(1)",
+      willChange: "transform",
+      transformOrigin: "top center",
       zIndex: -1,
 
       [`.${classes.card}:hover &`]: {
-        transform: "scaleY(30)",
+        transform: "scaleY(10)",
       },
     },
 

@@ -24,6 +24,19 @@ const theme = createTheme(federalTheme, {
     },
   },
 
+  shadows: {
+    ...federalTheme.shadows,
+
+    // Values copied from Sketch
+    // @see https://www.sketch.com/s/81803335-dd26-42f1-a505-6845270a91b7/layer-styles?g=Elevation&component=a41783c1-a658-4c47-be5e-9a8d5e122d36#Inspect
+    sm: `0px 1px 2px rgba(0,0,0, 0.05)`,
+    base: `0px 1px 5px rgba(0,0,0, 0.08), 0px 1px 2px rgba(0,0,0, 0.06)`,
+    md: `0px 4px 10px -1px rgba(0,0,0, 0.08), 0px 2px 4px -1px rgba(0,0,0, 0.06)`,
+    lg: `0px 5px 20px -2px rgba(0,0,0, 0.08), 0px 2px 6px -1px rgba(0,0,0, 0.05)`,
+    xl: `0px 15px 25px -3px rgba(0,0,0, 0.08), 0px 6px 10px -5px rgba(0,0,0, 0.04)`,
+    xxl: `0px 10px 20px rgba(0,0,0, 0.05), 1px 10px 70px -8px rgba(0,0,0, 0.13)`,
+  },
+
   breakpoints: {
     values: breakpoints,
   },

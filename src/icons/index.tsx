@@ -59,5 +59,5 @@ export const Icon = ({
   name: IconName;
 }) => {
   const IconComponent = Icons[name];
-  return <IconComponent size={size} color={color} {...props} />;
+  return <IconComponent color={color} {...props} />;
 };
