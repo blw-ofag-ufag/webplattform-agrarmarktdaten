@@ -65,13 +65,14 @@ export const AppLayout = (props: Props) => {
       allFocusArticles
         ?.map((focus) => ({ title: focus.title!, href: `/focus/${focus.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
-    const menuSections: MenuProps["sections"] = [
+    const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: "Home", href: "/" },
       { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
       { title: t({ id: "menu.focus", message: "Fokus" }), sections: focusSections },
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
       { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
       { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
+      { title: t({ id: "menu.info", message: "Info" }), href: "/info", desktop: false },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
@@ -140,9 +141,11 @@ export const AppLayout = (props: Props) => {
               },
             }}
           >
-            {menuSections.map((section, i) => (
-              <MenuButton key={i} {...section} />
-            ))}
+            {menuSections
+              .filter((x) => x.desktop !== false)
+              .map((section, i) => (
+                <MenuButton key={i} {...section} />
+              ))}
             <Box display="flex" flexGrow={1} />
             <MenuButton
               title={t({ id: "menu.info", message: "Info" })}
@@ -192,7 +195,7 @@ export const AppLayout = (props: Props) => {
 
 export const CalloutSection = (props: BoxProps) => {
   return (
-    <Box {...props} sx={{ backgroundColor: "cobalt.50", py: "6rem", ...props.sx }}>
+    <Box {...props} sx={{ backgroundColor: "cobalt.50", ...props.sx }}>
       {props.children}
     </Box>
   );

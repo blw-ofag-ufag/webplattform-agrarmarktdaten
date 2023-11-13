@@ -19,17 +19,13 @@ const useStyles = makeStyles()({
   container: {
     display: "flex",
     flexDirection: "column",
-    marginTop: "40px",
-    marginBottom: "40px",
   },
 });
 
-interface Props {
-  blogposts: GQL.SimpleBlogPostFragment[];
-}
-
-export const TopBlogpostsTeaser = (props: Props) => {
-  const { blogposts } = props;
+export const TopBlogpostsTeaser = (
+  props: { blogposts: GQL.SimpleBlogPostFragment[] } & React.ComponentProps<typeof CalloutSection>
+) => {
+  const { blogposts, ...rest } = props;
   const isDesktop = useMediaQuery(b.up("xl"));
   const isTablet = useMediaQuery(b.between("md", "xl"));
   const isMobile = useMediaQuery(b.down("md"));
@@ -165,7 +161,7 @@ export const TopBlogpostsTeaser = (props: Props) => {
   })();
 
   return (
-    <CalloutSection>
+    <CalloutSection {...rest}>
       <GridContainer disableItemMargin className={classes.container}>
         <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
           <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
