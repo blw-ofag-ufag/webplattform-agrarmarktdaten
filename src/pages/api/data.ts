@@ -95,15 +95,9 @@ const measureSchema = z.object({
 });
 
 const propertyRawSchema = z.object({
-  dimension: z
-    .string()
-    .startsWith(amdpDimension().value)
-    .transform((v) => removeNamespace(v, amdpDimension)),
-  label: z.string(),
-  dimensionValue: z
-    .string()
-    .startsWith(amdp().value)
-    .transform((v) => removeNamespace(v, amdp)),
+  dimension: z.string(),
+  label: z.string().optional(),
+  dimensionValue: z.string(),
   dimensionValueLabel: z.string(),
 });
 
@@ -112,7 +106,7 @@ const propertySchema = z.object({
     .string()
     .startsWith(amdpDimension().value)
     .transform((v) => removeNamespace(v, amdpDimension)),
-  label: z.string(),
+  label: z.string().optional(),
   type: z.literal("property").optional(),
   values: z.array(
     z.object({
@@ -125,11 +119,12 @@ const propertySchema = z.object({
 export type Measure = z.infer<typeof measureSchema>;
 export type Property = z.infer<typeof propertySchema>;
 
-const baseMeasures = ["price", "quantity", "index"] as const;
-const baseProperties = ["market", "value-chain"] as const;
-
-export type BaseMeasure = (typeof baseMeasures)[number];
-export type BaseProperty = (typeof baseProperties)[number];
+const baseMeasures = [
+  amdpMeasure("price").value,
+  amdpMeasure("quantity").value,
+  amdpMeasure("index").value,
+];
+const baseProperties = [amdpDimension("market").value, amdpDimension("value-chain").value];
 
 const basePropertiesSchema = z.object({
   "value-chain": propertySchema,
@@ -146,11 +141,11 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   console.log("> fetchBaseDimensions");
   const queryProperties = queryBasePropertyDimensions({
     locale,
-    propertiesIri: baseProperties.map((v) => amdpDimension(v).value),
+    propertiesIri: baseProperties,
   });
   const queryMeasures = queryBaseMeasureDimensions({
     locale,
-    measuresIri: baseMeasures.map((v) => amdpMeasure(v).value),
+    measuresIri: baseMeasures,
   });
 
   const [propertiesRaw, measuresRaw] = await Promise.all([
@@ -159,20 +154,18 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   ]);
 
   const propertiesRawParsed = z.array(propertyRawSchema).parse(propertiesRaw);
-
-  const propertiesDimensions = propertiesRawParsed.map((property) => property.dimension);
   const propertiesValuesGroups = groupBy(propertiesRawParsed, "dimension");
 
   const properties = basePropertiesSchema.parse(
-    propertiesDimensions.reduce(
+    baseProperties.reduce(
       (acc, dimension) => {
         const values = propertiesValuesGroups[dimension];
         const dim = propertiesRawParsed.find((property) => property.dimension === dimension);
-        if (baseProperties.includes(dimension as BaseProperty)) {
+        if (baseProperties.includes(dimension)) {
           return {
             ...acc,
-            [dimension as BaseProperty]: {
-              dimension: dimension as BaseProperty,
+            [removeNamespace(dimension, amdpDimension)]: {
+              dimension,
               label: dim?.label,
               values: values.map((value) => ({
                 value: value.dimensionValue,
@@ -183,19 +176,16 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
         }
         return acc;
       },
-      {} as Record<BaseProperty, Property>
+      {} as Record<string, Property>
     )
   );
 
   const measuresRawParsed = z.array(measureSchema).parse(measuresRaw);
   const measure = measuresRawParsed.flatMap((measure) => {
-    if (baseMeasures.includes(measure.dimension as BaseMeasure)) {
-      return {
-        dimension: measure.dimension as BaseMeasure,
-        label: measure.label,
-      };
-    }
-    return [];
+    return {
+      dimension: measure.dimension,
+      label: measure.label,
+    };
   });
 
   return {

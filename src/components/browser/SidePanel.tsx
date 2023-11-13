@@ -1,3 +1,4 @@
+import { availableBaseDimensionsValuesAtom } from "@/domain/dimensions";
 import {
   Option,
   filterConfigurationAtom,
@@ -7,7 +8,6 @@ import {
   timeViewAtom,
 } from "@/domain/filters";
 import useEvent from "@/lib/use-event";
-import { BaseProperty } from "@/pages/api/data";
 import { Trans } from "@lingui/macro";
 import {
   AccordionDetails,
@@ -24,12 +24,6 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
-import {
-  availableBaseDimensionsValuesAtom,
-  availableMeasuresAtom,
-  availableValueChainAtom,
-  baseDimensionsAtom,
-} from "@/domain/dimensions";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -47,9 +41,7 @@ const useExclusiveAccordion = (defaultState: string) => {
   return { getAccordionProps };
 };
 
-const orderedCubeFilters = ["value-chain", /* "market", */ "measure"] as Array<
-  BaseProperty | "measure"
->;
+const orderedCubeFilters = ["value-chain", /* "market", */ "measure"] as const;
 const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
   const filterConfiguration = useAtomValue(filterConfigurationAtom);

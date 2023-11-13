@@ -68,7 +68,9 @@ export const filterCubeConfigurationAtom = atom(async (get) => {
       type: "single" as const,
     },
     ["value-chain"]: {
-      name: baseDimensions.properties["value-chain"].label,
+      name:
+        baseDimensions.properties["value-chain"]?.label ??
+        baseDimensions.properties["value-chain"].dimension,
       options: baseDimensions.properties["value-chain"].values.map((v) => ({
         label: v.label,
         value: v.value,
@@ -76,7 +78,8 @@ export const filterCubeConfigurationAtom = atom(async (get) => {
       type: "single" as const,
     },
     market: {
-      name: baseDimensions.properties["market"].label,
+      name:
+        baseDimensions.properties["market"]?.label ?? baseDimensions.properties["market"].dimension,
       options: baseDimensions.properties["market"].values.map((v) => ({
         label: v.label,
         value: v.value,
@@ -101,7 +104,7 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
           ...acc,
           [dimension.dimension]: {
             key: dimension.dimension,
-            name: dim.label,
+            name: dim.label ?? dimension.dimension,
             options: dim.values,
             type: "multi" as const,
             search: dimension.search,

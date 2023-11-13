@@ -51,7 +51,7 @@ export const queryBasePropertyDimensions = ({
   cube:observationConstraint ?shape .
   ?shape ?p ?blankNode .
   ?blankNode sh:path ?dimension .
-  ?blankNode schema:name ?label. FILTER(lang(?label) = "${locale}")
+  OPTIONAL { ?blankNode schema:name ?label. FILTER(lang(?label) = "${locale}") } 
   ?cube cube:observationSet ?observationSet .
   ?observationSet cube:observation ?observation.
   ?observation ?dimension ?dimensionValue.
