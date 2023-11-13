@@ -2,6 +2,7 @@ import { client } from "@/graphql";
 import * as GQL from "@/graphql";
 import { Locale } from "@/locales/locales";
 import { GetServerSideProps } from "next";
+import { isValidLocale } from "@/locales/locales";
 
 const DOMAIN = "https://blw-agricultural-market-data-platform.vercel.app";
 
@@ -45,12 +46,16 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   }
 
   const paths = result.data.allBlogPosts.flatMap((page) => {
-    return page._allSlugLocales!.map(
-      (loc) =>
-        ({
-          locale: loc!.locale,
-          params: { slug: loc!.value },
-        }) as Paths
+    return (
+      page._allSlugLocales
+        ?.filter((x) => isValidLocale(x.locale))!
+        .map(
+          (loc) =>
+            ({
+              locale: loc!.locale,
+              params: { slug: loc!.value },
+            }) as Paths
+        ) ?? []
     );
   });
 

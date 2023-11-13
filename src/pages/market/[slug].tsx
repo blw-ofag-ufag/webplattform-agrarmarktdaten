@@ -10,6 +10,7 @@ import { getMarketColor } from "@/domain/colors";
 import { TableOfContents } from "@/components/TableOfContents";
 import { GridContainer } from "@/components/Grid/Grid";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
+import { isValidLocale } from "@/locales/locales";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
@@ -100,10 +101,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = result.data.allMarketArticles.flatMap((page) => {
     return page._allSlugLocales
-      ? page._allSlugLocales?.map((loc) => ({
-          locale: loc.locale ?? undefined,
-          params: { slug: loc.value ?? undefined },
-        }))
+      ? page._allSlugLocales
+          .filter((x) => isValidLocale(x.locale))
+          ?.map((loc) => ({
+            locale: loc.locale ?? undefined,
+            params: { slug: loc.value ?? undefined },
+          }))
       : [];
   });
 
