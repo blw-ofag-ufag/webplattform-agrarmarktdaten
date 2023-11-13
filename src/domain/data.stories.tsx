@@ -83,8 +83,6 @@ export const Observations = () => {
   const cubes = useAtomValue(cubesAtom);
   const cubeDef = cubes.find((c) => c.cube === cube);
 
-  console.log(cube, cubeDef);
-
   const observations = useQuery({
     queryKey: ["observations", cube],
     queryFn: () =>

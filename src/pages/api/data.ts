@@ -76,7 +76,6 @@ export const fetchCubes = async () => {
   const query = queryCubes();
   const cubesRaw = await fetchSparql(query);
   const cubes = z.array(cubeSpecSchema).parse(cubesRaw);
-  console.log({ cubes });
   return cubes;
 };
 
@@ -132,6 +131,11 @@ const baseProperties = ["market", "value-chain"] as const;
 export type BaseMeasure = (typeof baseMeasures)[number];
 export type BaseProperty = (typeof baseProperties)[number];
 
+const basePropertiesSchema = z.object({
+  "value-chain": propertySchema,
+  market: propertySchema,
+});
+
 /**
  *
  * Base dimensions are the dimensions that we use to know which cube to fetch.
@@ -159,26 +163,28 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   const propertiesDimensions = propertiesRawParsed.map((property) => property.dimension);
   const propertiesValuesGroups = groupBy(propertiesRawParsed, "dimension");
 
-  const properties = propertiesDimensions.reduce(
-    (acc, dimension) => {
-      const values = propertiesValuesGroups[dimension];
-      const dim = propertiesRawParsed.find((property) => property.dimension === dimension);
-      if (baseProperties.includes(dimension as BaseProperty)) {
-        return {
-          ...acc,
-          [dimension as BaseProperty]: {
-            dimension: dimension as BaseProperty,
-            label: dim?.label,
-            values: values.map((value) => ({
-              value: value.dimensionValue,
-              label: value.dimensionValueLabel,
-            })),
-          },
-        };
-      }
-      return acc;
-    },
-    {} as Record<BaseProperty, Property>
+  const properties = basePropertiesSchema.parse(
+    propertiesDimensions.reduce(
+      (acc, dimension) => {
+        const values = propertiesValuesGroups[dimension];
+        const dim = propertiesRawParsed.find((property) => property.dimension === dimension);
+        if (baseProperties.includes(dimension as BaseProperty)) {
+          return {
+            ...acc,
+            [dimension as BaseProperty]: {
+              dimension: dimension as BaseProperty,
+              label: dim?.label,
+              values: values.map((value) => ({
+                value: value.dimensionValue,
+                label: value.dimensionValueLabel,
+              })),
+            },
+          };
+        }
+        return acc;
+      },
+      {} as Record<BaseProperty, Property>
+    )
   );
 
   const measuresRawParsed = z.array(measureSchema).parse(measuresRaw);
