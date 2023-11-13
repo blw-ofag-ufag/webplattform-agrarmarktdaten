@@ -21,7 +21,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
-import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
 import { cubesAtom } from "@/domain/cubes";
@@ -77,7 +77,9 @@ export default function DataPage(props: GQL.DataPageQuery) {
                 borderColor: "grey.300",
               }}
             >
-              <DataBrowser />
+              <Suspense fallback={<CircularProgress />}>
+                <DataBrowser />
+              </Suspense>
             </Box>
           </Stack>
         </AppLayout>
@@ -93,7 +95,6 @@ const DataBrowser = () => {
   const observations = useAtomValue(observationsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
   const resultCount = observations.length;
-  const cubesList = useAtomValue(cubesAtom);
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
 
   return (
