@@ -8,7 +8,7 @@ export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
   queryFn: () => fetchCubes(),
 }));
 
-export const defaultCube = "cube/MilkDairyProducts/Consumption_Price_Year";
+export const defaultCube = "cube/MilkDairyProducts/Production_Price_Year";
 
 export const cubePathAtom = atom(async (get) => {
   const allCubes = await get(cubesAtom);
