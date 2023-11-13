@@ -1,8 +1,10 @@
-import { amdpMeasure, amdpProperty } from "@/lib/namespace";
+import { amdpMeasure, amdpDimension } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import { DimensionType, fetchBaseDimensions, fetchCubeDimensions } from "@/pages/api/data";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
-import { cubePathAtom } from "./cubes";
+import { cubePathAtom, cubesAtom } from "./cubes";
+import { atom } from "jotai";
+import { filterCubeSelectionAtom } from "./filters";
 
 /**
  * Base dimensions.
@@ -14,6 +16,64 @@ export const [baseDimensionsAtom, baseDimensionsStatusAtom] = atomsWithQuery((ge
   queryKey: ["baseDimensions", get(localeAtom)],
   queryFn: () => fetchBaseDimensions({ locale: get(localeAtom) }),
 }));
+
+export const availableBaseDimensionsValuesAtom = atom(async (get) => {
+  const cubes = await get(cubesAtom);
+  const filterCubeSelection = await get(filterCubeSelectionAtom);
+
+  /**
+   * This probably could be done in a more elegant way.
+   */
+  return {
+    "value-chain": {
+      options: cubes
+        .filter(
+          (c) =>
+            c.measure === get(filterCubeSelection.measure)?.value &&
+            c.market === get(filterCubeSelection.market)?.value
+        )
+        .map((c) => c.valueChain),
+    },
+    market: {
+      options: cubes
+        .filter(
+          (c) =>
+            c.measure === get(filterCubeSelection.measure)?.value &&
+            c.valueChain === get(filterCubeSelection["value-chain"])?.value
+        )
+        .map((c) => c.valueChain),
+    },
+    measure: {
+      options: cubes
+        .filter(
+          (c) =>
+            c.market === get(filterCubeSelection.market)?.value &&
+            c.valueChain === get(filterCubeSelection["value-chain"])?.value
+        )
+        .map((c) => c.valueChain),
+    },
+  };
+});
+
+export const availableValueChainAtom = atom(async (get) => {
+  const cubes = await get(cubesAtom);
+  const filterCubeSelection = await get(filterCubeSelectionAtom);
+  const measure = get(filterCubeSelection.measure);
+  const availableChain = cubes
+    .filter((cube) => cube.measure === measure?.value)
+    .map((cube) => cube.valueChain);
+  return availableChain;
+});
+
+export const availableMeasuresAtom = atom(async (get) => {
+  const cubes = await get(cubesAtom);
+  const filterCubeSelection = await get(filterCubeSelectionAtom);
+  const valueChain = get(filterCubeSelection["value-chain"]);
+  const measures = cubes
+    .filter((cube) => cube.valueChain === valueChain?.value)
+    .map((cube) => cube.measure);
+  return measures;
+});
 
 /**
  * Cube dimensions.
@@ -82,87 +142,87 @@ export const dataDimensions: {
   costComponent: {
     type: "property",
     id: "cost-component",
-    iri: amdpProperty("cost-component").value,
+    iri: amdpDimension("cost-component").value,
   },
   currency: {
     type: "property",
     id: "currency",
-    iri: amdpProperty("currency").value,
+    iri: amdpDimension("currency").value,
   },
   dataMethod: {
     type: "property",
     id: "data-method",
-    iri: amdpProperty("data-method").value,
+    iri: amdpDimension("data-method").value,
   },
   dataSource: {
     type: "property",
     id: "data-source",
-    iri: amdpProperty("data-source").value,
+    iri: amdpDimension("data-source").value,
   },
   date: {
     type: "property",
     id: "date",
-    iri: amdpProperty("date").value,
+    iri: amdpDimension("date").value,
   },
   foreignTrade: {
     type: "property",
     id: "foreign-trade",
-    iri: amdpProperty("foreign-trade").value,
+    iri: amdpDimension("foreign-trade").value,
   },
   keyIndicatorType: {
     type: "property",
     id: "key-indicator-type",
-    iri: amdpProperty("key-indicator-type").value,
+    iri: amdpDimension("key-indicator-type").value,
   },
   market: {
     type: "property",
     id: "market",
-    iri: amdpProperty("market").value,
+    iri: amdpDimension("market").value,
   },
   product: {
     type: "property",
     id: "product",
-    iri: amdpProperty("product").value,
+    iri: amdpDimension("product").value,
   },
   productGroup: {
     type: "property",
     id: "product-group",
-    iri: amdpProperty("product-group").value,
+    iri: amdpDimension("product-group").value,
   },
   productionSystem: {
     type: "property",
     id: "production-system",
-    iri: amdpProperty("production-system").value,
+    iri: amdpDimension("production-system").value,
   },
   productOrigin: {
     type: "property",
     id: "product-origin",
-    iri: amdpProperty("product-origin").value,
+    iri: amdpDimension("product-origin").value,
   },
   salesRegion: {
     type: "property",
     id: "sales-region",
-    iri: amdpProperty("sales-region").value,
+    iri: amdpDimension("sales-region").value,
   },
   unit: {
     type: "property",
     id: "unit",
-    iri: amdpProperty("unit").value,
+    iri: amdpDimension("unit").value,
   },
   usage: {
     type: "property",
     id: "usage",
-    iri: amdpProperty("usage").value,
+    iri: amdpDimension("usage").value,
   },
   valueChainDetail: {
     type: "property",
     id: "value-chain-detail",
-    iri: amdpProperty("value-chain-detail").value,
+    iri: amdpDimension("value-chain-detail").value,
   },
   valueChain: {
     type: "property",
     id: "value-chain",
-    iri: amdpProperty("value-chain").value,
+    iri: amdpDimension("value-chain").value,
   },
 };
 

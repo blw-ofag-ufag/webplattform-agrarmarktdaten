@@ -1,6 +1,5 @@
 import {
   Option,
-  TimeView,
   filterConfigurationAtom,
   filterCubeSelectionAtom,
   filterDimensionsSelectionAtom,
@@ -25,6 +24,12 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
+import {
+  availableBaseDimensionsValuesAtom,
+  availableMeasuresAtom,
+  availableValueChainAtom,
+  baseDimensionsAtom,
+} from "@/domain/dimensions";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -50,6 +55,7 @@ const SidePanel = () => {
   const filterConfiguration = useAtomValue(filterConfigurationAtom);
   const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
   const filterDimensionsSelection = useAtomValue(filterDimensionsSelectionAtom);
+  const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
 
   return (
     <Stack
@@ -78,6 +84,10 @@ const SidePanel = () => {
           const config = filterConfiguration.cube[key];
           const filterAtom = filterCubeSelection[key];
 
+          const options = config.options.filter((option) => {
+            return availableBaseDimensionsValues[key].options.includes(option.value);
+          });
+
           if (!filterAtom) {
             return null;
           }
@@ -88,7 +98,7 @@ const SidePanel = () => {
               slots={{
                 accordion: getAccordionProps(key),
               }}
-              options={config.options}
+              options={options}
               filterAtom={filterAtom}
               title={config.name}
             />
