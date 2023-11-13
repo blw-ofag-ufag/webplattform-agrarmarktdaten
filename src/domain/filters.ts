@@ -35,7 +35,7 @@ export type RangeOptions = {
   value: [number, number];
 };
 
-export type TimeView = "year" | "month";
+export type TimeView = "Year" | "Month";
 
 const MIN_DATE = dayjs("2020-01");
 const MAX_DATE = dayjs("2023-01");
@@ -46,7 +46,7 @@ export const timeRange = {
   value: [MIN_DATE.unix(), MAX_DATE.unix()] as [number, number],
 };
 
-export const timeViewAtom = atom("Year");
+export const timeViewAtom = atom<TimeView>("Year");
 export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
 
 /**

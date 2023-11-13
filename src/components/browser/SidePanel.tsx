@@ -212,7 +212,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
           <Trans id="data.filters.time">Time</Trans>
         </AccordionTitle>
         <PreviewFilter show={!props.expanded}>
-          {previewTime(timeRange.value[0], timeRange.value[1], timeView as TimeView)}
+          {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
         </PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
@@ -220,7 +220,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
           min={timeRange.min}
           max={timeRange.max}
           value={timeRange.value}
-          view={timeView as TimeView}
+          view={timeView}
           onChangeRange={handleTimeRangeChange}
           onChangeView={setTimeView}
         />

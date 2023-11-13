@@ -1,7 +1,7 @@
 import { fetchCubes } from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { filterCubeSelectionAtom } from "./filters";
+import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
 
 export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
   queryKey: ["cubes"],
@@ -23,5 +23,3 @@ export const cubePathAtom = atom(async (get) => {
   );
   return cubePath?.cube || defaultCube;
 });
-
-export const timeViewAtom = atom("Year");
