@@ -1,5 +1,5 @@
 import { Locale } from "@/locales/locales";
-import { amdpMeasure, amdpProperty } from "./namespace";
+import { amdpMeasure, amdpDimension } from "./namespace";
 
 const agDataBase = "https://lindas.admin.ch/foag/agricultural-market-data";
 
@@ -18,8 +18,8 @@ export const queryCubes = () => {
     ?blankNode sh:path ?measure .
     ?cube cube:observationSet ?observationSet .
     ?observationSet cube:observation ?observation .
-    ?observation <${amdpProperty("value-chain").value}> ?valueChain .
-    ?observation <${amdpProperty("market").value}> ?market .
+    ?observation <${amdpDimension("value-chain").value}> ?valueChain .
+    ?observation <${amdpDimension("market").value}> ?market .
     
     FILTER (
       contains(str(?measure), "${amdpMeasure().value}")

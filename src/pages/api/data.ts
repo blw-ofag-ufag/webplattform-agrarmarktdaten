@@ -7,7 +7,7 @@ import {
   queryObservations,
   queryPropertyDimensionAndValues,
 } from "@/lib/cube-queries";
-import { amdp, amdpMeasure, amdpProperty } from "@/lib/namespace";
+import { amdp, amdpMeasure, amdpDimension } from "@/lib/namespace";
 import { Locale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
 import { groupBy } from "lodash";
@@ -25,7 +25,6 @@ const addNamespace = (partialIri: string) => {
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
-  console.log(query);
   const body = JSON.stringify({ query });
   const res = await fetch("/api/sparql", {
     method: "post",
@@ -77,6 +76,7 @@ export const fetchCubes = async () => {
   const query = queryCubes();
   const cubesRaw = await fetchSparql(query);
   const cubes = z.array(cubeSpecSchema).parse(cubesRaw);
+  console.log({ cubes });
   return cubes;
 };
 
@@ -98,8 +98,8 @@ const measureSchema = z.object({
 const propertyRawSchema = z.object({
   dimension: z
     .string()
-    .startsWith(amdpProperty().value)
-    .transform((v) => removeNamespace(v, amdpProperty)),
+    .startsWith(amdpDimension().value)
+    .transform((v) => removeNamespace(v, amdpDimension)),
   label: z.string(),
   dimensionValue: z
     .string()
@@ -111,8 +111,8 @@ const propertyRawSchema = z.object({
 const propertySchema = z.object({
   dimension: z
     .string()
-    .startsWith(amdpProperty().value)
-    .transform((v) => removeNamespace(v, amdpProperty)),
+    .startsWith(amdpDimension().value)
+    .transform((v) => removeNamespace(v, amdpDimension)),
   label: z.string(),
   type: z.literal("property").optional(),
   values: z.array(
@@ -142,7 +142,7 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   console.log("> fetchBaseDimensions");
   const queryProperties = queryBasePropertyDimensions({
     locale,
-    propertiesIri: baseProperties.map((v) => amdpProperty(v).value),
+    propertiesIri: baseProperties.map((v) => amdpDimension(v).value),
   });
   const queryMeasures = queryBaseMeasureDimensions({
     locale,
@@ -332,7 +332,6 @@ export const fetchObservations = async ({
   measure: { iri: string; key: string };
 }) => {
   console.log("> fetchObservations");
-  console.log({ cubeIri, filters, measure });
   const fullCubeIri = addNamespace(cubeIri);
 
   const query = queryObservations({
@@ -350,5 +349,6 @@ export const fetchObservations = async ({
     })),
   });
   const observationsRaw = await fetchSparql(query);
-  return z.array(observationSchema).parse(observationsRaw);
+  const observations = z.array(observationSchema).parse(observationsRaw);
+  return observations;
 };
