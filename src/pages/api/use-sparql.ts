@@ -127,7 +127,6 @@ export const fetchObservations = async (
     filters: queryFilters.flatMap((f) => (f ? [f] : [])),
   });
 
-  console.log(customView.observationsQuery().query.toString());
   const observations = await customView.observations({});
 
   return parseObservations(observations, dimensions);
@@ -177,7 +176,7 @@ export const getDimensions = async (
           view,
           source: amdpSource,
           dimensionKey: ns.stripNamespaceFromIri({ iri }),
-          namespace: ns.amdpProperty,
+          namespace: ns.amdpDimension,
           locale,
         });
 
@@ -231,7 +230,7 @@ export const getDimensionValuesAndLabels = async ({
 
   const queryFilters = filters
     ? Object.entries(filters).flatMap(([dim, filterValues]) =>
-        filterValues ? buildDimensionFilter(namespace, view, dim, filterValues) ?? [] : []
+        filterValues ? buildDimensionFilter(view, dim, filterValues) ?? [] : []
       )
     : [];
 
@@ -420,9 +419,7 @@ export const getObservations = async (
 ) => {
   const queryFilters = filters
     ? Object.entries(filters).flatMap(([dimensionKey, filterValues]) =>
-        filterValues
-          ? buildDimensionFilter(ns.amdpProperty, view, dimensionKey, filterValues) ?? []
-          : []
+        filterValues ? buildDimensionFilter(view, dimensionKey, filterValues) ?? [] : []
       )
     : [];
 
@@ -431,7 +428,7 @@ export const getObservations = async (
   const filterViewDimensions = dimensions
     ? dimensions.flatMap((d) => {
         const dimension = view.dimension({
-          cubeDimension: ns.amdpProperty(d),
+          cubeDimension: ns.amdpDimension(d),
         });
         return dimension ? [dimension] : [];
       })
