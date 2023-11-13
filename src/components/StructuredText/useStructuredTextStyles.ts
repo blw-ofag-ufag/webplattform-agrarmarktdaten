@@ -68,7 +68,7 @@ const useStructuredTextStyles = makeStyles<
     link: {
       color: "inherit",
       textUnderlineOffset: "2px",
-      ":hover": { color: theme.palette.monochrome[600] },
+      "&:hover": { color: theme.palette.monochrome[600] },
     },
 
     p: debugStyle("p", {
@@ -99,15 +99,18 @@ const useStructuredTextStyles = makeStyles<
       [`.${classes.p} + &`]: margins.md,
       [`& + .${classes.p}`]: margins.md,
     }),
-    h4: debugStyle("h4", {}),
+    h4: debugStyle("h4", {
+      fontWeight: 700,
+      [`.${classes.p} + &`]: margins.md,
+      [`& + .${classes.p}`]: margins.md,
+    }),
     h5: debugStyle("h5", {}),
     h6: debugStyle("h6", {}),
 
-    ul: {
+    ul: debugStyle("ul", {
       listStyleType: "disc",
       margin: "1rem",
       listStylePosition: "outside",
-      background: "red",
 
       "& > li": {
         paddingLeft: "0.5rem",
@@ -116,7 +119,7 @@ const useStructuredTextStyles = makeStyles<
       "& > li + li": {
         marginTop: "0.25rem",
       },
-    },
+    }),
 
     specialSection: {
       marginTop: 64,

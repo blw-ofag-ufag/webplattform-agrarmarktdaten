@@ -1,12 +1,14 @@
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, List } from "@mui/material";
 import * as GQL from "@/graphql";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { StructuredText, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
-import { isHeading, isParagraph, isLink } from "datocms-structured-text-utils";
+import { isHeading, isParagraph, isLink, isList } from "datocms-structured-text-utils";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { makeStyles } from "@/components/style-utils";
 import { NamedCallout } from "@/components/NamedCallout";
+import useStructuredTextStyles from "@/components/StructuredText/useStructuredTextStyles";
+import { useStructuredTextDebug } from "@/components/StructuredText/StructuredText";
 
 const useStyles = makeStyles()(({ palette: c }) => ({
   button: {
@@ -26,6 +28,10 @@ const HighlightSection = (
   const { classes } = useStyles();
   const { data, ...rest } = props;
   const { locale } = useRouter();
+  const { debug: structuredTextDebug } = useStructuredTextDebug();
+  const { classes: structuredTextClasses } = useStructuredTextStyles({
+    debug: structuredTextDebug,
+  });
   return (
     <NamedCallout title={data.title} {...rest}>
       {data.content && (
@@ -35,15 +41,29 @@ const HighlightSection = (
           }
           customNodeRules={[
             renderNodeRule(isHeading, ({ children, key }) => (
-              <Typography key={key} variant="h4" component="h4" sx={{ mb: s(6) }}>
+              <Typography
+                key={key}
+                variant="h4"
+                component="h4"
+                className={structuredTextClasses.h4}
+              >
                 {children}
               </Typography>
             )),
             renderNodeRule(isParagraph, ({ children, key }) => (
-              <Typography key={key} variant="body1" component="p" sx={{ mb: s(4) }}>
+              <Typography
+                key={key}
+                variant="body1"
+                component="p"
+                className={structuredTextClasses.p}
+              >
                 {children}
               </Typography>
             )),
+
+            renderNodeRule(isList, ({ children }) => {
+              return <List className={structuredTextClasses.ul}>{children}</List>;
+            }),
             renderNodeRule(isLink, ({ node, children, key }) => (
               <Typography
                 variant="body1"
