@@ -1,14 +1,8 @@
+import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomFamily } from "jotai/vanilla/utils";
-import {
-  DIMENSION_FILTERS,
-  baseDimensionsAtom,
-  cubeDimensionsAtom,
-  dataDimensions,
-} from "./dimensions";
-import dayjs from "dayjs";
-import { boolean } from "zod";
+import { DIMENSION_FILTERS, baseDimensionsAtom, cubeDimensionsAtom } from "./dimensions";
 
 export type Option = {
   label: string;
@@ -175,8 +169,10 @@ export const filterConfigurationAtom = atom(async (get) => {
 /* Hashing and Codecs */
 
 export const multiOptionsCodec = <T extends Option>(options: T[]) => ({
-  serialize: (value: Option[]) => value.map((v) => v.value).join(","),
+  serialize: (value: Option[]) =>
+    value.length === 0 ? "None" : value.map((v) => v.value).join(","),
   deserialize: (value: string) => {
+    if (value === "None") return [];
     const values = value.split(",");
     return options.filter((p) => values.includes(p.value));
   },

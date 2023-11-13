@@ -24,12 +24,13 @@ import { useAtomValue } from "jotai";
 import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
+import { cubesAtom } from "@/domain/cubes";
+import { cubeDimensionsAtom } from "@/domain/dimensions";
+import { observationsAtom, observationsStatusAtom, valueFormatter } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { DimensionsResult } from "./api/use-sparql";
-import { cubesAtom } from "@/domain/cubes";
-import { observationsAtom, observationsStatusAtom } from "@/domain/observations";
+import { Measure, Observation, Property } from "./api/data";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -93,7 +94,7 @@ const DataBrowser = () => {
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
   const resultCount = observations.length;
   const cubesList = useAtomValue(cubesAtom);
-  console.log({ cubesList });
+  const cubeDimensions = useAtomValue(cubeDimensionsAtom);
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
@@ -172,7 +173,9 @@ const DataBrowser = () => {
               )}
 
               {observationsQueryStatus.isSuccess && (
-                <>{/* <Table observations={observations} dimensions={dimensions} /> */}</>
+                <>
+                  <Table observations={observations} dimensions={cubeDimensions} />
+                </>
               )}
             </>
           </Paper>
@@ -246,22 +249,35 @@ const Table = ({
   observations,
   dimensions,
 }: {
-  observations: $FixMe[];
-  dimensions: DimensionsResult;
+  observations: Observation[];
+  dimensions: Record<string, Property | Measure>;
 }) => {
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
       .map((dimension) => {
         return {
-          field: dimension.key ?? dimension.iri,
-          headerName: dimension.name,
+          field: dimension.dimension,
+          headerName: dimension.label,
           //width: 200,
+          valueFormatter: (params) =>
+            valueFormatter({
+              value: params.value,
+              dimension: dimension.dimension,
+              cubeDimensions: dimensions,
+            }),
         };
       });
   }, [dimensions]);
 
-  return <DataGrid rows={observations} columns={columns} autoPageSize />;
+  return (
+    <DataGrid
+      rows={observations}
+      columns={columns}
+      getRowId={(row) => row.observation}
+      autoPageSize
+    />
+  );
 };
 
 export const getStaticProps = async (context: $FixMe) => {

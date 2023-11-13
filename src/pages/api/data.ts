@@ -273,6 +273,7 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
 };
 
 const toKebabCase = (v: string) => v.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+const toCamelCase = (v: string) => v.replace(/-./g, (x) => x[1].toUpperCase());
 
 const observationSchema = z
   .object({
@@ -316,27 +317,30 @@ export type Observation = z.infer<typeof observationSchema>;
 
 export const fetchObservations = async ({
   cubeIri,
-  filters,
+  filters = {},
   measure,
 }: {
   cubeIri: string;
-  filters?: Record<string, string[]>;
+  filters: Record<string, string[]>;
   measure: { iri: string; key: string };
 }) => {
   console.log({ cubeIri, filters, measure });
   const fullCubeIri = addNamespace(cubeIri);
+
   const query = queryObservations({
     cubeIri: fullCubeIri,
-    filters,
+    filters: Object.entries(filters).reduce((acc, [key, value]) => {
+      return {
+        ...acc,
+        [toCamelCase(key)]: value.map((v) => addNamespace(v)),
+      };
+    }, {}),
     measure,
     dimensions: properties.map((v) => ({
       iri: dataDimensions[v].iri,
       key: v,
     })),
   });
-  console.log("HERE");
-  console.log(query);
   const observationsRaw = await fetchSparql(query);
-  console.log({ observationsRaw });
   return z.array(observationSchema).parse(observationsRaw);
 };

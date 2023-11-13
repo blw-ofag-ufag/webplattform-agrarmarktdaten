@@ -90,6 +90,7 @@ export const Observations = () => {
     queryFn: () =>
       fetchObservations({
         cubeIri: cube,
+        filters: {},
         measure: {
           iri: amdpMeasure(cubeDef?.measure).value,
           key: cubeDef?.measure ?? "measure",
@@ -126,7 +127,6 @@ export const Observations = () => {
     });
   }, [observations.data, showParsed]);
 
-  console.log(observations);
   return (
     <Stack gap={2}>
       <Typography variant="h2">Cube Observations</Typography>
