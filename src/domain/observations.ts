@@ -37,7 +37,8 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
   if (!cubeDefinition) return { queryKey: ["observations"], queryFn: () => [] };
 
   return {
-    queryKey: ["observations"],
+    /* how to encode filter info needs to be improved */
+    queryKey: ["observations", cubePath, JSON.stringify(filters)],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
