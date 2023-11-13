@@ -73,6 +73,7 @@ export type CubeSpec = z.infer<typeof cubeSpecSchema>;
  * Fetches the list of available cubes.
  */
 export const fetchCubes = async () => {
+  console.log("> fetchCubes");
   const query = queryCubes();
   const cubesRaw = await fetchSparql(query);
   const cubes = z.array(cubeSpecSchema).parse(cubesRaw);
@@ -138,6 +139,7 @@ export type BaseProperty = (typeof baseProperties)[number];
  * Measure dimensions returned do not include min/max values, as these are cube-specific.
  */
 export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
+  console.log("> fetchBaseDimensions");
   const queryProperties = queryBasePropertyDimensions({
     locale,
     propertiesIri: baseProperties.map((v) => amdpProperty(v).value),
@@ -210,6 +212,7 @@ const dimensionSpecSchema = z.object({
  * the values for property dimensions.
  */
 export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
+  console.log("> fetchCubeDimensions");
   const fullCubeIri = addNamespace(cubeIri);
   const queryDimensions = queryCubeDimensions({
     locale,
@@ -226,7 +229,27 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
     (dim) => dim.type === ns.cube("KeyDimension").value
   );
 
-  const dimensionsArray = await Promise.all([
+  const propertiesValues = await fetchSparql(
+    queryPropertyDimensionAndValues({
+      locale,
+      cubeIri: fullCubeIri,
+      dimensionsIris: propertyDim.map((dim) => dim.dimension),
+    })
+  );
+
+  const propertyValuesPerDimension = groupBy(propertiesValues, "dimension");
+
+  const properties = propertyDim.map((dim) => {
+    const values = propertyValuesPerDimension[dim.dimension];
+    return propertySchema.parse({
+      dimension: dim.dimension,
+      label: dim.label,
+      type: "property" as const,
+      values: values ? values.map((v) => ({ value: v.value, label: v.label })) : [],
+    });
+  });
+
+  const measures = await Promise.all([
     ...measureDim.map(async (dim) => {
       const range = await fetchSparql(
         queryMeasureDimensionRange({ locale, cubeIri: fullCubeIri, dimensionIri: dim.dimension })
@@ -241,25 +264,9 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
         },
       });
     }),
-
-    /* @TODO: this can be optimized by fetching values for all dimensions in single query */
-    ...propertyDim.map(async (dim) => {
-      const values = await fetchSparql(
-        queryPropertyDimensionAndValues({
-          locale,
-          cubeIri: fullCubeIri,
-          dimensionIri: dim.dimension,
-        })
-      );
-      return propertySchema.parse({
-        ...dim,
-        type: "property",
-        values,
-      });
-    }),
   ]);
 
-  const dimensions = dimensionsArray.reduce(
+  const dimensions = [...measures, ...properties].reduce(
     (acc, dim) => {
       return {
         ...acc,
@@ -324,6 +331,7 @@ export const fetchObservations = async ({
   filters: Record<string, string[]>;
   measure: { iri: string; key: string };
 }) => {
+  console.log("> fetchObservations");
   console.log({ cubeIri, filters, measure });
   const fullCubeIri = addNamespace(cubeIri);
 

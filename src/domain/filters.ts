@@ -113,7 +113,7 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
 /**
  *
  * Dimensions filter selection atoms. These atoms contain the selected values for each filter we
- * apply on demensions when fetching observations.
+ * apply on dimensions when fetching observations.
  */
 export const filterDimensionsSelectionAtom = atom(async (get) => {
   const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
