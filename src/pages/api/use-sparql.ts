@@ -1,4 +1,4 @@
-import { DataDimension, Measure, Property, dimensionIriMap } from "@/domain/data";
+import { DataDimension, Measure, Property, dimensionIriMap } from "@/domain/dimensions";
 import { defaultLocale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
 import { Literal, NamedNode } from "@rdfjs/types";
@@ -6,7 +6,6 @@ import { uniqBy } from "lodash";
 import { Cube, CubeDimension, Dimension, LookupSource, Source, View } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
 import * as ns from "../../lib/namespace";
-import { amdp } from "../../lib/namespace";
 
 const amdpSource = new Source({
   endpointUrl: "https://test.lindas.admin.ch/query",

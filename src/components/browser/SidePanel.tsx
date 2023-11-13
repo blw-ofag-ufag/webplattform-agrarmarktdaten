@@ -1,14 +1,14 @@
-import { Property, dimensionsAtom, measureOptionsAtom, valueChainOptionsAtom } from "@/domain/data";
 import {
   Option,
-  filtersSelectionAtomsAtom,
-  filtersSpecAtom,
-  valueChainSelectionAtomAtom,
-  indicators,
+  TimeView,
+  filterConfigurationAtom,
+  filterCubeSelectionAtom,
+  filterDimensionsSelectionAtom,
   timeRangeAtom,
   timeViewAtom,
 } from "@/domain/filters";
 import useEvent from "@/lib/use-event";
+import { BaseProperty } from "@/pages/api/data";
 import { Trans } from "@lingui/macro";
 import {
   AccordionDetails,
@@ -42,13 +42,14 @@ const useExclusiveAccordion = (defaultState: string) => {
   return { getAccordionProps };
 };
 
+const orderedCubeFilters = ["value-chain", /* "market", */ "measure"] as Array<
+  BaseProperty | "measure"
+>;
 const SidePanel = () => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
-  const filtersSpec = useAtomValue(filtersSpecAtom);
-  const filterSelectionAtoms = useAtomValue(filtersSelectionAtomsAtom);
-  const measureOptions = useAtomValue(measureOptionsAtom);
-  console.log({ measureOptions });
-  console.log({ filtersSpec });
+  const filterConfiguration = useAtomValue(filterConfigurationAtom);
+  const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
+  const filterDimensionsSelection = useAtomValue(filterDimensionsSelectionAtom);
 
   return (
     <Stack
@@ -72,12 +73,33 @@ const SidePanel = () => {
             </Typography>
           </Stack>
         </Box>
-        <ValueChainAccordion {...getAccordionProps("valueChain")} />
+        {/* Cube path filters */}
+        {orderedCubeFilters.map((key) => {
+          const config = filterConfiguration.cube[key];
+          const filterAtom = filterCubeSelection[key];
+
+          if (!filterAtom) {
+            return null;
+          }
+
+          return (
+            <FilterRadioAccordion
+              key={key}
+              slots={{
+                accordion: getAccordionProps(key),
+              }}
+              options={config.options}
+              filterAtom={filterAtom}
+              title={config.name}
+            />
+          );
+        })}
         <TimeAccordion {...getAccordionProps("time")} />
 
         {/* Property filters */}
-        {Object.entries(filtersSpec).map(([key, value]) => {
-          const filterAtom = filterSelectionAtoms[key as Property];
+
+        {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
+          const filterAtom = filterDimensionsSelection[key];
           if (!filterAtom) {
             return null;
           }
@@ -87,7 +109,7 @@ const SidePanel = () => {
               slots={{
                 accordion: getAccordionProps(key),
                 select: {
-                  withSearch: value.config.search,
+                  withSearch: value.search,
                   options: value.options,
                 },
               }}
@@ -107,6 +129,36 @@ const AccordionTitle = ({ children }: { children: React.ReactNode }) => {
     <Typography variant="h5" fontWeight="bold" color="grey.800">
       {children}
     </Typography>
+  );
+};
+
+const FilterRadioAccordion = <T extends Option>({
+  filterAtom,
+  title,
+  slots,
+  options,
+}: {
+  filterAtom: Atom<T | undefined>;
+  options: T[];
+  title: string;
+  slots: {
+    accordion: Omit<AccordionProps, "children">;
+  };
+}) => {
+  const [value, setValue] = useAtom(filterAtom);
+
+  return (
+    <FilterAccordion {...slots.accordion}>
+      <AccordionSummary>
+        <AccordionTitle>{title}</AccordionTitle>
+        <PreviewFilter show={!slots.accordion.expanded && !!value}>
+          {value && value.label}
+        </PreviewFilter>
+      </AccordionSummary>
+      <AccordionDetails>
+        <RadioFilter value={value} onChange={setValue} options={options} />
+      </AccordionDetails>
+    </FilterAccordion>
   );
 };
 
@@ -138,32 +190,6 @@ const FilterSelectAccordion = <T extends Option>({
     </FilterAccordion>
   );
 };
-const ValueChainAccordion = (props: Omit<AccordionProps, "children">) => {
-  const valueChainOptions = useAtomValue(valueChainOptionsAtom);
-  const valueChainAtom = useAtomValue(valueChainSelectionAtomAtom);
-  const [value, setValue] = useAtom(valueChainAtom);
-  const dimensions = useAtomValue(dimensionsAtom);
-
-  const options = valueChainOptions.map((option) => ({
-    value: option.value,
-    label: option.name,
-  }));
-  const valueChainDimension = dimensions.property.find((p) => p.key === "valueChain");
-
-  return (
-    <FilterAccordion {...props}>
-      <AccordionSummary>
-        <AccordionTitle>
-          <Trans id="data.filters.indicator">{valueChainDimension?.name}</Trans>
-        </AccordionTitle>
-        <PreviewFilter show={!props.expanded && !!value}>{value && value.label}</PreviewFilter>
-      </AccordionSummary>
-      <AccordionDetails>
-        <RadioFilter value={value} onChange={setValue} options={options} />
-      </AccordionDetails>
-    </FilterAccordion>
-  );
-};
 
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   const [timeRange, setTimeRange] = useAtom(timeRangeAtom);
@@ -186,7 +212,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
           <Trans id="data.filters.time">Time</Trans>
         </AccordionTitle>
         <PreviewFilter show={!props.expanded}>
-          {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
+          {previewTime(timeRange.value[0], timeRange.value[1], timeView as TimeView)}
         </PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
@@ -194,7 +220,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
           min={timeRange.min}
           max={timeRange.max}
           value={timeRange.value}
-          view={timeView}
+          view={timeView as TimeView}
           onChangeRange={handleTimeRangeChange}
           onChangeView={setTimeView}
         />

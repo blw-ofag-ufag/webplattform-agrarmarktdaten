@@ -1,10 +1,4 @@
 import { AppLayout } from "@/components/layout";
-import {
-  dimensionsAtom,
-  observationsAtom,
-  observationsStatusAtom,
-  valueChainAtom,
-} from "@/domain/data";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import blwTheme from "@/theme/blw";
@@ -35,6 +29,7 @@ import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import { DimensionsResult } from "./api/use-sparql";
 import { cubesAtom } from "@/domain/cubes";
+import { observationsAtom, observationsStatusAtom } from "@/domain/observations";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -95,7 +90,6 @@ const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observations = useAtomValue(observationsAtom);
-  const dimensions = useAtomValue(dimensionsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
   const resultCount = observations.length;
   const cubesList = useAtomValue(cubesAtom);
@@ -178,9 +172,7 @@ const DataBrowser = () => {
               )}
 
               {observationsQueryStatus.isSuccess && (
-                <>
-                  <Table observations={observations} dimensions={dimensions} />
-                </>
+                <>{/* <Table observations={observations} dimensions={dimensions} /> */}</>
               )}
             </>
           </Paper>
