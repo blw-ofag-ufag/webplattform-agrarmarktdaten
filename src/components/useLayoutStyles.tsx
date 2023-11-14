@@ -16,27 +16,25 @@ export const useLayoutStyles = makeStyles()((theme) => ({
     height: "fit-content",
   },
   content: {
-    [theme.breakpoints.up("xl")]: gridColumn(8),
+    [theme.breakpoints.up("xl")]: gridColumn(10),
     [theme.breakpoints.down("xl")]: gridColumn(6),
     [theme.breakpoints.down("lg")]: gridColumn(4),
   },
 }));
 
-export const useHeroStyles = makeStyles<{ shiftedLeft: boolean; shiftedRight: boolean }>()(
-  (theme, { shiftedLeft, shiftedRight }) => ({
-    shifter: {
-      [theme.breakpoints.up("xl")]: gridColumn(ASIDE_NB_COLUMNS),
-      [theme.breakpoints.down("xl")]: {
-        display: "none",
-      },
+export const useHeroStyles = makeStyles<{ shiftedLeft: boolean }>()((theme) => ({
+  shifter: {
+    [theme.breakpoints.up("xl")]: gridColumn(ASIDE_NB_COLUMNS),
+    [theme.breakpoints.down("xl")]: {
+      display: "none",
     },
-    heroContent: {
-      [theme.breakpoints.up("xl")]: gridColumn(10 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)),
-      [theme.breakpoints.down("xl")]: gridColumn(6),
-      [theme.breakpoints.down("lg")]: gridColumn(4),
-    },
-  })
-);
+  },
+  heroContent: {
+    [theme.breakpoints.up("xl")]: gridColumn(10),
+    [theme.breakpoints.down("xl")]: gridColumn(6),
+    [theme.breakpoints.down("lg")]: gridColumn(4),
+  },
+}));
 
 export const useTableOfContentsSticky = () => {
   return useStickyBox({ offsetTop: 200 });
