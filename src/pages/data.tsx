@@ -93,7 +93,7 @@ const DataBrowser = () => {
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observations = useAtomValue(observationsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
-  const resultCount = observations.length;
+  const resultCount = observations.observations.length;
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
 
   return (
@@ -132,7 +132,7 @@ const DataBrowser = () => {
             <Button size="small" startIcon={<IcControlDownload />}>
               <Trans id="data.actions.download">Data download</Trans>
             </Button>
-            <Button size="small" href="https://test.lindas.admin.ch/sparql/" target="_blank">
+            <Button size="small" href={observations.query} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
             <Button
@@ -174,7 +174,7 @@ const DataBrowser = () => {
 
               {observationsQueryStatus.isSuccess && (
                 <>
-                  <Table observations={observations} dimensions={cubeDimensions} />
+                  <Table observations={observations.observations} dimensions={cubeDimensions} />
                 </>
               )}
             </>
