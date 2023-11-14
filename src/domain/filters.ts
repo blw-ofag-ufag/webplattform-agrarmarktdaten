@@ -2,12 +2,7 @@ import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomFamily } from "jotai/vanilla/utils";
-import {
-  DIMENSION_FILTERS,
-  availableMeasuresAtom,
-  baseDimensionsAtom,
-  cubeDimensionsAtom,
-} from "./dimensions";
+import { DIMENSION_FILTERS, baseDimensionsAtom, cubeDimensionsAtom } from "./dimensions";
 
 export type Option = {
   label: string;

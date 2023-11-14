@@ -63,12 +63,16 @@ export const CubeDimensions = () => {
       <Typography variant="h2">Cube Dimensions</Typography>
       <Select label="Cube" value={cube} onChange={(e) => setCube(e.target.value)}>
         {cubes.map((c) => (
-          <MenuItem value={c.cube}>{c.cube}</MenuItem>
+          <MenuItem key={c.cube} value={c.cube}>
+            {c.cube}
+          </MenuItem>
         ))}
       </Select>
       <Select label="Language" value={locale} onChange={(e) => setLocale(e.target.value as Locale)}>
         {locales.map((l) => (
-          <MenuItem value={l}>{l.toUpperCase()}</MenuItem>
+          <MenuItem key={l} value={l}>
+            {l.toUpperCase()}
+          </MenuItem>
         ))}
       </Select>
       {dimensions.isLoading && <CircularProgress />}
@@ -106,7 +110,7 @@ export const Observations = () => {
       return [];
     }
 
-    return Object.entries(observations.data[0]).map(([key, value]) => {
+    return Object.entries(observations.data[0]).map(([key]) => {
       return {
         field: key,
         headerName: key,
@@ -123,14 +127,16 @@ export const Observations = () => {
         },
       };
     });
-  }, [observations.data, showParsed]);
+  }, [observations.data, dimensions.data, showParsed]);
 
   return (
     <Stack gap={2}>
       <Typography variant="h2">Cube Observations</Typography>
       <Select label="Cube" value={cube} onChange={(e) => setCube(e.target.value)}>
         {cubes.map((c) => (
-          <MenuItem value={c.cube}>{c.cube}</MenuItem>
+          <MenuItem key={c.cube} value={c.cube}>
+            {c.cube}
+          </MenuItem>
         ))}
       </Select>
       <FormControlLabel

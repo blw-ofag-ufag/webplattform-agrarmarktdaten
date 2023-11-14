@@ -24,7 +24,6 @@ import { useAtomValue } from "jotai";
 import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
-import { cubesAtom } from "@/domain/cubes";
 import { cubeDimensionsAtom } from "@/domain/dimensions";
 import { observationsAtom, observationsStatusAtom, valueFormatter } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
