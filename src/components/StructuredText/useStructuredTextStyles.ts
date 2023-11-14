@@ -96,12 +96,12 @@ const useStructuredTextStyles = makeStyles<
     h3: debugStyle("h3", {
       fontWeight: 700,
       [`.${classes.h2} + &`]: margins.xs,
-      [`.${classes.p} + &`]: margins.md,
+      [`.${classes.p} + &`]: margins.xl,
       [`& + .${classes.p}`]: margins.md,
     }),
     h4: debugStyle("h4", {
       fontWeight: 700,
-      [`.${classes.p} + &`]: margins.md,
+      [`.${classes.p} + &`]: margins.xl,
       [`& + .${classes.p}`]: margins.md,
     }),
     h5: debugStyle("h5", {}),
