@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { AppLayout } from "@/components/layout";
 import { client } from "@/graphql";
 import * as GQL from "@/graphql";
-import { Locale } from "@/locales/locales";
+import { Locale, isValidLocale } from "@/locales/locales";
 import { Box } from "@mui/material";
 import { StructuredText } from "@/components/StructuredText";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
@@ -176,10 +176,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   const paths = result.data.allBlogPosts.flatMap((page) => {
-    return page._allSlugLocales!.map((loc) => ({
-      locale: loc!.locale as Locale,
-      params: { slug: loc!.value as string },
-    }));
+    return (
+      page
+        ?._allSlugLocales!.filter((x) => isValidLocale(x.locale))
+        .map((loc) => ({
+          locale: loc!.locale as Locale,
+          params: { slug: loc!.value as string },
+        })) ?? []
+    );
   });
 
   return { fallback: false, paths };
