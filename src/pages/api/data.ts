@@ -1,3 +1,4 @@
+import { PROPERTIES, dataDimensions } from "@/domain/dimensions";
 import {
   queryBaseMeasureDimensions,
   queryBasePropertyDimensions,
@@ -7,13 +8,11 @@ import {
   queryObservations,
   queryPropertyDimensionAndValues,
 } from "@/lib/cube-queries";
-import { amdp, amdpMeasure, amdpDimension } from "@/lib/namespace";
+import { amdp, amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
 import { groupBy } from "lodash";
 import { z } from "zod";
-import * as ns from "../../lib/namespace";
-import { dataDimensions, properties } from "@/domain/dimensions";
 
 const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
   return fullIri.replace(namespace().value, "");
@@ -287,19 +286,82 @@ const toCamelCase = (v: string) => v.replace(/-./g, (x) => x[1].toUpperCase());
 const observationSchema = z
   .object({
     observation: z.string().transform((v) => removeNamespace(v, amdp)),
-    costComponent: z.string().transform((v) => removeNamespace(v, amdp)),
-    currency: z.string().transform((v) => removeNamespace(v, amdp)),
-    dataMethod: z.string().transform((v) => removeNamespace(v, amdp)),
-    dataSource: z.string().transform((v) => removeNamespace(v, amdp)),
-    date: z.string().transform((v) => removeNamespace(v, amdp)),
-    foreignTrade: z.string().transform((v) => removeNamespace(v, amdp)),
-    keyIndicatorType: z.string().transform((v) => removeNamespace(v, amdp)),
-    market: z.string().transform((v) => removeNamespace(v, amdp)),
-    salesRegion: z.string().transform((v) => removeNamespace(v, amdp)),
-    unit: z.string().transform((v) => removeNamespace(v, amdp)),
-    usage: z.string().transform((v) => removeNamespace(v, amdp)),
-    valueChain: z.string().transform((v) => removeNamespace(v, amdp)),
-    valueChainDetail: z.string().transform((v) => removeNamespace(v, amdp)),
+    costComponent: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    currency: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    dataMethod: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    dataSource: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    date: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    foreignTrade: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    keyIndicatorType: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    market: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    salesRegion: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    unit: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    usage: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    valueChain: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    valueChainDetail: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    product: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    productGroup: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    productionSystem: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    productOrigin: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    productProperties: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
+    productSubgroup: z
+      .string()
+      .transform((v) => removeNamespace(v, amdp))
+      .optional(),
     price: z
       .string()
       .transform((v) => +v)
@@ -345,7 +407,7 @@ export const fetchObservations = async ({
       };
     }, {}),
     measure,
-    dimensions: properties.map((v) => ({
+    dimensions: PROPERTIES.map((v) => ({
       iri: dataDimensions[v].iri,
       key: v,
     })),

@@ -90,9 +90,9 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQueryAsyn
 
 /* Data Dimensions */
 
-export const measures = ["price", "quantity", "index"] as const;
+export const MEASURES = ["price", "quantity", "index"] as const;
 
-export const properties = [
+export const PROPERTIES = [
   "costComponent",
   "currency",
   "dataMethod",
@@ -103,6 +103,8 @@ export const properties = [
   "market",
   "product",
   "productGroup",
+  "productSubgroup",
+  "productProperties",
   "productionSystem",
   "productOrigin",
   "salesRegion",
@@ -112,8 +114,8 @@ export const properties = [
   "valueChain",
 ] as const;
 
-export type Measure = (typeof measures)[number];
-export type Property = (typeof properties)[number];
+export type Measure = (typeof MEASURES)[number];
+export type Property = (typeof PROPERTIES)[number];
 
 export type DataDimension = Measure | Property;
 
@@ -198,6 +200,16 @@ export const dataDimensions: {
     type: "property",
     id: "product-origin",
     iri: amdpDimension("product-origin").value,
+  },
+  productSubgroup: {
+    type: "property",
+    id: "product-subgroup",
+    iri: amdpDimension("product-subgroup").value,
+  },
+  productProperties: {
+    type: "property",
+    id: "product-properties",
+    iri: amdpDimension("product-properties").value,
   },
   salesRegion: {
     type: "property",
