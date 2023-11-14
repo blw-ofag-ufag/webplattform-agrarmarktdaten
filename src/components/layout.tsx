@@ -185,7 +185,7 @@ export const AppLayout = (props: Props) => {
       </Box>
 
       {router.pathname !== "/data" && (
-        <div className="debug-warn">
+        <div>
           <Footer />
         </div>
       )}

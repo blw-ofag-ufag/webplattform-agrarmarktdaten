@@ -73,7 +73,6 @@ const StructuredText = (props: Props) => {
                     <Typography
                       variant="inherit"
                       component="a"
-                      data-debug-good
                       className={classes.link}
                       rel={rel}
                       target={target}
@@ -108,7 +107,6 @@ const StructuredText = (props: Props) => {
                   <Typography
                     key={key}
                     id={id}
-                    data-debug-good
                     variant={`h${node.level}`}
                     component={`h${node.level}`}
                     className={classes[`h${node.level}` as `h${typeof node.level}`]}
@@ -237,7 +235,6 @@ const StructuredText = (props: Props) => {
                   <Typography
                     variant="inherit"
                     component="a"
-                    data-debug-good
                     className={classes.link}
                     key={record.id}
                     href={url}
@@ -311,14 +308,7 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography
-      ref={ref}
-      id={id}
-      data-debug-good
-      variant="h1"
-      component="h1"
-      className={props.className}
-    >
+    <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
       {children}
     </Typography>
   );

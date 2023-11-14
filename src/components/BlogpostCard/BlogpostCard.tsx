@@ -216,7 +216,7 @@ export const BlogpostCard = (
 
         <div className={classes.content}>
           <div className={classes.publishedDate}>
-            <Typography variant="body3" data-debug-good color="textSecondary">
+            <Typography variant="body3" color="textSecondary">
               {publishedDate ? (
                 i18n.date(publishedDate, { year: "numeric", month: "long", day: "numeric" })
               ) : (
@@ -228,7 +228,6 @@ export const BlogpostCard = (
             variant={variant === "full" ? "h1" : "h2"}
             component="h2"
             className={cx(classes.title, clampedClassName)}
-            data-debug-good
           >
             {title}
           </Typography>
@@ -237,11 +236,7 @@ export const BlogpostCard = (
               <MarketChip key={slug} slug={slug} label={title} />
             ))}
           </div>
-          <Typography
-            variant="body1"
-            data-debug-good
-            className={cx(classes.lead, clampedClassName)}
-          >
+          <Typography variant="body1" className={cx(classes.lead, clampedClassName)}>
             {leadCard}
           </Typography>
         </div>

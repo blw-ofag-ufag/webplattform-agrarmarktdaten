@@ -163,7 +163,7 @@ export const TopBlogpostsTeaser = (
   return (
     <CalloutSection {...rest}>
       <GridContainer disableItemMargin className={classes.container}>
-        <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
+        <Typography variant="h1" sx={{ width: "100%", mb: s(8) }}>
           <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
         </Typography>
         {content}

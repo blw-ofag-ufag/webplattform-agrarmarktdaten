@@ -76,7 +76,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
       >
         {/* Markets */}
         <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
-          <Typography variant="h1" component="h2" data-debug-good>
+          <Typography variant="h1" component="h2">
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={homePage.markets} />
@@ -85,7 +85,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
         {/* Focus */}
 
         <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
-          <Typography variant="h1" component="h2" data-debug-good>
+          <Typography variant="h1" component="h2">
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
@@ -96,13 +96,13 @@ export default function HomePage(props: GQL.HomePageQuery) {
 
         {/* Data */}
         <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
-          <Typography variant="h1" component="h2" data-debug-good>
+          <Typography variant="h1" component="h2">
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>
           <Card sx={{ p: s(8) }} className={classes.card}>
             <Box display="flex" alignItems="center">
               <Box display="flex" flexDirection="column" pr="50px">
-                <Typography variant="body1" data-debug-good>
+                <Typography variant="body1">
                   <Trans id="homepage.section.data.content">
                     Various data can be selected and downloaded via the data download, in particular
                     price series, and in some cases also quantity and area data. Data are available
