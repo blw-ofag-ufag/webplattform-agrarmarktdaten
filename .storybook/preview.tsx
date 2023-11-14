@@ -3,6 +3,16 @@ import type { Preview } from "@storybook/react";
 import theme from "../src/theme/blw/index";
 import { breakpoints } from "@interactivethings/swiss-federal-ci";
 import { ThemeProvider } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 const viewports = Object.entries(breakpoints).map(([key, value]) => {
   return {
@@ -19,12 +29,24 @@ const preview: Preview = {
     (Story) => {
       return (
         <ThemeProvider theme={theme}>
-          <Story />
+          <QueryClientProvider client={queryClient}>
+            <Story />
+            <ReactQueryDevtools />
+          </QueryClientProvider>
         </ThemeProvider>
       );
     },
   ],
+
   parameters: {
+    options: {
+      showRoots: true,
+      storySort: {
+        method: "alphabetical",
+        includeNames: true,
+        order: ["Overview", "Design System", "Components"],
+      },
+    },
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
       matchers: {

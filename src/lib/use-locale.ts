@@ -1,11 +1,16 @@
-import { createContext, useContext } from "react";
+import { defaultLocale, Locale, locales } from "@/locales/locales";
+import { atom, useAtomValue } from "jotai";
+import { atomWithLocation } from "jotai-location";
 
-import { defaultLocale, Locale } from "@/locales/locales";
+const locationAtom = atomWithLocation();
 
-const LocaleContext = createContext<Locale>(defaultLocale);
-
-export const LocaleProvider = LocaleContext.Provider;
+export const localeAtom = atom<Locale>((get) => {
+  const location = get(locationAtom);
+  const locale = location.pathname?.split("/")[1];
+  if (locale && locales.includes(locale as Locale)) return locale as Locale;
+  return defaultLocale;
+});
 
 export const useLocale = () => {
-  return useContext(LocaleContext);
+  return useAtomValue(localeAtom);
 };

@@ -1,3 +1,4 @@
+import { Option } from "@/domain/filters";
 import { IcControlChevronUp, IcControlClose, IcSearch } from "@/icons/icons-jsx/control";
 import { Trans, t } from "@lingui/macro";
 import { CheckBox, CheckBoxOutlineBlank, Circle, IndeterminateCheckBox } from "@mui/icons-material";
@@ -7,7 +8,6 @@ import {
   AccordionSummaryProps,
   Box,
   Button,
-  Checkbox as MuiCheckbox,
   CheckboxProps,
   FormControlLabel,
   IconButton,
@@ -15,6 +15,7 @@ import {
   Accordion as MuiAccordion,
   AccordionDetails as MuiAccordionDetails,
   AccordionSummary as MuiAccordionSummary,
+  Checkbox as MuiCheckbox,
   Stack,
   TextField,
   Typography,
@@ -26,7 +27,6 @@ import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
 import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 import PreviewFilter from "./PreviewFilter";
-import { Option } from "@/domain/data";
 
 type Node<T extends Option> = {
   id: string;
@@ -326,7 +326,6 @@ const SelectItem = <T extends ScoredOption>({
       expanded={expanded}
       onClick={(e) => {
         e.stopPropagation();
-        console.log({ expanded, node, hasResults });
         setExpanded(!expanded);
       }}
     >

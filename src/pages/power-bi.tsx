@@ -12,6 +12,7 @@ const Page = (props: Props) => {
     const datasetId = d.dataset?.datasetId ?? "";
     const reportId = d.reportId ?? "";
     const reportWorkspaceId = d.workspace?.workspaceId ?? "";
+    const pages = d.pages.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
 
     return (
       <PowerBIReport
@@ -19,6 +20,7 @@ const Page = (props: Props) => {
         datasetId={datasetId}
         reportId={reportId}
         reportWorkspaceId={reportWorkspaceId}
+        pages={pages}
       />
     );
   });
@@ -28,9 +30,7 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
   const result = await client
     .query<GQL.AllPowerBiReportsQuery>(
       GQL.AllPowerBiReportsDocument,
-      {
-        locale: ctx.locale,
-      },
+      { locale: ctx.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();

@@ -8,19 +8,23 @@ import { Image } from "react-datocms";
 import { MarketChip } from "@/components/MarketChip";
 
 import { makeStyles } from "@/components/style-utils";
-import { useLineClamping, isHTMLElement } from "../../utils/clamp";
+import { isHTMLElement, useLineClamping } from "@/utils/clamp";
 
-const useStyles = makeStyles<void, "full" | "third">()(
-  ({ spacing: s, shadows: e, palette: c, breakpoints: b }, _params, classes) => ({
+const useStyles = makeStyles<void, "full" | "third" | "card">()((
+  { spacing: s, shadows: e, palette: c, breakpoints: b },
+  _params,
+  classes
+) => {
+  return {
     card: {
       overflow: "hidden",
-      boxShadow: e[6],
+      boxShadow: e.lg,
       backgroundColor: c.background.paper,
       borderRadius: s(2),
       cursor: "pointer",
-      transition: "box-shadow 0.5s ease",
+      transition: "box-shadow 0.3s ease",
       "&:hover": {
-        boxShadow: e[12],
+        boxShadow: e.xxl,
       },
     },
     full: {
@@ -44,6 +48,8 @@ const useStyles = makeStyles<void, "full" | "third">()(
     third: {
       maxWidth: "100%",
       "--px": s(6),
+      display: "flex",
+      flexDirection: "column",
     },
 
     publishedDate: {
@@ -67,6 +73,9 @@ const useStyles = makeStyles<void, "full" | "third">()(
     },
 
     title: {
+      [`.${classes.card}:hover &`]: {
+        textDecoration: "underline",
+      },
       [`.${classes.full} &`]: {
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -75,16 +84,17 @@ const useStyles = makeStyles<void, "full" | "third">()(
       [`.${classes.third} &`]: {
         paddingLeft: "var(--px)",
         paddingRight: "var(--px)",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        display: "-webkit-box",
-        WebkitLineClamp: "2",
-        lineClamp: "2",
-        WebkitBoxOrient: "vertical",
 
         // Prevent title to completely disappear due to
         // gridTemplateRow auto
         minHeight: "1.5em",
+
+        // Max height set to at most 2 lines (lineHeight / fontSize *  2 = 28 / 20 * 2),
+        // & prevent shrinking due to long lead
+        overflow: "hidden",
+        flexBasis: "min-content",
+        maxHeight: "2.8em",
+        flexShrink: 0,
       },
     },
 
@@ -119,10 +129,9 @@ const useStyles = makeStyles<void, "full" | "third">()(
       [`.${classes.third} &`]: {
         paddingLeft: "var(--px)",
         paddingRight: "var(--px)",
+        flexShrink: 1,
+        flexGrow: 1,
         overflow: "hidden",
-        textOverflow: "ellipsis",
-        display: "-webkit-box",
-        WebkitBoxOrient: "vertical",
       },
     },
 
@@ -146,24 +155,24 @@ const useStyles = makeStyles<void, "full" | "third">()(
     content: {
       [`.${classes.full} &`]: {
         display: "grid",
-        gridTemplateRows: "min-content auto min-content auto",
+        gridTemplateRows: "min-content min-content min-content auto",
         padding: s(5, 7),
         flexGrow: 0,
         flexShrink: 0,
         overflow: "hidden",
       },
       [`.${classes.third} &`]: {
-        paddingBottom: s(5),
+        paddingBottom: "1rem",
         paddingTop: s(5),
         display: "flex",
         flexDirection: "column",
         minHeight: "302px",
         maxHeight: "302px",
-        height: "100%",
+        overflow: "hidden",
       },
     },
-  })
-);
+  };
+});
 
 const clampedClassName = "clamped";
 

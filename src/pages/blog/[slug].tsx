@@ -4,11 +4,10 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { AppLayout } from "@/components/layout";
 import { client } from "@/graphql";
 import * as GQL from "@/graphql";
-import { Locale } from "@/locales/locales";
+import { Locale, isValidLocale } from "@/locales/locales";
 import { Box } from "@mui/material";
 import { StructuredText } from "@/components/StructuredText";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
-import { s, c } from "@interactivethings/swiss-federal-ci";
 import { format } from "date-fns";
 import Chip from "@mui/material/Chip";
 import { Intersperse } from "@/components/Intersperse";
@@ -16,10 +15,40 @@ import { GridContainer } from "@/components/Grid/Grid";
 import { MarketChip } from "@/components/MarketChip";
 import { Avatars } from "../../components/Avatars";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
+import { makeStyles } from "@/components/style-utils";
+
+const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
+  chip: {
+    backgroundColor: c.cobalt[100],
+    color: c.monochrome[800],
+    lineHeight: "18px",
+    fontSize: "14px",
+    paddingX: "18px",
+    paddingY: "6px",
+  },
+
+  authors: {
+    marginTop: s(1),
+    borderTop: `${c.cobalt[100]} 1px solid`,
+    borderBottom: `${c.cobalt[100]} 1px solid`,
+    display: "flex",
+    position: "relative",
+    height: "88px",
+    alignItems: "center",
+    gap: "1rem",
+  },
+
+  lead: {
+    marginTop: s(8),
+    color: c.monochrome[800],
+  },
+}));
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
   const { blogPost, topBlogPosts, allMarketArticles, allFocusArticles } = props;
-  const { classes } = useLayoutStyles();
+  const { classes: layoutClasses } = useLayoutStyles();
+  const { classes } = useStyles();
+
   const alternates = blogPost
     ? blogPost?._allSlugLocales?.map((loc) => ({
         href: "/blog/[slug]",
@@ -44,18 +73,19 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
       showBackButton
     >
       <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
-        <div className={classes.content}>
+        <div className={layoutClasses.aside} />
+        <div className={layoutClasses.content}>
           <Box sx={{ mb: 10 }}>
             {formattedDate && (
-              <Typography variant="body1" sx={{ color: c.monochrome[500] }}>
+              <Typography variant="body1" color="monochrome.500">
                 <Trans id="blogpost.publishedDate">Published on</Trans>
                 &nbsp;
                 {formattedDate}
               </Typography>
             )}
-            <h1 style={{ fontSize: "48px", fontWeight: 400, lineHeight: "72px", marginTop: s(8) }}>
+            <Typography variant="display2" display="block" fontWeight="regular" my="2rem">
               {blogPost.title}
-            </h1>
+            </Typography>
             <Box sx={{ display: "flex", gap: "16px" }}>
               {blogPost.markets.map(({ slug, title }) => {
                 return (
@@ -71,50 +101,21 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
                 );
               })}
               {blogPost.focusArticles.map(({ slug, title }) => {
-                return (
-                  <Chip
-                    key={slug}
-                    sx={{
-                      backgroundColor: c.cobalt[100],
-                      color: c.monochrome[800],
-                      lineHeight: "18px",
-                      fontSize: "14px",
-                      paddingX: "18px",
-                      paddingY: "6px",
-                    }}
-                    label={title}
-                  />
-                );
+                return <Chip key={slug} label={title} className={classes.chip} />;
               })}
             </Box>
-            <Box sx={{ mt: s(8), color: c.monochrome[800], fontWeight: 400 }}>
-              <StructuredText data={blogPost.lead} />
-            </Box>
+            <div className={classes.lead}>
+              <StructuredText data={blogPost.lead} sx={{ "&&": { pb: "2.5rem" } }} />
+            </div>
             {blogPost.authors.length > 0 && (
-              <Box
-                sx={{
-                  marginTop: s(10),
-                  borderTop: `${c.cobalt[100]} 1px solid`,
-                  borderBottom: `${c.cobalt[100]} 1px solid`,
-                  display: "flex",
-                  position: "relative",
-                  height: "88px",
-                  alignItems: "center",
-                  gap: "1rem",
-                }}
-              >
+              <div className={classes.authors}>
                 <Avatars
                   avatars={blogPost.authors.map((x) => ({
                     url: x.portrait?.url,
                     alt: `${x.firstName} ${x.lastName}`,
                   }))}
                 />
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
+                <Box display="flex" alignItems="center">
                   <Intersperse separator=",&nbsp;">
                     {blogPost.authors.map((author) => {
                       return (
@@ -125,7 +126,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
                     })}
                   </Intersperse>
                 </Box>
-              </Box>
+              </div>
             )}
           </Box>
           {blogPost.content && <StructuredText data={blogPost.content} />}
@@ -175,10 +176,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   const paths = result.data.allBlogPosts.flatMap((page) => {
-    return page._allSlugLocales!.map((loc) => ({
-      locale: loc!.locale as Locale,
-      params: { slug: loc!.value as string },
-    }));
+    return (
+      page
+        ?._allSlugLocales!.filter((x) => isValidLocale(x.locale))
+        .map((loc) => ({
+          locale: loc!.locale as Locale,
+          params: { slug: loc!.value as string },
+        })) ?? []
+    );
   });
 
   return { fallback: false, paths };

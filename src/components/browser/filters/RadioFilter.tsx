@@ -1,5 +1,11 @@
 import { FormControlLabel, Radio, Stack, Typography } from "@mui/material";
-import { Option } from "@/domain/data";
+import { Option } from "@/domain/filters";
+
+export type RadioProps<T extends Option> = {
+  options: T[];
+  value: T;
+  onChange: (newValues: T[]) => void;
+};
 
 export default function RadioFilter<T extends Option>({
   options,

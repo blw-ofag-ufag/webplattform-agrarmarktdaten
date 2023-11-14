@@ -12,16 +12,25 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
+import { makeStyles } from "@/components/style-utils";
+import { CalloutSection } from "@/components/layout";
 
-interface Props {
-  blogposts: GQL.SimpleBlogPostFragment[];
-}
+const useStyles = makeStyles()({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+  },
+});
 
-export const TopBlogpostsTeaser = (props: Props) => {
-  const { blogposts } = props;
+export const TopBlogpostsTeaser = (
+  props: { blogposts: GQL.SimpleBlogPostFragment[] } & React.ComponentProps<typeof CalloutSection>
+) => {
+  const { blogposts, ...rest } = props;
   const isDesktop = useMediaQuery(b.up("xl"));
   const isTablet = useMediaQuery(b.between("md", "xl"));
   const isMobile = useMediaQuery(b.down("md"));
+
+  const { classes } = useStyles();
 
   const theme = useTheme();
 
@@ -152,39 +161,38 @@ export const TopBlogpostsTeaser = (props: Props) => {
   })();
 
   return (
-    <GridContainer
-      disableItemMargin
-      sx={{ display: "flex", flexDirection: "column", mt: "40px", mb: "40px" }}
-    >
-      <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
-        <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
-      </Typography>
-      {content}
-      <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: s(8) }}>
-        <Box sx={{ maxWidth: "1676px", width: "100%" }}>
-          <Box sx={{ display: "flex", justifyContent: "end" }}>
-            <NextLink href={`/analysis`} legacyBehavior>
-              <Button
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "fit-content",
-                  backgroundColor: "transparent",
-                  color: c.cobalt[500],
-                  "&:hover": {
-                    textDecoration: "underline",
+    <CalloutSection {...rest}>
+      <GridContainer disableItemMargin className={classes.container}>
+        <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
+          <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
+        </Typography>
+        {content}
+        <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: s(8) }}>
+          <Box sx={{ maxWidth: "1676px", width: "100%" }}>
+            <Box sx={{ display: "flex", justifyContent: "end" }}>
+              <NextLink href={`/analysis`} legacyBehavior>
+                <Button
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "fit-content",
                     backgroundColor: "transparent",
-                  },
-                }}
-              >
-                <Trans id="button.show.all">Alle Anzeigen</Trans>
-                <ArrowRight />
-              </Button>
-            </NextLink>
+                    color: c.cobalt[500],
+                    "&:hover": {
+                      textDecoration: "underline",
+                      backgroundColor: "transparent",
+                    },
+                  }}
+                >
+                  <Trans id="button.show.all">Alle Anzeigen</Trans>
+                  <ArrowRight />
+                </Button>
+              </NextLink>
+            </Box>
           </Box>
         </Box>
-      </Box>
-    </GridContainer>
+      </GridContainer>
+    </CalloutSection>
   );
 };
 

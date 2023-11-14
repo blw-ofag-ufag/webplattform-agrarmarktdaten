@@ -19,23 +19,18 @@ msgid "filters.select.total"
 msgstr "({0} insgesamt)"
 
 #. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "data.filters.some"
-msgstr "{0} von {1}"
-
-#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {Ergebnis} other {Ergebnisse}}"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografic.date"
-msgstr "-"
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.some"
+msgstr "{0} von {1}"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.about_us.label"
 msgstr "Über uns"
 
@@ -45,10 +40,15 @@ msgid "data.filters.addedValue"
 msgstr "Wertschöpfungsstufe"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.report"
 msgstr "Agrarbericht"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Filters.tsx
+msgid "select.all"
+msgstr "Alle"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -67,9 +67,19 @@ msgstr "Analysen"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
-#: src/components/layout.tsx
+msgid "header.shortTitle"
+msgstr "BLW"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.blw"
 msgstr "Bundesamt für Landwirtschaft"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr "Bundesamt für Landwirtschaft BLW"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -80,6 +90,12 @@ msgstr "Filter zurücksetzen"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
 msgstr "Filter zurücksetzen"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Schliessen"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -102,8 +118,8 @@ msgid "data.actions.download"
 msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.feedback"
 msgstr "Feedback"
 
@@ -111,6 +127,11 @@ msgstr "Feedback"
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.heading"
 msgstr "Filter"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.focus"
+msgstr "Fokus"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
@@ -123,7 +144,7 @@ msgid "menu.focus"
 msgstr "Fokus"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "contact.follow.us"
 msgstr "Informiert bleiben"
 
@@ -133,8 +154,8 @@ msgid "data.filters.from"
 msgstr "Von"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.furtherinformation"
 msgstr "Weitere Informationen"
 
@@ -144,14 +165,9 @@ msgid "cta.back"
 msgstr "Zurück"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.impressum"
 msgstr "Kontakt"
-
-#. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografik.teaser"
-msgstr "-"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -164,19 +180,8 @@ msgid "menu.info"
 msgstr "Info"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografic"
-msgstr "-"
-
-#. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-msgid "button.infografic.teaser"
-msgstr "Infografik Ansehen?"
-
-#. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.priceindex"
 msgstr "Landesindex der Konsumentenpreise"
 
@@ -184,6 +189,16 @@ msgstr "Landesindex der Konsumentenpreise"
 #: src/pages/index.tsx
 msgid "homepage.section.data.button"
 msgstr "Mehr erfahren"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.filters.loading"
+msgstr "Loading"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+msgid "filter.market"
+msgstr "Markt"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
@@ -213,7 +228,7 @@ msgstr "Metadata"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.methods"
-msgstr "Methods"
+msgstr "Methoden"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
@@ -224,6 +239,11 @@ msgstr "Monat"
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr "Analysen"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.noOptions"
+msgstr "Keine Optionen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -241,8 +261,8 @@ msgid "data.filters.products"
 msgstr "Produktliste"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.importpriceindex"
 msgstr "Produzenten- und Importpreis-Index"
 
@@ -252,7 +272,7 @@ msgid "blogpost.publishedDate"
 msgstr "Veröffentlicht am"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.legal"
 msgstr "Auftrag und rechtliche Grundlage"
 
@@ -267,10 +287,9 @@ msgid "data.filters.salesRegions"
 msgstr "Verkaufsregion"
 
 #. js-lingui-explicit-id
-#: src/components/homepage/infografik-teaser.tsx
-#: src/components/homepage/infografik-teaser.tsx
-msgid "infografik.title"
-msgstr "-"
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.label"
+msgstr "Suche"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -288,22 +307,27 @@ msgid "data.actions.showFiler"
 msgstr "Filter anzeigen"
 
 #. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Sort.tsx
+msgid "sort.labe"
+msgstr "Sortieren nach"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.query"
 msgstr "SPARQL-Abfrage"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.newsletter"
 msgstr "Newsletter Anmeldung"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.terms"
 msgstr "Nutzungsbedingungen"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
+#: src/components/Footer/Footer.tsx
 msgid "footer.id"
 msgstr "Das Bundesamt für Landwirtschaft BLW ist das nationale Kompetenzzentrum für die Schweizer Agrarpolitik. Zu den Aufgaben des BLW gehört auch, eine unabhängige Marktbeobachtungsstelle zu führen (Artikel 27 Landwirtschaftsgesetz LwG). Diese erhebt und publiziert Marktindikatoren wie Preise und Mengen entlang der gesamten Wertschöpfungskette der wichtigsten Agrar- und Lebensmittelmärkte der Schweiz. Ziel ist es, die Markttransparenz zu erhöhen und langfristige Entwicklungen aufzuzeigen."
 

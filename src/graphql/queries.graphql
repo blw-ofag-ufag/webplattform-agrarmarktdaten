@@ -180,9 +180,7 @@ query MethodsPage($locale: SiteLocale!) {
       }
       links {
         __typename
-        ...FileDownloadSection
-        ...HighlightSection
-        ...PowerBI
+        ...InternalLink
       }
     }
   }
@@ -227,6 +225,7 @@ query InfoPage($locale: SiteLocale!) {
       }
       links {
         __typename
+        ...InternalLink
         ...FileDownloadSection
         ...HighlightSection
         ...PowerBI
@@ -262,9 +261,6 @@ query AnalysisPage($locale: SiteLocale!) {
       ...FullSEO
     }
   }
-  _allBlogPostsMeta {
-    count
-  }
 
   allMarketArticles(locale: $locale) {
     ...SimpleMarketArticle
@@ -273,15 +269,48 @@ query AnalysisPage($locale: SiteLocale!) {
   allFocusArticles(locale: $locale) {
     ...SimpleFocusArticle
   }
+}
 
-  allBlogPosts(locale: $locale, first: 7) {
+query paginatedFilteredBlogposts(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $marketFilter: ItemId
+  $focusFilter: ItemId
+  $orderBy: [BlogPostModelOrderBy]
+) {
+  blogposts: allBlogPosts(
+    locale: $locale
+    first: $first
+    skip: $skip
+    filter: {
+      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+    }
+    orderBy: $orderBy
+  ) {
     ...SimpleBlogPost
+  }
+  blogpostCount: _allBlogPostsMeta(
+    locale: $locale
+    filter: {
+      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+    }
+  ) {
+    count
   }
 }
 
-query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!) {
-  allBlogPosts(locale: $locale, first: $first, skip: $skip) {
+query paginatedBlogposts(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $orderBy: [BlogPostModelOrderBy]
+) {
+  blogposts: allBlogPosts(locale: $locale, first: $first, skip: $skip, orderBy: $orderBy) {
     ...SimpleBlogPost
+  }
+  blogpostCount: _allBlogPostsMeta(locale: $locale) {
+    count
   }
 }
 
@@ -318,6 +347,10 @@ query AllPowerBIReports($locale: SiteLocale!) {
     }
     workspace {
       workspaceId
+    }
+    pages {
+      name
+      pageId
     }
   }
 }
@@ -396,9 +429,7 @@ fragment FullMarketArticle on MarketArticleRecord {
     }
     links {
       __typename
-      ...FileDownloadSection
-      ...HighlightSection
-      ...PowerBI
+      ...InternalLink
     }
   }
   seo {
@@ -427,9 +458,7 @@ fragment FullFocusArticle on FocusArticleRecord {
     }
     links {
       __typename
-      ...FileDownloadSection
-      ...HighlightSection
-      ...PowerBI
+      ...InternalLink
     }
   }
   seo {
@@ -510,9 +539,7 @@ fragment BlogPost on BlogPostRecord {
     }
     links {
       __typename
-      ...FileDownloadSection
-      ...HighlightSection
-      ...PowerBI
+      ...InternalLink
     }
   }
 }
@@ -613,6 +640,11 @@ fragment PowerBI on PowerBiReportRecord {
       name
       id
     }
+  }
+  pages {
+    name
+    id
+    pageId
   }
 }
 
@@ -716,5 +748,23 @@ fragment InternalLink on RecordInterface {
   ... on BlogPostRecord {
     id
     slug
+  }
+  ... on DataPageRecord {
+    id
+  }
+  ... on InfoPageRecord {
+    id
+  }
+  ... on PowerBiPageRecord {
+    id
+  }
+  ... on FileDownloadSectionRecord {
+    id
+  }
+  ... on HighlightSectionRecord {
+    id
+  }
+  ... on PowerBiReportRecord {
+    id
   }
 }

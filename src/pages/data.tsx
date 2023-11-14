@@ -1,3 +1,7 @@
+import { AppLayout } from "@/components/layout";
+import * as GQL from "@/graphql";
+import { client } from "@/graphql/api";
+import blwTheme from "@/theme/blw";
 import {
   Alert,
   AlertTitle,
@@ -13,21 +17,19 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { useAtom } from "jotai";
-import React, { PropsWithChildren, useEffect, useState } from "react";
-import { QueryClientProvider, useQuery } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
-import * as GQL from "@/graphql";
-import { client } from "@/graphql/api";
-import { AppLayout } from "@/components/layout";
-import { indicatorAtom, marketsAtom } from "@/domain/data";
-import blwTheme from "@/theme/blw";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useAtomValue } from "jotai";
+import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
+import { cubeDimensionsAtom } from "@/domain/dimensions";
+import { observationsAtom, observationsStatusAtom, valueFormatter } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { CubeResult, fetchCube, fetchObservations, lindasClient } from "./api/use-sparql";
+import { Measure, Observation, Property } from "./api/data";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -36,6 +38,14 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
     },
     secondary: {
       main: "#888",
+    },
+  },
+});
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
     },
   },
 });
@@ -52,69 +62,46 @@ export default function DataPage(props: GQL.DataPageQuery) {
   const { allMarketArticles, allFocusArticles } = props;
   return (
     <SafeHydrate>
-      <QueryClientProvider client={lindasClient}>
-        <ReactQueryDevtools />
-        <ThemeProvider theme={blackAndWhiteTheme}>
-          <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
-            <Stack flexGrow={1} minHeight={0}>
-              <Box
-                zIndex={0}
-                display="flex"
-                //justifyContent="stretch"
-                flexGrow={1}
-                minHeight={0}
-                sx={{
-                  borderTop: "1px solid",
-                  borderColor: "grey.300",
-                }}
-              >
+      <ThemeProvider theme={blackAndWhiteTheme}>
+        <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+          <Stack flexGrow={1} minHeight={0}>
+            <Box
+              zIndex={0}
+              display="flex"
+              //justifyContent="stretch"
+              flexGrow={1}
+              minHeight={0}
+              sx={{
+                borderTop: "1px solid",
+                borderColor: "grey.300",
+              }}
+            >
+              <Suspense fallback={<CircularProgress />}>
                 <DataBrowser />
-              </Box>
-            </Stack>
-          </AppLayout>
-        </ThemeProvider>
-      </QueryClientProvider>
+              </Suspense>
+            </Box>
+          </Stack>
+        </AppLayout>
+      </ThemeProvider>
+      <ReactQueryDevtools client={queryClient} />
     </SafeHydrate>
   );
 }
 
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
-  // const locale = useLocale();
   const contentRef = React.useRef<HTMLDivElement>(null);
-  const indicator = useAtom(indicatorAtom);
-  const [markets] = useAtom(marketsAtom);
-
-  console.log({
-    indicator,
-    markets,
-  });
-
-  const cubeQuery = useQuery<CubeResult, Error>({
-    queryKey: ["cube"],
-    queryFn: () =>
-      fetchCube(
-        "https://agriculture.ld.admin.ch/foag/cube/MilkDairyProducts/Consumption_Price_Month"
-      ),
-  });
-
-  /* const dims = cubes.map((cube) => {
-    if (cube.view) {
-      const dim = getCubeDimension(cube.view, "product", { locale });
-      console.log(dim);
-    }
-  });
-
-  console.log(dims); */
-
-  const resultCount = 0; //placeholder
+  const observations = useAtomValue(observationsAtom);
+  const observationsQueryStatus = useAtomValue(observationsStatusAtom);
+  const resultCount = observations.length;
+  const cubeDimensions = useAtomValue(cubeDimensionsAtom);
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
       <Box width="388px" flexGrow={0} flexShrink={0}>
         <SidePanel />
       </Box>
-      <Stack bgcolor="#F0F4F7" flexGrow={1} minWidth={0} p="24px" gap={4}>
+      <Stack bgcolor="cobalt.50" flexGrow={1} minWidth={0} p="24px" gap={4}>
         <Stack height="80px" justifyContent="flex-end">
           <Box sx={{ width: "55px", height: "3px", backgroundColor: "#000" }} />
           <Typography variant="h1" sx={{ fontSize: "64px" }}>
@@ -128,10 +115,17 @@ const DataBrowser = () => {
             </Button>
             <Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />
             <Typography variant="body2" color="grey.600" padding={2}>
-              {`${resultCount} ${t({
-                id: "data.filters.results",
-                message: plural(resultCount, { one: "result", other: "results" }),
-              })}`}
+              {observationsQueryStatus.isLoading && (
+                <Trans id="data.filters.loading">Loading </Trans>
+              )}
+              {observationsQueryStatus.isSuccess && (
+                <>
+                  {`${resultCount} ${t({
+                    id: "data.filters.results",
+                    message: plural(resultCount ?? 0, { one: "result", other: "results" }),
+                  })}`}
+                </>
+              )}
             </Typography>
           </Stack>
           <Stack direction="row" gap={2}>
@@ -166,8 +160,8 @@ const DataBrowser = () => {
             }}
           >
             <>
-              {cubeQuery.isLoading && <CircularProgress size={24} />}
-              {cubeQuery.isError && (
+              {observationsQueryStatus.isLoading && <CircularProgress size={24} />}
+              {observationsQueryStatus.isError && (
                 <Alert
                   sx={{
                     width: "70%",
@@ -175,10 +169,14 @@ const DataBrowser = () => {
                   severity="error"
                 >
                   <AlertTitle>Error</AlertTitle>
-                  {cubeQuery.error.message}
                 </Alert>
               )}
-              {cubeQuery.isSuccess && <Table cube={cubeQuery.data} />}
+
+              {observationsQueryStatus.isSuccess && (
+                <>
+                  <Table observations={observations} dimensions={cubeDimensions} />
+                </>
+              )}
             </>
           </Paper>
         </Box>
@@ -247,32 +245,38 @@ const ContentDrawer = ({
   );
 };
 
-const Table = ({ cube }: { cube: CubeResult }) => {
-  const observationsQuery = useQuery({
-    queryKey: ["observations"],
-    queryFn: () => fetchObservations(cube.view),
-  });
-  console.log(observationsQuery);
-  return (
-    <>
-      {observationsQuery.isLoading && <CircularProgress size={24} />}
+const Table = ({
+  observations,
+  dimensions,
+}: {
+  observations: Observation[];
+  dimensions: Record<string, Property | Measure>;
+}) => {
+  const columns: GridColDef[] = useMemo(() => {
+    return Object.values(dimensions)
+      .flat()
+      .map((dimension) => {
+        return {
+          field: dimension.dimension,
+          headerName: dimension.label,
+          //width: 200,
+          valueFormatter: (params) =>
+            valueFormatter({
+              value: params.value,
+              dimension: dimension.dimension,
+              cubeDimensions: dimensions,
+            }),
+        };
+      });
+  }, [dimensions]);
 
-      {observationsQuery.isSuccess && (
-        <Stack>
-          <Box
-            sx={{
-              backgroundColor: "grey.200",
-              padding: 4,
-              border: "1px solid",
-              borderColor: "grey.300",
-            }}
-          >
-            <Typography variant="h5">{cube.iri}</Typography>
-            <Typography variant="body2">{observationsQuery.data.length} records</Typography>
-          </Box>
-        </Stack>
-      )}
-    </>
+  return (
+    <DataGrid
+      rows={observations}
+      columns={columns}
+      getRowId={(row) => row.observation}
+      autoPageSize
+    />
   );
 };
 

@@ -1,51 +1,64 @@
 import * as React from "react";
 import { Typography, Box } from "@mui/material";
 import * as GQL from "@/graphql";
-import { s, c } from "@interactivethings/swiss-federal-ci";
 import { Temporal } from "proposal-temporal";
 import Link from "next/link";
 import { Download } from "@/icons/icons-jsx/control";
 import { Intersperse } from "@/components/Intersperse";
+import { makeStyles } from "@/components/style-utils";
+import { NamedCallout } from "@/components/NamedCallout";
 
-interface Props {
-  data: Partial<GQL.FileDownloadSectionRecord>;
-}
+const useStyles = makeStyles<void, "fileTitle" | "file">()(
+  ({ palette: c, spacing: s }, _params, classes) => ({
+    separator: {
+      height: "1px",
+      width: "100%",
+      backgroundColor: c.cobalt[200],
+      margin: "1rem 0",
+    },
 
-const FileDownloadSection = (props: Props) => {
-  const { data } = props;
+    file: {
+      cursor: "pointer",
+      padding: s(2, 0),
+      "&:hover": {
+        backgroundColor: c.cobalt[50],
+        [`& .${classes.fileTitle}`]: { textDecoration: "underline" },
+      },
+      color: c.monochrome[800],
+      display: "grid",
+      gridTemplateColumns: "min-content 1fr",
+      gridTemplateRows: "min-content min-content",
+      gridTemplateAreas: '"icon title" "empty content"',
+      columnGap: "1rem",
+    },
+    fileTitle: {
+      color: c.monochrome[800],
+      gridArea: "title",
+      display: "flex",
+      alignItems: "center",
+    },
+    fileIcon: { gridArea: "icon", display: "flex", color: c.cobalt[800] },
+    fileContent: {
+      marginTop: s(3),
+      color: c.monochrome[500],
+      gridArea: "content",
+    },
+    fileDescription: {
+      marginBottom: s(2),
+    },
+  })
+);
+
+const FileDownloadSection = (
+  props: {
+    data: Partial<GQL.FileDownloadSectionRecord>;
+  } & Omit<React.ComponentProps<typeof NamedCallout>, "data">
+) => {
+  const { classes } = useStyles();
+  const { data, ...rest } = props;
   return (
-    <Box
-      key={data.id}
-      sx={{
-        position: "relative",
-        border: `${c.cobalt[100]} 4px solid`,
-        borderRadius: "12px",
-        backgroundColor: `${c.cobalt[50]}50`,
-        paddingX: s(20),
-        paddingBottom: s(12),
-        paddingTop: s(15),
-        marginTop: s(10),
-      }}
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          top: -15,
-          left: 80,
-          backgroundColor: c.cobalt[100],
-          width: "fit-content",
-          borderRadius: 100,
-          paddingY: s(1),
-          paddingX: s(3),
-        }}
-      >
-        <Typography variant="body2" sx={{ fontWeight: 700, color: c.cobalt[800] }}>
-          {data.title}
-        </Typography>
-      </Box>
-      <Intersperse
-        separator={<Box sx={{ height: "1px", width: "100%", backgroundColor: c.cobalt[200] }} />}
-      >
+    <NamedCallout title={data.title} {...rest}>
+      <Intersperse separator={<div className={classes.separator} />}>
         {data.fileDownloadItems?.map((item) => {
           const { id, date, title, file, description } = item;
           let formattedDate = "";
@@ -59,42 +72,30 @@ const FileDownloadSection = (props: Props) => {
           return (
             file?.url && (
               <Link href={file.url} key={id} legacyBehavior>
-                <Box
-                  sx={{
-                    cursor: "pointer",
-                    py: s(4),
-                    ":hover": {
-                      backgroundColor: c.cobalt[50],
-                      ".title": { textDecoration: "underline" },
-                    },
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box className={classes.file}>
+                  <div className={classes.fileIcon}>
                     <Download width={24} height={24} />
-                    <Typography
-                      className="title"
-                      variant="h3"
-                      sx={{ ml: s(4), color: c.cobalt[800] }}
-                    >
-                      {title}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ ml: s(10.5), mt: s(3), color: c.cobalt[500] }}>
-                    <Typography variant="body1" sx={{ mb: s(2) }}>
+                  </div>
+                  <Typography className={classes.fileTitle} variant="h4">
+                    {title}
+                  </Typography>
+
+                  <div className={classes.fileContent}>
+                    <Typography variant="body1" className={classes.fileDescription} display="block">
                       {description}
                     </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                    <Typography variant="h5" component="p">
                       {`${file?.format.toUpperCase()}`} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{" "}
                       {formattedDate}
                     </Typography>
-                  </Box>
+                  </div>
                 </Box>
               </Link>
             )
           );
         })}
       </Intersperse>
-    </Box>
+    </NamedCallout>
   );
 };
 
