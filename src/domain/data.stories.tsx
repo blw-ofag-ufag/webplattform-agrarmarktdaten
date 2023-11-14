@@ -106,11 +106,11 @@ export const Observations = () => {
   });
 
   const columns: GridColDef[] = useMemo(() => {
-    if (!observations.data || observations.data.length === 0) {
+    if (!observations.data || observations.data.observations.length === 0) {
       return [];
     }
 
-    return Object.entries(observations.data[0]).map(([key]) => {
+    return Object.entries(observations.data.observations[0]).map(([key]) => {
       return {
         field: key,
         headerName: key,
@@ -155,7 +155,7 @@ export const Observations = () => {
       {observations.isLoading && <CircularProgress />}
       {observations.isSuccess && observations.data && (
         <DataGrid
-          rows={observations.data}
+          rows={observations.data.observations}
           getRowId={(row) => row.observation}
           columns={columns}
           autoHeight
