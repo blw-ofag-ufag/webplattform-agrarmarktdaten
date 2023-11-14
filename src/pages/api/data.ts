@@ -9,10 +9,18 @@ import {
   queryPropertyDimensionAndValues,
 } from "@/lib/cube-queries";
 import { amdp, amdpDimension, amdpMeasure } from "@/lib/namespace";
-import { Locale } from "@/locales/locales";
+import { Locale, defaultLocale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
-import { groupBy } from "lodash";
+import { groupBy, orderBy, uniqBy } from "lodash";
 import { z } from "zod";
+import rdf from "rdf-ext";
+import * as ns from "../../lib/namespace";
+import { Source } from "rdf-cube-view-query";
+import StreamClient from "sparql-http-client";
+import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
+import { AnyPointer } from "clownface";
+import { Literal, Term } from "@rdfjs/types";
+import { ObservationValue } from "./use-sparql";
 
 const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
   return fullIri.replace(namespace().value, "");
@@ -158,7 +166,7 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   const properties = basePropertiesSchema.parse(
     baseProperties.reduce(
       (acc, dimension) => {
-        const values = propertiesValuesGroups[dimension];
+        const values = propertiesValuesGroups[dimension] ?? [];
         const dim = propertiesRawParsed.find((property) => property.dimension === dimension);
         if (baseProperties.includes(dimension)) {
           return {
@@ -416,3 +424,197 @@ export const fetchObservations = async ({
   const observations = z.array(observationSchema).parse(observationsRaw);
   return observations;
 };
+
+const amdpSource = new Source({
+  endpointUrl: "https://test.lindas.admin.ch/query",
+  sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
+});
+
+const sparqlClient = new StreamClient({
+  endpointUrl: "https://test.lindas.admin.ch/query",
+});
+
+export const fetchHierarchy = async ({
+  cubeIri,
+  dimensionIri,
+  locale,
+}: {
+  cubeIri: string;
+  dimensionIri: string;
+  locale: Locale;
+}) => {
+  console.log("> fetchHierarchy");
+  const cube = await amdpSource.cube(amdp(cubeIri).value);
+  console.log({ cube });
+
+  if (!cube) {
+    throw new Error(`Cube not found: ${cubeIri}`);
+    return;
+  }
+
+  const hierarchiesPointers = cube.ptr
+    .any()
+    .has(ns.sh.path, rdf.namedNode(dimensionIri))
+    .has(ns.cubeMeta.inHierarchy)
+    .out(ns.cubeMeta.inHierarchy)
+    .toArray();
+
+  console.log({ hierarchiesPointers });
+
+  const hierarchyNodes = uniqBy(
+    await Promise.all(
+      hierarchiesPointers.map(async (h) => {
+        const nodes = await getHierarchy(h).execute(sparqlClient, rdf);
+        const name = getName(h, { locale });
+        return {
+          nodes,
+          name,
+        };
+      })
+    ),
+    "name"
+  );
+
+  if (hierarchyNodes.length > 0) {
+    console.log({ hierarchyNodes });
+  }
+
+  const trees = hierarchyNodes.map((h) => {
+    const tree: ($FixMe & { hierarchyName?: string })[] = toTree(h.nodes, dimensionIri, locale);
+
+    if (tree.length > 0) {
+      // Augment hierarchy value with hierarchyName so that when regrouping
+      // below, we can create the fake nodes
+      tree[0].hierarchyName = h.name;
+    }
+    return tree;
+  });
+
+  if (trees.length > 0) {
+    console.log({ trees });
+  }
+
+  if (hierarchyNodes.length > 0) {
+    console.log(
+      `hierarchies found for dimension ${dimensionIri}. 
+        There are ${hierarchyNodes.length} hierarchy nodes for this dimension:
+        ${hierarchyNodes.map(
+          (h) => `- ${h.name} (${h.nodes.length} nodes) 
+          
+        `
+        )}`
+    );
+  }
+
+  return trees ?? [];
+};
+
+export const getName = (pointer: AnyPointer, { locale }: { locale: string }) => {
+  const term =
+    pointer
+      .out(ns.schema`name`)
+      .terms.find((term) => term.termType === "Literal" && term.language === locale) ??
+    pointer
+      .out(ns.schema`name`)
+      .terms.find((term) => term.termType === "Literal" && term.language === defaultLocale);
+
+  return term?.value ?? "---";
+};
+
+const toTree = (results: HierarchyNode[], dimensionIri: string, locale: string): $FixMe[] => {
+  //console.log({ dimensionIri });
+  const sortChildren = (children: $FixMe[]) => orderBy(children, ["position", "identifier"]);
+  const serializeNode = (node: HierarchyNode, depth: number): $FixMe | undefined => {
+    const name = getName(node.resource, { locale });
+    // TODO Find out why some hierachy nodes have no label. We filter
+    // them out at the moment
+    // @see https://zulip.zazuko.com/#narrow/stream/40-bafu-ext/topic/labels.20for.20each.20hierarchy.20level/near/312845
+    const identifier = parseTerm(node.resource.out(ns.schema.identifier)?.term);
+
+    debugger;
+    /* node.nextInHierarchy is empty. Why? It works in SPARQL query */
+
+    const res: $FixMe | undefined = name
+      ? {
+          label: name || "-",
+          alternateName: node.resource.out(ns.schema.alternateName).term?.value,
+          value: node.resource.value,
+          children: sortChildren(
+            node.nextInHierarchy
+              .map((childNode) => serializeNode(childNode.term, depth + 1))
+              .filter(truthy)
+              .filter((d) => d.label)
+          ),
+          position: parseTerm(node.resource.out(ns.schema.position).term),
+          identifier: identifier,
+          depth,
+          dimensionIri: dimensionIri,
+        }
+      : undefined;
+    return res;
+  };
+
+  return sortChildren(results.map((r) => serializeNode(r, 0)).filter(truthy));
+};
+
+export const parseTerm = (term?: Term) => {
+  if (!term) {
+    return;
+  }
+  if (term.termType !== "Literal") {
+    return term.value;
+  }
+  return parseRDFLiteral(term);
+};
+
+const xmlSchema = "http://www.w3.org/2001/XMLSchema#";
+
+const parseRDFLiteral = (value: Literal): ObservationValue => {
+  const v = value.value;
+  const dt = value.datatype.value.replace(xmlSchema, "");
+  switch (dt) {
+    case "string":
+      return v;
+    case "boolean":
+      return v === "true" ? true : false;
+    case "float":
+    case "integer":
+    case "long":
+    case "double":
+    case "decimal":
+    case "nonPositiveInteger":
+    case "nonNegativeInteger":
+    case "negativeInteger":
+    case "int":
+    case "unsignedLong":
+    case "positiveInteger":
+    case "short":
+    case "unsignedInt":
+    case "byte":
+    case "unsignedShort":
+    case "unsignedByte":
+      return +v;
+    // TODO: Figure out how to preserve granularity of date (maybe include interval?)
+    // case "date":
+    // case "time":
+    // case "dateTime":
+    // case "gYear":
+    // case "gYearMonth":
+    //   return new Date(v);
+    default:
+      return v;
+  }
+};
+
+type Truthy<T> = T extends false | "" | 0 | null | undefined ? never : T; // from lodash
+
+/**
+ * Enables type narrowing through Array::filter
+ *
+ * @example
+ * const a = [1, undefined].filter(Boolean) // here the type of a is (number | undefined)[]
+ * const b = [1, undefined].filter(truthy) // here the type of b is number[]
+ */
+export function truthy<T>(value: T): value is Truthy<T> {
+  return !!value;
+}

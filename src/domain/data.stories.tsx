@@ -1,6 +1,6 @@
-import { amdpMeasure } from "@/lib/namespace";
+import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale, locales } from "@/locales/locales";
-import { CubeSpec, fetchCubeDimensions, fetchObservations } from "@/pages/api/data";
+import { CubeSpec, fetchCubeDimensions, fetchHierarchy, fetchObservations } from "@/pages/api/data";
 import {
   CircularProgress,
   FormControlLabel,
@@ -83,8 +83,9 @@ export const CubeDimensions = () => {
 
 export const Observations = () => {
   const [cube, setCube] = useState<string>(defaultCube);
-  const [showParsed, setShowParsed] = useState(false);
   const cubes = useAtomValue(cubesAtom);
+  const [showParsed, setShowParsed] = useState(false);
+
   const cubeDef = cubes.find((c) => c.cube === cube);
 
   const observations = useQuery({
@@ -161,6 +162,36 @@ export const Observations = () => {
           autoHeight
         />
       )}
+    </Stack>
+  );
+};
+
+export const Hierarchy = () => {
+  const [cube, setCube] = useState<string>(defaultCube);
+  const cubes = useAtomValue(cubesAtom);
+
+  const hierarchy = useQuery({
+    queryKey: ["hierarchy", cube, "product"],
+    queryFn: () =>
+      fetchHierarchy({
+        cubeIri: cube,
+        dimensionIri: amdpDimension("product").value,
+        locale: "de",
+      }),
+  });
+
+  return (
+    <Stack gap={2}>
+      <Typography variant="h2">Product Hierarchy</Typography>
+      <Select label="Cube" value={cube} onChange={(e) => setCube(e.target.value)}>
+        {cubes.map((c) => (
+          <MenuItem key={c.cube} value={c.cube}>
+            {c.cube}
+          </MenuItem>
+        ))}
+      </Select>
+      {hierarchy && hierarchy.data && <ReactJson src={hierarchy.data} />}
+      {hierarchy.isLoading && <CircularProgress />}
     </Stack>
   );
 };

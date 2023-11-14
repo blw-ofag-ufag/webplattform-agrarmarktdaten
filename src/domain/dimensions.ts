@@ -82,6 +82,7 @@ export const availableMeasuresAtom = atom(async (get) => {
 export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQueryAsync(async (get) => {
   const cubePath = await get(cubePathAtom);
   const locale = get(localeAtom);
+  console.log({ locale });
   return {
     queryKey: ["cubeDimensions", cubePath, locale],
     queryFn: () => fetchCubeDimensions(locale, cubePath),
