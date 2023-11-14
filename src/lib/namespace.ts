@@ -26,17 +26,8 @@ export const cubeMeta = namespace("https://cube.link/meta/");
 export const view = namespace("https://cube.link/view/");
 
 export const amdp = namespace("https://agriculture.ld.admin.ch/foag/");
-export const amdpProperty = namespace("https://agriculture.ld.admin.ch/foag/property/");
+export const amdpDimension = namespace("https://agriculture.ld.admin.ch/foag/dimension/");
 export const amdpMeasure = namespace("https://agriculture.ld.admin.ch/foag/measure/");
-
-export const energyPricing = namespace(
-  "https://energy.ld.admin.ch/elcom/electricity-price/dimension/"
-);
-
-export const electricityprice = namespace("https://energy.ld.admin.ch/elcom/electricityprice/");
-export const electricitypriceDimension = namespace(
-  "https://energy.ld.admin.ch/elcom/electricityprice/dimension/"
-);
 
 export const addNamespaceToID = ({ dimension, id }: { dimension: string; id: string }): string => {
   // Check for full IRIs
@@ -63,13 +54,13 @@ export const getIriForDimension = (type: DimensionType, id: string) => {
     return amdpMeasure(id);
   }
   if (type === "property") {
-    return amdpProperty(id);
+    return amdpDimension(id);
   }
   return id;
 };
 
 export const getDimensionTypeFromIri = ({ iri }: { iri: string }): DimensionType => {
-  const matches = iri.replace(amdp.name, "").match(/(property|measure)(?=\/([a-zA-Z]|-)+$)/);
+  const matches = iri.replace(amdp.name, "").match(/(dimension|measure)(?=\/([a-zA-Z]|-)+$)/);
 
   if (!matches) {
     // Warn?

@@ -81,7 +81,7 @@ const TimeSlider = withStyles(Slider, (theme) => ({
   },
 }));
 
-const formatTimeView = (view: TimeView) => (view === "year" ? "YYYY" : "MM.YYYY");
+const formatTimeView = (view: TimeView) => (view === "Year" ? "YYYY" : "MM.YYYY");
 
 export default function TimeFilter({
   min,
@@ -121,7 +121,7 @@ export default function TimeFilter({
 
     let current = minDate.clone();
     while (current.isBefore(maxDate) && !current.isSame(maxDate)) {
-      current = current.add(1, view);
+      current = current.add(1, view === "Year" ? "year" : "month");
       if (!current.isSame(maxDate)) {
         values.push(getMark(current));
       }
@@ -150,10 +150,10 @@ export default function TimeFilter({
         exclusive
         onChange={(_, value) => onChangeView(value)}
       >
-        <FilterToggleButton value="year">
+        <FilterToggleButton value="Year">
           <Trans id="data.filters.year">Year</Trans>
         </FilterToggleButton>
-        <FilterToggleButton value="month">
+        <FilterToggleButton value="Month">
           <Trans id="data.filters.month">Month</Trans>
         </FilterToggleButton>
       </ToggleButtonGroup>
@@ -163,7 +163,7 @@ export default function TimeFilter({
             min={minDate}
             max={maxDate}
             label={t({ id: "data.filters.from", message: "From" })}
-            views={view === "year" ? ["year"] : ["year", "month"]}
+            views={view === "Year" ? ["year"] : ["year", "month"]}
             format={timeFormat}
             value={dayjs.unix(value[0])}
             onChange={(date) => {
@@ -175,7 +175,7 @@ export default function TimeFilter({
             min={minDate}
             max={maxDate}
             label={t({ id: "data.filters.to", message: "To" })}
-            views={view === "year" ? ["year"] : ["year", "month"]}
+            views={view === "Year" ? ["year"] : ["year", "month"]}
             format={timeFormat}
             value={dayjs.unix(value[1])}
             onChange={(date) => {

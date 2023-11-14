@@ -1,5 +1,4 @@
 import { AppLayout } from "@/components/layout";
-import { dimensionsAtom, observationsAtom, observationsStatusAtom } from "@/domain/data";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import blwTheme from "@/theme/blw";
@@ -22,13 +21,15 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
-import React, { PropsWithChildren, useEffect, useMemo, useState } from "react";
+import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
+import { cubeDimensionsAtom } from "@/domain/dimensions";
+import { observationsAtom, observationsStatusAtom, valueFormatter } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { DimensionsResult } from "./api/use-sparql";
+import { Measure, Observation, Property } from "./api/data";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -75,7 +76,9 @@ export default function DataPage(props: GQL.DataPageQuery) {
                 borderColor: "grey.300",
               }}
             >
-              <DataBrowser />
+              <Suspense fallback={<CircularProgress />}>
+                <DataBrowser />
+              </Suspense>
             </Box>
           </Stack>
         </AppLayout>
@@ -89,10 +92,9 @@ const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observations = useAtomValue(observationsAtom);
-  const dimensions = useAtomValue(dimensionsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
-
   const resultCount = observations.length;
+  const cubeDimensions = useAtomValue(cubeDimensionsAtom);
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
@@ -172,7 +174,7 @@ const DataBrowser = () => {
 
               {observationsQueryStatus.isSuccess && (
                 <>
-                  <Table observations={observations} dimensions={dimensions} />
+                  <Table observations={observations} dimensions={cubeDimensions} />
                 </>
               )}
             </>
@@ -247,22 +249,35 @@ const Table = ({
   observations,
   dimensions,
 }: {
-  observations: $FixMe[];
-  dimensions: DimensionsResult;
+  observations: Observation[];
+  dimensions: Record<string, Property | Measure>;
 }) => {
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
       .map((dimension) => {
         return {
-          field: dimension.key ?? dimension.iri,
-          headerName: dimension.name,
+          field: dimension.dimension,
+          headerName: dimension.label,
           //width: 200,
+          valueFormatter: (params) =>
+            valueFormatter({
+              value: params.value,
+              dimension: dimension.dimension,
+              cubeDimensions: dimensions,
+            }),
         };
       });
   }, [dimensions]);
 
-  return <DataGrid rows={observations} columns={columns} autoPageSize />;
+  return (
+    <DataGrid
+      rows={observations}
+      columns={columns}
+      getRowId={(row) => row.observation}
+      autoPageSize
+    />
+  );
 };
 
 export const getStaticProps = async (context: $FixMe) => {
