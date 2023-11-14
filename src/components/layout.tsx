@@ -13,7 +13,7 @@ import { Box, BoxProps } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useStickyBox } from "react-sticky-box";
-import { ScrollToTop } from "@/components/ScrollToTop";
+import ScrollToTop from "@/components/ScrollToTop";
 import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
