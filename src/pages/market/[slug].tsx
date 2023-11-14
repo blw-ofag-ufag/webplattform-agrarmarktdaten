@@ -1,7 +1,7 @@
 import { Hero } from "@/components/hero";
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { AppLayout } from "@/components/layout";
+import { AppLayout, LayoutSections } from "@/components/layout";
 import { StructuredText } from "@/components/StructuredText";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
@@ -55,8 +55,9 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
           {marketArticle.content && <StructuredText data={marketArticle.content} />}
         </div>
       </GridContainer>
-
-      <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      <LayoutSections>
+        <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      </LayoutSections>
     </AppLayout>
   );
 }

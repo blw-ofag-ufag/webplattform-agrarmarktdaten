@@ -1,6 +1,6 @@
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
-import { AppLayout } from "@/components/layout";
+import { AppLayout, LayoutSections } from "@/components/layout";
 import { Hero } from "@/components/hero";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
@@ -31,7 +31,9 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
           {infoPage.content && <StructuredText data={infoPage.content} />}
         </div>
       </GridContainer>
-      <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      <LayoutSections>
+        <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      </LayoutSections>
     </AppLayout>
   );
 }

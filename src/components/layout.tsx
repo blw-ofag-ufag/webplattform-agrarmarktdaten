@@ -193,10 +193,16 @@ export const AppLayout = (props: Props) => {
   );
 };
 
-export const CalloutSection = (props: BoxProps) => {
+export const LayoutSections = (props: BoxProps) => {
   return (
-    <Box {...props} sx={{ backgroundColor: "cobalt.50", ...props.sx }}>
-      {props.children}
-    </Box>
+    <Box
+      {...props}
+      sx={{
+        bgcolor: "cobalt.50",
+        pt: "5rem",
+        pb: "92px",
+        "& > * + *": { mt: "80px" },
+      }}
+    />
   );
 };

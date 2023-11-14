@@ -2,7 +2,7 @@ import { Trans } from "@lingui/macro";
 import { Typography, Box, Card, Button, useTheme } from "@mui/material";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
-import { AppLayout } from "@/components/layout";
+import { AppLayout, LayoutSections } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
@@ -66,14 +66,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
         // We vertically position the background on top so that sky is always visible
         sx={{ "&&": { backgroundPosition: "center top" } }}
       />
-      <Box
-        sx={{
-          bgcolor: "cobalt.50",
-          pt: "5rem",
-          pb: "92px",
-          "& > * + *": { mt: "80px" },
-        }}
-      >
+      <LayoutSections>
         {/* Markets */}
         <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
           <Typography variant="h1" component="h2">
@@ -119,7 +112,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
             </Box>
           </Card>
         </GridContainer>
-      </Box>
+      </LayoutSections>
     </AppLayout>
   );
 }

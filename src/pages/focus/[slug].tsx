@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import React from "react";
-import { AppLayout } from "@/components/layout";
+import { AppLayout, LayoutSections } from "@/components/layout";
 import { Hero } from "@/components/hero";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
@@ -46,7 +46,9 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
           {focusArticle.content && <StructuredText data={focusArticle.content} />}
         </div>
       </GridContainer>
-      <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      <LayoutSections>
+        <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      </LayoutSections>
     </AppLayout>
   );
 }
