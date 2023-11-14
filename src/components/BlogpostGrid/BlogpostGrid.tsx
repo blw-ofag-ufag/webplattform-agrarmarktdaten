@@ -17,13 +17,9 @@ import {
   parseAsStringEnum,
 } from "next-usequerystate";
 import dynamic from "next/dynamic";
+import { getSortBy } from "./utils";
 
 const Controls = dynamic(() => import("./internal/Controls"), { ssr: false });
-
-export enum SortBy {
-  Newest = "publishedDate_DESC",
-  Oldest = "publishedDate_ASC",
-}
 
 interface Props {
   markets: GQL.SimpleMarketArticleFragment[];
@@ -38,9 +34,10 @@ const BlogPostGrid = (props: Props) => {
   const shouldShowFullCard = useMediaQuery(theme.breakpoints.up("lg"));
   const [market, setMarket] = useQueryState("market", parseAsString.withDefault("all"));
   const [focusArticle, setFocusArticle] = useQueryState("focus", parseAsString.withDefault("all"));
+  const sortBy = getSortBy(locale);
   const [order, setOrder] = useQueryState(
     "order",
-    parseAsStringEnum(Object.values(SortBy)).withDefault(SortBy.Newest)
+    parseAsStringEnum(Object.keys(sortBy)).withDefault("publishedDate_DESC")
   );
 
   const handleMarketChange = (event: SelectChangeEvent) => {

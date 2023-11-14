@@ -45,7 +45,11 @@ export const Filter = (props: Props) => {
         inputProps={{ "aria-label": "Without label" }}
         renderValue={(value) => {
           const marketTitle = options.filter((m) => m.id === value)[0]?.title;
-          return <Typography variant="body1">{marketTitle ?? "All"}</Typography>;
+          return (
+            <Typography variant="body1">
+              {marketTitle ?? <Trans id="select.all">All</Trans>}
+            </Typography>
+          );
         }}
       >
         <MenuItem className={classes.menuItem} value="all" divider>

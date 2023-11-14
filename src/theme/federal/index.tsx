@@ -803,6 +803,7 @@ theme.components = {
   MuiAutocomplete: {
     styleOverrides: {
       root: {
+        width: "100%",
         [`& .${autocompleteClasses.inputRoot}`]: {
           paddingTop: 3,
           paddingBottom: 3,
