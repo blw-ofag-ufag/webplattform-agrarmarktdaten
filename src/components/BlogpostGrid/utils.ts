@@ -25,10 +25,12 @@ enum SortByIt {
 
 export const getSortBy = (locale?: string) => {
   const validLocale = parseLocaleString(locale ?? defaultLocale);
-  return {
-    en: SortByEn,
-    de: SortByDe,
-    fr: SortByFr,
-    it: SortByIt,
-  }[validLocale];
+  return (
+    {
+      en: SortByEn,
+      de: SortByDe,
+      fr: SortByFr,
+      it: SortByIt,
+    }[validLocale] ?? SortByDe
+  );
 };
