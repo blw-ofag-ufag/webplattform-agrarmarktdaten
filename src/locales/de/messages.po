@@ -14,6 +14,31 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.addedValue"
+#~ msgstr "Wertschöpfungsstufe"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.markets"
+#~ msgstr "Märkte"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.productionSystems"
+#~ msgstr "Produktionssystem"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.products"
+#~ msgstr "Produktliste"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.salesRegions"
+#~ msgstr "Verkaufsregion"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} insgesamt)"
@@ -35,17 +60,13 @@ msgid "footer.about_us.label"
 msgstr "Über uns"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.addedValue"
-msgstr "Wertschöpfungsstufe"
-
-#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.report"
 msgstr "Agrarbericht"
 
 #. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Filters.tsx
 #: src/components/BlogpostGrid/internal/Filters.tsx
 msgid "select.all"
 msgstr "Alle"
@@ -64,6 +85,11 @@ msgstr "Alle Beiträge anzeigen"
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analysen"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
+msgid "filter.apply"
+msgstr "Anwenden"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -124,12 +150,18 @@ msgid "footer.feedback"
 msgstr "Feedback"
 
 #. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
+msgid "filter.filters"
+msgstr "Filters"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.heading"
 msgstr "Filter"
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Controls.tsx
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
 msgid "filter.focus"
 msgstr "Fokus"
 
@@ -197,13 +229,9 @@ msgstr "Loading"
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Controls.tsx
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
 msgid "filter.market"
 msgstr "Markt"
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.markets"
-msgstr "Märkte"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -251,16 +279,6 @@ msgid "data.filters.none"
 msgstr "None"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.productionSystems"
-msgstr "Produktionssystem"
-
-#. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.products"
-msgstr "Produktliste"
-
-#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.importpriceindex"
@@ -282,11 +300,6 @@ msgid "data.control.reset"
 msgstr "Zurücksetzen"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.salesRegions"
-msgstr "Verkaufsregion"
-
-#. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Search.tsx
 msgid "search.label"
 msgstr "Suche"
@@ -295,6 +308,11 @@ msgstr "Suche"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
 msgstr "Suche"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.placeholder"
+msgstr "Suche nach Analysen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
