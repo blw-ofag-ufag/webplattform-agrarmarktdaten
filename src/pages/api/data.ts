@@ -199,8 +199,8 @@ export type DimensionType = z.infer<typeof dimensionTypeSchema>;
 
 const dimensionSpecSchema = z.object({
   dimension: z.string(),
-  label: z.string(),
-  type: z.string(),
+  label: z.string().optional(),
+  type: z.string().optional(),
 });
 
 /**
@@ -218,11 +218,17 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   const dimensionsRaw = await fetchSparql(queryDimensions);
   const dimensionsRawParsed = z.array(dimensionSpecSchema).parse(dimensionsRaw);
 
+  /**
+   * As a workaround to the data changes on 13.11.2023, we are checking the type of the dimension
+   * through the dimension IRI instead of the type. @TODO change back to type when data is fixed.
+   */
   const measureDim = dimensionsRawParsed.filter(
-    (dim) => dim.type === ns.cube("MeasureDimension").value
+    // (dim) => dim.type === ns.cube("MeasureDimension").value
+    (dim) => dim.dimension.startsWith(amdpMeasure().value)
   );
   const propertyDim = dimensionsRawParsed.filter(
-    (dim) => dim.type === ns.cube("KeyDimension").value
+    //(dim) => dim.type === ns.cube("KeyDimension").value
+    (dim) => dim.dimension.startsWith(amdpDimension().value)
   );
 
   const propertiesValues = await fetchSparql(

@@ -99,8 +99,8 @@ export const queryCubeDimensions = ({ locale, cubeIri }: { locale: Locale; cubeI
     <${cubeIri}> cube:observationConstraint ?shape .
     ?shape ?p ?blankNode .
     ?blankNode sh:path ?dimension .
-    ?blankNode schema:name ?label . FILTER(lang(?label) = "${locale}")
-    ?blankNode a ?type .
+    OPTIONAL { ?blankNode schema:name ?label . FILTER(lang(?label) = "${locale}") } 
+    OPTIONAL { ?blankNode a ?type . } 
   }
   `;
 };
