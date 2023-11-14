@@ -23,7 +23,7 @@ export const useLayoutStyles = makeStyles()((theme) => ({
 }));
 
 export const useHeroStyles = makeStyles<{ shiftedLeft: boolean; shiftedRight: boolean }>()(
-  (theme) => ({
+  (theme, { shiftedLeft, shiftedRight }) => ({
     shifter: {
       [theme.breakpoints.up("xl")]: gridColumn(ASIDE_NB_COLUMNS),
       [theme.breakpoints.down("xl")]: {
@@ -31,7 +31,7 @@ export const useHeroStyles = makeStyles<{ shiftedLeft: boolean; shiftedRight: bo
       },
     },
     heroContent: {
-      [theme.breakpoints.up("xl")]: gridColumn(10),
+      [theme.breakpoints.up("xl")]: gridColumn(10 - (shiftedLeft ? 2 : 0) - (shiftedRight ? 2 : 0)),
       [theme.breakpoints.down("xl")]: gridColumn(6),
       [theme.breakpoints.down("lg")]: gridColumn(4),
     },

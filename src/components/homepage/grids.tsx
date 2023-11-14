@@ -18,7 +18,7 @@ export const CardsGrid = ({ type, entries }: Props) => {
   const locale = useLocale();
 
   return (
-    <GridWrap sx={{ mb: s(10) }}>
+    <GridWrap>
       {entries.map((d) => (
         <GridWrapElement key={d.id}>
           <NextLink
