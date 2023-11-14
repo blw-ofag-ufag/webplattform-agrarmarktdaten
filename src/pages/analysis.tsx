@@ -20,7 +20,6 @@ export default function Analysis({
         title={analysisPage?.title}
         lead={analysisPage?.lead}
         bgColor={theme.palette.cobalt[100]}
-        shiftedRight
       />
       <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
     </AppLayout>

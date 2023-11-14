@@ -59,7 +59,6 @@ type Props = {
    * Whether the content of the hero should have a left margin of 2 columns on the 3xl and 2xl breakpoints.
    */
   shiftedLeft?: boolean;
-  shiftedRight?: boolean;
   titleTypographyProps?: TypographyProps;
   leadStructuredTextProps?: React.ComponentProps<typeof StructuredText>;
   showTitleLine?: boolean;
@@ -75,7 +74,6 @@ export const Hero = (props: Props) => {
     color = "#000000",
     bgColor = "transparent",
     shiftedLeft = false,
-    shiftedRight = false,
     titleTypographyProps,
     leadStructuredTextProps,
     showTitleLine = true,
@@ -84,7 +82,6 @@ export const Hero = (props: Props) => {
   const { classes, cx } = useStyles({ hero, bgColor });
   const { classes: herolayoutClasses } = useHeroStyles({
     shiftedLeft,
-    shiftedRight,
   });
   const shifter = <div className={herolayoutClasses.shifter} />;
 
@@ -105,7 +102,6 @@ export const Hero = (props: Props) => {
               {title}
             </Typography>
           </div>
-          {shiftedRight ? shifter : null}
         </GridContainer>
       </Box>
       {lead && (
@@ -121,7 +117,6 @@ export const Hero = (props: Props) => {
                 sx={{ "&&": { pb: 0 } }}
               />
             </div>
-            {shiftedRight ? shifter : null}
           </GridContainer>
         </Box>
       )}

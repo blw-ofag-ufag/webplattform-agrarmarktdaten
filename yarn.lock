@@ -14937,6 +14937,11 @@ remark-slug@^6.0.0:
     mdast-util-to-string "^1.0.0"
     unist-util-visit "^2.0.0"
 
+remeda@^1.29.0:
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/remeda/-/remeda-1.29.0.tgz#17550492ba30f128358510817fe1f0573dfb1b29"
+  integrity sha512-M3LQ14KtMdQ1879lj/kKji3zBk158s7Rwg963mEkTfQFMxnKrIEAMxJfo/+0sp/+uGgN/KMVU2MBA4LNjqf8YQ==
+
 remedial@^1.0.7:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/remedial/-/remedial-1.0.8.tgz#a5e4fd52a0e4956adbaf62da63a5a46a78c578a0"
