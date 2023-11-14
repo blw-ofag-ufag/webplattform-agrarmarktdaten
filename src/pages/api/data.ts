@@ -21,6 +21,7 @@ import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
 import { AnyPointer } from "clownface";
 import { Literal, Term } from "@rdfjs/types";
 import { ObservationValue } from "./use-sparql";
+import { mapTree, pruneTree, regroupTrees } from "@/utils/trees";
 
 const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
   return fullIri.replace(namespace().value, "");
@@ -434,6 +435,11 @@ const sparqlClient = new StreamClient({
   endpointUrl: "https://test.lindas.admin.ch/query",
 });
 
+/**
+ *
+ * Fetch the hierarchies for a given dimension.
+ * Approach adapted from: https://github.dev/visualize-admin/visualization-tool/blob/main/app/rdf/query-hierarchies.ts
+ */
 export const fetchHierarchy = async ({
   cubeIri,
   dimensionIri,
@@ -445,21 +451,24 @@ export const fetchHierarchy = async ({
 }) => {
   console.log("> fetchHierarchy");
   const cube = await amdpSource.cube(amdp(cubeIri).value);
-  console.log({ cube });
 
   if (!cube) {
     throw new Error(`Cube not found: ${cubeIri}`);
-    return;
   }
 
-  const hierarchiesPointers = cube.ptr
-    .any()
-    .has(ns.sh.path, rdf.namedNode(dimensionIri))
-    .has(ns.cubeMeta.inHierarchy)
-    .out(ns.cubeMeta.inHierarchy)
-    .toArray();
+  const hierarchiesPointers = uniqBy(
+    cube.ptr
+      .any()
+      .has(ns.sh.path, rdf.namedNode(dimensionIri))
+      .has(ns.cubeMeta.inHierarchy)
+      .out(ns.cubeMeta.inHierarchy)
+      .toArray(),
+    (h) => getName(h, { locale })
+  );
 
-  console.log({ hierarchiesPointers });
+  if (hierarchiesPointers.length === 0) {
+    return [];
+  }
 
   const hierarchyNodes = uniqBy(
     await Promise.all(
@@ -487,26 +496,13 @@ export const fetchHierarchy = async ({
       // below, we can create the fake nodes
       tree[0].hierarchyName = h.name;
     }
+    console.log({ tree });
     return tree;
   });
 
-  if (trees.length > 0) {
-    console.log({ trees });
-  }
+  const tree = regroupTrees(trees);
 
-  if (hierarchyNodes.length > 0) {
-    console.log(
-      `hierarchies found for dimension ${dimensionIri}. 
-        There are ${hierarchyNodes.length} hierarchy nodes for this dimension:
-        ${hierarchyNodes.map(
-          (h) => `- ${h.name} (${h.nodes.length} nodes) 
-          
-        `
-        )}`
-    );
-  }
-
-  return trees ?? [];
+  return tree ?? [];
 };
 
 export const getName = (pointer: AnyPointer, { locale }: { locale: string }) => {
@@ -522,31 +518,24 @@ export const getName = (pointer: AnyPointer, { locale }: { locale: string }) => 
 };
 
 const toTree = (results: HierarchyNode[], dimensionIri: string, locale: string): $FixMe[] => {
-  //console.log({ dimensionIri });
   const sortChildren = (children: $FixMe[]) => orderBy(children, ["position", "identifier"]);
   const serializeNode = (node: HierarchyNode, depth: number): $FixMe | undefined => {
     const name = getName(node.resource, { locale });
     // TODO Find out why some hierachy nodes have no label. We filter
     // them out at the moment
     // @see https://zulip.zazuko.com/#narrow/stream/40-bafu-ext/topic/labels.20for.20each.20hierarchy.20level/near/312845
-    const identifier = parseTerm(node.resource.out(ns.schema.identifier)?.term);
-
-    debugger;
-    /* node.nextInHierarchy is empty. Why? It works in SPARQL query */
-
     const res: $FixMe | undefined = name
       ? {
-          label: name || "-",
-          alternateName: node.resource.out(ns.schema.alternateName).term?.value,
+          label: name || node.resource.value,
           value: node.resource.value,
+          path: node.resource.out(ns.sh.path).term?.value,
           children: sortChildren(
             node.nextInHierarchy
-              .map((childNode) => serializeNode(childNode.term, depth + 1))
+              .map((childNode) => serializeNode(childNode, depth + 1))
               .filter(truthy)
               .filter((d) => d.label)
           ),
           position: parseTerm(node.resource.out(ns.schema.position).term),
-          identifier: identifier,
           depth,
           dimensionIri: dimensionIri,
         }
