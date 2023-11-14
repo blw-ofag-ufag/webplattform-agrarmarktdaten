@@ -1,4 +1,3 @@
-import * as GQL from "@/graphql";
 import { parseLocaleString, defaultLocale } from "@/locales/locales";
 
 export type SortBy = SortByEn | SortByDe | SortByFr | SortByIt;
