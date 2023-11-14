@@ -41,7 +41,7 @@ export const availableBaseDimensionsValuesAtom = atom(async (get) => {
             c.measure === get(filterCubeSelection.measure)?.value &&
             c.valueChain === get(filterCubeSelection["value-chain"])?.value
         )
-        .map((c) => c.valueChain),
+        .map((c) => c.market),
     },
     measure: {
       options: cubes
@@ -50,7 +50,7 @@ export const availableBaseDimensionsValuesAtom = atom(async (get) => {
             c.market === get(filterCubeSelection.market)?.value &&
             c.valueChain === get(filterCubeSelection["value-chain"])?.value
         )
-        .map((c) => c.valueChain),
+        .map((c) => c.measure),
     },
   };
 });
