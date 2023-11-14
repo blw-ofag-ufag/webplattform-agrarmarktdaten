@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Typography, Box, Card, Button } from "@mui/material";
+import { Typography, Box, Card, Button, useTheme } from "@mui/material";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout } from "@/components/layout";
@@ -39,6 +39,7 @@ const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
 export default function HomePage(props: GQL.HomePageQuery) {
   const { classes } = useStyles();
   const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const theme = useTheme();
   if (!homePage?.title || !homePage.lead) {
     return null;
   }
@@ -49,7 +50,16 @@ export default function HomePage(props: GQL.HomePageQuery) {
         lead={homePage.lead}
         hero={homePage.hero?.url}
         color="#ffffff"
-        titleTypographyProps={{ variant: "display1" }}
+        titleTypographyProps={{
+          variant: "display1",
+          sx: {
+            // Exception because the title is so long in German
+            [theme.breakpoints.down("xs")]: {
+              fontSize: "28px",
+              lineHeight: 1.5,
+            },
+          },
+        }}
         leadStructuredTextProps={{
           paragraphTypographyProps: { variant: "h3", fontWeight: "normal" },
         }}

@@ -96,8 +96,8 @@ export const Hero = (props: Props) => {
               data-debug-good
               variant="display2"
               component="h1"
-              sx={{ color }}
               {...titleTypographyProps}
+              sx={{ color, ...titleTypographyProps?.sx }}
             >
               {title}
             </Typography>
