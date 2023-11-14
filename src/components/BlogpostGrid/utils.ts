@@ -24,11 +24,6 @@ enum SortByIt {
   publishedDate_ASC = "Più vecchio",
 }
 
-interface Props {
-  markets: GQL.SimpleMarketArticleFragment[];
-  focusArticles: GQL.SimpleFocusArticleFragment[];
-}
-
 export const getSortBy = (locale?: string) => {
   const validLocale = parseLocaleString(locale ?? defaultLocale);
   return {
