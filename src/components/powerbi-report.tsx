@@ -55,6 +55,35 @@ type PowerBIReportProps = {
   pages: PowerBIPage[];
 };
 
+export const PowerBINavigation = ({
+  pages,
+  onChange,
+  activePage,
+}: {
+  pages: PowerBIPage[];
+  activePage: PowerBIPage;
+  onChange: (page: PowerBIPage) => void;
+}) => {
+  const { classes } = useStyles();
+
+  return (
+    <div className={classes.navigationContainer}>
+      <div className={classes.navigationContent}>
+        {pages.map((page) => (
+          <Button
+            key={page.id}
+            className={classes.navigationButton}
+            variant={page.id === activePage.id ? "contained" : "outlined"}
+            onClick={() => onChange(page)}
+          >
+            {page.name}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export const PowerBIReport = (props: PowerBIReportProps) => {
   const { datasetId, reportId, reportWorkspaceId, pages } = props;
   const [report, setReport] = React.useState<Report | undefined>(undefined);
@@ -76,22 +105,9 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
           setReport(embedObject as Report);
         }}
       />
-      {report && activePage && (
-        <div className={classes.navigationContainer}>
-          <div className={classes.navigationContent}>
-            {pages.map((page) => (
-              <Button
-                key={page.id}
-                className={classes.navigationButton}
-                variant={page.id === activePage.id ? "contained" : "outlined"}
-                onClick={() => setActivePage(page)}
-              >
-                {page.name}
-              </Button>
-            ))}
-          </div>
-        </div>
-      )}
+      {report && activePage ? (
+        <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
+      ) : null}
     </>
   );
 };
