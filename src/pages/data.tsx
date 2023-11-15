@@ -132,7 +132,7 @@ const DataBrowser = () => {
             <Button size="small" startIcon={<IcControlDownload />}>
               <Trans id="data.actions.download">Data download</Trans>
             </Button>
-            <Button size="small" href={observations.query} target="_blank">
+            <Button size="small" href={observations.query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
             <Button
