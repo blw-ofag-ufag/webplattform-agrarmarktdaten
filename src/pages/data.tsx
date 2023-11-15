@@ -95,7 +95,6 @@ const DataBrowser = () => {
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
   const resultCount = observations.length;
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
-  console.log({ cubeDimensions });
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>

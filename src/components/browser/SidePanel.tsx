@@ -105,7 +105,6 @@ const SidePanel = () => {
           if (!filterAtom) {
             return null;
           }
-          console.log(value);
           return (
             <FilterSelectAccordion
               key={key}
