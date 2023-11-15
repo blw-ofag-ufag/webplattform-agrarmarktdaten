@@ -3561,9 +3561,11 @@ export enum ItemStatus {
   updated = 'updated'
 }
 
+export type LegalPageModelContentBlocksField = DataButtonRecord | ImageTeaserBlockRecord;
+
 export type LegalPageModelContentField = {
   __typename: 'LegalPageModelContentField';
-  blocks: Array<Scalars['String']['output']>;
+  blocks: Array<LegalPageModelContentBlocksField>;
   links: Array<LegalPageModelContentLinksField>;
   value: Scalars['JsonField']['output'];
 };
@@ -3574,7 +3576,7 @@ export type LegalPageModelContentFieldMultiLocaleField = {
   value?: Maybe<LegalPageModelContentField>;
 };
 
-export type LegalPageModelContentLinksField = AnalysisPageRecord | BlogPostRecord | DataPageRecord | FocusArticleRecord | HomePageRecord | InfoPageRecord | LegalPageRecord | MarketArticleRecord | MethodsPageRecord | PowerBiPageRecord | TermsPageRecord;
+export type LegalPageModelContentLinksField = AnalysisPageRecord | BlogPostRecord | DataPageRecord | FileDownloadSectionRecord | FocusArticleRecord | HighlightSectionRecord | HomePageRecord | InfoPageRecord | LegalPageRecord | MarketArticleRecord | MethodsPageRecord | PowerBiPageRecord | TermsPageRecord;
 
 export type LegalPageModelLeadField = {
   __typename: 'LegalPageModelLeadField';
@@ -5981,10 +5983,12 @@ export type Tag = {
   tag: Scalars['String']['output'];
 };
 
+export type TermsPageModelContentBlocksField = DataButtonRecord | ImageTeaserBlockRecord;
+
 export type TermsPageModelContentField = {
   __typename: 'TermsPageModelContentField';
-  blocks: Array<Scalars['String']['output']>;
-  links: Array<Scalars['String']['output']>;
+  blocks: Array<TermsPageModelContentBlocksField>;
+  links: Array<TermsPageModelContentLinksField>;
   value: Scalars['JsonField']['output'];
 };
 
@@ -5993,6 +5997,8 @@ export type TermsPageModelContentFieldMultiLocaleField = {
   locale?: Maybe<SiteLocale>;
   value?: Maybe<TermsPageModelContentField>;
 };
+
+export type TermsPageModelContentLinksField = AnalysisPageRecord | BlogPostRecord | DataPageRecord | FileDownloadSectionRecord | FocusArticleRecord | HighlightSectionRecord | HomePageRecord | InfoPageRecord | LegalPageRecord | MarketArticleRecord | MethodsPageRecord | TermsPageRecord;
 
 export type TermsPageModelLeadField = {
   __typename: 'TermsPageModelLeadField';
@@ -7210,7 +7216,26 @@ export const BlogPostFragmentDoc = gql`
     blocks {
       __typename
       ...DataButton
-      ...ImageTeaserBlock
+      ... on ImageTeaserBlockRecord {
+        id
+        imageTeaserAsset {
+          customData
+          id
+          url
+          alt
+          width
+          height
+          responsiveImage(imgixParams: {fit: clip, auto: format}) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+          }
+        }
+      }
     }
     links {
       __typename
@@ -7703,7 +7728,6 @@ export const BlogPostDocument = gql`
     ${BlogPostFragmentDoc}
 ${InternalLinkFragmentDoc}
 ${DataButtonFragmentDoc}
-${ImageTeaserBlockFragmentDoc}
 ${FileDownloadSectionFragmentDoc}
 ${HighlightSectionFragmentDoc}
 ${HighlightSectionFileRecordFragmentDoc}
