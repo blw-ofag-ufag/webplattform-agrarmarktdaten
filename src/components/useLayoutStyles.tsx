@@ -27,6 +27,7 @@ export const useLayoutStyles = makeStyles()((theme) => ({
     [theme.breakpoints.up("xxl")]: gridColumn(8),
     [theme.breakpoints.down("xxl")]: { ...gridColumn(12), ...noMarginLeft },
     [theme.breakpoints.down("xl")]: { ...gridColumn(6), ...noMarginLeft },
+    [theme.breakpoints.down("sm")]: { ...gridColumn(4), ...noMarginLeft },
   },
 }));
 
@@ -41,6 +42,7 @@ export const useHeroStyles = makeStyles<{ shiftedLeft: boolean }>()((theme, { sh
     [theme.breakpoints.up("xxl")]: gridColumn(10 - (shiftedLeft ? 2 : 0)),
     [theme.breakpoints.down("xxl")]: { ...gridColumn(12), ...noMarginLeft },
     [theme.breakpoints.down("xl")]: { ...gridColumn(6), ...noMarginLeft },
+    [theme.breakpoints.down("sm")]: { ...gridColumn(4), ...noMarginLeft },
   },
 }));
 
