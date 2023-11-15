@@ -3,7 +3,7 @@ import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
 import React from "react";
 
-import { Button } from "@mui/material";
+import { Tab, Tabs } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
 
@@ -67,20 +67,17 @@ export const PowerBINavigation = ({
   const { classes } = useStyles();
 
   return (
-    <div className={classes.navigationContainer}>
-      <div className={classes.navigationContent}>
-        {pages.map((page) => (
-          <Button
-            key={page.id}
-            className={classes.navigationButton}
-            variant={page.id === activePage.id ? "contained" : "outlined"}
-            onClick={() => onChange(page)}
-          >
-            {page.name}
-          </Button>
-        ))}
-      </div>
-    </div>
+    <Tabs value={activePage?.id} sx={{ width: "100%" }}>
+      {pages.map((page) => (
+        <Tab
+          key={page.id}
+          value={page.id}
+          className={classes.navigationButton}
+          onClick={() => onChange(page)}
+          label={page.name}
+        />
+      ))}
+    </Tabs>
   );
 };
 
