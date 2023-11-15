@@ -13,7 +13,7 @@ import { Box, BoxProps } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useStickyBox } from "react-sticky-box";
-import { ScrollToTop } from "@/components/ScrollToTop";
+import ScrollToTop from "@/components/ScrollToTop";
 import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
@@ -185,7 +185,7 @@ export const AppLayout = (props: Props) => {
       </Box>
 
       {router.pathname !== "/data" && (
-        <div className="debug-warn">
+        <div>
           <Footer />
         </div>
       )}
@@ -193,10 +193,16 @@ export const AppLayout = (props: Props) => {
   );
 };
 
-export const CalloutSection = (props: BoxProps) => {
+export const LayoutSections = (props: BoxProps) => {
   return (
-    <Box {...props} sx={{ backgroundColor: "cobalt.50", ...props.sx }}>
-      {props.children}
-    </Box>
+    <Box
+      {...props}
+      sx={{
+        bgcolor: "cobalt.50",
+        pt: "5rem",
+        pb: "92px",
+        "& > * + *": { mt: "80px" },
+      }}
+    />
   );
 };

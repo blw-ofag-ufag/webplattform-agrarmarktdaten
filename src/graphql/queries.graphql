@@ -180,6 +180,7 @@ query MethodsPage($locale: SiteLocale!) {
       }
       links {
         __typename
+        ...InternalLink
         ...FileDownloadSection
         ...HighlightSection
         ...PowerBI
@@ -434,6 +435,7 @@ fragment FullMarketArticle on MarketArticleRecord {
       ...FileDownloadSection
       ...HighlightSection
       ...PowerBI
+      ...InternalLink
     }
   }
   seo {
@@ -462,6 +464,7 @@ fragment FullFocusArticle on FocusArticleRecord {
     }
     links {
       __typename
+      ...InternalLink
       ...FileDownloadSection
       ...HighlightSection
       ...PowerBI
@@ -545,6 +548,7 @@ fragment BlogPost on BlogPostRecord {
     }
     links {
       __typename
+      ...InternalLink
       ...FileDownloadSection
       ...HighlightSection
       ...PowerBI
@@ -758,6 +762,21 @@ fragment InternalLink on RecordInterface {
     slug
   }
   ... on DataPageRecord {
+    id
+  }
+  ... on InfoPageRecord {
+    id
+  }
+  ... on PowerBiPageRecord {
+    id
+  }
+  ... on FileDownloadSectionRecord {
+    id
+  }
+  ... on HighlightSectionRecord {
+    id
+  }
+  ... on PowerBiReportRecord {
     id
   }
 }

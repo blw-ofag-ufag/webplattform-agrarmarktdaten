@@ -1,4 +1,4 @@
-import { ScrollToTop } from "./";
+import { ScrollToTop } from "./ScrollToTop";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -10,20 +10,7 @@ const meta = {
   argTypes: {},
   decorators: [
     (Story) => {
-      return (
-        <div style={{ height: "2000px", position: "relative", display: "flex", alignItems: "end" }}>
-          <div
-            style={{
-              position: "sticky",
-              bottom: "100px",
-              right: "20px",
-              height: "fit-content",
-            }}
-          >
-            <Story />
-          </div>
-        </div>
-      );
+      return <Story />;
     },
   ],
 } satisfies Meta<typeof ScrollToTop>;

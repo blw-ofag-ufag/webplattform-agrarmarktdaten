@@ -177,7 +177,7 @@ msgstr "Indicatore"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.info"
-msgstr "Info"
+msgstr "Informazioni"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
