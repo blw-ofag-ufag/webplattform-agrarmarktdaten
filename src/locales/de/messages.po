@@ -177,7 +177,7 @@ msgstr "Kennzahl"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.info"
-msgstr "Info"
+msgstr "Informationen"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx

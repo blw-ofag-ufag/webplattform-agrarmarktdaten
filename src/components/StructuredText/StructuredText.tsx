@@ -5,6 +5,7 @@ import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { sectionAtom } from "@/lib/atoms";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
+import { InlineRecord, InternalLink } from "@/utils/dato";
 import { c, s } from "@interactivethings/swiss-federal-ci";
 import { OpenInNew } from "@mui/icons-material";
 import {
@@ -72,7 +73,6 @@ const StructuredText = (props: Props) => {
                     <Typography
                       variant="inherit"
                       component="a"
-                      data-debug-good
                       className={classes.link}
                       rel={rel}
                       target={target}
@@ -107,7 +107,6 @@ const StructuredText = (props: Props) => {
                   <Typography
                     key={key}
                     id={id}
-                    data-debug-good
                     variant={`h${node.level}`}
                     component={`h${node.level}`}
                     className={classes[`h${node.level}` as `h${typeof node.level}`]}
@@ -135,7 +134,8 @@ const StructuredText = (props: Props) => {
                 );
               }),
             ]}
-            renderInlineRecord={({ record }) => {
+            renderInlineRecord={({ record: _record }) => {
+              const record = _record as InlineRecord;
               switch (record.__typename) {
                 case "PowerBiReportRecord":
                   const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
@@ -170,10 +170,12 @@ const StructuredText = (props: Props) => {
                     />
                   );
                 default:
+                  const _check: never = record;
                   return null;
               }
             }}
-            renderLinkToRecord={({ record, children, transformedMeta }) => {
+            renderLinkToRecord={({ record: _record, children, transformedMeta }) => {
+              const record = _record as InternalLink;
               let url = "";
               switch (record.__typename) {
                 case "BlogPostRecord": {
@@ -208,13 +210,31 @@ const StructuredText = (props: Props) => {
                   url += `/data`;
                   break;
                 }
+                case "AboutPageRecord": {
+                  url += `/about`;
+                  break;
+                }
+                case "HomePageRecord": {
+                  url += `/about`;
+                  break;
+                }
+                case "InfoPageRecord": {
+                  url += `/info`;
+                  break;
+                }
+                case "PowerBiPageRecord": {
+                  url += `/power-bi/${record.id}`;
+                  break;
+                }
+                default:
+                  const _check: never = record;
+                  return null;
               }
               return (
                 <NextLink {...transformedMeta} legacyBehavior href={url}>
                   <Typography
                     variant="inherit"
                     component="a"
-                    data-debug-good
                     className={classes.link}
                     key={record.id}
                     href={url}
@@ -288,14 +308,7 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography
-      ref={ref}
-      id={id}
-      data-debug-good
-      variant="h1"
-      component="h1"
-      className={props.className}
-    >
+    <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
       {children}
     </Typography>
   );
