@@ -10,7 +10,7 @@ export const getMarketFromSlug = (slug: string | undefined | null) => {
     case "sostituti-del-latte-e-della-carne":
     case "milk-and-meat-substitutes":
       return "milk-and-meat-substitutes";
-    case "fruchte-gemuese-speisepilze":
+    case "fruchte-gemuese":
     case "fruits-et-legumes":
     case "frutta-e-verdura":
     case "fruits-and-vegetables":
