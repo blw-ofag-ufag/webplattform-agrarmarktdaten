@@ -1,7 +1,7 @@
 import * as React from "react";
 import ChevronUp from "@/icons/icons-jsx/control/IcControlChevronUp";
 import { makeStyles } from "@/components/style-utils";
-import { IconButton } from "@mui/material";
+import { IconButton, IconButtonProps } from "@mui/material";
 
 const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => ({
   wrapper: {
@@ -22,7 +22,8 @@ const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => (
     zIndex: 1,
   },
   scrollToTop: {
-    top: "calc(100vh - 5rem)",
+    top: "calc(100vh - var(--buttonSize) - var(--buttonPadding))",
+
     width: "var(--buttonSize)",
     height: "var(--buttonSize)",
 
@@ -43,18 +44,30 @@ const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => (
   },
 }));
 
-const ScrollToTop = () => {
-  const { classes } = useStyles();
+export const ScrollToToWrapper = (props: React.HTMLProps<HTMLDivElement>) => {
+  const { classes, cx } = useStyles();
+  return <div {...props} className={cx(classes.wrapper, props.className)} />;
+};
+
+export const ScrollToTop = (props: IconButtonProps) => {
+  const { classes, cx } = useStyles();
   return (
-    <div className={classes.wrapper}>
-      <IconButton
-        onClick={() => window?.scrollTo({ top: 0, behavior: "smooth" })}
-        className={classes.scrollToTop}
-      >
-        <ChevronUp width={48} height={48} />
-      </IconButton>
-    </div>
+    <IconButton
+      {...props}
+      onClick={() => window?.scrollTo({ top: 0, behavior: "smooth" })}
+      className={cx(classes.scrollToTop, props.className)}
+    >
+      <ChevronUp width={48} height={48} />
+    </IconButton>
   );
 };
 
-export default ScrollToTop;
+const ScrollToTopWrapped = (props: React.ComponentProps<typeof ScrollToTop>) => {
+  return (
+    <ScrollToToWrapper>
+      <ScrollToTop {...props} />
+    </ScrollToToWrapper>
+  );
+};
+
+export default ScrollToTopWrapped;

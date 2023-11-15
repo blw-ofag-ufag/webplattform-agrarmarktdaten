@@ -93,11 +93,10 @@ export const Hero = (props: Props) => {
           <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>
             {showTitleLine && <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />}
             <Typography
-              data-debug-good
               variant="display2"
               component="h1"
-              sx={{ color }}
               {...titleTypographyProps}
+              sx={{ color, ...titleTypographyProps?.sx }}
             >
               {title}
             </Typography>

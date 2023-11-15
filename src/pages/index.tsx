@@ -1,8 +1,8 @@
 import { Trans } from "@lingui/macro";
-import { Typography, Box, Card, Button } from "@mui/material";
+import { Typography, Box, Card, Button, useTheme } from "@mui/material";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
-import { AppLayout } from "@/components/layout";
+import { AppLayout, LayoutSections } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
@@ -39,6 +39,7 @@ const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
 export default function HomePage(props: GQL.HomePageQuery) {
   const { classes } = useStyles();
   const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const theme = useTheme();
   if (!homePage?.title || !homePage.lead) {
     return null;
   }
@@ -49,24 +50,26 @@ export default function HomePage(props: GQL.HomePageQuery) {
         lead={homePage.lead}
         hero={homePage.hero?.url}
         color="#ffffff"
-        titleTypographyProps={{ variant: "display1" }}
+        titleTypographyProps={{
+          variant: "display1",
+          sx: {
+            // Exception because the title is so long in German
+            [theme.breakpoints.down("xs")]: {
+              fontSize: "28px",
+              lineHeight: 1.5,
+            },
+          },
+        }}
         leadStructuredTextProps={{
           paragraphTypographyProps: { variant: "h3", fontWeight: "normal" },
         }}
         // We vertically position the background on top so that sky is always visible
         sx={{ "&&": { backgroundPosition: "center top" } }}
       />
-      <Box
-        sx={{
-          bgcolor: "cobalt.50",
-          pt: "5rem",
-          pb: "92px",
-          "& > * + *": { mt: "80px" },
-        }}
-      >
+      <LayoutSections>
         {/* Markets */}
         <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
-          <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
+          <Typography variant="h1" component="h2">
             <Trans id="homepage.section.market">Märkte</Trans>
           </Typography>
           <CardsGrid type="market" entries={homePage.markets} />
@@ -75,7 +78,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
         {/* Focus */}
 
         <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
-          <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
+          <Typography variant="h1" component="h2">
             <Trans id="homepage.section.theme">Focus</Trans>
           </Typography>
           <CardsGrid type="focus" entries={homePage.focusArticles} />
@@ -86,13 +89,13 @@ export default function HomePage(props: GQL.HomePageQuery) {
 
         {/* Data */}
         <GridContainer disableItemMargin sx={{ gap: s(8), flexDirection: "column" }}>
-          <Typography variant="h1" component="h2" data-debug-good sx={{ fontWeight: 700 }}>
+          <Typography variant="h1" component="h2">
             <Trans id="homepage.section.data">Data</Trans>
           </Typography>
           <Card sx={{ p: s(8) }} className={classes.card}>
             <Box display="flex" alignItems="center">
               <Box display="flex" flexDirection="column" pr="50px">
-                <Typography variant="body1" data-debug-good>
+                <Typography variant="body1">
                   <Trans id="homepage.section.data.content">
                     Various data can be selected and downloaded via the data download, in particular
                     price series, and in some cases also quantity and area data. Data are available
@@ -109,7 +112,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
             </Box>
           </Card>
         </GridContainer>
-      </Box>
+      </LayoutSections>
     </AppLayout>
   );
 }

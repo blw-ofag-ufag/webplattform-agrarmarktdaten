@@ -429,6 +429,9 @@ fragment FullMarketArticle on MarketArticleRecord {
     }
     links {
       __typename
+      ...FileDownloadSection
+      ...HighlightSection
+      ...PowerBI
       ...InternalLink
     }
   }
@@ -459,6 +462,9 @@ fragment FullFocusArticle on FocusArticleRecord {
     links {
       __typename
       ...InternalLink
+      ...FileDownloadSection
+      ...HighlightSection
+      ...PowerBI
     }
   }
   seo {
@@ -540,6 +546,9 @@ fragment BlogPost on BlogPostRecord {
     links {
       __typename
       ...InternalLink
+      ...FileDownloadSection
+      ...HighlightSection
+      ...PowerBI
     }
   }
 }

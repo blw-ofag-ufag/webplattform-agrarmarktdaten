@@ -123,7 +123,6 @@ const GridCard = ({
       <Box className={classes.dash} />
       <Typography
         className={classes.text}
-        data-debug-good
         variant="h2"
         component="h3"
         sx={{ mt: s(2), mx: s(8), mb: s(6) }}

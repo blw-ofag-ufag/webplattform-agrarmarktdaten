@@ -11,8 +11,6 @@ import SvgIcCheckboxDefault from "@/theme/federal/icons/IcCheckboxDefault";
 import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 import shadows from "@/theme/federal/shadows";
 
-import debugStyles from "./debug";
-
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
     xxs: true;
@@ -842,8 +840,6 @@ theme.components = {
             -webkit-overflow-scrolling: touch;
             -ms-overflow-style: -ms-autohiding-scrollbar;
           }
-
-          ${debugStyles}
           `,
   },
 };
