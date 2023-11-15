@@ -181,6 +181,9 @@ query MethodsPage($locale: SiteLocale!) {
       links {
         __typename
         ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+        ...PowerBI
       }
     }
   }
