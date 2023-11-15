@@ -100,7 +100,9 @@ export const AppLayout = (props: Props) => {
       display="flex"
       flexDirection="column"
     >
-      <LocaleSwitcher {...localeSwitcherProps} data-datocms-noindex />
+      <div data-datocms-noindex>
+        <LocaleSwitcher {...localeSwitcherProps} />
+      </div>
       <Box
         data-datocms-noindex
         sx={{
