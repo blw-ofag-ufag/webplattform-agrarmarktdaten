@@ -5,8 +5,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 // @ts-ignore
 import ParsingClient from "sparql-http-client";
 
+export const sparqlEndpoint = "http://test.lindas.admin.ch/query";
+
 const client = new ParsingClient({
-  endpointUrl: "http://test.lindas.admin.ch/query",
+  endpointUrl: sparqlEndpoint,
 });
 
 const parseRdf = (obj: Record<string, Literal | NamedNode>) => {
