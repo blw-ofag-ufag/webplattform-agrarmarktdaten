@@ -7,7 +7,7 @@ const ASIDE_NB_COLUMNS = 2;
 // Due to how gridColumn is implemented, we need to override the margin-left
 // to be 0 in cases when the first grid element (the aside) is displayed none
 const noMarginLeft = {
-  "&&": {
+  "&&&": {
     marginLeft: 0,
   },
 };
