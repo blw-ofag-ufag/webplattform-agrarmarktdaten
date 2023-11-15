@@ -72,6 +72,17 @@ query LegalPage($locale: SiteLocale!) {
     }
     content {
       value
+      blocks {
+        __typename
+        ...DataButton
+        ...ImageTeaserBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
     }
   }
 
@@ -97,6 +108,17 @@ query TermsPage($locale: SiteLocale!) {
     }
     content {
       value
+      blocks {
+        __typename
+        ...DataButton
+        ...ImageTeaserBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
     }
   }
 
