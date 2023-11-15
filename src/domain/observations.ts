@@ -83,7 +83,14 @@ export const parsedObservationsAtom = atom(async (get) => {
     Object.entries(obs).reduce((acc, [key, value]) => {
       return {
         ...acc,
-        [key]: valueFormatter({ value: value as string | number, dimension: key, cubeDimensions }),
+        [key]: valueFormatter({
+          value: value as string | number,
+          dimension: key,
+          cubeDimensions: {
+            ...cubeDimensions.properties,
+            ...cubeDimensions.measures,
+          },
+        }),
       };
     }, {})
   );

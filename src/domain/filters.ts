@@ -1,14 +1,20 @@
+import { amdp } from "@/lib/namespace";
+import { localeAtom } from "@/lib/use-locale";
+import { fetchHierarchy, removeNamespace } from "@/pages/api/data";
+import { findInHierarchy } from "@/utils/trees";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
+import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
-import { DIMENSION_FILTERS, baseDimensionsAtom, cubeDimensionsAtom } from "./dimensions";
+import { cubePathAtom } from "./cubes";
+import { baseDimensionsAtom, cubeDimensionsAtom, dataDimensions } from "./dimensions";
 
 export type Option = {
   label: string;
   value: string;
   checked?: boolean;
-} & { [key: string]: string };
+} & { [key: string]: $FixMe };
 
 export type Filter = {
   name: string;
@@ -16,6 +22,7 @@ export type Filter = {
   type: "single" | "multi";
   key: string;
   search?: boolean;
+  groups?: Array<(d: $FixMe) => string>;
 };
 
 export type FilterConfig = {
@@ -84,33 +91,90 @@ export const filterCubeConfigurationAtom = atom(async (get) => {
   };
 });
 
+export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQueryAsync(
+  async (get) => {
+    const locale = get(localeAtom);
+    const cubeIri = await get(cubePathAtom);
+
+    return {
+      queryKey: ["productHierarchy", locale],
+      queryFn: () =>
+        fetchHierarchy({
+          locale,
+          cubeIri,
+          dimensionIri: dataDimensions.product.iri,
+        }),
+    };
+  }
+);
+
+export const productOptionsWithHierarchyAtom = atom(async (get) => {
+  const hierarchy = await get(productHierarchyAtom);
+  const cubeDimensions = await get(cubeDimensionsAtom);
+
+  const cubeProducts = cubeDimensions.properties["product"]?.values;
+
+  const productOptions = cubeProducts.map((product) => {
+    const subgroup = findInHierarchy(hierarchy, (node) =>
+      node.children.find((c: $FixMe) => c.value === amdp(product.value).value)
+    );
+    const group = findInHierarchy(hierarchy, (node) =>
+      node.children.find((c: $FixMe) => c.value === subgroup?.value)
+    );
+    const market = findInHierarchy(hierarchy, (node) =>
+      node.children.find((c: $FixMe) => c.value === group?.value)
+    );
+
+    return {
+      value: product.value,
+      label: product.label,
+      ["product-subgroup"]: {
+        value: removeNamespace(subgroup?.value),
+        label: subgroup?.label,
+      },
+      ["product-group"]: {
+        value: removeNamespace(group?.value),
+        label: group?.label,
+      },
+      market: {
+        value: removeNamespace(market?.value),
+        label: market?.label,
+      },
+    };
+  });
+
+  return productOptions;
+});
+
 /**
  * Configuration for the dimension filters (salesRegion, productionSystem, etc). This filters affect
  * which observations of the cube we fetch.
  */
 export const filterDimensionsConfigurationAtom = atom(async (get) => {
   const cubeDimensions = await get(cubeDimensionsAtom);
+  const productOptions = await get(productOptionsWithHierarchyAtom);
 
-  const dimensions = DIMENSION_FILTERS.reduce(
-    (acc, dimension) => {
-      const dim = cubeDimensions[dimension.dimension];
-      if (dim && dim.type === "property") {
-        return {
-          ...acc,
-          [dimension.dimension]: {
-            key: dimension.dimension,
-            name: dim.label ?? dimension.dimension,
-            options: dim.values,
-            type: "multi" as const,
-            search: dimension.search,
-          },
-        };
-      }
-      return acc;
+  return {
+    ["sales-region"]: {
+      key: "sales-region",
+      name: cubeDimensions.properties[dataDimensions.salesRegion.id].label,
+      options: cubeDimensions.properties?.[dataDimensions.salesRegion.id].values,
+      type: "multi" as const,
+      search: true,
     },
-    {} as Record<string, Filter>
-  );
-  return dimensions;
+    ["product"]: {
+      key: "product",
+      name: cubeDimensions.properties?.[dataDimensions.product.id].label,
+      options: productOptions,
+      type: "multi" as const,
+      groups: [
+        (d: $FixMe) => d["market"].label,
+        (d: $FixMe) => d["product-group"].label,
+        (d: $FixMe) => d["product-subgroup"].label,
+      ],
+      search: true,
+    },
+  } as Record<string, Filter>;
 });
 
 /**

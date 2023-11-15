@@ -105,6 +105,7 @@ const SidePanel = () => {
           if (!filterAtom) {
             return null;
           }
+          console.log(value);
           return (
             <FilterSelectAccordion
               key={key}
@@ -113,6 +114,7 @@ const SidePanel = () => {
                 select: {
                   withSearch: value.search,
                   options: value.options,
+                  groups: value?.groups,
                 },
               }}
               options={value.options}

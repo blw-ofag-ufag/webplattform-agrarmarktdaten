@@ -10,24 +10,24 @@ import {
 } from "@/lib/cube-queries";
 import { amdp, amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale, defaultLocale } from "@/locales/locales";
+import { regroupTrees } from "@/utils/trees";
 import { NamespaceBuilder } from "@rdfjs/namespace";
-import { groupBy, orderBy, uniqBy } from "lodash";
-import { z } from "zod";
-import rdf from "rdf-ext";
-import * as ns from "../../lib/namespace";
-import { Source } from "rdf-cube-view-query";
-import StreamClient from "sparql-http-client";
+import { Literal, Term } from "@rdfjs/types";
 import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
 import { AnyPointer } from "clownface";
-import { Literal, Term } from "@rdfjs/types";
+import { groupBy, orderBy, uniqBy } from "lodash";
+import { Source } from "rdf-cube-view-query";
+import rdf from "rdf-ext";
+import StreamClient from "sparql-http-client";
+import { z } from "zod";
+import * as ns from "../../lib/namespace";
 import { ObservationValue } from "./use-sparql";
-import { mapTree, pruneTree, regroupTrees } from "@/utils/trees";
 
-const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
+export const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
   return fullIri.replace(namespace().value, "");
 };
 
-const addNamespace = (partialIri: string) => {
+export const addNamespace = (partialIri: string) => {
   return amdp(partialIri).value;
 };
 
@@ -226,17 +226,11 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   const dimensionsRaw = await fetchSparql(queryDimensions);
   const dimensionsRawParsed = z.array(dimensionSpecSchema).parse(dimensionsRaw);
 
-  /**
-   * As a workaround to the data changes on 13.11.2023, we are checking the type of the dimension
-   * through the dimension IRI instead of the type. @TODO change back to type when data is fixed.
-   */
   const measureDim = dimensionsRawParsed.filter(
-    // (dim) => dim.type === ns.cube("MeasureDimension").value
-    (dim) => dim.dimension.startsWith(amdpMeasure().value)
+    (dim) => dim.type === ns.cube("MeasureDimension").value
   );
   const propertyDim = dimensionsRawParsed.filter(
-    //(dim) => dim.type === ns.cube("KeyDimension").value
-    (dim) => dim.dimension.startsWith(amdpDimension().value)
+    (dim) => dim.type === ns.cube("KeyDimension").value
   );
 
   const propertiesValues = await fetchSparql(
@@ -276,17 +270,26 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
     }),
   ]);
 
-  const dimensions = [...measures, ...properties].reduce(
-    (acc, dim) => {
-      return {
-        ...acc,
-        [dim.dimension]: dim,
-      };
-    },
-    {} as Record<string, Measure | Property>
-  );
-
-  return dimensions;
+  return {
+    measures: measures.reduce(
+      (acc, measure) => {
+        return {
+          ...acc,
+          [measure.dimension]: measure,
+        };
+      },
+      {} as Record<string, Measure>
+    ),
+    properties: properties.reduce(
+      (acc, property) => {
+        return {
+          ...acc,
+          [property.dimension]: property,
+        };
+      },
+      {} as Record<string, Property>
+    ),
+  };
 };
 
 const toKebabCase = (v: string) => v.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
@@ -448,6 +451,7 @@ export const fetchHierarchy = async ({
   cubeIri: string;
   dimensionIri: string;
   locale: Locale;
+  asTree?: boolean;
 }) => {
   console.log("> fetchHierarchy");
   const cube = await amdpSource.cube(amdp(cubeIri).value);
@@ -496,7 +500,6 @@ export const fetchHierarchy = async ({
       // below, we can create the fake nodes
       tree[0].hierarchyName = h.name;
     }
-    console.log({ tree });
     return tree;
   });
 
@@ -537,7 +540,10 @@ const toTree = (results: HierarchyNode[], dimensionIri: string, locale: string):
           ),
           position: parseTerm(node.resource.out(ns.schema.position).term),
           depth,
-          dimensionIri: dimensionIri,
+          // hacky way to get the dimension type
+          dimension: amdpDimension(
+            removeNamespace(node.resource.value).match(/^([a-zA-Z]|-)*(?=\/)/)?.[0]
+          ).value,
         }
       : undefined;
     return res;

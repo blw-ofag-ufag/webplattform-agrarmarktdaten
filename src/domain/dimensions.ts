@@ -82,7 +82,6 @@ export const availableMeasuresAtom = atom(async (get) => {
 export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQueryAsync(async (get) => {
   const cubePath = await get(cubePathAtom);
   const locale = get(localeAtom);
-  console.log({ locale });
   return {
     queryKey: ["cubeDimensions", cubePath, locale],
     queryFn: () => fetchCubeDimensions(locale, cubePath),
@@ -238,8 +237,6 @@ export const dataDimensions: {
     iri: amdpDimension("value-chain").value,
   },
 };
-
-export const DIMENSION_FILTERS = [{ dimension: dataDimensions.salesRegion.id, search: true }];
 
 type IriMap = {
   [key: string]: {

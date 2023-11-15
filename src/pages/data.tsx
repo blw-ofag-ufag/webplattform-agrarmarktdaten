@@ -175,7 +175,10 @@ const DataBrowser = () => {
 
               {observationsQueryStatus.isSuccess && (
                 <>
-                  <Table observations={observations} dimensions={cubeDimensions} />
+                  <Table
+                    observations={observations}
+                    dimensions={{ ...cubeDimensions.measures, ...cubeDimensions.properties }}
+                  />
                 </>
               )}
             </>

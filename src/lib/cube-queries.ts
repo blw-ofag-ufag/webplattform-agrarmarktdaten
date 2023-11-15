@@ -128,7 +128,7 @@ export const queryPropertyDimensionAndValues = ({
       .map(
         (dimensionIri) => `
       {
-        SELECT ?dimension ?value ?label {
+        SELECT DISTINCT ?dimension ?value ?label {
           VALUES (?dimension) { (<${dimensionIri}>) }
           ?observation ?dimension ?value .
           ?value schema:name ?label . FILTER(lang(?label) = "${locale}")
