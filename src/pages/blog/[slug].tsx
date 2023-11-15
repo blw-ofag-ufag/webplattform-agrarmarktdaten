@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { Typography } from "@mui/material";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { AppLayout } from "@/components/layout";
+import { AppLayout, LayoutSections } from "@/components/layout";
 import { client } from "@/graphql";
 import * as GQL from "@/graphql";
 import { Locale, isValidLocale } from "@/locales/locales";
@@ -132,7 +132,9 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
           {blogPost.content && <StructuredText data={blogPost.content} />}
         </div>
       </GridContainer>
-      <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      <LayoutSections>
+        <TopBlogpostsTeaser blogposts={topBlogPosts} />
+      </LayoutSections>
     </AppLayout>
   );
 }

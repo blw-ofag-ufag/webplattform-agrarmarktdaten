@@ -13,7 +13,6 @@ import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { makeStyles } from "@/components/style-utils";
-import { CalloutSection } from "@/components/layout";
 
 const useStyles = makeStyles()({
   container: {
@@ -23,7 +22,7 @@ const useStyles = makeStyles()({
 });
 
 export const TopBlogpostsTeaser = (
-  props: { blogposts: GQL.SimpleBlogPostFragment[] } & React.ComponentProps<typeof CalloutSection>
+  props: { blogposts: GQL.SimpleBlogPostFragment[] } & React.HTMLProps<HTMLDivElement>
 ) => {
   const { blogposts, ...rest } = props;
   const isDesktop = useMediaQuery(b.up("xl"));
@@ -161,9 +160,9 @@ export const TopBlogpostsTeaser = (
   })();
 
   return (
-    <CalloutSection {...rest}>
+    <div {...rest}>
       <GridContainer disableItemMargin className={classes.container}>
-        <Typography data-debug-good variant="h1" sx={{ width: "100%", mb: s(8) }}>
+        <Typography variant="h1" sx={{ width: "100%", mb: s(8) }}>
           <Trans id="homepage.section.latestBlogPosts">Neuste Blogbeiträge</Trans>
         </Typography>
         {content}
@@ -192,7 +191,7 @@ export const TopBlogpostsTeaser = (
           </Box>
         </Box>
       </GridContainer>
-    </CalloutSection>
+    </div>
   );
 };
 
