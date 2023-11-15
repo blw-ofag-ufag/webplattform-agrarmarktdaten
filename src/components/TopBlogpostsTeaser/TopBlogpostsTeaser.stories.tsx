@@ -3,7 +3,7 @@ import { TopBlogpostsTeaser } from "./TopBlogpostsTeaser";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/TopBlogpostsTeaser",
+  title: "App Components / TopBlogpostsTeaser",
   component: TopBlogpostsTeaser,
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],

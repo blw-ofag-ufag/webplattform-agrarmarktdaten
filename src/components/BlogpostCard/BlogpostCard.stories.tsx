@@ -5,7 +5,7 @@ import { milkBlogPost, milkBlogPostWithSuperLongTitle } from "@/mocks/blog-posts
 import { Box } from "@mui/material";
 
 const meta = {
-  title: "Components/BlogpostCard",
+  title: "App Components / BlogpostCard",
   component: BlogpostCard,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
