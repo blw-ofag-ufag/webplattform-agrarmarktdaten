@@ -7216,7 +7216,26 @@ export const BlogPostFragmentDoc = gql`
     blocks {
       __typename
       ...DataButton
-      ...ImageTeaserBlock
+      ... on ImageTeaserBlockRecord {
+        id
+        imageTeaserAsset {
+          customData
+          id
+          url
+          alt
+          width
+          height
+          responsiveImage(imgixParams: {fit: clip, auto: format}) {
+            sizes
+            src
+            width
+            height
+            alt
+            title
+            base64
+          }
+        }
+      }
     }
     links {
       __typename
@@ -7743,7 +7762,6 @@ export const BlogPostDocument = gql`
     ${BlogPostFragmentDoc}
 ${InternalLinkFragmentDoc}
 ${DataButtonFragmentDoc}
-${ImageTeaserBlockFragmentDoc}
 ${FileDownloadSectionFragmentDoc}
 ${HighlightSectionFragmentDoc}
 ${HighlightSectionFileRecordFragmentDoc}
