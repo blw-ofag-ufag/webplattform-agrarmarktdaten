@@ -180,7 +180,7 @@ export const queryObservations = ({
   PREFIX cube: <https://cube.link/>
   PREFIX sh: <http://www.w3.org/ns/shacl#>
   PREFIX schema: <http://schema.org/>
-
+  
   SELECT DISTINCT ?observation ${dimensions.map((d) => `?${d.key}`).join(" ")} ?${measure.key}
   FROM <${agDataBase}>
   WHERE {

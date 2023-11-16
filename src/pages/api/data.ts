@@ -13,6 +13,7 @@ import { Locale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
 import { groupBy } from "lodash";
 import { z } from "zod";
+import { sparqlEndpoint } from "./sparql";
 
 const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
   return fullIri.replace(namespace().value, "");
@@ -414,5 +415,13 @@ export const fetchObservations = async ({
   });
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
-  return observations;
+
+  return {
+    observations,
+    query: getSparqlEditorUrl(query),
+  };
+};
+
+export const getSparqlEditorUrl = (query: string): string | null => {
+  return `${sparqlEndpoint}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
 };

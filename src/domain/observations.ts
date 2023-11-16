@@ -1,5 +1,5 @@
 import { amdpMeasure } from "@/lib/namespace";
-import { Measure, Observation, Property, fetchObservations } from "@/pages/api/data";
+import { Measure, Property, fetchObservations } from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { cubePathAtom, cubesAtom } from "./cubes";
@@ -12,7 +12,7 @@ import { filterDimensionsSelectionAtom } from "./filters";
  * Dimensions values on observations are not yet parsed, use parsedObservationsAtom for that.
  */
 export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
-  Observation[] | Promise<Observation[]>
+  ReturnType<typeof fetchObservations> extends Promise<infer T> ? T : never
 >(async (get) => {
   const cubePath = await get(cubePathAtom);
   const cubes = await get(cubesAtom);
@@ -34,7 +34,14 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
     {} as Record<string, string[]>
   );
 
-  if (!cubeDefinition) return { queryKey: ["observations"], queryFn: () => [] };
+  if (!cubeDefinition)
+    return {
+      queryKey: ["observations"],
+      queryFn: () => ({
+        observations: [],
+        query: "",
+      }),
+    };
 
   return {
     /* how to encode filter info needs to be improved */
@@ -79,7 +86,7 @@ export const parsedObservationsAtom = atom(async (get) => {
   const observations = await get(observationsAtom);
   const cubeDimensions = await get(cubeDimensionsAtom);
 
-  return observations.map((obs) =>
+  return observations.observations.map((obs) =>
     Object.entries(obs).reduce((acc, [key, value]) => {
       return {
         ...acc,
