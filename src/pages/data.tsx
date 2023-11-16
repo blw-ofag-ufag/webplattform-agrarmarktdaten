@@ -25,7 +25,12 @@ import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from
 
 import SidePanel from "@/components/browser/SidePanel";
 import { cubeDimensionsAtom } from "@/domain/dimensions";
-import { observationsAtom, observationsStatusAtom, valueFormatter } from "@/domain/observations";
+import {
+  filteredObservationsAtom,
+  observationsQueryAtom,
+  observationsStatusAtom,
+  valueFormatter,
+} from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
@@ -91,11 +96,12 @@ export default function DataPage(props: GQL.DataPageQuery) {
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
-  const observations = useAtomValue(observationsAtom);
   const observationsQueryStatus = useAtomValue(observationsStatusAtom);
-  const resultCount = observations.observations.length;
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
+  const filteredObservations = useAtomValue(filteredObservationsAtom);
+  const query = useAtomValue(observationsQueryAtom);
 
+  const resultCount = filteredObservations.length;
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
       <Box width="388px" flexGrow={0} flexShrink={0}>
@@ -132,7 +138,7 @@ const DataBrowser = () => {
             <Button size="small" startIcon={<IcControlDownload />}>
               <Trans id="data.actions.download">Data download</Trans>
             </Button>
-            <Button size="small" href={observations.query ?? ""} target="_blank">
+            <Button size="small" href={query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
             <Button
@@ -175,7 +181,7 @@ const DataBrowser = () => {
               {observationsQueryStatus.isSuccess && (
                 <>
                   <Table
-                    observations={observations.observations}
+                    observations={filteredObservations}
                     dimensions={{ ...cubeDimensions.measures, ...cubeDimensions.properties }}
                   />
                 </>
