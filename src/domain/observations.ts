@@ -12,7 +12,7 @@ import sortedStringify from "@/utils/sorted-stringify";
  * The observations are filtered by the selected dimensions.
  * Dimensions values on observations are not yet parsed, use parsedObservationsAtom for that.
  */
-export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
+export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
   ReturnType<typeof fetchObservations> extends Promise<infer T> ? T : never
 >(async (get) => {
   const cubePath = await get(cubePathAtom);

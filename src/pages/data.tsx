@@ -25,7 +25,7 @@ import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from
 
 import SidePanel from "@/components/browser/SidePanel";
 import { cubeDimensionsAtom } from "@/domain/dimensions";
-import { observationsAtom, observationsStatusAtom, valueFormatter } from "@/domain/observations";
+import { observationsAtom, observationsQueryAtom, valueFormatter } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
@@ -92,7 +92,7 @@ const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observations = useAtomValue(observationsAtom);
-  const observationsQueryStatus = useAtomValue(observationsStatusAtom);
+  const observationsQueryStatus = useAtomValue(observationsQueryAtom);
   const resultCount = observations.observations.length;
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
 
