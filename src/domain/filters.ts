@@ -7,7 +7,7 @@ import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
-import { cubePathAtom } from "./cubes";
+import { cubePathAtom, cubesAtom, defaultCube } from "./cubes";
 import { baseDimensionsAtom, cubeDimensionsAtom, dataDimensions } from "./dimensions";
 
 export type Option = {
@@ -203,18 +203,35 @@ export const filterDimensionsSelectionAtom = atom(async (get) => {
  */
 export const filterCubeSelectionAtom = atom(async (get) => {
   const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
+  const baseDimensions = await get(baseDimensionsAtom);
+  const cubes = await get(cubesAtom);
+  const defaultCubeDef = cubes.find((cube) => cube.cube === defaultCube);
+
+  const defaultMeasure = baseDimensions.measure.find(
+    (m) => m.dimension === defaultCubeDef?.measure
+  );
+
   return {
     measure: filterSingleHashAtomFamily({
       key: "measure",
       options: filterCubeConfiguration.measure.options,
+      defaultOption: defaultMeasure
+        ? { label: defaultMeasure.label, value: defaultMeasure.dimension }
+        : filterCubeConfiguration.measure.options[0],
     }),
     ["value-chain"]: filterSingleHashAtomFamily({
       key: "valueChain",
       options: filterCubeConfiguration["value-chain"].options,
+      defaultOption: baseDimensions.properties["value-chain"].values.find(
+        (v) => v.value === defaultCubeDef?.valueChain
+      ),
     }),
     market: filterSingleHashAtomFamily({
       key: "market",
       options: filterCubeConfiguration.market.options,
+      defaultOption: baseDimensions.properties.market.values.find(
+        (v) => v.value === defaultCubeDef?.market
+      ),
     }),
   };
 });
@@ -256,9 +273,9 @@ export const optionCodec = <T extends Option>(options: T[]) => ({
 });
 
 export const filterSingleHashAtomFamily = atomFamily(
-  ({ key, options }: { key: string; options: Option[] }) => {
-    const defaultOption = options[0];
-    return atomWithHash(key, defaultOption, optionCodec(options));
+  ({ key, options, defaultOption }: { key: string; defaultOption?: Option; options: Option[] }) => {
+    const initialValue = defaultOption ?? options[0];
+    return atomWithHash(key, initialValue, optionCodec(options));
   },
   (a, b) => a.key === b.key
 );
