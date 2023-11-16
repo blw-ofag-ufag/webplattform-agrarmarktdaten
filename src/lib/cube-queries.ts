@@ -122,14 +122,14 @@ export const queryPropertyDimensionAndValues = ({
   SELECT DISTINCT ?dimension ?value ?label  
   FROM <${agDataBase}>
   WHERE {
-    <${cubeIri}> cube:observationSet ?observationSet .
-    ?observationSet cube:observation ?observation .
     ${dimensionsIris
       .map(
         (dimensionIri) => `
       {
         SELECT DISTINCT ?dimension ?value ?label {
           VALUES (?dimension) { (<${dimensionIri}>) }
+          <${cubeIri}> cube:observationSet ?observationSet .
+          ?observationSet cube:observation ?observation .
           ?observation ?dimension ?value .
           ?value schema:name ?label . FILTER(lang(?label) = "${locale}")
         }
