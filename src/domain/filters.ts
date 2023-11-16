@@ -184,16 +184,21 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
  */
 export const filterDimensionsSelectionAtom = atom(async (get) => {
   const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
+  const productOptions = await get(productOptionsWithHierarchyAtom);
+
+  const cubeDimension = await get(cubeDimensionsAtom);
+
   return {
-    ...Object.fromEntries(
-      Object.entries(filterDimensionsConfiguration).map(([key, filter]) => [
-        key,
-        filterMultiHashAtomFamily({
-          key,
-          options: filter.options,
-        }),
-      ])
-    ),
+    ["sales-region"]: filterMultiHashAtomFamily({
+      key: "sales-region",
+      options: filterDimensionsConfiguration["sales-region"].options,
+      defaultOptions: cubeDimension.properties["sales-region"].values,
+    }),
+    ["product"]: filterMultiHashAtomFamily({
+      key: "product",
+      options: productOptions,
+      defaultOptions: productOptions,
+    }),
   };
 });
 
@@ -281,8 +286,18 @@ export const filterSingleHashAtomFamily = atomFamily(
 );
 
 export const filterMultiHashAtomFamily = atomFamily(
-  ({ key, options }: { key: string; options: Option[] }) => {
-    return atomWithHash(key, options, multiOptionsCodec(options));
+  ({
+    key,
+    options,
+    defaultOptions,
+  }: {
+    key: string;
+    options: Option[];
+    defaultOptions?: Option[];
+  }) => {
+    return atomWithHash(key, defaultOptions ?? options, multiOptionsCodec(options));
   },
-  (a, b) => a.key === b.key
+  (a, b) =>
+    a.key === b.key &&
+    new Set(a.options.map((optA) => optA.value)) === new Set(b.options.map((optB) => optB.value))
 );

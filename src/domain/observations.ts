@@ -106,7 +106,6 @@ export const filteredObservationsAtom = atom(async (get) => {
   const filters = Object.entries(filterDimensionsSelection).reduce(
     (acc, [key, atom]) => {
       const selectedOptions = get(atom);
-      console.log({ key, selectedOptions });
       const filterFn = (obs: Observation) =>
         selectedOptions.map((option) => option.value).includes(obs[key as keyof Observation]);
       return [...acc, filterFn];

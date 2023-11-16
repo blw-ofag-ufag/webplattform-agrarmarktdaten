@@ -101,7 +101,8 @@ const SidePanel = () => {
         {/* Property filters */}
 
         {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
-          const filterAtom = filterDimensionsSelection[key];
+          const filterAtom =
+            filterDimensionsSelection[key as keyof typeof filterDimensionsSelection];
           if (!filterAtom) {
             return null;
           }
@@ -112,7 +113,6 @@ const SidePanel = () => {
                 accordion: getAccordionProps(key),
                 select: {
                   withSearch: value.search,
-                  options: value.options,
                   groups: value?.groups,
                 },
               }}
@@ -176,7 +176,7 @@ const FilterSelectAccordion = <T extends Option>({
   title: string;
   slots: {
     accordion: Omit<AccordionProps, "children">;
-    select: Omit<SelectProps<T>, "values" | "onChange">;
+    select: Omit<SelectProps<T>, "values" | "onChange" | "options">;
   };
 }) => {
   const [values, setValues] = useAtom(filterAtom);
@@ -188,7 +188,7 @@ const FilterSelectAccordion = <T extends Option>({
         <PreviewSelect show={!slots.accordion.expanded} values={values} options={options} />
       </AccordionSummary>
       <AccordionDetails>
-        <Select values={values} onChange={setValues} {...slots.select} />
+        <Select values={values} onChange={setValues} options={options} {...slots.select} />
       </AccordionDetails>
     </FilterAccordion>
   );
