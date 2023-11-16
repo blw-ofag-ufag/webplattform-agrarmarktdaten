@@ -26,6 +26,7 @@ import {
   StructuredTextGraphQlResponse,
   renderNodeRule,
 } from "react-datocms";
+import NextImage from "next/image";
 
 const defaultParagraphTypographyProps = {
   variant: "body1",
@@ -269,19 +270,38 @@ const StructuredText = (props: Props) => {
                 case "ImageTeaserBlockRecord":
                   const image =
                     record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
-                  return image?.responsiveImage ? (
-                    <Box sx={{ my: "32px" }}>
-                      {/*eslint-disable-next-line jsx-a11y/alt-text*/}
-                      <Image
-                        data={image?.responsiveImage}
-                        layout="intrinsic"
-                        pictureStyle={{ margin: 0 }}
-                      />
-                      <Typography variant="body1" sx={{ mt: s(3), color: c.monochrome[500] }}>
-                        {image.responsiveImage.title}
-                      </Typography>
-                    </Box>
-                  ) : null;
+                  //For normal images
+                  if (image?.responsiveImage) {
+                    return (
+                      <Box sx={{ my: "32px" }}>
+                        {/*eslint-disable-next-line jsx-a11y/alt-text*/}
+                        <Image
+                          data={image?.responsiveImage}
+                          layout="intrinsic"
+                          pictureStyle={{ margin: 0 }}
+                        />
+                        <Typography variant="body1" sx={{ mt: s(3), color: c.monochrome[500] }}>
+                          {image.responsiveImage.title}
+                        </Typography>
+                      </Box>
+                    );
+                  }
+                  //SVGs apparently don't  have the responsiveImage prop set so we use the nextimage component here
+                  if (image?.url) {
+                    return (
+                      <Box sx={{ my: "32px", width: "100%", height: "100%", position: "relative" }}>
+                        <NextImage
+                          src={image?.url}
+                          alt={image?.alt ?? ""}
+                          width={0}
+                          height={0}
+                          style={{ width: "100%", height: "auto" }}
+                          sizes="100vw"
+                        />
+                      </Box>
+                    );
+                  }
+                  return null;
                 default:
                   return null;
               }
