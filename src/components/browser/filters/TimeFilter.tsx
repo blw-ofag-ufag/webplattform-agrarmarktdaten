@@ -190,6 +190,9 @@ export default function TimeFilter({
           step={null}
           size="small"
           marks={sliderValues}
+          valueLabelDisplay="auto"
+          valueLabelFormat={(v) => dayjs.unix(v).format(timeFormat)}
+          disableSwap
           onChange={(_, value) => setSliderRange(value as [number, number])}
           onChangeCommitted={(_, value) => onChangeRange(value as [number, number])}
           sx={{
