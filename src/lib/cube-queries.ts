@@ -183,25 +183,26 @@ export const queryObservations = ({
   PREFIX schema: <http://schema.org/>
   
   SELECT DISTINCT ?observation ${dimensions.map((d) => `?${d.key}`).join(" ")} ?measure
-  FROM <${agDataBase}>
   WHERE {
-    ${
-      filters
-        ? Object.entries(filters)
-            .map(([key, values]) => {
-              return `VALUES(?${key}) { ${values.map((v) => `(<${v}>)`).join("\n")} }`;
-            })
-            .join("\n")
-        : ""
+    GRAPH <${agDataBase}> {
+      ${
+        filters
+          ? Object.entries(filters)
+              .map(([key, values]) => {
+                return `VALUES(?${key}) { ${values.map((v) => `(<${v}>)`).join("\n")} }`;
+              })
+              .join("\n")
+          : ""
+      }
+      <${cubeIri}> cube:observationSet ?observationSet .
+      ?observationSet cube:observation ?observation .
+      ${dimensions
+        .map((dimension) => {
+          return `?observation <${dimension.iri}> ?${dimension.key} .`;
+        })
+        .join("\n")}
+      ?observation <${measure.iri}> ?measure .
     }
-    <${cubeIri}> cube:observationSet ?observationSet .
-    ?observationSet cube:observation ?observation .
-    ${dimensions
-      .map((dimension) => {
-        return `?observation <${dimension.iri}> ?${dimension.key} .`;
-      })
-      .join("\n")}
-    ?observation <${measure.iri}> ?measure .
   }
   `;
 };
