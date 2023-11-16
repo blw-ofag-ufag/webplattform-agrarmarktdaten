@@ -6,7 +6,7 @@ import * as GQL from "@/graphql";
 import { sectionAtom } from "@/lib/atoms";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
 import { InlineRecord, InternalLink } from "@/utils/dato";
-import { c, s } from "@interactivethings/swiss-federal-ci";
+import { c } from "@interactivethings/swiss-federal-ci";
 import { OpenInNew } from "@mui/icons-material";
 import {
   Box,
@@ -270,33 +270,41 @@ const StructuredText = (props: Props) => {
                 case "ImageTeaserBlockRecord":
                   const image =
                     record.imageTeaserAsset as unknown as GQL.ImageTeaserBlockRecord["imageTeaserAsset"];
+                  const description = (record.description as string) ?? image?.title;
                   //For normal images
                   if (image?.responsiveImage) {
                     return (
-                      <Box sx={{ my: "32px" }}>
+                      <Box className={classes.imageWrapper}>
                         {/*eslint-disable-next-line jsx-a11y/alt-text*/}
                         <Image
                           data={image?.responsiveImage}
                           layout="intrinsic"
                           pictureStyle={{ margin: 0 }}
                         />
-                        <Typography variant="body1" sx={{ mt: s(3), color: c.monochrome[500] }}>
-                          {image.responsiveImage.title}
-                        </Typography>
+                        {description && (
+                          <Typography variant="body1" className={classes.imageTitle}>
+                            {description}
+                          </Typography>
+                        )}
                       </Box>
                     );
                   }
-                  //SVGs apparently don't  have the responsiveImage prop set so we use the nextimage component here
+                  //SVGs apparently don't have the responsiveImage prop set so we use the nextimage component here
                   if (image?.url) {
                     return (
-                      <Box sx={{ my: "32px", width: "100%", height: "100%", position: "relative" }}>
+                      <Box className={classes.svgWrapper}>
                         <NextImage
                           src={image?.url}
                           alt={image?.alt ?? ""}
                           width={0}
                           height={0}
-                          style={{ width: "100%", height: "auto" }}
+                          className={classes.svg}
                         />
+                        {description && (
+                          <Typography variant="body1" className={classes.imageTitle}>
+                            {description}
+                          </Typography>
+                        )}
                       </Box>
                     );
                   }
