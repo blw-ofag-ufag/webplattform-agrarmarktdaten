@@ -84,6 +84,8 @@ export const filterCubeConfigurationAtom = atom(async (get) => {
   };
 });
 
+type DimensionIri = string;
+
 /**
  * Configuration for the dimension filters (salesRegion, productionSystem, etc). This filters affect
  * which observations of the cube we fetch.
@@ -108,7 +110,7 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
       }
       return acc;
     },
-    {} as Record<string, Filter>
+    {} as Record<DimensionIri, Filter>
   );
   return dimensions;
 });
@@ -169,8 +171,7 @@ export const filterConfigurationAtom = atom(async (get) => {
   };
 });
 
-/* Hashing and Codecs */
-
+/* Codecs to save state in URL hash */
 export const multiOptionsCodec = <T extends Option>(options: T[]) => ({
   serialize: (value: Option[]) =>
     value.length === 0 ? "None" : value.map((v) => v.value).join(","),
