@@ -72,6 +72,17 @@ query LegalPage($locale: SiteLocale!) {
     }
     content {
       value
+      blocks {
+        __typename
+        ...DataButton
+        ...ImageTeaserBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
     }
   }
 
@@ -97,6 +108,17 @@ query TermsPage($locale: SiteLocale!) {
     }
     content {
       value
+      blocks {
+        __typename
+        ...DataButton
+        ...ImageTeaserBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
     }
   }
 
@@ -622,7 +644,8 @@ fragment ImageTeaserBlock on ImageTeaserBlockRecord {
     alt
     width
     height
-    responsiveImage(imgixParams: { fit: fill, w: 1096, h: 556, auto: format }) {
+    # responsiveImage(imgixParams: { fit: fill, w: 1096, h: 556, auto: format }) {
+    responsiveImage(imgixParams: { fit: clip, auto: format }) {
       sizes
       src
       width
