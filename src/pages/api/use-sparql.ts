@@ -1,7 +1,7 @@
 import { DataDimension, Measure, Property, dimensionIriMap } from "@/domain/dimensions";
 import { defaultLocale } from "@/locales/locales";
 import { NamespaceBuilder } from "@rdfjs/namespace";
-import { Literal, NamedNode } from "@rdfjs/types";
+import { Literal } from "@rdfjs/types";
 import { uniqBy } from "lodash";
 import { Cube, CubeDimension, Dimension, LookupSource, Source, View } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
@@ -343,123 +343,6 @@ export const parseObservations = (observations: $FixMe, dimensions: DimensionsRe
     return parsedObservation;
   });
 };
-
-/* Not currently being used */
-
-export const getSparqlEditorUrl = (query: string): string | null => {
-  return process.env.SPARQL_EDITOR
-    ? `${process.env.SPARQL_EDITOR}#query=${encodeURIComponent(query)}`
-    : query;
-};
-
-export type ObservationValue = string | number | boolean;
-
-/**
- * Parse observation values (values returned from query.execute()) to native JS types
- *
- * @param observationValue
- */
-export const parseObservationValue = (value: Literal | NamedNode): ObservationValue => {
-  // Parse literals to native JS types
-  if (value.termType === "Literal") {
-    return parseRDFLiteral(value);
-  }
-
-  // Return the IRI of named nodes
-  return value.value;
-};
-
-const xmlSchema = "http://www.w3.org/2001/XMLSchema#";
-const parseRDFLiteral = (value: Literal): ObservationValue => {
-  const v = value.value;
-  const dt = value.datatype.value.replace(xmlSchema, "");
-  switch (dt) {
-    case "string":
-      return v;
-    case "boolean":
-      return v === "true" ? true : false;
-    case "float":
-    case "integer":
-    case "long":
-    case "double":
-    case "decimal":
-    case "nonPositiveInteger":
-    case "nonNegativeInteger":
-    case "negativeInteger":
-    case "int":
-    case "unsignedLong":
-    case "positiveInteger":
-    case "short":
-    case "unsignedInt":
-    case "byte":
-    case "unsignedShort":
-    case "unsignedByte":
-      return +v;
-    // TODO: Figure out how to preserve granularity of date (maybe include interval?)
-    // case "date":
-    // case "time":
-    // case "dateTime":
-    // case "gYear":
-    // case "gYearMonth":
-    //   return new Date(v);
-    default:
-      return v;
-  }
-};
-
-export const getObservations = async (
-  { view, source }: { view: View; source: Source },
-  {
-    filters,
-    dimensions,
-  }: {
-    filters?: Filters;
-    dimensions?: string[];
-  }
-) => {
-  const queryFilters = filters
-    ? Object.entries(filters).flatMap(([dimensionKey, filterValues]) =>
-        filterValues ? buildDimensionFilter(view, dimensionKey, filterValues) ?? [] : []
-      )
-    : [];
-
-  const lookupSource = LookupSource.fromSource(source);
-
-  const filterViewDimensions = dimensions
-    ? dimensions.flatMap((d) => {
-        const dimension = view.dimension({
-          cubeDimension: ns.amdpDimension(d),
-        });
-        return dimension ? [dimension] : [];
-      })
-    : view.dimensions;
-
-  const filterView = new View({
-    dimensions: filterViewDimensions,
-    filters: queryFilters,
-  });
-
-  console.log("> getObservations");
-
-  console.log({
-    query: getSparqlEditorUrl(filterView.observationsQuery({}).query.toString()),
-  });
-
-  const observations = await filterView.observations({});
-
-  // Clean up
-  filterView.clear();
-  lookupSource.clear();
-
-  // Workaround for faulty empty query result
-  if (observations.length === 1 && Object.values(observations[0]).some((v) => v === undefined)) {
-    return [];
-  }
-
-  return observations;
-};
-
-export const getView = (cube: Cube): View => View.fromCube(cube);
 
 export const buildDimensionFilter = (view: View, dimensionIri: string, filters: string[]) => {
   const viewDimension = view.dimension({

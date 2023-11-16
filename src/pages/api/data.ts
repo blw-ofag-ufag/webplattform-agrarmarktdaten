@@ -21,7 +21,7 @@ import rdf from "rdf-ext";
 import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
-import { ObservationValue } from "./use-sparql";
+import { sparqlEndpoint } from "./sparql";
 
 export const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
   return fullIri.replace(namespace().value, "");
@@ -426,7 +426,15 @@ export const fetchObservations = async ({
   });
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
-  return observations;
+
+  return {
+    observations,
+    query: getSparqlEditorUrl(query),
+  };
+};
+
+export const getSparqlEditorUrl = (query: string): string | null => {
+  return `${sparqlEndpoint}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
 };
 
 const amdpSource = new Source({
@@ -564,7 +572,7 @@ export const parseTerm = (term?: Term) => {
 
 const xmlSchema = "http://www.w3.org/2001/XMLSchema#";
 
-const parseRDFLiteral = (value: Literal): ObservationValue => {
+const parseRDFLiteral = (value: Literal): $FixMe => {
   const v = value.value;
   const dt = value.datatype.value.replace(xmlSchema, "");
   switch (dt) {
