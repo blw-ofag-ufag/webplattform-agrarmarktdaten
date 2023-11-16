@@ -14,7 +14,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
-import ReactJson from "react-json-view";
+import { ObjectInspector } from "react-inspector";
 import { cubesAtom, defaultCube } from "./cubes";
 import { baseDimensionsAtom } from "./dimensions";
 import { valueFormatter } from "./observations";
@@ -43,7 +43,7 @@ export const BaseDimensions = () => {
   return (
     <Stack gap={2}>
       <Typography variant="h2">Base Dimensions</Typography>
-      <ReactJson src={baseDimensions} />
+      <ObjectInspector data={baseDimensions} />
     </Stack>
   );
 };
@@ -76,7 +76,7 @@ export const CubeDimensions = () => {
         ))}
       </Select>
       {dimensions.isLoading && <CircularProgress />}
-      {dimensions.isSuccess && <ReactJson src={dimensions.data} />}
+      {dimensions.isSuccess && <ObjectInspector data={dimensions.data} />}
     </Stack>
   );
 };
