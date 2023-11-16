@@ -1,8 +1,7 @@
-import { SelectChangeEvent } from "@mui/material";
+import { Box, SelectChangeEvent, useMediaQuery } from "@mui/material";
 import * as GQL from "@/graphql";
 import { GridContainer, GridWrap, GridWrapElement } from "@/components/Grid";
 import { makeStyles } from "@/components/style-utils";
-import { SortBy } from "../BlogpostGrid";
 import { Trans } from "@lingui/macro";
 import { SEARCH_BUILD_TRIGGER } from "@/domain/env";
 import { client } from "@/lib/dato";
@@ -13,14 +12,22 @@ import { useDebounce } from "@/lib/useDebounce";
 import Search from "./Search";
 import Sort from "./Sort";
 import { Filter } from "./Filters";
+import { useTheme } from "@mui/material/styles";
+import MobileFilters from "./MobileFilters";
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme) => ({
   sortRoot: {
     display: "flex",
     alignItems: "center",
   },
   sortContainer: {
     marginTop: "10px",
+  },
+  searchContainer: {
+    width: "100%",
+    display: "flex",
+    alignItems: "end",
+    [theme.breakpoints.down("xl")]: { marginRight: "20px", width: "100%" },
   },
 }));
 
@@ -31,8 +38,8 @@ interface Props {
   focusArticles: GQL.SimpleFocusArticleFragment[];
   selectedFocusArticle: string;
   onSelectFocusArticle: (e: SelectChangeEvent) => void;
-  sortBy: SortBy;
-  onSelectSortBy: (sortBy: SortBy) => void;
+  sortBy: string;
+  onSelectSortBy: (sortBy: string) => void;
 }
 
 const Controls = (props: Props) => {
@@ -47,6 +54,9 @@ const Controls = (props: Props) => {
     onSelectSortBy,
   } = props;
   const { classes } = useStyles();
+
+  const theme = useTheme();
+  const isNotDesktop = useMediaQuery(theme.breakpoints.down("xl"));
 
   const { locale } = useRouter();
   const [searchString, setSearchString] = React.useState("");
@@ -74,36 +84,47 @@ const Controls = (props: Props) => {
 
   return (
     <>
-      <GridContainer>
+      <GridContainer disableItemMargin>
         <GridWrap>
-          <GridWrapElement>
+          <GridWrapElement sx={{ [theme.breakpoints.down("xl")]: { display: "none" } }}>
             <Filter
-              options={markets}
+              options={markets.sort((a, b) => a?.title?.localeCompare(b?.title ?? "") ?? 0)}
               selectedOption={selectedMarket}
               onSelectOption={onSelectMarket}
               label={<Trans id="filter.market">Market</Trans>}
             />
           </GridWrapElement>
-          <GridWrapElement>
+          <GridWrapElement sx={{ [theme.breakpoints.down("xl")]: { display: "none" } }}>
             <Filter
-              options={focusArticles}
+              options={focusArticles.sort((a, b) => a?.title?.localeCompare(b?.title ?? "") ?? 0)}
               selectedOption={selectedFocusArticle}
               onSelectOption={onSelectFocusArticle}
               label={<Trans id="filter.focus">Focus</Trans>}
             />
           </GridWrapElement>
-          <GridWrapElement>
-            <Search
-              searchString={searchString}
-              setSearchString={setSearchString}
-              options={searchOptions}
-              onReset={() => {
-                setSearchOptions([]);
-                //We need to manually clear this otherwise if the user types too fast it won't clear and we get unwanted results
-                setDebouncedSearchString("");
-              }}
-              showLabel
-            />
+          <GridWrapElement full={isNotDesktop} sx={{ display: "flex" }}>
+            <Box className={classes.searchContainer}>
+              <Search
+                searchString={searchString}
+                setSearchString={setSearchString}
+                options={searchOptions}
+                onReset={() => {
+                  setSearchOptions([]);
+                  //We need to manually clear this otherwise if the user types too fast it won't clear and we get unwanted results
+                  setDebouncedSearchString("");
+                }}
+              />
+            </Box>
+            {isNotDesktop && (
+              <MobileFilters
+                markets={markets}
+                selectedMarket={selectedMarket}
+                onSelectMarket={onSelectMarket}
+                focusArticles={focusArticles}
+                selectedFocusArticle={selectedFocusArticle}
+                onSelectFocusArticle={onSelectFocusArticle}
+              />
+            )}
           </GridWrapElement>
         </GridWrap>
       </GridContainer>
