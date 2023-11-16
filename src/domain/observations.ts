@@ -1,9 +1,17 @@
+import { queryObservations } from "@/lib/cube-queries";
 import { amdpMeasure } from "@/lib/namespace";
-import { Measure, Property, fetchObservations } from "@/pages/api/data";
+import {
+  Measure,
+  Observation,
+  Property,
+  addNamespace,
+  fetchObservations,
+  toCamelCase,
+} from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { cubePathAtom, cubesAtom } from "./cubes";
-import { cubeDimensionsAtom } from "./dimensions";
+import { PROPERTIES, cubeDimensionsAtom, dataDimensions } from "./dimensions";
 import { filterDimensionsSelectionAtom } from "./filters";
 
 /**
@@ -16,23 +24,7 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
 >(async (get) => {
   const cubePath = await get(cubePathAtom);
   const cubes = await get(cubesAtom);
-  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
-
   const cubeDefinition = cubes.find((cube) => cube.cube === cubePath);
-
-  const filters = Object.entries(filterDimensionsSelection).reduce(
-    (acc, [key, atom]) => {
-      const selectedOptions = get(atom);
-      if (atom) {
-        return {
-          ...acc,
-          [key]: selectedOptions.map((option) => option.value),
-        };
-      }
-      return acc;
-    },
-    {} as Record<string, string[]>
-  );
 
   if (!cubeDefinition)
     return {
@@ -45,7 +37,7 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
 
   return {
     /* how to encode filter info needs to be improved */
-    queryKey: ["observations", cubePath, JSON.stringify(filters)],
+    queryKey: ["observations", cubePath],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
@@ -53,7 +45,7 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
           iri: amdpMeasure(cubeDefinition.measure).value,
           key: cubeDefinition.measure,
         },
-        filters,
+        filters: {},
       }),
   };
 });
@@ -101,4 +93,77 @@ export const parsedObservationsAtom = atom(async (get) => {
       };
     }, {})
   );
+});
+
+/**
+ * Filtered observations atom. This atom contains the observations of the cube that we are currently
+ * viewing. The observations are filtered by the selected dimensions.
+ */
+export const filteredObservationsAtom = atom(async (get) => {
+  const { observations } = await get(observationsAtom);
+  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+
+  const filters = Object.entries(filterDimensionsSelection).reduce(
+    (acc, [key, atom]) => {
+      const selectedOptions = get(atom);
+      console.log({ key, selectedOptions });
+      const filterFn = (obs: Observation) =>
+        selectedOptions.map((option) => option.value).includes(obs[key as keyof Observation]);
+      return [...acc, filterFn];
+    },
+    [] as Array<(obs: Observation) => boolean>
+  );
+
+  const filteredObservations = observations.filter((obs) =>
+    filters.map((f) => f(obs)).every(Boolean)
+  );
+
+  return filteredObservations;
+});
+
+/**
+ * Observations query atom. This atom contains the SPARQL query to fetch the observations of the
+ * cube that we are currently viewing. The observations are filtered by the selected dimensions.
+ */
+export const observationsQueryAtom = atom(async (get) => {
+  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+  const cubeIri = await get(cubePathAtom);
+  const fullCubeIri = addNamespace(cubeIri);
+  const cubes = await get(cubesAtom);
+  const cubeDefinition = cubes.find((cube) => cube.cube === cubeIri);
+
+  if (!cubeDefinition) return "";
+  const filters = Object.entries(filterDimensionsSelection).reduce(
+    (acc, [key, atom]) => {
+      const selectedOptions = get(atom);
+      if (atom) {
+        return {
+          ...acc,
+          [key]: selectedOptions.map((option) => option.value),
+        };
+      }
+      return acc;
+    },
+    {} as Record<string, string[]>
+  );
+
+  const query = queryObservations({
+    cubeIri: fullCubeIri,
+    filters: Object.entries(filters).reduce((acc, [key, value]) => {
+      return {
+        ...acc,
+        [toCamelCase(key)]: value.map((v) => addNamespace(v)),
+      };
+    }, {}),
+    measure: {
+      iri: amdpMeasure(cubeDefinition.measure).value,
+      key: cubeDefinition.measure,
+    },
+    dimensions: PROPERTIES.map((v) => ({
+      iri: dataDimensions[v].iri,
+      key: v,
+    })),
+  });
+
+  return query;
 });

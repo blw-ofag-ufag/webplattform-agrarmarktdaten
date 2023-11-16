@@ -292,8 +292,9 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   };
 };
 
-const toKebabCase = (v: string) => v.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
-const toCamelCase = (v: string) => v.replace(/-./g, (x) => x[1].toUpperCase());
+export const toKebabCase = (v: string) =>
+  v.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+export const toCamelCase = (v: string) => v.replace(/-./g, (x) => x[1].toUpperCase());
 
 const observationSchema = z
   .object({
@@ -438,12 +439,12 @@ export const getSparqlEditorUrl = (query: string): string | null => {
 };
 
 const amdpSource = new Source({
-  endpointUrl: "https://test.lindas.admin.ch/query",
+  endpointUrl: `${sparqlEndpoint}/query`,
   sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
 });
 
 const sparqlClient = new StreamClient({
-  endpointUrl: "https://test.lindas.admin.ch/query",
+  endpointUrl: `${sparqlEndpoint}/query`,
 });
 
 /**
@@ -495,10 +496,6 @@ export const fetchHierarchy = async ({
     ),
     "name"
   );
-
-  if (hierarchyNodes.length > 0) {
-    console.log({ hierarchyNodes });
-  }
 
   const trees = hierarchyNodes.map((h) => {
     const tree: ($FixMe & { hierarchyName?: string })[] = toTree(h.nodes, dimensionIri, locale);
