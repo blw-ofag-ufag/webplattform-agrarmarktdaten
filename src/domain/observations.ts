@@ -14,7 +14,27 @@ import { mapValues } from "lodash";
 import { mapToObj } from "remeda";
 import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
 import { DIMENSIONS, Dimension, dataDimensions } from "./dimensions";
-import { filterDimensionsSelectionAtom } from "./filters";
+import {
+  RangeOptions,
+  filterDimensionsSelectionAtom,
+  timeRangeAtom,
+  timeViewAtom,
+  TimeView,
+} from "./filters";
+import sortedStringify from "@/utils/sorted-stringify";
+import dayjs from "dayjs";
+import { TimeFilter } from "@/lib/cube-queries";
+
+const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
+  const [minUnix, maxUnix] = timeRange.value;
+  const [minDate, maxDate] = [dayjs.unix(minUnix), dayjs.unix(maxUnix)];
+  const fmtString = timeView === "Month" ? "YYYY-MM-DD" : "YYYY";
+  return {
+    minDate: minDate.format(fmtString),
+    maxDate: maxDate.format(fmtString),
+    mode: timeView,
+  };
+};
 
 /**
  * Observations atom. This atom contains the observations of the cube that we are currently viewing.
@@ -28,6 +48,10 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
   const cubes = await get(cubesAtom);
   const cubeDefinition = cubes.find((cube) => cube.cube === cubePath);
 
+  const timeRange = await get(timeRangeAtom);
+  const timeView = await get(timeViewAtom);
+  const timeFilter = getTimeFilter(timeRange, timeView);
+
   if (!cubeDefinition)
     return {
       queryKey: ["observations"],
@@ -39,7 +63,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
 
   return {
     /* how to encode filter info needs to be improved */
-    queryKey: ["observations", cubePath],
+    queryKey: ["observations", cubePath, sortedStringify(timeFilter)],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
@@ -47,7 +71,11 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
           iri: amdpMeasure(cubeDefinition.measure).value,
           key: cubeDefinition.measure,
         },
+        // Filters are done client-side
         filters: {},
+
+        // Time filters are done server-side
+        timeFilter,
       }),
     staleTime: Infinity,
   };
@@ -135,6 +163,10 @@ export const observationsSparqlQueryAtom = atom(async (get) => {
   const cubes = await get(cubesAtom);
   const cubeDefinition = cubes.find((cube) => cube.cube === cubeIri);
 
+  const timeRange = await get(timeRangeAtom);
+  const timeView = await get(timeViewAtom);
+  const timeFilter = getTimeFilter(timeRange, timeView);
+
   if (!cubeDefinition) return "";
   const filters = mapValues(filterDimensionsSelection, (atom) => {
     if (atom) {
@@ -158,6 +190,7 @@ export const observationsSparqlQueryAtom = atom(async (get) => {
       iri: dataDimensions[v].iri,
       key: toCamelCase(v),
     })),
+    timeFilter,
   });
 
   return getSparqlEditorUrl(query);

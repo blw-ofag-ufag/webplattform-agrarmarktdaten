@@ -1,5 +1,6 @@
 import { DIMENSIONS, Dimension, dataDimensions } from "@/domain/dimensions";
 import {
+  TimeFilter,
   queryBaseMeasureDimensions,
   queryBasePropertyDimensions,
   queryCubeDimensions,
@@ -285,6 +286,7 @@ const observationSchema = z
       },
       {} as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>
     ),
+    formattedDate: z.string().optional(),
   })
   .transform((v) => {
     return Object.entries(v).reduce(
@@ -304,10 +306,12 @@ export const fetchObservations = async ({
   cubeIri,
   filters = {},
   measure,
+  timeFilter,
 }: {
   cubeIri: string;
   filters: Record<string, string[]>;
   measure: { iri: string; key: string };
+  timeFilter: TimeFilter;
 }) => {
   console.log("> fetchObservations");
   const fullCubeIri = ns.addNamespace(cubeIri);
@@ -325,6 +329,7 @@ export const fetchObservations = async ({
       iri: dataDimensions[v].iri,
       key: toCamelCase(v),
     })),
+    timeFilter,
   });
 
   const observationsRaw = await fetchSparql(query);

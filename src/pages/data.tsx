@@ -221,7 +221,11 @@ const Table = ({
       .flat()
       .map((dimension) => {
         return {
-          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
+          field: isMeasure(dimension.dimension)
+            ? "measure"
+            : dimension.dimension === "date"
+            ? "formatted-date"
+            : dimension.dimension,
           headerName: dimension.label,
           //width: 200,
           valueFormatter: (params) =>
