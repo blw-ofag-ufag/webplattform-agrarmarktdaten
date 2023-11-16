@@ -26,13 +26,12 @@ import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from
 import SidePanel from "@/components/browser/SidePanel";
 import { cubeDimensionsAtom } from "@/domain/dimensions";
 import { observationsAtom, observationsQueryAtom, valueFormatter } from "@/domain/observations";
-import { IcControlArrowRight, IcControlClose, IcControlDownload } from "@/icons/icons-jsx/control";
+import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import { Measure, Observation, Property } from "./api/data";
-import { ObjectInspector } from "react-inspector";
 import { useFlag } from "@/utils/flags";
-import { makeStyles } from "@/components/style-utils";
+import DebugDataPage from "../components/DebugDataPage";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -91,58 +90,6 @@ export default function DataPage(props: GQL.DataPageQuery) {
   );
 }
 
-const useDebugStyles = makeStyles()((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-    position: "fixed",
-    right: 0,
-    zIndex: 1,
-    background: "paper",
-    maxWidth: 400,
-  },
-}));
-
-const DebugDataBrowser = () => {
-  const observations = useAtomValue(observationsAtom);
-  const observationsQuery = useAtomValue(observationsQueryAtom);
-  const cubeDimensions = useAtomValue(cubeDimensionsAtom);
-  const [expanded, setExpanded] = useState(false);
-  const { classes } = useDebugStyles();
-  return (
-    <Paper className={classes.root}>
-      {expanded ? (
-        <>
-          <IconButton
-            size="small"
-            onClick={() => setExpanded(false)}
-            sx={{ position: "absolute", top: "0.25rem", right: "0.25rem" }}
-          >
-            <IcControlClose fontSize="small" />
-          </IconButton>
-          <Stack spacing={2} sx={{ fontSize: "small" }}>
-            <div>
-              <Typography variant="h5">Observations</Typography>
-              <ObjectInspector data={observations.observations} />
-            </div>
-            <div>
-              <Typography variant="h5">Observations query status</Typography>
-              <ObjectInspector data={observationsQueryStatus} />
-            </div>
-            <div>
-              <Typography variant="h5">Cube dimensions</Typography>
-              <ObjectInspector data={cubeDimensions} />
-            </div>
-          </Stack>
-        </>
-      ) : (
-        <Button size="small" onClick={() => setExpanded(true)}>
-          debug
-        </Button>
-      )}
-    </Paper>
-  );
-};
-
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
@@ -155,7 +102,7 @@ const DataBrowser = () => {
 
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
-      {debug ? <DebugDataBrowser /> : null}
+      {debug ? <DebugDataPage /> : null}
       <Box width="388px" flexGrow={0} flexShrink={0}>
         <SidePanel />
       </Box>
