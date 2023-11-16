@@ -272,7 +272,11 @@ const StructuredText = (props: Props) => {
                   return image?.responsiveImage ? (
                     <Box sx={{ my: "32px" }}>
                       {/*eslint-disable-next-line jsx-a11y/alt-text*/}
-                      <Image data={image?.responsiveImage} layout="responsive" />
+                      <Image
+                        data={image?.responsiveImage}
+                        layout="intrinsic"
+                        pictureStyle={{ margin: 0 }}
+                      />
                       <Typography variant="body1" sx={{ mt: s(3), color: c.monochrome[500] }}>
                         {image.responsiveImage.title}
                       </Typography>
