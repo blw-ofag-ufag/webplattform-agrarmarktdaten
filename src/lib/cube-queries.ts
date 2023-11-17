@@ -123,14 +123,14 @@ export const queryPropertyDimensionAndValues = ({
   SELECT DISTINCT ?dimension ?value ?label  
   FROM <${agDataBase}>
   WHERE {
-    <${cubeIri}> cube:observationSet ?observationSet .
-    ?observationSet cube:observation ?observation .
     ${dimensionsIris
       .map(
         (dimensionIri) => `
       {
-        SELECT ?dimension ?value ?label {
+        SELECT DISTINCT ?dimension ?value ?label {
           VALUES (?dimension) { (<${dimensionIri}>) }
+          <${cubeIri}> cube:observationSet ?observationSet .
+          ?observationSet cube:observation ?observation .
           ?observation ?dimension ?value .
           ?value schema:name ?label . FILTER(lang(?label) = "${locale}")
         }
@@ -182,7 +182,7 @@ export const queryObservations = ({
   PREFIX sh: <http://www.w3.org/ns/shacl#>
   PREFIX schema: <http://schema.org/>
   
-  SELECT DISTINCT ?observation ${dimensions.map((d) => `?${d.key}`).join(" ")} ?${measure.key}
+  SELECT DISTINCT ?observation ${dimensions.map((d) => `?${d.key}`).join(" ")} ?measure
   FROM <${agDataBase}>
   WHERE {
     ${
@@ -201,7 +201,7 @@ export const queryObservations = ({
         return `?observation <${dimension.iri}> ?${dimension.key} .`;
       })
       .join("\n")}
-    ?observation <${measure.iri}> ?${measure.key} .
+    ?observation <${measure.iri}> ?measure .
   }
   `;
 };

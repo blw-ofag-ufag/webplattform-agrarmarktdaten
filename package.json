@@ -27,7 +27,7 @@
     "postversion": "git push --follow-tags",
     "icons:transform": "svgr --typescript -d src/icons/icons-jsx src/icons/icons-svg --replace-attr-values '#000=currentColor' --icon",
     "prepare": "husky install",
-    "postinstall": "yarn graphql:codegen; yarn locales:compile",
+    "postinstall": "yarn locales:compile",
     "e2e:screenshots": "node ./scripts/e2e-screenshots.mjs"
   },
   "dependencies": {
@@ -57,7 +57,9 @@
     "@tanstack/react-query-devtools": "^5.4.3",
     "@tpluscode/rdf-ns-builders": "^4.1.0",
     "@urql/exchange-graphcache": "^6.3.3",
+    "@zazuko/cube-hierarchy-query": "^2.2.0",
     "@zazuko/rdf-vocabularies": "^2023.1.19",
+    "@zazuko/vocabulary-extras-builders": "^1.0.3",
     "anysort": "^2.0.0",
     "catalog": "^4.0.1-canary.2",
     "core-js": "^3.6.5",
@@ -87,6 +89,7 @@
     "react": "^18.2.0",
     "react-datocms": "^4.1.3",
     "react-dom": "^18.2.0",
+    "react-inspector": "^6.0.2",
     "react-intersection-observer": "^9.5.2",
     "react-material-ui-carousel": "^3.4.2",
     "react-sticky-box": "^2.0.4",
@@ -147,7 +150,6 @@
     "lint-staged": "^14.0.1",
     "playwright": "^1.39.0",
     "prettier": "^3.0.3",
-    "react-json-view": "^1.21.3",
     "storybook": "^7.5.3",
     "typescript": "5.2.2"
   }

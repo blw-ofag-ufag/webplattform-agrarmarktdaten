@@ -50,7 +50,7 @@ const nodeFromOption = <T extends Option>(option: T, level: number): Node<T> => 
 
 const stratify = <T extends Option>(
   items: T[],
-  groupFunctions: ((item: T) => string)[],
+  groupFunctions: ((item: T) => string | undefined)[],
   level = 0
 ) => {
   if (groupFunctions.length === 0) {
@@ -62,10 +62,12 @@ const stratify = <T extends Option>(
 
   for (const item of items) {
     const key = groupFn(item);
-    if (!groupedItems.has(key)) {
-      groupedItems.set(key, []);
+    if (key) {
+      if (!groupedItems.has(key)) {
+        groupedItems.set(key, []);
+      }
+      groupedItems.get(key)!.push(item);
     }
-    groupedItems.get(key)!.push(item);
   }
 
   const nextGroupingFunctions = groupFunctions.slice(1);
@@ -129,7 +131,7 @@ const propagateValueInTree = <T extends Option>(
 export type SelectProps<T extends Option> = {
   options: T[];
   values: T[];
-  groups?: Array<(item: T) => string>;
+  groups?: Array<(item: T) => string | undefined>;
   onChange: (newValues: T[]) => void;
   colorCheckbox?: (item: T) => string;
   withSearch?: boolean;
