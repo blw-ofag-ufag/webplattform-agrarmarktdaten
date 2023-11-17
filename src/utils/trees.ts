@@ -4,6 +4,11 @@ import sortBy from "lodash/sortBy";
 import { bfs } from "@/utils/bfs";
 import { HierarchyValue } from "@/pages/api/data";
 
+/**
+ *
+ * Source: https://github.com/visualize-admin/visualization-tool/blob/d4947ffdac7ffaf41c14bf1a35f6f4e5f2d98fc9/app/rdf/tree-utils.ts
+ */
+
 export const mapTree = <T extends { children?: T[] | null }>(tree: T[], cb: (h: T) => T) => {
   return tree.map((t): T => {
     return {
@@ -85,7 +90,7 @@ export const visitHierarchy = (
 };
 
 /**
- * Visits a hierarchy with depth first search
+ * Finds node in a hierarchy using depth first search
  */
 export const findInHierarchy = (
   tree: HierarchyValue[],

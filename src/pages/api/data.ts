@@ -21,7 +21,7 @@ import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
 import { toCamelCase, toKebabCase } from "@/utils/stringCase";
-import { truthy } from "@/domain/types";
+import { indexBy, isTruthy } from "remeda";
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
@@ -263,24 +263,8 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   ]);
 
   return {
-    measures: measures.reduce(
-      (acc, measure) => {
-        return {
-          ...acc,
-          [measure.dimension]: measure,
-        };
-      },
-      {} as Record<string, Measure>
-    ),
-    properties: properties.reduce(
-      (acc, property) => {
-        return {
-          ...acc,
-          [property.dimension]: property,
-        };
-      },
-      {} as Record<string, Property>
-    ),
+    measures: indexBy(measures, (m) => m.dimension),
+    properties: indexBy(properties, (p) => p.dimension),
   };
 };
 
@@ -469,7 +453,7 @@ const toTree = (results: HierarchyNode[], locale: string) => {
       children: sortChildren(
         node.nextInHierarchy
           .map((childNode) => serializeNode(childNode, depth + 1))
-          .filter(truthy)
+          .filter(isTruthy)
           .filter((d) => d.label)
       ),
       depth,
@@ -478,7 +462,7 @@ const toTree = (results: HierarchyNode[], locale: string) => {
     return res;
   };
 
-  return sortChildren(results.map((r) => serializeNode(r, 0)).filter(truthy));
+  return sortChildren(results.map((r) => serializeNode(r, 0)).filter(isTruthy));
 };
 
 const getDimensionFromValue = (dimensionValueIri: string) => {

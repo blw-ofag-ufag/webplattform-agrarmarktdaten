@@ -1,12 +1,20 @@
 import { queryObservations } from "@/lib/cube-queries";
 import { addNamespace, amdpMeasure } from "@/lib/namespace";
-import { Measure, Observation, Property, fetchObservations } from "@/pages/api/data";
+import {
+  Measure,
+  Observation,
+  Property,
+  fetchObservations,
+  getSparqlEditorUrl,
+} from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions, Dimension } from "./dimensions";
 import { filterDimensionsSelectionAtom } from "./filters";
 import { toCamelCase } from "@/utils/stringCase";
+import { mapValues } from "lodash";
+import { mapToObj } from "remeda";
 
 /**
  * Observations atom. This atom contains the observations of the cube that we are currently viewing.
@@ -101,8 +109,8 @@ export const filteredObservationsAtom = atom(async (get) => {
     (acc, [key, atom]) => {
       const dim = key as Dimension;
       const selectedOptions = get(atom);
-      const filterFn = (obs: Observation) =>
-        selectedOptions.map((option) => option.value).includes(obs[dim]);
+      const optionsSet = new Set(selectedOptions.map((option) => option.value));
+      const filterFn = (obs: Observation) => optionsSet.has(obs[dim]);
       return [...acc, filterFn];
     },
     [] as Array<(obs: Observation) => boolean>
@@ -127,37 +135,29 @@ export const observationsQueryAtom = atom(async (get) => {
   const cubeDefinition = cubes.find((cube) => cube.cube === cubeIri);
 
   if (!cubeDefinition) return "";
-  const filters = Object.entries(filterDimensionsSelection).reduce(
-    (acc, [key, atom]) => {
+  const filters = mapValues(filterDimensionsSelection, (atom) => {
+    if (atom) {
       const selectedOptions = get(atom);
-      if (atom) {
-        return {
-          ...acc,
-          [key]: selectedOptions.map((option) => option.value),
-        };
-      }
-      return acc;
-    },
-    {} as Record<string, string[]>
-  );
+      return selectedOptions.map((option) => option.value);
+    }
+    return [];
+  });
 
   const query = queryObservations({
     cubeIri: fullCubeIri,
-    filters: Object.entries(filters).reduce((acc, [key, value]) => {
-      return {
-        ...acc,
-        [toCamelCase(key)]: value.map((v) => addNamespace(v)),
-      };
-    }, {}),
+    filters: mapToObj(Object.entries(filters), ([key, value]) => [
+      toCamelCase(key),
+      value.map((v) => addNamespace(v)),
+    ]),
     measure: {
       iri: amdpMeasure(cubeDefinition.measure).value,
       key: cubeDefinition.measure,
     },
     dimensions: DIMENSIONS.map((v) => ({
       iri: dataDimensions[v].iri,
-      key: v,
+      key: toCamelCase(v),
     })),
   });
 
-  return query;
+  return getSparqlEditorUrl(query);
 });

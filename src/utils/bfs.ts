@@ -1,13 +1,16 @@
+import { HierarchyValue } from "@/pages/api/data";
+
 export const IGNORE = {};
-type HierarchyValue = $FixMe;
 
 /**
+ * Source: https://github.com/visualize-admin/visualization-tool/blob/d4947ffdac7ffaf41c14bf1a35f6f4e5f2d98fc9/app/utils/bfs.ts
+ *
  * TODO check if can be deduplicated with visitHierarchy
  * ⚠️ visitHierarchy is a depth-first-search while we have
  * a bread-first-search here.
  */
 export const bfs = function <T extends unknown>(
-  tree: $FixMe[],
+  tree: HierarchyValue[],
   visitor: (
     node: HierarchyValue,
     { depth, parents }: { depth: number; parents: HierarchyValue[] }
