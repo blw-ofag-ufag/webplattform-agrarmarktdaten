@@ -19,7 +19,21 @@ export type Option = {
   label: string;
   value: string;
   checked?: boolean;
-} & { [key: string]: $FixMe };
+  hierarchy?: {
+    ["product-subgroup"]: {
+      value?: string;
+      label?: string;
+    };
+    ["product-group"]: {
+      value?: string;
+      label?: string;
+    };
+    market: {
+      value?: string;
+      label?: string;
+    };
+  };
+};
 
 export type Filter = {
   name: string;
@@ -113,7 +127,10 @@ export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery
   }
 );
 
-export const getProductOptionsWithHierarchy = (hierarchy: HierarchyValue[], options: Option[]) => {
+export const getProductOptionsWithHierarchy = (
+  hierarchy: HierarchyValue[],
+  options: Option[]
+): Option[] => {
   const productOptions = options.map((product) => {
     const subgroup = findInHierarchy(
       hierarchy,
@@ -131,17 +148,19 @@ export const getProductOptionsWithHierarchy = (hierarchy: HierarchyValue[], opti
     return {
       value: product.value,
       label: product.label,
-      ["product-subgroup"]: {
-        value: subgroup?.value,
-        label: subgroup?.label,
-      },
-      ["product-group"]: {
-        value: group?.value,
-        label: group?.label,
-      },
-      market: {
-        value: market?.value,
-        label: market?.label,
+      hierarchy: {
+        ["product-subgroup"]: {
+          value: subgroup?.value,
+          label: subgroup?.label,
+        },
+        ["product-group"]: {
+          value: group?.value,
+          label: group?.label,
+        },
+        market: {
+          value: market?.value,
+          label: market?.label,
+        },
       },
     };
   });
@@ -157,8 +176,6 @@ export const productOptionsWithHierarchyAtom = atom(async (get) => {
 
   return getProductOptionsWithHierarchy(hierarchy, cubeProducts);
 });
-
-type ProductOptionWithHierarchy = ReturnType<typeof getProductOptionsWithHierarchy>[0];
 
 /**
  * Configuration for the dimension filters (salesRegion, productionSystem, etc). This filters affect
@@ -182,9 +199,9 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
       options: productOptions,
       type: "multi" as const,
       groups: [
-        (d: ProductOptionWithHierarchy) => d["market"].label,
-        (d: ProductOptionWithHierarchy) => d["product-group"].label,
-        (d: ProductOptionWithHierarchy) => d["product-subgroup"].label,
+        (d: Option) => d.hierarchy?.["market"].label,
+        (d: Option) => d.hierarchy?.["product-group"].label,
+        (d: Option) => d.hierarchy?.["product-subgroup"].label,
       ],
       search: true,
     },
