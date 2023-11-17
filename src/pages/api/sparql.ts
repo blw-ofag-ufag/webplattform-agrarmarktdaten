@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 // @ts-ignore
 import ParsingClient from "sparql-http-client";
 
-export const sparqlEndpoint = "http://test.lindas.admin.ch";
+export const sparqlEndpoint = "https://test.lindas.admin.ch";
 
 const client = new ParsingClient({
   endpointUrl: `${sparqlEndpoint}/query`,
