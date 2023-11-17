@@ -71,6 +71,29 @@ const useStructuredTextStyles = makeStyles<
       "&:hover": { color: theme.palette.monochrome[600] },
     },
 
+    imageWrapper: {
+      marginTop: "32px",
+      marginBottom: "32px",
+    },
+
+    svgWrapper: {
+      marginTop: "32px",
+      marginBottom: "32px",
+      width: "100%",
+      height: "100%",
+      position: "relative",
+    },
+
+    svg: {
+      width: "100%",
+      height: "auto",
+    },
+
+    imageTitle: {
+      marginTop: theme.spacing(3),
+      color: theme.palette.monochrome[500],
+    },
+
     p: debugStyle("p", {
       "& + & ": margins.lg,
 

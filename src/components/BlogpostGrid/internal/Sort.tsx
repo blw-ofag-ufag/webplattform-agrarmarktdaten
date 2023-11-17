@@ -1,13 +1,15 @@
 import { MenuItem, Select, Typography, FormLabel } from "@mui/material";
 import { Trans } from "@lingui/macro";
-import { SortBy } from "../BlogpostGrid";
 import { makeStyles } from "@/components/style-utils";
+import { getSortBy, SortBy } from "../utils";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles()((theme) => ({
   sortLabel: {
     color: theme.palette.monochrome[400],
     fontSize: "14px!important",
     marginRight: "5px",
+    display: "inline",
   },
   //Could not add a new variant in the there so styled things here for the moment
   selectNaked: {
@@ -30,13 +32,15 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 interface Props {
-  sortBy: SortBy;
-  onSelectSortBy: (sortBy: SortBy) => void;
+  sortBy: string;
+  onSelectSortBy: (sortBy: string) => void;
 }
 
 const Sort = (props: Props) => {
   const { sortBy, onSelectSortBy } = props;
   const { classes } = useStyles();
+  const { locale } = useRouter();
+  const sortByEnum = getSortBy(locale);
   return (
     <>
       <FormLabel>
@@ -46,16 +50,23 @@ const Sort = (props: Props) => {
       </FormLabel>
       <Select
         className={classes.selectNaked}
-        value={sortBy}
-        onChange={(e) => onSelectSortBy(e.target.value as SortBy)}
+        // FIXME: Need to work out the proper type here
+        // @ts-ignore
+        value={sortByEnum[sortBy]}
+        onChange={(e) => {
+          onSelectSortBy(e.target.value as SortBy);
+        }}
         displayEmpty
+        renderValue={(value) => <span>{value}</span>}
         inputProps={{ "aria-label": "Without label" }}
       >
-        {(Object.keys(SortBy) as Array<keyof typeof SortBy>).map((sortByElem) => (
-          <MenuItem key={sortByElem} value={SortBy[sortByElem]} divider>
-            {sortByElem}
-          </MenuItem>
-        ))}
+        {Object.entries(sortByEnum).map(([sortByKey, sortByValue]) => {
+          return (
+            <MenuItem key={sortByValue} value={sortByKey} divider>
+              {sortByValue}
+            </MenuItem>
+          );
+        })}
       </Select>
     </>
   );

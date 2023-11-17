@@ -38,7 +38,7 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
       </Head>
-      <body>
+      <body style={{ position: "relative" }}>
         <Main />
         <NextScript />
       </body>

@@ -637,6 +637,7 @@ fragment SurveyBlock on SurveyBlockRecord {
 
 fragment ImageTeaserBlock on ImageTeaserBlockRecord {
   id
+  description
   imageTeaserAsset {
     customData
     id
@@ -644,6 +645,7 @@ fragment ImageTeaserBlock on ImageTeaserBlockRecord {
     alt
     width
     height
+    title
     # responsiveImage(imgixParams: { fit: fill, w: 1096, h: 556, auto: format }) {
     responsiveImage(imgixParams: { fit: clip, auto: format }) {
       sizes
