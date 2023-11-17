@@ -25,11 +25,13 @@ import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from
 
 import SidePanel from "@/components/browser/SidePanel";
 import { cubeDimensionsAtom } from "@/domain/dimensions";
-import { observationsAtom, observationsStatusAtom, valueFormatter } from "@/domain/observations";
+import { observationsAtom, observationsQueryAtom, valueFormatter } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import { Measure, Observation, Property } from "./api/data";
+import { useFlag } from "@/utils/flags";
+import DebugDataPage from "../components/DebugDataPage";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -92,12 +94,15 @@ const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observations = useAtomValue(observationsAtom);
-  const observationsQueryStatus = useAtomValue(observationsStatusAtom);
+  const observationsQueryStatus = useAtomValue(observationsQueryAtom);
   const resultCount = observations.observations.length;
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
 
+  const debug = useFlag("debug");
+
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
+      {debug ? <DebugDataPage /> : null}
       <Box width="388px" flexGrow={0} flexShrink={0}>
         <SidePanel />
       </Box>

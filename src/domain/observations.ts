@@ -5,13 +5,14 @@ import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { cubePathAtom, cubesAtom } from "./cubes";
 import { cubeDimensionsAtom } from "./dimensions";
 import { filterDimensionsSelectionAtom } from "./filters";
+import sortedStringify from "@/utils/sorted-stringify";
 
 /**
  * Observations atom. This atom contains the observations of the cube that we are currently viewing.
  * The observations are filtered by the selected dimensions.
  * Dimensions values on observations are not yet parsed, use parsedObservationsAtom for that.
  */
-export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
+export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
   ReturnType<typeof fetchObservations> extends Promise<infer T> ? T : never
 >(async (get) => {
   const cubePath = await get(cubePathAtom);
@@ -45,7 +46,7 @@ export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
 
   return {
     /* how to encode filter info needs to be improved */
-    queryKey: ["observations", cubePath, JSON.stringify(filters)],
+    queryKey: ["observations", cubePath, sortedStringify(filters)],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
