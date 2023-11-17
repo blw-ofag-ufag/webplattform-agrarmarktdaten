@@ -93,13 +93,14 @@ export const queryCubeDimensions = ({ locale, cubeIri }: { locale: Locale; cubeI
   PREFIX sh: <http://www.w3.org/ns/shacl#>
   PREFIX schema: <http://schema.org/>
 
-  SELECT DISTINCT ?dimension ?label ?type 
+  SELECT DISTINCT ?dimension ?label ?type ?description
   FROM <${agDataBase}>
   WHERE {
     <${cubeIri}> cube:observationConstraint ?shape .
     ?shape ?p ?blankNode .
     ?blankNode sh:path ?dimension .
     OPTIONAL { ?blankNode schema:name ?label . FILTER(lang(?label) = "${locale}") } 
+    OPTIONAL { ?blankNode schema:description ?description . FILTER(lang(?description) = "${locale}") } 
     OPTIONAL { ?blankNode a ?type . } 
   }
   `;
