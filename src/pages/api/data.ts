@@ -85,6 +85,7 @@ const measureSchema = z.object({
     .startsWith(amdpMeasure().value)
     .transform((v) => ns.removeNamespace(v, amdpMeasure)),
   label: z.string(),
+  description: z.string().optional(),
   range: z
     .object({
       min: z.number(),
@@ -107,6 +108,7 @@ const propertySchema = z.object({
     .startsWith(amdpDimension().value)
     .transform((v) => ns.removeNamespace(v, amdpDimension)),
   label: z.string().optional(),
+  description: z.string().optional(),
   type: z.literal("property").optional(),
   values: z.array(
     z.object({
