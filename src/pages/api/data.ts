@@ -201,6 +201,7 @@ const dimensionSpecSchema = z.object({
   dimension: z.string(),
   label: z.string().optional(),
   type: z.string().optional(),
+  description: z.string().optional(),
 });
 
 /**
@@ -241,6 +242,7 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
       dimension: dim.dimension,
       label: dim.label,
       type: "property" as const,
+      description: dim.description,
       values: values ? values.map((v) => ({ value: v.value, label: v.label })) : [],
     });
   });
