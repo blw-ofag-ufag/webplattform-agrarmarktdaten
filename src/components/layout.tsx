@@ -177,6 +177,7 @@ export const AppLayout = (props: Props) => {
                 width: "100%",
                 height: "50px",
               }}
+              data-datocms-noindex
             >
               <BackButton />
             </GridContainer>
@@ -187,7 +188,7 @@ export const AppLayout = (props: Props) => {
       </Box>
 
       {router.pathname !== "/data" && (
-        <div>
+        <div data-datocms-noindex>
           <Footer />
         </div>
       )}
