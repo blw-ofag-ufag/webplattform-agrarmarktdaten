@@ -158,6 +158,8 @@ export const productOptionsWithHierarchyAtom = atom(async (get) => {
   return getProductOptionsWithHierarchy(hierarchy, cubeProducts);
 });
 
+type ProductOptionWithHierarchy = ReturnType<typeof getProductOptionsWithHierarchy>[0];
+
 /**
  * Configuration for the dimension filters (salesRegion, productionSystem, etc). This filters affect
  * which observations of the cube we fetch.
@@ -180,9 +182,9 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
       options: productOptions,
       type: "multi" as const,
       groups: [
-        (d: $FixMe) => d["market"].label,
-        (d: $FixMe) => d["product-group"].label,
-        (d: $FixMe) => d["product-subgroup"].label,
+        (d: ProductOptionWithHierarchy) => d["market"].label,
+        (d: ProductOptionWithHierarchy) => d["product-group"].label,
+        (d: ProductOptionWithHierarchy) => d["product-subgroup"].label,
       ],
       search: true,
     },
@@ -270,8 +272,7 @@ export const filterConfigurationAtom = atom(async (get) => {
   };
 });
 
-/* Hashing and Codecs */
-
+/* Codecs to save state in URL hash */
 export const multiOptionsCodec = <T extends Option>(options: T[]) => ({
   serialize: (value: Option[]) =>
     value.length === 0 ? "None" : value.map((v) => v.value).join(","),

@@ -89,6 +89,7 @@
     "react": "^18.2.0",
     "react-datocms": "^4.1.3",
     "react-dom": "^18.2.0",
+    "react-inspector": "^6.0.2",
     "react-intersection-observer": "^9.5.2",
     "react-material-ui-carousel": "^3.4.2",
     "react-sticky-box": "^2.0.4",
@@ -149,7 +150,6 @@
     "lint-staged": "^14.0.1",
     "playwright": "^1.39.0",
     "prettier": "^3.0.3",
-    "react-json-view": "^1.21.3",
     "storybook": "^7.5.3",
     "typescript": "5.2.2"
   }

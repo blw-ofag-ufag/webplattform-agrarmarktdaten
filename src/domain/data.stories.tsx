@@ -14,10 +14,10 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
-import ReactJson from "react-json-view";
+import { ObjectInspector } from "react-inspector";
 import { baseDimensionsAtom, cubesAtom, defaultCube } from "./cubes";
-import { getProductOptionsWithHierarchy } from "./filters";
 import { valueFormatter } from "./observations";
+import { getProductOptionsWithHierarchy } from "./filters";
 
 export const AvailableCubes = () => {
   const cubes = useAtomValue(cubesAtom);
@@ -43,7 +43,7 @@ export const BaseDimensions = () => {
   return (
     <Stack gap={2}>
       <Typography variant="h2">Base Dimensions</Typography>
-      <ReactJson src={baseDimensions} />
+      <ObjectInspector data={baseDimensions} />
     </Stack>
   );
 };
@@ -76,7 +76,7 @@ export const CubeDimensions = () => {
         ))}
       </Select>
       {dimensions.isLoading && <CircularProgress />}
-      {dimensions.isSuccess && <ReactJson src={dimensions.data} />}
+      {dimensions.isSuccess && <ObjectInspector data={dimensions.data} />}
     </Stack>
   );
 };
@@ -211,9 +211,9 @@ export const Hierarchy = () => {
       {hierarchy && hierarchy.data && (
         <Stack>
           <Typography variant="h3">List</Typography>
-          <ReactJson src={productList} />
+          <ObjectInspector data={{ list: productList }} />
           <Typography variant="h3">Tree</Typography>
-          <ReactJson src={hierarchy.data} />
+          <ObjectInspector data={hierarchy.data} />
         </Stack>
       )}
       {hierarchy.isLoading && <CircularProgress />}

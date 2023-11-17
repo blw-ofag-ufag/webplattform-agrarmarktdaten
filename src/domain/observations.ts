@@ -7,21 +7,21 @@ import {
   fetchObservations,
   getSparqlEditorUrl,
 } from "@/pages/api/data";
+import { toCamelCase } from "@/utils/stringCase";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
-import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
-import { DIMENSIONS, dataDimensions, Dimension } from "./dimensions";
-import { filterDimensionsSelectionAtom } from "./filters";
-import { toCamelCase } from "@/utils/stringCase";
 import { mapValues } from "lodash";
 import { mapToObj } from "remeda";
+import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
+import { DIMENSIONS, Dimension, dataDimensions } from "./dimensions";
+import { filterDimensionsSelectionAtom } from "./filters";
 
 /**
  * Observations atom. This atom contains the observations of the cube that we are currently viewing.
  * The observations are filtered by the selected dimensions.
  * Dimensions values on observations are not yet parsed, use parsedObservationsAtom for that.
  */
-export const [observationsAtom, observationsStatusAtom] = atomsWithQueryAsync<
+export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
   ReturnType<typeof fetchObservations> extends Promise<infer T> ? T : never
 >(async (get) => {
   const cubePath = await get(cubePathAtom);
@@ -127,7 +127,7 @@ export const filteredObservationsAtom = atom(async (get) => {
  * Observations query atom. This atom contains the SPARQL query to fetch the observations of the
  * cube that we are currently viewing. The observations are filtered by the selected dimensions.
  */
-export const observationsQueryAtom = atom(async (get) => {
+export const observationsSparqlQueryAtom = atom(async (get) => {
   const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
   const cubeIri = await get(cubePathAtom);
   const fullCubeIri = addNamespace(cubeIri);

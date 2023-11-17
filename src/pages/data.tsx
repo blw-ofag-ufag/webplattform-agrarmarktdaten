@@ -24,18 +24,20 @@ import { useAtomValue } from "jotai";
 import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
-import { cubeDimensionsAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
-  observationsStatusAtom,
+  observationsSparqlQueryAtom,
   valueFormatter,
 } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
+import { useFlag } from "@/utils/flags";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
+import DebugDataPage from "../components/DebugDataPage";
 import { Measure, Observation, Property } from "./api/data";
+import { cubeDimensionsAtom } from "@/domain/cubes";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -97,14 +99,17 @@ export default function DataPage(props: GQL.DataPageQuery) {
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
-  const observationsQueryStatus = useAtomValue(observationsStatusAtom);
+  const observationsQueryStatus = useAtomValue(observationsQueryAtom);
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
-  const query = useAtomValue(observationsQueryAtom);
+  const query = useAtomValue(observationsSparqlQueryAtom);
 
   const resultCount = filteredObservations.length;
+  const debug = useFlag("debug");
+
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
+      {debug ? <DebugDataPage /> : null}
       <Box width="388px" flexGrow={0} flexShrink={0}>
         <SidePanel />
       </Box>
