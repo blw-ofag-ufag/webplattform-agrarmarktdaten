@@ -41,6 +41,7 @@ const Search = (props: Props) => {
           onReset?.();
         }
       }}
+      filterOptions={(options) => options}
       renderOption={(props, option) => {
         if (option.attributes?.highlight.body?.[0]) {
           const highlight = highlightMatches(
