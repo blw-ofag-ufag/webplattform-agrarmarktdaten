@@ -20,6 +20,7 @@ import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
+import { toCamelCase, toKebabCase } from "@/utils/stringCase";
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
@@ -281,10 +282,6 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
     ),
   };
 };
-
-export const toKebabCase = (v: string) =>
-  v.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
-export const toCamelCase = (v: string) => v.replace(/-./g, (x) => x[1].toUpperCase());
 
 const observationSchema = z
   .object({
