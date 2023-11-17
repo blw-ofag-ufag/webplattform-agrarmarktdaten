@@ -7,6 +7,7 @@ const locationAtom = atomWithLocation();
 export const localeAtom = atom<Locale>((get) => {
   const location = get(locationAtom);
   const locale = location.pathname?.split("/")[1];
+  console.log(locale);
   if (locale && locales.includes(locale as Locale)) return locale as Locale;
   return defaultLocale;
 });

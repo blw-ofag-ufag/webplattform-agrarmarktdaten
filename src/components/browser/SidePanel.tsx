@@ -1,4 +1,3 @@
-import { availableBaseDimensionsValuesAtom } from "@/domain/dimensions";
 import {
   Option,
   filterConfigurationAtom,
@@ -24,6 +23,7 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
+import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -101,7 +101,8 @@ const SidePanel = () => {
         {/* Property filters */}
 
         {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
-          const filterAtom = filterDimensionsSelection[key];
+          const filterAtom =
+            filterDimensionsSelection[key as keyof typeof filterDimensionsSelection];
           if (!filterAtom) {
             return null;
           }
@@ -112,12 +113,12 @@ const SidePanel = () => {
                 accordion: getAccordionProps(key),
                 select: {
                   withSearch: value.search,
-                  options: value.options,
+                  groups: value?.groups,
                 },
               }}
               options={value.options}
               filterAtom={filterAtom}
-              title={value.name}
+              title={value.name ?? value.key}
             />
           );
         })}
@@ -175,7 +176,7 @@ const FilterSelectAccordion = <T extends Option>({
   title: string;
   slots: {
     accordion: Omit<AccordionProps, "children">;
-    select: Omit<SelectProps<T>, "values" | "onChange">;
+    select: Omit<SelectProps<T>, "values" | "onChange" | "options">;
   };
 }) => {
   const [values, setValues] = useAtom(filterAtom);
@@ -187,7 +188,7 @@ const FilterSelectAccordion = <T extends Option>({
         <PreviewSelect show={!slots.accordion.expanded} values={values} options={options} />
       </AccordionSummary>
       <AccordionDetails>
-        <Select values={values} onChange={setValues} {...slots.select} />
+        <Select values={values} onChange={setValues} options={options} {...slots.select} />
       </AccordionDetails>
     </FilterAccordion>
   );

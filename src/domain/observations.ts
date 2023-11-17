@@ -1,11 +1,20 @@
-import { amdpMeasure } from "@/lib/namespace";
-import { Measure, Property, fetchObservations } from "@/pages/api/data";
+import { queryObservations } from "@/lib/cube-queries";
+import { addNamespace, amdpMeasure } from "@/lib/namespace";
+import {
+  Measure,
+  Observation,
+  Property,
+  fetchObservations,
+  getSparqlEditorUrl,
+} from "@/pages/api/data";
+import { toCamelCase } from "@/utils/stringCase";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
-import { cubePathAtom, cubesAtom } from "./cubes";
-import { cubeDimensionsAtom } from "./dimensions";
+import { mapValues } from "lodash";
+import { mapToObj } from "remeda";
+import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
+import { DIMENSIONS, Dimension, dataDimensions } from "./dimensions";
 import { filterDimensionsSelectionAtom } from "./filters";
-import sortedStringify from "@/utils/sorted-stringify";
 
 /**
  * Observations atom. This atom contains the observations of the cube that we are currently viewing.
@@ -17,23 +26,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
 >(async (get) => {
   const cubePath = await get(cubePathAtom);
   const cubes = await get(cubesAtom);
-  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
-
   const cubeDefinition = cubes.find((cube) => cube.cube === cubePath);
-
-  const filters = Object.entries(filterDimensionsSelection).reduce(
-    (acc, [key, atom]) => {
-      const selectedOptions = get(atom);
-      if (atom) {
-        return {
-          ...acc,
-          [key]: selectedOptions.map((option) => option.value),
-        };
-      }
-      return acc;
-    },
-    {} as Record<string, string[]>
-  );
 
   if (!cubeDefinition)
     return {
@@ -46,7 +39,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
 
   return {
     /* how to encode filter info needs to be improved */
-    queryKey: ["observations", cubePath, sortedStringify(filters)],
+    queryKey: ["observations", cubePath],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
@@ -54,7 +47,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
           iri: amdpMeasure(cubeDefinition.measure).value,
           key: cubeDefinition.measure,
         },
-        filters,
+        filters: {},
       }),
   };
 });
@@ -91,8 +84,80 @@ export const parsedObservationsAtom = atom(async (get) => {
     Object.entries(obs).reduce((acc, [key, value]) => {
       return {
         ...acc,
-        [key]: valueFormatter({ value: value as string | number, dimension: key, cubeDimensions }),
+        [key]: valueFormatter({
+          value: value as string | number,
+          dimension: key,
+          cubeDimensions: {
+            ...cubeDimensions.properties,
+            ...cubeDimensions.measures,
+          },
+        }),
       };
     }, {})
   );
+});
+
+/**
+ * Filtered observations atom. This atom contains the observations of the cube that we are currently
+ * viewing. The observations are filtered by the selected dimensions.
+ */
+export const filteredObservationsAtom = atom(async (get) => {
+  const { observations } = await get(observationsAtom);
+  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+
+  const filters = Object.entries(filterDimensionsSelection).reduce(
+    (acc, [key, atom]) => {
+      const dim = key as Dimension;
+      const selectedOptions = get(atom);
+      const optionsSet = new Set(selectedOptions.map((option) => option.value));
+      const filterFn = (obs: Observation) => optionsSet.has(obs[dim]);
+      return [...acc, filterFn];
+    },
+    [] as Array<(obs: Observation) => boolean>
+  );
+
+  const filteredObservations = observations.filter((obs) =>
+    filters.map((f) => f(obs)).every(Boolean)
+  );
+
+  return filteredObservations;
+});
+
+/**
+ * Observations query atom. This atom contains the SPARQL query to fetch the observations of the
+ * cube that we are currently viewing. The observations are filtered by the selected dimensions.
+ */
+export const observationsSparqlQueryAtom = atom(async (get) => {
+  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+  const cubeIri = await get(cubePathAtom);
+  const fullCubeIri = addNamespace(cubeIri);
+  const cubes = await get(cubesAtom);
+  const cubeDefinition = cubes.find((cube) => cube.cube === cubeIri);
+
+  if (!cubeDefinition) return "";
+  const filters = mapValues(filterDimensionsSelection, (atom) => {
+    if (atom) {
+      const selectedOptions = get(atom);
+      return selectedOptions.map((option) => option.value);
+    }
+    return [];
+  });
+
+  const query = queryObservations({
+    cubeIri: fullCubeIri,
+    filters: mapToObj(Object.entries(filters), ([key, value]) => [
+      toCamelCase(key),
+      value.map((v) => addNamespace(v)),
+    ]),
+    measure: {
+      iri: amdpMeasure(cubeDefinition.measure).value,
+      key: cubeDefinition.measure,
+    },
+    dimensions: DIMENSIONS.map((v) => ({
+      iri: dataDimensions[v].iri,
+      key: toCamelCase(v),
+    })),
+  });
+
+  return getSparqlEditorUrl(query);
 });

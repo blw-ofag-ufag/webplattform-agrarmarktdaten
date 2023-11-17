@@ -1,6 +1,6 @@
-import { amdpMeasure } from "@/lib/namespace";
+import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale, locales } from "@/locales/locales";
-import { CubeSpec, fetchCubeDimensions, fetchObservations } from "@/pages/api/data";
+import { CubeSpec, fetchCubeDimensions, fetchHierarchy, fetchObservations } from "@/pages/api/data";
 import {
   CircularProgress,
   FormControlLabel,
@@ -15,9 +15,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
 import { ObjectInspector } from "react-inspector";
-import { cubesAtom, defaultCube } from "./cubes";
-import { baseDimensionsAtom } from "./dimensions";
+import { baseDimensionsAtom, cubesAtom, defaultCube } from "./cubes";
 import { valueFormatter } from "./observations";
+import { getProductOptionsWithHierarchy } from "./filters";
 
 export const AvailableCubes = () => {
   const cubes = useAtomValue(cubesAtom);
@@ -83,8 +83,9 @@ export const CubeDimensions = () => {
 
 export const Observations = () => {
   const [cube, setCube] = useState<string>(defaultCube);
-  const [showParsed, setShowParsed] = useState(false);
   const cubes = useAtomValue(cubesAtom);
+  const [showParsed, setShowParsed] = useState(false);
+
   const cubeDef = cubes.find((c) => c.cube === cube);
 
   const observations = useQuery({
@@ -120,7 +121,10 @@ export const Observations = () => {
             return valueFormatter({
               value: params.value,
               dimension: key,
-              cubeDimensions: dimensions.data,
+              cubeDimensions: {
+                ...dimensions.data.properties,
+                ...dimensions.data.measures,
+              },
             });
           }
           return params.value;
@@ -161,6 +165,58 @@ export const Observations = () => {
           autoHeight
         />
       )}
+    </Stack>
+  );
+};
+
+export const Hierarchy = () => {
+  const [cube, setCube] = useState<string>(defaultCube);
+  const cubes = useAtomValue(cubesAtom);
+
+  const hierarchy = useQuery({
+    queryKey: ["hierarchy", cube, "product"],
+    queryFn: () =>
+      fetchHierarchy({
+        cubeIri: cube,
+        dimensionIri: amdpDimension("product").value,
+        locale: "de",
+      }),
+  });
+
+  const dimensions = useQuery({
+    queryKey: ["dimensions", cube, "de"],
+    queryFn: () => fetchCubeDimensions("de", cube),
+  });
+
+  const productList = useMemo(() => {
+    if (!hierarchy.data || !dimensions.data) return [];
+
+    const cubeProducts = dimensions.data.properties?.["product"]?.values;
+
+    const productList = getProductOptionsWithHierarchy(hierarchy.data, cubeProducts);
+
+    return productList;
+  }, [hierarchy.data, dimensions.data]);
+
+  return (
+    <Stack gap={2}>
+      <Typography variant="h2">Product Hierarchy</Typography>
+      <Select label="Cube" value={cube} onChange={(e) => setCube(e.target.value)}>
+        {cubes.map((c) => (
+          <MenuItem key={c.cube} value={c.cube}>
+            {c.cube}
+          </MenuItem>
+        ))}
+      </Select>
+      {hierarchy && hierarchy.data && (
+        <Stack>
+          <Typography variant="h3">List</Typography>
+          <ObjectInspector data={{ list: productList }} />
+          <Typography variant="h3">Tree</Typography>
+          <ObjectInspector data={hierarchy.data} />
+        </Stack>
+      )}
+      {hierarchy.isLoading && <CircularProgress />}
     </Stack>
   );
 };

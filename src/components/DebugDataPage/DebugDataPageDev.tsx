@@ -1,11 +1,11 @@
 import { Button, IconButton, Paper, Stack, Typography, Link } from "@mui/material";
 import { useAtomValue } from "jotai";
 import React, { useState } from "react";
-import { cubeDimensionsAtom } from "@/domain/dimensions";
 import { observationsAtom, observationsQueryAtom } from "@/domain/observations";
 import { IcControlClose, IcControlExternal } from "@/icons/icons-jsx/control";
 import { ObjectInspector } from "react-inspector";
 import { makeStyles } from "@/components/style-utils";
+import { cubeDimensionsAtom } from "@/domain/cubes";
 
 const useDebugStyles = makeStyles()((theme) => ({
   root: {

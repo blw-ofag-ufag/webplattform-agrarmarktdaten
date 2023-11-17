@@ -24,14 +24,20 @@ import { useAtomValue } from "jotai";
 import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
-import { cubeDimensionsAtom } from "@/domain/dimensions";
-import { observationsAtom, observationsQueryAtom, valueFormatter } from "@/domain/observations";
+import { isMeasure } from "@/domain/dimensions";
+import {
+  filteredObservationsAtom,
+  observationsQueryAtom,
+  observationsSparqlQueryAtom,
+  valueFormatter,
+} from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
+import { useFlag } from "@/utils/flags";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import { Measure, Observation, Property } from "./api/data";
-import { useFlag } from "@/utils/flags";
 import DebugDataPage from "../components/DebugDataPage";
+import { Measure, Observation, Property } from "./api/data";
+import { cubeDimensionsAtom } from "@/domain/cubes";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -93,11 +99,12 @@ export default function DataPage(props: GQL.DataPageQuery) {
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const contentRef = React.useRef<HTMLDivElement>(null);
-  const observations = useAtomValue(observationsAtom);
   const observationsQueryStatus = useAtomValue(observationsQueryAtom);
-  const resultCount = observations.observations.length;
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
+  const filteredObservations = useAtomValue(filteredObservationsAtom);
+  const query = useAtomValue(observationsSparqlQueryAtom);
 
+  const resultCount = filteredObservations.length;
   const debug = useFlag("debug");
 
   return (
@@ -137,7 +144,7 @@ const DataBrowser = () => {
             <Button size="small" startIcon={<IcControlDownload />}>
               <Trans id="data.actions.download">Data download</Trans>
             </Button>
-            <Button size="small" href={observations.query ?? ""} target="_blank">
+            <Button size="small" href={query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
             <Button
@@ -179,7 +186,10 @@ const DataBrowser = () => {
 
               {observationsQueryStatus.isSuccess && (
                 <>
-                  <Table observations={observations.observations} dimensions={cubeDimensions} />
+                  <Table
+                    observations={filteredObservations}
+                    dimensions={{ ...cubeDimensions.measures, ...cubeDimensions.properties }}
+                  />
                 </>
               )}
             </>
@@ -262,7 +272,7 @@ const Table = ({
       .flat()
       .map((dimension) => {
         return {
-          field: dimension.dimension,
+          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
           headerName: dimension.label,
           //width: 200,
           valueFormatter: (params) =>
