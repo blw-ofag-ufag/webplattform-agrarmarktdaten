@@ -1,13 +1,6 @@
-import { amdp, amdpDimension, amdpMeasure } from "@/lib/namespace";
+import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale, locales } from "@/locales/locales";
-import {
-  CubeSpec,
-  fetchCubeDimensions,
-  fetchHierarchy,
-  fetchObservations,
-  removeNamespace,
-} from "@/pages/api/data";
-import { findInHierarchy } from "@/utils/trees";
+import { CubeSpec, fetchCubeDimensions, fetchHierarchy, fetchObservations } from "@/pages/api/data";
 import {
   CircularProgress,
   FormControlLabel,
@@ -22,8 +15,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
 import ReactJson from "react-json-view";
-import { cubesAtom, defaultCube } from "./cubes";
-import { baseDimensionsAtom } from "./dimensions";
+import { baseDimensionsAtom, cubesAtom, defaultCube } from "./cubes";
+import { getProductOptionsWithHierarchy } from "./filters";
 import { valueFormatter } from "./observations";
 
 export const AvailableCubes = () => {
@@ -200,34 +193,7 @@ export const Hierarchy = () => {
 
     const cubeProducts = dimensions.data.properties?.["product"]?.values;
 
-    const productList = cubeProducts.map((product) => {
-      const subgroup = findInHierarchy(hierarchy.data, (node) =>
-        node.children.find((c: $FixMe) => c.value === amdp(product.value).value)
-      );
-      const group = findInHierarchy(hierarchy.data, (node) =>
-        node.children.find((c: $FixMe) => c.value === subgroup?.value)
-      );
-      const market = findInHierarchy(hierarchy.data, (node) =>
-        node.children.find((c: $FixMe) => c.value === group?.value)
-      );
-
-      return {
-        value: product.value,
-        label: product.label,
-        ["product-subgroup"]: {
-          value: removeNamespace(subgroup?.value),
-          label: subgroup?.label,
-        },
-        ["product-group"]: {
-          value: removeNamespace(group?.value),
-          label: group?.label,
-        },
-        market: {
-          value: removeNamespace(market?.value),
-          label: market?.label,
-        },
-      };
-    });
+    const productList = getProductOptionsWithHierarchy(hierarchy.data, cubeProducts);
 
     return productList;
   }, [hierarchy.data, dimensions.data]);
@@ -246,8 +212,8 @@ export const Hierarchy = () => {
         <Stack>
           <Typography variant="h3">List</Typography>
           <ReactJson src={productList} />
-          {/* <Typography variant="h3">Tree</Typography>
-          <ReactJson src={hierarchy.data} /> */}
+          <Typography variant="h3">Tree</Typography>
+          <ReactJson src={hierarchy.data} />
         </Stack>
       )}
       {hierarchy.isLoading && <CircularProgress />}

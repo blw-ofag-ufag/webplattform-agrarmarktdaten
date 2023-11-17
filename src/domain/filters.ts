@@ -1,5 +1,5 @@
 import { localeAtom } from "@/lib/use-locale";
-import { fetchHierarchy } from "@/pages/api/data";
+import { HierarchyValue, fetchHierarchy } from "@/pages/api/data";
 import { findInHierarchy } from "@/utils/trees";
 import dayjs from "dayjs";
 import { Atom, atom } from "jotai";
@@ -113,13 +113,8 @@ export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery
   }
 );
 
-export const productOptionsWithHierarchyAtom = atom(async (get) => {
-  const hierarchy = await get(productHierarchyAtom);
-  const cubeDimensions = await get(cubeDimensionsAtom);
-
-  const cubeProducts = cubeDimensions.properties["product"]?.values;
-
-  const productOptions = cubeProducts.map((product) => {
+export const getProductOptionsWithHierarchy = (hierarchy: HierarchyValue[], options: Option[]) => {
+  const productOptions = options.map((product) => {
     const subgroup = findInHierarchy(
       hierarchy,
       (node) => !!node.children.find((c) => c.value === product.value)
@@ -152,6 +147,15 @@ export const productOptionsWithHierarchyAtom = atom(async (get) => {
   });
 
   return productOptions;
+};
+
+export const productOptionsWithHierarchyAtom = atom(async (get) => {
+  const hierarchy = await get(productHierarchyAtom);
+  const cubeDimensions = await get(cubeDimensionsAtom);
+
+  const cubeProducts = cubeDimensions.properties["product"]?.values;
+
+  return getProductOptionsWithHierarchy(hierarchy, cubeProducts);
 });
 
 /**
