@@ -181,7 +181,7 @@ export const queryObservations = ({
   PREFIX sh: <http://www.w3.org/ns/shacl#>
   PREFIX schema: <http://schema.org/>
   
-  SELECT DISTINCT ?observation ${dimensions.map((d) => `?${d.key}`).join(" ")} ?${measure.key}
+  SELECT DISTINCT ?observation ${dimensions.map((d) => `?${d.key}`).join(" ")} ?measure
   FROM <${agDataBase}>
   WHERE {
     ${
@@ -200,7 +200,7 @@ export const queryObservations = ({
         return `?observation <${dimension.iri}> ?${dimension.key} .`;
       })
       .join("\n")}
-    ?observation <${measure.iri}> ?${measure.key} .
+    ?observation <${measure.iri}> ?measure .
   }
   `;
 };

@@ -1,17 +1,10 @@
 import { queryObservations } from "@/lib/cube-queries";
-import { amdpMeasure } from "@/lib/namespace";
-import {
-  Measure,
-  Observation,
-  Property,
-  addNamespace,
-  fetchObservations,
-  toCamelCase,
-} from "@/pages/api/data";
+import { addNamespace, amdpMeasure } from "@/lib/namespace";
+import { Measure, Observation, Property, fetchObservations, toCamelCase } from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
-import { cubePathAtom, cubesAtom } from "./cubes";
-import { PROPERTIES, cubeDimensionsAtom, dataDimensions } from "./dimensions";
+import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
+import { DIMENSIONS, dataDimensions, Dimension } from "./dimensions";
 import { filterDimensionsSelectionAtom } from "./filters";
 
 /**
@@ -105,9 +98,10 @@ export const filteredObservationsAtom = atom(async (get) => {
 
   const filters = Object.entries(filterDimensionsSelection).reduce(
     (acc, [key, atom]) => {
+      const dim = key as Dimension;
       const selectedOptions = get(atom);
       const filterFn = (obs: Observation) =>
-        selectedOptions.map((option) => option.value).includes(obs[key as keyof Observation]);
+        selectedOptions.map((option) => option.value).includes(obs[dim]);
       return [...acc, filterFn];
     },
     [] as Array<(obs: Observation) => boolean>
@@ -158,7 +152,7 @@ export const observationsQueryAtom = atom(async (get) => {
       iri: amdpMeasure(cubeDefinition.measure).value,
       key: cubeDefinition.measure,
     },
-    dimensions: PROPERTIES.map((v) => ({
+    dimensions: DIMENSIONS.map((v) => ({
       iri: dataDimensions[v].iri,
       key: v,
     })),

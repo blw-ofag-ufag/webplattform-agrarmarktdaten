@@ -1,4 +1,3 @@
-import { availableBaseDimensionsValuesAtom } from "@/domain/dimensions";
 import {
   Option,
   filterConfigurationAtom,
@@ -24,6 +23,7 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
+import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -118,7 +118,7 @@ const SidePanel = () => {
               }}
               options={value.options}
               filterAtom={filterAtom}
-              title={value.name}
+              title={value.name ?? value.key}
             />
           );
         })}

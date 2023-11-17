@@ -1,14 +1,20 @@
-import { amdp } from "@/lib/namespace";
+import { amdp, removeNamespace } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
-import { fetchHierarchy, removeNamespace } from "@/pages/api/data";
+import { fetchHierarchy } from "@/pages/api/data";
 import { findInHierarchy } from "@/utils/trees";
 import dayjs from "dayjs";
-import { atom } from "jotai";
+import { Atom, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
-import { cubePathAtom, cubesAtom, defaultCube } from "./cubes";
-import { baseDimensionsAtom, cubeDimensionsAtom, dataDimensions } from "./dimensions";
+import {
+  baseDimensionsAtom,
+  cubeDimensionsAtom,
+  cubePathAtom,
+  cubesAtom,
+  defaultCube,
+} from "./cubes";
+import { Dimension, dataDimensions } from "./dimensions";
 
 export type Option = {
   label: string;
@@ -155,14 +161,14 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
   const productOptions = await get(productOptionsWithHierarchyAtom);
 
   return {
-    ["sales-region"]: {
+    ["sales-region" as Dimension]: {
       key: "sales-region",
-      name: cubeDimensions.properties[dataDimensions.salesRegion.id].label,
-      options: cubeDimensions.properties?.[dataDimensions.salesRegion.id].values,
+      name: cubeDimensions.properties[dataDimensions["sales-region"].id].label,
+      options: cubeDimensions.properties?.[dataDimensions["sales-region"].id].values,
       type: "multi" as const,
       search: true,
     },
-    ["product"]: {
+    ["product" as Dimension]: {
       key: "product",
       name: cubeDimensions.properties?.[dataDimensions.product.id].label,
       options: productOptions,
@@ -174,7 +180,7 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
       ],
       search: true,
     },
-  } as Record<string, Filter>;
+  };
 });
 
 /**
@@ -188,18 +194,21 @@ export const filterDimensionsSelectionAtom = atom(async (get) => {
 
   const cubeDimension = await get(cubeDimensionsAtom);
 
-  return {
-    ["sales-region"]: filterMultiHashAtomFamily({
-      key: "sales-region",
-      options: filterDimensionsConfiguration["sales-region"].options,
-      defaultOptions: cubeDimension.properties["sales-region"].values,
-    }),
-    ["product"]: filterMultiHashAtomFamily({
-      key: "product",
-      options: productOptions,
-      defaultOptions: productOptions,
-    }),
-  };
+  const filters = {} as Partial<Record<Dimension, Atom<Option[]>>>;
+
+  filters["sales-region"] = filterMultiHashAtomFamily({
+    key: "sales-region",
+    options: filterDimensionsConfiguration["sales-region"].options,
+    defaultOptions: cubeDimension.properties["sales-region"].values,
+  });
+
+  filters["product"] = filterMultiHashAtomFamily({
+    key: "product",
+    options: productOptions,
+    defaultOptions: productOptions,
+  });
+
+  return filters;
 });
 
 /**

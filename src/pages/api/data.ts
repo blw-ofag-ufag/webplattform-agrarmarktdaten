@@ -1,4 +1,4 @@
-import { PROPERTIES, dataDimensions } from "@/domain/dimensions";
+import { DIMENSIONS, Dimension, dataDimensions } from "@/domain/dimensions";
 import {
   queryBaseMeasureDimensions,
   queryBasePropertyDimensions,
@@ -11,8 +11,6 @@ import {
 import { amdp, amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale, defaultLocale } from "@/locales/locales";
 import { regroupTrees } from "@/utils/trees";
-import { NamespaceBuilder } from "@rdfjs/namespace";
-import { Literal, Term } from "@rdfjs/types";
 import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
 import { AnyPointer } from "clownface";
 import { groupBy, orderBy, uniqBy } from "lodash";
@@ -22,14 +20,6 @@ import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
-
-export const removeNamespace = (fullIri: string, namespace: NamespaceBuilder<string> = amdp) => {
-  return fullIri.replace(namespace().value, "");
-};
-
-export const addNamespace = (partialIri: string) => {
-  return amdp(partialIri).value;
-};
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
@@ -53,21 +43,21 @@ const cubeSpecSchema = z
     cube: z
       .string()
       .startsWith(amdp("cube").value, { message: "Must be a valid AMDP cube" })
-      .transform((v) => removeNamespace(v, amdp)),
+      .transform((v) => ns.removeNamespace(v, amdp)),
     valueChain: z
       .string()
       .startsWith(amdp("value-chain").value, {
         message: "Must be a valid AMDP value chain",
       })
-      .transform((v) => removeNamespace(v, amdp)),
+      .transform((v) => ns.removeNamespace(v, amdp)),
     market: z
       .string()
       .startsWith(amdp("market").value, { message: "Must be a valid AMDP market" })
-      .transform((v) => removeNamespace(v, amdp)),
+      .transform((v) => ns.removeNamespace(v, amdp)),
     measure: z
       .string()
       .startsWith(amdpMeasure().value, { message: "Must be a valid AMDP measure" })
-      .transform((v) => removeNamespace(v, amdpMeasure)),
+      .transform((v) => ns.removeNamespace(v, amdpMeasure)),
   })
   .transform((cubeSpec) => ({
     ...cubeSpec,
@@ -91,7 +81,7 @@ const measureSchema = z.object({
   dimension: z
     .string()
     .startsWith(amdpMeasure().value)
-    .transform((v) => removeNamespace(v, amdpMeasure)),
+    .transform((v) => ns.removeNamespace(v, amdpMeasure)),
   label: z.string(),
   range: z
     .object({
@@ -113,12 +103,12 @@ const propertySchema = z.object({
   dimension: z
     .string()
     .startsWith(amdpDimension().value)
-    .transform((v) => removeNamespace(v, amdpDimension)),
+    .transform((v) => ns.removeNamespace(v, amdpDimension)),
   label: z.string().optional(),
   type: z.literal("property").optional(),
   values: z.array(
     z.object({
-      value: z.string().transform((v) => removeNamespace(v, amdp)),
+      value: z.string().transform((v) => ns.removeNamespace(v, amdp)),
       label: z.string(),
     })
   ),
@@ -172,7 +162,7 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
         if (baseProperties.includes(dimension)) {
           return {
             ...acc,
-            [removeNamespace(dimension, amdpDimension)]: {
+            [ns.removeNamespace(dimension, amdpDimension)]: {
               dimension,
               label: dim?.label,
               values: values.map((value) => ({
@@ -217,7 +207,7 @@ const dimensionSpecSchema = z.object({
  */
 export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   console.log("> fetchCubeDimensions");
-  const fullCubeIri = addNamespace(cubeIri);
+  const fullCubeIri = ns.addNamespace(cubeIri);
   const queryDimensions = queryCubeDimensions({
     locale,
     cubeIri: fullCubeIri,
@@ -298,103 +288,28 @@ export const toCamelCase = (v: string) => v.replace(/-./g, (x) => x[1].toUpperCa
 
 const observationSchema = z
   .object({
-    observation: z.string().transform((v) => removeNamespace(v, amdp)),
-    costComponent: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    currency: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    dataMethod: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    dataSource: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    date: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    foreignTrade: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    keyIndicatorType: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    market: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    salesRegion: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    unit: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    usage: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    valueChain: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    valueChainDetail: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    product: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    productGroup: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    productionSystem: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    productOrigin: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    productProperties: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    productSubgroup: z
-      .string()
-      .transform((v) => removeNamespace(v, amdp))
-      .optional(),
-    price: z
-      .string()
-      .transform((v) => +v)
-      .optional(),
-    quantity: z
-      .string()
-      .transform((v) => +v)
-      .optional(),
-    index: z
-      .string()
-      .transform((v) => +v)
-      .optional(),
+    observation: z.string().transform((v) => ns.removeNamespace(v, amdp)),
+    measure: z.string().transform((v) => +v),
+    ...DIMENSIONS.reduce(
+      (acc, d) => {
+        return {
+          ...acc,
+          [toCamelCase(d)]: z.string().transform((v) => ns.removeNamespace(v, amdp)),
+        };
+      },
+      {} as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>
+    ),
   })
   .transform((v) => {
-    return Object.entries(v).reduce((acc, [key, value]) => {
-      return {
-        ...acc,
-        [toKebabCase(key)]: value,
-      };
-    }, {});
+    return Object.entries(v).reduce(
+      (acc, [key, value]) => {
+        return {
+          ...acc,
+          [toKebabCase(key)]: value,
+        };
+      },
+      {} as Record<Dimension, string> & { observation: string; measure: number }
+    );
   });
 
 export type Observation = z.infer<typeof observationSchema>;
@@ -409,22 +324,23 @@ export const fetchObservations = async ({
   measure: { iri: string; key: string };
 }) => {
   console.log("> fetchObservations");
-  const fullCubeIri = addNamespace(cubeIri);
+  const fullCubeIri = ns.addNamespace(cubeIri);
 
   const query = queryObservations({
     cubeIri: fullCubeIri,
     filters: Object.entries(filters).reduce((acc, [key, value]) => {
       return {
         ...acc,
-        [toCamelCase(key)]: value.map((v) => addNamespace(v)),
+        [toCamelCase(key)]: value.map((v) => ns.addNamespace(v)),
       };
     }, {}),
     measure,
-    dimensions: PROPERTIES.map((v) => ({
+    dimensions: DIMENSIONS.map((v) => ({
       iri: dataDimensions[v].iri,
-      key: v,
+      key: toCamelCase(v),
     })),
   });
+
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
 
@@ -498,7 +414,7 @@ export const fetchHierarchy = async ({
   );
 
   const trees = hierarchyNodes.map((h) => {
-    const tree: ($FixMe & { hierarchyName?: string })[] = toTree(h.nodes, dimensionIri, locale);
+    const tree: ($FixMe & { hierarchyName?: string })[] = toTree(h.nodes, locale);
 
     if (tree.length > 0) {
       // Augment hierarchy value with hierarchyName so that when regrouping
@@ -525,7 +441,7 @@ export const getName = (pointer: AnyPointer, { locale }: { locale: string }) => 
   return term?.value ?? "---";
 };
 
-const toTree = (results: HierarchyNode[], dimensionIri: string, locale: string): $FixMe[] => {
+const toTree = (results: HierarchyNode[], locale: string): $FixMe[] => {
   const sortChildren = (children: $FixMe[]) => orderBy(children, ["position", "identifier"]);
   const serializeNode = (node: HierarchyNode, depth: number): $FixMe | undefined => {
     const name = getName(node.resource, { locale });
@@ -543,67 +459,14 @@ const toTree = (results: HierarchyNode[], dimensionIri: string, locale: string):
               .filter(truthy)
               .filter((d) => d.label)
           ),
-          position: parseTerm(node.resource.out(ns.schema.position).term),
           depth,
-          // hacky way to get the dimension type
-          dimension: amdpDimension(
-            removeNamespace(node.resource.value).match(/^([a-zA-Z]|-)*(?=\/)/)?.[0]
-          ).value,
+          dimension: getDimensionFromValue(node.resource.value),
         }
       : undefined;
     return res;
   };
 
   return sortChildren(results.map((r) => serializeNode(r, 0)).filter(truthy));
-};
-
-export const parseTerm = (term?: Term) => {
-  if (!term) {
-    return;
-  }
-  if (term.termType !== "Literal") {
-    return term.value;
-  }
-  return parseRDFLiteral(term);
-};
-
-const xmlSchema = "http://www.w3.org/2001/XMLSchema#";
-
-const parseRDFLiteral = (value: Literal): $FixMe => {
-  const v = value.value;
-  const dt = value.datatype.value.replace(xmlSchema, "");
-  switch (dt) {
-    case "string":
-      return v;
-    case "boolean":
-      return v === "true" ? true : false;
-    case "float":
-    case "integer":
-    case "long":
-    case "double":
-    case "decimal":
-    case "nonPositiveInteger":
-    case "nonNegativeInteger":
-    case "negativeInteger":
-    case "int":
-    case "unsignedLong":
-    case "positiveInteger":
-    case "short":
-    case "unsignedInt":
-    case "byte":
-    case "unsignedShort":
-    case "unsignedByte":
-      return +v;
-    // TODO: Figure out how to preserve granularity of date (maybe include interval?)
-    // case "date":
-    // case "time":
-    // case "dateTime":
-    // case "gYear":
-    // case "gYearMonth":
-    //   return new Date(v);
-    default:
-      return v;
-  }
 };
 
 type Truthy<T> = T extends false | "" | 0 | null | undefined ? never : T; // from lodash
@@ -618,3 +481,8 @@ type Truthy<T> = T extends false | "" | 0 | null | undefined ? never : T; // fro
 export function truthy<T>(value: T): value is Truthy<T> {
   return !!value;
 }
+
+const getDimensionFromValue = (dimensionValueIri: string) => {
+  return amdpDimension(ns.removeNamespace(dimensionValueIri).match(/^([a-zA-Z]|-)*(?=\/)/)?.[0])
+    .value;
+};

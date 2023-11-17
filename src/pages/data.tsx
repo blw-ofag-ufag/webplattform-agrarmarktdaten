@@ -24,7 +24,8 @@ import { useAtomValue } from "jotai";
 import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
 
 import SidePanel from "@/components/browser/SidePanel";
-import { cubeDimensionsAtom } from "@/domain/dimensions";
+import { cubeDimensionsAtom } from "@/domain/cubes";
+import { isMeasure } from "@/domain/dimensions";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
@@ -266,7 +267,7 @@ const Table = ({
       .flat()
       .map((dimension) => {
         return {
-          field: dimension.dimension,
+          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
           headerName: dimension.label,
           //width: 200,
           valueFormatter: (params) =>
