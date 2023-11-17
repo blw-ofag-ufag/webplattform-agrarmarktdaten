@@ -89,6 +89,18 @@ const useStructuredTextStyles = makeStyles<
       height: "auto",
     },
 
+    linkButton: {
+      fontWeight: "bold",
+      display: "block",
+      width: "fit-content",
+      color: theme.palette.cobalt[500],
+    },
+
+    externalLink: {
+      textDecoration: "none",
+      color: "inherit",
+    },
+
     imageTitle: {
       marginTop: theme.spacing(3),
       color: theme.palette.monochrome[500],
