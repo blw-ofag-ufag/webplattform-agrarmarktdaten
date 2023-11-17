@@ -198,24 +198,22 @@ const StructuredText = (props: Props) => {
                 case "InternalLinkButtonRecord": {
                   const { label, page } = record as GQL.InternalLinkButtonRecord;
                   const url = getUrl(page as InternalLink);
-                  return (
-                    url && (
-                      <NextLink legacyBehavior href={url} passHref>
-                        <Button variant="inline" className={classes.linkButton}>
-                          {label}
-                        </Button>
-                      </NextLink>
-                    )
-                  );
+                  return url ? (
+                    <NextLink legacyBehavior href={url} passHref>
+                      <Button variant="inline" className={classes.linkButton}>
+                        {label}
+                      </Button>
+                    </NextLink>
+                  ) : null;
                 }
 
                 case "ExternalLinkButtonRecord": {
                   const { label, url } = record as GQL.ExternalLinkButtonRecord;
                   //We add target blank automatically to keep consistency with the rest of the site
-                  return (
+                  return url ? (
                     <Button variant="inline" className={classes.linkButton}>
                       <a
-                        href={url ?? ""}
+                        href={url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={classes.externalLink}
@@ -223,18 +221,18 @@ const StructuredText = (props: Props) => {
                         {label}
                       </a>
                     </Button>
-                  );
+                  ) : null;
                 }
 
                 case "AssetLinkButtonRecord": {
                   const { label, asset } = record as GQL.AssetLinkButtonRecord;
-                  return (
-                    <NextLink legacyBehavior href={asset?.url ?? ""} passHref>
+                  return asset?.url ? (
+                    <NextLink legacyBehavior href={asset?.url} passHref>
                       <Button variant="inline" className={classes.linkButton}>
                         {label}
                       </Button>
                     </NextLink>
-                  );
+                  ) : null;
                 }
 
                 case "DataButtonRecord": {
