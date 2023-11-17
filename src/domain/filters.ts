@@ -63,7 +63,7 @@ export type RangeOptions = {
 
 export type TimeView = "Year" | "Month";
 
-const MIN_DATE = dayjs("2020-01");
+const MIN_DATE = dayjs("2000-01");
 const MAX_DATE = dayjs("2023-01");
 
 export const timeRange = {
