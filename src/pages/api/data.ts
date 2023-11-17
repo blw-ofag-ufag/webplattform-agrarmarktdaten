@@ -22,7 +22,7 @@ import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
 import { toCamelCase, toKebabCase } from "@/utils/stringCase";
-import { indexBy, isTruthy } from "remeda";
+import { indexBy, isTruthy, mapToObj } from "remeda";
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
@@ -313,17 +313,14 @@ export const fetchObservations = async ({
   measure: { iri: string; key: string };
   timeFilter: TimeFilter;
 }) => {
-  console.log("> fetchObservations");
   const fullCubeIri = ns.addNamespace(cubeIri);
 
   const query = queryObservations({
     cubeIri: fullCubeIri,
-    filters: Object.entries(filters).reduce((acc, [key, value]) => {
-      return {
-        ...acc,
-        [toCamelCase(key)]: value.map((v) => ns.addNamespace(v)),
-      };
-    }, {}),
+    filters: mapToObj(Object.entries(filters), ([key, value]) => [
+      toCamelCase(key),
+      value.map((v) => ns.addNamespace(v)),
+    ]),
     measure,
     dimensions: DIMENSIONS.map((v) => ({
       iri: dataDimensions[v].iri,
