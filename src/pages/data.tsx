@@ -8,9 +8,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Drawer,
-  DrawerProps,
-  IconButton,
   Paper,
   Stack,
   ThemeProvider,
@@ -21,9 +18,11 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
-import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 
+import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel from "@/components/browser/SidePanel";
+import { cubeDimensionsAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
 import {
   filteredObservationsAtom,
@@ -37,7 +36,6 @@ import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
 import { Measure, Observation, Property } from "./api/data";
-import { cubeDimensionsAtom } from "@/domain/cubes";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -195,68 +193,18 @@ const DataBrowser = () => {
             </>
           </Paper>
         </Box>
-        <ContentDrawer
-          anchor="right"
+        <MetadataPanel
+          dimensions={cubeDimensions}
           open={showMetadataPanel}
           onClose={() => setShowMetadataPanel(false)}
-          container={contentRef.current}
-        >
-          <Box px={4} py={5}>
-            <Stack direction="row" justifyContent="space-between">
-              <Typography variant="h3">
-                <Trans id="data.metadata.title">Metadata</Trans>
-              </Typography>
-              <IconButton onClick={() => setShowMetadataPanel(false)}>
-                <IcControlArrowRight />
-              </IconButton>
-            </Stack>
-          </Box>
-        </ContentDrawer>
-
-        {/* <DataBrowserDebug /> */}
-        {/*  <Results
-          cubesQuery={cubesQuery}
-          //dimensionsQuery={dimensionsQuery}
-          //yearsQuery={yearsQuery}
-        /> */}
+          slots={{
+            drawer: {
+              container: contentRef.current,
+            },
+          }}
+        />
       </Stack>
     </Stack>
-  );
-};
-
-const ContentDrawer = ({
-  children,
-  container,
-  ...props
-}: { container: HTMLDivElement | null } & PropsWithChildren & DrawerProps) => {
-  return (
-    <Drawer
-      PaperProps={{
-        style: {
-          width: "388px",
-          position: "absolute",
-          border: "none",
-          top: 0,
-        },
-      }}
-      slotProps={{
-        backdrop: {
-          style: {
-            position: "absolute",
-            top: 0,
-            backgroundColor: "transparent",
-          },
-        },
-      }}
-      SlideProps={{ timeout: { enter: 0, exit: 0 } }}
-      ModalProps={{
-        container,
-        style: { position: "absolute", top: 0 },
-      }}
-      {...props}
-    >
-      {children}
-    </Drawer>
   );
 };
 
