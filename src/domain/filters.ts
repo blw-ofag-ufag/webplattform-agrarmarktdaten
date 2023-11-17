@@ -1,4 +1,3 @@
-import { amdp, removeNamespace } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import { fetchHierarchy } from "@/pages/api/data";
 import { findInHierarchy } from "@/utils/trees";
@@ -121,29 +120,32 @@ export const productOptionsWithHierarchyAtom = atom(async (get) => {
   const cubeProducts = cubeDimensions.properties["product"]?.values;
 
   const productOptions = cubeProducts.map((product) => {
-    const subgroup = findInHierarchy(hierarchy, (node) =>
-      node.children.find((c: $FixMe) => c.value === amdp(product.value).value)
+    const subgroup = findInHierarchy(
+      hierarchy,
+      (node) => !!node.children.find((c) => c.value === product.value)
     );
-    const group = findInHierarchy(hierarchy, (node) =>
-      node.children.find((c: $FixMe) => c.value === subgroup?.value)
+    const group = findInHierarchy(
+      hierarchy,
+      (node) => !!node.children.find((c) => c.value === subgroup?.value)
     );
-    const market = findInHierarchy(hierarchy, (node) =>
-      node.children.find((c: $FixMe) => c.value === group?.value)
+    const market = findInHierarchy(
+      hierarchy,
+      (node) => !!node.children.find((c) => c.value === group?.value)
     );
 
     return {
       value: product.value,
       label: product.label,
       ["product-subgroup"]: {
-        value: removeNamespace(subgroup?.value),
+        value: subgroup?.value,
         label: subgroup?.label,
       },
       ["product-group"]: {
-        value: removeNamespace(group?.value),
+        value: group?.value,
         label: group?.label,
       },
       market: {
-        value: removeNamespace(market?.value),
+        value: market?.value,
         label: market?.label,
       },
     };

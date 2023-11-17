@@ -1,11 +1,12 @@
 import { queryObservations } from "@/lib/cube-queries";
 import { addNamespace, amdpMeasure } from "@/lib/namespace";
-import { Measure, Observation, Property, fetchObservations, toCamelCase } from "@/pages/api/data";
+import { Measure, Observation, Property, fetchObservations } from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions, Dimension } from "./dimensions";
 import { filterDimensionsSelectionAtom } from "./filters";
+import { toCamelCase } from "@/utils/stringCase";
 
 /**
  * Observations atom. This atom contains the observations of the cube that we are currently viewing.

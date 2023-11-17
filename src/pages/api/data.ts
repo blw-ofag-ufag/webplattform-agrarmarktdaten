@@ -21,6 +21,7 @@ import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
 import { toCamelCase, toKebabCase } from "@/utils/stringCase";
+import { truthy } from "@/domain/types";
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
@@ -438,46 +439,47 @@ export const getName = (pointer: AnyPointer, { locale }: { locale: string }) => 
   return term?.value ?? "---";
 };
 
-const toTree = (results: HierarchyNode[], locale: string): $FixMe[] => {
-  const sortChildren = (children: $FixMe[]) => orderBy(children, ["position", "identifier"]);
-  const serializeNode = (node: HierarchyNode, depth: number): $FixMe | undefined => {
+export interface HierarchyValue {
+  label: string;
+  value: string;
+  children: HierarchyValue[];
+  depth: number;
+  dimension: string;
+}
+
+const hierarchyValueSchema: z.ZodType<HierarchyValue> = z.lazy(() =>
+  z.object({
+    label: z.string().transform((v) => ns.removeNamespace(v, amdp)),
+    value: z.string().transform((v) => ns.removeNamespace(v, amdp)),
+    children: z.array(hierarchyValueSchema),
+    depth: z.number(),
+    dimension: z.string(),
+  })
+);
+
+const toTree = (results: HierarchyNode[], locale: string) => {
+  const sortChildren = (children: HierarchyValue[]) =>
+    orderBy(children, ["position", "identifier"]);
+  const serializeNode = (node: HierarchyNode, depth: number) => {
     const name = getName(node.resource, { locale });
-    // TODO Find out why some hierachy nodes have no label. We filter
-    // them out at the moment
-    // @see https://zulip.zazuko.com/#narrow/stream/40-bafu-ext/topic/labels.20for.20each.20hierarchy.20level/near/312845
-    const res: $FixMe | undefined = name
-      ? {
-          label: name || node.resource.value,
-          value: node.resource.value,
-          path: node.resource.out(ns.sh.path).term?.value,
-          children: sortChildren(
-            node.nextInHierarchy
-              .map((childNode) => serializeNode(childNode, depth + 1))
-              .filter(truthy)
-              .filter((d) => d.label)
-          ),
-          depth,
-          dimension: getDimensionFromValue(node.resource.value),
-        }
-      : undefined;
+
+    const res = hierarchyValueSchema.parse({
+      label: name ?? node.resource.value,
+      value: node.resource.value,
+      children: sortChildren(
+        node.nextInHierarchy
+          .map((childNode) => serializeNode(childNode, depth + 1))
+          .filter(truthy)
+          .filter((d) => d.label)
+      ),
+      depth,
+      dimension: getDimensionFromValue(node.resource.value),
+    });
     return res;
   };
 
   return sortChildren(results.map((r) => serializeNode(r, 0)).filter(truthy));
 };
-
-type Truthy<T> = T extends false | "" | 0 | null | undefined ? never : T; // from lodash
-
-/**
- * Enables type narrowing through Array::filter
- *
- * @example
- * const a = [1, undefined].filter(Boolean) // here the type of a is (number | undefined)[]
- * const b = [1, undefined].filter(truthy) // here the type of b is number[]
- */
-export function truthy<T>(value: T): value is Truthy<T> {
-  return !!value;
-}
 
 const getDimensionFromValue = (dimensionValueIri: string) => {
   return amdpDimension(ns.removeNamespace(dimensionValueIri).match(/^([a-zA-Z]|-)*(?=\/)/)?.[0])

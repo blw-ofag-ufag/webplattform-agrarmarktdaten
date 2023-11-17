@@ -2,8 +2,7 @@ import orderBy from "lodash/orderBy";
 import sortBy from "lodash/sortBy";
 
 import { bfs } from "@/utils/bfs";
-
-type HierarchyValue = $FixMe;
+import { HierarchyValue } from "@/pages/api/data";
 
 export const mapTree = <T extends { children?: T[] | null }>(tree: T[], cb: (h: T) => T) => {
   return tree.map((t): T => {
@@ -60,7 +59,7 @@ export const sortHierarchy = (tree: HierarchyValue[]): HierarchyValue[] => {
 
   return sortedTree.map((d) => ({
     ...d,
-    children: d.children ? sortHierarchy(d.children) : undefined,
+    children: d.children ? sortHierarchy(d.children) : [],
   }));
 };
 
@@ -151,9 +150,8 @@ export const regroupTrees = (
         ...goodTrees[0][0],
         children: goodTrees.map((t) => ({
           value: t[0].hierarchyName!,
-          hasValue: false,
           children: t[0].children,
-          dimensionIri: t[0].dimensionIri,
+          dimension: t[0].dimension,
           label: t[0].hierarchyName!,
           depth: -1,
         })),
