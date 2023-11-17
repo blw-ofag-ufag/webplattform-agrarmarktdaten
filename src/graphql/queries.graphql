@@ -75,6 +75,9 @@ query LegalPage($locale: SiteLocale!) {
       blocks {
         __typename
         ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
         ...ImageTeaserBlock
       }
       links {
@@ -111,6 +114,9 @@ query TermsPage($locale: SiteLocale!) {
       blocks {
         __typename
         ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
         ...ImageTeaserBlock
       }
       links {
@@ -198,6 +204,9 @@ query MethodsPage($locale: SiteLocale!) {
       blocks {
         __typename
         ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
         ...ImageTeaserBlock
       }
       links {
@@ -246,6 +255,9 @@ query InfoPage($locale: SiteLocale!) {
       blocks {
         __typename
         ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
         ...ImageTeaserBlock
       }
       links {
@@ -450,6 +462,9 @@ fragment FullMarketArticle on MarketArticleRecord {
     blocks {
       __typename
       ...DataButton
+      ...InternalLinkButton
+      ...ExternalLinkButton
+      ...AssetLinkButton
       ...ImageTeaserBlock
     }
     links {
@@ -482,6 +497,9 @@ fragment FullFocusArticle on FocusArticleRecord {
     blocks {
       __typename
       ...DataButton
+      ...InternalLinkButton
+      ...ExternalLinkButton
+      ...AssetLinkButton
       ...ImageTeaserBlock
     }
     links {
@@ -566,6 +584,9 @@ fragment BlogPost on BlogPostRecord {
     blocks {
       __typename
       ...DataButton
+      ...InternalLinkButton
+      ...ExternalLinkButton
+      ...AssetLinkButton
       ...ImageTeaserBlock
     }
     links {
@@ -704,10 +725,6 @@ fragment HighlightSection on HighlightSectionRecord {
   id
   title
   content {
-    # blocks {
-    #   id
-    #   __typename
-    # }
     links {
       __typename
       ...HighlightSectionFileRecord
@@ -752,6 +769,29 @@ fragment HighlightSectionLink on HighlightSectionLinkRecord {
 fragment DataButton on DataButtonRecord {
   id
   url
+  label
+}
+
+fragment InternalLinkButton on InternalLinkButtonRecord {
+  id
+  page {
+    __typename
+    ...InternalLink
+  }
+  label
+}
+
+fragment ExternalLinkButton on ExternalLinkButtonRecord {
+  id
+  url
+  label
+}
+
+fragment AssetLinkButton on AssetLinkButtonRecord {
+  id
+  asset {
+    url
+  }
   label
 }
 
