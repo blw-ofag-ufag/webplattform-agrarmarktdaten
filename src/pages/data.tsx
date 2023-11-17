@@ -215,6 +215,7 @@ const Table = ({
   observations: Observation[];
   dimensions: Record<string, Property | Measure>;
 }) => {
+  const [paginationModel, setPaginationModel] = useState({ pageSize: 100, page: 0 });
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
@@ -237,8 +238,9 @@ const Table = ({
     <DataGrid
       rows={observations}
       columns={columns}
+      paginationModel={paginationModel}
+      onPaginationModelChange={(pm) => setPaginationModel(pm)}
       getRowId={(row) => row.observation}
-      autoPageSize
     />
   );
 };
