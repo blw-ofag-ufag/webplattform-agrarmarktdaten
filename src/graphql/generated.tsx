@@ -240,7 +240,36 @@ export type AnalysisPageRecordTitleArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
-export type BlogPostModelContentBlocksField = DataButtonRecord | ImageTeaserBlockRecord;
+/** Block of type Asset Link Button (asset_link_button) */
+export type AssetLinkButtonRecord = RecordInterface & {
+  __typename: 'AssetLinkButtonRecord';
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  asset?: Maybe<FileField>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ItemId']['output'];
+  label?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+
+/** Block of type Asset Link Button (asset_link_button) */
+export type AssetLinkButtonRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+export type BlogPostModelContentBlocksField = AssetLinkButtonRecord | DataButtonRecord | ExternalLinkButtonRecord | ImageTeaserBlockRecord | InternalLinkButtonRecord;
 
 export type BlogPostModelContentField = {
   __typename: 'BlogPostModelContentField';
@@ -703,6 +732,35 @@ export type DownloadTeaserBlockRecordMarkdownArgs = {
   markdown?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+/** Block of type External Link Button (external_link_button) */
+export type ExternalLinkButtonRecord = RecordInterface & {
+  __typename: 'ExternalLinkButtonRecord';
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ItemId']['output'];
+  label?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** Block of type External Link Button (external_link_button) */
+export type ExternalLinkButtonRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
 /** Block of type External Video (external_video_block) */
 export type ExternalVideoBlockRecord = RecordInterface & {
   __typename: 'ExternalVideoBlockRecord';
@@ -1162,6 +1220,12 @@ export type FocusArticleModelContentField = {
   value: Scalars['JsonField']['output'];
 };
 
+export type FocusArticleModelContentFieldMultiLocaleField = {
+  __typename: 'FocusArticleModelContentFieldMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<FocusArticleModelContentField>;
+};
+
 export type FocusArticleModelContentLinksField = AnalysisPageRecord | BlogPostRecord | DataPageRecord | FileDownloadSectionRecord | FocusArticleRecord | HighlightSectionRecord | HomePageRecord | InfoPageRecord | LegalPageRecord | MarketArticleRecord | MethodsPageRecord | PowerBiPageRecord | PowerBiReportRecord | TermsPageRecord;
 
 export type FocusArticleModelFilter = {
@@ -1231,6 +1295,7 @@ export enum FocusArticleModelOrderBy {
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecord = RecordInterface & {
   __typename: 'FocusArticleRecord';
+  _allContentLocales?: Maybe<Array<FocusArticleModelContentFieldMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<FocusArticleModelLeadFieldMultiLocaleField>>;
   _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
@@ -1257,6 +1322,13 @@ export type FocusArticleRecord = RecordInterface & {
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
+};
+
+
+/** Record of type 🎯  Focus Article (focus_article) */
+export type FocusArticleRecordAllContentLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
 };
 
 
@@ -1290,6 +1362,13 @@ export type FocusArticleRecordAllTitleLocalesArgs = {
 
 /** Record of type 🎯  Focus Article (focus_article) */
 export type FocusArticleRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🎯  Focus Article (focus_article) */
+export type FocusArticleRecordContentArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
 
@@ -3543,6 +3622,37 @@ export type InfoPageRecordTitleArgs = {
   locale?: InputMaybe<SiteLocale>;
 };
 
+export type InternalLinkButtonModelPageField = AnalysisPageRecord | BlogPostRecord | DataPageRecord | FocusArticleRecord | HomePageRecord | InfoPageRecord | LegalPageRecord | MarketArticleRecord | MethodsPageRecord | TermsPageRecord;
+
+/** Block of type Internal Link Button (internal_link_button) */
+export type InternalLinkButtonRecord = RecordInterface & {
+  __typename: 'InternalLinkButtonRecord';
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ItemId']['output'];
+  label?: Maybe<Scalars['String']['output']>;
+  page?: Maybe<InternalLinkButtonModelPageField>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+
+/** Block of type Internal Link Button (internal_link_button) */
+export type InternalLinkButtonRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
 /** Specifies how to filter by ID */
 export type ItemIdFilter = {
   /** Search the record with the specified ID */
@@ -3598,6 +3708,7 @@ export type LegalPageRecord = RecordInterface & {
   __typename: 'LegalPageRecord';
   _allContentLocales?: Maybe<Array<LegalPageModelContentFieldMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<LegalPageModelLeadFieldMultiLocaleField>>;
+  _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
@@ -3639,6 +3750,13 @@ export type LegalPageRecordAllLeadLocalesArgs = {
 
 
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
+export type LegalPageRecordAllSeoLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
@@ -3667,6 +3785,13 @@ export type LegalPageRecordContentArgs = {
 
 /** Record of type 🧑‍⚖️ Legal Page (legal_page) */
 export type LegalPageRecordLeadArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🧑‍⚖️ Legal Page (legal_page) */
+export type LegalPageRecordSeoArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -6020,6 +6145,7 @@ export type TermsPageRecord = RecordInterface & {
   __typename: 'TermsPageRecord';
   _allContentLocales?: Maybe<Array<TermsPageModelContentFieldMultiLocaleField>>;
   _allLeadLocales?: Maybe<Array<TermsPageModelLeadFieldMultiLocaleField>>;
+  _allSeoLocales?: Maybe<Array<SeoFieldMultiLocaleField>>;
   _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _allTitleLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
@@ -6061,6 +6187,13 @@ export type TermsPageRecordAllLeadLocalesArgs = {
 
 
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
+export type TermsPageRecordAllSeoLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
@@ -6089,6 +6222,13 @@ export type TermsPageRecordContentArgs = {
 
 /** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
 export type TermsPageRecordLeadArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🧑‍⚖️ Terms and Conditions Page (terms_page) */
+export type TermsPageRecordSeoArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -6740,7 +6880,7 @@ export type BlogPostQueryVariables = Exact<{
 }>;
 
 
-export type BlogPostQuery = { __typename: 'Query', blogPost?: { __typename: 'BlogPostRecord', id: any, publishedDate?: string | null, title?: string | null, leadCard?: string | null, slug?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, lead?: { __typename: 'BlogPostModelLeadField', value: any, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, authors: Array<{ __typename: 'PersonRecord', id: any, firstName?: string | null, lastName?: string | null, portrait?: { __typename: 'FileField', id: any, url: string } | null }>, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, content?: { __typename: 'BlogPostModelContentField', value: any, blocks: Array<{ __typename: 'DataButtonRecord', id: any, url?: string | null, label?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', customData: any, id: any, url: string, alt?: string | null, width?: number | null, height?: number | null, title?: string | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FileDownloadSectionRecord', id: any, title?: string | null, fileDownloadItems: Array<{ __typename: 'FileDownloadItemRecord', id: any, title?: string | null, description?: string | null, date?: string | null, file?: { __typename: 'FileField', url: string, format: string } | null }> } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HighlightSectionRecord', id: any, title?: string | null, content?: { __typename: 'HighlightSectionModelContentField', value: any, links: Array<{ __typename: 'HighlightSectionFileRecord', id: any, title?: string | null, file?: { __typename: 'FileField', url: string } | null } | { __typename: 'HighlightSectionLinkRecord', id: any, title?: string | null, link?: { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any, slug?: string | null } | null }> } | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null, pages: Array<{ __typename: 'PowerBiPageRecord', name?: string | null, id: any, pageId?: string | null }> } | { __typename: 'TermsPageRecord', id: any }> } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, leadCard?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }> };
+export type BlogPostQuery = { __typename: 'Query', blogPost?: { __typename: 'BlogPostRecord', id: any, publishedDate?: string | null, title?: string | null, leadCard?: string | null, slug?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, lead?: { __typename: 'BlogPostModelLeadField', value: any, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, authors: Array<{ __typename: 'PersonRecord', id: any, firstName?: string | null, lastName?: string | null, portrait?: { __typename: 'FileField', id: any, url: string } | null }>, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, content?: { __typename: 'BlogPostModelContentField', value: any, blocks: Array<{ __typename: 'AssetLinkButtonRecord', id: any, label?: string | null, asset?: { __typename: 'FileField', url: string } | null } | { __typename: 'DataButtonRecord', id: any, url?: string | null, label?: string | null } | { __typename: 'ExternalLinkButtonRecord', id: any, url?: string | null, label?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', customData: any, id: any, url: string, alt?: string | null, width?: number | null, height?: number | null, title?: string | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null } | { __typename: 'InternalLinkButtonRecord', id: any, label?: string | null, page?: { __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any } | null }>, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FileDownloadSectionRecord', id: any, title?: string | null, fileDownloadItems: Array<{ __typename: 'FileDownloadItemRecord', id: any, title?: string | null, description?: string | null, date?: string | null, file?: { __typename: 'FileField', url: string, format: string } | null }> } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HighlightSectionRecord', id: any, title?: string | null, content?: { __typename: 'HighlightSectionModelContentField', value: any, links: Array<{ __typename: 'HighlightSectionFileRecord', id: any, title?: string | null, file?: { __typename: 'FileField', url: string } | null } | { __typename: 'HighlightSectionLinkRecord', id: any, title?: string | null, link?: { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any, slug?: string | null } | null }> } | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null, pages: Array<{ __typename: 'PowerBiPageRecord', name?: string | null, id: any, pageId?: string | null }> } | { __typename: 'TermsPageRecord', id: any }> } | null } | null, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, topBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, leadCard?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }> };
 
 export type AllPowerBiReportsQueryVariables = Exact<{
   locale: SiteLocale;
@@ -6776,7 +6916,7 @@ export type FullFocusArticleFragment = { __typename: 'FocusArticleRecord', id: a
 
 export type SimpleBlogPostFragment = { __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, leadCard?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
 
-export type BlogPostFragment = { __typename: 'BlogPostRecord', id: any, publishedDate?: string | null, title?: string | null, leadCard?: string | null, slug?: string | null, lead?: { __typename: 'BlogPostModelLeadField', value: any, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, authors: Array<{ __typename: 'PersonRecord', id: any, firstName?: string | null, lastName?: string | null, portrait?: { __typename: 'FileField', id: any, url: string } | null }>, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, content?: { __typename: 'BlogPostModelContentField', value: any, blocks: Array<{ __typename: 'DataButtonRecord', id: any, url?: string | null, label?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', customData: any, id: any, url: string, alt?: string | null, width?: number | null, height?: number | null, title?: string | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null }>, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FileDownloadSectionRecord', id: any, title?: string | null, fileDownloadItems: Array<{ __typename: 'FileDownloadItemRecord', id: any, title?: string | null, description?: string | null, date?: string | null, file?: { __typename: 'FileField', url: string, format: string } | null }> } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HighlightSectionRecord', id: any, title?: string | null, content?: { __typename: 'HighlightSectionModelContentField', value: any, links: Array<{ __typename: 'HighlightSectionFileRecord', id: any, title?: string | null, file?: { __typename: 'FileField', url: string } | null } | { __typename: 'HighlightSectionLinkRecord', id: any, title?: string | null, link?: { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any, slug?: string | null } | null }> } | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null, pages: Array<{ __typename: 'PowerBiPageRecord', name?: string | null, id: any, pageId?: string | null }> } | { __typename: 'TermsPageRecord', id: any }> } | null };
+export type BlogPostFragment = { __typename: 'BlogPostRecord', id: any, publishedDate?: string | null, title?: string | null, leadCard?: string | null, slug?: string | null, lead?: { __typename: 'BlogPostModelLeadField', value: any, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, authors: Array<{ __typename: 'PersonRecord', id: any, firstName?: string | null, lastName?: string | null, portrait?: { __typename: 'FileField', id: any, url: string } | null }>, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }>, content?: { __typename: 'BlogPostModelContentField', value: any, blocks: Array<{ __typename: 'AssetLinkButtonRecord', id: any, label?: string | null, asset?: { __typename: 'FileField', url: string } | null } | { __typename: 'DataButtonRecord', id: any, url?: string | null, label?: string | null } | { __typename: 'ExternalLinkButtonRecord', id: any, url?: string | null, label?: string | null } | { __typename: 'ImageTeaserBlockRecord', id: any, description?: string | null, imageTeaserAsset?: { __typename: 'FileField', customData: any, id: any, url: string, alt?: string | null, width?: number | null, height?: number | null, title?: string | null, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null } | { __typename: 'InternalLinkButtonRecord', id: any, label?: string | null, page?: { __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any } | null }>, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FileDownloadSectionRecord', id: any, title?: string | null, fileDownloadItems: Array<{ __typename: 'FileDownloadItemRecord', id: any, title?: string | null, description?: string | null, date?: string | null, file?: { __typename: 'FileField', url: string, format: string } | null }> } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HighlightSectionRecord', id: any, title?: string | null, content?: { __typename: 'HighlightSectionModelContentField', value: any, links: Array<{ __typename: 'HighlightSectionFileRecord', id: any, title?: string | null, file?: { __typename: 'FileField', url: string } | null } | { __typename: 'HighlightSectionLinkRecord', id: any, title?: string | null, link?: { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any, slug?: string | null } | null }> } | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, name?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', id: any, name?: string | null, workspaceId?: string | null } | null, dataset?: { __typename: 'PowerBiDatasetRecord', name?: string | null, id: any, datasetId?: string | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null, name?: string | null, id: any } | null } | null, pages: Array<{ __typename: 'PowerBiPageRecord', name?: string | null, id: any, pageId?: string | null }> } | { __typename: 'TermsPageRecord', id: any }> } | null };
 
 export type DownloadTeaserBlockFragment = { __typename: 'DownloadTeaserBlockRecord', id: any, markdown?: string | null, description?: string | null, downloadTeaserAssets: Array<{ __typename: 'DownloadTeaserAssetRecord', id: any, title?: string | null, file?: { __typename: 'FileField', id: any, url: string } | null }> };
 
@@ -6804,9 +6944,17 @@ export type HighlightSectionLinkFragment = { __typename: 'HighlightSectionLinkRe
 
 export type DataButtonFragment = { __typename: 'DataButtonRecord', id: any, url?: string | null, label?: string | null };
 
+export type InternalLinkButtonFragment = { __typename: 'InternalLinkButtonRecord', id: any, label?: string | null, page?: { __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any } | null };
+
+export type ExternalLinkButtonFragment = { __typename: 'ExternalLinkButtonRecord', id: any, url?: string | null, label?: string | null };
+
+export type AssetLinkButtonFragment = { __typename: 'AssetLinkButtonRecord', id: any, label?: string | null, asset?: { __typename: 'FileField', url: string } | null };
+
 type InternalLinkAboutPageRecordFragment = { __typename: 'AboutPageRecord', id: any };
 
 type InternalLinkAnalysisPageRecordFragment = { __typename: 'AnalysisPageRecord', id: any };
+
+type InternalLinkAssetLinkButtonRecordFragment = { __typename: 'AssetLinkButtonRecord' };
 
 type InternalLinkBlogPostRecordFragment = { __typename: 'BlogPostRecord', id: any, slug?: string | null };
 
@@ -6817,6 +6965,8 @@ type InternalLinkDataPageRecordFragment = { __typename: 'DataPageRecord', id: an
 type InternalLinkDownloadTeaserAssetRecordFragment = { __typename: 'DownloadTeaserAssetRecord' };
 
 type InternalLinkDownloadTeaserBlockRecordFragment = { __typename: 'DownloadTeaserBlockRecord' };
+
+type InternalLinkExternalLinkButtonRecordFragment = { __typename: 'ExternalLinkButtonRecord' };
 
 type InternalLinkExternalVideoBlockRecordFragment = { __typename: 'ExternalVideoBlockRecord' };
 
@@ -6843,6 +6993,8 @@ type InternalLinkIframeBlockRecordFragment = { __typename: 'IframeBlockRecord' }
 type InternalLinkImageTeaserBlockRecordFragment = { __typename: 'ImageTeaserBlockRecord' };
 
 type InternalLinkInfoPageRecordFragment = { __typename: 'InfoPageRecord', id: any };
+
+type InternalLinkInternalLinkButtonRecordFragment = { __typename: 'InternalLinkButtonRecord' };
 
 type InternalLinkLegalPageRecordFragment = { __typename: 'LegalPageRecord', id: any };
 
@@ -6882,7 +7034,7 @@ type InternalLinkTermsPageRecordFragment = { __typename: 'TermsPageRecord', id: 
 
 type InternalLinkThemeRecordFragment = { __typename: 'ThemeRecord' };
 
-export type InternalLinkFragment = InternalLinkAboutPageRecordFragment | InternalLinkAnalysisPageRecordFragment | InternalLinkBlogPostRecordFragment | InternalLinkDataButtonRecordFragment | InternalLinkDataPageRecordFragment | InternalLinkDownloadTeaserAssetRecordFragment | InternalLinkDownloadTeaserBlockRecordFragment | InternalLinkExternalVideoBlockRecordFragment | InternalLinkFileDownloadItemRecordFragment | InternalLinkFileDownloadSectionRecordFragment | InternalLinkFocusArticleRecordFragment | InternalLinkGalleryBlockRecordFragment | InternalLinkHighlightSectionFileRecordFragment | InternalLinkHighlightSectionLinkRecordFragment | InternalLinkHighlightSectionRecordFragment | InternalLinkHomePageRecordFragment | InternalLinkHomeRecordFragment | InternalLinkIframeBlockRecordFragment | InternalLinkImageTeaserBlockRecordFragment | InternalLinkInfoPageRecordFragment | InternalLinkLegalPageRecordFragment | InternalLinkLegendFileRecordFragment | InternalLinkMarkdownBlockRecordFragment | InternalLinkMarketArticleRecordFragment | InternalLinkMethodsPageRecordFragment | InternalLinkNewsfeedRecordFragment | InternalLinkPersonRecordFragment | InternalLinkPotatoInfographicRecordFragment | InternalLinkPowerBiDatasetRecordFragment | InternalLinkPowerBiPageRecordFragment | InternalLinkPowerBiReportPageRecordFragment | InternalLinkPowerBiReportRecordFragment | InternalLinkPowerBiWorkspaceRecordFragment | InternalLinkSimplePageRecordFragment | InternalLinkSurveyAnswerRecordFragment | InternalLinkSurveyBlockRecordFragment | InternalLinkSurveyQuestionRecordFragment | InternalLinkTermsPageRecordFragment | InternalLinkThemeRecordFragment;
+export type InternalLinkFragment = InternalLinkAboutPageRecordFragment | InternalLinkAnalysisPageRecordFragment | InternalLinkAssetLinkButtonRecordFragment | InternalLinkBlogPostRecordFragment | InternalLinkDataButtonRecordFragment | InternalLinkDataPageRecordFragment | InternalLinkDownloadTeaserAssetRecordFragment | InternalLinkDownloadTeaserBlockRecordFragment | InternalLinkExternalLinkButtonRecordFragment | InternalLinkExternalVideoBlockRecordFragment | InternalLinkFileDownloadItemRecordFragment | InternalLinkFileDownloadSectionRecordFragment | InternalLinkFocusArticleRecordFragment | InternalLinkGalleryBlockRecordFragment | InternalLinkHighlightSectionFileRecordFragment | InternalLinkHighlightSectionLinkRecordFragment | InternalLinkHighlightSectionRecordFragment | InternalLinkHomePageRecordFragment | InternalLinkHomeRecordFragment | InternalLinkIframeBlockRecordFragment | InternalLinkImageTeaserBlockRecordFragment | InternalLinkInfoPageRecordFragment | InternalLinkInternalLinkButtonRecordFragment | InternalLinkLegalPageRecordFragment | InternalLinkLegendFileRecordFragment | InternalLinkMarkdownBlockRecordFragment | InternalLinkMarketArticleRecordFragment | InternalLinkMethodsPageRecordFragment | InternalLinkNewsfeedRecordFragment | InternalLinkPersonRecordFragment | InternalLinkPotatoInfographicRecordFragment | InternalLinkPowerBiDatasetRecordFragment | InternalLinkPowerBiPageRecordFragment | InternalLinkPowerBiReportPageRecordFragment | InternalLinkPowerBiReportRecordFragment | InternalLinkPowerBiWorkspaceRecordFragment | InternalLinkSimplePageRecordFragment | InternalLinkSurveyAnswerRecordFragment | InternalLinkSurveyBlockRecordFragment | InternalLinkSurveyQuestionRecordFragment | InternalLinkTermsPageRecordFragment | InternalLinkThemeRecordFragment;
 
 export const SimpleMarketArticleFragmentDoc = gql`
     fragment SimpleMarketArticle on MarketArticleRecord {
@@ -7180,6 +7332,32 @@ export const SimpleBlogPostFragmentDoc = gql`
   publishedDate
 }
     `;
+export const InternalLinkButtonFragmentDoc = gql`
+    fragment InternalLinkButton on InternalLinkButtonRecord {
+  id
+  page {
+    __typename
+    ...InternalLink
+  }
+  label
+}
+    `;
+export const ExternalLinkButtonFragmentDoc = gql`
+    fragment ExternalLinkButton on ExternalLinkButtonRecord {
+  id
+  url
+  label
+}
+    `;
+export const AssetLinkButtonFragmentDoc = gql`
+    fragment AssetLinkButton on AssetLinkButtonRecord {
+  id
+  asset {
+    url
+  }
+  label
+}
+    `;
 export const BlogPostFragmentDoc = gql`
     fragment BlogPost on BlogPostRecord {
   id
@@ -7218,6 +7396,9 @@ export const BlogPostFragmentDoc = gql`
     blocks {
       __typename
       ...DataButton
+      ...InternalLinkButton
+      ...ExternalLinkButton
+      ...AssetLinkButton
       ...ImageTeaserBlock
     }
     links {
@@ -7745,6 +7926,9 @@ export const BlogPostDocument = gql`
     ${BlogPostFragmentDoc}
 ${InternalLinkFragmentDoc}
 ${DataButtonFragmentDoc}
+${InternalLinkButtonFragmentDoc}
+${ExternalLinkButtonFragmentDoc}
+${AssetLinkButtonFragmentDoc}
 ${ImageTeaserBlockFragmentDoc}
 ${FileDownloadSectionFragmentDoc}
 ${HighlightSectionFragmentDoc}

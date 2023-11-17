@@ -10,6 +10,7 @@ import { c } from "@interactivethings/swiss-federal-ci";
 import { OpenInNew } from "@mui/icons-material";
 import {
   Box,
+  Button,
   BoxProps,
   List,
   Typography,
@@ -177,60 +178,7 @@ const StructuredText = (props: Props) => {
             }}
             renderLinkToRecord={({ record: _record, children, transformedMeta }) => {
               const record = _record as InternalLink;
-              let url = "";
-              switch (record.__typename) {
-                case "BlogPostRecord": {
-                  url += `/blog/${record.slug}`;
-                  break;
-                }
-                case "TermsPageRecord": {
-                  url += `/terms`;
-                  break;
-                }
-                case "MethodsPageRecord": {
-                  url += `/methods`;
-                  break;
-                }
-                case "MarketArticleRecord": {
-                  url += `/market/${record.slug}`;
-                  break;
-                }
-                case "LegalPageRecord": {
-                  url += `/legal`;
-                  break;
-                }
-                case "FocusArticleRecord": {
-                  url += `/focus/${record.slug}`;
-                  break;
-                }
-                case "AnalysisPageRecord": {
-                  url += `/analysis`;
-                  break;
-                }
-                case "DataPageRecord": {
-                  url += `/data`;
-                  break;
-                }
-                case "AboutPageRecord": {
-                  url += `/about`;
-                  break;
-                }
-                case "HomePageRecord": {
-                  url += `/about`;
-                  break;
-                }
-                case "InfoPageRecord": {
-                  url += `/info`;
-                  break;
-                }
-                case "PowerBiPageRecord": {
-                  url += `/power-bi/${record.id}`;
-                  break;
-                }
-                default:
-                  const _check: never = record;
-                  return null;
-              }
+              const url = getUrl(record) ?? "";
               return (
                 <NextLink {...transformedMeta} legacyBehavior href={url}>
                   <Typography
@@ -247,6 +195,48 @@ const StructuredText = (props: Props) => {
             }}
             renderBlock={({ record }) => {
               switch (record.__typename) {
+                case "InternalLinkButtonRecord": {
+                  const { label, page } = record as GQL.InternalLinkButtonRecord;
+                  const url = getUrl(page as InternalLink);
+                  return (
+                    url && (
+                      <NextLink legacyBehavior href={url} passHref>
+                        <Button variant="inline" className={classes.linkButton}>
+                          {label}
+                        </Button>
+                      </NextLink>
+                    )
+                  );
+                }
+
+                case "ExternalLinkButtonRecord": {
+                  const { label, url } = record as GQL.ExternalLinkButtonRecord;
+                  //We add target blank automatically to keep consistency with the rest of the site
+                  return (
+                    <Button variant="inline" className={classes.linkButton}>
+                      <a
+                        href={url ?? ""}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={classes.externalLink}
+                      >
+                        {label}
+                      </a>
+                    </Button>
+                  );
+                }
+
+                case "AssetLinkButtonRecord": {
+                  const { label, asset } = record as GQL.AssetLinkButtonRecord;
+                  return (
+                    <NextLink legacyBehavior href={asset?.url ?? ""} passHref>
+                      <Button variant="inline" className={classes.linkButton}>
+                        {label}
+                      </Button>
+                    </NextLink>
+                  );
+                }
+
                 case "DataButtonRecord": {
                   const { url, label } = record as GQL.DataButtonRecord;
                   return (
@@ -318,6 +308,50 @@ const StructuredText = (props: Props) => {
       </DebugStructuredText.Provider>
     )
   );
+};
+
+const getUrl = (record: InternalLink) => {
+  switch (record.__typename) {
+    case "BlogPostRecord": {
+      return `/blog/${record.slug}`;
+    }
+    case "TermsPageRecord": {
+      return `/terms`;
+    }
+    case "MethodsPageRecord": {
+      return `/methods`;
+    }
+    case "MarketArticleRecord": {
+      return `/market/${record.slug}`;
+    }
+    case "LegalPageRecord": {
+      return `/legal`;
+    }
+    case "FocusArticleRecord": {
+      return `/focus/${record.slug}`;
+    }
+    case "AnalysisPageRecord": {
+      return `/analysis`;
+    }
+    case "DataPageRecord": {
+      return `/data`;
+    }
+    case "AboutPageRecord": {
+      return `/about`;
+    }
+    case "HomePageRecord": {
+      return `/about`;
+    }
+    case "InfoPageRecord": {
+      return `/info`;
+    }
+    case "PowerBiPageRecord": {
+      return `/power-bi/${record.id}`;
+    }
+    default:
+      const _check: never = record;
+      return null;
+  }
 };
 
 interface HeaderProps {
