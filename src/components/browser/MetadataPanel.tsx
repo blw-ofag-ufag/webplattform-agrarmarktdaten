@@ -106,7 +106,7 @@ const DataDimensionItem = ({
         {expanded ? (
           <Stack>
             <Typography
-              sx={{ mt: 2, color: "grey.800" }}
+              sx={{ mt: 2, color: "textSecondary" }}
               variant="body2"
               fontWeight="bold"
               gutterBottom

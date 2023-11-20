@@ -26,11 +26,12 @@ export const ContentDrawer = ({ children, container, ...props }: ContentDrawerPr
           },
         },
       }}
-      SlideProps={{ timeout: { enter: 0, exit: 0 } }}
       ModalProps={{
         container,
         style: { position: "absolute", top: 0 },
       }}
+      // https://github.com/mui/material-ui/issues/11749#issuecomment-561755796
+      variant="persistent"
       {...props}
     >
       <Box px={4} py={5}>
