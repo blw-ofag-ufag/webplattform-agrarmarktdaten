@@ -7571,7 +7571,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
 
-clownface-shacl-path@^2.0.1, clownface-shacl-path@^2.0.2:
+clownface-shacl-path@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/clownface-shacl-path/-/clownface-shacl-path-2.0.2.tgz#d9a1a651afca5ede7e22e593a3bb914ab5fd9722"
   integrity sha512-M0bNroM/Mn2GovQu1vnJ/nagjKZgguO11GoB1plSsW2BVc+DMWBO4DdExDoQ2VzGiPUKG5HbJvI3RGIFsYobsA==
@@ -10006,10 +10006,10 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
-framer-motion@^10.16.4:
-  version "10.16.4"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.16.4.tgz#30279ef5499b8d85db3a298ee25c83429933e9f8"
-  integrity sha512-p9V9nGomS3m6/CALXqv6nFGMuFOxbWsmaOrdmhyQimMIlLl3LC7h7l86wge/Js/8cRu5ktutS/zlzgR7eBOtFA==
+framer-motion@^10.16.5:
+  version "10.16.5"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.16.5.tgz#f1ad625adf213a8906f1ea52a31a4ef222f056d5"
+  integrity sha512-GEzVjOYP2MIpV9bT/GbhcsBNoImG3/2X3O/xVNWmktkv9MdJ7P/44zELm/7Fjb+O3v39SmKFnoDQB32giThzpg==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
@@ -11104,7 +11104,7 @@ is-glob@4.0.3, is-glob@^4.0.0, is-glob@^4.0.1, is-glob@^4.0.3, is-glob@~4.0.1:
   dependencies:
     is-extglob "^2.1.1"
 
-is-graph-pointer@^2.0.0, is-graph-pointer@^2.1.0:
+is-graph-pointer@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-graph-pointer/-/is-graph-pointer-2.1.0.tgz#03926d721c96c7a73e8a8f051eed858870de2a75"
   integrity sha512-qc9R2PweF7eUoWJ/ggSB5NnJrJuCFInMV/8fvsb8yth7etAk2B5xwXyFnoc9QVrQSzBj2elQx3u9VStZzKM47w==

@@ -85,6 +85,7 @@ const measureSchema = z.object({
     .startsWith(amdpMeasure().value)
     .transform((v) => ns.removeNamespace(v, amdpMeasure)),
   label: z.string(),
+  description: z.string().optional(),
   range: z
     .object({
       min: z.number(),
@@ -107,6 +108,7 @@ const propertySchema = z.object({
     .startsWith(amdpDimension().value)
     .transform((v) => ns.removeNamespace(v, amdpDimension)),
   label: z.string().optional(),
+  description: z.string().optional(),
   type: z.literal("property").optional(),
   values: z.array(
     z.object({
@@ -201,6 +203,7 @@ const dimensionSpecSchema = z.object({
   dimension: z.string(),
   label: z.string().optional(),
   type: z.string().optional(),
+  description: z.string().optional(),
 });
 
 /**
@@ -241,6 +244,7 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
       dimension: dim.dimension,
       label: dim.label,
       type: "property" as const,
+      description: dim.description,
       values: values ? values.map((v) => ({ value: v.value, label: v.label })) : [],
     });
   });

@@ -1,8 +1,8 @@
+import { localeAtom } from "@/lib/use-locale";
 import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
 import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
-import { localeAtom } from "@/lib/use-locale";
 
 export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
   queryKey: ["cubes"],
@@ -109,3 +109,7 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQueryAsyn
     staleTime: Infinity,
   };
 });
+
+export type CubeDimensions = ReturnType<typeof fetchCubeDimensions> extends Promise<infer T>
+  ? T
+  : never;
