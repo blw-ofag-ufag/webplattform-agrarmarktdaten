@@ -7,6 +7,7 @@ import { localeAtom } from "@/lib/use-locale";
 export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
   queryKey: ["cubes"],
   queryFn: () => fetchCubes(),
+  staleTime: Infinity,
 }));
 
 export const defaultCube = "cube/MilkDairyProducts/Production_Price_Year";
@@ -34,6 +35,7 @@ export const cubePathAtom = atom(async (get) => {
 export const [baseDimensionsAtom, baseDimensionsStatusAtom] = atomsWithQuery((get) => ({
   queryKey: ["baseDimensions", get(localeAtom)],
   queryFn: () => fetchBaseDimensions({ locale: get(localeAtom) }),
+  staleTime: Infinity,
 }));
 
 export const availableBaseDimensionsValuesAtom = atom(async (get) => {
@@ -104,5 +106,6 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQueryAsyn
   return {
     queryKey: ["cubeDimensions", cubePath, locale],
     queryFn: () => fetchCubeDimensions(locale, cubePath),
+    staleTime: Infinity,
   };
 });

@@ -49,6 +49,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
         },
         filters: {},
       }),
+    staleTime: Infinity,
   };
 });
 
