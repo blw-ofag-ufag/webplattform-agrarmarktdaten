@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as GQL from "@/graphql";
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { BlogpostCard } from "@/components/BlogpostCard";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { Pagination } from "@/components/Pagination";
@@ -18,8 +18,24 @@ import {
 } from "next-usequerystate";
 import dynamic from "next/dynamic";
 import { getSortBy } from "./utils";
+import { makeStyles } from "@/components/style-utils";
+import { Trans } from "@lingui/macro";
 
 const Controls = dynamic(() => import("./internal/Controls"), { ssr: false });
+
+const useStyles = makeStyles()((theme) => ({
+  noResultsWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+    paddingTop: "96px",
+    marginBottom: "400px",
+  },
+  noResults: {
+    fontWeight: 400,
+    color: theme.palette.monochrome[800],
+  },
+}));
 
 interface Props {
   markets: GQL.SimpleMarketArticleFragment[];
@@ -28,6 +44,7 @@ interface Props {
 
 const BlogPostGrid = (props: Props) => {
   const { markets, focusArticles } = props;
+  const { classes } = useStyles();
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const theme = useTheme();
   const { locale } = useRouter();
@@ -110,7 +127,7 @@ const BlogPostGrid = (props: Props) => {
               </GridWrapElement>
             );
           })}
-          {data?.blogpostCount && (
+          {data?.blogpostCount && data?.blogpostCount?.count > 0 && (
             <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
               <Pagination
                 //first page has 7 articles, the remaining ones have 9
@@ -124,6 +141,13 @@ const BlogPostGrid = (props: Props) => {
                   setPage(page);
                 }}
               />
+            </Box>
+          )}
+          {data?.blogposts.length === 0 && (
+            <Box className={classes.noResultsWrapper}>
+              <Typography variant="h3" className={classes.noResults}>
+                <Trans id="analysis.noResults">There are no results for this selection.</Trans>
+              </Typography>
             </Box>
           )}
         </GridWrap>
