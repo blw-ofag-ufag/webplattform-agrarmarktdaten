@@ -14,28 +14,27 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel from "@/components/browser/SidePanel";
 import { cubeDimensionsAtom } from "@/domain/cubes";
-import { isMeasure } from "@/domain/dimensions";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
   observationsSparqlQueryAtom,
-  valueFormatter,
 } from "@/domain/observations";
 import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
 import { useFlag } from "@/utils/flags";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
-import { Measure, Observation, Property } from "./api/data";
+import { Table } from "@/components/browser/Table";
+import ActionButtons from "@/components/browser/ActionButtons";
+import DataDownload from "@/components/browser/DataDownload";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -139,9 +138,7 @@ const DataBrowser = () => {
             </Typography>
           </Stack>
           <Stack direction="row" gap={2}>
-            <Button size="small" startIcon={<IcControlDownload />}>
-              <Trans id="data.actions.download">Data download</Trans>
-            </Button>
+            <DataDownload />
             <Button size="small" href={query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
@@ -183,12 +180,10 @@ const DataBrowser = () => {
               )}
 
               {observationsQueryStatus.isSuccess && (
-                <>
-                  <Table
-                    observations={filteredObservations}
-                    dimensions={{ ...cubeDimensions.measures, ...cubeDimensions.properties }}
-                  />
-                </>
+                <Table
+                  observations={filteredObservations}
+                  dimensions={{ ...cubeDimensions.measures, ...cubeDimensions.properties }}
+                />
               )}
             </>
           </Paper>
@@ -205,41 +200,6 @@ const DataBrowser = () => {
         />
       </Stack>
     </Stack>
-  );
-};
-
-const Table = ({
-  observations,
-  dimensions,
-}: {
-  observations: Observation[];
-  dimensions: Record<string, Property | Measure>;
-}) => {
-  const columns: GridColDef[] = useMemo(() => {
-    return Object.values(dimensions)
-      .flat()
-      .map((dimension) => {
-        return {
-          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
-          headerName: dimension.label,
-          //width: 200,
-          valueFormatter: (params) =>
-            valueFormatter({
-              value: params.value,
-              dimension: dimension.dimension,
-              cubeDimensions: dimensions,
-            }),
-        };
-      });
-  }, [dimensions]);
-
-  return (
-    <DataGrid
-      rows={observations}
-      columns={columns}
-      getRowId={(row) => row.observation}
-      autoPageSize
-    />
   );
 };
 
