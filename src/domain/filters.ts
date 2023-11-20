@@ -123,6 +123,7 @@ export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery
           cubeIri,
           dimensionIri: dataDimensions.product.iri,
         }),
+      staleTime: Infinity,
     };
   }
 );
