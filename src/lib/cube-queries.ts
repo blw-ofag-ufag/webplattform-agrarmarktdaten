@@ -166,11 +166,17 @@ export const queryMeasureDimensionRange = ({
   `;
 };
 
-export type TimeFilter = {
-  minDate: string;
-  maxDate: string;
-  mode: "Year" | "Month";
-};
+export type TimeFilter =
+  | {
+      minDate: string;
+      maxDate: string;
+      mode: "Year" | "Month";
+    }
+  | {
+      minDate: null;
+      maxDate: null;
+      mode: "Year" | "Month";
+    };
 
 type QueryObservationsOptions = {
   cubeIri: string;
@@ -247,9 +253,15 @@ export const queryObservations = ({
     `
     }
   
-    FILTER (
-    	?formattedDate >= "${timeFilter.minDate}" && ?formattedDate <= "${timeFilter.maxDate}"
-    )
+    ${
+      timeFilter.minDate && timeFilter.maxDate
+        ? `
+      FILTER (
+        ?formattedDate >= "${timeFilter.minDate}" && ?formattedDate <= "${timeFilter.maxDate}"
+      )
+      `
+        : ""
+    }
 
     
   } ORDER BY ?formattedDate

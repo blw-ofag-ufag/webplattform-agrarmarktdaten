@@ -277,6 +277,7 @@ const observationSchema = z
   .object({
     observation: z.string().transform((v) => ns.removeNamespace(v, amdp)),
     measure: z.string().transform((v) => +v),
+    /** The date used to do time filtering */
     formattedDate: z.string().optional(),
     ...(Object.fromEntries(
       DIMENSIONS.map((d) => {
