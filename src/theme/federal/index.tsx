@@ -732,7 +732,6 @@ theme.components = {
         color: theme.palette.text.primary,
         textTransform: "none",
         fontWeight: "normal",
-        minHeight: 64,
         position: "relative",
 
         alignItems: "center",

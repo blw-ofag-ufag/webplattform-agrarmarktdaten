@@ -3,7 +3,7 @@ import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
 import React from "react";
 
-import { Tab, Tabs } from "@mui/material";
+import { Tab, Tabs, tabClasses } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
 
@@ -72,7 +72,16 @@ export const PowerBINavigation = ({
   const { classes } = useStyles();
 
   return (
-    <Tabs value={activePage?.id} sx={{ width: "100%" }}>
+    <Tabs
+      value={activePage?.id}
+      sx={{
+        width: "100%",
+        [`& .${tabClasses.root}`]: {
+          // Not done at theme level not to mess up with global navigation at the top
+          minHeight: 64,
+        },
+      }}
+    >
       {pages.map((page) => (
         <Tab
           key={page.id}
