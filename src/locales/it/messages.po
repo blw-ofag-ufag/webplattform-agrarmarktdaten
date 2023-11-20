@@ -304,7 +304,7 @@ msgstr "Pubblicato il"
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.legal"
-msgstr "Missione e base giuridica"
+msgstr "Compiti e basi legali"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
