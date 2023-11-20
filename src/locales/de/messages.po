@@ -39,6 +39,16 @@ msgstr ""
 #~ msgstr "Verkaufsregion"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.indicator"
+#~ msgstr "Kennzahl"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+#~ msgid "search.label"
+#~ msgstr "Suche"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} insgesamt)"
@@ -90,6 +100,11 @@ msgstr "Analysen"
 #: src/components/BlogpostGrid/internal/MobileFilters.tsx
 msgid "filter.apply"
 msgstr "Anwenden"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "controls.metadata-panel.available-values"
+msgstr "Available values"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -193,6 +208,7 @@ msgstr "Weitere Informationen"
 
 #. js-lingui-explicit-id
 #: src/components/back-button.tsx
+#: src/components/browser/MetadataPanel.tsx
 msgid "cta.back"
 msgstr "Zurück"
 
@@ -202,11 +218,7 @@ msgid "footer.impressum"
 msgstr "Kontakt"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.indicator"
-msgstr "Kennzahl"
-
-#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
 msgstr "Informationen"
@@ -244,13 +256,13 @@ msgid "homepage.section.market"
 msgstr "Märkte"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.metadata"
+#: src/components/browser/MetadataPanel.tsx
+msgid "data.metadata.title"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.metadata.title"
+msgid "data.actions.metadata"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
@@ -300,11 +312,6 @@ msgid "data.control.reset"
 msgstr "Zurücksetzen"
 
 #. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Search.tsx
-msgid "search.label"
-msgstr "Suche"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
 msgstr "Suche"
@@ -323,6 +330,11 @@ msgstr "Alle auswählen"
 #: src/pages/data.tsx
 msgid "data.actions.showFiler"
 msgstr "Filter anzeigen"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "cta.show-more"
+msgstr "Show more"
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Sort.tsx

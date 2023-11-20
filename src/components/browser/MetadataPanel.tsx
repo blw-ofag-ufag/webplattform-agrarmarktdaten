@@ -144,7 +144,7 @@ const DataDimensionItem = ({
             }}
             endIcon={<SvgIcControlArrowRight />}
           >
-            <Trans id="cta.show-moew"> Show more</Trans>
+            <Trans id="cta.show-more"> Show more</Trans>
           </Button>
         )}
       </AnimatePresence>

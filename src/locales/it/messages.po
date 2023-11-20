@@ -39,6 +39,16 @@ msgstr ""
 #~ msgstr "Regione di vendita"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.indicator"
+#~ msgstr "Indicatore"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+#~ msgid "search.label"
+#~ msgstr "Ricerca"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} totale)"
@@ -90,6 +100,11 @@ msgstr "Analisi"
 #: src/components/BlogpostGrid/internal/MobileFilters.tsx
 msgid "filter.apply"
 msgstr "Applicare"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "controls.metadata-panel.available-values"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -193,6 +208,7 @@ msgstr "Ulteriori informazioni"
 
 #. js-lingui-explicit-id
 #: src/components/back-button.tsx
+#: src/components/browser/MetadataPanel.tsx
 msgid "cta.back"
 msgstr "Indietro"
 
@@ -202,11 +218,7 @@ msgid "footer.impressum"
 msgstr "Contatto"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.indicator"
-msgstr "Indicatore"
-
-#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
 msgstr "Informazioni"
@@ -244,13 +256,13 @@ msgid "homepage.section.market"
 msgstr "Mercati"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.metadata"
+#: src/components/browser/MetadataPanel.tsx
+msgid "data.metadata.title"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.metadata.title"
+msgid "data.actions.metadata"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
@@ -300,11 +312,6 @@ msgid "data.control.reset"
 msgstr "Reset"
 
 #. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Search.tsx
-msgid "search.label"
-msgstr "Ricerca"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
 msgstr "Ricerca"
@@ -323,6 +330,11 @@ msgstr "Seleziona tutto"
 #: src/pages/data.tsx
 msgid "data.actions.showFiler"
 msgstr "Mostra filtri"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "cta.show-more"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Sort.tsx
