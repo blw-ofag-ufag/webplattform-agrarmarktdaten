@@ -21,6 +21,11 @@ const CONFIG: models.IReportEmbedConfiguration = {
 
 const useStyles = makeStyles()((theme) => ({
   root: {
+    "& iframe": {
+      border: "none",
+    },
+  },
+  embed: {
     aspectRatio: "16/9",
     width: "100%",
   },
@@ -94,18 +99,18 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
   const { classes } = useStyles();
 
   return (
-    <>
+    <div className={classes.root}>
+      {report && activePage ? (
+        <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
+      ) : null}
       <PowerBIEmbed
         embedConfig={embedConfig}
-        cssClassName={classes.root}
+        cssClassName={classes.embed}
         getEmbeddedComponent={(embedObject) => {
           setReport(embedObject as Report);
         }}
       />
-      {report && activePage ? (
-        <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
-      ) : null}
-    </>
+    </div>
   );
 };
 
