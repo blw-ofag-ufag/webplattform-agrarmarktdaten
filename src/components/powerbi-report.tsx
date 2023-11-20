@@ -48,7 +48,7 @@ type PowerBIPage = {
   id: string;
 };
 
-type PowerBIReportProps = {
+export type PowerBIReportProps = {
   datasetId: string;
   reportId: string;
   reportWorkspaceId: string;

@@ -28,6 +28,8 @@ import {
   renderNodeRule,
 } from "react-datocms";
 import NextImage from "next/image";
+import { PowerBIFullScreen } from "@/components/PowerBIFullScreen";
+import { t } from "@lingui/macro";
 
 const defaultParagraphTypographyProps = {
   variant: "body1",
@@ -142,15 +144,28 @@ const StructuredText = (props: Props) => {
                 case "PowerBiReportRecord":
                   const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
                   return (
-                    <PowerBIReport
-                      key={record.id}
-                      datasetId={powerBiReport.dataset?.datasetId ?? ""}
-                      reportId={powerBiReport?.reportId ?? ""}
-                      reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
-                      pages={
-                        powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? []
-                      }
-                    />
+                    <>
+                      <PowerBIFullScreen
+                        label={t({ id: "controls.fullscreen", message: "Full Screen" })}
+                        powerbi={{
+                          datasetId: powerBiReport.dataset?.datasetId ?? "",
+                          reportId: powerBiReport?.reportId ?? "",
+                          reportWorkspaceId: powerBiReport.workspace?.workspaceId ?? "",
+                          pages:
+                            powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ??
+                            [],
+                        }}
+                      />
+                      <PowerBIReport
+                        key={record.id}
+                        datasetId={powerBiReport.dataset?.datasetId ?? ""}
+                        reportId={powerBiReport?.reportId ?? ""}
+                        reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
+                        pages={
+                          powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? []
+                        }
+                      />
+                    </>
                   );
                 case "FileDownloadSectionRecord":
                   const fileDownloadSection = record as Partial<GQL.FileDownloadSectionRecord>;
