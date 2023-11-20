@@ -39,6 +39,16 @@ msgstr ""
 #~ msgstr "Sales region"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.indicator"
+#~ msgstr "Indicator"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+#~ msgid "search.label"
+#~ msgstr "Search"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} total)"
@@ -120,6 +130,7 @@ msgstr "Reset filters"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
+#: src/components/PowerBIFullScreen/PowerBIFullScreen.tsx
 msgid "header.close"
 msgstr "Close"
 
@@ -186,6 +197,11 @@ msgid "data.filters.from"
 msgstr "From"
 
 #. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "controls.fullscreen"
+msgstr "Full Screen"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.furtherinformation"
@@ -202,11 +218,7 @@ msgid "footer.impressum"
 msgstr "Contact"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.indicator"
-msgstr "Indicator"
-
-#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
 msgstr "Info"
@@ -298,11 +310,6 @@ msgstr "Mandate and legal basis"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.control.reset"
 msgstr "Reset"
-
-#. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Search.tsx
-msgid "search.label"
-msgstr "Search"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx

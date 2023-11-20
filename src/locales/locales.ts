@@ -1,9 +1,14 @@
 // If translations get too big, we should load them dynamically. But for now it's fine.
 import { i18n } from "@lingui/core";
-import { de as pluralsDe, fr as pluralsFr, it as pluralsIt } from "make-plural/plurals";
+import {
+  de as pluralsDe,
+  fr as pluralsFr,
+  it as pluralsIt,
+  en as pluralsEn,
+} from "make-plural/plurals";
 
 import { messages as catalogDe } from "@/locales/de/messages.js";
-// import { messages as catalogEn } from "@/locales/en/messages.js";
+import { messages as catalogEn } from "@/locales/en/messages.js";
 import { messages as catalogFr } from "@/locales/fr/messages.js";
 import { messages as catalogIt } from "@/locales/it/messages.js";
 
@@ -24,13 +29,13 @@ i18n.loadLocaleData({
   de: { plurals: pluralsDe },
   fr: { plurals: pluralsFr },
   it: { plurals: pluralsIt },
-  // en: { plurals: pluralsEn },
+  en: { plurals: pluralsEn },
 });
 i18n.load({
   de: catalogDe,
   fr: catalogFr,
   it: catalogIt,
-  // en: catalogEn,
+  en: catalogEn,
 });
 i18n.activate(defaultLocale);
 
