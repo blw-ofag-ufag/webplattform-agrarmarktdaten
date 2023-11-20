@@ -16,16 +16,9 @@ export const ContentDrawer = ({ children, container, ...props }: ContentDrawerPr
           border: "none",
           top: 0,
         },
+        elevation: 8,
       }}
-      slotProps={{
-        backdrop: {
-          style: {
-            position: "absolute",
-            top: 0,
-            backgroundColor: "transparent",
-          },
-        },
-      }}
+      hideBackdrop
       ModalProps={{
         container,
         style: { position: "absolute", top: 0 },
