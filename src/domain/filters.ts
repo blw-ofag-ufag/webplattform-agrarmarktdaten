@@ -187,14 +187,15 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
   const productOptions = await get(productOptionsWithHierarchyAtom);
 
   return {
-    ["sales-region" as Dimension]: {
+    "sales-region": {
       key: "sales-region",
       name: cubeDimensions.properties[dataDimensions["sales-region"].id].label,
       options: cubeDimensions.properties?.[dataDimensions["sales-region"].id].values,
       type: "multi" as const,
       search: true,
+      groups: undefined,
     },
-    ["product" as Dimension]: {
+    product: {
       key: "product",
       name: cubeDimensions.properties?.[dataDimensions.product.id].label,
       options: productOptions,

@@ -22,7 +22,7 @@ import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
 import { toCamelCase, toKebabCase } from "@/utils/stringCase";
-import { indexBy, isTruthy, mapToObj } from "remeda";
+import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
@@ -277,28 +277,14 @@ const observationSchema = z
   .object({
     observation: z.string().transform((v) => ns.removeNamespace(v, amdp)),
     measure: z.string().transform((v) => +v),
-    ...DIMENSIONS.reduce(
-      (acc, d) => {
-        return {
-          ...acc,
-          [toCamelCase(d)]: z.string().transform((v) => ns.removeNamespace(v, amdp)),
-        };
-      },
-      {} as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>
-    ),
     formattedDate: z.string().optional(),
+    ...(Object.fromEntries(
+      DIMENSIONS.map((d) => {
+        return [toCamelCase(d), z.string().transform((v) => ns.removeNamespace(v, amdp))];
+      })
+    ) as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>),
   })
-  .transform((v) => {
-    return Object.entries(v).reduce(
-      (acc, [key, value]) => {
-        return {
-          ...acc,
-          [toKebabCase(key)]: value,
-        };
-      },
-      {} as Record<Dimension, string> & { observation: string; measure: number }
-    );
-  });
+  .transform((v) => mapKeys(v, toKebabCase));
 
 export type Observation = z.infer<typeof observationSchema>;
 
