@@ -3,7 +3,10 @@
 # Allow: /blog/
 
 Disallow: /
-Allow: /blog/
+Allow: /de/blog/
+Allow: /en/blog/
+Allow: /it/blog/
+Allow: /fr/blog/
 
 ## More specific rules for later
 # Disallow: /api/
