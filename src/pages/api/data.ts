@@ -1,5 +1,6 @@
 import { DIMENSIONS, Dimension, dataDimensions } from "@/domain/dimensions";
 import {
+  TimeFilter,
   queryBaseMeasureDimensions,
   queryBasePropertyDimensions,
   queryCubeDimensions,
@@ -21,7 +22,7 @@ import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
 import { toCamelCase, toKebabCase } from "@/utils/stringCase";
-import { indexBy, isTruthy } from "remeda";
+import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 
 export const fetchSparql = async (query: string) => {
   console.log("> fetchSparql");
@@ -85,6 +86,7 @@ const measureSchema = z.object({
     .startsWith(amdpMeasure().value)
     .transform((v) => ns.removeNamespace(v, amdpMeasure)),
   label: z.string(),
+  description: z.string().optional(),
   range: z
     .object({
       min: z.number(),
@@ -107,6 +109,7 @@ const propertySchema = z.object({
     .startsWith(amdpDimension().value)
     .transform((v) => ns.removeNamespace(v, amdpDimension)),
   label: z.string().optional(),
+  description: z.string().optional(),
   type: z.literal("property").optional(),
   values: z.array(
     z.object({
@@ -201,6 +204,7 @@ const dimensionSpecSchema = z.object({
   dimension: z.string(),
   label: z.string().optional(),
   type: z.string().optional(),
+  description: z.string().optional(),
 });
 
 /**
@@ -241,6 +245,7 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
       dimension: dim.dimension,
       label: dim.label,
       type: "property" as const,
+      description: dim.description,
       values: values ? values.map((v) => ({ value: v.value, label: v.label })) : [],
     });
   });
@@ -272,27 +277,15 @@ const observationSchema = z
   .object({
     observation: z.string().transform((v) => ns.removeNamespace(v, amdp)),
     measure: z.string().transform((v) => +v),
-    ...DIMENSIONS.reduce(
-      (acc, d) => {
-        return {
-          ...acc,
-          [toCamelCase(d)]: z.string().transform((v) => ns.removeNamespace(v, amdp)),
-        };
-      },
-      {} as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>
-    ),
+    /** The date used to do time filtering */
+    formattedDate: z.string().optional(),
+    ...(Object.fromEntries(
+      DIMENSIONS.map((d) => {
+        return [toCamelCase(d), z.string().transform((v) => ns.removeNamespace(v, amdp))];
+      })
+    ) as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>),
   })
-  .transform((v) => {
-    return Object.entries(v).reduce(
-      (acc, [key, value]) => {
-        return {
-          ...acc,
-          [toKebabCase(key)]: value,
-        };
-      },
-      {} as Record<Dimension, string> & { observation: string; measure: number }
-    );
-  });
+  .transform((v) => mapKeys(v, toKebabCase));
 
 export type Observation = z.infer<typeof observationSchema>;
 
@@ -300,27 +293,27 @@ export const fetchObservations = async ({
   cubeIri,
   filters = {},
   measure,
+  timeFilter,
 }: {
   cubeIri: string;
   filters: Record<string, string[]>;
   measure: { iri: string; key: string };
+  timeFilter: TimeFilter;
 }) => {
-  console.log("> fetchObservations");
   const fullCubeIri = ns.addNamespace(cubeIri);
 
   const query = queryObservations({
     cubeIri: fullCubeIri,
-    filters: Object.entries(filters).reduce((acc, [key, value]) => {
-      return {
-        ...acc,
-        [toCamelCase(key)]: value.map((v) => ns.addNamespace(v)),
-      };
-    }, {}),
+    filters: mapToObj(Object.entries(filters), ([key, value]) => [
+      toCamelCase(key),
+      value.map((v) => ns.addNamespace(v)),
+    ]),
     measure,
     dimensions: DIMENSIONS.map((v) => ({
       iri: dataDimensions[v].iri,
       key: toCamelCase(v),
     })),
+    timeFilter,
   });
 
   const observationsRaw = await fetchSparql(query);

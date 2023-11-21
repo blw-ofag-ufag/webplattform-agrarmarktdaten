@@ -8,9 +8,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Drawer,
-  DrawerProps,
-  IconButton,
   Paper,
   Stack,
   ThemeProvider,
@@ -21,9 +18,11 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
-import React, { PropsWithChildren, Suspense, useEffect, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 
+import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel from "@/components/browser/SidePanel";
+import { cubeDimensionsAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
 import {
   filteredObservationsAtom,
@@ -37,7 +36,6 @@ import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
 import { Measure, Observation, Property } from "./api/data";
-import { cubeDimensionsAtom } from "@/domain/cubes";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -195,69 +193,42 @@ const DataBrowser = () => {
             </>
           </Paper>
         </Box>
-        <ContentDrawer
-          anchor="right"
+        <MetadataPanel
+          dimensions={cubeDimensions}
           open={showMetadataPanel}
           onClose={() => setShowMetadataPanel(false)}
-          container={contentRef.current}
-        >
-          <Box px={4} py={5}>
-            <Stack direction="row" justifyContent="space-between">
-              <Typography variant="h3">
-                <Trans id="data.metadata.title">Metadata</Trans>
-              </Typography>
-              <IconButton onClick={() => setShowMetadataPanel(false)}>
-                <IcControlArrowRight />
-              </IconButton>
-            </Stack>
-          </Box>
-        </ContentDrawer>
-
-        {/* <DataBrowserDebug /> */}
-        {/*  <Results
-          cubesQuery={cubesQuery}
-          //dimensionsQuery={dimensionsQuery}
-          //yearsQuery={yearsQuery}
-        /> */}
+          slots={{
+            drawer: {
+              container: contentRef.current,
+            },
+          }}
+        />
       </Stack>
     </Stack>
   );
 };
 
-const ContentDrawer = ({
-  children,
-  container,
-  ...props
-}: { container: HTMLDivElement | null } & PropsWithChildren & DrawerProps) => {
-  return (
-    <Drawer
-      PaperProps={{
-        style: {
-          width: "388px",
-          position: "absolute",
-          border: "none",
-          top: 0,
-        },
-      }}
-      slotProps={{
-        backdrop: {
-          style: {
-            position: "absolute",
-            top: 0,
-            backgroundColor: "transparent",
-          },
-        },
-      }}
-      SlideProps={{ timeout: { enter: 0, exit: 0 } }}
-      ModalProps={{
-        container,
-        style: { position: "absolute", top: 0 },
-      }}
-      {...props}
-    >
-      {children}
-    </Drawer>
-  );
+const columnSpecs = {
+  price: { width: 100 },
+  date: { width: 100 },
+  "cost-component": { width: 100 },
+  currency: { width: 100 },
+  "data-method": { width: 100 },
+  "data-source": { width: 200 },
+  "foreign-trade": { width: 100 },
+  "key-indicator-type": { width: 100 },
+  market: { width: 200 },
+  product: { width: 200 },
+  "product-group": { width: 200 },
+  "production-system": { width: 150 },
+  "product-origin": { width: 100 },
+  "product-properties": { width: 100 },
+  "product-subgroup": { width: 200 },
+  "sales-region": { width: 100 },
+  unit: { width: 100 },
+  usage: { width: 100 },
+  "value-chain-detail": { width: 100 },
+  "value-chain": { width: 100 },
 };
 
 const Table = ({
@@ -267,14 +238,19 @@ const Table = ({
   observations: Observation[];
   dimensions: Record<string, Property | Measure>;
 }) => {
+  const [paginationModel, setPaginationModel] = useState({ pageSize: 100, page: 0 });
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
       .map((dimension) => {
         return {
-          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
+          field: isMeasure(dimension.dimension)
+            ? "measure"
+            : dimension.dimension === "date"
+            ? "formatted-date"
+            : dimension.dimension,
           headerName: dimension.label,
-          //width: 200,
+          width: columnSpecs[dimension.dimension as keyof typeof columnSpecs]?.width || 100,
           valueFormatter: (params) =>
             valueFormatter({
               value: params.value,
@@ -289,8 +265,9 @@ const Table = ({
     <DataGrid
       rows={observations}
       columns={columns}
+      paginationModel={paginationModel}
+      onPaginationModelChange={(pm) => setPaginationModel(pm)}
       getRowId={(row) => row.observation}
-      autoPageSize
     />
   );
 };

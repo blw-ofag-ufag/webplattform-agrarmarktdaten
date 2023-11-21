@@ -3,7 +3,7 @@ import { MarketChip } from "./";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/MarketChip",
+  title: "App Components / MarketChip",
   component: MarketChip,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

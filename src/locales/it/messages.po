@@ -102,6 +102,11 @@ msgid "filter.apply"
 msgstr "Applicare"
 
 #. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "controls.metadata-panel.available-values"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "header.shortTitle"
 msgstr "UFAG"
@@ -209,6 +214,7 @@ msgstr "Ulteriori informazioni"
 
 #. js-lingui-explicit-id
 #: src/components/back-button.tsx
+#: src/components/browser/MetadataPanel.tsx
 msgid "cta.back"
 msgstr "Indietro"
 
@@ -256,13 +262,13 @@ msgid "homepage.section.market"
 msgstr "Mercati"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.metadata"
+#: src/components/browser/MetadataPanel.tsx
+msgid "data.metadata.title"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.metadata.title"
+msgid "data.actions.metadata"
 msgstr "Metadata"
 
 #. js-lingui-explicit-id
@@ -330,6 +336,11 @@ msgstr "Seleziona tutto"
 #: src/pages/data.tsx
 msgid "data.actions.showFiler"
 msgstr "Mostra filtri"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "cta.show-more"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Sort.tsx

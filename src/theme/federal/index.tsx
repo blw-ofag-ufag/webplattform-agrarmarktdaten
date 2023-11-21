@@ -708,13 +708,19 @@ theme.components = {
       },
     },
   },
+
+  // @see https://storybook.bund-ds.bedev.liip.ch/iframe.html?id=components-tabs--example&args=&viewMode=story
   MuiTabs: {
     styleOverrides: {
       root: {
+        borderBottom: "1px solid",
+        borderBottomColor: theme.palette.divider,
         "& .MuiTabs-flexContainer": {
-          gap: 4,
+          gap: "0",
         },
         "& .MuiTabs-indicator": {
+          // Due to the indicator being narrower than the tab, we do not
+          // use the indicator
           display: "none",
         },
       },
@@ -723,22 +729,41 @@ theme.components = {
   MuiTab: {
     styleOverrides: {
       root: {
-        justifyContent: "center",
-        alignItems: "center",
-        height: 49,
-        paddingTop: 0,
-        paddingRight: 24,
-        paddingBottom: 0,
-        paddingLeft: 24,
-        backgroundColor: theme.palette.grey[100],
-        color: theme.palette.grey[900],
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        boxShadow: shadows[6],
+        color: theme.palette.text.primary,
+        textTransform: "none",
+        fontWeight: "normal",
+        position: "relative",
 
+        alignItems: "center",
+        justifyContent: "center",
+        minWidth: 0,
+        fontSize: "1.15rem",
+        "&:after": {
+          content: '" "',
+          display: "block",
+          height: "2px",
+          bottom: 0,
+          position: "absolute",
+          left: "1rem",
+          right: "1rem",
+          borderBottom: "3px solid transparent",
+        },
+
+        "&:hover": {
+          // On hover color red
+          color: theme.palette.red[500],
+        },
         "&.Mui-selected": {
-          height: 50,
-          color: theme.palette.primary.main,
+          // But when it is selected, it should stay text.primary even
+          // if hovered
+          color: theme.palette.text.primary,
+        },
+
+        // Indicator shown on hover & when selected
+        "&.Mui-selected, &:hover": {
+          "&:after": {
+            borderBottomColor: theme.palette.red[500],
+          },
         },
       },
     },

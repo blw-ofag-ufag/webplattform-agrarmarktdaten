@@ -1,7 +1,7 @@
 import { Button, IconButton, Paper, Stack, Typography, Link } from "@mui/material";
 import { useAtomValue } from "jotai";
 import React, { useState } from "react";
-import { observationsAtom, observationsQueryAtom } from "@/domain/observations";
+import { filteredObservationsAtom, observationsQueryAtom } from "@/domain/observations";
 import { IcControlClose, IcControlExternal } from "@/icons/icons-jsx/control";
 import { ObjectInspector } from "react-inspector";
 import { makeStyles } from "@/components/style-utils";
@@ -18,7 +18,7 @@ const useDebugStyles = makeStyles()((theme) => ({
   },
 }));
 const DebugDataPage = () => {
-  const observations = useAtomValue(observationsAtom);
+  const observations = useAtomValue(filteredObservationsAtom);
   const observationsQuery = useAtomValue(observationsQueryAtom);
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
   const [expanded, setExpanded] = useState(false);
@@ -37,7 +37,7 @@ const DebugDataPage = () => {
           <Stack spacing={2} sx={{ fontSize: "small" }}>
             <div>
               <Typography variant="h5">Observations</Typography>
-              <ObjectInspector data={observations.observations} />
+              <ObjectInspector data={observations} />
             </div>
             <div>
               <Typography variant="h5">Observations query status</Typography>

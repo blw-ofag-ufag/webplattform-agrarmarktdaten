@@ -13,8 +13,28 @@ import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { mapValues } from "lodash";
 import { mapToObj } from "remeda";
 import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
-import { DIMENSIONS, Dimension, dataDimensions } from "./dimensions";
-import { filterDimensionsSelectionAtom } from "./filters";
+import { DIMENSIONS, dataDimensions } from "./dimensions";
+import {
+  RangeOptions,
+  filterDimensionsSelectionAtom,
+  timeRangeAtom,
+  timeViewAtom,
+  TimeView,
+} from "./filters";
+import dayjs from "dayjs";
+import { TimeFilter } from "@/lib/cube-queries";
+import { timeFormat } from "d3";
+
+const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
+  const [minUnix, maxUnix] = timeRange.value;
+  const [minDate, maxDate] = [dayjs.unix(minUnix), dayjs.unix(maxUnix)];
+  const fmtString = timeView === "Month" ? "YYYY-MM-DD" : "YYYY";
+  return {
+    minDate: minDate.format(fmtString),
+    maxDate: maxDate.format(fmtString),
+    mode: timeView,
+  };
+};
 
 /**
  * Observations atom. This atom contains the observations of the cube that we are currently viewing.
@@ -28,6 +48,10 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
   const cubes = await get(cubesAtom);
   const cubeDefinition = cubes.find((cube) => cube.cube === cubePath);
 
+  const timeRange = await get(timeRangeAtom);
+  const timeView = await get(timeViewAtom);
+  const timeFilter = getTimeFilter(timeRange, timeView);
+
   if (!cubeDefinition)
     return {
       queryKey: ["observations"],
@@ -37,9 +61,11 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
       }),
     };
 
+  // Time filters are done client-side
+  const queryTimeFilter = { minDate: null, maxDate: null, mode: timeFilter.mode };
+
   return {
-    /* how to encode filter info needs to be improved */
-    queryKey: ["observations", cubePath],
+    queryKey: ["observations", cubePath, queryTimeFilter],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
@@ -47,8 +73,12 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
           iri: amdpMeasure(cubeDefinition.measure).value,
           key: cubeDefinition.measure,
         },
+        // Filters are done client-side
         filters: {},
+
+        timeFilter: queryTimeFilter,
       }),
+    staleTime: Infinity,
   };
 });
 
@@ -99,26 +129,39 @@ export const parsedObservationsAtom = atom(async (get) => {
 
 /**
  * Filtered observations atom. This atom contains the observations of the cube that we are currently
- * viewing. The observations are filtered by the selected dimensions.
+ * viewing. The observations are filtered by the selected dimensions client-side.
+ *
+ * ℹ️ The filtering logic is done application side for performance concerns.
+ *  ⚠️ The filtering logic needs to be in sync with the SPARQL filtering logic expressed in the
+ * `observationsSparqlQueryAtom`.
  */
 export const filteredObservationsAtom = atom(async (get) => {
   const { observations } = await get(observationsAtom);
   const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+  const timeRange = await get(timeRangeAtom);
+  const timeView = await get(timeViewAtom);
 
   const filters = Object.entries(filterDimensionsSelection).reduce(
     (acc, [key, atom]) => {
-      const dim = key as Dimension;
+      const dim = key as keyof typeof filterDimensionsSelection;
       const selectedOptions = get(atom);
       const optionsSet = new Set(selectedOptions.map((option) => option.value));
-      const filterFn = (obs: Observation) => optionsSet.has(obs[dim]);
+      const filterFn = (obs: Observation) => optionsSet.has(obs[dim] as string);
       return [...acc, filterFn];
     },
     [] as Array<(obs: Observation) => boolean>
   );
 
-  const filteredObservations = observations.filter((obs) =>
-    filters.map((f) => f(obs)).every(Boolean)
-  );
+  const formatDate = timeView === "Month" ? timeFormat("%Y-%m") : timeFormat("%Y");
+  const [minDate, maxDate] = timeRange.value.map((d) => formatDate(dayjs.unix(d).toDate()));
+  const timeFilterFn = (obs: Observation) => {
+    const formattedDate = obs["formatted-date"];
+    return formattedDate && formattedDate >= minDate && formattedDate <= maxDate;
+  };
+
+  const filteredObservations = observations
+    .filter(timeFilterFn)
+    .filter((obs) => filters.map((f) => f(obs)).every(Boolean));
 
   return filteredObservations;
 });
@@ -126,6 +169,9 @@ export const filteredObservationsAtom = atom(async (get) => {
 /**
  * Observations query atom. This atom contains the SPARQL query to fetch the observations of the
  * cube that we are currently viewing. The observations are filtered by the selected dimensions.
+ *
+ * ⚠️ The SPARQL filtering logic needs to be the same as the logic expressed application side in the
+ * `filteredObservationsAtom`.
  */
 export const observationsSparqlQueryAtom = atom(async (get) => {
   const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
@@ -133,6 +179,10 @@ export const observationsSparqlQueryAtom = atom(async (get) => {
   const fullCubeIri = addNamespace(cubeIri);
   const cubes = await get(cubesAtom);
   const cubeDefinition = cubes.find((cube) => cube.cube === cubeIri);
+
+  const timeRange = await get(timeRangeAtom);
+  const timeView = await get(timeViewAtom);
+  const timeFilter = getTimeFilter(timeRange, timeView);
 
   if (!cubeDefinition) return "";
   const filters = mapValues(filterDimensionsSelection, (atom) => {
@@ -157,6 +207,7 @@ export const observationsSparqlQueryAtom = atom(async (get) => {
       iri: dataDimensions[v].iri,
       key: toCamelCase(v),
     })),
+    timeFilter,
   });
 
   return getSparqlEditorUrl(query);

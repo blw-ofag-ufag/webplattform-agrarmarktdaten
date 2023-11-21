@@ -102,7 +102,7 @@ const SidePanel = () => {
 
         {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
           const filterAtom =
-            filterDimensionsSelection[key as keyof typeof filterDimensionsSelection];
+            filterDimensionsSelection[key as keyof (typeof filterConfiguration)["dimensions"]];
           if (!filterAtom) {
             return null;
           }

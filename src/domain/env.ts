@@ -9,7 +9,11 @@ export const DATOCMS_API_URL = "https://graphql.datocms.com";
 export const DATOCMS_API_TOKEN = process.env.NEXT_PUBLIC_DATOCMS_API_TOKEN;
 export const DATO_CMS_INCLUDE_DRAFTS = process.env.NEXT_PUBLIC_DATO_CMS_INCLUDE_DRAFTS;
 
+export const DATOCMS_FULL_ACCESS_API_TOKEN = process.env.DATOCMS_FULL_ACCESS_API_TOKEN;
+
 // Access the build trigger page to get the build trigger id at: https://blw-agricultural-market-data-platform.admin.datocms.com/project_settings/build_triggers/7249/edit
 // Check the url for the actual id
 // export const SEARCH_BUILD_TRIGGER = IS_PROD_ENVIRONMENT ? 7249 : 30119;
 export const SEARCH_BUILD_TRIGGER = 7249;
+
+export const REINDEX_TOKEN = process.env.REINDEX_TOKEN;

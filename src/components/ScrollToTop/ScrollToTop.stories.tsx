@@ -3,7 +3,7 @@ import { ScrollToTop } from "./ScrollToTop";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/ScrollToTop",
+  title: "App Components / ScrollToTop",
   component: ScrollToTop,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

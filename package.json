@@ -33,6 +33,7 @@
   "dependencies": {
     "@babel/standalone": "^7.8.4",
     "@datocms/cma-client-browser": "^3.0.1",
+    "@datocms/cma-client-node": "^3.0.6",
     "@emotion/css": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
@@ -68,7 +69,7 @@
     "datocms-structured-text-to-html-string": "^2.1.11",
     "datocms-structured-text-utils": "^2.0.4",
     "dayjs": "^1.11.10",
-    "framer-motion": "^10.16.4",
+    "framer-motion": "^10.16.5",
     "graphql": "^16.3.0",
     "graphql-tag": "^2.10.3",
     "isomorphic-unfetch": "^4.0.2",

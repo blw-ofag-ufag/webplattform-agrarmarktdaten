@@ -63,7 +63,7 @@ export type RangeOptions = {
 
 export type TimeView = "Year" | "Month";
 
-const MIN_DATE = dayjs("2020-01");
+const MIN_DATE = dayjs("2000-01");
 const MAX_DATE = dayjs("2023-01");
 
 export const timeRange = {
@@ -123,6 +123,7 @@ export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery
           cubeIri,
           dimensionIri: dataDimensions.product.iri,
         }),
+      staleTime: Infinity,
     };
   }
 );
@@ -186,14 +187,15 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
   const productOptions = await get(productOptionsWithHierarchyAtom);
 
   return {
-    ["sales-region" as Dimension]: {
+    "sales-region": {
       key: "sales-region",
       name: cubeDimensions.properties[dataDimensions["sales-region"].id].label,
       options: cubeDimensions.properties?.[dataDimensions["sales-region"].id].values,
       type: "multi" as const,
       search: true,
+      groups: undefined,
     },
-    ["product" as Dimension]: {
+    product: {
       key: "product",
       name: cubeDimensions.properties?.[dataDimensions.product.id].label,
       options: productOptions,

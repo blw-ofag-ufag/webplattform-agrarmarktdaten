@@ -93,13 +93,14 @@ export const queryCubeDimensions = ({ locale, cubeIri }: { locale: Locale; cubeI
   PREFIX sh: <http://www.w3.org/ns/shacl#>
   PREFIX schema: <http://schema.org/>
 
-  SELECT DISTINCT ?dimension ?label ?type 
+  SELECT DISTINCT ?dimension ?label ?type ?description
   FROM <${agDataBase}>
   WHERE {
     <${cubeIri}> cube:observationConstraint ?shape .
     ?shape ?p ?blankNode .
     ?blankNode sh:path ?dimension .
     OPTIONAL { ?blankNode schema:name ?label . FILTER(lang(?label) = "${locale}") } 
+    OPTIONAL { ?blankNode schema:description ?description . FILTER(lang(?description) = "${locale}") } 
     OPTIONAL { ?blankNode a ?type . } 
   }
   `;
@@ -165,42 +166,104 @@ export const queryMeasureDimensionRange = ({
   `;
 };
 
+export type TimeFilter =
+  | {
+      minDate: string;
+      maxDate: string;
+      mode: "Year" | "Month";
+    }
+  | {
+      minDate: null;
+      maxDate: null;
+      mode: "Year" | "Month";
+    };
+
+type QueryObservationsOptions = {
+  cubeIri: string;
+  filters?: Record<string, string[]>;
+  dimensions: { iri: string; key: string }[];
+  measure: { iri: string; key: string };
+  timeFilter: TimeFilter;
+};
+
 export const queryObservations = ({
   cubeIri,
   filters,
   dimensions,
   measure,
-}: {
-  cubeIri: string;
-  filters?: Record<string, string[]>;
-  dimensions: { iri: string; key: string }[];
-  measure: { iri: string; key: string };
-}) => {
+  timeFilter,
+}: QueryObservationsOptions) => {
   return `
   PREFIX cube: <https://cube.link/>
   PREFIX sh: <http://www.w3.org/ns/shacl#>
   PREFIX schema: <http://schema.org/>
+  PREFIX time: <http://www.w3.org/2006/time#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   
-  SELECT DISTINCT ?observation ${dimensions.map((d) => `?${d.key}`).join(" ")} ?measure
-  FROM <${agDataBase}>
+  SELECT DISTINCT ?observation
+    ${dimensions.map((d) => `?${d.key}`).join(" ")} ?measure
+    ?formattedDate
   WHERE {
+    GRAPH <${agDataBase}> {
+      ${
+        filters
+          ? Object.entries(filters)
+              .map(([key, values]) => {
+                return `VALUES(?${key}) { ${values.map((v) => `(<${v}>)`).join("\n")} }`;
+              })
+              .join("\n")
+          : ""
+      }
+      <${cubeIri}> cube:observationSet ?observationSet .
+      ?observationSet cube:observation ?observation .
+      ${dimensions
+        .map((dimension) => {
+          return `?observation <${dimension.iri}> ?${dimension.key} .`;
+        })
+        .join("\n")}
+      ?observation <${measure.iri}> ?measure .
+    }
+
+    ?date time:year ?timeYear.
+    
+  	${
+      timeFilter.mode === "Month"
+        ? // There must be a better way to do that but using direct comparison like < "10"^^schema:integer
+          // would not work because the considered order would be lexicographic instead of numerical.
+          // @see https://zulip.zazuko.com/#narrow/stream/40-bafu-ext/topic/temporal.20entities.20.26.20timezones/near/375697
+          `
+      ?date time:month ?timeMonth.
+
+      BIND(
+        COALESCE(
+          IF(
+            ?timeMonth = "12"^^schema:Integer ||
+            ?timeMonth = "11"^^schema:Integer ||
+            ?timeMonth = "10"^^schema:Integer, 
+              CONCAT(str(?timeYear), "-", str(?timeMonth)),
+              1/0
+          ),
+          CONCAT(str(?timeYear), "-",   CONCAT("0", str(?timeMonth)))
+        ) AS ?formattedDate
+      )`
+        : `
+      BIND(
+        str(?timeYear) as ?formattedDate
+      )
+    `
+    }
+  
     ${
-      filters
-        ? Object.entries(filters)
-            .map(([key, values]) => {
-              return `VALUES(?${key}) { ${values.map((v) => `(<${v}>)`).join("\n")} }`;
-            })
-            .join("\n")
+      timeFilter.minDate && timeFilter.maxDate
+        ? `
+      FILTER (
+        ?formattedDate >= "${timeFilter.minDate}" && ?formattedDate <= "${timeFilter.maxDate}"
+      )
+      `
         : ""
     }
-    <${cubeIri}> cube:observationSet ?observationSet .
-    ?observationSet cube:observation ?observation .
-    ${dimensions
-      .map((dimension) => {
-        return `?observation <${dimension.iri}> ?${dimension.key} .`;
-      })
-      .join("\n")}
-    ?observation <${measure.iri}> ?measure .
-  }
+
+    
+  } ORDER BY ?formattedDate
   `;
 };

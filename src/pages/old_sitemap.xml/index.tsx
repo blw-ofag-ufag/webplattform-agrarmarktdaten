@@ -4,7 +4,7 @@ import { Locale } from "@/locales/locales";
 import { GetServerSideProps } from "next";
 import { isValidLocale } from "@/locales/locales";
 
-const DOMAIN = "https://blw-agricultural-market-data-platform.vercel.app";
+const DOMAIN = "https://www.agrimarketdata.ch";
 
 interface Paths {
   locale: Locale;
@@ -15,12 +15,13 @@ interface Paths {
 
 function generateSiteMap(blogposts: Paths[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
       ${blogposts
         .map(({ locale, params: { slug } }) => {
           return `
         <url>
             <loc>${`${DOMAIN}/${locale}/blog/${slug}`}</loc>
+            <xhtml:link rel="alternate" hreflang="${locale}" href="${`${DOMAIN}/${locale}/blog/${slug}`}"/>
         </url>
       `;
         })
