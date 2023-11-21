@@ -10,11 +10,13 @@ const TRANSITION_DURATION = 200;
 
 const useStyles = makeStyles()((theme) => ({
   button: {
+    position: "absolute",
+    bottom: -40,
+    right: 0,
     fontWeight: "bold",
     display: "flex",
     width: "fit-content",
     color: theme.palette.cobalt[500],
-    float: "right",
   },
 
   modal: {
@@ -52,6 +54,13 @@ const useStyles = makeStyles()((theme) => ({
     maxHeight: "calc(90vh - 72px)",
     height: "100%",
   },
+  powerbiInnerWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    height: "100%",
+    maxWidth: "100%",
+    aspectRatio: "16/9",
+  },
 }));
 
 interface Props {
@@ -81,15 +90,7 @@ const PowerBIFullScreen = (props: Props) => {
               </Button>
             </div>
             <div className={classes.powerbiWrapper}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  height: "100%",
-                  maxWidth: "100%",
-                  aspectRatio: "16/9",
-                }}
-              >
+              <div className={classes.powerbiInnerWrapper}>
                 <PowerBIReport {...powerbi} />
               </div>
             </div>

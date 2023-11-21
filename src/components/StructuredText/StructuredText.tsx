@@ -144,7 +144,7 @@ const StructuredText = (props: Props) => {
                 case "PowerBiReportRecord":
                   const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
                   return (
-                    <>
+                    <div style={{ position: "relative" }}>
                       <PowerBIFullScreen
                         label={t({ id: "controls.fullscreen", message: "Full Screen" })}
                         powerbi={{
@@ -165,7 +165,7 @@ const StructuredText = (props: Props) => {
                           powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? []
                         }
                       />
-                    </>
+                    </div>
                   );
                 case "FileDownloadSectionRecord":
                   const fileDownloadSection = record as Partial<GQL.FileDownloadSectionRecord>;
