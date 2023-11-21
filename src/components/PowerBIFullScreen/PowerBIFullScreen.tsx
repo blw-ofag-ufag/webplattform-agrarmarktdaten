@@ -46,10 +46,11 @@ const useStyles = makeStyles()((theme) => ({
   },
 
   powerbiWrapper: {
-    paddingLeft: "15%",
-    paddingRight: "15%",
+    paddingLeft: "5%",
+    paddingRight: "5%",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     paddingBottom: "5%",
     maxHeight: "calc(90vh - 72px)",
     height: "100%",

@@ -21,6 +21,7 @@ const CONFIG: models.IReportEmbedConfiguration = {
 
 const useStyles = makeStyles()((theme) => ({
   root: {
+    width: "100%",
     "& iframe": {
       border: "none",
     },
