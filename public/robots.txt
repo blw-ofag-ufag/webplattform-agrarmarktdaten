@@ -1,6 +1,7 @@
-#User-agent: *
+User-agent: DatoCmsSearchBot
 # For now, disallow everything
-#Disallow: /
+Disallow: /
+Allow: /blog/
 
 ## More specific rules for later
 # Disallow: /api/
