@@ -4,7 +4,7 @@ import { Locale } from "@/locales/locales";
 import { GetServerSideProps } from "next";
 import { isValidLocale } from "@/locales/locales";
 
-const DOMAIN = "https://blw-agricultural-market-data-platform.vercel.app";
+const DOMAIN = "https://www.agrimarketdata.ch";
 
 interface Paths {
   locale: Locale;

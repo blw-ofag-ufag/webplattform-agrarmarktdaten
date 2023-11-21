@@ -3,10 +3,20 @@
 # Allow: /blog/
 
 Disallow: /
-Allow: /de/blog/
-Allow: /en/blog/
-Allow: /it/blog/
-Allow: /fr/blog/
+Allow: /de/blog/*
+Allow: /en/blog/*
+Allow: /it/blog/*
+Allow: /fr/blog/*
+Allow: /de/blog/fleischabsatz-detailhandel-schweiz-2022
+Allow: /fr/blog/ventes-viande-commerce-detail-suisse-2022
+Allow: /it/blog/vendite-carne-commercio-dettaglio-svizzero-2022
+Allow: /de/blog/milk-post-2023
+Allow: /fr/blog/t
+Allow: /it/blog/t
+Allow: /de/blog/schweizer-eier-verarbeitung-2022
+Allow: /fr/blog/jamais-encore-autant-d-oeufs-suisses-n-avaient-ete-utilises-dans-la-transformatio
+Allow: /it/blog/mai-cosi-tante-uova-svizzere-trasformate-come-nel-2022
+
 
 ## More specific rules for later
 # Disallow: /api/
