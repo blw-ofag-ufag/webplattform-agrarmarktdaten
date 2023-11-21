@@ -3,7 +3,7 @@ import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
 import React from "react";
 
-import { Tab, Tabs, tabClasses } from "@mui/material";
+import { Tab, Tabs, TabsProps, tabClasses } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
 
@@ -42,6 +42,14 @@ const useStyles = makeStyles()((theme) => ({
   navigationButton: {
     whiteSpace: "nowrap",
   },
+  navigationTabs: {
+    width: "100%",
+    [`& .${tabClasses.root}`]: {
+      // Not done at theme level not to mess up with global navigation at the top
+      minHeight: 56,
+      fontSize: "1rem",
+    },
+  },
 }));
 
 const getEmbedUrl = (reportId: string, reportWorkspaceId: string) => {
@@ -64,24 +72,16 @@ export const PowerBINavigation = ({
   pages,
   onChange,
   activePage,
+  ...props
 }: {
   pages: PowerBIPage[];
   activePage: PowerBIPage;
   onChange: (page: PowerBIPage) => void;
-}) => {
-  const { classes } = useStyles();
+} & Omit<TabsProps, "onChange">) => {
+  const { classes, cx } = useStyles();
 
   return (
-    <Tabs
-      value={activePage?.id}
-      sx={{
-        width: "100%",
-        [`& .${tabClasses.root}`]: {
-          // Not done at theme level not to mess up with global navigation at the top
-          minHeight: 64,
-        },
-      }}
-    >
+    <Tabs value={activePage?.id} {...props} className={cx(classes.navigationTabs, props.className)}>
       {pages.map((page) => (
         <Tab
           key={page.id}
