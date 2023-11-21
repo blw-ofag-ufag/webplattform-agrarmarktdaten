@@ -114,9 +114,15 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
         marginBottom: s(2),
         minHeight: "42px",
         display: "flex",
-        columnGap: s(4),
+        columnGap: s(2),
         rowGap: s(2),
-        flexWrap: "wrap",
+        flexWrap: "nowrap",
+        overflow: "hidden",
+
+        "& > *": {
+          flexShrink: 1,
+          overflow: "hidden",
+        },
       },
     },
 
