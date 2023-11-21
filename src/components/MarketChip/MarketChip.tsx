@@ -24,7 +24,12 @@ const MarketChip = (props: Props) => {
   const { classes, cx } = useStyles();
   const market = getMarketFromSlug(slug);
   return (
-    <Chip label={label} title={label} className={cx(classes.chip, classes[market])} {...rest} />
+    <Chip
+      label={label}
+      title={label ?? undefined}
+      className={cx(classes.chip, classes[market])}
+      {...rest}
+    />
   );
 };
 

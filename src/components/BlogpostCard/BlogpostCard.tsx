@@ -242,6 +242,7 @@ export const BlogpostCard = (
             variant={variant === "full" ? "h1" : "h4"}
             component="h2"
             className={cx(classes.title, clampedClassName)}
+            title={title ?? undefined}
           >
             {title}
           </Typography>
