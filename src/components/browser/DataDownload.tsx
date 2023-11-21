@@ -171,7 +171,7 @@ const DownloadMenuItem = ({
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
             valueFormatter({
-              value,
+              value: dimension.dimension === "date" ? observation["formatted-date"] : value,
               dimension: dimension.dimension,
               cubeDimensions: dimensions.properties,
             }),
