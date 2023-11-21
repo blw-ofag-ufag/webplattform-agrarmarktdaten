@@ -11,6 +11,7 @@ const main = async () => {
   const routes = [
     { route: "/analysis", fullPage: false },
     { route: "/methods", fullPage: false },
+    { route: "/legal", fullPage: false },
     { route: "/en/blog/demo-de", fullPage: true },
     { route: "/", fullPage: true },
   ];
