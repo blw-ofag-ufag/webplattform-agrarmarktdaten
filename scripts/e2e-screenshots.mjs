@@ -5,6 +5,7 @@ const main = async () => {
   const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
   const browser = await chromium.launch({
     headless: !!process.env.CI,
+    timeout: 50000,
   });
 
   // List of pages to visit
