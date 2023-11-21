@@ -21,6 +21,7 @@ function generateSiteMap(blogposts: Paths[]) {
           return `
         <url>
             <loc>${`${DOMAIN}/${locale}/blog/${slug}`}</loc>
+            <xhtml:link rel="alternate" hreflang="${locale}" href="${`${DOMAIN}/${locale}/blog/${slug}`}"/>
         </url>
       `;
         })
