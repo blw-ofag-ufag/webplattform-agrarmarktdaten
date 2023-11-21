@@ -106,6 +106,7 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
         rowGap: s(2),
         flexWrap: "wrap",
         marginBottom: s(4),
+        overflow: "hidden",
       },
       [`.${classes.third} &`]: {
         paddingLeft: "var(--px)",
