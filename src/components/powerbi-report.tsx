@@ -77,7 +77,7 @@ export const PowerBINavigation = ({
   pages: PowerBIPage[];
   activePage: PowerBIPage;
   onChange: (page: PowerBIPage) => void;
-} & TabsProps) => {
+} & Omit<TabsProps, "onChange">) => {
   const { classes, cx } = useStyles();
 
   return (
