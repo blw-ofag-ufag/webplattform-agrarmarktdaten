@@ -106,10 +106,9 @@ export default function DataDownload() {
                     dimensions={dimensions}
                     disableRipple
                     sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
                       borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
                       borderColor: "grey.300",
+                      p: 0,
                     }}
                   >
                     <Typography variant="body1">{format.toUpperCase()}</Typography>
@@ -151,7 +150,7 @@ const DownloadMenuItem = ({
     const parsedRows = dataset.map((observation) => {
       return mapToObj(Object.entries(observation), ([key, value]) => {
         const dimension = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
-        if (dimension) {
+        if (dimension && value) {
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
             valueFormatter({
@@ -190,7 +189,15 @@ const DownloadMenuItem = ({
   return (
     <MenuItem key={format} {...props}>
       <Button
+        variant="text"
         disabled={state.isDownloading}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          px: 3,
+          py: 2,
+        }}
         onClick={async () => {
           dispatch({ isDownloading: true });
 
