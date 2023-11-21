@@ -208,6 +208,29 @@ const DataBrowser = () => {
   );
 };
 
+const columnSpecs = {
+  price: { width: 100 },
+  date: { width: 100 },
+  "cost-component": { width: 100 },
+  currency: { width: 100 },
+  "data-method": { width: 100 },
+  "data-source": { width: 200 },
+  "foreign-trade": { width: 100 },
+  "key-indicator-type": { width: 100 },
+  market: { width: 200 },
+  product: { width: 200 },
+  "product-group": { width: 200 },
+  "production-system": { width: 150 },
+  "product-origin": { width: 100 },
+  "product-properties": { width: 100 },
+  "product-subgroup": { width: 200 },
+  "sales-region": { width: 100 },
+  unit: { width: 100 },
+  usage: { width: 100 },
+  "value-chain-detail": { width: 100 },
+  "value-chain": { width: 100 },
+};
+
 const Table = ({
   observations,
   dimensions,
@@ -215,14 +238,19 @@ const Table = ({
   observations: Observation[];
   dimensions: Record<string, Property | Measure>;
 }) => {
+  const [paginationModel, setPaginationModel] = useState({ pageSize: 100, page: 0 });
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
       .map((dimension) => {
         return {
-          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
+          field: isMeasure(dimension.dimension)
+            ? "measure"
+            : dimension.dimension === "date"
+            ? "formatted-date"
+            : dimension.dimension,
           headerName: dimension.label,
-          //width: 200,
+          width: columnSpecs[dimension.dimension as keyof typeof columnSpecs]?.width || 100,
           valueFormatter: (params) =>
             valueFormatter({
               value: params.value,
@@ -237,8 +265,9 @@ const Table = ({
     <DataGrid
       rows={observations}
       columns={columns}
+      paginationModel={paginationModel}
+      onPaginationModelChange={(pm) => setPaginationModel(pm)}
       getRowId={(row) => row.observation}
-      autoPageSize
     />
   );
 };
