@@ -29,7 +29,7 @@ const useStyles = makeStyles()((theme) => ({
     justifyContent: "center",
     width: "100%",
     paddingTop: "96px",
-    marginBottom: "400px",
+    minHeight: "400px",
   },
   noResults: {
     fontWeight: 400,
