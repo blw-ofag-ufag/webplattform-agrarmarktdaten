@@ -79,6 +79,13 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
       [`.${classes.full} &`]: {
         overflow: "hidden",
         textOverflow: "ellipsis",
+
+        // Prevent title to completely disappear due to
+        // gridTemplateRow auto
+        minHeight: "1.5em",
+
+        // Max height set to at most 2 lines (lineHeight / fontSize *  4 = 36 / 24 * 4 = ),
+        maxHeight: "6em",
       },
 
       [`.${classes.third} &`]: {
