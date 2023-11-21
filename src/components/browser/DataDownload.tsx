@@ -2,9 +2,18 @@ import { CubeDimensions, cubeDimensionsAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
 import { filteredObservationsAtom, valueFormatter } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
+import { useLocale } from "@/lib/use-locale";
 import { Observation } from "@/pages/api/data";
-import { Trans } from "@lingui/macro";
-import { Button, Fade, ListItem, MenuItem, MenuItemProps, Typography } from "@mui/material";
+import { Trans, t } from "@lingui/macro";
+import {
+  Button,
+  CircularProgress,
+  Fade,
+  ListItem,
+  MenuItem,
+  MenuItemProps,
+  Typography,
+} from "@mui/material";
 import { Workbook } from "exceljs";
 import { saveAs } from "file-saver";
 import { useAtomValue } from "jotai";
@@ -26,6 +35,7 @@ export type FileFormat = (typeof FILE_FORMATS)[number];
 
 type DataDownloadState = {
   isDownloading: boolean;
+  format?: FileFormat;
   error?: string;
 };
 
@@ -135,7 +145,14 @@ const DownloadMenuItem = ({
   dataset: Observation[];
 } & MenuItemProps) => {
   const [state, dispatch] = useDataDownloadState();
+  const locale = useLocale();
+
   const download = useCallback(async () => {
+    const fileName = `${t({
+      id: "data.download.filename",
+      message: "AMDP_data",
+    })}_${new Date().toLocaleString(locale)}.${format}`;
+
     const workbook = new Workbook();
 
     const worksheet = workbook.addWorksheet("data");
@@ -170,21 +187,22 @@ const DownloadMenuItem = ({
     switch (format) {
       case "csv":
         const csv = await workbook.csv.writeBuffer();
-        saveAs(new Blob([csv], { type: "text/csv" }), "data.csv");
+        saveAs(new Blob([csv], { type: "text/csv" }), fileName);
         break;
       case "xlsx":
         const xlsx = await workbook.xlsx.writeBuffer();
         saveAs(
           new Blob([xlsx], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-          })
+          }),
+          fileName
         );
         break;
       case "json":
-        saveAs(new Blob([JSON.stringify(parsedRows)], { type: "application/json" }), "data.json");
+        saveAs(new Blob([JSON.stringify(parsedRows)], { type: "application/json" }), fileName);
         break;
     }
-  }, [format, dataset, dimensions]);
+  }, [format, dataset, dimensions, locale]);
 
   return (
     <MenuItem key={format} {...props}>
@@ -199,7 +217,7 @@ const DownloadMenuItem = ({
           py: 2,
         }}
         onClick={async () => {
-          dispatch({ isDownloading: true });
+          dispatch({ isDownloading: true, format });
 
           try {
             await download();
@@ -211,7 +229,11 @@ const DownloadMenuItem = ({
         }}
       >
         <Typography variant="body1">{format.toUpperCase()}</Typography>
-        <IcControlDownload width={20} height={20} />
+        {state.isDownloading && state.format === format ? (
+          <CircularProgress />
+        ) : (
+          <IcControlDownload width={20} height={20} />
+        )}
       </Button>
     </MenuItem>
   );
