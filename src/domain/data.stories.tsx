@@ -98,6 +98,11 @@ export const Observations = () => {
           iri: amdpMeasure(cubeDef?.measure).value,
           key: cubeDef?.measure ?? "measure",
         },
+        timeFilter: {
+          mode: "Year",
+          minDate: "2000",
+          maxDate: "2003",
+        },
       }),
   });
 

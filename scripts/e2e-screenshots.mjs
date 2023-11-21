@@ -11,7 +11,8 @@ const main = async () => {
   const routes = [
     { route: "/analysis", fullPage: false },
     { route: "/methods", fullPage: false },
-    { route: "/en/blog/demo-de", fullPage: true },
+    { route: "/legal", fullPage: false },
+    { route: "/de/market/milch-und-milchprodukte", fullPage: true },
     { route: "/", fullPage: true },
   ];
 
@@ -36,7 +37,7 @@ const main = async () => {
 
       // Take a screenshot and save it with page name and breakpoint name
       const screenshotPath = `screenshots/${pageName}-${name}.png`; // You can adjust the path as needed
-      await page.screenshot({ path: screenshotPath, fullPage });
+      await page.screenshot({ path: screenshotPath, fullPage, animations: "disabled" });
 
       console.log(`Screenshot taken: ${screenshotPath}`);
     }

@@ -19,22 +19,21 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
 import React, { Suspense, useEffect, useState } from "react";
 
+import DataDownload from "@/components/browser/DataDownload";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel from "@/components/browser/SidePanel";
+import { Table } from "@/components/browser/Table";
 import { cubeDimensionsAtom } from "@/domain/cubes";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
   observationsSparqlQueryAtom,
 } from "@/domain/observations";
-import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
+import { IcControlArrowRight } from "@/icons/icons-jsx/control";
 import { useFlag } from "@/utils/flags";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
-import { Table } from "@/components/browser/Table";
-import ActionButtons from "@/components/browser/ActionButtons";
-import DataDownload from "@/components/browser/DataDownload";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
