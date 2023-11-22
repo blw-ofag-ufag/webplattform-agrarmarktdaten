@@ -23,4 +23,5 @@ export const Avatars = () => {
 
 export default {
   component: AvatarsComponent,
+  title: "App Components / Avatars",
 };

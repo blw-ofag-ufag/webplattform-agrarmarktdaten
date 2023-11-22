@@ -3,7 +3,7 @@ import { TableOfContents } from ".";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
-  title: "Components/TableOfContents",
+  title: "App Components / TableOfContents",
   component: TableOfContents,
   parameters: { layout: "centered" },
   tags: ["autodocs"],

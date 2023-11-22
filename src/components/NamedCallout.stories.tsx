@@ -106,4 +106,5 @@ export const NamedSection = () => {
 
 export default {
   component: NamedSection,
+  title: "App Components / NamedSection",
 };

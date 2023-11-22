@@ -3,7 +3,7 @@ import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
 import React from "react";
 
-import { Button } from "@mui/material";
+import { Tab, Tabs, TabsProps, tabClasses } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
 
@@ -21,6 +21,11 @@ const CONFIG: models.IReportEmbedConfiguration = {
 
 const useStyles = makeStyles()((theme) => ({
   root: {
+    "& iframe": {
+      border: "none",
+    },
+  },
+  embed: {
     aspectRatio: "16/9",
     width: "100%",
   },
@@ -36,6 +41,14 @@ const useStyles = makeStyles()((theme) => ({
   },
   navigationButton: {
     whiteSpace: "nowrap",
+  },
+  navigationTabs: {
+    width: "100%",
+    [`& .${tabClasses.root}`]: {
+      // Not done at theme level not to mess up with global navigation at the top
+      minHeight: 56,
+      fontSize: "1rem",
+    },
   },
 }));
 
@@ -59,28 +72,26 @@ export const PowerBINavigation = ({
   pages,
   onChange,
   activePage,
+  ...props
 }: {
   pages: PowerBIPage[];
   activePage: PowerBIPage;
   onChange: (page: PowerBIPage) => void;
-}) => {
-  const { classes } = useStyles();
+} & Omit<TabsProps, "onChange">) => {
+  const { classes, cx } = useStyles();
 
   return (
-    <div className={classes.navigationContainer}>
-      <div className={classes.navigationContent}>
-        {pages.map((page) => (
-          <Button
-            key={page.id}
-            className={classes.navigationButton}
-            variant={page.id === activePage.id ? "contained" : "outlined"}
-            onClick={() => onChange(page)}
-          >
-            {page.name}
-          </Button>
-        ))}
-      </div>
-    </div>
+    <Tabs value={activePage?.id} {...props} className={cx(classes.navigationTabs, props.className)}>
+      {pages.map((page) => (
+        <Tab
+          key={page.id}
+          value={page.id}
+          className={classes.navigationButton}
+          onClick={() => onChange(page)}
+          label={page.name}
+        />
+      ))}
+    </Tabs>
   );
 };
 
@@ -97,18 +108,18 @@ export const PowerBIReport = (props: PowerBIReportProps) => {
   const { classes } = useStyles();
 
   return (
-    <>
+    <div className={classes.root}>
+      {report && activePage ? (
+        <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
+      ) : null}
       <PowerBIEmbed
         embedConfig={embedConfig}
-        cssClassName={classes.root}
+        cssClassName={classes.embed}
         getEmbeddedComponent={(embedObject) => {
           setReport(embedObject as Report);
         }}
       />
-      {report && activePage ? (
-        <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
-      ) : null}
-    </>
+    </div>
   );
 };
 
