@@ -12,7 +12,6 @@ const main = async () => {
     { route: "/analysis", fullPage: false },
     { route: "/methods", fullPage: false },
     { route: "/legal", fullPage: false },
-    { route: "/de/market/milch-und-milchprodukte", fullPage: true },
     { route: "/", fullPage: true },
   ];
 
