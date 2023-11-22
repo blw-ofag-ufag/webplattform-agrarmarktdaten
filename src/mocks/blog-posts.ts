@@ -27,13 +27,13 @@ export const milkBlogPost = {
   markets: [
     {
       __typename: "MarketArticleRecord" as "MarketArticleRecord",
-      title: "Bio",
+      title: "Coming soon: Bio",
       slug: "bio",
       id: "121805521",
     },
     {
       __typename: "MarketArticleRecord" as "MarketArticleRecord",
-      title: "Milk",
+      title: "Milk: Mega super long title that should be cut",
       slug: "milk",
       id: "121805522",
     },
