@@ -314,8 +314,7 @@ const SelectItem = <T extends ScoredOption>({
           </Typography>
         }
         sx={{
-          paddingLeft: node.level === 0 ? 0 : "28px",
-          paddingTop: "4px",
+          paddingLeft: node.level === 0 ? 0 : "48px",
         }}
       />
     );
@@ -395,17 +394,25 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   flexDirection: "row-reverse",
 
   [`&.${accordionSummaryClasses.root}`]: {
-    padding: theme.spacing(1, 0),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
     minHeight: 0,
     [`&.${accordionSummaryClasses.expanded}`]: {
       minHeight: 0,
+      margin: theme.spacing(0),
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
     },
   },
 
   [`& .${accordionSummaryClasses.content}`]: {
+    margin: theme.spacing(0),
     marginLeft: theme.spacing(1),
+
     [`&.${accordionSummaryClasses.expanded}`]: {
+      margin: theme.spacing(0),
       marginLeft: theme.spacing(1),
+      padding: theme.spacing(0, 0),
     },
   },
   [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]: {
@@ -418,7 +425,8 @@ const AccordionDetails = styled((props: AccordionDetailsProps) => (
 ))(({ theme }) => ({
   [`&.${accordionDetailsClasses.root}`]: {
     padding: 0,
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(1),
+    marginLeft: theme.spacing(4),
   },
 }));
 

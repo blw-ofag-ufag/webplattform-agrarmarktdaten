@@ -3,6 +3,7 @@ import { IcControlCalendar } from "@/icons/icons-jsx/control";
 import { useLocale } from "@/lib/use-locale";
 import { Trans, t } from "@lingui/macro";
 import {
+  Box,
   Button,
   Divider,
   InputLabel,
@@ -40,14 +41,19 @@ const FilterToggleButton = withStyles(ToggleButton, (theme) => ({
     justifyContent: "center",
     textTransform: "none",
     border: "1px solid",
-    borderColor: theme.palette.grey[500],
+    borderColor: theme.palette.cobalt[200],
+    color: theme.palette.cobalt[500],
+
+    "&:hover": {
+      borderColor: theme.palette.cobalt[700],
+    },
 
     [`&.${toggleButtonClasses.selected}`]: {
-      backgroundColor: theme.palette.grey[700],
+      backgroundColor: theme.palette.cobalt[500],
 
-      color: theme.palette.grey[50],
+      color: theme.palette.cobalt[50],
       "&:hover": {
-        backgroundColor: theme.palette.grey[800],
+        backgroundColor: theme.palette.cobalt[700],
       },
     },
   },
@@ -56,7 +62,7 @@ const FilterToggleButton = withStyles(ToggleButton, (theme) => ({
 const TimeSlider = withStyles(Slider, (theme) => ({
   root: {
     [`& .${sliderClasses.rail}`]: {
-      backgroundColor: theme.palette.grey[600],
+      backgroundColor: theme.palette.cobalt[500],
     },
     [`& .${sliderClasses.track}`]: {
       height: "2px",
@@ -66,7 +72,7 @@ const TimeSlider = withStyles(Slider, (theme) => ({
       height: "16px",
       width: "16px",
       borderRadius: "50%",
-      backgroundColor: theme.palette.grey[800],
+      backgroundColor: theme.palette.cobalt[500],
       [`&:hover, &:focus, &.${sliderClasses.active}`]: {
         /* hardcoded, but probably will be changed with the new theme anyway */
         boxShadow: "0px 0px 0px 4px rgba(68, 68, 68, 0.16);",
@@ -183,27 +189,29 @@ export default function TimeFilter({
             }}
           />
         </Stack>
-        <TimeSlider
-          value={sliderRange}
-          min={min}
-          max={max}
-          step={null}
-          size="small"
-          marks={sliderValues}
-          valueLabelDisplay="auto"
-          valueLabelFormat={(v) => dayjs.unix(v).format(timeFormat)}
-          disableSwap
-          onChange={(_, value) => setSliderRange(value as [number, number])}
-          onChangeCommitted={(_, value) => onChangeRange(value as [number, number])}
-          sx={{
-            [`& .${sliderClasses.markLabel}[data-index="0"]`]: {
-              transform: "translateX(0%)",
-            },
-            [`& .${sliderClasses.markLabel}[data-index="${sliderValues.length - 1}"]`]: {
-              transform: "translateX(-100%)",
-            },
-          }}
-        />
+        <Box px={2}>
+          <TimeSlider
+            value={sliderRange}
+            min={min}
+            max={max}
+            step={null}
+            size="small"
+            marks={sliderValues}
+            valueLabelDisplay="auto"
+            valueLabelFormat={(v) => dayjs.unix(v).format(timeFormat)}
+            disableSwap
+            onChange={(_, value) => setSliderRange(value as [number, number])}
+            onChangeCommitted={(_, value) => onChangeRange(value as [number, number])}
+            sx={{
+              [`& .${sliderClasses.markLabel}[data-index="0"]`]: {
+                transform: "translateX(0%)",
+              },
+              [`& .${sliderClasses.markLabel}[data-index="${sliderValues.length - 1}"]`]: {
+                transform: "translateX(-100%)",
+              },
+            }}
+          />
+        </Box>
       </LocalizationProvider>
     </Stack>
   );

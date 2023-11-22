@@ -44,10 +44,10 @@ import { Measure, Observation, Property } from "./api/data";
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
     primary: {
-      main: "#444",
+      main: blwTheme.palette.cobalt[500],
     },
     secondary: {
-      main: "#888",
+      main: blwTheme.palette.grey[400],
     },
   },
 });
