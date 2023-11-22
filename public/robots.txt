@@ -1,15 +1,21 @@
 User-agent: DatoCmsSearchBot
-Disallow: /api/
-Disallow: /docs/
-Disallow: /focus/
-Disallow: /market/
-Disallow: /analysis/
-Disallow: /data/
-Disallow: /info/
-Disallow: /legal/
-Disallow: /methods/
-Disallow: /terms-and-conditions/
-Disallow: /power-bi/
+Disallow: /api
+Disallow: /docs
+Disallow: /focus
+Disallow: /market
+Disallow: /analysis
+Disallow: /data
+Disallow: /info
+Disallow: /legal
+Disallow: /de/legal
+Disallow: /it/legal
+Disallow: /fr/legal
+Disallow: /methods
+Disallow: /terms-and-conditions
+Disallow: /de/terms-and-conditions
+Disallow: /it/terms-and-conditions
+Disallow: /fr/terms-and-conditions
+Disallow: /power-bi
 Allow: /blog/
 
 
