@@ -1,3 +1,4 @@
+import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
 import {
   Option,
   filterConfigurationAtom,
@@ -6,6 +7,7 @@ import {
   timeRangeAtom,
   timeViewAtom,
 } from "@/domain/filters";
+import { IcChevronDoubleLeft } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans } from "@lingui/macro";
 import {
@@ -13,18 +15,18 @@ import {
   AccordionProps,
   AccordionSummary,
   Box,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
 import { Atom, useAtom, useAtomValue } from "jotai";
 import { SyntheticEvent, useState } from "react";
 import FilterAccordion from "../filter-accordion";
+import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
-import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
-import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -71,16 +73,20 @@ const SidePanel = ({
         <Box>
           <Box
             sx={{
-              px: "16px",
-              py: "36px",
+              px: 4,
+              py: 6,
             }}
             display="flex"
             justifyContent="space-between"
+            alignItems="center"
           >
+            <Typography variant="h4">
+              <Trans id="data.filters.heading">Filters</Trans>
+            </Typography>
             <Stack direction="row" gap={0.5} alignItems="center">
-              <Typography variant="h4">
-                <Trans id="data.filters.heading">Filters</Trans>
-              </Typography>
+              <IconButton onClick={onClose}>
+                <IcChevronDoubleLeft />
+              </IconButton>
             </Stack>
           </Box>
           {/* Cube path filters */}

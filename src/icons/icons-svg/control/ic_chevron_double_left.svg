@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons/24dp/ic_ChevronDoubleLeft</title>
+    <g id="Icons/24dp/ic_ChevronDoubleLeft" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ChevronDoubleLeft" transform="translate(7, 5)" fill="#000" fill-rule="nonzero" stroke="#000" stroke-width="0.5">
+            <polygon id="Path" points="4.06696 0 4.71696 0.375 0.866 7.044 4.71696 13.712 4.06696 14.087 0 7.044"></polygon>
+            <polygon id="Path" points="8.06696 0 8.71696 0.375 4.86596 7.044 8.71696 13.712 8.06696 14.087 3.99996 7.044"></polygon>
+        </g>
+    </g>
+</svg>

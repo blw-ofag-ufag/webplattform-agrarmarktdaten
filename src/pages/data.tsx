@@ -31,8 +31,8 @@ import {
   valueFormatter,
 } from "@/domain/observations";
 import {
-  IcControlArrowLeft,
-  IcControlArrowRight,
+  IcChevronDoubleLeft,
+  IcChevronDoubleRight,
   IcControlDownload,
 } from "@/icons/icons-jsx/control";
 import { useFlag } from "@/utils/flags";
@@ -136,7 +136,7 @@ const DataBrowser = () => {
           <Stack direction="row" gap={1} alignItems="center">
             <Button
               variant="inline"
-              startIcon={showFilters ? <IcControlArrowLeft /> : <IcControlArrowRight />}
+              startIcon={showFilters ? <IcChevronDoubleLeft /> : <IcChevronDoubleRight />}
               onClick={() => setShowFilters(!showFilters)}
             >
               {showFilters ? (
