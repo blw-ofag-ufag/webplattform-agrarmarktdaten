@@ -22,7 +22,7 @@ import React, { Suspense, useEffect, useMemo, useState } from "react";
 
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel from "@/components/browser/SidePanel";
-import { cubeDimensionsAtom } from "@/domain/cubes";
+import { cubeDimensionsAtom, visualizeUrlAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
 import {
   filteredObservationsAtom,
@@ -101,6 +101,7 @@ const DataBrowser = () => {
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const query = useAtomValue(observationsSparqlQueryAtom);
+  const visualizeUrl = useAtomValue(visualizeUrlAtom);
 
   const resultCount = filteredObservations.length;
   const debug = useFlag("debug");
@@ -145,11 +146,7 @@ const DataBrowser = () => {
             <Button size="small" href={query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
-            <Button
-              size="small"
-              href="https://int.visualize.admin.ch/en/browse/organization/https%3A%2F%2Fregister.ld.admin.ch[…]-fur-landwirtschaft-blw?includeDrafts=true&dataSource=Int"
-              target="_blank"
-            >
+            <Button size="small" href={visualizeUrl ?? ""} target="_blank">
               <Trans id="data.actions.visualize">Visualize</Trans>
             </Button>
             <Button size="small" onClick={() => setShowMetadataPanel(true)}>
