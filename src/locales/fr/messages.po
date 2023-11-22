@@ -368,6 +368,11 @@ msgid "footer.id"
 msgstr "L’Office fédéral de l’agriculture OFAG est le centre de compétences pour la politique agricole suisse. L'une des tâches de l'OFAG, est d'assurer l'observervation indépendante du marché (art. 27 de la loi sur l’agriculture, LAgr). Ceci consiste à recenser et publier des indicateurs de marché tels que les prix et les quantités tout au long de la chaîne de création de valeur ajoutée des principaux marchés agricoles et alimentaires de Suisse. L’objectif est d’accroître la transparence du marché et de mettre en évidence les évolutions à long terme."
 
 #. js-lingui-explicit-id
+#: src/components/BlogpostGrid/BlogpostGrid.tsx
+msgid "analysis.noResults"
+msgstr "Il n'y a pas de résultat pour cette sélection"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.time"
 msgstr "Période"
