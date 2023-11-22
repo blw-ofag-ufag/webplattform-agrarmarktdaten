@@ -30,7 +30,11 @@ import {
   observationsSparqlQueryAtom,
   valueFormatter,
 } from "@/domain/observations";
-import { IcControlArrowRight, IcControlDownload } from "@/icons/icons-jsx/control";
+import {
+  IcControlArrowLeft,
+  IcControlArrowRight,
+  IcControlDownload,
+} from "@/icons/icons-jsx/control";
 import { useFlag } from "@/utils/flags";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
@@ -96,6 +100,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
 
 const DataBrowser = () => {
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observationsQueryStatus = useAtomValue(observationsQueryAtom);
   const cubeDimensions = useAtomValue(cubeDimensionsAtom);
@@ -108,8 +113,17 @@ const DataBrowser = () => {
   return (
     <Stack direction="row" width="100%" ref={contentRef}>
       {debug ? <DebugDataPage /> : null}
-      <Box width="388px" flexGrow={0} flexShrink={0}>
-        <SidePanel />
+
+      <Box width={showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
+        <SidePanel
+          open={showFilters}
+          onClose={() => setShowFilters(false)}
+          slots={{
+            drawer: {
+              container: contentRef.current,
+            },
+          }}
+        />
       </Box>
       <Stack bgcolor="cobalt.50" flexGrow={1} minWidth={0} p="24px" gap={4}>
         <Stack height="80px" justifyContent="flex-end">
@@ -120,8 +134,16 @@ const DataBrowser = () => {
         </Stack>
         <Stack direction="row" justifyContent="space-between">
           <Stack direction="row" gap={1} alignItems="center">
-            <Button variant="inline" startIcon={<IcControlArrowRight />}>
-              <Trans id="data.actions.showFiler">Show Filters</Trans>
+            <Button
+              variant="inline"
+              startIcon={showFilters ? <IcControlArrowLeft /> : <IcControlArrowRight />}
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              {showFilters ? (
+                <Trans id="data.actions.hideFilter">Hide Filters</Trans>
+              ) : (
+                <Trans id="data.actions.showFilter">Show Filters</Trans>
+              )}
             </Button>
             <Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />
             <Typography variant="body2" color="grey.600" padding={2}>

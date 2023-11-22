@@ -24,6 +24,7 @@ import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
 import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
+import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -42,7 +43,17 @@ const useExclusiveAccordion = (defaultState: string) => {
 };
 
 const orderedCubeFilters = ["value-chain", /* "market", */ "measure"] as const;
-const SidePanel = () => {
+const SidePanel = ({
+  open = true,
+  onClose = () => {},
+  slots,
+}: {
+  open?: boolean;
+  onClose?: () => void;
+  slots: {
+    drawer: Omit<ContentDrawerProps, "open">;
+  };
+}) => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
   const filterConfiguration = useAtomValue(filterConfigurationAtom);
   const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
@@ -50,80 +61,82 @@ const SidePanel = () => {
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
 
   return (
-    <Stack
-      justifyContent="space-between"
-      sx={{
-        height: "100%",
-      }}
-    >
-      <Box>
-        <Box
-          sx={{
-            px: "16px",
-            py: "36px",
-          }}
-          display="flex"
-          justifyContent="space-between"
-        >
-          <Stack direction="row" gap={0.5} alignItems="center">
-            <Typography variant="h4">
-              <Trans id="data.filters.heading">Filters</Trans>
-            </Typography>
-          </Stack>
+    <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
+      <Stack
+        justifyContent="space-between"
+        sx={{
+          height: "100%",
+        }}
+      >
+        <Box>
+          <Box
+            sx={{
+              px: "16px",
+              py: "36px",
+            }}
+            display="flex"
+            justifyContent="space-between"
+          >
+            <Stack direction="row" gap={0.5} alignItems="center">
+              <Typography variant="h4">
+                <Trans id="data.filters.heading">Filters</Trans>
+              </Typography>
+            </Stack>
+          </Box>
+          {/* Cube path filters */}
+          {orderedCubeFilters.map((key) => {
+            const config = filterConfiguration.cube[key];
+            const filterAtom = filterCubeSelection[key];
+
+            const options = config.options.filter((option) => {
+              return availableBaseDimensionsValues[key].options.includes(option.value);
+            });
+
+            if (!filterAtom) {
+              return null;
+            }
+
+            return (
+              <FilterRadioAccordion
+                key={key}
+                slots={{
+                  accordion: getAccordionProps(key),
+                }}
+                options={options}
+                filterAtom={filterAtom}
+                title={config.name}
+              />
+            );
+          })}
+          <TimeAccordion {...getAccordionProps("time")} />
+
+          {/* Property filters */}
+
+          {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
+            const filterAtom =
+              filterDimensionsSelection[key as keyof (typeof filterConfiguration)["dimensions"]];
+            if (!filterAtom) {
+              return null;
+            }
+            return (
+              <FilterSelectAccordion
+                key={key}
+                slots={{
+                  accordion: getAccordionProps(key),
+                  select: {
+                    withSearch: value.search,
+                    groups: value?.groups,
+                  },
+                }}
+                options={value.options}
+                filterAtom={filterAtom}
+                title={value.name ?? value.key}
+              />
+            );
+          })}
         </Box>
-        {/* Cube path filters */}
-        {orderedCubeFilters.map((key) => {
-          const config = filterConfiguration.cube[key];
-          const filterAtom = filterCubeSelection[key];
-
-          const options = config.options.filter((option) => {
-            return availableBaseDimensionsValues[key].options.includes(option.value);
-          });
-
-          if (!filterAtom) {
-            return null;
-          }
-
-          return (
-            <FilterRadioAccordion
-              key={key}
-              slots={{
-                accordion: getAccordionProps(key),
-              }}
-              options={options}
-              filterAtom={filterAtom}
-              title={config.name}
-            />
-          );
-        })}
-        <TimeAccordion {...getAccordionProps("time")} />
-
-        {/* Property filters */}
-
-        {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
-          const filterAtom =
-            filterDimensionsSelection[key as keyof (typeof filterConfiguration)["dimensions"]];
-          if (!filterAtom) {
-            return null;
-          }
-          return (
-            <FilterSelectAccordion
-              key={key}
-              slots={{
-                accordion: getAccordionProps(key),
-                select: {
-                  withSearch: value.search,
-                  groups: value?.groups,
-                },
-              }}
-              options={value.options}
-              filterAtom={filterAtom}
-              title={value.name ?? value.key}
-            />
-          );
-        })}
-      </Box>
-    </Stack>
+      </Stack>
+    </ContentDrawer>
   );
 };
 
