@@ -25,15 +25,17 @@ export function MetadataPanel({
 }) {
   return (
     <ContentDrawer anchor="right" open={open} onClose={onClose} {...slots.drawer}>
-      <Stack direction="row" justifyContent="space-between">
-        <Typography variant="h3">
-          <Trans id="data.metadata.title">Metadata</Trans>
-        </Typography>
-        <IconButton onClick={onClose}>
-          <IcControlArrowRight />
-        </IconButton>
-      </Stack>
-      <MetadataContent dimensions={dimensions} />
+      <Box px={4} py={5}>
+        <Stack direction="row" justifyContent="space-between">
+          <Typography variant="h3">
+            <Trans id="data.metadata.title">Metadata</Trans>
+          </Typography>
+          <IconButton onClick={onClose}>
+            <IcControlArrowRight />
+          </IconButton>
+        </Stack>
+        <MetadataContent dimensions={dimensions} />
+      </Box>
     </ContentDrawer>
   );
 }

@@ -1,5 +1,5 @@
-import { Box, Drawer, DrawerProps } from "@mui/material";
-import React, { PropsWithChildren } from "react";
+import { Drawer, DrawerProps } from "@mui/material";
+import { PropsWithChildren } from "react";
 
 export type ContentDrawerProps = {
   container: HTMLDivElement | null;
@@ -27,9 +27,7 @@ export const ContentDrawer = ({ children, container, ...props }: ContentDrawerPr
       variant="persistent"
       {...props}
     >
-      <Box px={4} py={5}>
-        {children}
-      </Box>
+      {children}
     </Drawer>
   );
 };
