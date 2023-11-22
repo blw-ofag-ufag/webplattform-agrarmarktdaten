@@ -304,7 +304,7 @@ msgstr "Pubblicato il"
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.legal"
-msgstr "Missione e base giuridica"
+msgstr "Compiti e basi legali"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
@@ -360,6 +360,11 @@ msgstr "Condizioni d’uso"
 #: src/components/Footer/Footer.tsx
 msgid "footer.id"
 msgstr "L'Ufficio federale dell'agricoltura UFAG è il centro di competenza nazionale per la politica agricola svizzera. Tra i suoi compiti rientra il monitoraggio indipendente del mercato (art. 27 della legge sull'agricoltura, LAgr). L'UFAG rileva e pubblica indicatori di mercato, come prezzi e quantità, lungo l'intera catena del valore dei principali mercati agroalimentari della Svizzera. L'obiettivo è aumentare la trasparenza del mercato e mostrare l’evoluzione a lungo termine."
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/BlogpostGrid.tsx
+msgid "analysis.noResults"
+msgstr "Non ci sono risultati per questa selezione"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
