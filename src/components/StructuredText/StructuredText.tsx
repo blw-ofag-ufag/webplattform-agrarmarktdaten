@@ -30,6 +30,7 @@ import {
 import NextImage from "next/image";
 import { PowerBIFullScreen } from "@/components/PowerBIFullScreen";
 import { t } from "@lingui/macro";
+import { atom } from "jotai";
 
 const defaultParagraphTypographyProps = {
   variant: "body1",
@@ -143,6 +144,9 @@ const StructuredText = (props: Props) => {
               switch (record.__typename) {
                 case "PowerBiReportRecord":
                   const powerBiReport = record as Partial<GQL.PowerBiReportRecord>;
+                  const pages =
+                    powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
+                  const currentPageAtom = atom<{ name: string; id: string }>(pages[0]);
                   return (
                     <div style={{ position: "relative" }}>
                       <PowerBIFullScreen
@@ -151,9 +155,8 @@ const StructuredText = (props: Props) => {
                           datasetId: powerBiReport.dataset?.datasetId ?? "",
                           reportId: powerBiReport?.reportId ?? "",
                           reportWorkspaceId: powerBiReport.workspace?.workspaceId ?? "",
-                          pages:
-                            powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ??
-                            [],
+                          pages,
+                          currentPage: currentPageAtom,
                         }}
                       />
                       <PowerBIReport
@@ -161,9 +164,8 @@ const StructuredText = (props: Props) => {
                         datasetId={powerBiReport.dataset?.datasetId ?? ""}
                         reportId={powerBiReport?.reportId ?? ""}
                         reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
-                        pages={
-                          powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? []
-                        }
+                        pages={pages}
+                        currentPage={currentPageAtom}
                       />
                     </div>
                   );
