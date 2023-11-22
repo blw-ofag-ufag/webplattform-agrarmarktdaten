@@ -3,11 +3,13 @@ import * as GQL from "@/graphql";
 import { Locale } from "@/locales/locales";
 import { GetServerSideProps } from "next";
 import { isValidLocale } from "@/locales/locales";
-import { IS_PROD_ENVIRONMENT } from "@/domain/env";
+// import { IS_PROD_ENVIRONMENT } from "@/domain/env";
 
-const DOMAIN = IS_PROD_ENVIRONMENT
-  ? "https://www.agrimarketdata.ch"
-  : "https://blw-agricultural-market-data-platform-ixt1.vercel.app";
+// const DOMAIN = IS_PROD_ENVIRONMENT
+//   ? "https://www.agrimarketdata.ch"
+//   : "https://blw-agricultural-market-data-platform-ixt1.vercel.app";
+
+const DOMAIN = "https://blw-agricultural-market-data-platform-ixt1.vercel.app";
 
 interface Paths {
   locale: Locale;
