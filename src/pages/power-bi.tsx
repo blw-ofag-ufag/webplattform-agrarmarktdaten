@@ -2,6 +2,7 @@ import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { GetStaticProps } from "next";
+import { atom } from "jotai";
 
 type Props = GQL.AllPowerBiReportsQuery;
 
@@ -13,6 +14,7 @@ const Page = (props: Props) => {
     const reportId = d.reportId ?? "";
     const reportWorkspaceId = d.workspace?.workspaceId ?? "";
     const pages = d.pages.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
+    const currentPageAtom = atom<{ name: string; id: string }>(pages[0]);
 
     return (
       <PowerBIReport
@@ -21,6 +23,7 @@ const Page = (props: Props) => {
         reportId={reportId}
         reportWorkspaceId={reportWorkspaceId}
         pages={pages}
+        currentPage={currentPageAtom}
       />
     );
   });
