@@ -5,6 +5,7 @@ const main = async () => {
   const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
   const browser = await chromium.launch({
     headless: !!process.env.CI,
+    timeout: 50000,
   });
 
   // List of pages to visit
@@ -12,7 +13,6 @@ const main = async () => {
     { route: "/analysis", fullPage: false },
     { route: "/methods", fullPage: false },
     { route: "/legal", fullPage: false },
-    { route: "/de/market/milch-und-milchprodukte", fullPage: true },
     { route: "/", fullPage: true },
   ];
 

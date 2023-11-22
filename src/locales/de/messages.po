@@ -362,6 +362,11 @@ msgid "footer.id"
 msgstr "Das Bundesamt für Landwirtschaft BLW ist das nationale Kompetenzzentrum für die Schweizer Agrarpolitik. Zu den Aufgaben des BLW gehört auch, eine unabhängige Marktbeobachtungsstelle zu führen (Artikel 27 Landwirtschaftsgesetz LwG). Diese erhebt und publiziert Marktindikatoren wie Preise und Mengen entlang der gesamten Wertschöpfungskette der wichtigsten Agrar- und Lebensmittelmärkte der Schweiz. Ziel ist es, die Markttransparenz zu erhöhen und langfristige Entwicklungen aufzuzeigen."
 
 #. js-lingui-explicit-id
+#: src/components/BlogpostGrid/BlogpostGrid.tsx
+msgid "analysis.noResults"
+msgstr "Für diese Auswahl gibt es keine Ergebnisse"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "data.filters.time"
 msgstr "Zeitraum"
