@@ -226,11 +226,16 @@ export default function Select<T extends Option>({
           disabled={searchString !== "" || options.length === values.length}
           onClick={() => onChange(options)}
         >
-          <Typography variant="body2">
+          <Typography variant="body2" onClick={() => onChange(options)}>
             <Trans id="filters.select.all">Select all</Trans>
           </Typography>
         </Button>
-        <Button variant="text" size="small">
+        <Button
+          variant="text"
+          size="small"
+          onClick={() => onChange([])}
+          disabled={values.length === 0}
+        >
           <Typography variant="body2">
             <Trans id="filters.select.clear">Clear</Trans>
           </Typography>
@@ -469,13 +474,15 @@ export const PreviewSelect = <T extends Option>({
   options,
   values,
   show,
+  tainted = false,
 }: {
   options: T[];
   values: T[];
   show: boolean;
+  tainted?: boolean;
 }) => {
   return (
-    <PreviewFilter show={show}>
+    <PreviewFilter show={show} tainted={tainted}>
       {values.length === 0
         ? t({ id: "data.filters.none", message: "None" })
         : values.length === options.length

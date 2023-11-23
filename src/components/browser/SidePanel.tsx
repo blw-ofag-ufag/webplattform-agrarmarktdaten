@@ -13,20 +13,22 @@ import { Trans } from "@lingui/macro";
 import {
   AccordionDetails,
   AccordionProps,
-  AccordionSummary,
+  AccordionSummary as AccordionSummaryMui,
   Box,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
 import { Atom, useAtom, useAtomValue } from "jotai";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
+import { withStyles } from "../style-utils";
+import { xor } from "lodash";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -111,6 +113,7 @@ const SidePanel = ({
                 options={options}
                 filterAtom={filterAtom}
                 title={config.name}
+                defaultValue={config.defaultOption}
               />
             );
           })}
@@ -159,6 +162,7 @@ const FilterRadioAccordion = <T extends Option>({
   title,
   slots,
   options,
+  defaultValue,
 }: {
   filterAtom: Atom<T | undefined>;
   options: T[];
@@ -166,14 +170,16 @@ const FilterRadioAccordion = <T extends Option>({
   slots: {
     accordion: Omit<AccordionProps, "children">;
   };
+  defaultValue: T;
 }) => {
   const [value, setValue] = useAtom(filterAtom);
+  const isTainted = value?.value !== defaultValue.value;
 
   return (
     <FilterAccordion {...slots.accordion}>
-      <AccordionSummary>
+      <AccordionSummary className={isTainted ? "tainted" : ""}>
         <AccordionTitle>{title}</AccordionTitle>
-        <PreviewFilter show={!slots.accordion.expanded && !!value}>
+        <PreviewFilter tainted={isTainted} show={!slots.accordion.expanded && !!value}>
           {value && value.label}
         </PreviewFilter>
       </AccordionSummary>
@@ -183,6 +189,15 @@ const FilterRadioAccordion = <T extends Option>({
     </FilterAccordion>
   );
 };
+
+const AccordionSummary = withStyles(AccordionSummaryMui, (theme) => ({
+  root: {
+    "&.tainted": {
+      color: theme.palette.grey[500],
+      backgroundColor: theme.palette.cobalt[100],
+    },
+  },
+}));
 
 const FilterSelectAccordion = <T extends Option>({
   filterAtom,
@@ -199,12 +214,25 @@ const FilterSelectAccordion = <T extends Option>({
   };
 }) => {
   const [values, setValues] = useAtom(filterAtom);
+  const isTainted = useMemo(() => {
+    return (
+      xor(
+        values.map((v) => v.value),
+        options.map((o) => o.value)
+      ).length > 0
+    );
+  }, [values, options]);
 
   return (
     <FilterAccordion {...slots.accordion}>
-      <AccordionSummary>
+      <AccordionSummary className={isTainted ? "tainted" : ""}>
         <AccordionTitle>{title}</AccordionTitle>
-        <PreviewSelect show={!slots.accordion.expanded} values={values} options={options} />
+        <PreviewSelect
+          tainted={isTainted}
+          show={!slots.accordion.expanded}
+          values={values}
+          options={options}
+        />
       </AccordionSummary>
       <AccordionDetails>
         <Select values={values} onChange={setValues} options={options} {...slots.select} />

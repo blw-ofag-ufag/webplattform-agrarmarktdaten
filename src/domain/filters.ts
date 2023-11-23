@@ -81,31 +81,54 @@ export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
  */
 export const filterCubeConfigurationAtom = atom(async (get) => {
   const baseDimensions = await get(baseDimensionsAtom);
+  const cubes = await get(cubesAtom);
+  const defaultCubeDef = cubes.find((cube) => cube.cube === defaultCube);
+
+  const defaultMeasure = baseDimensions.measure.find(
+    (m) => m.dimension === defaultCubeDef?.measure
+  );
+
+  const measureOptions = baseDimensions.measure.map((m) => ({
+    label: m.label,
+    value: m.dimension,
+  }));
+  const marketOptions = baseDimensions.properties["market"].values.map((v) => ({
+    label: v.label,
+    value: v.value,
+  }));
+  const valueChainOptions = baseDimensions.properties["value-chain"].values.map((v) => ({
+    label: v.label,
+    value: v.value,
+  }));
 
   return {
     measure: {
       name: "Measure",
-      options: baseDimensions.measure.map((m) => ({ label: m.label, value: m.dimension })),
+      options: measureOptions,
       type: "single" as const,
+      defaultOption: defaultMeasure
+        ? { label: defaultMeasure.label, value: defaultMeasure.dimension }
+        : measureOptions[0],
     },
     ["value-chain"]: {
       name:
         baseDimensions.properties["value-chain"]?.label ??
         baseDimensions.properties["value-chain"].dimension,
-      options: baseDimensions.properties["value-chain"].values.map((v) => ({
-        label: v.label,
-        value: v.value,
-      })),
+      options: valueChainOptions,
       type: "single" as const,
+      defaultOption:
+        baseDimensions.properties["value-chain"].values.find(
+          (v) => v.value === defaultCubeDef?.valueChain
+        ) ?? valueChainOptions[0],
     },
     market: {
       name:
         baseDimensions.properties["market"]?.label ?? baseDimensions.properties["market"].dimension,
-      options: baseDimensions.properties["market"].values.map((v) => ({
-        label: v.label,
-        value: v.value,
-      })),
+      options: marketOptions,
       type: "single" as const,
+      defaultOption:
+        baseDimensions.properties.market.values.find((v) => v.value === defaultCubeDef?.market) ??
+        marketOptions[0],
     },
   };
 });
@@ -244,35 +267,22 @@ export const filterDimensionsSelectionAtom = atom(async (get) => {
  */
 export const filterCubeSelectionAtom = atom(async (get) => {
   const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
-  const baseDimensions = await get(baseDimensionsAtom);
-  const cubes = await get(cubesAtom);
-  const defaultCubeDef = cubes.find((cube) => cube.cube === defaultCube);
-
-  const defaultMeasure = baseDimensions.measure.find(
-    (m) => m.dimension === defaultCubeDef?.measure
-  );
 
   return {
     measure: filterSingleHashAtomFamily({
       key: "measure",
       options: filterCubeConfiguration.measure.options,
-      defaultOption: defaultMeasure
-        ? { label: defaultMeasure.label, value: defaultMeasure.dimension }
-        : filterCubeConfiguration.measure.options[0],
+      defaultOption: filterCubeConfiguration.measure.defaultOption,
     }),
     ["value-chain"]: filterSingleHashAtomFamily({
       key: "valueChain",
       options: filterCubeConfiguration["value-chain"].options,
-      defaultOption: baseDimensions.properties["value-chain"].values.find(
-        (v) => v.value === defaultCubeDef?.valueChain
-      ),
+      defaultOption: filterCubeConfiguration["value-chain"].defaultOption,
     }),
     market: filterSingleHashAtomFamily({
       key: "market",
       options: filterCubeConfiguration.market.options,
-      defaultOption: baseDimensions.properties.market.values.find(
-        (v) => v.value === defaultCubeDef?.market
-      ),
+      defaultOption: filterCubeConfiguration.market.defaultOption,
     }),
   };
 });
