@@ -79,6 +79,13 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
       [`.${classes.full} &`]: {
         overflow: "hidden",
         textOverflow: "ellipsis",
+
+        // Prevent title to completely disappear due to
+        // gridTemplateRow auto
+        minHeight: "1.5em",
+
+        // Max height set to at most 2 lines (lineHeight / fontSize *  4 = 36 / 24 * 4 = ),
+        maxHeight: "6em",
       },
 
       [`.${classes.third} &`]: {
@@ -89,11 +96,11 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
         // gridTemplateRow auto
         minHeight: "1.5em",
 
-        // Max height set to at most 2 lines (lineHeight / fontSize *  2 = 28 / 20 * 2),
+        // Max height set to at most 2 lines (lineHeight / fontSize *  2 = 24 / 16 * 2 = 3em),
         // & prevent shrinking due to long lead
         overflow: "hidden",
         flexBasis: "min-content",
-        maxHeight: "2.8em",
+        maxHeight: "3em",
         flexShrink: 0,
       },
     },
@@ -106,6 +113,7 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
         rowGap: s(2),
         flexWrap: "wrap",
         marginBottom: s(4),
+        overflow: "hidden",
       },
       [`.${classes.third} &`]: {
         paddingLeft: "var(--px)",
@@ -114,9 +122,15 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
         marginBottom: s(2),
         minHeight: "42px",
         display: "flex",
-        columnGap: s(4),
+        columnGap: s(2),
         rowGap: s(2),
-        flexWrap: "wrap",
+        flexWrap: "nowrap",
+        overflow: "hidden",
+
+        "& > *": {
+          flexShrink: 1,
+          overflow: "hidden",
+        },
       },
     },
 
@@ -225,9 +239,10 @@ export const BlogpostCard = (
             </Typography>
           </div>
           <Typography
-            variant={variant === "full" ? "h1" : "h2"}
+            variant={variant === "full" ? "h1" : "h4"}
             component="h2"
             className={cx(classes.title, clampedClassName)}
+            title={title ?? undefined}
           >
             {title}
           </Typography>
