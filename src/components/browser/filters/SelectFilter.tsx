@@ -180,7 +180,7 @@ export default function Select<T extends Option>({
   };
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} py={2}>
       {withSearch && (
         <TextField
           value={searchString}

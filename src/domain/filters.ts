@@ -2,7 +2,7 @@ import { localeAtom } from "@/lib/use-locale";
 import { HierarchyValue, fetchHierarchy } from "@/pages/api/data";
 import { findInHierarchy } from "@/utils/trees";
 import dayjs from "dayjs";
-import { Atom, atom } from "jotai";
+import { WritableAtom, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
@@ -13,7 +13,7 @@ import {
   cubesAtom,
   defaultCube,
 } from "./cubes";
-import { Dimension, dataDimensions } from "./dimensions";
+import { CubeDimension, Dimension, dataDimensions } from "./dimensions";
 
 export type Option = {
   label: string;
@@ -209,28 +209,31 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
   const cubeDimensions = await get(cubeDimensionsAtom);
   const productOptions = await get(productOptionsWithHierarchyAtom);
 
-  return {
-    "sales-region": {
-      key: "sales-region",
-      name: cubeDimensions.properties[dataDimensions["sales-region"].id].label,
-      options: cubeDimensions.properties?.[dataDimensions["sales-region"].id].values,
-      type: "multi" as const,
-      search: true,
-      groups: undefined,
-    },
-    product: {
-      key: "product",
-      name: cubeDimensions.properties?.[dataDimensions.product.id].label,
-      options: productOptions,
-      type: "multi" as const,
-      groups: [
-        (d: Option) => d.hierarchy?.["market"].label,
-        (d: Option) => d.hierarchy?.["product-group"].label,
-        (d: Option) => d.hierarchy?.["product-subgroup"].label,
-      ],
-      search: true,
-    },
+  const configs = {} as Partial<Record<Dimension, Filter>>;
+
+  configs["sales-region"] = {
+    key: "sales-region",
+    name: cubeDimensions.properties[dataDimensions["sales-region"].id].label ?? "sales-region",
+    options: cubeDimensions.properties?.[dataDimensions["sales-region"].id].values,
+    type: "multi" as const,
+    search: true,
+    groups: undefined,
   };
+
+  configs["product"] = {
+    key: "product",
+    name: cubeDimensions.properties?.[dataDimensions.product.id].label ?? "product",
+    options: productOptions,
+    type: "multi" as const,
+    groups: [
+      (d: Option) => d.hierarchy?.["market"].label ?? "market",
+      (d: Option) => d.hierarchy?.["product-group"].label ?? "product-group",
+      (d: Option) => d.hierarchy?.["product-subgroup"].label ?? "product-subgroup",
+    ],
+    search: true,
+  };
+
+  return configs;
 });
 
 /**
@@ -244,11 +247,11 @@ export const filterDimensionsSelectionAtom = atom(async (get) => {
 
   const cubeDimension = await get(cubeDimensionsAtom);
 
-  const filters = {} as Partial<Record<Dimension, Atom<Option[]>>>;
+  const filters = {} as Partial<Record<Dimension, WritableAtom<Option[], any, void>>>;
 
   filters["sales-region"] = filterMultiHashAtomFamily({
     key: "sales-region",
-    options: filterDimensionsConfiguration["sales-region"].options,
+    options: filterDimensionsConfiguration["sales-region"]?.options ?? [],
     defaultOptions: cubeDimension.properties["sales-region"].values,
   });
 
@@ -287,6 +290,23 @@ export const filterCubeSelectionAtom = atom(async (get) => {
   };
 });
 
+export const resetCubeFiltersAtom = atom(null, async (get, set) => {
+  const filterCubeSelection = await get(filterCubeSelectionAtom);
+  const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
+
+  const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
+  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+
+  Object.entries(filterCubeSelection).forEach(([key, atom]) => {
+    const defaultOption = filterCubeConfiguration[key as CubeDimension].defaultOption;
+    set(atom, defaultOption);
+  });
+
+  Object.entries(filterDimensionsSelection).forEach(([key, atom]) => {
+    const defaultOptions = filterDimensionsConfiguration[key as Dimension]?.options;
+    set(atom, defaultOptions);
+  });
+});
 /**
  * Atom that contains the configuration for all filters.
  * cube: configuration for the cube filters, on which cube we fetch.

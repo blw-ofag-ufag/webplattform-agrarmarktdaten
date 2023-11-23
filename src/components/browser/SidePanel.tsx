@@ -4,31 +4,33 @@ import {
   filterConfigurationAtom,
   filterCubeSelectionAtom,
   filterDimensionsSelectionAtom,
+  resetCubeFiltersAtom,
   timeRangeAtom,
   timeViewAtom,
 } from "@/domain/filters";
-import { IcChevronDoubleLeft } from "@/icons/icons-jsx/control";
+import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
-import { Trans } from "@lingui/macro";
+import { Trans, t } from "@lingui/macro";
 import {
   AccordionDetails,
   AccordionProps,
   AccordionSummary as AccordionSummaryMui,
   Box,
+  Chip,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
-import { Atom, useAtom, useAtomValue } from "jotai";
+import { Atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { xor } from "lodash";
 import { SyntheticEvent, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
+import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
-import { withStyles } from "../style-utils";
-import { xor } from "lodash";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -86,6 +88,7 @@ const SidePanel = ({
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
             <Stack direction="row" gap={0.5} alignItems="center">
+              <ResetFiltersButton />
               <IconButton onClick={onClose}>
                 <IcChevronDoubleLeft />
               </IconButton>
@@ -280,3 +283,23 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 };
 
 export default SidePanel;
+
+const ResetFiltersButton = () => {
+  const resetCubeFilters = useSetAtom(resetCubeFiltersAtom);
+
+  return (
+    <Chip
+      clickable
+      onClick={() => resetCubeFilters()}
+      label={t({ id: "cta.reset-filters", message: "Reset Filters" })}
+      icon={<IcRepeat width={24} height={24} />}
+      sx={{
+        backgroundColor: "cobalt.100",
+        color: "grey.800",
+        "&:hover": {
+          backgroundColor: "cobalt.100",
+        },
+      }}
+    />
+  );
+};
