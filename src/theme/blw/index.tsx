@@ -73,6 +73,25 @@ const theme = createTheme(federalTheme, {
             borderColor: federalTheme.palette.grey[700],
           },
         },
+        {
+          props: { variant: "text" },
+          style: {
+            color: "grey.800",
+
+            padding: 0,
+            borderBottom: "1px solid",
+            borderColor: "transparent",
+            borderRadius: 0,
+            ":hover": {
+              backgroundColor: "transparent",
+              borderBottom: "1px solid",
+              borderColor: "grey.800",
+            },
+            "&.Mui-disabled": {
+              color: "grey.500",
+            },
+          },
+        },
       ],
     },
     MuiCheckbox: {

@@ -142,9 +142,10 @@ export default function TimeFilter({
     <Stack gap={3}>
       <Button
         variant="text"
+        size="small"
         sx={{
           width: "fit-content",
-          color: "grey.600",
+          mb: 2,
         }}
       >
         <Trans id="data.control.reset">Reset</Trans>

@@ -180,7 +180,7 @@ export default function Select<T extends Option>({
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3}>
       {withSearch && (
         <TextField
           value={searchString}
@@ -208,7 +208,7 @@ export default function Select<T extends Option>({
       )}
       <Stack
         direction="row"
-        spacing={0.5}
+        spacing={2}
         divider={
           <Circle
             sx={{
@@ -220,12 +220,17 @@ export default function Select<T extends Option>({
         }
         alignItems="center"
       >
-        <Button variant="text" disabled={searchString !== ""} onClick={() => onChange(options)}>
+        <Button
+          variant="text"
+          size="small"
+          disabled={searchString !== "" || options.length === values.length}
+          onClick={() => onChange(options)}
+        >
           <Typography variant="body2">
             <Trans id="filters.select.all">Select all</Trans>
           </Typography>
         </Button>
-        <Button variant="text" onClick={() => onChange([])}>
+        <Button variant="text" size="small">
           <Typography variant="body2">
             <Trans id="filters.select.clear">Clear</Trans>
           </Typography>
