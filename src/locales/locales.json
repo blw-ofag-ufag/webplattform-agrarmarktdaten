@@ -1,4 +1,14 @@
 {
   "locales": ["de", "fr", "it"],
-  "defaultLocale": "de"
+  "defaultLocale": "de",
+  "localDomains": [
+    { "domain": "local-agrarmarktdaten.ch", "defaultLocale": "de", "http": true },
+    { "domain": "local-dati-agrimercato.ch", "defaultLocale": "it", "http": true },
+    { "domain": "local-donnees-agrimarche.ch", "defaultLocale": "fr", "http": true }
+  ],
+  "domains": [
+    { "domain": "agrarmarktdaten.ch", "defaultLocale": "de", "http": true },
+    { "domain": "dati-agrimercato.ch", "defaultLocale": "it", "http": true },
+    { "domain": "donnees-agrimarche.ch", "defaultLocale": "fr", "http": true }
+  ]
 }
