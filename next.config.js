@@ -1,4 +1,5 @@
 const { withSentryConfig } = require("@sentry/nextjs");
+const { IS_PROD_ENVIRONMENT } = require("./src/domain/env");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -10,7 +11,7 @@ const VERSION = `v${pkg.version}`;
 
 console.log("Version", VERSION);
 
-const { locales, defaultLocale } = require("./src/locales/locales.json");
+const { locales, defaultLocale, domains, localDomains } = require("./src/locales/locales.json");
 
 const config = withBundleAnalyzer(
   withMDX({
@@ -21,11 +22,7 @@ const config = withBundleAnalyzer(
     i18n: {
       locales,
       defaultLocale,
-      domains: [
-        { domain: "local-agrarmarktdaten.ch", defaultLocale: "de", http: true },
-        { domain: "local-dati-agrimercato.ch", defaultLocale: "it", http: true },
-        { domain: "local-donnees-agrimarche.ch", defaultLocale: "fr", http: true },
-      ],
+      domains: IS_PROD_ENVIRONMENT ? domains : localDomains,
       localeDetection: false,
     },
 
