@@ -21,6 +21,12 @@ const config = withBundleAnalyzer(
     i18n: {
       locales,
       defaultLocale,
+      domains: [
+        { domain: "local-agrarmarktdaten.ch", defaultLocale: "de", http: true },
+        { domain: "local-dati-agrimercato.ch", defaultLocale: "it", http: true },
+        { domain: "local-donnees-agrimarche.ch", defaultLocale: "fr", http: true },
+      ],
+      localeDetection: false,
     },
 
     transpilePackages: ["jotai-devtools"],
