@@ -54,6 +54,7 @@ export function MetadataContent({ dimensions }: { dimensions: CubeDimensions }) 
           <>
             <Button
               variant="text"
+              size="small"
               onClick={() => setSelectedDimension(undefined)}
               startIcon={<SvgIcControlArrowLeft />}
             >

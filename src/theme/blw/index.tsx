@@ -8,6 +8,7 @@ import colors from "@/assets/mui-color-tokens.json";
 declare module "@mui/material" {
   interface ButtonPropsVariantOverrides {
     aside: true;
+    ghost: true;
   }
 }
 
@@ -76,8 +77,8 @@ const theme = createTheme(federalTheme, {
         {
           props: { variant: "text" },
           style: {
+            width: "fit-content",
             color: "grey.800",
-
             padding: 0,
             borderBottom: "1px solid",
             borderColor: "transparent",

@@ -8,7 +8,7 @@ export const BackButton = () => {
 
   return (
     <Button
-      variant="text"
+      variant="ghost"
       onClick={() => router.back()}
       startIcon={<SvgIcControlArrowLeft />}
       sx={{ position: "absolute", mt: 4, ml: 2, color: "black" }}
