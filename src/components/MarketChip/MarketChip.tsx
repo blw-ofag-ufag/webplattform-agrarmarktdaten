@@ -23,7 +23,14 @@ const MarketChip = (props: Props) => {
   const { slug, label, ...rest } = props;
   const { classes, cx } = useStyles();
   const market = getMarketFromSlug(slug);
-  return <Chip label={label} className={cx(classes.chip, classes[market])} {...rest} />;
+  return (
+    <Chip
+      label={label}
+      title={label ?? undefined}
+      className={cx(classes.chip, classes[market])}
+      {...rest}
+    />
+  );
 };
 
 export default MarketChip;

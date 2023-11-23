@@ -3,9 +3,20 @@ import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
 import React from "react";
 
-import { Tab, Tabs, TabsProps, tabClasses } from "@mui/material";
+import {
+  MenuItem,
+  Select,
+  SxProps,
+  Tab,
+  Tabs,
+  Theme,
+  tabClasses,
+  tabScrollButtonClasses,
+  useMediaQuery,
+} from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
+import { PrimitiveAtom, useAtom } from "jotai";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
   ssr: false,
@@ -21,6 +32,7 @@ const CONFIG: models.IReportEmbedConfiguration = {
 
 const useStyles = makeStyles()((theme) => ({
   root: {
+    width: "100%",
     "& iframe": {
       border: "none",
     },
@@ -47,7 +59,10 @@ const useStyles = makeStyles()((theme) => ({
     [`& .${tabClasses.root}`]: {
       // Not done at theme level not to mess up with global navigation at the top
       minHeight: 56,
-      fontSize: "1rem",
+      fontSize: "1.125rem",
+    },
+    [`& .${tabScrollButtonClasses.root}`]: {
+      alignItems: "center",
     },
   },
 }));
@@ -61,27 +76,62 @@ type PowerBIPage = {
   id: string;
 };
 
-type PowerBIReportProps = {
+export type PowerBIReportProps = {
   datasetId: string;
   reportId: string;
   reportWorkspaceId: string;
   pages: PowerBIPage[];
+  currentPage: PrimitiveAtom<{ id: string; name: string }>;
 };
 
 export const PowerBINavigation = ({
   pages,
   onChange,
   activePage,
+  switchToSelectOnMobile = true,
   ...props
 }: {
   pages: PowerBIPage[];
   activePage: PowerBIPage;
   onChange: (page: PowerBIPage) => void;
-} & Omit<TabsProps, "onChange">) => {
+  switchToSelectOnMobile?: boolean;
+} & {
+  className?: string;
+  sx?: SxProps;
+}) => {
   const { classes, cx } = useStyles();
 
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
+
+  if (isMobile && switchToSelectOnMobile) {
+    return (
+      <Select
+        value={activePage.id}
+        {...props}
+        onChange={(ev) => {
+          const page = pages.find((p) => p.id === ev.target.value);
+          if (page) {
+            onChange(page);
+          }
+        }}
+      >
+        {pages.map((page) => (
+          <MenuItem key={page.id} value={page.id}>
+            {page.name}
+          </MenuItem>
+        ))}
+      </Select>
+    );
+  }
   return (
-    <Tabs value={activePage?.id} {...props} className={cx(classes.navigationTabs, props.className)}>
+    <Tabs
+      variant="scrollable"
+      allowScrollButtonsMobile
+      scrollButtons="auto"
+      value={activePage?.id}
+      {...props}
+      className={cx(classes.navigationTabs, props.className)}
+    >
       {pages.map((page) => (
         <Tab
           key={page.id}
@@ -96,9 +146,9 @@ export const PowerBINavigation = ({
 };
 
 export const PowerBIReport = (props: PowerBIReportProps) => {
-  const { datasetId, reportId, reportWorkspaceId, pages } = props;
+  const { datasetId, reportId, reportWorkspaceId, pages, currentPage } = props;
   const [report, setReport] = React.useState<Report | undefined>(undefined);
-  const [activePage, setActivePage] = React.useState<PowerBIPage | undefined>(pages[0]);
+  const [activePage, setActivePage] = useAtom(currentPage);
   const embedConfig = usePowerBIEmbedConfig({
     datasetId,
     reportId,

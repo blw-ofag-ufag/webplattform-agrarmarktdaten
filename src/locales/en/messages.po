@@ -39,6 +39,16 @@ msgstr ""
 #~ msgstr "Sales region"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.indicator"
+#~ msgstr "Indicator"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+#~ msgid "search.label"
+#~ msgstr "Search"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} total)"
@@ -120,6 +130,7 @@ msgstr "Reset filters"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
+#: src/components/PowerBIFullScreen/PowerBIFullScreen.tsx
 msgid "header.close"
 msgstr "Close"
 
@@ -186,6 +197,11 @@ msgid "data.filters.from"
 msgstr "From"
 
 #. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "controls.fullscreen"
+msgstr "Full Screen"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.furtherinformation"
@@ -202,11 +218,7 @@ msgid "footer.impressum"
 msgstr "Contact"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "data.filters.indicator"
-msgstr "Indicator"
-
-#. js-lingui-explicit-id
+#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
 msgstr "Info"
@@ -300,11 +312,6 @@ msgid "data.control.reset"
 msgstr "Reset"
 
 #. js-lingui-explicit-id
-#: src/components/BlogpostGrid/internal/Search.tsx
-msgid "search.label"
-msgstr "Search"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
 msgstr "Search"
@@ -348,6 +355,11 @@ msgstr "Terms of use"
 #: src/components/Footer/Footer.tsx
 msgid "footer.id"
 msgstr "The Federal Office for Agriculture FOAG is the national centre of competence for Swiss agricultural policy. The tasks of the FOAG also include running an independent market observatory (Article 27 of the Agriculture Act LwG). It collects and publishes market indicators such as prices and quantities along the entire value chain of the most important agricultural and food markets in Switzerland. The aim is to increase market transparency and highlight long-term developments."
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/BlogpostGrid.tsx
+msgid "analysis.noResults"
+msgstr "There are no results for this selection. "
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx

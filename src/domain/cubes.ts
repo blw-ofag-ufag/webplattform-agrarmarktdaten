@@ -3,6 +3,7 @@ import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/ap
 import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
 import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
+import { amdp } from "@/lib/namespace";
 
 export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
   queryKey: ["cubes"],
@@ -113,3 +114,14 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQueryAsyn
 export type CubeDimensions = ReturnType<typeof fetchCubeDimensions> extends Promise<infer T>
   ? T
   : never;
+
+export const visualizeUrlAtom = atom(async (get) => {
+  const cubePath = await get(cubePathAtom);
+  const locale = get(localeAtom);
+
+  const visualizeEndpoint = `https://int.visualize.admin.ch/${locale}`;
+
+  return `${visualizeEndpoint}/browse?dataset=${encodeURIComponent(
+    amdp(cubePath).value
+  )}&dataSource=Int`;
+});

@@ -92,6 +92,11 @@ msgid "button.show.all"
 msgstr "Afficher tous les posts"
 
 #. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.filename"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analyses"
@@ -135,6 +140,7 @@ msgstr "Réinitialiser les filtres"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
+#: src/components/PowerBIFullScreen/PowerBIFullScreen.tsx
 msgid "header.close"
 msgstr "Fermer"
 
@@ -149,14 +155,19 @@ msgid "homepage.section.data"
 msgstr "Données"
 
 #. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.actions.download"
+msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.hero.title"
 msgstr "Télécharger des données"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.download"
-msgstr "Télécharger des données"
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.title"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -199,6 +210,11 @@ msgstr "Pour rester informés"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.from"
 msgstr "De"
+
+#. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "controls.fullscreen"
+msgstr "Plein écran"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -360,6 +376,11 @@ msgstr "Conditions d’utilisation"
 #: src/components/Footer/Footer.tsx
 msgid "footer.id"
 msgstr "L’Office fédéral de l’agriculture OFAG est le centre de compétences pour la politique agricole suisse. L'une des tâches de l'OFAG, est d'assurer l'observervation indépendante du marché (art. 27 de la loi sur l’agriculture, LAgr). Ceci consiste à recenser et publier des indicateurs de marché tels que les prix et les quantités tout au long de la chaîne de création de valeur ajoutée des principaux marchés agricoles et alimentaires de Suisse. L’objectif est d’accroître la transparence du marché et de mettre en évidence les évolutions à long terme."
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/BlogpostGrid.tsx
+msgid "analysis.noResults"
+msgstr "Il n'y a pas de résultat pour cette sélection"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx

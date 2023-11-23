@@ -87,7 +87,7 @@ export const valueFormatter = ({
   dimension,
   cubeDimensions,
 }: {
-  value: string | number;
+  value?: string | number;
   dimension: string;
   cubeDimensions: Record<string, Property | Measure>;
 }) => {

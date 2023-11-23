@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons/24dp/ic_Expand</title>
+    <g id="Icons/24dp/ic_Expand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Expand" transform="translate(4, 4)" fill="#1F2937" fill-rule="nonzero" stroke="#1F2937" stroke-width="0.25">
+            <polygon id="Path" points="16.84395 6.98301 15.36795 1.476 9.86195 0 9.66695 0.725 14.33995 1.977 8.68895 7.62701 9.21895 8.15801 14.86895 2.508 16.11895 7.17701"></polygon>
+            <polygon id="Path" points="7.62895 8.68801 1.978 14.33901 0.725 9.66201 0 9.85601 1.476 15.36301 6.98295 16.83901 7.17695 16.11501 2.513 14.86501 8.15895 9.21801"></polygon>
+        </g>
+    </g>
+</svg>
