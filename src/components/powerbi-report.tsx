@@ -57,7 +57,7 @@ const useStyles = makeStyles()((theme) => ({
     [`& .${tabClasses.root}`]: {
       // Not done at theme level not to mess up with global navigation at the top
       minHeight: 56,
-      fontSize: "1.125rem",
+      fontSize: "1rem",
     },
     [`& .${tabScrollButtonClasses.root}`]: {
       alignItems: "center",
