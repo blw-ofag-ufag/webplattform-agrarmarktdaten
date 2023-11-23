@@ -135,6 +135,7 @@ msgstr "Azzera i filtri"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
+#: src/components/PowerBIFullScreen/PowerBIFullScreen.tsx
 msgid "header.close"
 msgstr "Chiudi"
 
@@ -199,6 +200,11 @@ msgstr "Rimanere informati"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.from"
 msgstr "Da"
+
+#. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "controls.fullscreen"
+msgstr "Schermo intero"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx

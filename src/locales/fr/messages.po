@@ -135,6 +135,7 @@ msgstr "Réinitialiser les filtres"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
+#: src/components/PowerBIFullScreen/PowerBIFullScreen.tsx
 msgid "header.close"
 msgstr "Fermer"
 
@@ -199,6 +200,11 @@ msgstr "Pour rester informés"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.from"
 msgstr "De"
+
+#. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "controls.fullscreen"
+msgstr "Plein écran"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx

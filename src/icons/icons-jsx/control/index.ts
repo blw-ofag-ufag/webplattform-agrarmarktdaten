@@ -1,4 +1,5 @@
 export { default as Download } from "./Download";
+export { default as IcExpand } from "./IcExpand";
 export { default as IcControlArrowLeft } from "./IcControlArrowLeft";
 export { default as IcControlArrowRight } from "./IcControlArrowRight";
 export { default as IcControlCalendar } from "./IcControlCalendar";

@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
+import { PrimitiveAtom, useAtom } from "jotai";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
   ssr: false,
@@ -31,6 +32,7 @@ const CONFIG: models.IReportEmbedConfiguration = {
 
 const useStyles = makeStyles()((theme) => ({
   root: {
+    width: "100%",
     "& iframe": {
       border: "none",
     },
@@ -74,11 +76,12 @@ type PowerBIPage = {
   id: string;
 };
 
-type PowerBIReportProps = {
+export type PowerBIReportProps = {
   datasetId: string;
   reportId: string;
   reportWorkspaceId: string;
   pages: PowerBIPage[];
+  currentPage: PrimitiveAtom<{ id: string; name: string }>;
 };
 
 export const PowerBINavigation = ({
@@ -143,9 +146,9 @@ export const PowerBINavigation = ({
 };
 
 export const PowerBIReport = (props: PowerBIReportProps) => {
-  const { datasetId, reportId, reportWorkspaceId, pages } = props;
+  const { datasetId, reportId, reportWorkspaceId, pages, currentPage } = props;
   const [report, setReport] = React.useState<Report | undefined>(undefined);
-  const [activePage, setActivePage] = React.useState<PowerBIPage | undefined>(pages[0]);
+  const [activePage, setActivePage] = useAtom(currentPage);
   const embedConfig = usePowerBIEmbedConfig({
     datasetId,
     reportId,
