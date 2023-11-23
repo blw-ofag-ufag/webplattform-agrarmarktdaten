@@ -208,7 +208,6 @@ const DownloadMenuItem = ({
     <MenuItem key={format} {...props}>
       <Button
         variant="text"
-        disabled={state.isDownloading}
         sx={{
           display: "flex",
           justifyContent: "space-between",
