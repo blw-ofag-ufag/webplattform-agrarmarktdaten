@@ -92,6 +92,11 @@ msgid "button.show.all"
 msgstr "Alle Beiträge anzeigen"
 
 #. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.filename"
+msgstr "AMDP_data"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analysen"
@@ -149,14 +154,19 @@ msgid "homepage.section.data"
 msgstr "Daten"
 
 #. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.actions.download"
+msgstr "Daten herunterladen"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.hero.title"
 msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.download"
-msgstr "Daten herunterladen"
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.title"
+msgstr "Download dataset"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
