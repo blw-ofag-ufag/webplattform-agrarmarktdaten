@@ -10,6 +10,7 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { Download } from "@/icons/icons-jsx/control";
 import { GridContainer } from "@/components/Grid";
 import { makeStyles } from "@/components/style-utils";
+import CardActionButton from "@/components/CardActionButton";
 import Link from "next/link";
 
 const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
@@ -18,16 +19,6 @@ const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
     fontWeight: 700,
     width: "fit-content",
     marginTop: s(6),
-  },
-
-  downloadIcon: {
-    backgroundColor: c.cobalt[100],
-    borderRadius: 80,
-    minWidth: "80px",
-    height: "80px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
 
   card: {
@@ -107,9 +98,9 @@ export default function HomePage(props: GQL.HomePageQuery) {
                     <Trans id="homepage.section.data.button">Learn More</Trans>
                   </Button>
                 </Box>
-                <div className={classes.downloadIcon}>
+                <CardActionButton component={Link} href="/data">
                   <Download width={32} height={32} />
-                </div>
+                </CardActionButton>
               </Box>
             </Card>
           </GridContainer>
