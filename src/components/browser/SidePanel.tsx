@@ -21,7 +21,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { Atom, useAtom, useAtomValue } from "jotai";
 import { xor } from "lodash";
 import { SyntheticEvent, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
@@ -285,21 +285,24 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 export default SidePanel;
 
 const ResetFiltersButton = () => {
-  const resetCubeFilters = useSetAtom(resetCubeFiltersAtom);
-
+  const [areFiltersDefault, resetCubeFilters] = useAtom(resetCubeFiltersAtom);
   return (
-    <Chip
-      clickable
-      onClick={() => resetCubeFilters()}
-      label={t({ id: "cta.reset-filters", message: "Reset Filters" })}
-      icon={<IcRepeat width={24} height={24} />}
-      sx={{
-        backgroundColor: "cobalt.100",
-        color: "grey.800",
-        "&:hover": {
-          backgroundColor: "cobalt.100",
-        },
-      }}
-    />
+    <>
+      {!areFiltersDefault && (
+        <Chip
+          clickable
+          onClick={() => resetCubeFilters()}
+          label={t({ id: "cta.reset-filters", message: "Reset Filters" })}
+          icon={<IcRepeat width={24} height={24} />}
+          sx={{
+            backgroundColor: "cobalt.100",
+            color: "grey.800",
+            "&:hover": {
+              backgroundColor: "cobalt.100",
+            },
+          }}
+        />
+      )}
+    </>
   );
 };

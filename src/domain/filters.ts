@@ -14,6 +14,7 @@ import {
   defaultCube,
 } from "./cubes";
 import { CubeDimension, Dimension, dataDimensions } from "./dimensions";
+import { isEqual } from "lodash";
 
 export type Option = {
   label: string;
@@ -290,23 +291,48 @@ export const filterCubeSelectionAtom = atom(async (get) => {
   };
 });
 
-export const resetCubeFiltersAtom = atom(null, async (get, set) => {
-  const filterCubeSelection = await get(filterCubeSelectionAtom);
-  const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
+/**
+ * Read-write atom to manage reset filters feature. The atom value contains a boolean on whether the
+ * filters have the default values. Its write function resets all filters to their default values.
+ */
+export const resetCubeFiltersAtom = atom(
+  async (get) => {
+    const filterCubeSelection = await get(filterCubeSelectionAtom);
+    const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
 
-  const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
-  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+    const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
+    const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
 
-  Object.entries(filterCubeSelection).forEach(([key, atom]) => {
-    const defaultOption = filterCubeConfiguration[key as CubeDimension].defaultOption;
-    set(atom, defaultOption);
-  });
+    const areCubeFiltersDefault = Object.entries(filterCubeSelection).every(
+      ([key, atom]) =>
+        get(atom)?.value === filterCubeConfiguration[key as CubeDimension].defaultOption.value
+    );
 
-  Object.entries(filterDimensionsSelection).forEach(([key, atom]) => {
-    const defaultOptions = filterDimensionsConfiguration[key as Dimension]?.options;
-    set(atom, defaultOptions);
-  });
-});
+    const areDimensionFiltersDefault = Object.entries(filterDimensionsSelection).every(
+      ([key, atom]) => isEqual(get(atom), filterDimensionsConfiguration[key as Dimension]?.options)
+    );
+
+    return areCubeFiltersDefault && areDimensionFiltersDefault;
+  },
+  async (get, set) => {
+    const filterCubeSelection = await get(filterCubeSelectionAtom);
+    const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
+
+    const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
+    const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+
+    Object.entries(filterCubeSelection).forEach(([key, atom]) => {
+      const defaultOption = filterCubeConfiguration[key as CubeDimension].defaultOption;
+      set(atom, defaultOption);
+    });
+
+    Object.entries(filterDimensionsSelection).forEach(([key, atom]) => {
+      const defaultOptions = filterDimensionsConfiguration[key as Dimension]?.options;
+      set(atom, defaultOptions);
+    });
+  }
+);
+
 /**
  * Atom that contains the configuration for all filters.
  * cube: configuration for the cube filters, on which cube we fetch.
