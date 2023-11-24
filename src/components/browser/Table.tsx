@@ -2,7 +2,7 @@ import { isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 const columnSpecs = {
   price: { width: 100 },

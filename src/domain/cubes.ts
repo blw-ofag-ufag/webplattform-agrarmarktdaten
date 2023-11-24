@@ -1,9 +1,9 @@
+import { amdp } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/api/data";
 import { atom } from "jotai";
 import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
 import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
-import { amdp } from "@/lib/namespace";
 
 export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
   queryKey: ["cubes"],
