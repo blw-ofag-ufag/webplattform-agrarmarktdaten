@@ -6,6 +6,7 @@ import {
   c,
   MenuContainer,
   MenuButton,
+  LocaleSwitcherProps,
 } from "@interactivethings/swiss-federal-ci";
 import { useTheme } from "@mui/material/styles";
 import { t } from "@lingui/macro";
@@ -18,7 +19,7 @@ import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
 import { BackButton } from "./back-button";
-import { vars } from "@/components/Grid/Grid";
+import { makeContentWrapperProps } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
@@ -82,7 +83,7 @@ export const AppLayout = (props: Props) => {
     return { headerSections, menuSections };
   }, [allMarkets, allFocusArticles]);
 
-  const localeSwitcherProps = alternates
+  const dynamicLocaleSwitcherProps: LocaleSwitcherProps = alternates
     ? {
         alternates: alternates
           .map((d) => ({ locale: d.locale, pathname: d.href, href: d.as }))
@@ -91,6 +92,14 @@ export const AppLayout = (props: Props) => {
     : {
         locales: locales.filter((x) => isAuthorizedLocale(x)),
       };
+  const commonLocaleSwitcherProps: Pick<LocaleSwitcherProps, "ContentWrapperProps"> = {
+    ContentWrapperProps: makeContentWrapperProps(theme),
+  };
+
+  const localeSwitcherProps = {
+    ...commonLocaleSwitcherProps,
+    ...dynamicLocaleSwitcherProps,
+  };
 
   return (
     <Box
@@ -110,20 +119,19 @@ export const AppLayout = (props: Props) => {
           [theme.breakpoints.up("lg")]: { display: "flex", justifyContent: "center" },
         }}
       >
-        <GridContainer disableItemMargin className={classes.headerContainer}>
-          <Header
-            closeLabel={t({ id: "header.close", message: "Close" })}
-            shortTitle={t({ id: "header.shortTitle", message: "BLW" })}
-            longTitle={t({ id: "header.longTitle", message: "Bundesamt für Landwirtschaft" })}
-            rootHref="/"
-            sections={headerSections}
-            ContentWrapperProps={{ sx: { px: "0!important" } }}
-            sx={{ borderBottom: "none", px: 0, mx: 0 }}
-          />
-        </GridContainer>
+        <Header
+          closeLabel={t({ id: "header.close", message: "Close" })}
+          shortTitle={t({ id: "header.shortTitle", message: "BLW" })}
+          longTitle={t({ id: "header.longTitle", message: "Bundesamt für Landwirtschaft" })}
+          rootHref="/"
+          sections={headerSections}
+          ContentWrapperProps={makeContentWrapperProps(theme)}
+          sx={{ borderBottom: "none", px: 0, mx: 0 }}
+        />
       </Box>
       <Box
         ref={stickyRef}
+        data-datocms-noindex
         sx={{
           borderBottom: `1px solid ${c.monochrome[200]}`,
           display: { xxs: "none", xs: "none", lg: "block" },
@@ -131,35 +139,26 @@ export const AppLayout = (props: Props) => {
           zIndex: 10,
         }}
       >
-        <GridContainer data-datocms-noindex>
-          <MenuContainer
-            sx={{ borderBottom: "none", ml: "-12px" }}
-            closeLabel={t({ id: "header.close", message: "Close" })}
-            ContentWrapperProps={{
-              sx: {
-                px: "0!important",
-                width: "100%",
-                [theme.breakpoints.down("xl")]: { paddingX: `var(${vars.offset})` },
-              },
-            }}
-          >
-            {menuSections
-              .filter((x) => x.desktop !== false)
-              .map((section, i) => (
-                <MenuButton key={i} {...section} />
-              ))}
-            <Box display="flex" flexGrow={1} />
-            <MenuButton
-              title={t({ id: "menu.info", message: "Info" })}
-              href="/info"
-              endIcon={
-                <Box sx={{ ml: 1 }}>
-                  <IcInfoCircle fontSize={16} />
-                </Box>
-              }
-            />
-          </MenuContainer>
-        </GridContainer>
+        <MenuContainer
+          closeLabel={t({ id: "header.close", message: "Close" })}
+          ContentWrapperProps={makeContentWrapperProps(theme)}
+        >
+          {menuSections
+            .filter((x) => x.desktop !== false)
+            .map((section, i) => (
+              <MenuButton key={i} {...section} />
+            ))}
+          <Box display="flex" flexGrow={1} />
+          <MenuButton
+            title={t({ id: "menu.info", message: "Info" })}
+            href="/info"
+            endIcon={
+              <Box sx={{ ml: 1 }}>
+                <IcInfoCircle fontSize={16} />
+              </Box>
+            }
+          />
+        </MenuContainer>
       </Box>
       <Box
         sx={{

@@ -15,6 +15,7 @@ import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRigh
 import { useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import { t } from "@lingui/macro";
+import { makeContentWrapperProps } from "@/components/Grid/Grid";
 
 const FooterBLW = () => {
   const theme = useTheme();
@@ -22,18 +23,7 @@ const FooterBLW = () => {
   const isXXlAndUp = useMediaQuery(theme.breakpoints.up("xxl"));
   return (
     <Footer
-      ContentWrapperProps={{
-        sx: {
-          [theme.breakpoints.only("xxxl")]: { maxWidth: "1676px", px: "0!important" },
-          [theme.breakpoints.only("xxl")]: { maxWidth: "1544px", px: "0!important" },
-          [theme.breakpoints.only("xl")]: { paddingX: "64px" },
-          [theme.breakpoints.only("lg")]: { paddingX: "48px" },
-          [theme.breakpoints.only("md")]: { paddingX: "36px" },
-          [theme.breakpoints.only("sm")]: { paddingX: "36px" },
-          [theme.breakpoints.only("xs")]: { paddingX: "28px" },
-          [theme.breakpoints.only("xxs")]: { paddingX: "20px" },
-        },
-      }}
+      ContentWrapperProps={makeContentWrapperProps(theme)}
       bottomLinks={[
         {
           title: t({ id: "footer.impressum", message: "Impressum" }),
