@@ -5,6 +5,8 @@ import { breakpoints } from "@interactivethings/swiss-federal-ci";
 import { ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { I18nProvider } from "@lingui/react";
+import { i18n } from "@/locales/locales";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,12 +30,14 @@ const preview: Preview = {
   decorators: [
     (Story) => {
       return (
-        <ThemeProvider theme={theme}>
-          <QueryClientProvider client={queryClient}>
-            <Story />
-            <ReactQueryDevtools />
-          </QueryClientProvider>
-        </ThemeProvider>
+        <I18nProvider i18n={i18n}>
+          <ThemeProvider theme={theme}>
+            <QueryClientProvider client={queryClient}>
+              <Story />
+              <ReactQueryDevtools />
+            </QueryClientProvider>
+          </ThemeProvider>
+        </I18nProvider>
       );
     },
   ],
