@@ -77,6 +77,7 @@ const theme = createTheme(federalTheme, {
           [`& .${sliderClasses.track}`]: {
             height: "2px",
             borderRadius: "4px",
+            backgroundColor: federalTheme.palette.cobalt[500],
           },
           [`& .${sliderClasses.thumb}`]: {
             height: "16px",
