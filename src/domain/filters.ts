@@ -2,7 +2,7 @@ import { localeAtom } from "@/lib/use-locale";
 import { HierarchyValue, fetchHierarchy } from "@/pages/api/data";
 import { findInHierarchy } from "@/utils/trees";
 import dayjs from "dayjs";
-import { Atom, atom } from "jotai";
+import { WritableAtom, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
@@ -13,7 +13,8 @@ import {
   cubesAtom,
   defaultCube,
 } from "./cubes";
-import { Dimension, dataDimensions } from "./dimensions";
+import { CubeDimension, Dimension, dataDimensions } from "./dimensions";
+import { isEqual } from "lodash";
 
 export type Option = {
   label: string;
@@ -81,31 +82,54 @@ export const timeRangeAtom = atomWithHash<RangeOptions>("timeRange", timeRange);
  */
 export const filterCubeConfigurationAtom = atom(async (get) => {
   const baseDimensions = await get(baseDimensionsAtom);
+  const cubes = await get(cubesAtom);
+  const defaultCubeDef = cubes.find((cube) => cube.cube === defaultCube);
+
+  const defaultMeasure = baseDimensions.measure.find(
+    (m) => m.dimension === defaultCubeDef?.measure
+  );
+
+  const measureOptions = baseDimensions.measure.map((m) => ({
+    label: m.label,
+    value: m.dimension,
+  }));
+  const marketOptions = baseDimensions.properties["market"].values.map((v) => ({
+    label: v.label,
+    value: v.value,
+  }));
+  const valueChainOptions = baseDimensions.properties["value-chain"].values.map((v) => ({
+    label: v.label,
+    value: v.value,
+  }));
 
   return {
     measure: {
       name: "Measure",
-      options: baseDimensions.measure.map((m) => ({ label: m.label, value: m.dimension })),
+      options: measureOptions,
       type: "single" as const,
+      defaultOption: defaultMeasure
+        ? { label: defaultMeasure.label, value: defaultMeasure.dimension }
+        : measureOptions[0],
     },
     ["value-chain"]: {
       name:
         baseDimensions.properties["value-chain"]?.label ??
         baseDimensions.properties["value-chain"].dimension,
-      options: baseDimensions.properties["value-chain"].values.map((v) => ({
-        label: v.label,
-        value: v.value,
-      })),
+      options: valueChainOptions,
       type: "single" as const,
+      defaultOption:
+        baseDimensions.properties["value-chain"].values.find(
+          (v) => v.value === defaultCubeDef?.valueChain
+        ) ?? valueChainOptions[0],
     },
     market: {
       name:
         baseDimensions.properties["market"]?.label ?? baseDimensions.properties["market"].dimension,
-      options: baseDimensions.properties["market"].values.map((v) => ({
-        label: v.label,
-        value: v.value,
-      })),
+      options: marketOptions,
       type: "single" as const,
+      defaultOption:
+        baseDimensions.properties.market.values.find((v) => v.value === defaultCubeDef?.market) ??
+        marketOptions[0],
     },
   };
 });
@@ -186,28 +210,31 @@ export const filterDimensionsConfigurationAtom = atom(async (get) => {
   const cubeDimensions = await get(cubeDimensionsAtom);
   const productOptions = await get(productOptionsWithHierarchyAtom);
 
-  return {
-    "sales-region": {
-      key: "sales-region",
-      name: cubeDimensions.properties[dataDimensions["sales-region"].id].label,
-      options: cubeDimensions.properties?.[dataDimensions["sales-region"].id].values,
-      type: "multi" as const,
-      search: true,
-      groups: undefined,
-    },
-    product: {
-      key: "product",
-      name: cubeDimensions.properties?.[dataDimensions.product.id].label,
-      options: productOptions,
-      type: "multi" as const,
-      groups: [
-        (d: Option) => d.hierarchy?.["market"].label,
-        (d: Option) => d.hierarchy?.["product-group"].label,
-        (d: Option) => d.hierarchy?.["product-subgroup"].label,
-      ],
-      search: true,
-    },
+  const configs = {} as Partial<Record<Dimension, Filter>>;
+
+  configs["sales-region"] = {
+    key: "sales-region",
+    name: cubeDimensions.properties[dataDimensions["sales-region"].id].label ?? "sales-region",
+    options: cubeDimensions.properties?.[dataDimensions["sales-region"].id].values,
+    type: "multi" as const,
+    search: true,
+    groups: undefined,
   };
+
+  configs["product"] = {
+    key: "product",
+    name: cubeDimensions.properties?.[dataDimensions.product.id].label ?? "product",
+    options: productOptions,
+    type: "multi" as const,
+    groups: [
+      (d: Option) => d.hierarchy?.["market"].label ?? "market",
+      (d: Option) => d.hierarchy?.["product-group"].label ?? "product-group",
+      (d: Option) => d.hierarchy?.["product-subgroup"].label ?? "product-subgroup",
+    ],
+    search: true,
+  };
+
+  return configs;
 });
 
 /**
@@ -221,11 +248,11 @@ export const filterDimensionsSelectionAtom = atom(async (get) => {
 
   const cubeDimension = await get(cubeDimensionsAtom);
 
-  const filters = {} as Partial<Record<Dimension, Atom<Option[]>>>;
+  const filters = {} as Partial<Record<Dimension, WritableAtom<Option[], any, void>>>;
 
   filters["sales-region"] = filterMultiHashAtomFamily({
     key: "sales-region",
-    options: filterDimensionsConfiguration["sales-region"].options,
+    options: filterDimensionsConfiguration["sales-region"]?.options ?? [],
     defaultOptions: cubeDimension.properties["sales-region"].values,
   });
 
@@ -244,38 +271,67 @@ export const filterDimensionsSelectionAtom = atom(async (get) => {
  */
 export const filterCubeSelectionAtom = atom(async (get) => {
   const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
-  const baseDimensions = await get(baseDimensionsAtom);
-  const cubes = await get(cubesAtom);
-  const defaultCubeDef = cubes.find((cube) => cube.cube === defaultCube);
-
-  const defaultMeasure = baseDimensions.measure.find(
-    (m) => m.dimension === defaultCubeDef?.measure
-  );
 
   return {
     measure: filterSingleHashAtomFamily({
       key: "measure",
       options: filterCubeConfiguration.measure.options,
-      defaultOption: defaultMeasure
-        ? { label: defaultMeasure.label, value: defaultMeasure.dimension }
-        : filterCubeConfiguration.measure.options[0],
+      defaultOption: filterCubeConfiguration.measure.defaultOption,
     }),
     ["value-chain"]: filterSingleHashAtomFamily({
       key: "valueChain",
       options: filterCubeConfiguration["value-chain"].options,
-      defaultOption: baseDimensions.properties["value-chain"].values.find(
-        (v) => v.value === defaultCubeDef?.valueChain
-      ),
+      defaultOption: filterCubeConfiguration["value-chain"].defaultOption,
     }),
     market: filterSingleHashAtomFamily({
       key: "market",
       options: filterCubeConfiguration.market.options,
-      defaultOption: baseDimensions.properties.market.values.find(
-        (v) => v.value === defaultCubeDef?.market
-      ),
+      defaultOption: filterCubeConfiguration.market.defaultOption,
     }),
   };
 });
+
+/**
+ * Read-write atom to manage reset filters feature. The atom value contains a boolean on whether the
+ * filters have the default values. Its write function resets all filters to their default values.
+ */
+export const resetCubeFiltersAtom = atom(
+  async (get) => {
+    const filterCubeSelection = await get(filterCubeSelectionAtom);
+    const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
+
+    const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
+    const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+
+    const areCubeFiltersDefault = Object.entries(filterCubeSelection).every(
+      ([key, atom]) =>
+        get(atom)?.value === filterCubeConfiguration[key as CubeDimension].defaultOption.value
+    );
+
+    const areDimensionFiltersDefault = Object.entries(filterDimensionsSelection).every(
+      ([key, atom]) => isEqual(get(atom), filterDimensionsConfiguration[key as Dimension]?.options)
+    );
+
+    return areCubeFiltersDefault && areDimensionFiltersDefault;
+  },
+  async (get, set) => {
+    const filterCubeSelection = await get(filterCubeSelectionAtom);
+    const filterCubeConfiguration = await get(filterCubeConfigurationAtom);
+
+    const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
+    const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
+
+    Object.entries(filterCubeSelection).forEach(([key, atom]) => {
+      const defaultOption = filterCubeConfiguration[key as CubeDimension].defaultOption;
+      set(atom, defaultOption);
+    });
+
+    Object.entries(filterDimensionsSelection).forEach(([key, atom]) => {
+      const defaultOptions = filterDimensionsConfiguration[key as Dimension]?.options;
+      set(atom, defaultOptions);
+    });
+  }
+);
 
 /**
  * Atom that contains the configuration for all filters.
