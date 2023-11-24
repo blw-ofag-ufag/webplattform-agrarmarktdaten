@@ -49,6 +49,11 @@ msgstr ""
 #~ msgstr "Suche"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.actions.showFiler"
+#~ msgstr "Filter anzeigen"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} insgesamt)"
@@ -229,6 +234,11 @@ msgid "cta.back"
 msgstr "Zurück"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.hideFilter"
+msgstr "Hide Filters"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.impressum"
 msgstr "Kontakt"
@@ -328,6 +338,11 @@ msgid "data.control.reset"
 msgstr "Zurücksetzen"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "cta.reset-filters"
+msgstr "Reset Filters"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
 msgstr "Suche"
@@ -344,8 +359,8 @@ msgstr "Alle auswählen"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.actions.showFiler"
-msgstr "Filter anzeigen"
+msgid "data.actions.showFilter"
+msgstr "Show Filters"
 
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
