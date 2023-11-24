@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Typography, Box, Card, Button, useTheme } from "@mui/material";
+import { Typography, Card, Button, useTheme } from "@mui/material";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout, LayoutSections } from "@/components/layout";
@@ -13,17 +13,37 @@ import { makeStyles } from "@/components/style-utils";
 import CardActionButton from "@/components/CardActionButton";
 import Link from "next/link";
 
-const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
+const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e, breakpoints: b }) => ({
   button: {
     backgroundColor: c.cobalt[500],
     fontWeight: 700,
     width: "fit-content",
-    marginTop: s(6),
+    gridArea: "button",
   },
 
   card: {
     boxShadow: e.lg,
     borderRadius: s(2),
+    alignItems: "center",
+    gap: "1rem",
+    display: "grid",
+    gridTemplateColumns: "1fr max-content",
+    gridTemplateRows: "max-content max-content",
+    gridTemplateAreas: '"text icon" "button icon"',
+
+    [b.down("md")]: {
+      gridTemplateColumns: "1fr",
+      gridTemplateRows: "min-content max-content max-content",
+      gridTemplateAreas: '"icon" "text" "button"',
+    },
+  },
+
+  text: {
+    gridArea: "text",
+  },
+  icon: {
+    gridArea: "icon",
+    width: "fit-content",
   },
 }));
 
@@ -85,23 +105,19 @@ export default function HomePage(props: GQL.HomePageQuery) {
               <Trans id="homepage.section.data">Data</Trans>
             </Typography>
             <Card sx={{ p: s(8) }} className={classes.card}>
-              <Box display="flex" alignItems="center">
-                <Box display="flex" flexDirection="column" pr="50px">
-                  <Typography variant="body1">
-                    <Trans id="homepage.section.data.content">
-                      Various data can be selected and downloaded via the data download, in
-                      particular price series, and in some cases also quantity and area data. Data
-                      are available from the year 2000 onwards.
-                    </Trans>
-                  </Typography>
-                  <Button className={classes.button} component={Link} href="/data">
-                    <Trans id="homepage.section.data.button">Learn More</Trans>
-                  </Button>
-                </Box>
-                <CardActionButton component={Link} href="/data">
-                  <Download width={32} height={32} />
-                </CardActionButton>
-              </Box>
+              <Typography variant="body1" className={classes.text}>
+                <Trans id="homepage.section.data.content">
+                  Various data can be selected and downloaded via the data download, in particular
+                  price series, and in some cases also quantity and area data. Data are available
+                  from the year 2000 onwards.
+                </Trans>
+              </Typography>
+              <Button className={classes.button} component={Link} href="/data">
+                <Trans id="homepage.section.data.button">Learn More</Trans>
+              </Button>
+              <CardActionButton component={Link} href="/data" className={classes.icon}>
+                <Download width={32} height={32} />
+              </CardActionButton>
             </Card>
           </GridContainer>
         </LayoutSections>
