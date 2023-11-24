@@ -26,5 +26,5 @@ export const Metadata = () => {
 
 export default {
   component: Metadata,
-  title: "Components / Browser",
+  title: "App Components / Browser",
 };
