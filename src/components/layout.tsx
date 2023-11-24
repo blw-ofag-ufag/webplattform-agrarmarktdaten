@@ -93,6 +93,10 @@ export const AppLayout = (props: Props) => {
         locales: locales.filter((x) => isAuthorizedLocale(x)),
       };
 
+  /**
+   * TODO Use className when https://github.com/interactivethings/swiss-federal-ci/pull/29
+   * is merged.
+   */
   const contentWrapperSx = makeContentWrapperSx(theme);
   const commonLocaleSwitcherProps: Pick<LocaleSwitcherProps, "ContentWrapperProps"> = {
     ContentWrapperProps: {
