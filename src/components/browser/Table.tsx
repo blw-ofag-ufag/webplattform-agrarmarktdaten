@@ -1,8 +1,9 @@
 import { isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import React, { useMemo, useState } from "react";
+import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid";
+import { useMemo } from "react";
+import { makeStyles } from "../style-utils";
 
 const columnSpecs = {
   price: { width: 100 },
@@ -27,6 +28,26 @@ const columnSpecs = {
   "value-chain": { width: 100 },
 };
 
+const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
+  dataGrid: {
+    border: "1px solid",
+    borderColor: c.cobalt[100],
+    boxShadow: e.xxl,
+    color: c.grey[600],
+    [`& .${gridClasses.columnHeaders}`]: {
+      backgroundColor: c.cobalt[50],
+      textTransform: "uppercase",
+      borderBottom: "2px solid",
+      borderColor: c.cobalt[100],
+      fontWeight: typography.fontWeightRegular,
+    },
+    [`& .${gridClasses.row}`]: {
+      borderBottom: "2px solid",
+      borderColor: c.cobalt[100],
+    },
+  },
+}));
+
 export const Table = ({
   observations,
   dimensions,
@@ -34,7 +55,8 @@ export const Table = ({
   observations: Observation[];
   dimensions: Record<string, Property | Measure>;
 }) => {
-  const [paginationModel, setPaginationModel] = useState({ pageSize: 100, page: 0 });
+  //const [paginationModel, setPaginationModel] = useState({ pageSize: 25, page: 0 });
+  const { classes } = useStyles();
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
@@ -61,9 +83,13 @@ export const Table = ({
     <DataGrid
       rows={observations}
       columns={columns}
-      paginationModel={paginationModel}
-      onPaginationModelChange={(pm) => setPaginationModel(pm)}
+      autoPageSize
+      // paginationModel={paginationModel}
+      // onPaginationModelChange={(pm) => setPaginationModel(pm)}
       getRowId={(row) => row.observation}
+      className={classes.dataGrid}
+      rowHeight={48}
+      columnHeaderHeight={48}
     />
   );
 };
