@@ -19,7 +19,7 @@ import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
 import { locales } from "@/locales/locales";
 import { BackButton } from "./back-button";
-import { makeContentWrapperProps } from "@/components/Grid/Grid";
+import { makeContentWrapperSx } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
@@ -92,8 +92,12 @@ export const AppLayout = (props: Props) => {
     : {
         locales: locales.filter((x) => isAuthorizedLocale(x)),
       };
+
+  const contentWrapperSx = makeContentWrapperSx(theme);
   const commonLocaleSwitcherProps: Pick<LocaleSwitcherProps, "ContentWrapperProps"> = {
-    ContentWrapperProps: makeContentWrapperProps(theme),
+    ContentWrapperProps: {
+      sx: contentWrapperSx,
+    },
   };
 
   const localeSwitcherProps = {
@@ -125,7 +129,7 @@ export const AppLayout = (props: Props) => {
           longTitle={t({ id: "header.longTitle", message: "Bundesamt für Landwirtschaft" })}
           rootHref="/"
           sections={headerSections}
-          ContentWrapperProps={makeContentWrapperProps(theme)}
+          ContentWrapperProps={{ sx: contentWrapperSx }}
           sx={{ borderBottom: "none", px: 0, mx: 0 }}
         />
       </Box>
@@ -141,7 +145,7 @@ export const AppLayout = (props: Props) => {
       >
         <MenuContainer
           closeLabel={t({ id: "header.close", message: "Close" })}
-          ContentWrapperProps={makeContentWrapperProps(theme)}
+          ContentWrapperProps={{ sx: contentWrapperSx }}
         >
           {menuSections
             .filter((x) => x.desktop !== false)

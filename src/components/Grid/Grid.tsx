@@ -219,7 +219,7 @@ export const GridWrapElement = ({ children, sx, full, ...rest }: Props & { full?
  * For compatibility with swiss-federal-ci. Return value should be passed to ContentWrapperProps,
  * for swiss-federal-ci ContentWrapper to use the same grid system as BLW.
  */
-export const makeContentWrapperProps = (theme: Theme) => {
+export const makeContentWrapperSx = (theme: Theme) => {
   const getSxForBreakpoint = (bp: Breakpoint) => {
     const spec = specs[bp];
     return {
@@ -235,7 +235,5 @@ export const makeContentWrapperProps = (theme: Theme) => {
   );
   sx[theme.breakpoints.down("xxs")] = getSxForBreakpoint("xxs");
   sx[theme.breakpoints.up("xxxl")] = getSxForBreakpoint("xxxl");
-  return {
-    sx,
-  };
+  return sx;
 };
