@@ -410,7 +410,7 @@ msgstr "An"
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
-msgstr "Über den Daten-Download können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten. Die Daten sind ab dem Jahr 2000 verfügbar."
+msgstr "Über den Daten-Download können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten."
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
