@@ -13,7 +13,6 @@ import {
   ToggleButtonGroup,
   Typography,
   sliderClasses,
-  toggleButtonClasses,
 } from "@mui/material";
 import { DatePicker, DatePickerProps, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -22,7 +21,7 @@ import "dayjs/locale/de";
 import "dayjs/locale/fr";
 import "dayjs/locale/it";
 import { useEffect, useMemo, useState } from "react";
-import { makeStyles, withStyles } from "../../style-utils";
+import { makeStyles } from "../../style-utils";
 
 const useStyles = makeStyles()(({ palette: c }) => ({
   divider: {
@@ -32,58 +31,6 @@ const useStyles = makeStyles()(({ palette: c }) => ({
     height: "1px",
     border: "none",
     backgroundColor: c.grey[800],
-  },
-}));
-
-const FilterToggleButton = withStyles(ToggleButton, (theme) => ({
-  root: {
-    flexGrow: 1,
-    justifyContent: "center",
-    textTransform: "none",
-    border: "1px solid",
-    borderColor: theme.palette.cobalt[200],
-    color: theme.palette.cobalt[500],
-
-    "&:hover": {
-      borderColor: theme.palette.cobalt[700],
-    },
-
-    [`&.${toggleButtonClasses.selected}`]: {
-      backgroundColor: theme.palette.cobalt[500],
-
-      color: theme.palette.cobalt[50],
-      "&:hover": {
-        backgroundColor: theme.palette.cobalt[700],
-      },
-    },
-  },
-}));
-
-const TimeSlider = withStyles(Slider, (theme) => ({
-  root: {
-    [`& .${sliderClasses.rail}`]: {
-      backgroundColor: theme.palette.cobalt[500],
-    },
-    [`& .${sliderClasses.track}`]: {
-      height: "2px",
-      borderRadius: "4px",
-    },
-    [`& .${sliderClasses.thumb}`]: {
-      height: "16px",
-      width: "16px",
-      borderRadius: "50%",
-      backgroundColor: theme.palette.cobalt[500],
-      [`&:hover, &:focus, &.${sliderClasses.active}`]: {
-        /* hardcoded, but probably will be changed with the new theme anyway */
-        boxShadow: "0px 0px 0px 4px rgba(68, 68, 68, 0.16);",
-      },
-    },
-    [`& .${sliderClasses.mark}`]: {
-      display: "none",
-    },
-    [`& .${sliderClasses.markLabel}`]: {
-      top: "24px",
-    },
   },
 }));
 
@@ -157,12 +104,12 @@ export default function TimeFilter({
         exclusive
         onChange={(_, value) => onChangeView(value)}
       >
-        <FilterToggleButton value="Year">
+        <ToggleButton value="Year">
           <Trans id="data.filters.year">Year</Trans>
-        </FilterToggleButton>
-        <FilterToggleButton value="Month">
+        </ToggleButton>
+        <ToggleButton value="Month">
           <Trans id="data.filters.month">Month</Trans>
-        </FilterToggleButton>
+        </ToggleButton>
       </ToggleButtonGroup>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
         <Stack direction="row" spacing={3} alignItems="end">
@@ -191,7 +138,7 @@ export default function TimeFilter({
           />
         </Stack>
         <Box px={2}>
-          <TimeSlider
+          <Slider
             value={sliderRange}
             min={min}
             max={max}
