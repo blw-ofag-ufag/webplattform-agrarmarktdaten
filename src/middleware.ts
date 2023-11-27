@@ -65,8 +65,8 @@ function redirectLocales(req: NextRequest) {
         .join("/");
       return `/${redirectUrl}`;
     }
-    //If we every use Catch-all Segments [...slug] (https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments) then that needs to be implemented
-    //If we every use Optional Catch-all Segments [[...slug]](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments) then that needs to be implemented
+    //If we ever want to use Catch-all Segments [...slug] (https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#catch-all-segments) then that needs to be implemented
+    //If we ever want to use Optional Catch-all Segments [[...slug]](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes#optional-catch-all-segments) then that needs to be implemented
   }
   return match?.url;
 }
