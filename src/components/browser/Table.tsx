@@ -1,4 +1,4 @@
-import { isMeasure } from "@/domain/dimensions";
+import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
 import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid";
@@ -74,6 +74,14 @@ export const Table = ({
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
+      .sort((a, b) =>
+        dimensionsToShowSorted.indexOf(a.dimension) === -1
+          ? 1
+          : dimensionsToShowSorted.indexOf(b.dimension) === -1
+          ? -1
+          : dimensionsToShowSorted.indexOf(a.dimension) -
+            dimensionsToShowSorted.indexOf(b.dimension)
+      )
       .map((dimension) => {
         return {
           field: isMeasure(dimension.dimension)

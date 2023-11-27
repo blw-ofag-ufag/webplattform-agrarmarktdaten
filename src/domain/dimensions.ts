@@ -27,6 +27,28 @@ export const DIMENSIONS = [
   "value-chain",
 ] as const;
 
+export const dimensionsToShowSorted = [
+  "date",
+  "market",
+  "value-chain",
+  "price",
+  "quantity",
+  "index",
+  "currency",
+  "product",
+  "unit",
+  "product-subgroup",
+  "product-group",
+  "product-properties",
+  "production-system",
+  "product-origin",
+  "sales-region",
+  "foreign-trade",
+  "key-indicator-type",
+  "usage",
+  "value-chain-detail",
+];
+
 const CUBE_DEFINITION_DIMENSIONS = ["value-chain", "market", "measure"] as const;
 export type CubeDimension = (typeof CUBE_DEFINITION_DIMENSIONS)[number];
 
