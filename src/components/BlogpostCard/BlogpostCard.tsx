@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import NextLink from "next/link";
 import { i18n } from "@lingui/core";
 import * as GQL from "@/graphql";
-import { useLocale } from "@/lib/use-locale";
+import { useRouter } from "next/router";
 import { Image } from "react-datocms";
 import { MarketChip } from "@/components/MarketChip";
 
@@ -203,7 +203,7 @@ export const BlogpostCard = (
     publishedDate,
     variant = "third",
   } = props;
-  const locale = useLocale();
+  const { locale } = useRouter();
   const cardRef = React.useRef<HTMLDivElement>(null);
   useLineClamping(() => {
     return cardRef.current
