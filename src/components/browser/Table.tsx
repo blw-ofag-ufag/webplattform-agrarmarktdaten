@@ -41,9 +41,20 @@ const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
       borderColor: c.cobalt[100],
       fontWeight: typography.fontWeightRegular,
     },
+
+    [`& .${gridClasses.columnHeader}`]: {
+      ":focus-within": {
+        outline: "none !important",
+      },
+    },
     [`& .${gridClasses.row}`]: {
       borderBottom: "2px solid",
       borderColor: c.cobalt[100],
+    },
+    [`& .${gridClasses.cell}`]: {
+      ":focus-within": {
+        outline: "none !important",
+      },
     },
   },
 }));
@@ -90,6 +101,10 @@ export const Table = ({
       className={classes.dataGrid}
       rowHeight={48}
       columnHeaderHeight={48}
+      disableColumnMenu
+      disableColumnSelector
+      disableRowSelectionOnClick
+      disableColumnFilter
     />
   );
 };
