@@ -50,6 +50,9 @@ const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
     [`& .${gridClasses.row}`]: {
       borderBottom: "2px solid",
       borderColor: c.cobalt[100],
+      ":hover": {
+        backgroundColor: c.cobalt[50],
+      },
     },
     [`& .${gridClasses.cell}`]: {
       ":focus-within": {
@@ -79,6 +82,10 @@ export const Table = ({
             ? "formatted-date"
             : dimension.dimension,
           headerName: dimension.label,
+          headerAlign:
+            isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
+          align:
+            isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           width: columnSpecs[dimension.dimension as keyof typeof columnSpecs]?.width || 100,
           valueFormatter: (params) =>
             valueFormatter({
