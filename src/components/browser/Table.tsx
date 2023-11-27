@@ -2,7 +2,7 @@ import { isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
 import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { makeStyles } from "../style-utils";
 
 const columnSpecs = {
@@ -55,7 +55,7 @@ export const Table = ({
   observations: Observation[];
   dimensions: Record<string, Property | Measure>;
 }) => {
-  //const [paginationModel, setPaginationModel] = useState({ pageSize: 25, page: 0 });
+  const [paginationModel, setPaginationModel] = useState({ pageSize: 25, page: 0 });
   const { classes } = useStyles();
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
@@ -83,9 +83,9 @@ export const Table = ({
     <DataGrid
       rows={observations}
       columns={columns}
-      autoPageSize
-      // paginationModel={paginationModel}
-      // onPaginationModelChange={(pm) => setPaginationModel(pm)}
+      //autoPageSize
+      paginationModel={paginationModel}
+      onPaginationModelChange={(pm) => setPaginationModel(pm)}
       getRowId={(row) => row.observation}
       className={classes.dataGrid}
       rowHeight={48}

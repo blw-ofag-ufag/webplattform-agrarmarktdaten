@@ -292,8 +292,8 @@ export const filterCubeSelectionAtom = atom(async (get) => {
 });
 
 /**
- * Read-write atom to manage reset filters feature. The atom value contains a boolean on whether the
- * filters have the default values. Its write function resets all filters to their default values.
+ * Read-write atom to manage reset filters feature. The atom value contains the number of filters
+ * that don't have the default values. Its write function resets all filters to their default values.
  */
 export const resetCubeFiltersAtom = atom(
   async (get) => {
@@ -303,16 +303,16 @@ export const resetCubeFiltersAtom = atom(
     const filterDimensionsConfiguration = await get(filterDimensionsConfigurationAtom);
     const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
 
-    const areCubeFiltersDefault = Object.entries(filterCubeSelection).every(
+    const changedCubeFilters = Object.entries(filterCubeSelection).filter(
       ([key, atom]) =>
-        get(atom)?.value === filterCubeConfiguration[key as CubeDimension].defaultOption.value
+        get(atom)?.value !== filterCubeConfiguration[key as CubeDimension].defaultOption.value
     );
 
-    const areDimensionFiltersDefault = Object.entries(filterDimensionsSelection).every(
-      ([key, atom]) => isEqual(get(atom), filterDimensionsConfiguration[key as Dimension]?.options)
+    const changedDimensionsFilters = Object.entries(filterDimensionsSelection).filter(
+      ([key, atom]) => !isEqual(get(atom), filterDimensionsConfiguration[key as Dimension]?.options)
     );
 
-    return areCubeFiltersDefault && areDimensionFiltersDefault;
+    return changedCubeFilters.length + changedDimensionsFilters.length;
   },
   async (get, set) => {
     const filterCubeSelection = await get(filterCubeSelectionAtom);
