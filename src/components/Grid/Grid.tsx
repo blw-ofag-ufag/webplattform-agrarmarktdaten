@@ -181,8 +181,9 @@ export const useGridElementStyles = makeStyles<{ full?: boolean | undefined }>()
     gridElement: {
       textDecoration: "none",
       [theme.breakpoints.up("xl")]: gridColumn(full ? 12 : 4),
-      [theme.breakpoints.between("sm", "xl")]: gridColumn(full ? 6 : 3),
-      [theme.breakpoints.down("md")]: gridColumn(4),
+      [theme.breakpoints.between("md", "xl")]: gridColumn(full ? 6 : 3),
+      [theme.breakpoints.between("sm", "md")]: gridColumn(6),
+      [theme.breakpoints.down("sm")]: gridColumn(4),
     },
   })
 );
