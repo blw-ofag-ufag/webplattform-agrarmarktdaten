@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SxProps, useMediaQuery } from "@mui/material";
 
-import { Breakpoint } from "@mui/material/styles";
+import { Breakpoint, Theme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
 import theme from "@/theme/blw";
@@ -218,4 +218,27 @@ export const GridWrapElement = ({ children, sx, full, ...rest }: Props & { full?
       {children}
     </Box>
   );
+};
+
+/**
+ * For compatibility with swiss-federal-ci. Return value should be passed to ContentWrapperProps,
+ * for swiss-federal-ci ContentWrapper to use the same grid system as BLW.
+ */
+export const makeContentWrapperSx = (theme: Theme) => {
+  const getSxForBreakpoint = (bp: Breakpoint) => {
+    const spec = specs[bp];
+    return {
+      maxWidth: `${spec.totalWidth}px`,
+      paddingX: `${spec.offset}px`,
+    };
+  };
+  const sx = Object.fromEntries(
+    Object.keys(specs).map((bp_) => {
+      const bp = bp_ as Breakpoint;
+      return [theme.breakpoints.only(bp), getSxForBreakpoint(bp)];
+    })
+  );
+  sx[theme.breakpoints.down("xxs")] = getSxForBreakpoint("xxs");
+  sx[theme.breakpoints.up("xxxl")] = getSxForBreakpoint("xxxl");
+  return sx;
 };
