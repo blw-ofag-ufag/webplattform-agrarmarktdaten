@@ -10,7 +10,7 @@ import {
 import { toCamelCase } from "@/utils/stringCase";
 import { atom } from "jotai";
 import { atomsWithQueryAsync } from "jotai-tanstack-query";
-import { mapValues } from "lodash";
+import { isNumber, mapValues } from "lodash";
 import { mapToObj } from "remeda";
 import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
@@ -23,7 +23,7 @@ import {
 } from "./filters";
 import dayjs from "dayjs";
 import { TimeFilter } from "@/lib/cube-queries";
-import { timeFormat } from "d3";
+import { format, timeFormat } from "d3";
 
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
@@ -93,7 +93,7 @@ export const valueFormatter = ({
 }) => {
   const dim = cubeDimensions[dimension];
   if (dim && dim.type === "measure") {
-    return value; /* @TODO: add number formatting using dimension range */
+    return isNumber(value) ? format(".2f")(value) : value;
   }
   if (dim && dim.type === "property") {
     return dim.values.find((v) => v.value === value)?.label ?? value;
