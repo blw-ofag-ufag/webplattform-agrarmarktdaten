@@ -103,7 +103,7 @@ export const ComponentBlock = ({
   return (
     <div>
       <MuiTypography variant="h5" gutterBottom>
-        {title}{" "}
+        {title}
       </MuiTypography>
 
       {children}
