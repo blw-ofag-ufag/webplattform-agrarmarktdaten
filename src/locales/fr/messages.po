@@ -410,7 +410,7 @@ msgstr "Pour"
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
-msgstr "Différentes données peuvent être sélectionnées et téléchargées via le téléchargement de données, en particulier des séries de prix et, dans certains cas, des données de quantité et de superficie. Les données sont disponibles à partir de l'année 2000."
+msgstr "Différentes données peuvent être sélectionnées et téléchargées via l’option “téléchargement de données”, en particulier des séries de prix et, dans certains cas, des données de quantité et de superficie."
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
