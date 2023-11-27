@@ -7,14 +7,43 @@ import { Hero } from "@/components/hero";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function LegalPage(props: GQL.TermsPageQuery) {
-  const { termsPage, allMarketArticles, allFocusArticles } = props;
+  const {
+    termsPage,
+    allMarketArticles,
+    allFocusArticles,
+    marketSlug,
+    focusSlug,
+    analysisSlug,
+    dataSlug,
+    infoSlug,
+    legalSlug,
+    methodsSlug,
+  } = props;
   const { classes } = useLayoutStyles();
 
   if (!termsPage?.title || !termsPage.lead) {
     return null;
   }
+  const alternates = termsPage?._allSlugLocales?.map((loc) => ({
+    href: "/legal",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+      marketSlug={marketSlug}
+      focusSlug={focusSlug}
+      analysisSlug={analysisSlug}
+      dataSlug={dataSlug}
+      infoSlug={infoSlug}
+      legalSlug={legalSlug}
+      methodsSlug={methodsSlug}
+      termsSlug={termsPage}
+      showBackButton
+    >
       <Hero title={termsPage.title} lead={termsPage.lead} showTitleLine={false} shiftedLeft />
       <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
         <div className={classes.aside} />

@@ -13,7 +13,20 @@ import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayou
 import { isValidLocale } from "@/locales/locales";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
-  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const {
+    marketArticle,
+    allMarketArticles,
+    allFocusArticles,
+    topBlogPosts,
+    marketSlug,
+    focusSlug,
+    analysisSlug,
+    dataSlug,
+    infoSlug,
+    legalSlug,
+    methodsSlug,
+    termsSlug,
+  } = props;
 
   const stickyRef = useTableOfContentsSticky();
   const alternates = marketArticle?._allSlugLocales?.map((loc) => ({
@@ -32,6 +45,14 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
+      marketSlug={marketSlug}
+      focusSlug={focusSlug}
+      analysisSlug={analysisSlug}
+      dataSlug={dataSlug}
+      infoSlug={infoSlug}
+      legalSlug={legalSlug}
+      methodsSlug={methodsSlug}
+      termsSlug={termsSlug}
       showBackButton
     >
       <Hero
@@ -79,15 +100,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  return {
-    props: {
-      marketArticle: result.data.marketArticle,
-      allMarketArticles: result.data.allMarketArticles,
-      allFocusArticles: result.data.allFocusArticles,
-      topBlogPosts: result.data.topBlogPosts,
-    },
-    revalidate: 10,
-  };
+  return { props: result.data, revalidate: 10 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

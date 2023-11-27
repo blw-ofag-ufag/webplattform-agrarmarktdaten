@@ -15,8 +15,15 @@ import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRigh
 import { useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import { t } from "@lingui/macro";
+import * as GQL from "@/graphql";
 
-const FooterBLW = () => {
+interface Props {
+  termsSlug?: GQL.TermsLocaleFragment | null;
+  legalSlug?: GQL.LegalLocaleFragment | null;
+}
+
+const FooterBLW = (props: Props) => {
+  const { legalSlug, termsSlug } = props;
   const theme = useTheme();
   const { locale } = useRouter();
   const isXXlAndUp = useMediaQuery(theme.breakpoints.up("xxl"));
@@ -42,7 +49,7 @@ const FooterBLW = () => {
         {
           title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
           external: false,
-          href: `/${locale}/legal`,
+          href: `/${legalSlug?.slug}`,
         },
         {
           title: t({ id: "footer.about_us.label", message: "About Us" }),
@@ -51,7 +58,7 @@ const FooterBLW = () => {
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
           external: false,
-          href: `/${locale}/terms-and-conditions`,
+          href: `/${termsSlug?.slug}`,
         },
       ]}
       nCols={isXXlAndUp ? 4 : 3}

@@ -9,14 +9,43 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function InfoPage(props: GQL.InfoPageQuery) {
-  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const {
+    infoPage,
+    allMarketArticles,
+    allFocusArticles,
+    topBlogPosts,
+    marketSlug,
+    focusSlug,
+    analysisSlug,
+    dataSlug,
+    legalSlug,
+    methodsSlug,
+    termsSlug,
+  } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!infoPage?.title || !infoPage.lead) {
     return null;
   }
+  const alternates = infoPage?._allSlugLocales?.map((loc) => ({
+    href: "/info",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+      marketSlug={marketSlug}
+      focusSlug={focusSlug}
+      analysisSlug={analysisSlug}
+      dataSlug={dataSlug}
+      infoSlug={infoPage}
+      legalSlug={legalSlug}
+      methodsSlug={methodsSlug}
+      termsSlug={termsSlug}
+    >
       <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <div ref={stickyRef} className={classes.aside}>
@@ -42,9 +71,7 @@ export const getStaticProps = async (context: $FixMe) => {
   const result = await client
     .query<GQL.InfoPageQuery>(
       GQL.InfoPageDocument,
-      {
-        locale: context.locale,
-      },
+      { locale: context.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();

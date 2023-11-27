@@ -9,14 +9,43 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const {
+    methodsPage,
+    allMarketArticles,
+    allFocusArticles,
+    topBlogPosts,
+    marketSlug,
+    focusSlug,
+    analysisSlug,
+    dataSlug,
+    infoSlug,
+    legalSlug,
+    termsSlug,
+  } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
+  const alternates = methodsPage?._allSlugLocales?.map((loc) => ({
+    href: "/legal",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+      marketSlug={marketSlug}
+      focusSlug={focusSlug}
+      analysisSlug={analysisSlug}
+      dataSlug={dataSlug}
+      infoSlug={infoSlug}
+      legalSlug={legalSlug}
+      methodsSlug={methodsPage}
+      termsSlug={termsSlug}
+    >
       <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <div ref={stickyRef} className={classes.aside}>
@@ -42,9 +71,7 @@ export const getStaticProps = async (context: $FixMe) => {
   const result = await client
     .query<GQL.MethodsPageQuery>(
       GQL.MethodsPageDocument,
-      {
-        locale: context.locale,
-      },
+      { locale: context.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();

@@ -27,6 +27,14 @@ interface Props {
   children: React.ReactNode;
   allMarkets?: GQL.SimpleMarketArticleFragment[];
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
+  marketSlug?: GQL.MarketLocaleFragment | null;
+  focusSlug?: GQL.FocusLocaleFragment | null;
+  methodsSlug?: GQL.MethodsLocaleFragment | null;
+  termsSlug?: GQL.TermsLocaleFragment | null;
+  legalSlug?: GQL.LegalLocaleFragment | null;
+  infoSlug?: GQL.InfoLocaleFragment | null;
+  dataSlug?: GQL.DataLocaleFragment | null;
+  analysisSlug?: GQL.AnalysisLocaleFragment | null;
   alternates?: { href: string; as: string; locale: string }[];
   showBackButton?: boolean;
 }
@@ -50,8 +58,21 @@ export const isAuthorizedLocale = (locale: string) => locale !== "en";
 
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
-  const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
-
+  const {
+    children,
+    allMarkets,
+    allFocusArticles,
+    marketSlug,
+    focusSlug,
+    methodsSlug,
+    termsSlug,
+    legalSlug,
+    infoSlug,
+    dataSlug,
+    analysisSlug,
+    alternates,
+    showBackButton = false,
+  } = props;
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
@@ -59,20 +80,24 @@ export const AppLayout = (props: Props) => {
   const { headerSections, menuSections } = React.useMemo(() => {
     const marketSections =
       allMarkets
-        ?.map((market) => ({ title: market.title!, href: `/market/${market.slug}` }))
+        ?.map((market) => ({ title: market.title!, href: `/${marketSlug?.slug}/${market.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const focusSections =
       allFocusArticles
-        ?.map((focus) => ({ title: focus.title!, href: `/focus/${focus.slug}` }))
+        ?.map((focus) => ({ title: focus.title!, href: `/${focusSlug?.slug}/${focus.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: "Home", href: "/" },
       { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
       { title: t({ id: "menu.focus", message: "Fokus" }), sections: focusSections },
-      { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
-      { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
-      { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
-      { title: t({ id: "menu.info", message: "Info" }), href: "/info", desktop: false },
+      { title: t({ id: "menu.analysis", message: "Analysis" }), href: `/${analysisSlug?.slug}` },
+      { title: t({ id: "menu.data", message: "Data" }), href: `/${dataSlug?.slug}` },
+      { title: t({ id: "menu.methods", message: "Methods" }), href: `/${methodsSlug?.slug}` },
+      {
+        title: t({ id: "menu.info", message: "Info" }),
+        href: `/${infoSlug?.slug}`,
+        desktop: false,
+      },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
@@ -80,7 +105,16 @@ export const AppLayout = (props: Props) => {
     }));
 
     return { headerSections, menuSections };
-  }, [allMarkets, allFocusArticles]);
+  }, [
+    allMarkets,
+    allFocusArticles,
+    marketSlug,
+    focusSlug,
+    analysisSlug,
+    dataSlug,
+    infoSlug,
+    methodsSlug,
+  ]);
 
   const localeSwitcherProps = alternates
     ? {
@@ -151,7 +185,7 @@ export const AppLayout = (props: Props) => {
             <Box display="flex" flexGrow={1} />
             <MenuButton
               title={t({ id: "menu.info", message: "Info" })}
-              href="/info"
+              href={`/${infoSlug?.slug}`}
               endIcon={
                 <Box sx={{ ml: 1 }}>
                   <IcInfoCircle fontSize={16} />
@@ -189,7 +223,7 @@ export const AppLayout = (props: Props) => {
 
       {router.pathname !== "/data" && (
         <div data-datocms-noindex>
-          <Footer />
+          <Footer legalSlug={legalSlug} termsSlug={termsSlug} />
         </div>
       )}
     </Box>

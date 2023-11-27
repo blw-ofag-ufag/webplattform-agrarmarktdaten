@@ -45,7 +45,20 @@ const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
 }));
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
-  const { blogPost, topBlogPosts, allMarketArticles, allFocusArticles } = props;
+  const {
+    blogPost,
+    allMarketArticles,
+    allFocusArticles,
+    topBlogPosts,
+    marketSlug,
+    focusSlug,
+    analysisSlug,
+    dataSlug,
+    infoSlug,
+    legalSlug,
+    methodsSlug,
+    termsSlug,
+  } = props;
   const { classes: layoutClasses } = useLayoutStyles();
   const { classes } = useStyles();
 
@@ -70,6 +83,14 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
+      marketSlug={marketSlug}
+      focusSlug={focusSlug}
+      analysisSlug={analysisSlug}
+      dataSlug={dataSlug}
+      infoSlug={infoSlug}
+      legalSlug={legalSlug}
+      methodsSlug={methodsSlug}
+      termsSlug={termsSlug}
       showBackButton
     >
       <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
@@ -156,15 +177,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  return {
-    props: {
-      blogPost: blogPostQuery.data.blogPost,
-      allMarketArticles: blogPostQuery.data.allMarketArticles,
-      allFocusArticles: blogPostQuery.data.allFocusArticles,
-      topBlogPosts: blogPostQuery.data.topBlogPosts,
-    },
-    revalidate: 10,
-  };
+  return { props: blogPostQuery.data, revalidate: 10 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

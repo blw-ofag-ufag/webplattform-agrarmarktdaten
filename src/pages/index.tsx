@@ -38,14 +38,38 @@ const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
 
 export default function HomePage(props: GQL.HomePageQuery) {
   const { classes } = useStyles();
-  const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const {
+    homePage,
+    allMarketArticles,
+    allFocusArticles,
+    topBlogPosts,
+    marketSlug,
+    focusSlug,
+    analysisSlug,
+    dataSlug,
+    infoSlug,
+    legalSlug,
+    methodsSlug,
+    termsSlug,
+  } = props;
   const theme = useTheme();
   if (!homePage?.title || !homePage.lead) {
     return null;
   }
   return (
     <div data-datocms-noindex>
-      <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+      <AppLayout
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+        marketSlug={marketSlug}
+        focusSlug={focusSlug}
+        analysisSlug={analysisSlug}
+        dataSlug={dataSlug}
+        infoSlug={infoSlug}
+        legalSlug={legalSlug}
+        methodsSlug={methodsSlug}
+        termsSlug={termsSlug}
+      >
         <Hero
           title={homePage.title}
           lead={homePage.lead}

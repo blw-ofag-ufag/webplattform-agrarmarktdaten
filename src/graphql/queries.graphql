@@ -2,10 +2,6 @@
 ## Regular
 query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
-    _allSlugLocales {
-      locale
-      value
-    }
     id
     title
     lead {
@@ -35,34 +31,31 @@ query HomePage($locale: SiteLocale!) {
     }
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
+  ...AllMenuLocales
+  ...MenuItems
+  ...TopBlogPosts
 }
 
 query DataPage($locale: SiteLocale!) {
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
+  dataPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
   }
-
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
+  ...AllMenuLocales
+  ...MenuItems
 }
 
 query LegalPage($locale: SiteLocale!) {
   legalPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
     id
     title
-    slug
+    ...LegalLocale
     lead {
       value
       links {
@@ -89,19 +82,45 @@ query LegalPage($locale: SiteLocale!) {
     }
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
+  methodsSlug: methodsPage(locale: $locale) {
+    ...MethodsLocale
   }
 
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
+  termsSlug: termsPage(locale: $locale) {
+    ...TermsLocale
   }
+
+  infoSlug: infoPage(locale: $locale) {
+    ...InfoLocale
+  }
+
+  dataSlug: dataPage(locale: $locale) {
+    ...DataLocale
+  }
+
+  analysisSlug: analysisPage(locale: $locale) {
+    ...AnalysisLocale
+  }
+
+  marketSlug: market(locale: $locale) {
+    ...MarketLocale
+  }
+
+  focusSlug: focusModel(locale: $locale) {
+    ...FocusLocale
+  }
+
+  ...MenuItems
 }
 
 query TermsPage($locale: SiteLocale!) {
   termsPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
     title
-    slug
+    ...TermsLocale
     lead {
       value
       links {
@@ -128,13 +147,35 @@ query TermsPage($locale: SiteLocale!) {
     }
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
+  methodsSlug: methodsPage(locale: $locale) {
+    ...MethodsLocale
   }
 
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
+  legalSlug: legalPage(locale: $locale) {
+    ...LegalLocale
   }
+
+  infoSlug: infoPage(locale: $locale) {
+    ...InfoLocale
+  }
+
+  dataSlug: dataPage(locale: $locale) {
+    ...DataLocale
+  }
+
+  analysisSlug: analysisPage(locale: $locale) {
+    ...AnalysisLocale
+  }
+
+  marketSlug: market(locale: $locale) {
+    ...MarketLocale
+  }
+
+  focusSlug: focusModel(locale: $locale) {
+    ...FocusLocale
+  }
+
+  ...MenuItems
 }
 
 query MarketPage($locale: SiteLocale!, $slug: String!) {
@@ -146,17 +187,9 @@ query MarketPage($locale: SiteLocale!, $slug: String!) {
     ...FullMarketArticle
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
+  ...AllMenuLocales
+  ...MenuItems
+  ...TopBlogPosts
 }
 
 query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
@@ -168,17 +201,9 @@ query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
     ...FullFocusArticle
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
+  ...AllMenuLocales
+  ...MenuItems
+  ...TopBlogPosts
 }
 
 query MethodsPage($locale: SiteLocale!) {
@@ -189,6 +214,7 @@ query MethodsPage($locale: SiteLocale!) {
     }
     id
     title
+    ...MethodsLocale
     lead {
       value
       links {
@@ -219,17 +245,36 @@ query MethodsPage($locale: SiteLocale!) {
     }
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
+  termsSlug: termsPage(locale: $locale) {
+    ...TermsLocale
   }
 
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
+  legalSlug: legalPage(locale: $locale) {
+    ...LegalLocale
   }
 
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
+  infoSlug: infoPage(locale: $locale) {
+    ...InfoLocale
   }
+
+  dataSlug: dataPage(locale: $locale) {
+    ...DataLocale
+  }
+
+  analysisSlug: analysisPage(locale: $locale) {
+    ...AnalysisLocale
+  }
+
+  marketSlug: market(locale: $locale) {
+    ...MarketLocale
+  }
+
+  focusSlug: focusModel(locale: $locale) {
+    ...FocusLocale
+  }
+
+  ...MenuItems
+  ...TopBlogPosts
 }
 
 query InfoPage($locale: SiteLocale!) {
@@ -240,6 +285,7 @@ query InfoPage($locale: SiteLocale!) {
     }
     id
     title
+    ...InfoLocale
     lead {
       value
       links {
@@ -270,23 +316,47 @@ query InfoPage($locale: SiteLocale!) {
     }
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
+  methodsSlug: methodsPage(locale: $locale) {
+    ...MethodsLocale
   }
 
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
+  termsSlug: termsPage(locale: $locale) {
+    ...TermsLocale
   }
 
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
+  legalSlug: legalPage(locale: $locale) {
+    ...LegalLocale
   }
+
+  dataSlug: dataPage(locale: $locale) {
+    ...DataLocale
+  }
+
+  analysisSlug: analysisPage(locale: $locale) {
+    ...AnalysisLocale
+  }
+
+  marketSlug: market(locale: $locale) {
+    ...MarketLocale
+  }
+
+  focusSlug: focusModel(locale: $locale) {
+    ...FocusLocale
+  }
+
+  ...MenuItems
+  ...TopBlogPosts
 }
 
 query AnalysisPage($locale: SiteLocale!) {
   analysisPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
     id
     title
+    ...AnalysisLocale
     lead {
       value
       links {
@@ -299,13 +369,35 @@ query AnalysisPage($locale: SiteLocale!) {
     }
   }
 
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
+  methodsSlug: methodsPage(locale: $locale) {
+    ...MethodsLocale
   }
 
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
+  termsSlug: termsPage(locale: $locale) {
+    ...TermsLocale
   }
+
+  legalSlug: legalPage(locale: $locale) {
+    ...LegalLocale
+  }
+
+  infoSlug: infoPage(locale: $locale) {
+    ...InfoLocale
+  }
+
+  dataSlug: dataPage(locale: $locale) {
+    ...DataLocale
+  }
+
+  marketSlug: market(locale: $locale) {
+    ...MarketLocale
+  }
+
+  focusSlug: focusModel(locale: $locale) {
+    ...FocusLocale
+  }
+
+  ...MenuItems
 }
 
 query paginatedFilteredBlogposts(
@@ -353,26 +445,16 @@ query paginatedBlogposts(
 
 query BlogPost($locale: SiteLocale!, $slug: String!) {
   blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
-    ...BlogPost
-    id
-
     _allSlugLocales {
       locale
       value
     }
+    id
+    ...BlogPost
   }
-
-  allMarketArticles(locale: $locale) {
-    ...SimpleMarketArticle
-  }
-
-  allFocusArticles(locale: $locale) {
-    ...SimpleFocusArticle
-  }
-
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
-    ...SimpleBlogPost
-  }
+  ...AllMenuLocales
+  ...MenuItems
+  ...TopBlogPosts
 }
 
 query AllPowerBIReports($locale: SiteLocale!) {
@@ -423,6 +505,57 @@ query AllBlogPostsSlugLocales {
   }
 }
 
+query AllRedirects {
+  methodsPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  termsPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  legalPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  infoPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  dataPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  analysisPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  focusModel {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  market {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
 # Fragments
 fragment FullSEO on SeoField {
   title
@@ -432,6 +565,38 @@ fragment FullSEO on SeoField {
     url
   }
   twitterCard
+}
+
+fragment MethodsLocale on MethodsPageRecord {
+  slug
+}
+
+fragment TermsLocale on TermsPageRecord {
+  slug
+}
+
+fragment LegalLocale on LegalPageRecord {
+  slug
+}
+
+fragment InfoLocale on InfoPageRecord {
+  slug
+}
+
+fragment DataLocale on DataPageRecord {
+  slug
+}
+
+fragment AnalysisLocale on AnalysisPageRecord {
+  slug
+}
+
+fragment MarketLocale on MarketRecord {
+  slug
+}
+
+fragment FocusLocale on FocusModelRecord {
+  slug
 }
 
 fragment SimpleMarketArticle on MarketArticleRecord {
@@ -843,5 +1008,56 @@ fragment InternalLink on RecordInterface {
   }
   ... on PowerBiReportRecord {
     id
+  }
+}
+
+# Query fragments
+
+fragment MenuItems on Query {
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+}
+
+fragment TopBlogPosts on Query {
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+    ...SimpleBlogPost
+  }
+}
+
+fragment AllMenuLocales on Query {
+  methodsSlug: methodsPage(locale: $locale) {
+    ...MethodsLocale
+  }
+
+  termsSlug: termsPage(locale: $locale) {
+    ...TermsLocale
+  }
+
+  legalSlug: legalPage(locale: $locale) {
+    ...LegalLocale
+  }
+
+  infoSlug: infoPage(locale: $locale) {
+    ...InfoLocale
+  }
+
+  dataSlug: dataPage(locale: $locale) {
+    ...DataLocale
+  }
+
+  analysisSlug: analysisPage(locale: $locale) {
+    ...AnalysisLocale
+  }
+
+  marketSlug: market(locale: $locale) {
+    ...MarketLocale
+  }
+
+  focusSlug: focusModel(locale: $locale) {
+    ...FocusLocale
   }
 }
