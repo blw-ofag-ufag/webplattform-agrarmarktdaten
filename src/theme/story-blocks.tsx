@@ -93,6 +93,24 @@ export const StorybookSectionTitle = ({ children }: { children: React.ReactNode 
   return <MuiTypography variant="h3">{children}</MuiTypography>;
 };
 
+export const ComponentBlock = ({
+  children,
+  title,
+}: {
+  children: React.ReactNode;
+  title: React.ReactNode;
+}) => {
+  return (
+    <div>
+      <MuiTypography variant="h5" gutterBottom>
+        {title}
+      </MuiTypography>
+
+      {children}
+    </div>
+  );
+};
+
 export const PaletteBlock = ({ name, value }: { name: string; value: Color | FederalColor }) => {
   const { classes } = useStyles();
   if (typeof value === "object") {

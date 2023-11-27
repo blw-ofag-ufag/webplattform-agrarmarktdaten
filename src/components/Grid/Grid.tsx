@@ -1,9 +1,10 @@
 import * as React from "react";
-import { SxProps } from "@mui/material";
+import { SxProps, useMediaQuery } from "@mui/material";
 
 import { Breakpoint } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
+import theme from "@/theme/blw";
 
 interface Props {
   children: React.ReactNode;
@@ -98,6 +99,10 @@ export const specs: Record<Breakpoint, BreakpointSpec> = {
     rowGutterWidth: 40,
   },
 };
+
+export const useIsDesktop = () => useMediaQuery(theme.breakpoints.up("xl"));
+export const useIsTablet = () => useMediaQuery(theme.breakpoints.between("md", "xl"));
+export const useIsMobile = () => useMediaQuery(theme.breakpoints.down("md"));
 
 export const vars = {
   offset: "--BLWGrid-offset",
