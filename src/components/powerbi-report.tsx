@@ -69,6 +69,13 @@ const useStyles = makeStyles()((theme) => ({
     aspectRatio: "16/9",
     width: "100%",
     flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+
+    "& iframe": {
+      // Necessary for Chrome
+      flexGrow: 1,
+    },
   },
   embedFullscreen: {
     aspectRatio: "auto",
