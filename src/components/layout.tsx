@@ -24,7 +24,7 @@ import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
 import slugs from "@/generated/slugs.json";
-import { useStyles as useInPlaceDialogStyles } from "@/components/InPlaceDialog";
+import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 
 interface Props {
   children: React.ReactNode;

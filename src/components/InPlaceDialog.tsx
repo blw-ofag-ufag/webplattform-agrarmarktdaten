@@ -7,7 +7,7 @@ import { Trans } from "@lingui/macro";
 
 const IN_PLACE_DIALOG_OPENED = "in-place-dialog-opened";
 
-export const useStyles = makeStyles()(() => ({
+export const useInPlaceDialogStyles = makeStyles()(() => ({
   hideWhenOpened: {
     [`body.${IN_PLACE_DIALOG_OPENED} &`]: {
       display: "none !important",
@@ -15,17 +15,37 @@ export const useStyles = makeStyles()(() => ({
   },
 }));
 
+const useStyles = makeStyles<void, "modalOpened">()((_theme, _params, classes) => ({
+  paper: {
+    [`.${classes.modalOpened} &`]: {
+      margin: "4rem",
+    },
+    flexGrow: 1,
+    padding: 0,
+    margin: 0,
+    position: "relative",
+    overflow: "hidden",
+  },
+  modalOpened: { display: "flex" },
+  modalClosed: { position: "static" },
+  closeButton: { position: "absolute", top: "0.5rem", right: "0.5rem", zIndex: 1 },
+  content: { minHeight: "100%", display: "flex", flexDirection: "column", flexGrow: 1 },
+}));
+
 export const InPlaceDialog = ({
   open,
   onClose,
   children,
   fallback,
+  className,
 }: {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
   fallback?: React.ReactNode;
+  className?: string;
 }) => {
+  const { classes, cx } = useStyles();
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -39,7 +59,7 @@ export const InPlaceDialog = ({
   return (
     <>
       <Modal
-        sx={open ? {} : { position: "static", zIndex: 10000 }}
+        className={cx(open ? classes.modalOpened : classes.modalClosed, className)}
         hideBackdrop={!open}
         /** Always show the content */
         open
@@ -52,26 +72,18 @@ export const InPlaceDialog = ({
         disableScrollLock={!open}
         disableRestoreFocus={!open}
       >
-        <Paper
-          sx={{
-            flexGrow: 1,
-            p: open ? "8rem" : 0,
-            margin: open ? 4 : 0,
-            position: "relative",
-          }}
-          elevation={open ? 6 : 0}
-        >
+        <Paper className={classes.paper} elevation={open ? 6 : 0}>
           {open ? (
             <Button
               onClick={() => onClose()}
-              sx={{ position: "absolute", top: "0.5rem", right: "0.5rem", zIndex: 1 }}
+              className={classes.closeButton}
               endIcon={<IcControlClose width={12} height={12} />}
               variant="inline"
             >
               <Trans id="header.close">Close</Trans>
             </Button>
           ) : null}
-          <motion.div layout style={{ minHeight: "100%" }}>
+          <motion.div layout className={classes.content}>
             {children}
           </motion.div>
         </Paper>

@@ -2,7 +2,7 @@ import * as React from "react";
 import ChevronUp from "@/icons/icons-jsx/control/IcControlChevronUp";
 import { makeStyles } from "@/components/style-utils";
 import { IconButton, IconButtonProps } from "@mui/material";
-import { useStyles as useInPlaceDialogStyles } from "@/components/InPlaceDialog";
+import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 
 const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => ({
   wrapper: {

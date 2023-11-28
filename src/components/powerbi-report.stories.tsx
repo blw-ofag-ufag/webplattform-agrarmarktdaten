@@ -2,7 +2,7 @@ import {
   PowerBIReport as PowerBIReportComponent,
   PowerBINavigation as PowerBINavigationComponent,
 } from "@/components/powerbi-report";
-import { InPlaceDialog as InPlaceDialogComponent, useStyles } from "./InPlaceDialog";
+import { InPlaceDialog as InPlaceDialogComponent, useInPlaceDialogStyles } from "./InPlaceDialog";
 import { FormControlLabel, Switch, Typography } from "@mui/material";
 import { useState } from "react";
 
@@ -39,7 +39,7 @@ export const PowerBINavigation = () => {
 
 export const InPlaceDialog = () => {
   const [fullscreen, setFullscreen] = useState(false);
-  const { classes } = useStyles();
+  const { classes } = useInPlaceDialogStyles();
   return (
     <>
       <Typography variant="body1" className={classes.hideWhenOpened}>

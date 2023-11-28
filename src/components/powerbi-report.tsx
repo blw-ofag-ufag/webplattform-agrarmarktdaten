@@ -23,7 +23,7 @@ import { makeStyles } from "./style-utils";
 import { InPlaceDialog } from "./InPlaceDialog";
 import IcExpand from "@/icons/icons-jsx/control/IcExpand";
 import { t } from "@lingui/macro";
-import { useStyles as useInPlaceDialogStyles } from "@/components/InPlaceDialog";
+import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 import { useInView } from "framer-motion";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
@@ -39,18 +39,29 @@ const CONFIG: models.IReportEmbedConfiguration = {
 };
 
 const useStyles = makeStyles()((theme) => ({
-  root: {
+  reportContainer: {
     width: "100%",
     display: "flex",
     flexDirection: "column",
+    flexGrow: 1,
     "& iframe": {
       border: "none",
+    },
+  },
+  reportContainerFullscreen: {
+    padding: "8rem",
+
+    [theme.breakpoints.down("xxxl")]: {
+      padding: "4rem",
     },
   },
   embed: {
     aspectRatio: "16/9",
     width: "100%",
     flexGrow: 1,
+  },
+  embedFullscreen: {
+    aspectRatio: "auto",
   },
   navigationContainer: {
     width: "100%",
@@ -171,14 +182,14 @@ export const PowerBIReport = (props: {
     activePage,
     host,
   });
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const [fullscreen, setFullscreenState] = useControlled({
     default: false,
     controlled: props.open,
     name: "PowerBIReport",
   });
 
-  const reportContainerRef = useRef(null);
+  const reportContainerRef = useRef<HTMLDivElement>(null);
   const reportContainerHeight = useRef(0);
   const setFullscreen = useEventCallback((value: boolean) => {
     reportContainerHeight.current = reportContainerRef.current?.getBoundingClientRect().height ?? 0;
@@ -206,17 +217,23 @@ export const PowerBIReport = (props: {
         {t({ id: "controls.fullscreen", message: "Full Screen" })}
       </Button>
       <InPlaceDialog
-        fallback={<div style={{ backrgound: "#eee", height: reportContainerHeight.current }} />}
+        fallback={<div style={{ background: "#eee", height: reportContainerHeight.current }} />}
         open={fullscreen}
         onClose={() => setFullscreen(false)}
       >
-        <div className={classes.root} ref={reportContainerRef}>
+        <div
+          className={cx(
+            classes.reportContainer,
+            fullscreen ? classes.reportContainerFullscreen : null
+          )}
+          ref={reportContainerRef}
+        >
           {report && activePage ? (
             <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
           ) : null}
           <PowerBIEmbed
             embedConfig={embedConfig}
-            cssClassName={classes.embed}
+            cssClassName={cx(classes.embed, fullscreen ? classes.embedFullscreen : null)}
             getEmbeddedComponent={(embedObject) => {
               setReport(embedObject as Report);
             }}
