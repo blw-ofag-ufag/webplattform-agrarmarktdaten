@@ -25,7 +25,6 @@ import { toCamelCase, toKebabCase } from "@/utils/stringCase";
 import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 
 export const fetchSparql = async (query: string) => {
-  console.log("> fetchSparql");
   const body = JSON.stringify({ query });
   const res = await fetch("/api/sparql", {
     method: "post",
