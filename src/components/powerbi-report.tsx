@@ -54,6 +54,16 @@ const useStyles = makeStyles()((theme) => ({
     [theme.breakpoints.down("xxxl")]: {
       padding: "4rem",
     },
+
+    // Not to have any overlap between close button and navigation
+    [theme.breakpoints.down("lg")]: {
+      paddingTop: "6rem",
+    },
+  },
+  fullscreenButton: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   embed: {
     aspectRatio: "16/9",
@@ -202,7 +212,7 @@ export const PowerBIReport = (props: {
   return (
     <Box position="relative" ref={inViewRef}>
       <Button
-        className={inPlaceDialogClasses.hideWhenOpened}
+        className={cx(inPlaceDialogClasses.hideWhenOpened, classes.fullscreenButton)}
         sx={{
           position: "absolute",
           bottom: "-3rem",
