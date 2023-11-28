@@ -14,6 +14,8 @@ import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { makeStyles } from "@/components/style-utils";
 import { useIsDesktop, useIsMobile, useIsTablet } from "@/components/Grid/Grid";
+import slugs from "@/generated/slugs.json";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles()({
   container: {
@@ -29,6 +31,9 @@ export const TopBlogpostsTeaser = (
   const isDesktop = useIsDesktop();
   const isTablet = useIsTablet();
   const isMobile = useIsMobile();
+
+  const { locale } = useRouter();
+  const localeSlugs = slugs.find((slug) => slug.locale === locale)?.slugs;
 
   const { classes } = useStyles();
 
@@ -170,7 +175,7 @@ export const TopBlogpostsTeaser = (
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center", mt: s(8) }}>
           <Box sx={{ maxWidth: "1676px", width: "100%" }}>
             <Box sx={{ display: "flex", justifyContent: "end" }}>
-              <NextLink href={`/analysis`} legacyBehavior>
+              <NextLink href={`/${localeSlugs?.analysis}`} legacyBehavior>
                 <Button
                   sx={{
                     display: "flex",
