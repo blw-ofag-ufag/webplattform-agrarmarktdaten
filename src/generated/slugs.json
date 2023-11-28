@@ -1,0 +1,41 @@
+[
+  {
+    "locale": "de",
+    "slugs": {
+      "methods": "methoden",
+      "data": "daten",
+      "legal": "auftrag-und-rechtliche-grundlage",
+      "terms": "nutzungsbedingungen",
+      "info": "informationen",
+      "analysis": "analysen",
+      "focus": "fokus",
+      "market": "markt"
+    }
+  },
+  {
+    "locale": "fr",
+    "slugs": {
+      "methods": "methodes",
+      "data": "donnees",
+      "legal": "mission-et-bases-legales",
+      "terms": "conditions-utilisations",
+      "info": "informations",
+      "analysis": "analyses",
+      "focus": "focus",
+      "market": "marche"
+    }
+  },
+  {
+    "locale": "it",
+    "slugs": {
+      "methods": "metodi",
+      "data": "dati",
+      "legal": "compiti-e-basi-legali",
+      "terms": "condizioni-uso",
+      "info": "informazioni",
+      "analysis": "analisi",
+      "focus": "focus",
+      "market": "mercato"
+    }
+  }
+]
