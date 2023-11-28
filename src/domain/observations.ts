@@ -1,4 +1,4 @@
-import { queryObservations } from "@/lib/cube-queries";
+import { TimeFilter, queryObservations } from "@/lib/cube-queries";
 import { addNamespace, amdpMeasure } from "@/lib/namespace";
 import {
   Measure,
@@ -8,22 +8,21 @@ import {
   getSparqlEditorUrl,
 } from "@/pages/api/data";
 import { toCamelCase } from "@/utils/stringCase";
+import { timeFormat } from "d3";
+import dayjs from "dayjs";
 import { atom } from "jotai";
-import { atomsWithQueryAsync } from "jotai-tanstack-query";
+import { atomsWithQuery } from "jotai-tanstack-query";
 import { mapValues } from "lodash";
 import { mapToObj } from "remeda";
-import { cubeDimensionsAtom, cubePathAtom, cubesAtom } from "./cubes";
+import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
 import {
   RangeOptions,
+  TimeView,
   filterDimensionsSelectionAtom,
   timeRangeAtom,
   timeViewAtom,
-  TimeView,
 } from "./filters";
-import dayjs from "dayjs";
-import { TimeFilter } from "@/lib/cube-queries";
-import { timeFormat } from "d3";
 
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
@@ -41,25 +40,28 @@ const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter 
  * The observations are filtered by the selected dimensions.
  * Dimensions values on observations are not yet parsed, use parsedObservationsAtom for that.
  */
-export const [observationsAtom, observationsQueryAtom] = atomsWithQueryAsync<
+export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
   ReturnType<typeof fetchObservations> extends Promise<infer T> ? T : never
->(async (get) => {
-  const cubePath = await get(cubePathAtom);
-  const cubes = await get(cubesAtom);
-  const cubeDefinition = cubes.find((cube) => cube.cube === cubePath);
+>((get) => {
+  const emptyQuery = {
+    queryKey: ["observations"],
+    queryFn: () => ({
+      observations: [],
+      query: "",
+    }),
+  };
 
-  const timeRange = await get(timeRangeAtom);
-  const timeView = await get(timeViewAtom);
+  const cubePath = get(cubePathAtom);
+  const cubes = get(cubesStatusAtom);
+
+  if (!cubes.isSuccess) return emptyQuery;
+  const cubeDefinition = cubes.data.find((cube) => cube.cube === cubePath);
+
+  const timeRange = get(timeRangeAtom);
+  const timeView = get(timeViewAtom);
   const timeFilter = getTimeFilter(timeRange, timeView);
 
-  if (!cubeDefinition)
-    return {
-      queryKey: ["observations"],
-      queryFn: () => ({
-        observations: [],
-        query: "",
-      }),
-    };
+  if (!cubeDefinition) return emptyQuery;
 
   // Time filters are done client-side
   const queryTimeFilter = { minDate: null, maxDate: null, mode: timeFilter.mode };
@@ -108,7 +110,9 @@ export const valueFormatter = ({
  */
 export const parsedObservationsAtom = atom(async (get) => {
   const observations = await get(observationsAtom);
-  const cubeDimensions = await get(cubeDimensionsAtom);
+  const cubeDimensions = await get(cubeDimensionsStatusAtom);
+
+  if (!cubeDimensions.isSuccess) return observations.observations;
 
   return observations.observations.map((obs) =>
     Object.entries(obs).reduce((acc, [key, value]) => {
@@ -118,8 +122,8 @@ export const parsedObservationsAtom = atom(async (get) => {
           value: value as string | number,
           dimension: key,
           cubeDimensions: {
-            ...cubeDimensions.properties,
-            ...cubeDimensions.measures,
+            ...cubeDimensions.data.properties,
+            ...cubeDimensions.data.measures,
           },
         }),
       };
@@ -135,11 +139,13 @@ export const parsedObservationsAtom = atom(async (get) => {
  *  ⚠️ The filtering logic needs to be in sync with the SPARQL filtering logic expressed in the
  * `observationsSparqlQueryAtom`.
  */
-export const filteredObservationsAtom = atom(async (get) => {
-  const { observations } = await get(observationsAtom);
-  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
-  const timeRange = await get(timeRangeAtom);
-  const timeView = await get(timeViewAtom);
+export const filteredObservationsAtom = atom((get) => {
+  const observationsQuery = get(observationsQueryAtom);
+  const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
+  const timeRange = get(timeRangeAtom);
+  const timeView = get(timeViewAtom);
+
+  if (!observationsQuery.data) return [];
 
   const filters = Object.entries(filterDimensionsSelection).reduce(
     (acc, [key, atom]) => {
@@ -159,7 +165,7 @@ export const filteredObservationsAtom = atom(async (get) => {
     return formattedDate && formattedDate >= minDate && formattedDate <= maxDate;
   };
 
-  const filteredObservations = observations
+  const filteredObservations = observationsQuery.data.observations
     .filter(timeFilterFn)
     .filter((obs) => filters.map((f) => f(obs)).every(Boolean));
 
@@ -173,15 +179,17 @@ export const filteredObservationsAtom = atom(async (get) => {
  * ⚠️ The SPARQL filtering logic needs to be the same as the logic expressed application side in the
  * `filteredObservationsAtom`.
  */
-export const observationsSparqlQueryAtom = atom(async (get) => {
-  const filterDimensionsSelection = await get(filterDimensionsSelectionAtom);
-  const cubeIri = await get(cubePathAtom);
+export const observationsSparqlQueryAtom = atom((get) => {
+  const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
+  const cubeIri = get(cubePathAtom);
   const fullCubeIri = addNamespace(cubeIri);
-  const cubes = await get(cubesAtom);
-  const cubeDefinition = cubes.find((cube) => cube.cube === cubeIri);
+  const cubes = get(cubesStatusAtom);
+  if (!cubes.isSuccess) return undefined;
 
-  const timeRange = await get(timeRangeAtom);
-  const timeView = await get(timeViewAtom);
+  const cubeDefinition = cubes.data.find((cube) => cube.cube === cubeIri);
+
+  const timeRange = get(timeRangeAtom);
+  const timeView = get(timeViewAtom);
   const timeFilter = getTimeFilter(timeRange, timeView);
 
   if (!cubeDefinition) return "";

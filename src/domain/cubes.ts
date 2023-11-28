@@ -2,7 +2,7 @@ import { amdp } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/api/data";
 import { atom } from "jotai";
-import { atomsWithQuery, atomsWithQueryAsync } from "jotai-tanstack-query";
+import { atomsWithQuery } from "jotai-tanstack-query";
 import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
 
 export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
@@ -13,15 +13,23 @@ export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
 
 export const defaultCube = "cube/MilkDairyProducts/Production_Price_Year";
 
-export const cubePathAtom = atom(async (get) => {
-  const allCubes = await get(cubesAtom);
-  const filterCubeSelection = await get(filterCubeSelectionAtom);
+export const cubePathAtom = atom((get) => {
+  const { status, data: allCubes } = get(cubesStatusAtom);
+  const filterCubeSelection = get(filterCubeSelectionAtom);
+
+  if (status !== "success") return defaultCube;
 
   const cubePath = allCubes.find(
     (cube) =>
-      cube.valueChain === get(filterCubeSelection["value-chain"])?.value &&
-      cube.market === get(filterCubeSelection.market)?.value &&
-      cube.measure === get(filterCubeSelection.measure)?.value &&
+      (filterCubeSelection["value-chain"]
+        ? cube.valueChain === get(filterCubeSelection["value-chain"])?.value
+        : true) &&
+      (filterCubeSelection.market
+        ? cube.market === get(filterCubeSelection.market)?.value
+        : true) &&
+      (filterCubeSelection.measure
+        ? cube.measure === get(filterCubeSelection.measure)?.value
+        : true) &&
       cube.timeView === get(timeViewAtom)
   );
   return cubePath?.cube || defaultCube;
@@ -39,70 +47,68 @@ export const [baseDimensionsAtom, baseDimensionsStatusAtom] = atomsWithQuery((ge
   staleTime: Infinity,
 }));
 
-export const availableBaseDimensionsValuesAtom = atom(async (get) => {
-  const cubes = await get(cubesAtom);
-  const filterCubeSelection = await get(filterCubeSelectionAtom);
+export const availableBaseDimensionsValuesAtom = atom((get) => {
+  const cubes = get(cubesStatusAtom);
+  const filterCubeSelection = get(filterCubeSelectionAtom);
 
   /**
    * This probably could be done in a more elegant way.
    */
   return {
     "value-chain": {
-      options: cubes
-        .filter(
-          (c) =>
-            c.measure === get(filterCubeSelection.measure)?.value &&
-            c.market === get(filterCubeSelection.market)?.value
-        )
-        .map((c) => c.valueChain),
+      options: cubes.isSuccess
+        ? cubes.data
+            .filter(
+              (c) =>
+                (filterCubeSelection.measure
+                  ? c.measure === get(filterCubeSelection.measure)?.value
+                  : true) &&
+                (filterCubeSelection.market
+                  ? c.market === get(filterCubeSelection.market)?.value
+                  : true)
+            )
+            .map((c) => c.valueChain)
+        : [],
     },
     market: {
-      options: cubes
-        .filter(
-          (c) =>
-            c.measure === get(filterCubeSelection.measure)?.value &&
-            c.valueChain === get(filterCubeSelection["value-chain"])?.value
-        )
-        .map((c) => c.market),
+      options: cubes.isSuccess
+        ? cubes.data
+            .filter(
+              (c) =>
+                (filterCubeSelection.measure
+                  ? c.measure === get(filterCubeSelection.measure)?.value
+                  : true) &&
+                (filterCubeSelection["value-chain"]
+                  ? c.valueChain === get(filterCubeSelection["value-chain"])?.value
+                  : true)
+            )
+            .map((c) => c.market)
+        : [],
     },
     measure: {
-      options: cubes
-        .filter(
-          (c) =>
-            c.market === get(filterCubeSelection.market)?.value &&
-            c.valueChain === get(filterCubeSelection["value-chain"])?.value
-        )
-        .map((c) => c.measure),
+      options: cubes.isSuccess
+        ? cubes.data
+            .filter(
+              (c) =>
+                (filterCubeSelection.market
+                  ? c.market === get(filterCubeSelection.market)?.value
+                  : true) &&
+                (filterCubeSelection["value-chain"]
+                  ? c.valueChain === get(filterCubeSelection["value-chain"])?.value
+                  : true)
+            )
+            .map((c) => c.measure)
+        : [],
     },
   };
-});
-
-export const availableValueChainAtom = atom(async (get) => {
-  const cubes = await get(cubesAtom);
-  const filterCubeSelection = await get(filterCubeSelectionAtom);
-  const measure = get(filterCubeSelection.measure);
-  const availableChain = cubes
-    .filter((cube) => cube.measure === measure?.value)
-    .map((cube) => cube.valueChain);
-  return availableChain;
-});
-
-export const availableMeasuresAtom = atom(async (get) => {
-  const cubes = await get(cubesAtom);
-  const filterCubeSelection = await get(filterCubeSelectionAtom);
-  const valueChain = get(filterCubeSelection["value-chain"]);
-  const measures = cubes
-    .filter((cube) => cube.valueChain === valueChain?.value)
-    .map((cube) => cube.measure);
-  return measures;
 });
 
 /**
  * Cube dimensions.
  * This atom contains the definitions of the dimensions of the cube that we are currently viewing.
  */
-export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQueryAsync(async (get) => {
-  const cubePath = await get(cubePathAtom);
+export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((get) => {
+  const cubePath = get(cubePathAtom);
   const locale = get(localeAtom);
   return {
     queryKey: ["cubeDimensions", cubePath, locale],
@@ -115,8 +121,8 @@ export type CubeDimensions = ReturnType<typeof fetchCubeDimensions> extends Prom
   ? T
   : never;
 
-export const visualizeUrlAtom = atom(async (get) => {
-  const cubePath = await get(cubePathAtom);
+export const visualizeUrlAtom = atom((get) => {
+  const cubePath = get(cubePathAtom);
   const locale = get(localeAtom);
 
   const visualizeEndpoint = `https://int.visualize.admin.ch/${locale}`;

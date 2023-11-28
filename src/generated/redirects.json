@@ -1,0 +1,110 @@
+[
+  {
+    "url": "/methods",
+    "alternates": [
+      "/methoden",
+      "/methods",
+      "/methodes",
+      "/metodi"
+    ],
+    "locales": [
+      {
+        "locale": "de",
+        "path": "/methoden"
+      },
+      {
+        "locale": "en",
+        "path": "/methods"
+      },
+      {
+        "locale": "fr",
+        "path": "/methodes"
+      },
+      {
+        "locale": "it",
+        "path": "/metodi"
+      }
+    ]
+  },
+  {
+    "url": "/data",
+    "alternates": [
+      "/daten",
+      "/data",
+      "/donnees",
+      "/dati"
+    ]
+  },
+  {
+    "url": "/legal",
+    "alternates": [
+      "/auftrag-und-rechtliche-grundlage",
+      "/mandate-and-legal-basis",
+      "/mission-et-bases-legales",
+      "/compiti-e-basi-legali"
+    ]
+  },
+  {
+    "url": "/terms-and-conditions",
+    "alternates": [
+      "/nutzungsbedingungen",
+      "/terms-use",
+      "/conditions-utilisations",
+      "/condizioni-uso"
+    ]
+  },
+  {
+    "url": "/info",
+    "alternates": [
+      "/informationen",
+      "/information",
+      "/informations",
+      "/informazioni"
+    ]
+  },
+  {
+    "url": "/analysis",
+    "alternates": [
+      "/analysen",
+      "/analisys",
+      "/analyses",
+      "/analisi"
+    ]
+  },
+  {
+    "url": "/focus/[slug]",
+    "alternates": [
+      "/fokus",
+      "/focus",
+      "/focus",
+      "/focus"
+    ]
+  },
+  {
+    "url": "/market/[slug]",
+    "alternates": [
+      "/markt",
+      "/market",
+      "/marche",
+      "/mercato"
+    ],
+    "locales": [
+      {
+        "locale": "de",
+        "path": "/markt"
+      },
+      {
+        "locale": "en",
+        "path": "/market"
+      },
+      {
+        "locale": "fr",
+        "path": "/marche"
+      },
+      {
+        "locale": "it",
+        "path": "/mercato"
+      }
+    ]
+  }
+]
