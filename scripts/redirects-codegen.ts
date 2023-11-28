@@ -19,10 +19,6 @@ const run = async () => {
     {
       url: "/methods",
       alternates: result.data.methodsPage?._allSlugLocales?.map(({ value }) => `/${value}`),
-      locales: result.data.methodsPage?._allSlugLocales?.map(({ value, locale }) => ({
-        locale,
-        path: `/${value}`,
-      })),
     },
     {
       url: "/data",
@@ -51,10 +47,6 @@ const run = async () => {
     {
       url: "/market/[slug]",
       alternates: result.data.market?._allSlugLocales?.map(({ value }) => `/${value}`),
-      locales: result.data.market?._allSlugLocales?.map(({ value, locale }) => ({
-        locale,
-        path: `/${value}`,
-      })),
     },
   ];
 
