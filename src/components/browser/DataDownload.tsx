@@ -1,4 +1,4 @@
-import { CubeDimensions, cubeDimensionsAtom } from "@/domain/cubes";
+import { CubeDimensions, cubeDimensionsStatusAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
 import { filteredObservationsAtom, valueFormatter } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
@@ -70,7 +70,7 @@ export const DataDownloadStateProvider = ({ children }: PropsWithChildren) => {
 export default function DataDownload() {
   const anchorRef = useRef<HTMLButtonElement>(null);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
-  const dimensions = useAtomValue(cubeDimensionsAtom);
+  const dimensions = useAtomValue(cubeDimensionsStatusAtom);
   return (
     <DataDownloadStateProvider>
       <PopupState variant="popover" popupId="data-download-popup">
@@ -107,25 +107,32 @@ export default function DataDownload() {
                   <Trans id="data.download.title">Download dataset</Trans>
                 </Typography>
               </ListItem>
-              {FILE_FORMATS.map((format, i) => (
+
+              {dimensions.isSuccess ? (
                 <>
-                  <DownloadMenuItem
-                    key={format}
-                    format={format}
-                    dataset={filteredObservations}
-                    dimensions={dimensions}
-                    disableRipple
-                    sx={{
-                      borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
-                      borderColor: "grey.300",
-                      p: 0,
-                    }}
-                  >
-                    <Typography variant="body1">{format.toUpperCase()}</Typography>
-                    <IcControlDownload width={20} height={20} />
-                  </DownloadMenuItem>
+                  {FILE_FORMATS.map((format, i) => (
+                    <>
+                      <DownloadMenuItem
+                        key={format}
+                        format={format}
+                        dataset={filteredObservations}
+                        dimensions={dimensions.data}
+                        disableRipple
+                        sx={{
+                          borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
+                          borderColor: "grey.300",
+                          p: 0,
+                        }}
+                      >
+                        <Typography variant="body1">{format.toUpperCase()}</Typography>
+                        <IcControlDownload width={20} height={20} />
+                      </DownloadMenuItem>
+                    </>
+                  ))}
                 </>
-              ))}
+              ) : (
+                <CircularProgress />
+              )}
             </HoverMenu>
           </>
         )}

@@ -325,7 +325,7 @@ export const fetchObservations = async ({
   };
 };
 
-export const getSparqlEditorUrl = (query: string): string | null => {
+export const getSparqlEditorUrl = (query: string): string => {
   return `${sparqlEndpoint}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
 };
 

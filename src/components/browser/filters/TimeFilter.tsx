@@ -94,6 +94,10 @@ export default function TimeFilter({
           width: "fit-content",
           mb: 2,
         }}
+        onClick={() => {
+          setSliderRange([min, max]);
+          onChangeRange([min, max]);
+        }}
       >
         <Trans id="data.control.reset">Reset</Trans>
       </Button>

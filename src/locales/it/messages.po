@@ -256,13 +256,18 @@ msgid "footer.priceindex"
 msgstr "Indice nazionale dei prezzi al consumo"
 
 #. js-lingui-explicit-id
-#: src/pages/index.tsx
+#: src/components/DataPageCard.tsx
 msgid "homepage.section.data.button"
 msgstr "Per saperne di più"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.loading"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.loading.info"
 msgstr ""
 
 #. js-lingui-explicit-id
@@ -408,7 +413,7 @@ msgid "data.filters.to"
 msgstr "A"
 
 #. js-lingui-explicit-id
-#: src/pages/index.tsx
+#: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
 msgstr "È possibile selezionare e scaricare diversi dati, in particolare le serie dei prezzi e, in alcuni casi, anche i dati relativi alle quantità e alle superfici."
 

@@ -256,7 +256,7 @@ msgid "footer.priceindex"
 msgstr "Landesindex der Konsumentenpreise"
 
 #. js-lingui-explicit-id
-#: src/pages/index.tsx
+#: src/components/DataPageCard.tsx
 msgid "homepage.section.data.button"
 msgstr "Mehr erfahren"
 
@@ -264,6 +264,11 @@ msgstr "Mehr erfahren"
 #: src/pages/data.tsx
 msgid "data.filters.loading"
 msgstr "Loading"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.loading.info"
+msgstr "Loading data..."
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Controls.tsx
@@ -408,7 +413,7 @@ msgid "data.filters.to"
 msgstr "An"
 
 #. js-lingui-explicit-id
-#: src/pages/index.tsx
+#: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
 msgstr "Über den Daten-Download können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten."
 

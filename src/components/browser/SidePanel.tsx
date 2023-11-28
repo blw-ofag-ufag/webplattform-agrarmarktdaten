@@ -1,11 +1,13 @@
-import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
+import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
 import {
   Option,
-  filterConfigurationAtom,
+  filterCubeConfigurationAtom,
   filterCubeSelectionAtom,
+  filterDimensionsConfigurationAtom,
   filterDimensionsSelectionAtom,
   resetCubeFiltersAtom,
   timeRangeAtom,
+  timeRangeDefault,
   timeViewAtom,
 } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
@@ -17,13 +19,14 @@ import {
   AccordionSummary as AccordionSummaryMui,
   Box,
   Chip,
+  CircularProgress,
   IconButton,
   Stack,
   Typography,
 } from "@mui/material";
 import { Atom, useAtom, useAtomValue } from "jotai";
-import { xor } from "lodash";
-import { SyntheticEvent, useMemo, useState } from "react";
+import { maxBy, minBy, xor } from "lodash";
+import { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
@@ -31,6 +34,8 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
+import { observationsQueryAtom } from "@/domain/observations";
+import dayjs from "dayjs";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -61,10 +66,12 @@ const SidePanel = ({
   };
 }) => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
-  const filterConfiguration = useAtomValue(filterConfigurationAtom);
+  const filterCubeConfiguration = useAtomValue(filterCubeConfigurationAtom);
+  const filterDimensionsConfiguration = useAtomValue(filterDimensionsConfigurationAtom);
   const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
   const filterDimensionsSelection = useAtomValue(filterDimensionsSelectionAtom);
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
+  const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
 
   return (
     <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
@@ -96,8 +103,12 @@ const SidePanel = ({
           </Box>
           {/* Cube path filters */}
           {orderedCubeFilters.map((key) => {
-            const config = filterConfiguration.cube[key];
+            const config = filterCubeConfiguration[key];
             const filterAtom = filterCubeSelection[key];
+
+            if (!config) {
+              return null;
+            }
 
             const options = config.options.filter((option) => {
               return availableBaseDimensionsValues[key].options.includes(option.value);
@@ -124,28 +135,36 @@ const SidePanel = ({
 
           {/* Property filters */}
 
-          {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
-            const filterAtom =
-              filterDimensionsSelection[key as keyof (typeof filterConfiguration)["dimensions"]];
-            if (!filterAtom) {
-              return null;
-            }
-            return (
-              <FilterSelectAccordion
-                key={key}
-                slots={{
-                  accordion: getAccordionProps(key),
-                  select: {
-                    withSearch: value.search,
-                    groups: value?.groups,
-                  },
-                }}
-                options={value.options}
-                filterAtom={filterAtom}
-                title={value.name ?? value.key}
-              />
-            );
-          })}
+          {cubeDimensionsStatus.isSuccess ? (
+            <>
+              {Object.entries(filterDimensionsConfiguration).map(([key, value]) => {
+                const filterAtom =
+                  filterDimensionsSelection[key as keyof typeof filterDimensionsConfiguration];
+                if (!filterAtom) {
+                  return null;
+                }
+                return (
+                  <FilterSelectAccordion
+                    key={key}
+                    slots={{
+                      accordion: getAccordionProps(key),
+                      select: {
+                        withSearch: value.search,
+                        groups: value?.groups,
+                      },
+                    }}
+                    options={value.options}
+                    filterAtom={filterAtom}
+                    title={value.name ?? value.key}
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <AccordionSummary>
+              <CircularProgress />
+            </AccordionSummary>
+          )}
         </Box>
       </Stack>
     </ContentDrawer>
@@ -247,6 +266,26 @@ const FilterSelectAccordion = <T extends Option>({
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   const [timeRange, setTimeRange] = useAtom(timeRangeAtom);
   const [timeView, setTimeView] = useAtom(timeViewAtom);
+  const observationsQuery = useAtomValue(observationsQueryAtom);
+
+  useEffect(() => {
+    if (observationsQuery.data) {
+      const minDate = minBy(observationsQuery.data.observations, "formatted-date")?.[
+        "formatted-date"
+      ];
+      const maxDate = maxBy(observationsQuery.data.observations, "formatted-date")?.[
+        "formatted-date"
+      ];
+
+      const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
+      const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;
+      setTimeRange({
+        value: [min, max],
+        min,
+        max,
+      });
+    }
+  }, [observationsQuery.data, setTimeRange]);
 
   const handleTimeRangeChange = useEvent((value: [number, number]) => {
     if (!Array.isArray(value)) {
