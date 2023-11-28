@@ -356,10 +356,23 @@ export const resetCubeFiltersAtom = atom(
 /* Codecs to save state in URL hash */
 export const multiOptionsCodec = <T extends Option>(options: T[]) => ({
   serialize: (value: Option[]) =>
-    value.length === 0 ? "None" : value.map((v) => v.value).join(","),
+    value.length === 0
+      ? "None"
+      : value.length === options.length
+      ? "All"
+      : value.map((v) => v.value).join(","),
   deserialize: (value: string) => {
     if (value === "None") return [];
+    if (value === "All") return options;
     const values = value.split(",");
+    const valuesOptions = options.filter((p) => values.includes(p.value));
+
+    // This case covers the situation where the options have changed and the saved values are not in
+    // the new options. In this case we return all the options.
+    if (values.length > 0 && valuesOptions.length === 0) {
+      return options;
+    }
+
     return options.filter((p) => values.includes(p.value));
   },
 });
@@ -395,5 +408,8 @@ export const filterMultiHashAtomFamily = atomFamily(
   },
   (a, b) =>
     a.key === b.key &&
-    new Set(a.options.map((optA) => optA.value)) === new Set(b.options.map((optB) => optB.value))
+    isEqual(
+      a.options.map((optA) => optA.value),
+      b.options.map((optB) => optB.value)
+    )
 );
