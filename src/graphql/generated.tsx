@@ -7531,7 +7531,11 @@ export const SimpleBlogPostFragmentDoc = gql`
     `;
 export const TopBlogPostsFragmentDoc = gql`
     fragment TopBlogPosts on Query {
-  topBlogPosts: allBlogPosts(locale: $locale, first: 3) {
+  topBlogPosts: allBlogPosts(
+    locale: $locale
+    first: 3
+    orderBy: [publishedDate_DESC]
+  ) {
     ...SimpleBlogPost
   }
 }
