@@ -33,24 +33,6 @@
       "/data",
       "/donnees",
       "/dati"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/daten"
-      },
-      {
-        "locale": "en",
-        "path": "/data"
-      },
-      {
-        "locale": "fr",
-        "path": "/donnees"
-      },
-      {
-        "locale": "it",
-        "path": "/dati"
-      }
     ]
   },
   {
@@ -60,24 +42,6 @@
       "/mandate-and-legal-basis",
       "/mission-et-bases-legales",
       "/compiti-e-basi-legali"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/auftrag-und-rechtliche-grundlage"
-      },
-      {
-        "locale": "en",
-        "path": "/mandate-and-legal-basis"
-      },
-      {
-        "locale": "fr",
-        "path": "/mission-et-bases-legales"
-      },
-      {
-        "locale": "it",
-        "path": "/compiti-e-basi-legali"
-      }
     ]
   },
   {
@@ -87,24 +51,6 @@
       "/terms-use",
       "/conditions-utilisations",
       "/condizioni-uso"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/nutzungsbedingungen"
-      },
-      {
-        "locale": "en",
-        "path": "/terms-use"
-      },
-      {
-        "locale": "fr",
-        "path": "/conditions-utilisations"
-      },
-      {
-        "locale": "it",
-        "path": "/condizioni-uso"
-      }
     ]
   },
   {
@@ -114,24 +60,6 @@
       "/information",
       "/informations",
       "/informazioni"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/informationen"
-      },
-      {
-        "locale": "en",
-        "path": "/information"
-      },
-      {
-        "locale": "fr",
-        "path": "/informations"
-      },
-      {
-        "locale": "it",
-        "path": "/informazioni"
-      }
     ]
   },
   {
@@ -141,24 +69,6 @@
       "/analisys",
       "/analyses",
       "/analisi"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/analysen"
-      },
-      {
-        "locale": "en",
-        "path": "/analisys"
-      },
-      {
-        "locale": "fr",
-        "path": "/analyses"
-      },
-      {
-        "locale": "it",
-        "path": "/analisi"
-      }
     ]
   },
   {
@@ -168,24 +78,6 @@
       "/focus",
       "/focus",
       "/focus"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/fokus"
-      },
-      {
-        "locale": "en",
-        "path": "/focus"
-      },
-      {
-        "locale": "fr",
-        "path": "/focus"
-      },
-      {
-        "locale": "it",
-        "path": "/focus"
-      }
     ]
   },
   {

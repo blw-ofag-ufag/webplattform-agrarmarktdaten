@@ -15,18 +15,13 @@ import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRigh
 import { useTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import { t } from "@lingui/macro";
-import * as GQL from "@/graphql";
 import { makeContentWrapperSx } from "@/components/Grid/Grid";
+import slugs from "@/generated/slugs.json";
 
-interface Props {
-  termsSlug?: GQL.TermsLocaleFragment | null;
-  legalSlug?: GQL.LegalLocaleFragment | null;
-}
-
-const FooterBLW = (props: Props) => {
-  const { legalSlug, termsSlug } = props;
+const FooterBLW = () => {
   const theme = useTheme();
   const { locale } = useRouter();
+  const localeSlugs = slugs.find((slug) => slug.locale === locale)?.slugs;
   const isXXlAndUp = useMediaQuery(theme.breakpoints.up("xxl"));
   return (
     <Footer
@@ -39,7 +34,7 @@ const FooterBLW = (props: Props) => {
         {
           title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
           external: false,
-          href: `/${legalSlug?.slug}`,
+          href: `/${localeSlugs?.legal}`,
         },
         {
           title: t({ id: "footer.about_us.label", message: "About Us" }),
@@ -48,7 +43,7 @@ const FooterBLW = (props: Props) => {
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
           external: false,
-          href: `/${termsSlug?.slug}`,
+          href: `/${localeSlugs?.terms}`,
         },
       ]}
       nCols={isXXlAndUp ? 4 : 3}

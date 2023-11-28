@@ -31,7 +31,6 @@ query HomePage($locale: SiteLocale!) {
     }
   }
 
-  ...AllMenuLocales
   ...MenuItems
   ...TopBlogPosts
 }
@@ -43,7 +42,6 @@ query DataPage($locale: SiteLocale!) {
       value
     }
   }
-  ...AllMenuLocales
   ...MenuItems
 }
 
@@ -55,7 +53,6 @@ query LegalPage($locale: SiteLocale!) {
     }
     id
     title
-    ...LegalLocale
     lead {
       value
       links {
@@ -80,34 +77,6 @@ query LegalPage($locale: SiteLocale!) {
         ...HighlightSection
       }
     }
-  }
-
-  methodsSlug: methodsPage(locale: $locale) {
-    ...MethodsLocale
-  }
-
-  termsSlug: termsPage(locale: $locale) {
-    ...TermsLocale
-  }
-
-  infoSlug: infoPage(locale: $locale) {
-    ...InfoLocale
-  }
-
-  dataSlug: dataPage(locale: $locale) {
-    ...DataLocale
-  }
-
-  analysisSlug: analysisPage(locale: $locale) {
-    ...AnalysisLocale
-  }
-
-  marketSlug: market(locale: $locale) {
-    ...MarketLocale
-  }
-
-  focusSlug: focusModel(locale: $locale) {
-    ...FocusLocale
   }
 
   ...MenuItems
@@ -120,7 +89,6 @@ query TermsPage($locale: SiteLocale!) {
       value
     }
     title
-    ...TermsLocale
     lead {
       value
       links {
@@ -145,34 +113,6 @@ query TermsPage($locale: SiteLocale!) {
         ...HighlightSection
       }
     }
-  }
-
-  methodsSlug: methodsPage(locale: $locale) {
-    ...MethodsLocale
-  }
-
-  legalSlug: legalPage(locale: $locale) {
-    ...LegalLocale
-  }
-
-  infoSlug: infoPage(locale: $locale) {
-    ...InfoLocale
-  }
-
-  dataSlug: dataPage(locale: $locale) {
-    ...DataLocale
-  }
-
-  analysisSlug: analysisPage(locale: $locale) {
-    ...AnalysisLocale
-  }
-
-  marketSlug: market(locale: $locale) {
-    ...MarketLocale
-  }
-
-  focusSlug: focusModel(locale: $locale) {
-    ...FocusLocale
   }
 
   ...MenuItems
@@ -187,7 +127,6 @@ query MarketPage($locale: SiteLocale!, $slug: String!) {
     ...FullMarketArticle
   }
 
-  ...AllMenuLocales
   ...MenuItems
   ...TopBlogPosts
 }
@@ -201,7 +140,6 @@ query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
     ...FullFocusArticle
   }
 
-  ...AllMenuLocales
   ...MenuItems
   ...TopBlogPosts
 }
@@ -214,7 +152,6 @@ query MethodsPage($locale: SiteLocale!) {
     }
     id
     title
-    ...MethodsLocale
     lead {
       value
       links {
@@ -243,34 +180,6 @@ query MethodsPage($locale: SiteLocale!) {
         ...PowerBI
       }
     }
-  }
-
-  termsSlug: termsPage(locale: $locale) {
-    ...TermsLocale
-  }
-
-  legalSlug: legalPage(locale: $locale) {
-    ...LegalLocale
-  }
-
-  infoSlug: infoPage(locale: $locale) {
-    ...InfoLocale
-  }
-
-  dataSlug: dataPage(locale: $locale) {
-    ...DataLocale
-  }
-
-  analysisSlug: analysisPage(locale: $locale) {
-    ...AnalysisLocale
-  }
-
-  marketSlug: market(locale: $locale) {
-    ...MarketLocale
-  }
-
-  focusSlug: focusModel(locale: $locale) {
-    ...FocusLocale
   }
 
   ...MenuItems
@@ -285,7 +194,6 @@ query InfoPage($locale: SiteLocale!) {
     }
     id
     title
-    ...InfoLocale
     lead {
       value
       links {
@@ -316,34 +224,6 @@ query InfoPage($locale: SiteLocale!) {
     }
   }
 
-  methodsSlug: methodsPage(locale: $locale) {
-    ...MethodsLocale
-  }
-
-  termsSlug: termsPage(locale: $locale) {
-    ...TermsLocale
-  }
-
-  legalSlug: legalPage(locale: $locale) {
-    ...LegalLocale
-  }
-
-  dataSlug: dataPage(locale: $locale) {
-    ...DataLocale
-  }
-
-  analysisSlug: analysisPage(locale: $locale) {
-    ...AnalysisLocale
-  }
-
-  marketSlug: market(locale: $locale) {
-    ...MarketLocale
-  }
-
-  focusSlug: focusModel(locale: $locale) {
-    ...FocusLocale
-  }
-
   ...MenuItems
   ...TopBlogPosts
 }
@@ -356,7 +236,6 @@ query AnalysisPage($locale: SiteLocale!) {
     }
     id
     title
-    ...AnalysisLocale
     lead {
       value
       links {
@@ -367,34 +246,6 @@ query AnalysisPage($locale: SiteLocale!) {
     seo {
       ...FullSEO
     }
-  }
-
-  methodsSlug: methodsPage(locale: $locale) {
-    ...MethodsLocale
-  }
-
-  termsSlug: termsPage(locale: $locale) {
-    ...TermsLocale
-  }
-
-  legalSlug: legalPage(locale: $locale) {
-    ...LegalLocale
-  }
-
-  infoSlug: infoPage(locale: $locale) {
-    ...InfoLocale
-  }
-
-  dataSlug: dataPage(locale: $locale) {
-    ...DataLocale
-  }
-
-  marketSlug: market(locale: $locale) {
-    ...MarketLocale
-  }
-
-  focusSlug: focusModel(locale: $locale) {
-    ...FocusLocale
   }
 
   ...MenuItems
@@ -452,7 +303,6 @@ query BlogPost($locale: SiteLocale!, $slug: String!) {
     id
     ...BlogPost
   }
-  ...AllMenuLocales
   ...MenuItems
   ...TopBlogPosts
 }
@@ -565,38 +415,6 @@ fragment FullSEO on SeoField {
     url
   }
   twitterCard
-}
-
-fragment MethodsLocale on MethodsPageRecord {
-  slug
-}
-
-fragment TermsLocale on TermsPageRecord {
-  slug
-}
-
-fragment LegalLocale on LegalPageRecord {
-  slug
-}
-
-fragment InfoLocale on InfoPageRecord {
-  slug
-}
-
-fragment DataLocale on DataPageRecord {
-  slug
-}
-
-fragment AnalysisLocale on AnalysisPageRecord {
-  slug
-}
-
-fragment MarketLocale on MarketRecord {
-  slug
-}
-
-fragment FocusLocale on FocusModelRecord {
-  slug
 }
 
 fragment SimpleMarketArticle on MarketArticleRecord {
@@ -1025,39 +843,5 @@ fragment MenuItems on Query {
 fragment TopBlogPosts on Query {
   topBlogPosts: allBlogPosts(locale: $locale, first: 3, orderBy: [publishedDate_DESC]) {
     ...SimpleBlogPost
-  }
-}
-
-fragment AllMenuLocales on Query {
-  methodsSlug: methodsPage(locale: $locale) {
-    ...MethodsLocale
-  }
-
-  termsSlug: termsPage(locale: $locale) {
-    ...TermsLocale
-  }
-
-  legalSlug: legalPage(locale: $locale) {
-    ...LegalLocale
-  }
-
-  infoSlug: infoPage(locale: $locale) {
-    ...InfoLocale
-  }
-
-  dataSlug: dataPage(locale: $locale) {
-    ...DataLocale
-  }
-
-  analysisSlug: analysisPage(locale: $locale) {
-    ...AnalysisLocale
-  }
-
-  marketSlug: market(locale: $locale) {
-    ...MarketLocale
-  }
-
-  focusSlug: focusModel(locale: $locale) {
-    ...FocusLocale
   }
 }

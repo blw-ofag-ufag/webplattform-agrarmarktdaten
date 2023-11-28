@@ -12,20 +12,7 @@ import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayou
 import { isValidLocale } from "@/locales/locales";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
-  const {
-    focusArticle,
-    allMarketArticles,
-    allFocusArticles,
-    topBlogPosts,
-    marketSlug,
-    focusSlug,
-    analysisSlug,
-    dataSlug,
-    infoSlug,
-    legalSlug,
-    methodsSlug,
-    termsSlug,
-  } = props;
+  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!focusArticle?.title || !focusArticle?.lead) {
@@ -43,14 +30,6 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
-      marketSlug={marketSlug}
-      focusSlug={focusSlug}
-      analysisSlug={analysisSlug}
-      dataSlug={dataSlug}
-      infoSlug={infoSlug}
-      legalSlug={legalSlug}
-      methodsSlug={methodsSlug}
-      termsSlug={termsSlug}
       showBackButton
     >
       <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shiftedLeft />
