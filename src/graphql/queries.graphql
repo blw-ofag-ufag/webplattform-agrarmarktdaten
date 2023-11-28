@@ -2,10 +2,6 @@
 ## Regular
 query HomePage($locale: SiteLocale!) {
   homePage(locale: $locale) {
-    _allSlugLocales {
-      locale
-      value
-    }
     id
     title
     lead {
