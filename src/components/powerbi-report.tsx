@@ -1,9 +1,11 @@
 import dynamic from "next/dynamic";
 import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
-import React from "react";
+import React, { useState } from "react";
 
 import {
+  Box,
+  Button,
   MenuItem,
   Select,
   SxProps,
@@ -12,11 +14,16 @@ import {
   Theme,
   tabClasses,
   tabScrollButtonClasses,
+  useControlled,
+  useEventCallback,
   useMediaQuery,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { makeStyles } from "./style-utils";
-import { PrimitiveAtom, useAtom } from "jotai";
+import { InPlaceDialog } from "./InPlaceDialog";
+import IcExpand from "@/icons/icons-jsx/control/IcExpand";
+import { t } from "@lingui/macro";
+import { useStyles as useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
   ssr: false,
@@ -40,6 +47,9 @@ const useStyles = makeStyles()((theme) => ({
   embed: {
     aspectRatio: "16/9",
     width: "100%",
+
+    // A bit hacky, prevents embed to overflow while in fullscreen
+    maxHeight: "85vh",
   },
   navigationContainer: {
     width: "100%",
@@ -74,14 +84,6 @@ const getEmbedUrl = (reportId: string, reportWorkspaceId: string) => {
 type PowerBIPage = {
   name: string;
   id: string;
-};
-
-export type PowerBIReportProps = {
-  datasetId: string;
-  reportId: string;
-  reportWorkspaceId: string;
-  pages: PowerBIPage[];
-  currentPage: PrimitiveAtom<{ id: string; name: string }>;
 };
 
 export const PowerBINavigation = ({
@@ -145,47 +147,91 @@ export const PowerBINavigation = ({
   );
 };
 
-export const PowerBIReport = (props: PowerBIReportProps) => {
-  const { datasetId, reportId, reportWorkspaceId, pages, currentPage } = props;
+export const PowerBIReport = (props: {
+  datasetId: string;
+  reportId: string;
+  reportWorkspaceId: string;
+  pages: PowerBIPage[];
+  open?: boolean;
+  onChangeFullscreen?: (fullscreen: boolean) => void;
+  host?: string;
+}) => {
+  const { datasetId, reportId, reportWorkspaceId, pages, host, onChangeFullscreen } = props;
   const [report, setReport] = React.useState<Report | undefined>(undefined);
-  const [activePage, setActivePage] = useAtom(currentPage);
+  const [activePage, setActivePage] = useState(() => pages[0]);
   const embedConfig = usePowerBIEmbedConfig({
     datasetId,
     reportId,
     reportWorkspaceId,
     activePage,
+    host,
   });
   const { classes } = useStyles();
+  const [fullscreen, setFullscreenState] = useControlled({
+    default: false,
+    controlled: props.open,
+    name: "PowerBIReport",
+  });
+
+  const setFullscreen = useEventCallback((value: boolean) => {
+    setFullscreenState(value);
+    onChangeFullscreen?.(value);
+  });
+
+  const { classes: inPlaceDialogClasses } = useInPlaceDialogStyles();
 
   return (
-    <div className={classes.root}>
-      {report && activePage ? (
-        <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
-      ) : null}
-      <PowerBIEmbed
-        embedConfig={embedConfig}
-        cssClassName={classes.embed}
-        getEmbeddedComponent={(embedObject) => {
-          setReport(embedObject as Report);
+    <Box position="relative">
+      <Button
+        className={inPlaceDialogClasses.hideWhenOpened}
+        sx={{
+          position: "absolute",
+          bottom: "-3rem",
+          right: 0,
+          color: "cobalt.500",
+          fontWeight: "bold",
         }}
-      />
-    </div>
+        startIcon={<IcExpand />}
+        variant="inline"
+        onClick={() => setFullscreen(true)}
+      >
+        {t({ id: "controls.fullscreen", message: "Full Screen" })}
+      </Button>
+      <InPlaceDialog open={fullscreen} onClose={() => setFullscreen(false)}>
+        <div className={classes.root}>
+          {report && activePage ? (
+            <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
+          ) : null}
+          <PowerBIEmbed
+            embedConfig={embedConfig}
+            cssClassName={classes.embed}
+            getEmbeddedComponent={(embedObject) => {
+              setReport(embedObject as Report);
+            }}
+          />
+        </div>
+      </InPlaceDialog>
+    </Box>
   );
 };
+
+export type PowerBIReportProps = React.ComponentProps<typeof PowerBIReport>;
 
 type PowerBIConfigProps = {
   datasetId: string;
   reportId: string;
   reportWorkspaceId: string;
   activePage?: PowerBIPage;
+  host?: string;
 };
 
-const usePowerBIEmbedConfig = (props: PowerBIConfigProps) => {
-  const { datasetId, reportId, reportWorkspaceId, activePage } = props;
+const usePowerBIEmbedConfig = (props: PowerBIConfigProps & { enabled?: boolean }) => {
+  const { datasetId, reportId, reportWorkspaceId, activePage, host } = props;
   const { data: accessToken } = useQuery({
     queryKey: ["powerbi", "accessToken", reportId, datasetId],
+    enabled: props.enabled ?? true,
     queryFn: async () => {
-      const embedToken = await fetch("/api/powerbi/report", {
+      const embedToken = await fetch(`${host ?? ""}/api/powerbi/report`, {
         method: "POST",
         body: JSON.stringify({
           datasets: [{ id: datasetId }],
