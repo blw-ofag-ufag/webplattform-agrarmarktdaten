@@ -11,22 +11,19 @@ import { GridContainer } from "@/components/Grid/Grid";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 import { isValidLocale } from "@/locales/locales";
 import slugs from "@/generated/slugs.json";
-import { useRouter } from "next/router";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
-  const { locale } = useRouter();
-  const localeSlugs = slugs.find((slug) => slug.locale === locale)?.slugs;
 
   if (!focusArticle?.title || !focusArticle?.lead) {
     return null;
   }
 
   const alternates = focusArticle?._allSlugLocales?.map((loc) => ({
-    href: `/${localeSlugs?.focus}/[slug]`,
-    as: `/${localeSlugs?.focus}/${loc.value}`,
+    href: `/focus/[slug]`,
+    as: `/${slugs.find((slug) => slug.locale === loc.locale)?.slugs.focus}/${loc.value}`,
     locale: loc.locale as string,
   }));
 
