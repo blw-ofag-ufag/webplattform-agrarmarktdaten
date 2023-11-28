@@ -17,13 +17,13 @@ import {
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import DataDownload from "@/components/browser/DataDownload";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
-import { cubeDimensionsAtom, visualizeUrlAtom } from "@/domain/cubes";
+import { cubeDimensionsStatusAtom, visualizeUrlAtom } from "@/domain/cubes";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
@@ -80,9 +80,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
                 borderColor: "grey.300",
               }}
             >
-              <Suspense fallback={<CircularProgress />}>
-                <DataBrowser />
-              </Suspense>
+              <DataBrowser />
             </Box>
           </Stack>
         </AppLayout>
@@ -97,12 +95,12 @@ const DataBrowser = () => {
   const [showFilters, setShowFilters] = useState(true);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observationsQueryStatus = useAtomValue(observationsQueryAtom);
-  const cubeDimensions = useAtomValue(cubeDimensionsAtom);
+  const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const query = useAtomValue(observationsSparqlQueryAtom);
   const visualizeUrl = useAtomValue(visualizeUrlAtom);
 
-  const resultCount = filteredObservations.length;
+  const resultCount = observationsQueryStatus.isSuccess ? filteredObservations.length : undefined;
   const debug = useFlag("debug");
 
   return (
@@ -157,7 +155,7 @@ const DataBrowser = () => {
           </Stack>
           <Stack direction="row" gap={2}>
             <DataDownload />
-            <Button size="small" href={query ?? ""} target="_blank">
+            <Button size="small" disabled={!query} href={query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </Button>
             <Button size="small" href={visualizeUrl ?? ""} target="_blank">
@@ -193,25 +191,32 @@ const DataBrowser = () => {
                 </Alert>
               )}
 
-              {observationsQueryStatus.isSuccess && (
+              {observationsQueryStatus.isSuccess && cubeDimensions.isSuccess ? (
                 <Table
                   observations={filteredObservations}
-                  dimensions={{ ...cubeDimensions.measures, ...cubeDimensions.properties }}
+                  dimensions={{
+                    ...cubeDimensions.data.measures,
+                    ...cubeDimensions.data.properties,
+                  }}
                 />
+              ) : (
+                <CircularProgress size={24} />
               )}
             </>
           </Paper>
         </Box>
-        <MetadataPanel
-          dimensions={cubeDimensions}
-          open={showMetadataPanel}
-          onClose={() => setShowMetadataPanel(false)}
-          slots={{
-            drawer: {
-              container: contentRef.current,
-            },
-          }}
-        />
+        {cubeDimensions.isSuccess && (
+          <MetadataPanel
+            dimensions={cubeDimensions.data}
+            open={showMetadataPanel}
+            onClose={() => setShowMetadataPanel(false)}
+            slots={{
+              drawer: {
+                container: contentRef.current,
+              },
+            }}
+          />
+        )}
       </Stack>
     </Stack>
   );

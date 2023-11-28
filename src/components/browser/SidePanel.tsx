@@ -1,8 +1,9 @@
 import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
 import {
   Option,
-  filterConfigurationAtom,
+  filterCubeConfigurationAtom,
   filterCubeSelectionAtom,
+  filterDimensionsConfigurationAtom,
   filterDimensionsSelectionAtom,
   resetCubeFiltersAtom,
   timeRangeAtom,
@@ -61,7 +62,8 @@ const SidePanel = ({
   };
 }) => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
-  const filterConfiguration = useAtomValue(filterConfigurationAtom);
+  const filterCubeConfiguration = useAtomValue(filterCubeConfigurationAtom);
+  const filterDimensionsConfiguration = useAtomValue(filterDimensionsConfigurationAtom);
   const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
   const filterDimensionsSelection = useAtomValue(filterDimensionsSelectionAtom);
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
@@ -96,8 +98,12 @@ const SidePanel = ({
           </Box>
           {/* Cube path filters */}
           {orderedCubeFilters.map((key) => {
-            const config = filterConfiguration.cube[key];
+            const config = filterCubeConfiguration[key];
             const filterAtom = filterCubeSelection[key];
+
+            if (!config) {
+              return null;
+            }
 
             const options = config.options.filter((option) => {
               return availableBaseDimensionsValues[key].options.includes(option.value);
@@ -124,9 +130,9 @@ const SidePanel = ({
 
           {/* Property filters */}
 
-          {Object.entries(filterConfiguration.dimensions).map(([key, value]) => {
+          {Object.entries(filterDimensionsConfiguration).map(([key, value]) => {
             const filterAtom =
-              filterDimensionsSelection[key as keyof (typeof filterConfiguration)["dimensions"]];
+              filterDimensionsSelection[key as keyof typeof filterDimensionsConfiguration];
             if (!filterAtom) {
               return null;
             }
