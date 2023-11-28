@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { Report } from "powerbi-client";
 import * as models from "powerbi-models";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import {
   Box,
@@ -24,6 +24,7 @@ import { InPlaceDialog } from "./InPlaceDialog";
 import IcExpand from "@/icons/icons-jsx/control/IcExpand";
 import { t } from "@lingui/macro";
 import { useStyles as useInPlaceDialogStyles } from "@/components/InPlaceDialog";
+import { useInView } from "framer-motion";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
   ssr: false,
@@ -159,7 +160,10 @@ export const PowerBIReport = (props: {
   const { datasetId, reportId, reportWorkspaceId, pages, host, onChangeFullscreen } = props;
   const [report, setReport] = React.useState<Report | undefined>(undefined);
   const [activePage, setActivePage] = useState(() => pages[0]);
+  const inViewRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(inViewRef);
   const embedConfig = usePowerBIEmbedConfig({
+    enabled: inView,
     datasetId,
     reportId,
     reportWorkspaceId,
@@ -181,7 +185,7 @@ export const PowerBIReport = (props: {
   const { classes: inPlaceDialogClasses } = useInPlaceDialogStyles();
 
   return (
-    <Box position="relative">
+    <Box position="relative" ref={inViewRef}>
       <Button
         className={inPlaceDialogClasses.hideWhenOpened}
         sx={{
