@@ -1,4 +1,5 @@
 const { withSentryConfig } = require("@sentry/nextjs");
+const { locales, defaultLocale, domains, localDomains } = require("./src/locales/locales.json");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -10,8 +11,6 @@ const VERSION = `v${pkg.version}`;
 
 console.log("Version", VERSION);
 
-const { locales, defaultLocale } = require("./src/locales/locales.json");
-
 const config = withBundleAnalyzer(
   withMDX({
     // Build-time env variables
@@ -21,6 +20,8 @@ const config = withBundleAnalyzer(
     i18n: {
       locales,
       defaultLocale,
+      domains: process.env.NODE_ENV === "production" ? domains : localDomains,
+      localeDetection: false,
     },
 
     transpilePackages: ["jotai-devtools"],

@@ -1,11 +1,19 @@
-import { Button, IconButton, Paper, Stack, Typography, Link } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+  Link,
+  CircularProgress,
+} from "@mui/material";
 import { useAtomValue } from "jotai";
 import React, { useState } from "react";
 import { filteredObservationsAtom, observationsQueryAtom } from "@/domain/observations";
 import { IcControlClose, IcControlExternal } from "@/icons/icons-jsx/control";
 import { ObjectInspector } from "react-inspector";
 import { makeStyles } from "@/components/style-utils";
-import { cubeDimensionsAtom } from "@/domain/cubes";
+import { cubeDimensionsStatusAtom } from "@/domain/cubes";
 
 const useDebugStyles = makeStyles()((theme) => ({
   root: {
@@ -20,7 +28,7 @@ const useDebugStyles = makeStyles()((theme) => ({
 const DebugDataPage = () => {
   const observations = useAtomValue(filteredObservationsAtom);
   const observationsQuery = useAtomValue(observationsQueryAtom);
-  const cubeDimensions = useAtomValue(cubeDimensionsAtom);
+  const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);
   const [expanded, setExpanded] = useState(false);
   const { classes } = useDebugStyles();
   return (
@@ -55,7 +63,11 @@ const DebugDataPage = () => {
             </div>
             <div>
               <Typography variant="h5">Cube dimensions</Typography>
-              <ObjectInspector data={cubeDimensions} />
+              {cubeDimensions.isSuccess ? (
+                <ObjectInspector data={cubeDimensions.data} />
+              ) : (
+                <CircularProgress />
+              )}
             </div>
           </Stack>
         </>

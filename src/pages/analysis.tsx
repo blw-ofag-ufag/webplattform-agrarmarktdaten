@@ -5,17 +5,24 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql";
 import { useTheme } from "@mui/material";
 
-export default function Analysis({
-  analysisPage,
-  allFocusArticles,
-  allMarketArticles,
-}: GQL.AnalysisPageQuery) {
+export default function Analysis(props: GQL.AnalysisPageQuery) {
+  const { analysisPage, allFocusArticles, allMarketArticles } = props;
   const theme = useTheme();
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
   }
+
+  const alternates = analysisPage?._allSlugLocales?.map((loc) => ({
+    href: "/analysis",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero
         title={analysisPage?.title}
         lead={analysisPage?.lead}
