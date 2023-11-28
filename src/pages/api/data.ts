@@ -100,7 +100,7 @@ const propertyRawSchema = z.object({
   dimension: z.string(),
   label: z.string().optional(),
   dimensionValue: z.string(),
-  dimensionValueLabel: z.string(),
+  dimensionValueLabel: z.string().optional(),
 });
 
 const propertySchema = z.object({
@@ -172,7 +172,7 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
               label: dim?.label,
               values: values.map((value) => ({
                 value: value.dimensionValue,
-                label: value.dimensionValueLabel,
+                label: value.dimensionValueLabel ?? ns.removeNamespace(value.dimensionValue),
               })),
             },
           };

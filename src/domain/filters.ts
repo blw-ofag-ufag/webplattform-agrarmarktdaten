@@ -324,8 +324,9 @@ export const resetCubeFiltersAtom = atom(
     const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
 
     const changedCubeFilters = Object.entries(filterCubeSelection).filter(([key, atom]) => {
-      const defaultOption = filterCubeConfiguration[key as CubeDimension]?.defaultOption;
-      return defaultOption && atom && get(atom)?.value !== defaultOption.value;
+      const defaultOptionValue =
+        filterCubeConfiguration[key as CubeDimension]?.defaultOption?.value;
+      return defaultOptionValue && atom && get(atom)?.value !== defaultOptionValue;
     });
 
     const changedDimensionsFilters = Object.entries(filterDimensionsSelection).filter(

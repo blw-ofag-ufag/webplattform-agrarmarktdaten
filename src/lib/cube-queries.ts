@@ -55,7 +55,7 @@ export const queryBasePropertyDimensions = ({
   ?cube cube:observationSet ?observationSet .
   ?observationSet cube:observation ?observation.
   ?observation ?dimension ?dimensionValue.
-  ?dimensionValue schema:name ?dimensionValueLabel. FILTER(lang(?dimensionValueLabel) = "${locale}")
+  OPTIONAL { ?dimensionValue schema:name ?dimensionValueLabel. FILTER(lang(?dimensionValueLabel) = "${locale}") } 
 }
 `;
 };
@@ -83,7 +83,7 @@ export const queryBaseMeasureDimensions = ({
   cube:observationConstraint ?shape .
   ?shape ?p ?blankNode .
   ?blankNode sh:path ?dimension .
-  ?blankNode schema:name ?label. FILTER(lang(?label) = "${locale}")
+  OPTIONAL { ?blankNode schema:name ?label. FILTER(lang(?label) = "${locale}") } 
 }`;
 };
 
