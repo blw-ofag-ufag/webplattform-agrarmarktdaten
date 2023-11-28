@@ -9,19 +9,7 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const {
-    methodsPage,
-    allMarketArticles,
-    allFocusArticles,
-    topBlogPosts,
-    marketSlug,
-    focusSlug,
-    analysisSlug,
-    dataSlug,
-    infoSlug,
-    legalSlug,
-    termsSlug,
-  } = props;
+  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
@@ -37,14 +25,6 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
-      marketSlug={marketSlug}
-      focusSlug={focusSlug}
-      analysisSlug={analysisSlug}
-      dataSlug={dataSlug}
-      infoSlug={infoSlug}
-      legalSlug={legalSlug}
-      methodsSlug={methodsPage}
-      termsSlug={termsSlug}
     >
       <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>

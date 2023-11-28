@@ -7,18 +7,7 @@ import { Hero } from "@/components/hero";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
 
 export default function LegalPage(props: GQL.TermsPageQuery) {
-  const {
-    termsPage,
-    allMarketArticles,
-    allFocusArticles,
-    marketSlug,
-    focusSlug,
-    analysisSlug,
-    dataSlug,
-    infoSlug,
-    legalSlug,
-    methodsSlug,
-  } = props;
+  const { termsPage, allMarketArticles, allFocusArticles } = props;
   const { classes } = useLayoutStyles();
 
   if (!termsPage?.title || !termsPage.lead) {
@@ -34,14 +23,6 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
-      marketSlug={marketSlug}
-      focusSlug={focusSlug}
-      analysisSlug={analysisSlug}
-      dataSlug={dataSlug}
-      infoSlug={infoSlug}
-      legalSlug={legalSlug}
-      methodsSlug={methodsSlug}
-      termsSlug={termsPage}
       showBackButton
     >
       <Hero title={termsPage.title} lead={termsPage.lead} showTitleLine={false} shiftedLeft />

@@ -23,19 +23,12 @@ import { makeContentWrapperSx } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
+import slugs from "@/generated/slugs.json";
 
 interface Props {
   children: React.ReactNode;
   allMarkets?: GQL.SimpleMarketArticleFragment[];
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
-  marketSlug?: GQL.MarketLocaleFragment | null;
-  focusSlug?: GQL.FocusLocaleFragment | null;
-  methodsSlug?: GQL.MethodsLocaleFragment | null;
-  termsSlug?: GQL.TermsLocaleFragment | null;
-  legalSlug?: GQL.LegalLocaleFragment | null;
-  infoSlug?: GQL.InfoLocaleFragment | null;
-  dataSlug?: GQL.DataLocaleFragment | null;
-  analysisSlug?: GQL.AnalysisLocaleFragment | null;
   alternates?: { href: string; as: string; locale: string }[];
   showBackButton?: boolean;
 }
@@ -59,44 +52,35 @@ export const isAuthorizedLocale = (locale: string) => locale !== "en";
 
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
-  const {
-    children,
-    allMarkets,
-    allFocusArticles,
-    marketSlug,
-    focusSlug,
-    methodsSlug,
-    termsSlug,
-    legalSlug,
-    infoSlug,
-    dataSlug,
-    analysisSlug,
-    alternates,
-    showBackButton = false,
-  } = props;
+  const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
 
+  const localeSlugs = slugs.find(({ locale }) => locale === router.locale)?.slugs;
+
   const { headerSections, menuSections } = React.useMemo(() => {
     const marketSections =
       allMarkets
-        ?.map((market) => ({ title: market.title!, href: `/${marketSlug?.slug}/${market.slug}` }))
+        ?.map((market) => ({
+          title: market.title!,
+          href: `/${localeSlugs?.market}/${market.slug}`,
+        }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const focusSections =
       allFocusArticles
-        ?.map((focus) => ({ title: focus.title!, href: `/${focusSlug?.slug}/${focus.slug}` }))
+        ?.map((focus) => ({ title: focus.title!, href: `/${localeSlugs?.focus}/${focus.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: "Home", href: "/" },
       { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
       { title: t({ id: "menu.focus", message: "Fokus" }), sections: focusSections },
-      { title: t({ id: "menu.analysis", message: "Analysis" }), href: `/${analysisSlug?.slug}` },
-      { title: t({ id: "menu.data", message: "Data" }), href: `/${dataSlug?.slug}` },
-      { title: t({ id: "menu.methods", message: "Methods" }), href: `/${methodsSlug?.slug}` },
+      { title: t({ id: "menu.analysis", message: "Analysis" }), href: `/${localeSlugs?.analysis}` },
+      { title: t({ id: "menu.data", message: "Data" }), href: `/${localeSlugs?.data}` },
+      { title: t({ id: "menu.methods", message: "Methods" }), href: `/${localeSlugs?.methods}` },
       {
         title: t({ id: "menu.info", message: "Info" }),
-        href: `/${infoSlug?.slug}`,
+        href: `/${localeSlugs?.info}`,
         desktop: false,
       },
     ];
@@ -106,16 +90,7 @@ export const AppLayout = (props: Props) => {
     }));
 
     return { headerSections, menuSections };
-  }, [
-    allMarkets,
-    allFocusArticles,
-    marketSlug,
-    focusSlug,
-    analysisSlug,
-    dataSlug,
-    infoSlug,
-    methodsSlug,
-  ]);
+  }, [allMarkets, allFocusArticles, localeSlugs]);
 
   const dynamicLocaleSwitcherProps: LocaleSwitcherProps = alternates
     ? {
@@ -193,7 +168,7 @@ export const AppLayout = (props: Props) => {
           <Box display="flex" flexGrow={1} />
           <MenuButton
             title={t({ id: "menu.info", message: "Info" })}
-            href={`/${infoSlug?.slug}`}
+            href={`/${localeSlugs?.info}`}
             endIcon={
               <Box sx={{ ml: 1 }}>
                 <IcInfoCircle fontSize={16} />
@@ -230,7 +205,7 @@ export const AppLayout = (props: Props) => {
 
       {router.pathname !== "/data" && (
         <div data-datocms-noindex>
-          <Footer legalSlug={legalSlug} termsSlug={termsSlug} />
+          <Footer />
         </div>
       )}
     </Box>

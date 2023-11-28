@@ -63,19 +63,7 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 }
 
 export default function DataPage(props: GQL.DataPageQuery) {
-  const {
-    dataPage,
-    allMarketArticles,
-    allFocusArticles,
-    marketSlug,
-    focusSlug,
-    analysisSlug,
-    dataSlug,
-    infoSlug,
-    legalSlug,
-    methodsSlug,
-    termsSlug,
-  } = props;
+  const { dataPage, allMarketArticles, allFocusArticles } = props;
 
   const alternates = dataPage?._allSlugLocales?.map((loc) => ({
     href: "/data",
@@ -90,14 +78,6 @@ export default function DataPage(props: GQL.DataPageQuery) {
           alternates={alternates}
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
-          marketSlug={marketSlug}
-          focusSlug={focusSlug}
-          analysisSlug={analysisSlug}
-          dataSlug={dataSlug}
-          infoSlug={infoSlug}
-          legalSlug={legalSlug}
-          methodsSlug={methodsSlug}
-          termsSlug={termsSlug}
         >
           <Stack flexGrow={1} minHeight={0}>
             <Box

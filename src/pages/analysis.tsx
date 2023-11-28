@@ -6,18 +6,7 @@ import { client } from "@/graphql";
 import { useTheme } from "@mui/material";
 
 export default function Analysis(props: GQL.AnalysisPageQuery) {
-  const {
-    analysisPage,
-    allFocusArticles,
-    allMarketArticles,
-    marketSlug,
-    focusSlug,
-    dataSlug,
-    infoSlug,
-    legalSlug,
-    methodsSlug,
-    termsSlug,
-  } = props;
+  const { analysisPage, allFocusArticles, allMarketArticles } = props;
   const theme = useTheme();
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
@@ -33,14 +22,6 @@ export default function Analysis(props: GQL.AnalysisPageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
-      marketSlug={marketSlug}
-      focusSlug={focusSlug}
-      analysisSlug={analysisPage}
-      dataSlug={dataSlug}
-      infoSlug={infoSlug}
-      legalSlug={legalSlug}
-      methodsSlug={methodsSlug}
-      termsSlug={termsSlug}
     >
       <Hero
         title={analysisPage?.title}

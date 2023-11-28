@@ -11,38 +11,14 @@ import { GridContainer } from "@/components/Grid";
 import { DataPageCard } from "../components/DataPageCard";
 
 export default function HomePage(props: GQL.HomePageQuery) {
-  const {
-    homePage,
-    allMarketArticles,
-    allFocusArticles,
-    topBlogPosts,
-    marketSlug,
-    focusSlug,
-    analysisSlug,
-    dataSlug,
-    infoSlug,
-    legalSlug,
-    methodsSlug,
-    termsSlug,
-  } = props;
+  const { homePage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const theme = useTheme();
   if (!homePage?.title || !homePage.lead) {
     return null;
   }
   return (
     <div data-datocms-noindex>
-      <AppLayout
-        allMarkets={allMarketArticles}
-        allFocusArticles={allFocusArticles}
-        marketSlug={marketSlug}
-        focusSlug={focusSlug}
-        analysisSlug={analysisSlug}
-        dataSlug={dataSlug}
-        infoSlug={infoSlug}
-        legalSlug={legalSlug}
-        methodsSlug={methodsSlug}
-        termsSlug={termsSlug}
-      >
+      <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
         <Hero
           title={homePage.title}
           lead={homePage.lead}

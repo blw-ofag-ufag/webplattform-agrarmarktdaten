@@ -9,19 +9,7 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 
 export default function InfoPage(props: GQL.InfoPageQuery) {
-  const {
-    infoPage,
-    allMarketArticles,
-    allFocusArticles,
-    topBlogPosts,
-    marketSlug,
-    focusSlug,
-    analysisSlug,
-    dataSlug,
-    legalSlug,
-    methodsSlug,
-    termsSlug,
-  } = props;
+  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!infoPage?.title || !infoPage.lead) {
@@ -37,14 +25,6 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
-      marketSlug={marketSlug}
-      focusSlug={focusSlug}
-      analysisSlug={analysisSlug}
-      dataSlug={dataSlug}
-      infoSlug={infoPage}
-      legalSlug={legalSlug}
-      methodsSlug={methodsSlug}
-      termsSlug={termsSlug}
     >
       <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
