@@ -20,8 +20,8 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   }
 
   const alternates = focusArticle?._allSlugLocales?.map((loc) => ({
-    href: "/market/[slug]",
-    as: `/market/${loc.value}`,
+    href: "/focus/[slug]",
+    as: `/focus/${loc.value}`,
     locale: loc.locale as string,
   }));
 
