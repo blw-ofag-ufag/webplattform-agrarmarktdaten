@@ -71,16 +71,16 @@ export const Table = ({
 }) => {
   const [paginationModel, setPaginationModel] = useState({ pageSize: 25, page: 0 });
   const { classes } = useStyles();
+
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
       .sort((a, b) =>
-        dimensionsToShowSorted.indexOf(a.dimension) === -1
+        !dimensionsToShowSorted.hasOwnProperty(a.dimension)
           ? 1
-          : dimensionsToShowSorted.indexOf(b.dimension) === -1
+          : !dimensionsToShowSorted.hasOwnProperty(b.dimension)
           ? -1
-          : dimensionsToShowSorted.indexOf(a.dimension) -
-            dimensionsToShowSorted.indexOf(b.dimension)
+          : dimensionsToShowSorted[a.dimension] - dimensionsToShowSorted[b.dimension]
       )
       .map((dimension) => {
         return {
@@ -109,7 +109,6 @@ export const Table = ({
     <DataGrid
       rows={observations}
       columns={columns}
-      //autoPageSize
       paginationModel={paginationModel}
       onPaginationModelChange={(pm) => setPaginationModel(pm)}
       getRowId={(row) => row.observation}
