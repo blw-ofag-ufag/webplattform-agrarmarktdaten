@@ -4,8 +4,9 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { getMarketColor } from "@/domain/colors";
 import { GridWrap, GridWrapElement } from "@/components/Grid";
 import * as GQL from "@/graphql";
-import { useLocale } from "@/lib/use-locale";
 import { makeStyles } from "@/components/style-utils";
+import { useRouter } from "next/router";
+import slugs from "@/generated/slugs.json";
 
 export type GridEntry = GQL.SimpleMarketArticleFragment | GQL.SimpleFocusArticleFragment;
 
@@ -15,15 +16,17 @@ interface Props {
 }
 
 export const CardsGrid = ({ type, entries }: Props) => {
-  const locale = useLocale();
-
+  const { locale } = useRouter();
+  const localeSlugs = slugs.find((slug) => slug.locale === locale)?.slugs;
+  const typeLocale =
+    type === "market" ? localeSlugs?.market : type === "focus" ? localeSlugs?.focus : null;
   return (
     <GridWrap>
       {entries.map((d) => (
         <GridWrapElement key={d.id}>
           <NextLink
             href={`/${type}/[slug]`}
-            as={`/${type}/${d.slug}`}
+            as={`/${typeLocale}/${d.slug}`}
             locale={locale}
             passHref
             legacyBehavior

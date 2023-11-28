@@ -11,14 +11,19 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { GridContainer } from "@/components/Grid/Grid";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 import { isValidLocale } from "@/locales/locales";
+import slugs from "@/generated/slugs.json";
+import { useRouter } from "next/router";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
   const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
 
+  const { locale } = useRouter();
+  const localeSlugs = slugs.find((slug) => slug.locale === locale)?.slugs;
+
   const stickyRef = useTableOfContentsSticky();
   const alternates = marketArticle?._allSlugLocales?.map((loc) => ({
-    href: "/market/[slug]",
-    as: `/market/${loc.value}`,
+    href: `/${localeSlugs?.market}/[slug]`,
+    as: `/${localeSlugs?.market}/${loc.value}`,
     locale: loc.locale as string,
   }));
   const { classes } = useLayoutStyles();
