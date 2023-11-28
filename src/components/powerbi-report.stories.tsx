@@ -89,13 +89,16 @@ const powerBiReport = {
 export const PowerBIReport = () => {
   const pages = powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
   return (
-    <PowerBIReportComponent
-      host={"http://localhost:3000"}
-      datasetId={powerBiReport.dataset?.datasetId ?? ""}
-      reportId={powerBiReport?.reportId ?? ""}
-      reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
-      pages={pages}
-    />
+    <div style={{ maxWidth: 800 }}>
+      <PowerBIReportComponent
+        host={"http://localhost:3000"}
+        datasetId={powerBiReport.dataset?.datasetId ?? ""}
+        reportId={powerBiReport?.reportId ?? ""}
+        reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
+        pages={pages}
+      />
+      Content below report
+    </div>
   );
 };
 

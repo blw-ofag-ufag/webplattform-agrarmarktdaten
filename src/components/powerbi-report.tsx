@@ -41,6 +41,8 @@ const CONFIG: models.IReportEmbedConfiguration = {
 const useStyles = makeStyles()((theme) => ({
   root: {
     width: "100%",
+    display: "flex",
+    flexDirection: "column",
     "& iframe": {
       border: "none",
     },
@@ -48,13 +50,12 @@ const useStyles = makeStyles()((theme) => ({
   embed: {
     aspectRatio: "16/9",
     width: "100%",
-
-    // A bit hacky, prevents embed to overflow while in fullscreen
-    maxHeight: "85vh",
+    flexGrow: 1,
   },
   navigationContainer: {
     width: "100%",
     overflowX: "auto",
+    flex: "0 0 auto",
   },
   navigationContent: {
     display: "flex",
@@ -177,7 +178,10 @@ export const PowerBIReport = (props: {
     name: "PowerBIReport",
   });
 
+  const reportContainerRef = useRef(null);
+  const reportContainerHeight = useRef(0);
   const setFullscreen = useEventCallback((value: boolean) => {
+    reportContainerHeight.current = reportContainerRef.current?.getBoundingClientRect().height ?? 0;
     setFullscreenState(value);
     onChangeFullscreen?.(value);
   });
@@ -201,8 +205,12 @@ export const PowerBIReport = (props: {
       >
         {t({ id: "controls.fullscreen", message: "Full Screen" })}
       </Button>
-      <InPlaceDialog open={fullscreen} onClose={() => setFullscreen(false)}>
-        <div className={classes.root}>
+      <InPlaceDialog
+        fallback={<div style={{ backrgound: "#eee", height: reportContainerHeight.current }} />}
+        open={fullscreen}
+        onClose={() => setFullscreen(false)}
+      >
+        <div className={classes.root} ref={reportContainerRef}>
           {report && activePage ? (
             <PowerBINavigation pages={pages} activePage={activePage} onChange={setActivePage} />
           ) : null}

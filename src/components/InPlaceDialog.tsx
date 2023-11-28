@@ -19,10 +19,12 @@ export const InPlaceDialog = ({
   open,
   onClose,
   children,
+  fallback,
 }: {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  fallback?: React.ReactNode;
 }) => {
   useEffect(() => {
     if (open) {
@@ -35,36 +37,46 @@ export const InPlaceDialog = ({
     };
   }, [, open]);
   return (
-    <Modal
-      sx={open ? { display: "flex" } : { position: "static", zIndex: 10000 }}
-      hideBackdrop={!open}
-      /** Always show the content */
-      open
-      onClose={onClose}
-      closeAfterTransition
-      disableAutoFocus={!open}
-      disableEscapeKeyDown={!open}
-      /** Content is at the same DOM location as a normal element */
-      disablePortal={true}
-      disableScrollLock={!open}
-      disableRestoreFocus={!open}
-    >
-      <Paper
-        sx={{ flexGrow: 1, p: open ? 4 : 0, margin: open ? 4 : 0, position: "relative" }}
-        elevation={open ? 6 : 0}
+    <>
+      <Modal
+        sx={open ? {} : { position: "static", zIndex: 10000 }}
+        hideBackdrop={!open}
+        /** Always show the content */
+        open
+        onClose={onClose}
+        closeAfterTransition
+        disableAutoFocus={!open}
+        disableEscapeKeyDown={!open}
+        /** Content is at the same DOM location as a normal element */
+        disablePortal={true}
+        disableScrollLock={!open}
+        disableRestoreFocus={!open}
       >
-        {open ? (
-          <Button
-            onClick={() => onClose()}
-            sx={{ position: "absolute", top: "0.5rem", right: "0.5rem", zIndex: 1 }}
-            endIcon={<IcControlClose width={12} height={12} />}
-            variant="inline"
-          >
-            <Trans id="header.close">Close</Trans>
-          </Button>
-        ) : null}
-        <motion.div layout>{children}</motion.div>
-      </Paper>
-    </Modal>
+        <Paper
+          sx={{
+            flexGrow: 1,
+            p: open ? "8rem" : 0,
+            margin: open ? 4 : 0,
+            position: "relative",
+          }}
+          elevation={open ? 6 : 0}
+        >
+          {open ? (
+            <Button
+              onClick={() => onClose()}
+              sx={{ position: "absolute", top: "0.5rem", right: "0.5rem", zIndex: 1 }}
+              endIcon={<IcControlClose width={12} height={12} />}
+              variant="inline"
+            >
+              <Trans id="header.close">Close</Trans>
+            </Button>
+          ) : null}
+          <motion.div layout style={{ minHeight: "100%" }}>
+            {children}
+          </motion.div>
+        </Paper>
+      </Modal>
+      {open ? fallback : null}
+    </>
   );
 };
