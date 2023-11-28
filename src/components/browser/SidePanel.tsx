@@ -1,4 +1,4 @@
-import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
+import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
 import {
   Option,
   filterCubeConfigurationAtom,
@@ -18,6 +18,7 @@ import {
   AccordionSummary as AccordionSummaryMui,
   Box,
   Chip,
+  CircularProgress,
   IconButton,
   Stack,
   Typography,
@@ -67,6 +68,7 @@ const SidePanel = ({
   const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
   const filterDimensionsSelection = useAtomValue(filterDimensionsSelectionAtom);
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
+  const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
 
   return (
     <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
@@ -130,28 +132,36 @@ const SidePanel = ({
 
           {/* Property filters */}
 
-          {Object.entries(filterDimensionsConfiguration).map(([key, value]) => {
-            const filterAtom =
-              filterDimensionsSelection[key as keyof typeof filterDimensionsConfiguration];
-            if (!filterAtom) {
-              return null;
-            }
-            return (
-              <FilterSelectAccordion
-                key={key}
-                slots={{
-                  accordion: getAccordionProps(key),
-                  select: {
-                    withSearch: value.search,
-                    groups: value?.groups,
-                  },
-                }}
-                options={value.options}
-                filterAtom={filterAtom}
-                title={value.name ?? value.key}
-              />
-            );
-          })}
+          {cubeDimensionsStatus.isSuccess ? (
+            <>
+              {Object.entries(filterDimensionsConfiguration).map(([key, value]) => {
+                const filterAtom =
+                  filterDimensionsSelection[key as keyof typeof filterDimensionsConfiguration];
+                if (!filterAtom) {
+                  return null;
+                }
+                return (
+                  <FilterSelectAccordion
+                    key={key}
+                    slots={{
+                      accordion: getAccordionProps(key),
+                      select: {
+                        withSearch: value.search,
+                        groups: value?.groups,
+                      },
+                    }}
+                    options={value.options}
+                    filterAtom={filterAtom}
+                    title={value.name ?? value.key}
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <AccordionSummary>
+              <CircularProgress />
+            </AccordionSummary>
+          )}
         </Box>
       </Stack>
     </ContentDrawer>

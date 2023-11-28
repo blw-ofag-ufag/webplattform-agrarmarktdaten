@@ -3,8 +3,6 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import blwTheme from "@/theme/blw";
 import {
-  Alert,
-  AlertTitle,
   Box,
   Button,
   CircularProgress,
@@ -179,18 +177,6 @@ const DataBrowser = () => {
             }}
           >
             <>
-              {observationsQueryStatus.isLoading && <CircularProgress size={24} />}
-              {observationsQueryStatus.isError && (
-                <Alert
-                  sx={{
-                    width: "70%",
-                  }}
-                  severity="error"
-                >
-                  <AlertTitle>Error</AlertTitle>
-                </Alert>
-              )}
-
               {observationsQueryStatus.isSuccess && cubeDimensions.isSuccess ? (
                 <Table
                   observations={filteredObservations}
@@ -200,7 +186,12 @@ const DataBrowser = () => {
                   }}
                 />
               ) : (
-                <CircularProgress size={24} />
+                <Stack gap={2} alignItems="center">
+                  <CircularProgress size={24} />
+                  <Typography variant="h5" fontWeight="normal">
+                    <Trans id="data.loading.info">Loading data...</Trans>
+                  </Typography>
+                </Stack>
               )}
             </>
           </Paper>
