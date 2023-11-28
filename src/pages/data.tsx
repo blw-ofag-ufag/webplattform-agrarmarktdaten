@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 
 import DataDownload from "@/components/browser/DataDownload";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
-import SidePanel from "@/components/browser/SidePanel";
+import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
 import { cubeDimensionsStatusAtom, visualizeUrlAtom } from "@/domain/cubes";
 import {
@@ -32,6 +32,7 @@ import { useFlag } from "@/utils/flags";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
+import { resetCubeFiltersAtom } from "@/domain/filters";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -81,7 +82,6 @@ export default function DataPage(props: GQL.DataPageQuery) {
             <Box
               zIndex={0}
               display="flex"
-              //justifyContent="stretch"
               flexGrow={1}
               minHeight={0}
               sx={{
@@ -108,6 +108,7 @@ const DataBrowser = () => {
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const query = useAtomValue(observationsSparqlQueryAtom);
   const visualizeUrl = useAtomValue(visualizeUrlAtom);
+  const filteredChangedCount = useAtomValue(resetCubeFiltersAtom);
 
   const resultCount = observationsQueryStatus.isSuccess ? filteredObservations.length : undefined;
   const debug = useFlag("debug");
@@ -135,7 +136,12 @@ const DataBrowser = () => {
           </Typography>
         </Stack>
         <Stack direction="row" justifyContent="space-between">
-          <Stack direction="row" gap={1} alignItems="center">
+          <Stack
+            direction="row"
+            gap={1}
+            alignItems="center"
+            divider={<Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />}
+          >
             <Button
               variant="inline"
               startIcon={showFilters ? <IcChevronDoubleLeft /> : <IcChevronDoubleRight />}
@@ -147,7 +153,6 @@ const DataBrowser = () => {
                 <Trans id="data.actions.showFilter">Show Filters</Trans>
               )}
             </Button>
-            <Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />
             <Typography variant="body2" color="grey.600" padding={2}>
               {observationsQueryStatus.isLoading && (
                 <Trans id="data.filters.loading">Loading </Trans>
@@ -161,7 +166,21 @@ const DataBrowser = () => {
                 </>
               )}
             </Typography>
+            {filteredChangedCount > 0 && (
+              <Typography variant="body2" color="grey.600" padding={2}>
+                {`${filteredChangedCount} ${t({
+                  id: "data.filters.count",
+                  message: plural(filteredChangedCount, {
+                    one: "filter applied",
+                    other: "filters applied",
+                  }),
+                })}`}
+              </Typography>
+            )}
+
+            {filteredChangedCount > 0 && <ResetFiltersButton />}
           </Stack>
+
           <Stack direction="row" gap={2}>
             <DataDownload />
             <Button size="small" disabled={!query} href={query ?? ""} target="_blank">

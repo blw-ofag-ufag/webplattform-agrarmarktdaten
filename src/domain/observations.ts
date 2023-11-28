@@ -8,11 +8,11 @@ import {
   getSparqlEditorUrl,
 } from "@/pages/api/data";
 import { toCamelCase } from "@/utils/stringCase";
-import { timeFormat } from "d3";
+import { format, timeFormat } from "d3";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { mapValues } from "lodash";
+import { isNumber, mapValues } from "lodash";
 import { mapToObj } from "remeda";
 import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
@@ -95,7 +95,7 @@ export const valueFormatter = ({
 }) => {
   const dim = cubeDimensions[dimension];
   if (dim && dim.type === "measure") {
-    return value; /* @TODO: add number formatting using dimension range */
+    return isNumber(value) ? format(".2f")(value) : value;
   }
   if (dim && dim.type === "property") {
     return dim.values.find((v) => v.value === value)?.label ?? value;

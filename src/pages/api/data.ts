@@ -25,7 +25,6 @@ import { toCamelCase, toKebabCase } from "@/utils/stringCase";
 import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 
 export const fetchSparql = async (query: string) => {
-  console.log("> fetchSparql");
   const body = JSON.stringify({ query });
   const res = await fetch("/api/sparql", {
     method: "post",
@@ -100,7 +99,7 @@ const propertyRawSchema = z.object({
   dimension: z.string(),
   label: z.string().optional(),
   dimensionValue: z.string(),
-  dimensionValueLabel: z.string(),
+  dimensionValueLabel: z.string().optional(),
 });
 
 const propertySchema = z.object({
@@ -172,7 +171,7 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
               label: dim?.label,
               values: values.map((value) => ({
                 value: value.dimensionValue,
-                label: value.dimensionValueLabel,
+                label: value.dimensionValueLabel ?? ns.removeNamespace(value.dimensionValue),
               })),
             },
           };

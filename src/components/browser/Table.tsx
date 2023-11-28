@@ -1,8 +1,9 @@
-import { isMeasure } from "@/domain/dimensions";
+import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid";
 import { useMemo, useState } from "react";
+import { makeStyles } from "../style-utils";
 
 const columnSpecs = {
   price: { width: 100 },
@@ -27,6 +28,40 @@ const columnSpecs = {
   "value-chain": { width: 100 },
 };
 
+const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
+  dataGrid: {
+    border: "1px solid",
+    borderColor: c.cobalt[100],
+    boxShadow: e.xxl,
+    color: c.grey[600],
+    [`& .${gridClasses.columnHeaders}`]: {
+      backgroundColor: c.cobalt[50],
+      textTransform: "uppercase",
+      borderBottom: "2px solid",
+      borderColor: c.cobalt[100],
+      fontWeight: typography.fontWeightRegular,
+    },
+
+    [`& .${gridClasses.columnHeader}`]: {
+      ":focus-within": {
+        outline: "none !important",
+      },
+    },
+    [`& .${gridClasses.row}`]: {
+      borderBottom: "2px solid",
+      borderColor: c.cobalt[100],
+      ":hover": {
+        backgroundColor: c.cobalt[50],
+      },
+    },
+    [`& .${gridClasses.cell}`]: {
+      ":focus-within": {
+        outline: "none !important",
+      },
+    },
+  },
+}));
+
 export const Table = ({
   observations,
   dimensions,
@@ -34,10 +69,19 @@ export const Table = ({
   observations: Observation[];
   dimensions: Record<string, Property | Measure>;
 }) => {
-  const [paginationModel, setPaginationModel] = useState({ pageSize: 100, page: 0 });
+  const [paginationModel, setPaginationModel] = useState({ pageSize: 25, page: 0 });
+  const { classes } = useStyles();
+
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
       .flat()
+      .sort((a, b) =>
+        !dimensionsToShowSorted.hasOwnProperty(a.dimension)
+          ? 1
+          : !dimensionsToShowSorted.hasOwnProperty(b.dimension)
+          ? -1
+          : dimensionsToShowSorted[a.dimension] - dimensionsToShowSorted[b.dimension]
+      )
       .map((dimension) => {
         return {
           field: isMeasure(dimension.dimension)
@@ -46,6 +90,10 @@ export const Table = ({
             ? "formatted-date"
             : dimension.dimension,
           headerName: dimension.label,
+          headerAlign:
+            isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
+          align:
+            isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           width: columnSpecs[dimension.dimension as keyof typeof columnSpecs]?.width || 100,
           valueFormatter: (params) =>
             valueFormatter({
@@ -64,6 +112,13 @@ export const Table = ({
       paginationModel={paginationModel}
       onPaginationModelChange={(pm) => setPaginationModel(pm)}
       getRowId={(row) => row.observation}
+      className={classes.dataGrid}
+      rowHeight={48}
+      columnHeaderHeight={48}
+      disableColumnMenu
+      disableColumnSelector
+      disableRowSelectionOnClick
+      disableColumnFilter
     />
   );
 };

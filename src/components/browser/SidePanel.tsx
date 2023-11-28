@@ -10,6 +10,7 @@ import {
   timeRangeDefault,
   timeViewAtom,
 } from "@/domain/filters";
+import { observationsQueryAtom } from "@/domain/observations";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, t } from "@lingui/macro";
@@ -24,7 +25,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Atom, useAtom, useAtomValue } from "jotai";
+import dayjs from "dayjs";
+import { Atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { maxBy, minBy, xor } from "lodash";
 import { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
@@ -34,8 +36,6 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
-import { observationsQueryAtom } from "@/domain/observations";
-import dayjs from "dayjs";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -71,6 +71,7 @@ const SidePanel = ({
   const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
   const filterDimensionsSelection = useAtomValue(filterDimensionsSelectionAtom);
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
+  const filtersChangedCount = useAtomValue(resetCubeFiltersAtom);
   const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
 
   return (
@@ -95,7 +96,7 @@ const SidePanel = ({
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
             <Stack direction="row" gap={0.5} alignItems="center">
-              <ResetFiltersButton />
+              {filtersChangedCount > 0 && <ResetFiltersButton />}
               <IconButton onClick={onClose}>
                 <IcChevronDoubleLeft />
               </IconButton>
@@ -323,25 +324,21 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 
 export default SidePanel;
 
-const ResetFiltersButton = () => {
-  const [areFiltersDefault, resetCubeFilters] = useAtom(resetCubeFiltersAtom);
+export const ResetFiltersButton = () => {
+  const resetCubeFilters = useSetAtom(resetCubeFiltersAtom);
   return (
-    <>
-      {!areFiltersDefault && (
-        <Chip
-          clickable
-          onClick={() => resetCubeFilters()}
-          label={t({ id: "cta.reset-filters", message: "Reset Filters" })}
-          icon={<IcRepeat width={24} height={24} />}
-          sx={{
-            backgroundColor: "cobalt.100",
-            color: "grey.800",
-            "&:hover": {
-              backgroundColor: "cobalt.100",
-            },
-          }}
-        />
-      )}
-    </>
+    <Chip
+      clickable
+      onClick={() => resetCubeFilters()}
+      label={t({ id: "cta.reset-filters", message: "Reset Filters" })}
+      icon={<IcRepeat width={24} height={24} />}
+      sx={{
+        backgroundColor: "cobalt.100",
+        color: "grey.800",
+        "&:hover": {
+          backgroundColor: "cobalt.100",
+        },
+      }}
+    />
   );
 };
