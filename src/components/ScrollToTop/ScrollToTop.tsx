@@ -2,6 +2,7 @@ import * as React from "react";
 import ChevronUp from "@/icons/icons-jsx/control/IcControlChevronUp";
 import { makeStyles } from "@/components/style-utils";
 import { IconButton, IconButtonProps } from "@mui/material";
+import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 
 const useStyles = makeStyles()(({ palette: c, shadows: z, breakpoints: b }) => ({
   wrapper: {
@@ -63,8 +64,9 @@ export const ScrollToTop = (props: IconButtonProps) => {
 };
 
 const ScrollToTopWrapped = (props: React.ComponentProps<typeof ScrollToTop>) => {
+  const { classes: inPlaceDialogClasses } = useInPlaceDialogStyles();
   return (
-    <ScrollToToWrapper>
+    <ScrollToToWrapper className={inPlaceDialogClasses.hideWhenOpened}>
       <ScrollToTop {...props} />
     </ScrollToToWrapper>
   );
