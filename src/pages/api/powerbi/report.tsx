@@ -61,6 +61,10 @@ const handler: NextApiHandler = async (req, res) => {
       throw Error("Couldn't get embed code");
     }
 
+    // if (process.env.NODE_ENV === "development") {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET");
+    // }
     res.status(200).json(embedCodeResult);
   } catch (e) {
     console.error(e);

@@ -24,6 +24,7 @@ import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
 import slugs from "@/generated/slugs.json";
+import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 
 interface Props {
   children: React.ReactNode;
@@ -118,6 +119,8 @@ export const AppLayout = (props: Props) => {
     ...dynamicLocaleSwitcherProps,
   };
 
+  const { classes: inPlaceDialogClasses } = useInPlaceDialogStyles();
+
   return (
     <Box
       component="main"
@@ -149,6 +152,7 @@ export const AppLayout = (props: Props) => {
       <Box
         ref={stickyRef}
         data-datocms-noindex
+        className={inPlaceDialogClasses.hideWhenOpened}
         sx={{
           borderBottom: `1px solid ${c.monochrome[200]}`,
           display: { xxs: "none", xs: "none", lg: "block" },
