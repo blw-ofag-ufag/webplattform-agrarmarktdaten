@@ -7,6 +7,7 @@ import {
   filterDimensionsSelectionAtom,
   resetCubeFiltersAtom,
   timeRangeAtom,
+  timeRangeDefault,
   timeViewAtom,
 } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
@@ -24,8 +25,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Atom, useAtom, useAtomValue } from "jotai";
-import { xor } from "lodash";
-import { SyntheticEvent, useMemo, useState } from "react";
+import { maxBy, minBy, xor } from "lodash";
+import { SyntheticEvent, useEffect, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
@@ -33,6 +34,8 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
+import { observationsQueryAtom } from "@/domain/observations";
+import dayjs from "dayjs";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -263,6 +266,26 @@ const FilterSelectAccordion = <T extends Option>({
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   const [timeRange, setTimeRange] = useAtom(timeRangeAtom);
   const [timeView, setTimeView] = useAtom(timeViewAtom);
+  const observationsQuery = useAtomValue(observationsQueryAtom);
+
+  useEffect(() => {
+    if (observationsQuery.data) {
+      const minDate = minBy(observationsQuery.data.observations, "formatted-date")?.[
+        "formatted-date"
+      ];
+      const maxDate = maxBy(observationsQuery.data.observations, "formatted-date")?.[
+        "formatted-date"
+      ];
+
+      const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
+      const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;
+      setTimeRange({
+        value: [min, max],
+        min,
+        max,
+      });
+    }
+  }, [observationsQuery.data, setTimeRange]);
 
   const handleTimeRangeChange = useEvent((value: [number, number]) => {
     if (!Array.isArray(value)) {
