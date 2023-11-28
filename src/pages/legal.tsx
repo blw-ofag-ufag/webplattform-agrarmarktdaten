@@ -12,8 +12,18 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
   if (!legalPage?.title || !legalPage.lead) {
     return null;
   }
+  const alternates = legalPage?._allSlugLocales?.map((loc) => ({
+    href: "/legal",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles} showBackButton>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+      showBackButton
+    >
       <Hero title={legalPage.title} lead={legalPage.lead} showTitleLine={false} shiftedLeft />
       <GridContainer
         sx={{

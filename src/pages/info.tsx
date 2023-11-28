@@ -15,8 +15,17 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
   if (!infoPage?.title || !infoPage.lead) {
     return null;
   }
+  const alternates = infoPage?._allSlugLocales?.map((loc) => ({
+    href: "/info",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <div ref={stickyRef} className={classes.aside}>
@@ -42,9 +51,7 @@ export const getStaticProps = async (context: $FixMe) => {
   const result = await client
     .query<GQL.InfoPageQuery>(
       GQL.InfoPageDocument,
-      {
-        locale: context.locale,
-      },
+      { locale: context.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();

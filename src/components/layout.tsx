@@ -23,6 +23,7 @@ import { makeContentWrapperSx } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
+import slugs from "@/generated/slugs.json";
 
 interface Props {
   children: React.ReactNode;
@@ -52,28 +53,36 @@ export const isAuthorizedLocale = (locale: string) => locale !== "en";
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
   const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
-
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
 
+  const localeSlugs = slugs.find(({ locale }) => locale === router.locale)?.slugs;
+
   const { headerSections, menuSections } = React.useMemo(() => {
     const marketSections =
       allMarkets
-        ?.map((market) => ({ title: market.title!, href: `/market/${market.slug}` }))
+        ?.map((market) => ({
+          title: market.title!,
+          href: `/${localeSlugs?.market}/${market.slug}`,
+        }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const focusSections =
       allFocusArticles
-        ?.map((focus) => ({ title: focus.title!, href: `/focus/${focus.slug}` }))
+        ?.map((focus) => ({ title: focus.title!, href: `/${localeSlugs?.focus}/${focus.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: "Home", href: "/" },
       { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
       { title: t({ id: "menu.focus", message: "Fokus" }), sections: focusSections },
-      { title: t({ id: "menu.analysis", message: "Analysis" }), href: "/analysis" },
-      { title: t({ id: "menu.data", message: "Data" }), href: "/data" },
-      { title: t({ id: "menu.methods", message: "Methods" }), href: "/methods" },
-      { title: t({ id: "menu.info", message: "Info" }), href: "/info", desktop: false },
+      { title: t({ id: "menu.analysis", message: "Analysis" }), href: `/${localeSlugs?.analysis}` },
+      { title: t({ id: "menu.data", message: "Data" }), href: `/${localeSlugs?.data}` },
+      { title: t({ id: "menu.methods", message: "Methods" }), href: `/${localeSlugs?.methods}` },
+      {
+        title: t({ id: "menu.info", message: "Info" }),
+        href: `/${localeSlugs?.info}`,
+        desktop: false,
+      },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
       ...d,
@@ -81,7 +90,7 @@ export const AppLayout = (props: Props) => {
     }));
 
     return { headerSections, menuSections };
-  }, [allMarkets, allFocusArticles]);
+  }, [allMarkets, allFocusArticles, localeSlugs]);
 
   const dynamicLocaleSwitcherProps: LocaleSwitcherProps = alternates
     ? {
@@ -159,7 +168,7 @@ export const AppLayout = (props: Props) => {
           <Box display="flex" flexGrow={1} />
           <MenuButton
             title={t({ id: "menu.info", message: "Info" })}
-            href="/info"
+            href={`/${localeSlugs?.info}`}
             endIcon={
               <Box sx={{ ml: 1 }}>
                 <IcInfoCircle fontSize={16} />

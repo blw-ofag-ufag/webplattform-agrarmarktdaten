@@ -79,15 +79,7 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  return {
-    props: {
-      marketArticle: result.data.marketArticle,
-      allMarketArticles: result.data.allMarketArticles,
-      allFocusArticles: result.data.allFocusArticles,
-      topBlogPosts: result.data.topBlogPosts,
-    },
-    revalidate: 10,
-  };
+  return { props: result.data, revalidate: 10 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

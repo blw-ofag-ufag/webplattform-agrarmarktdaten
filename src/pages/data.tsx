@@ -63,11 +63,22 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 }
 
 export default function DataPage(props: GQL.DataPageQuery) {
-  const { allMarketArticles, allFocusArticles } = props;
+  const { dataPage, allMarketArticles, allFocusArticles } = props;
+
+  const alternates = dataPage?._allSlugLocales?.map((loc) => ({
+    href: "/data",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
+
   return (
     <SafeHydrate>
       <ThemeProvider theme={blackAndWhiteTheme}>
-        <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+        <AppLayout
+          alternates={alternates}
+          allMarkets={allMarketArticles}
+          allFocusArticles={allFocusArticles}
+        >
           <Stack flexGrow={1} minHeight={0}>
             <Box
               zIndex={0}

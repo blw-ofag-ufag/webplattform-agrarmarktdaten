@@ -15,8 +15,17 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
+  const alternates = methodsPage?._allSlugLocales?.map((loc) => ({
+    href: "/legal",
+    as: `/${loc.value}`,
+    locale: loc.locale as string,
+  }));
   return (
-    <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+    <AppLayout
+      alternates={alternates}
+      allMarkets={allMarketArticles}
+      allFocusArticles={allFocusArticles}
+    >
       <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
       <GridContainer sx={{ mt: 4, position: "relative" }}>
         <div ref={stickyRef} className={classes.aside}>
@@ -42,9 +51,7 @@ export const getStaticProps = async (context: $FixMe) => {
   const result = await client
     .query<GQL.MethodsPageQuery>(
       GQL.MethodsPageDocument,
-      {
-        locale: context.locale,
-      },
+      { locale: context.locale },
       { requestPolicy: "network-only" }
     )
     .toPromise();
