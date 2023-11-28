@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Typography, Box, Card, Button, useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { Hero } from "@/components/hero";
 import { CardsGrid } from "@/components/homepage/grids";
 import { AppLayout, LayoutSections } from "@/components/layout";
@@ -7,37 +7,10 @@ import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { s } from "@interactivethings/swiss-federal-ci";
-import { Download } from "@/icons/icons-jsx/control";
 import { GridContainer } from "@/components/Grid";
-import { makeStyles } from "@/components/style-utils";
-import Link from "next/link";
-
-const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e }) => ({
-  button: {
-    backgroundColor: c.cobalt[500],
-    fontWeight: 700,
-    width: "fit-content",
-    marginTop: s(6),
-  },
-
-  downloadIcon: {
-    backgroundColor: c.cobalt[100],
-    borderRadius: 80,
-    minWidth: "80px",
-    height: "80px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  card: {
-    boxShadow: e.lg,
-    borderRadius: s(2),
-  },
-}));
+import { DataPageCard } from "../components/DataPageCard";
 
 export default function HomePage(props: GQL.HomePageQuery) {
-  const { classes } = useStyles();
   const {
     homePage,
     allMarketArticles,
@@ -117,25 +90,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
             <Typography variant="h1" component="h2">
               <Trans id="homepage.section.data">Data</Trans>
             </Typography>
-            <Card sx={{ p: s(8) }} className={classes.card}>
-              <Box display="flex" alignItems="center">
-                <Box display="flex" flexDirection="column" pr="50px">
-                  <Typography variant="body1">
-                    <Trans id="homepage.section.data.content">
-                      Various data can be selected and downloaded via the data download, in
-                      particular price series, and in some cases also quantity and area data. Data
-                      are available from the year 2000 onwards.
-                    </Trans>
-                  </Typography>
-                  <Button className={classes.button} component={Link} href="/data">
-                    <Trans id="homepage.section.data.button">Learn More</Trans>
-                  </Button>
-                </Box>
-                <div className={classes.downloadIcon}>
-                  <Download width={32} height={32} />
-                </div>
-              </Box>
-            </Card>
+            <DataPageCard />
           </GridContainer>
         </LayoutSections>
       </AppLayout>

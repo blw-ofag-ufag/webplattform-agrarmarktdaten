@@ -16,14 +16,14 @@ const FilterAccordion = withStyles(Accordion, (theme) => ({
     },
 
     "& .MuiAccordionSummary-root": {
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
       paddingLeft: theme.spacing(4),
     },
     "& .MuiAccordionSummary-root.Mui-expanded": {
       minHeight: "48px",
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
     },
     "& .MuiAccordionSummary-content": {
       display: "flex",

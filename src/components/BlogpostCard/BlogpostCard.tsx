@@ -239,7 +239,7 @@ export const BlogpostCard = (
             </Typography>
           </div>
           <Typography
-            variant={variant === "full" ? "h1" : "h4"}
+            variant={variant === "full" ? "h3" : "h4"}
             component="h2"
             className={cx(classes.title, clampedClassName)}
             title={title ?? undefined}

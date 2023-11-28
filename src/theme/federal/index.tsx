@@ -196,12 +196,12 @@ theme.typography = merge(theme.typography, {
   }),
   h3: createTypographyVariant(theme, {
     fontSize: [18, 20],
-    lineHeight: [28, 32],
+    lineHeight: [27, 30],
     fontWeight: 700,
   }),
   h4: createTypographyVariant(theme, {
     fontSize: [16, 18],
-    lineHeight: [24, 20],
+    lineHeight: [24, 27],
     fontWeight: 700,
   }),
   h5: createTypographyVariant(theme, {

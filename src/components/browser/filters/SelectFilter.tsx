@@ -180,7 +180,7 @@ export default function Select<T extends Option>({
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={3} py={2}>
       {withSearch && (
         <TextField
           value={searchString}
@@ -208,7 +208,7 @@ export default function Select<T extends Option>({
       )}
       <Stack
         direction="row"
-        spacing={0.5}
+        spacing={2}
         divider={
           <Circle
             sx={{
@@ -220,12 +220,22 @@ export default function Select<T extends Option>({
         }
         alignItems="center"
       >
-        <Button variant="text" disabled={searchString !== ""} onClick={() => onChange(options)}>
-          <Typography variant="body2">
+        <Button
+          variant="text"
+          size="small"
+          disabled={searchString !== "" || options.length === values.length}
+          onClick={() => onChange(options)}
+        >
+          <Typography variant="body2" onClick={() => onChange(options)}>
             <Trans id="filters.select.all">Select all</Trans>
           </Typography>
         </Button>
-        <Button variant="text" onClick={() => onChange([])}>
+        <Button
+          variant="text"
+          size="small"
+          onClick={() => onChange([])}
+          disabled={values.length === 0}
+        >
           <Typography variant="body2">
             <Trans id="filters.select.clear">Clear</Trans>
           </Typography>
@@ -314,8 +324,7 @@ const SelectItem = <T extends ScoredOption>({
           </Typography>
         }
         sx={{
-          paddingLeft: node.level === 0 ? 0 : "28px",
-          paddingTop: "4px",
+          paddingLeft: node.level === 0 ? 0 : "48px",
         }}
       />
     );
@@ -395,17 +404,25 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   flexDirection: "row-reverse",
 
   [`&.${accordionSummaryClasses.root}`]: {
-    padding: theme.spacing(1, 0),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
     minHeight: 0,
     [`&.${accordionSummaryClasses.expanded}`]: {
       minHeight: 0,
+      margin: theme.spacing(0),
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
     },
   },
 
   [`& .${accordionSummaryClasses.content}`]: {
+    margin: theme.spacing(0),
     marginLeft: theme.spacing(1),
+
     [`&.${accordionSummaryClasses.expanded}`]: {
+      margin: theme.spacing(0),
       marginLeft: theme.spacing(1),
+      padding: theme.spacing(0, 0),
     },
   },
   [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]: {
@@ -418,7 +435,8 @@ const AccordionDetails = styled((props: AccordionDetailsProps) => (
 ))(({ theme }) => ({
   [`&.${accordionDetailsClasses.root}`]: {
     padding: 0,
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(1),
+    marginLeft: theme.spacing(4),
   },
 }));
 
@@ -456,13 +474,15 @@ export const PreviewSelect = <T extends Option>({
   options,
   values,
   show,
+  tainted = false,
 }: {
   options: T[];
   values: T[];
   show: boolean;
+  tainted?: boolean;
 }) => {
   return (
-    <PreviewFilter show={show}>
+    <PreviewFilter show={show} tainted={tainted}>
       {values.length === 0
         ? t({ id: "data.filters.none", message: "None" })
         : values.length === options.length

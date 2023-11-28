@@ -49,6 +49,11 @@ msgstr ""
 #~ msgstr "Recherche"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.actions.showFiler"
+#~ msgstr "Afficher le filtre"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} total)"
@@ -90,6 +95,11 @@ msgstr "Tous"
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "button.show.all"
 msgstr "Afficher tous les posts"
+
+#. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.filename"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -135,6 +145,7 @@ msgstr "Réinitialiser les filtres"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 #: src/components/layout.tsx
+#: src/components/PowerBIFullScreen/PowerBIFullScreen.tsx
 msgid "header.close"
 msgstr "Fermer"
 
@@ -149,14 +160,19 @@ msgid "homepage.section.data"
 msgstr "Données"
 
 #. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.actions.download"
+msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.hero.title"
 msgstr "Télécharger des données"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.download"
-msgstr "Télécharger des données"
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.title"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -201,6 +217,11 @@ msgid "data.filters.from"
 msgstr "De"
 
 #. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "controls.fullscreen"
+msgstr "Plein écran"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.furtherinformation"
@@ -211,6 +232,11 @@ msgstr "Informations supplémentaires"
 #: src/components/browser/MetadataPanel.tsx
 msgid "cta.back"
 msgstr "Retour"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.hideFilter"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -312,6 +338,11 @@ msgid "data.control.reset"
 msgstr "Remise à zéro"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "cta.reset-filters"
+msgstr ""
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
 msgstr "Recherche"
@@ -328,8 +359,8 @@ msgstr "Sélectionner tout"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
-msgid "data.actions.showFiler"
-msgstr "Afficher le filtre"
+msgid "data.actions.showFilter"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
@@ -379,7 +410,7 @@ msgstr "Pour"
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data.content"
-msgstr "Différentes données peuvent être sélectionnées et téléchargées via le téléchargement de données, en particulier des séries de prix et, dans certains cas, des données de quantité et de superficie. Les données sont disponibles à partir de l'année 2000."
+msgstr "Différentes données peuvent être sélectionnées et téléchargées via l’option “téléchargement de données”, en particulier des séries de prix et, dans certains cas, des données de quantité et de superficie."
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx

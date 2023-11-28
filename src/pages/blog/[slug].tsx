@@ -98,7 +98,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
         <div className={layoutClasses.content}>
           <Box sx={{ mb: 10 }}>
             {formattedDate && (
-              <Typography variant="body1" color="monochrome.500">
+              <Typography variant="body1" color="monochrome.500" data-datocms-noindex>
                 <Trans id="blogpost.publishedDate">Published on</Trans>
                 &nbsp;
                 {formattedDate}

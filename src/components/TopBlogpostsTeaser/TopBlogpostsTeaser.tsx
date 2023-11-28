@@ -4,8 +4,8 @@ import * as React from "react";
 import { BlogpostCard } from "@/components/BlogpostCard";
 import * as GQL from "@/graphql";
 import Carousel from "react-material-ui-carousel";
-import { Button, useMediaQuery, Box, Typography } from "@mui/material";
-import { b, s, c } from "@interactivethings/swiss-federal-ci";
+import { Button, Box, Typography } from "@mui/material";
+import { s, c } from "@interactivethings/swiss-federal-ci";
 import LensIcon from "@mui/icons-material/Lens";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -13,6 +13,7 @@ import ArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { GridWrap, GridWrapElement, GridContainer } from "@/components/Grid";
 import { useTheme } from "@mui/material/styles";
 import { makeStyles } from "@/components/style-utils";
+import { useIsDesktop, useIsMobile, useIsTablet } from "@/components/Grid/Grid";
 
 const useStyles = makeStyles()({
   container: {
@@ -25,9 +26,9 @@ export const TopBlogpostsTeaser = (
   props: { blogposts: GQL.SimpleBlogPostFragment[] } & React.HTMLProps<HTMLDivElement>
 ) => {
   const { blogposts, ...rest } = props;
-  const isDesktop = useMediaQuery(b.up("xl"));
-  const isTablet = useMediaQuery(b.between("md", "xl"));
-  const isMobile = useMediaQuery(b.down("md"));
+  const isDesktop = useIsDesktop();
+  const isTablet = useIsTablet();
+  const isMobile = useIsMobile();
 
   const { classes } = useStyles();
 
