@@ -10,7 +10,7 @@ const productionUrls = [
   "www.agrarmarktdaten.ch",
 ];
 
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const basicAuth = req.headers.get("authorization");
   const url = req.nextUrl;
   const { pathname, search } = url;
