@@ -110,7 +110,8 @@ const DataBrowser = () => {
   const visualizeUrl = useAtomValue(visualizeUrlAtom);
   const filteredChangedCount = useAtomValue(resetCubeFiltersAtom);
 
-  const resultCount = observationsQueryStatus.isSuccess ? filteredObservations.length : undefined;
+  const queriesCompleted = observationsQueryStatus.isSuccess && cubeDimensions.isSuccess;
+  const resultCount = queriesCompleted ? filteredObservations.length : undefined;
   const debug = useFlag("debug");
 
   return (
@@ -154,10 +155,10 @@ const DataBrowser = () => {
               )}
             </Button>
             <Typography variant="body2" color="grey.600" padding={2}>
-              {observationsQueryStatus.isLoading && (
+              {(observationsQueryStatus.isLoading || cubeDimensions.isLoading) && (
                 <Trans id="data.filters.loading">Loading </Trans>
               )}
-              {observationsQueryStatus.isSuccess && (
+              {resultCount && (
                 <>
                   {`${resultCount} ${t({
                     id: "data.filters.results",
@@ -166,7 +167,7 @@ const DataBrowser = () => {
                 </>
               )}
             </Typography>
-            {filteredChangedCount > 0 && (
+            {filteredChangedCount > 0 && queriesCompleted && (
               <Typography variant="body2" color="grey.600" padding={2}>
                 {`${filteredChangedCount} ${t({
                   id: "data.filters.count",
@@ -178,7 +179,7 @@ const DataBrowser = () => {
               </Typography>
             )}
 
-            {filteredChangedCount > 0 && <ResetFiltersButton />}
+            {filteredChangedCount > 0 && queriesCompleted && <ResetFiltersButton />}
           </Stack>
 
           <Stack direction="row" gap={2}>
