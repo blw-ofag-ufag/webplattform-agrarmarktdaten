@@ -9,7 +9,7 @@
     "dev": "next",
     "storybook": "storybook dev -p 6006 --no-open",
     "storybook:build": "storybook build -o public/storybook",
-    "build": "lingui compile && next build && yarn storybook:build",
+    "build": "yarn codegen:rewrites && lingui compile && next build && yarn storybook:build",
     "export": "lingui compile && next build && next export -o build",
     "start": "next start -p $PORT",
     "lint": "eslint .",
