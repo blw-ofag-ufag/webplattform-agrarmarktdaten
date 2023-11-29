@@ -15,6 +15,7 @@ import {
   defaultCube,
 } from "./cubes";
 import { CubeDimension, Dimension, dataDimensions } from "./dimensions";
+import { t } from "@lingui/macro";
 
 export type Option = {
   label: string;
@@ -109,7 +110,7 @@ export const filterCubeConfigurationAtom = atom((get) => {
 
   return {
     measure: {
-      name: "Measure",
+      name: t({ id: "data.filters.measure", message: "Measure" }),
       options: measureOptions,
       type: "single" as const,
       defaultOption: defaultMeasure

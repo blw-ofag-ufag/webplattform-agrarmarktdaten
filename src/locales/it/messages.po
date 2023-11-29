@@ -119,7 +119,7 @@ msgstr "Applicare"
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "controls.metadata-panel.available-values"
-msgstr ""
+msgstr "Valori disponibili"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -241,7 +241,7 @@ msgstr "Indietro"
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
-msgstr ""
+msgstr "Nascondere i filtri"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -273,7 +273,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.loading.info"
-msgstr ""
+msgstr "I dati vengono caricati"
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Controls.tsx
@@ -290,6 +290,11 @@ msgstr "Mercati"
 #: src/pages/index.tsx
 msgid "homepage.section.market"
 msgstr "Mercati"
+
+#. js-lingui-explicit-id
+#: src/domain/filters.ts
+msgid "data.filters.measure"
+msgstr "Indicatore"
 
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
@@ -370,12 +375,12 @@ msgstr "Seleziona tutto"
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.showFilter"
-msgstr ""
+msgstr "Mostrare i filtri"
 
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "cta.show-more"
-msgstr ""
+msgstr "Mostrare di più"
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Sort.tsx
