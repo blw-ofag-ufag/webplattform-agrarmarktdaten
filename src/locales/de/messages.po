@@ -69,6 +69,11 @@ msgid "data.filters.some"
 msgstr "{0} von {1}"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.filters.count"
+msgstr "{filteredChangedCount, plural, one {filter applied} other {filters applied}}"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.about_us.label"
@@ -143,9 +148,9 @@ msgid "filters.select.clear"
 msgstr "Filter zurücksetzen"
 
 #. js-lingui-explicit-id
+#: src/components/InPlaceDialog.tsx
 #: src/components/layout.tsx
 #: src/components/layout.tsx
-#: src/components/PowerBIFullScreen/PowerBIFullScreen.tsx
 msgid "header.close"
 msgstr "Schliessen"
 
@@ -217,7 +222,7 @@ msgid "data.filters.from"
 msgstr "Von"
 
 #. js-lingui-explicit-id
-#: src/components/StructuredText/StructuredText.tsx
+#: src/components/powerbi-report.tsx
 msgid "controls.fullscreen"
 msgstr "Vollbild"
 
