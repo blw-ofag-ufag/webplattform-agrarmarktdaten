@@ -132,7 +132,7 @@ export const queryPropertyDimensionAndValues = ({
           <${cubeIri}> cube:observationSet ?observationSet .
           ?observationSet cube:observation ?observation .
           ?observation ?dimension ?value .
-          ?value schema:name ?label . FILTER(lang(?label) = "${locale}")
+          OPTIONAL { ?value schema:name ?label . FILTER(lang(?label) = "${locale}") } 
         }
       }`
       )

@@ -102,21 +102,29 @@ const propertyRawSchema = z.object({
   dimensionValueLabel: z.string().optional(),
 });
 
-const propertySchema = z.object({
-  dimension: z
-    .string()
-    .startsWith(amdpDimension().value)
-    .transform((v) => ns.removeNamespace(v, amdpDimension)),
-  label: z.string().optional(),
-  description: z.string().optional(),
-  type: z.literal("property").optional(),
-  values: z.array(
-    z.object({
-      value: z.string().transform((v) => ns.removeNamespace(v, amdp)),
-      label: z.string(),
-    })
-  ),
-});
+const propertySchema = z
+  .object({
+    dimension: z
+      .string()
+      .startsWith(amdpDimension().value)
+      .transform((v) => ns.removeNamespace(v, amdpDimension)),
+    label: z.string().optional(),
+    description: z.string().optional(),
+    type: z.literal("property").optional(),
+    values: z.array(
+      z.object({
+        value: z.string().transform((v) => ns.removeNamespace(v, amdp)),
+        label: z.string().optional(),
+      })
+    ),
+  })
+  .transform((v) => ({
+    ...v,
+    values: v.values.map((value) => ({
+      ...value,
+      label: value.label ?? value.value,
+    })),
+  }));
 
 export type Measure = z.infer<typeof measureSchema>;
 export type Property = z.infer<typeof propertySchema>;
