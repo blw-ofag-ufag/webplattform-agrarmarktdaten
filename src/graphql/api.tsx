@@ -55,7 +55,7 @@ export const client = createClient({
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
-      "X-Include-Drafts": DATO_CMS_INCLUDE_DRAFTS ? "true" : "",
+      ...(DATO_CMS_INCLUDE_DRAFTS === "true" && { "X-Include-Drafts": "true" }),
     },
   },
   exchanges: IS_DEV_ENVIRONMENT
