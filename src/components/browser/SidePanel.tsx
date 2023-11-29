@@ -298,9 +298,17 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
     });
   });
 
+  const isTainted = useMemo(() => {
+    return (
+      timeRange.value[0] !== timeRange.min ||
+      timeRange.value[1] !== timeRange.max ||
+      timeView !== "Year"
+    );
+  }, [timeRange, timeView]);
+
   return (
     <FilterAccordion {...props}>
-      <AccordionSummary>
+      <AccordionSummary className={isTainted ? "tainted" : ""}>
         <AccordionTitle>
           <Trans id="data.filters.time">Time</Trans>
         </AccordionTitle>
