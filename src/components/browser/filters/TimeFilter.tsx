@@ -87,20 +87,23 @@ export default function TimeFilter({
 
   return (
     <Stack gap={3}>
-      <Button
-        variant="text"
-        size="small"
-        sx={{
-          width: "fit-content",
-          mb: 2,
-        }}
-        onClick={() => {
-          setSliderRange([min, max]);
-          onChangeRange([min, max]);
-        }}
-      >
-        <Trans id="data.control.reset">Reset</Trans>
-      </Button>
+      <Box minHeight={28}>
+        {(sliderRange[0] !== min || sliderRange[1] !== max) && (
+          <Button
+            variant="text"
+            size="small"
+            sx={{
+              width: "fit-content",
+            }}
+            onClick={() => {
+              setSliderRange([min, max]);
+              onChangeRange([min, max]);
+            }}
+          >
+            <Trans id="data.control.reset">Reset</Trans>
+          </Button>
+        )}
+      </Box>
       <ToggleButtonGroup
         size="small"
         fullWidth
