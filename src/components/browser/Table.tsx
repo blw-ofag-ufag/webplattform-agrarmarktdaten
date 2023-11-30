@@ -1,7 +1,7 @@
 import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
-import { DataGridPro, GridColDef, GridRow, gridClasses } from "@mui/x-data-grid-pro";
+import { DataGridPro, GridColDef, GridRow, gridClasses, useGridApiRef } from "@mui/x-data-grid-pro";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
 
@@ -48,6 +48,8 @@ export const Table = ({
   dimensions: Record<string, Property | Measure>;
 }) => {
   const PAGE_SIZE = 50;
+  const apiRef = useGridApiRef();
+
   const { classes } = useStyles();
   const [loadedRows, setLoadedRows] = useState<Observation[]>(observations.slice(0, PAGE_SIZE));
   const observer = useRef<IntersectionObserver>();
@@ -99,10 +101,11 @@ export const Table = ({
   }, [dimensions]);
 
   return (
-    <DataGridPro
+    <DataGridPro<Observation>
+      apiRef={apiRef}
       rows={loadedRows}
       columns={columns}
-      getRowId={(row) => row.observation}
+      getRowId={(row) => row.observation as string}
       className={classes.dataGrid}
       rowHeight={48}
       columnHeaderHeight={48}
@@ -111,15 +114,16 @@ export const Table = ({
       disableRowSelectionOnClick
       disableColumnFilter
       autosizeOnMount
-      autosizeOptions={{
-        //columns: observations[0] ? Object.keys(observations[0]) : [],
-        includeOutliers: true,
-        includeHeaders: true,
-      }}
       columnBuffer={Object.keys(dimensions).length}
       hideFooter={loadedRows.length !== observations.length}
       hideFooterPagination
       hideFooterRowCount={loadedRows.length < observations.length}
+      onResize={() => {
+        apiRef.current.autosizeColumns({
+          includeHeaders: true,
+          includeOutliers: true,
+        });
+      }}
       slots={{
         row: (props) => {
           const index = props.index;

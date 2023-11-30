@@ -192,7 +192,7 @@ const DataBrowser = () => {
           </Stack>
         </Stack>
 
-        <Paper elevation={4} className={classes.paper}>
+        <Paper elevation={3} className={classes.paper}>
           <>
             {observationsQueryStatus.isSuccess && cubeDimensions.isSuccess ? (
               <Box sx={{ position: "absolute", inset: 0 }}>
