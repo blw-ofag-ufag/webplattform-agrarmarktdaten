@@ -372,6 +372,7 @@ const Header1 = (props: HeaderProps) => {
   const ref = React.useRef(null);
   const entry = useIntersectionObserver(ref, { rootMargin: "0%", threshold: 1.0 });
   const setSection = useSetAtom(sectionAtom);
+  const { classes } = useStructuredTextStyles({});
 
   React.useEffect(() => {
     if (hash === encodedContent) {
@@ -391,14 +392,8 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Box
-      position="relative"
-      sx={{
-        "& > svg": { display: "none" },
-        "&:hover > svg": { display: "block" },
-      }}
-    >
-      <IcLink width={27} height={27} style={{ position: "absolute", top: 5, left: -30 }} />
+    <Box position="relative" className={classes.h1Wrapper}>
+      <IcLink width={27} height={27} className={classes.h1Icon} />
       <Typography
         ref={ref}
         id={id}

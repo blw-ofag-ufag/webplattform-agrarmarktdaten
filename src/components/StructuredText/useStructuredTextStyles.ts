@@ -121,10 +121,7 @@ const useStructuredTextStyles = makeStyles<
     }),
     h1: debugStyle("h1", {
       fontWeight: 700,
-      overflowAnchor: "none",
-      "&: hover": {
-        cursor: "pointer",
-      },
+      "&: hover": { cursor: "pointer" },
       [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
     }),
     h2: debugStyle("h2", {
@@ -164,6 +161,12 @@ const useStructuredTextStyles = makeStyles<
       marginTop: 64,
       marginBottom: 64,
     },
+    h1Icon: debugStyle("h1Icon", { position: "absolute", top: 5, left: -30 }),
+    h1Wrapper: debugStyle("h1Wrapper", {
+      "& > svg": { display: "none" },
+      "&:hover > svg": { display: "block" },
+      marginBottom: "24px",
+    }),
   };
 });
 
