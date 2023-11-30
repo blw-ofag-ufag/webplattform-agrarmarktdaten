@@ -121,7 +121,6 @@ const useStructuredTextStyles = makeStyles<
     }),
     h1: debugStyle("h1", {
       fontWeight: 700,
-      "&: hover": { cursor: "pointer" },
       [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
     }),
     h2: debugStyle("h2", {
@@ -163,8 +162,10 @@ const useStructuredTextStyles = makeStyles<
     },
     h1Icon: debugStyle("h1Icon", { position: "absolute", top: 10, left: -30 }),
     h1Wrapper: debugStyle("h1Wrapper", {
+      cursor: "pointer",
       "& > svg": { display: "none" },
       "&:hover > svg": { display: "block" },
+
       marginTop: theme.spacing(7),
       marginBottom: theme.spacing(3),
     }),
