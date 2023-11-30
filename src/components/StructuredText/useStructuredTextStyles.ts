@@ -161,11 +161,12 @@ const useStructuredTextStyles = makeStyles<
       marginTop: 64,
       marginBottom: 64,
     },
-    h1Icon: debugStyle("h1Icon", { position: "absolute", top: 5, left: -30 }),
+    h1Icon: debugStyle("h1Icon", { position: "absolute", top: 10, left: -30 }),
     h1Wrapper: debugStyle("h1Wrapper", {
       "& > svg": { display: "none" },
       "&:hover > svg": { display: "block" },
-      marginBottom: "24px",
+      marginTop: theme.spacing(7),
+      marginBottom: theme.spacing(3),
     }),
   };
 });
