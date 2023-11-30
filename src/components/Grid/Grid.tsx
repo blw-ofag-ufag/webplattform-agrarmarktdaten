@@ -229,8 +229,10 @@ export const makeContentWrapperSx = (theme: Theme) => {
   const getSxForBreakpoint = (bp: Breakpoint) => {
     const spec = specs[bp];
     return {
-      maxWidth: `${spec.totalWidth}px`,
-      paddingX: `${spec.offset}px`,
+      "&&": {
+        maxWidth: `${spec.totalWidth}px`,
+        paddingX: `${spec.offset}px`,
+      },
     };
   };
   const sx = Object.fromEntries(
