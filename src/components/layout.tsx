@@ -128,6 +128,7 @@ export const AppLayout = (props: Props) => {
       minHeight="100vh"
       display="flex"
       flexDirection="column"
+      maxHeight={router.pathname === "/data" ? "100vh" : undefined}
     >
       <div data-datocms-noindex>
         <LocaleSwitcher {...localeSwitcherProps} />

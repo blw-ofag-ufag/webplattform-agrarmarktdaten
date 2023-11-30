@@ -1,42 +1,20 @@
 import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
-import { DataGrid, GridColDef, gridClasses } from "@mui/x-data-grid";
-import { useMemo, useState } from "react";
+import { DataGridPro, GridColDef, GridRow, gridClasses, useGridApiRef } from "@mui/x-data-grid-pro";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
-
-const columnSpecs = {
-  price: { width: 100 },
-  date: { width: 100 },
-  "cost-component": { width: 100 },
-  currency: { width: 100 },
-  "data-method": { width: 100 },
-  "data-source": { width: 200 },
-  "foreign-trade": { width: 100 },
-  "key-indicator-type": { width: 100 },
-  market: { width: 200 },
-  product: { width: 200 },
-  "product-group": { width: 200 },
-  "production-system": { width: 150 },
-  "product-origin": { width: 100 },
-  "product-properties": { width: 100 },
-  "product-subgroup": { width: 200 },
-  "sales-region": { width: 100 },
-  unit: { width: 100 },
-  usage: { width: 100 },
-  "value-chain-detail": { width: 100 },
-  "value-chain": { width: 100 },
-};
 
 const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
   dataGrid: {
+    maxWidth: "100%",
+    maxHeight: "100%",
     border: "1px solid",
     borderColor: c.cobalt[100],
     boxShadow: e.xxl,
-    color: c.grey[600],
+    color: c.monochrome[600],
     [`& .${gridClasses.columnHeaders}`]: {
       backgroundColor: c.cobalt[50],
-      textTransform: "uppercase",
       borderBottom: "2px solid",
       borderColor: c.cobalt[100],
       fontWeight: typography.fontWeightRegular,
@@ -69,8 +47,30 @@ export const Table = ({
   observations: Observation[];
   dimensions: Record<string, Property | Measure>;
 }) => {
-  const [paginationModel, setPaginationModel] = useState({ pageSize: 25, page: 0 });
+  const PAGE_SIZE = 50;
+  const apiRef = useGridApiRef();
+
   const { classes } = useStyles();
+  const [loadedRows, setLoadedRows] = useState<Observation[]>(observations.slice(0, PAGE_SIZE));
+  const observer = useRef<IntersectionObserver>();
+
+  useEffect(() => {
+    setLoadedRows(observations.slice(0, PAGE_SIZE));
+  }, [observations]);
+
+  const lastOptionElementRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(async (entries) => {
+        const [target] = entries;
+        if (target.isIntersecting && observations.length > loadedRows.length) {
+          setLoadedRows(observations.slice(0, loadedRows.length + PAGE_SIZE));
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loadedRows, setLoadedRows, observations]
+  );
 
   const columns: GridColDef[] = useMemo(() => {
     return Object.values(dimensions)
@@ -94,7 +94,6 @@ export const Table = ({
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           align:
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
-          width: columnSpecs[dimension.dimension as keyof typeof columnSpecs]?.width || 100,
           valueFormatter: (params) =>
             valueFormatter({
               value: params.value,
@@ -106,12 +105,11 @@ export const Table = ({
   }, [dimensions]);
 
   return (
-    <DataGrid
-      rows={observations}
+    <DataGridPro<Observation>
+      apiRef={apiRef}
+      rows={loadedRows}
       columns={columns}
-      paginationModel={paginationModel}
-      onPaginationModelChange={(pm) => setPaginationModel(pm)}
-      getRowId={(row) => row.observation}
+      getRowId={(row) => row.observation as string}
       className={classes.dataGrid}
       rowHeight={48}
       columnHeaderHeight={48}
@@ -119,6 +117,31 @@ export const Table = ({
       disableColumnSelector
       disableRowSelectionOnClick
       disableColumnFilter
+      autosizeOnMount
+      columnBuffer={Object.keys(dimensions).length}
+      hideFooter
+      hideFooterPagination
+      hideFooterRowCount
+      onResize={() => {
+        apiRef.current.autosizeColumns({
+          includeHeaders: true,
+          includeOutliers: true,
+        });
+      }}
+      slots={{
+        row: (props) => {
+          const index = props.index;
+          const lastItemIndex = loadedRows.length - 2;
+          if (lastItemIndex === index) {
+            return (
+              <div ref={lastOptionElementRef}>
+                <GridRow {...props} className="cursor-pointer"></GridRow>
+              </div>
+            );
+          }
+          return <GridRow {...props} className="cursor-pointer"></GridRow>;
+        },
+      }}
     />
   );
 };
