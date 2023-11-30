@@ -14,7 +14,7 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
     return null;
   }
   const alternates = termsPage?._allSlugLocales?.map((loc) => ({
-    href: "/legal",
+    href: "/terms-and-conditions",
     as: `/${loc.value}`,
     locale: loc.locale as string,
   }));
