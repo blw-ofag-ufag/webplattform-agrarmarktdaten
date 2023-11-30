@@ -21,7 +21,7 @@ interface MyDocumentProps extends DocumentProps {
 // See https://github.com/mui/material-ui/blob/master/examples/material-next-ts/pages/_app.tsx.
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html>
+    <Html style={{ scrollBehavior: "smooth" }}>
       <Head>
         {/* PWA primary color, background of the page on Safari (cobalt[600]). */}
         <meta name="theme-color" content="2f4356" />

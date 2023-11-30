@@ -28,6 +28,7 @@ import {
   renderNodeRule,
 } from "react-datocms";
 import NextImage from "next/image";
+import { useRouter } from "next/router";
 
 const defaultParagraphTypographyProps = {
   variant: "body1",
@@ -362,9 +363,24 @@ interface HeaderProps {
 
 const Header1 = (props: HeaderProps) => {
   const { id, children } = props;
+  const { asPath, push } = useRouter();
+  const [, hash] = asPath.split("#");
+  const textContent = extractTextContent(children as JSX.Element);
+  const encodedContent = encodeURI(textContent);
   const ref = React.useRef(null);
   const entry = useIntersectionObserver(ref, { rootMargin: "0%", threshold: 1.0 });
   const setSection = useSetAtom(sectionAtom);
+
+  React.useEffect(() => {
+    if (hash === encodedContent) {
+      setTimeout(() => {
+        const elem = document.getElementById(id);
+        const elementPosition = elem?.getBoundingClientRect().top;
+        const offsetPosition = (elementPosition ?? 0) + window.scrollY - 110;
+        window?.scrollTo({ behavior: "smooth", top: offsetPosition });
+      }, 200);
+    }
+  }, [hash, encodedContent, id]);
 
   React.useEffect(() => {
     if (entry?.intersectionRatio === 1.0) {
@@ -373,10 +389,35 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
+    <Typography
+      ref={ref}
+      id={id}
+      variant="h1"
+      component="h1"
+      className={props.className}
+      onClick={() => {
+        const newHashPath = asPath.includes("#")
+          ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
+          : `#${encodedContent}`;
+        push(newHashPath);
+      }}
+    >
       {children}
     </Typography>
   );
+};
+
+const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
+  if (Array.isArray(node)) {
+    return node.map(extractTextContent).join("");
+  }
+  if (typeof node === "string") {
+    return node;
+  }
+  if (typeof node === "object") {
+    return extractTextContent(node?.props.children);
+  }
+  return "";
 };
 
 export default StructuredText;
