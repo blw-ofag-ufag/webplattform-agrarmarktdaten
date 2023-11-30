@@ -132,7 +132,6 @@ export const Table = ({
         row: (props) => {
           const index = props.index;
           const lastItemIndex = loadedRows.length - 2;
-          // console.log("lastItemIndex", lastItemIndex, index);
           if (lastItemIndex === index) {
             return (
               <div ref={lastOptionElementRef}>
