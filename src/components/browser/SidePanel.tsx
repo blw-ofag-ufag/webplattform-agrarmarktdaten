@@ -92,7 +92,7 @@ const SidePanel = ({
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h4">
+            <Typography variant="h2">
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
             <Stack direction="row" gap={0.5} alignItems="center">
