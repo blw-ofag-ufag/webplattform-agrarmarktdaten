@@ -15,6 +15,7 @@ export const ContentDrawer = ({ children, container, ...props }: ContentDrawerPr
           position: "absolute",
           border: "none",
           top: 0,
+          zIndex: 9,
         },
         elevation: 8,
       }}
