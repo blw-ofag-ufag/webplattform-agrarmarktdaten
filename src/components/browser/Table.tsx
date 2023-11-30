@@ -2,7 +2,7 @@ import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
 import { DataGridPro, GridColDef, GridRow, gridClasses, useGridApiRef } from "@mui/x-data-grid-pro";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
 
 const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
@@ -53,6 +53,10 @@ export const Table = ({
   const { classes } = useStyles();
   const [loadedRows, setLoadedRows] = useState<Observation[]>(observations.slice(0, PAGE_SIZE));
   const observer = useRef<IntersectionObserver>();
+
+  useEffect(() => {
+    setLoadedRows(observations.slice(0, PAGE_SIZE));
+  }, [observations]);
 
   const lastOptionElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -115,9 +119,9 @@ export const Table = ({
       disableColumnFilter
       autosizeOnMount
       columnBuffer={Object.keys(dimensions).length}
-      hideFooter={loadedRows.length !== observations.length}
+      hideFooter
       hideFooterPagination
-      hideFooterRowCount={loadedRows.length < observations.length}
+      hideFooterRowCount
       onResize={() => {
         apiRef.current.autosizeColumns({
           includeHeaders: true,

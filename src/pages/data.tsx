@@ -29,6 +29,7 @@ import {
 } from "@/domain/observations";
 import { IcChevronDoubleLeft, IcChevronDoubleRight } from "@/icons/icons-jsx/control";
 import { useFlag } from "@/utils/flags";
+import { s } from "@interactivethings/swiss-federal-ci";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
@@ -125,13 +126,13 @@ const DataBrowser = () => {
           }}
         />
       </Box>
-      <Stack p="24px" pb={0} gap={4} flexGrow={1} minHeight={0}>
-        <Stack height="80px" justifyContent="flex-end">
+      <Stack px={s(8)} gap={4} flexGrow={1} minHeight={0}>
+        <Box mt={s(24)} mb={s(4)}>
           <Box sx={{ width: "55px", height: "3px", backgroundColor: "#000" }} />
-          <Typography variant="h1" sx={{ fontSize: "64px" }}>
+          <Typography variant="display2" component="h1">
             <Trans id="data.hero.title">Data download</Trans>
           </Typography>
-        </Stack>
+        </Box>
         <Stack direction="row" justifyContent="space-between">
           <Stack
             direction="row"
@@ -141,6 +142,7 @@ const DataBrowser = () => {
           >
             <Button
               variant="inline"
+              size="small"
               startIcon={showFilters ? <IcChevronDoubleLeft /> : <IcChevronDoubleRight />}
               onClick={() => setShowFilters(!showFilters)}
             >
