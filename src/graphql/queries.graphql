@@ -813,6 +813,9 @@ fragment InternalLink on RecordInterface {
   ... on InfoPageRecord {
     id
   }
+  ... on PowerBiPageRecord {
+    id
+  }
 }
 
 fragment InternalEmbed on RecordInterface {
