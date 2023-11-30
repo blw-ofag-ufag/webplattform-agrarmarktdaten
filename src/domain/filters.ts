@@ -221,9 +221,11 @@ export const filterDimensionsConfigurationAtom = atom((get) => {
 
   if (!cubeDimensions.isSuccess) return configs;
 
+  console.log(cubeDimensions.data);
   configs["sales-region"] = {
     key: "sales-region",
-    name: cubeDimensions.data.properties[dataDimensions["sales-region"].id].label ?? "sales-region",
+    name:
+      cubeDimensions.data.properties[dataDimensions["sales-region"].id]?.label ?? "sales-region",
     options: cubeDimensions.data.properties?.[dataDimensions["sales-region"].id].values,
     type: "multi" as const,
     search: true,

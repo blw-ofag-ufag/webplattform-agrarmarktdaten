@@ -79,21 +79,26 @@ export const fetchCubes = async () => {
   return cubes;
 };
 
-const measureSchema = z.object({
-  dimension: z
-    .string()
-    .startsWith(amdpMeasure().value)
-    .transform((v) => ns.removeNamespace(v, amdpMeasure)),
-  label: z.string(),
-  description: z.string().optional(),
-  range: z
-    .object({
-      min: z.number(),
-      max: z.number(),
-    })
-    .optional(),
-  type: z.literal("measure").optional(),
-});
+const measureSchema = z
+  .object({
+    dimension: z
+      .string()
+      .startsWith(amdpMeasure().value)
+      .transform((v) => ns.removeNamespace(v, amdpMeasure)),
+    label: z.string().optional(),
+    description: z.string().optional(),
+    range: z
+      .object({
+        min: z.number(),
+        max: z.number(),
+      })
+      .optional(),
+    type: z.literal("measure").optional(),
+  })
+  .transform((v) => ({
+    ...v,
+    label: v.label ?? v.dimension,
+  }));
 
 const propertyRawSchema = z.object({
   dimension: z.string(),
@@ -230,10 +235,12 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   const dimensionsRawParsed = z.array(dimensionSpecSchema).parse(dimensionsRaw);
 
   const measureDim = dimensionsRawParsed.filter(
-    (dim) => dim.type === ns.cube("MeasureDimension").value
+    // dimension type is not properly set in the cube in INT
+    (dim) => dim.type === ns.cube("MeasureDimension").value || dim.dimension.includes("measure")
   );
   const propertyDim = dimensionsRawParsed.filter(
-    (dim) => dim.type === ns.cube("KeyDimension").value
+    // dimension type is not properly set in the cube in INT
+    (dim) => dim.type === ns.cube("KeyDimension").value || dim.dimension.includes("dimension")
   );
 
   const propertiesValues = await fetchSparql(
