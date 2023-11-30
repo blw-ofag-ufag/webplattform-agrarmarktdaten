@@ -11,7 +11,7 @@ import { i18n } from "../src/locales/locales";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: Infinity,
+      staleTime: 1000 * 60 * 5, // 5 minutes
     },
   },
 });

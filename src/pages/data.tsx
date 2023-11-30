@@ -12,8 +12,6 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
 import React, { useEffect, useState } from "react";
 
@@ -22,6 +20,7 @@ import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
 import { cubeDimensionsStatusAtom, visualizeUrlAtom } from "@/domain/cubes";
+import { resetCubeFiltersAtom } from "@/domain/filters";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
@@ -32,7 +31,6 @@ import { useFlag } from "@/utils/flags";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
-import { resetCubeFiltersAtom } from "@/domain/filters";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -41,14 +39,6 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
     },
     secondary: {
       main: blwTheme.palette.grey[400],
-    },
-  },
-});
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
     },
   },
 });
@@ -94,7 +84,6 @@ export default function DataPage(props: GQL.DataPageQuery) {
           </Stack>
         </AppLayout>
       </ThemeProvider>
-      <ReactQueryDevtools client={queryClient} />
     </SafeHydrate>
   );
 }

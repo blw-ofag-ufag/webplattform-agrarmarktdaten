@@ -80,7 +80,6 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
 
         timeFilter: queryTimeFilter,
       }),
-    staleTime: Infinity,
   };
 });
 
