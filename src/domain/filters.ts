@@ -154,7 +154,6 @@ export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery
         cubeIri: cubeIri,
         dimensionIri: dataDimensions.product.iri,
       }),
-    staleTime: Infinity,
   };
 });
 
