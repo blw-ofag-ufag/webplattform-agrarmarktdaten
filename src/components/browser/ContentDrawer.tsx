@@ -1,21 +1,29 @@
 import { Drawer, DrawerProps } from "@mui/material";
 import { PropsWithChildren } from "react";
+import { makeStyles } from "../style-utils";
 
 export type ContentDrawerProps = {
   container: HTMLDivElement | null;
 } & DrawerProps &
   PropsWithChildren;
 
+const useStyles = makeStyles()(() => ({
+  paper: {
+    width: "388px",
+    position: "absolute",
+    border: "none",
+    top: 0,
+    // should be below the header menus
+    zIndex: 9,
+  },
+}));
+
 export const ContentDrawer = ({ children, container, ...props }: ContentDrawerProps) => {
+  const { classes } = useStyles();
   return (
     <Drawer
       PaperProps={{
-        style: {
-          width: "388px",
-          position: "absolute",
-          border: "none",
-          top: 0,
-        },
+        className: classes.paper,
         elevation: 8,
       }}
       hideBackdrop
