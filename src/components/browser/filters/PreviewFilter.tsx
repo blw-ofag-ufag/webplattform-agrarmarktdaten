@@ -13,7 +13,12 @@ const PreviewFilter = ({
   PropsWithChildren) => {
   return (
     <Grow in={show}>
-      <Typography variant="body3" color={tainted ? "grey.800" : "grey.500"} mr={1} {...props}>
+      <Typography
+        variant="body3"
+        color={tainted ? "monochrome.800" : "monochrome.400"}
+        mr={1}
+        {...props}
+      >
         {children}
       </Typography>
     </Grow>
