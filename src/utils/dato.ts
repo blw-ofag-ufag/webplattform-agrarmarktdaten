@@ -9,7 +9,6 @@ import type * as GQL from "@/graphql";
 
 export const internalLinks = [
   "AnalysisPageRecord",
-  "AboutPageRecord",
   "BlogPostRecord",
   "DataPageRecord",
   "FocusArticleRecord",
@@ -27,7 +26,6 @@ export const internalLinks = [
 // like so GQL[(typeof internalLinks)[number]]
 export type InternalLink =
   | GQL.AnalysisPageRecord
-  | GQL.AboutPageRecord
   | GQL.BlogPostRecord
   | GQL.DataPageRecord
   | GQL.FocusArticleRecord

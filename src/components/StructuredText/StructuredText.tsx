@@ -28,7 +28,9 @@ import {
   renderNodeRule,
 } from "react-datocms";
 import NextImage from "next/image";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
+import IcLink from "@/icons/icons-jsx/control/IcLink";
+import slugs from "@/generated/slugs.json";
 
 const defaultParagraphTypographyProps = {
   variant: "body1",
@@ -50,6 +52,7 @@ export const useStructuredTextDebug = () => React.useContext(DebugStructuredText
 const StructuredText = (props: Props) => {
   const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
   const { classes } = useStructuredTextStyles({ debug: props.debug });
+  const router = useRouter();
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
@@ -181,7 +184,7 @@ const StructuredText = (props: Props) => {
             }}
             renderLinkToRecord={({ record: _record, children, transformedMeta }) => {
               const record = _record as InternalLink;
-              const url = getUrl(record) ?? "";
+              const url = getUrl(record, router) ?? "";
               return (
                 <NextLink {...transformedMeta} legacyBehavior href={url}>
                   <Typography
@@ -199,10 +202,11 @@ const StructuredText = (props: Props) => {
             renderBlock={({ record }) => {
               switch (record.__typename) {
                 case "InternalLinkButtonRecord": {
-                  const { label, page } = record as GQL.InternalLinkButtonRecord;
-                  const url = getUrl(page as InternalLink);
-                  return url ? (
-                    <NextLink legacyBehavior href={url} passHref>
+                  const { label, page, anchor } = record as GQL.InternalLinkButtonRecord;
+                  const url = getUrl(page as InternalLink, router);
+                  const fullUrl = anchor ? `${url}#${anchor}` : url;
+                  return fullUrl ? (
+                    <NextLink legacyBehavior href={fullUrl} passHref>
                       <Button variant="inline" className={classes.linkButton}>
                         {label}
                       </Button>
@@ -311,40 +315,38 @@ const StructuredText = (props: Props) => {
   );
 };
 
-const getUrl = (record: InternalLink) => {
+const getUrl = (record: InternalLink, router: NextRouter) => {
+  const localeSlugs = slugs.find(({ locale }) => locale === router.locale)?.slugs;
   switch (record.__typename) {
+    case "HomePageRecord": {
+      return `/`;
+    }
     case "BlogPostRecord": {
       return `/blog/${record.slug}`;
     }
     case "TermsPageRecord": {
-      return `/terms`;
+      return `/${localeSlugs?.terms}`;
     }
     case "MethodsPageRecord": {
-      return `/methods`;
+      return `/${localeSlugs?.methods}`;
     }
     case "MarketArticleRecord": {
-      return `/market/${record.slug}`;
+      return `/${localeSlugs?.market}/${record.slug}`;
     }
     case "LegalPageRecord": {
-      return `/legal`;
+      return `/${localeSlugs?.legal}`;
     }
     case "FocusArticleRecord": {
-      return `/focus/${record.slug}`;
+      return `/${localeSlugs?.focus}/${record.slug}`;
     }
     case "AnalysisPageRecord": {
-      return `/analysis`;
+      return `/${localeSlugs?.analysis}`;
     }
     case "DataPageRecord": {
-      return `/data`;
-    }
-    case "AboutPageRecord": {
-      return `/about`;
-    }
-    case "HomePageRecord": {
-      return `/about`;
+      return `/${localeSlugs?.data}`;
     }
     case "InfoPageRecord": {
-      return `/info`;
+      return `/${localeSlugs?.info}`;
     }
     case "PowerBiPageRecord": {
       return `/power-bi/${record.id}`;
@@ -389,21 +391,30 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography
-      ref={ref}
-      id={id}
-      variant="h1"
-      component="h1"
-      className={props.className}
-      onClick={() => {
-        const newHashPath = asPath.includes("#")
-          ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
-          : `#${encodedContent}`;
-        push(newHashPath);
+    <Box
+      position="relative"
+      sx={{
+        "& > svg": { display: "none" },
+        "&:hover > svg": { display: "block" },
       }}
     >
-      {children}
-    </Typography>
+      <IcLink width={27} height={27} style={{ position: "absolute", top: 5, left: -30 }} />
+      <Typography
+        ref={ref}
+        id={id}
+        variant="h1"
+        component="h1"
+        className={props.className}
+        onClick={() => {
+          const newHashPath = asPath.includes("#")
+            ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
+            : `#${encodedContent}`;
+          push(newHashPath);
+        }}
+      >
+        {children}
+      </Typography>
+    </Box>
   );
 };
 
