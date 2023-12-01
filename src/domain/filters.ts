@@ -221,7 +221,6 @@ export const filterDimensionsConfigurationAtom = atom((get) => {
 
   if (!cubeDimensions.isSuccess) return configs;
 
-  console.log(cubeDimensions.data);
   configs["sales-region"] = {
     key: "sales-region",
     name:
