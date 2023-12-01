@@ -180,7 +180,7 @@ const DownloadMenuItem = ({
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
             valueFormatter({
-              value: dimension.dimension,
+              value: value,
               dimension: dimension.dimension,
               cubeDimensions: dimensions.properties,
               timeView,
@@ -197,13 +197,13 @@ const DownloadMenuItem = ({
     switch (format) {
       case "csv":
         const csv = await workbook.csv.writeBuffer();
-        saveAs(new Blob([csv], { type: "text/csv" }), fileName);
+        saveAs(new Blob([csv], { type: "text/csv;charset=utf-8" }), fileName);
         break;
       case "xlsx":
         const xlsx = await workbook.xlsx.writeBuffer();
         saveAs(
           new Blob([xlsx], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
           }),
           fileName
         );
