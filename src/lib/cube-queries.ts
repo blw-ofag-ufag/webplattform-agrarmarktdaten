@@ -243,6 +243,9 @@ export const queryObservations = ({
     }
     time:hasEnd/time:inXSDDateTimeStamp ?toPeriod .
 
+    ?date time:hasBeginning/time:inXSDDateTimeStamp ?start .
+    ?date time:hasEnd/time:inXSDDateTimeStamp ?end .
+
   
     FILTER (?start >= ?fromPeriod)
     FILTER (?end <= ?toPeriod)`
