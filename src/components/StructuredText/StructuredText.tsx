@@ -150,7 +150,7 @@ const StructuredText = (props: Props) => {
                   const pages =
                     powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
                   return (
-                    <div style={{ position: "relative" }}>
+                    <div style={{ position: "relative", marginBottom: "0.5rem" }}>
                       <PowerBIReport
                         key={record.id}
                         datasetId={powerBiReport.dataset?.datasetId ?? ""}
@@ -207,11 +207,13 @@ const StructuredText = (props: Props) => {
                   const { label, page } = record as GQL.InternalLinkButtonRecord;
                   const url = getUrl(page as InternalLink);
                   return url ? (
-                    <NextLink legacyBehavior href={url} passHref>
-                      <Button variant="inline" className={classes.linkButton}>
-                        {label}
-                      </Button>
-                    </NextLink>
+                    <p className={cx(classes.p, classes.internalLinkParagraph)}>
+                      <NextLink legacyBehavior href={url} passHref>
+                        <Button variant="inline" className={classes.linkButton}>
+                          {label}
+                        </Button>
+                      </NextLink>
+                    </p>
                   ) : null;
                 }
 

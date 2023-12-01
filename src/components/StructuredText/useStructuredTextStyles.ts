@@ -96,6 +96,12 @@ const useStructuredTextStyles = makeStyles<
       color: theme.palette.cobalt[500],
     },
 
+    internalLinkParagraph: {
+      "&&": {
+        margin: 0,
+      },
+    },
+
     externalLink: {
       textDecoration: "none",
       color: "inherit",
