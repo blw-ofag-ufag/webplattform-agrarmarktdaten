@@ -17,18 +17,40 @@ import { Avatars } from "../../components/Avatars";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
 import { makeStyles } from "@/components/style-utils";
 
-const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
+const useStyles = makeStyles()(({ palette: c }) => ({
+  publishedDate: {
+    marginBottom: "2rem",
+  },
+
+  title: {
+    marginBottom: "1.5rem",
+  },
+
+  marketChips: {
+    marginBottom: "2rem",
+  },
+
   chip: {
     backgroundColor: c.cobalt[100],
     color: c.monochrome[800],
     lineHeight: "18px",
     fontSize: "14px",
-    paddingX: "18px",
-    paddingY: "6px",
+  },
+
+  lead: {
+    color: c.monochrome[800],
+    marginBottom: "2.5rem",
+  },
+
+  leadParagraph: {
+    "&&": {
+      fontSize: "20px",
+      lineHeight: "32px",
+    },
   },
 
   authors: {
-    marginTop: s(1),
+    marginBottom: "6rem",
     borderTop: `${c.cobalt[100]} 1px solid`,
     borderBottom: `${c.cobalt[100]} 1px solid`,
     display: "flex",
@@ -36,11 +58,6 @@ const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
     height: "88px",
     alignItems: "center",
     gap: "1rem",
-  },
-
-  lead: {
-    marginTop: s(8),
-    color: c.monochrome[800],
   },
 }));
 
@@ -77,16 +94,27 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
         <div className={layoutClasses.content}>
           <Box sx={{ mb: 10 }}>
             {formattedDate && (
-              <Typography variant="body1" color="monochrome.500" data-datocms-noindex>
+              <Typography
+                variant="body1"
+                color="monochrome.500"
+                data-datocms-noindex
+                className={classes.publishedDate}
+              >
                 <Trans id="blogpost.publishedDate">Published on</Trans>
                 &nbsp;
                 {formattedDate}
               </Typography>
             )}
-            <Typography variant="display2" display="block" fontWeight="regular" my="2rem">
+            <Typography
+              component="h1"
+              variant="display2"
+              display="block"
+              fontWeight="regular"
+              className={classes.title}
+            >
               {blogPost.title}
             </Typography>
-            <Box sx={{ display: "flex", gap: "16px" }}>
+            <Box sx={{ display: "flex", gap: "1rem" }} className={classes.marketChips}>
               {blogPost.markets.map(({ slug, title }) => {
                 return (
                   <MarketChip
@@ -105,7 +133,11 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
               })}
             </Box>
             <div className={classes.lead}>
-              <StructuredText data={blogPost.lead} sx={{ "&&": { pb: "2.5rem" } }} />
+              <StructuredText
+                data={blogPost.lead}
+                paragraphTypographyProps={{ className: classes.leadParagraph }}
+                sx={{ "&&": { pb: 0 } }}
+              />
             </div>
             {blogPost.authors.length > 0 && (
               <div className={classes.authors}>
