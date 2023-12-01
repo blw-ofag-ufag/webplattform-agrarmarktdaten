@@ -61,6 +61,12 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
   fullscreenButton: {
+    position: "absolute",
+    bottom: "-3rem",
+    right: 0,
+    zIndex: 1000,
+    color: theme.palette.cobalt[500],
+    fontWeight: "bold",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
@@ -220,13 +226,6 @@ export const PowerBIReport = (props: {
     <Box position="relative" ref={inViewRef}>
       <Button
         className={cx(inPlaceDialogClasses.hideWhenOpened, classes.fullscreenButton)}
-        sx={{
-          position: "absolute",
-          bottom: "-3rem",
-          right: 0,
-          color: "cobalt.500",
-          fontWeight: "bold",
-        }}
         startIcon={<IcExpand />}
         variant="inline"
         onClick={() => setFullscreen(true)}
