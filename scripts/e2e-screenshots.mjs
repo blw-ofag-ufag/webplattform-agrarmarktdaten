@@ -1,6 +1,8 @@
 import { chromium, devices } from "playwright";
 import { breakpoints } from "@interactivethings/swiss-federal-ci";
 
+const sleep = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
+
 const main = async () => {
   const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
   const browser = await chromium.launch({
@@ -34,7 +36,7 @@ const main = async () => {
         height: 1080,
       });
 
-      await page.waitForLoadState("networkidle");
+      await Promise.race([sleep(10 * 1000), page.waitForLoadState("networkidle")]);
 
       // Take a screenshot and save it with page name and breakpoint name
       const screenshotPath = `screenshots/${pageName}-${name}.png`; // You can adjust the path as needed
