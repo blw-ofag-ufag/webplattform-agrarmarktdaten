@@ -23,19 +23,22 @@ import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
+import jsonpack from "jsonpack";
 
 export const fetchSparql = async (query: string) => {
   const body = JSON.stringify({ query });
   const res = await fetch("/api/sparql", {
     method: "post",
     body,
-  }).then((resp) => {
+  }).then(async (resp) => {
     if (!resp.ok) {
       throw new Error(resp.statusText);
     }
-    return resp.json();
+    const text = await resp.text();
+    const unpack = jsonpack.unpack(text);
+    return unpack;
   });
-  return res;
+  return res as $FixMe;
 };
 
 export type TimeView = "Year" | "Month";
