@@ -73,9 +73,12 @@ export type CubeSpec = z.infer<typeof cubeSpecSchema>;
  */
 export const fetchCubes = async () => {
   console.log("> fetchCubes");
+  const start = performance.now();
   const query = queryCubes();
   const cubesRaw = await fetchSparql(query);
   const cubes = z.array(cubeSpecSchema).parse(cubesRaw);
+  const end = performance.now();
+  console.log(`fetchCubes took ${end - start}ms`);
   return cubes;
 };
 
@@ -154,6 +157,7 @@ const basePropertiesSchema = z.object({
  */
 export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   console.log("> fetchBaseDimensions");
+  const start = performance.now();
   const queryProperties = queryBasePropertyDimensions({
     locale,
     propertiesIri: baseProperties,
@@ -203,6 +207,9 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
     };
   });
 
+  const end = performance.now();
+  console.log(`fetchBaseDimensions took ${end - start}ms`);
+
   return {
     properties,
     measure,
@@ -225,6 +232,7 @@ const dimensionSpecSchema = z.object({
  */
 export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   console.log("> fetchCubeDimensions");
+  const start = performance.now();
   const fullCubeIri = ns.addNamespace(cubeIri);
   const queryDimensions = queryCubeDimensions({
     locale,
@@ -247,7 +255,9 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
     queryPropertyDimensionAndValues({
       locale,
       cubeIri: fullCubeIri,
-      dimensionsIris: propertyDim.map((dim) => dim.dimension),
+      dimensionsIris: propertyDim
+        .map((dim) => dim.dimension)
+        .filter((d) => d !== amdpDimension("date").value),
     })
   );
 
@@ -280,6 +290,9 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
       });
     }),
   ]);
+
+  const end = performance.now();
+  console.log(`fetchCubeDimensions took ${end - start}ms`);
 
   return {
     measures: indexBy(measures, (m) => m.dimension),
@@ -314,6 +327,8 @@ export const fetchObservations = async ({
   measure: { iri: string; key: string };
   timeFilter: TimeFilter;
 }) => {
+  console.log("> fetchObservations");
+  const start = performance.now();
   const fullCubeIri = ns.addNamespace(cubeIri);
 
   const query = queryObservations({
@@ -332,6 +347,9 @@ export const fetchObservations = async ({
 
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
+
+  const end = performance.now();
+  console.log(`fetchObservations took ${end - start}ms`);
 
   return {
     observations,
@@ -368,6 +386,7 @@ export const fetchHierarchy = async ({
   asTree?: boolean;
 }) => {
   console.log("> fetchHierarchy");
+  const start = performance.now();
   const cube = await amdpSource.cube(amdp(cubeIri).value);
 
   if (!cube) {
@@ -415,6 +434,8 @@ export const fetchHierarchy = async ({
 
   const tree = regroupTrees(trees);
 
+  const end = performance.now();
+  console.log(`fetchHierarchy took ${end - start}ms`);
   return tree ?? [];
 };
 
