@@ -1,5 +1,6 @@
 import { CubeDimensions, cubeDimensionsStatusAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
+import { timeViewAtom } from "@/domain/filters";
 import { filteredObservationsAtom, valueFormatter } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
 import { useLocale } from "@/lib/use-locale";
@@ -152,6 +153,7 @@ const DownloadMenuItem = ({
   dataset: Observation[];
 } & MenuItemProps) => {
   const [state, dispatch] = useDataDownloadState();
+  const timeView = useAtomValue(timeViewAtom);
   const locale = useLocale();
 
   const download = useCallback(async () => {
@@ -178,9 +180,10 @@ const DownloadMenuItem = ({
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
             valueFormatter({
-              value: dimension.dimension === "date" ? observation["formatted-date"] : value,
+              value: dimension.dimension,
               dimension: dimension.dimension,
               cubeDimensions: dimensions.properties,
+              timeView,
             }),
           ];
         } else {

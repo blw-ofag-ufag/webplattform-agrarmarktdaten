@@ -354,7 +354,6 @@ export const fetchObservations = async ({
 
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
-  console.log({ observations, observationsRaw });
   const end = performance.now();
   console.log(`fetchObservations took ${end - start}ms`);
   return {
