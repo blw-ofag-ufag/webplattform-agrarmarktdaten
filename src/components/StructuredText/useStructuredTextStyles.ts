@@ -100,6 +100,7 @@ const useStructuredTextStyles = makeStyles<
       "&&": {
         margin: 0,
       },
+      [`& + .${classes.p}:not(&)`]: margins.lg,
     },
 
     externalLink: {
