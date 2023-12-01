@@ -345,6 +345,8 @@ export const fetchObservations = async ({
     timeFilter,
   });
 
+  console.log(query);
+
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
 
