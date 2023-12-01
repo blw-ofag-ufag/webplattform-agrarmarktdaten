@@ -168,8 +168,8 @@ export const queryMeasureDimensionRange = ({
 
 export type TimeFilter =
   | {
-      minDate: string;
-      maxDate: string;
+      minDate: { year: string; month?: string };
+      maxDate: { year: string; month?: string };
       mode: "Year" | "Month";
     }
   | {
@@ -202,7 +202,7 @@ export const queryObservations = ({
   
   SELECT DISTINCT ?observation
     ${dimensions.map((d) => `?${d.key}`).join(" ")} ?measure
-    ?formattedDate
+    ?year ?month
   WHERE {
     GRAPH <${agDataBase}> {
       ${
@@ -224,46 +224,32 @@ export const queryObservations = ({
       ?observation <${measure.iri}> ?measure .
     }
 
-    ?date time:year ?timeYear.
-    
-  	${
-      timeFilter.mode === "Month"
-        ? // There must be a better way to do that but using direct comparison like < "10"^^schema:integer
-          // would not work because the considered order would be lexicographic instead of numerical.
-          // @see https://zulip.zazuko.com/#narrow/stream/40-bafu-ext/topic/temporal.20entities.20.26.20timezones/near/375697
-          `
-      ?date time:month ?timeMonth.
+    ?date time:year ?year.
+    OPTIONAL { ?date time:month ?month. }
 
-      BIND(
-        COALESCE(
-          IF(
-            ?timeMonth = "12"^^schema:Integer ||
-            ?timeMonth = "11"^^schema:Integer ||
-            ?timeMonth = "10"^^schema:Integer, 
-              CONCAT(str(?timeYear), "-", str(?timeMonth)),
-              1/0
-          ),
-          CONCAT(str(?timeYear), "-",   CONCAT("0", str(?timeMonth)))
-        ) AS ?formattedDate
-      )`
-        : `
-      BIND(
-        str(?timeYear) as ?formattedDate
-      )
-    `
-    }
-  
     ${
       timeFilter.minDate && timeFilter.maxDate
-        ? `
-      FILTER (
-        ?formattedDate >= "${timeFilter.minDate}" && ?formattedDate <= "${timeFilter.maxDate}"
-      )
-      `
+        ? `?fromInterval time:year "${timeFilter.minDate.year}"^^schema:Integer ; ${
+            timeFilter.mode === "Month"
+              ? `time:month "${timeFilter.minDate.month}"^^schema:Integer ;`
+              : ""
+          }
+    time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
+      
+    ?toInterval time:year "${timeFilter.maxDate.year}"^^schema:Integer ; ${
+      timeFilter.mode === "Month"
+        ? `time:month "${timeFilter.maxDate.month}"^^schema:Integer ;`
         : ""
     }
+    time:hasEnd/time:inXSDDateTimeStamp ?toPeriod .
 
+  
+    FILTER (?start >= ?fromPeriod)
+    FILTER (?end <= ?toPeriod)`
+        : ""
+    }
     
-  } ORDER BY ?formattedDate
+    
+  } ORDER BY ?year ?month
   `;
 };

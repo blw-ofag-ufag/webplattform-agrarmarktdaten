@@ -11,18 +11,18 @@ import {
 } from "@/lib/cube-queries";
 import { amdp, amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale, defaultLocale } from "@/locales/locales";
+import { toCamelCase, toKebabCase } from "@/utils/stringCase";
 import { regroupTrees } from "@/utils/trees";
 import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
 import { AnyPointer } from "clownface";
 import { groupBy, orderBy, uniqBy } from "lodash";
 import { Source } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
+import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
-import { toCamelCase, toKebabCase } from "@/utils/stringCase";
-import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 
 export const fetchSparql = async (query: string) => {
   const body = JSON.stringify({ query });
@@ -304,14 +304,21 @@ const observationSchema = z
   .object({
     observation: z.string().transform((v) => ns.removeNamespace(v, amdp)),
     measure: z.string().transform((v) => +v),
-    /** The date used to do time filtering */
-    formattedDate: z.string().optional(),
+    year: z.string().transform((v) => +v),
+    month: z
+      .string()
+      .transform((v) => +v)
+      .optional(),
     ...(Object.fromEntries(
       DIMENSIONS.map((d) => {
         return [toCamelCase(d), z.string().transform((v) => ns.removeNamespace(v, amdp))];
       })
     ) as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>),
   })
+  .transform((v) => ({
+    ...v,
+    date: v.month ? `${v.year}-${v.month}` : `${v.year}`,
+  }))
   .transform((v) => mapKeys(v, toKebabCase));
 
 export type Observation = z.infer<typeof observationSchema>;
@@ -345,14 +352,11 @@ export const fetchObservations = async ({
     timeFilter,
   });
 
-  console.log(query);
-
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
-
+  console.log({ observations, observationsRaw });
   const end = performance.now();
   console.log(`fetchObservations took ${end - start}ms`);
-
   return {
     observations,
     query: getSparqlEditorUrl(query),

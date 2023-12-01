@@ -104,8 +104,6 @@ const DataBrowser = () => {
   const resultCount = queriesCompleted ? filteredObservations.length : undefined;
   const debug = useFlag("debug");
 
-  console.log({ observationsQueryAtom });
-
   return (
     <Stack
       direction="row"
