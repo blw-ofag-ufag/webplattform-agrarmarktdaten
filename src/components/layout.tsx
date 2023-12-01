@@ -26,14 +26,6 @@ import { IcInfoCircle } from "@/icons/icons-jsx/control";
 import slugs from "@/generated/slugs.json";
 import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 
-interface Props {
-  children: React.ReactNode;
-  allMarkets?: GQL.SimpleMarketArticleFragment[];
-  allFocusArticles?: GQL.SimpleFocusArticleFragment[];
-  alternates?: { href: string; as: string; locale: string }[];
-  showBackButton?: boolean;
-}
-
 const useStyles = makeStyles()({
   headerContainer: {
     zIndex: 10,
@@ -51,9 +43,25 @@ const useStyles = makeStyles()({
 // Forbid English for the moment
 export const isAuthorizedLocale = (locale: string) => locale !== "en";
 
+interface Props {
+  children: React.ReactNode;
+  allMarkets?: GQL.SimpleMarketArticleFragment[];
+  allFocusArticles?: GQL.SimpleFocusArticleFragment[];
+  alternates?: { href: string; as: string; locale: string }[];
+  showBackButton?: boolean;
+  backButtonColor?: string;
+}
+
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
-  const { children, allMarkets, allFocusArticles, alternates, showBackButton = false } = props;
+  const {
+    children,
+    allMarkets,
+    allFocusArticles,
+    alternates,
+    showBackButton = false,
+    backButtonColor,
+  } = props;
   const theme = useTheme();
   const router = useRouter();
   const stickyRef = useStickyBox({ offsetTop: 0 });
@@ -200,7 +208,7 @@ export const AppLayout = (props: Props) => {
               }}
               data-datocms-noindex
             >
-              <BackButton />
+              <BackButton color={backButtonColor} />
             </GridContainer>
           </div>
         )}
