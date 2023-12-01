@@ -10,12 +10,11 @@ import { StructuredText } from "@/components/StructuredText";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { format } from "date-fns";
 import Chip from "@mui/material/Chip";
-import { Intersperse } from "@/components/Intersperse";
 import { GridContainer } from "@/components/Grid/Grid";
 import { MarketChip } from "@/components/MarketChip";
-import { Avatars } from "../../components/Avatars";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
 import { makeStyles } from "@/components/style-utils";
+import { Authors } from "@/components/Authors";
 
 const useStyles = makeStyles()(({ palette: c }) => ({
   publishedDate: {
@@ -53,11 +52,6 @@ const useStyles = makeStyles()(({ palette: c }) => ({
     marginBottom: "6rem",
     borderTop: `${c.cobalt[100]} 1px solid`,
     borderBottom: `${c.cobalt[100]} 1px solid`,
-    display: "flex",
-    position: "relative",
-    height: "5.5rem",
-    alignItems: "center",
-    gap: "1.25rem",
   },
 }));
 
@@ -140,25 +134,14 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
               />
             </div>
             {blogPost.authors.length > 0 && (
-              <div className={classes.authors}>
-                <Avatars
-                  avatars={blogPost.authors.map((x) => ({
-                    url: x.portrait?.url,
-                    alt: `${x.firstName} ${x.lastName}`,
-                  }))}
-                />
-                <Box display="flex" alignItems="center">
-                  <Intersperse separator=",&nbsp;">
-                    {blogPost.authors.map((author) => {
-                      return (
-                        <Typography variant="body1" key={`${author.firstName} ${author.lastName}`}>
-                          {`${author.firstName} ${author.lastName}`}
-                        </Typography>
-                      );
-                    })}
-                  </Intersperse>
-                </Box>
-              </div>
+              <Authors
+                authors={blogPost.authors.map((x) => ({
+                  img: x.portrait?.url,
+                  firstName: x.firstName,
+                  lastName: x.lastName,
+                }))}
+                className={classes.authors}
+              />
             )}
           </Box>
           {blogPost.content && <StructuredText data={blogPost.content} />}
