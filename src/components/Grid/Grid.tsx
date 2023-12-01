@@ -27,6 +27,7 @@ type BreakpointSpec = {
  * @see https://www.sketch.com/s/81803335-dd26-42f1-a505-6845270a91b7/p/6000F394-096F-4CAD-96D6-3F8056F9DE4B/canvas
  */
 export const specs: Record<Breakpoint, BreakpointSpec> = {
+  // Desktop
   xxxl: {
     totalWidth: 1676,
     offset: 0,
@@ -45,6 +46,7 @@ export const specs: Record<Breakpoint, BreakpointSpec> = {
     rowGutterWidth: 40,
   },
 
+  // Tablet
   xl: {
     totalWidth: 1280,
     offset: 64,
@@ -72,6 +74,7 @@ export const specs: Record<Breakpoint, BreakpointSpec> = {
     rowGutterWidth: 40,
   },
 
+  // Mobile
   sm: {
     totalWidth: 640,
     offset: 35,
