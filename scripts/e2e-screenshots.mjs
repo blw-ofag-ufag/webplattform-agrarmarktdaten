@@ -13,6 +13,7 @@ const main = async () => {
     { route: "/analysis", fullPage: false },
     { route: "/methods", fullPage: false },
     { route: "/legal", fullPage: false },
+    { route: "/markt/milch-und-milchprodukte", fullPage: true },
     { route: "/", fullPage: true },
   ];
 
@@ -37,7 +38,12 @@ const main = async () => {
 
       // Take a screenshot and save it with page name and breakpoint name
       const screenshotPath = `screenshots/${pageName}-${name}.png`; // You can adjust the path as needed
-      await page.screenshot({ path: screenshotPath, fullPage, animations: "disabled" });
+      await page.screenshot({
+        path: screenshotPath,
+        fullPage,
+        animations: "disabled",
+        mask: [page.locator(".powerbi-embed")],
+      });
 
       console.log(`Screenshot taken: ${screenshotPath}`);
     }

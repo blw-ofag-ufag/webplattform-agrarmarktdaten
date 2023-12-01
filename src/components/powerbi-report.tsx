@@ -250,7 +250,12 @@ export const PowerBIReport = (props: {
           ) : null}
           <PowerBIEmbed
             embedConfig={embedConfig}
-            cssClassName={cx(classes.embed, fullscreen ? classes.embedFullscreen : null)}
+            cssClassName={cx(
+              // Class used to hide power bi embeds during playwright screenshots
+              "powerbi-embed",
+              classes.embed,
+              fullscreen ? classes.embedFullscreen : null
+            )}
             getEmbeddedComponent={(embedObject) => {
               setReport(embedObject as Report);
             }}
