@@ -19,10 +19,13 @@ import { Authors } from "@/components/Authors";
 const useStyles = makeStyles()(({ palette: c }) => ({
   publishedDate: {
     marginBottom: "2rem",
+    color: c.monochrome[500],
   },
 
   title: {
     marginBottom: "1.5rem",
+    display: "block",
+    fontWeight: "regular",
   },
 
   marketChips: {
@@ -88,24 +91,13 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
         <div className={layoutClasses.content}>
           <Box sx={{ mb: 10 }}>
             {formattedDate && (
-              <Typography
-                variant="body1"
-                color="monochrome.500"
-                data-datocms-noindex
-                className={classes.publishedDate}
-              >
+              <Typography variant="body1" data-datocms-noindex className={classes.publishedDate}>
                 <Trans id="blogpost.publishedDate">Published on</Trans>
                 &nbsp;
                 {formattedDate}
               </Typography>
             )}
-            <Typography
-              component="h1"
-              variant="display2"
-              display="block"
-              fontWeight="regular"
-              className={classes.title}
-            >
+            <Typography component="h1" variant="display2" className={classes.title}>
               {blogPost.title}
             </Typography>
             <Box sx={{ display: "flex", gap: "1rem" }} className={classes.marketChips}>
