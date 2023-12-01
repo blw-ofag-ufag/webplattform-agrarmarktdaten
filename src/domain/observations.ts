@@ -27,10 +27,9 @@ import {
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
   const [minDate, maxDate] = [dayjs.unix(minUnix), dayjs.unix(maxUnix)];
-  const fmtString = timeView === "Month" ? "YYYY-MM-DD" : "YYYY";
   return {
-    minDate: minDate.format(fmtString),
-    maxDate: maxDate.format(fmtString),
+    minDate: { year: minDate.year().toString(), month: minDate.month().toString() },
+    maxDate: { year: maxDate.year().toString(), month: maxDate.month().toString() },
     mode: timeView,
   };
 };
@@ -80,6 +79,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
 
         timeFilter: queryTimeFilter,
       }),
+    retry: false,
   };
 });
 
@@ -87,12 +87,20 @@ export const valueFormatter = ({
   value,
   dimension,
   cubeDimensions,
+  timeView,
 }: {
   value?: string | number;
   dimension: string;
   cubeDimensions: Record<string, Property | Measure>;
+  timeView?: TimeView;
 }) => {
   const dim = cubeDimensions[dimension];
+  if (dim && dim.dimension === "date") {
+    if (timeView === "Year") {
+      return timeFormat("%Y")(dayjs(value).toDate());
+    }
+    return timeFormat("%m-%Y")(dayjs(value).toDate());
+  }
   if (dim && dim.type === "measure") {
     return isNumber(value) ? format(".2f")(value) : value;
   }
@@ -142,7 +150,6 @@ export const filteredObservationsAtom = atom((get) => {
   const observationsQuery = get(observationsQueryAtom);
   const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
   const timeRange = get(timeRangeAtom);
-  const timeView = get(timeViewAtom);
 
   if (!observationsQuery.data) return [];
 
@@ -157,11 +164,10 @@ export const filteredObservationsAtom = atom((get) => {
     [] as Array<(obs: Observation) => boolean>
   );
 
-  const formatDate = timeView === "Month" ? timeFormat("%Y-%m") : timeFormat("%Y");
-  const [minDate, maxDate] = timeRange.value.map((d) => formatDate(dayjs.unix(d).toDate()));
+  const [minDate, maxDate] = timeRange.value.map((d) => dayjs.unix(d));
   const timeFilterFn = (obs: Observation) => {
-    const formattedDate = obs["formatted-date"];
-    return formattedDate && formattedDate >= minDate && formattedDate <= maxDate;
+    const observationDate = dayjs(obs.date);
+    return observationDate && observationDate >= minDate && observationDate <= maxDate;
   };
 
   const filteredObservations = observationsQuery.data.observations

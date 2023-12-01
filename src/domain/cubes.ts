@@ -4,6 +4,7 @@ import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/ap
 import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
+import { isEmpty } from "lodash";
 
 export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
   queryKey: ["cubes"],
@@ -16,7 +17,7 @@ export const cubePathAtom = atom((get) => {
   const { status, data: allCubes } = get(cubesStatusAtom);
   const filterCubeSelection = get(filterCubeSelectionAtom);
 
-  if (status !== "success") return defaultCube;
+  if (status !== "success" || isEmpty(filterCubeSelection)) return defaultCube;
 
   const cubePath = allCubes.find(
     (cube) =>
@@ -108,6 +109,7 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
 export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((get) => {
   const cubePath = get(cubePathAtom);
   const locale = get(localeAtom);
+
   return {
     queryKey: ["cubeDimensions", cubePath, locale],
     queryFn: () => fetchCubeDimensions(locale, cubePath),

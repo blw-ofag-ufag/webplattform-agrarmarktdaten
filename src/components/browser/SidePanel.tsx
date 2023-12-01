@@ -271,12 +271,8 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 
   useEffect(() => {
     if (observationsQuery.data) {
-      const minDate = minBy(observationsQuery.data.observations, "formatted-date")?.[
-        "formatted-date"
-      ];
-      const maxDate = maxBy(observationsQuery.data.observations, "formatted-date")?.[
-        "formatted-date"
-      ];
+      const minDate = minBy(observationsQuery.data.observations, (d) => dayjs(d.date))?.date;
+      const maxDate = maxBy(observationsQuery.data.observations, (d) => dayjs(d.date))?.date;
 
       const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
       const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;

@@ -100,8 +100,8 @@ export const Observations = () => {
         },
         timeFilter: {
           mode: "Year",
-          minDate: "2000",
-          maxDate: "2003",
+          minDate: { year: "2000" },
+          maxDate: { year: "2003" },
         },
       }),
   });

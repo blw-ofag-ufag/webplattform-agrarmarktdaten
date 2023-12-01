@@ -11,31 +11,34 @@ import {
 } from "@/lib/cube-queries";
 import { amdp, amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { Locale, defaultLocale } from "@/locales/locales";
+import { toCamelCase, toKebabCase } from "@/utils/stringCase";
 import { regroupTrees } from "@/utils/trees";
 import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
 import { AnyPointer } from "clownface";
 import { groupBy, orderBy, uniqBy } from "lodash";
 import { Source } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
+import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
 import { sparqlEndpoint } from "./sparql";
-import { toCamelCase, toKebabCase } from "@/utils/stringCase";
-import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
+import jsonpack from "jsonpack";
 
 export const fetchSparql = async (query: string) => {
   const body = JSON.stringify({ query });
   const res = await fetch("/api/sparql", {
     method: "post",
     body,
-  }).then((resp) => {
+  }).then(async (resp) => {
     if (!resp.ok) {
       throw new Error(resp.statusText);
     }
-    return resp.json();
+    const text = await resp.text();
+    const unpack = jsonpack.unpack(text);
+    return unpack;
   });
-  return res;
+  return res as $FixMe;
 };
 
 export type TimeView = "Year" | "Month";
@@ -73,9 +76,12 @@ export type CubeSpec = z.infer<typeof cubeSpecSchema>;
  */
 export const fetchCubes = async () => {
   console.log("> fetchCubes");
+  const start = performance.now();
   const query = queryCubes();
   const cubesRaw = await fetchSparql(query);
   const cubes = z.array(cubeSpecSchema).parse(cubesRaw);
+  const end = performance.now();
+  console.log(`fetchCubes took ${end - start}ms`);
   return cubes;
 };
 
@@ -154,6 +160,7 @@ const basePropertiesSchema = z.object({
  */
 export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   console.log("> fetchBaseDimensions");
+  const start = performance.now();
   const queryProperties = queryBasePropertyDimensions({
     locale,
     propertiesIri: baseProperties,
@@ -203,6 +210,9 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
     };
   });
 
+  const end = performance.now();
+  console.log(`fetchBaseDimensions took ${end - start}ms`);
+
   return {
     properties,
     measure,
@@ -225,6 +235,7 @@ const dimensionSpecSchema = z.object({
  */
 export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   console.log("> fetchCubeDimensions");
+  const start = performance.now();
   const fullCubeIri = ns.addNamespace(cubeIri);
   const queryDimensions = queryCubeDimensions({
     locale,
@@ -247,7 +258,9 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
     queryPropertyDimensionAndValues({
       locale,
       cubeIri: fullCubeIri,
-      dimensionsIris: propertyDim.map((dim) => dim.dimension),
+      dimensionsIris: propertyDim
+        .map((dim) => dim.dimension)
+        .filter((d) => d !== amdpDimension("date").value),
     })
   );
 
@@ -281,6 +294,9 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
     }),
   ]);
 
+  const end = performance.now();
+  console.log(`fetchCubeDimensions took ${end - start}ms`);
+
   return {
     measures: indexBy(measures, (m) => m.dimension),
     properties: indexBy(properties, (p) => p.dimension),
@@ -291,14 +307,21 @@ const observationSchema = z
   .object({
     observation: z.string().transform((v) => ns.removeNamespace(v, amdp)),
     measure: z.string().transform((v) => +v),
-    /** The date used to do time filtering */
-    formattedDate: z.string().optional(),
+    year: z.string().transform((v) => +v),
+    month: z
+      .string()
+      .transform((v) => +v)
+      .optional(),
     ...(Object.fromEntries(
       DIMENSIONS.map((d) => {
         return [toCamelCase(d), z.string().transform((v) => ns.removeNamespace(v, amdp))];
       })
     ) as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>),
   })
+  .transform((v) => ({
+    ...v,
+    date: v.month ? `${v.year}-${v.month}` : `${v.year}`,
+  }))
   .transform((v) => mapKeys(v, toKebabCase));
 
 export type Observation = z.infer<typeof observationSchema>;
@@ -314,6 +337,8 @@ export const fetchObservations = async ({
   measure: { iri: string; key: string };
   timeFilter: TimeFilter;
 }) => {
+  console.log("> fetchObservations");
+  const start = performance.now();
   const fullCubeIri = ns.addNamespace(cubeIri);
 
   const query = queryObservations({
@@ -332,7 +357,8 @@ export const fetchObservations = async ({
 
   const observationsRaw = await fetchSparql(query);
   const observations = z.array(observationSchema).parse(observationsRaw);
-
+  const end = performance.now();
+  console.log(`fetchObservations took ${end - start}ms`);
   return {
     observations,
     query: getSparqlEditorUrl(query),
@@ -368,6 +394,7 @@ export const fetchHierarchy = async ({
   asTree?: boolean;
 }) => {
   console.log("> fetchHierarchy");
+  const start = performance.now();
   const cube = await amdpSource.cube(amdp(cubeIri).value);
 
   if (!cube) {
@@ -415,6 +442,8 @@ export const fetchHierarchy = async ({
 
   const tree = regroupTrees(trees);
 
+  const end = performance.now();
+  console.log(`fetchHierarchy took ${end - start}ms`);
   return tree ?? [];
 };
 

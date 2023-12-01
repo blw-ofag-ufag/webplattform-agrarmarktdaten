@@ -4,6 +4,8 @@ import { Measure, Observation, Property } from "@/pages/api/data";
 import { DataGridPro, GridColDef, GridRow, gridClasses, useGridApiRef } from "@mui/x-data-grid-pro";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
+import { useAtomValue } from "jotai";
+import { timeViewAtom } from "@/domain/filters";
 
 const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
   dataGrid: {
@@ -53,6 +55,7 @@ export const Table = ({
   const { classes } = useStyles();
   const [loadedRows, setLoadedRows] = useState<Observation[]>(observations.slice(0, PAGE_SIZE));
   const observer = useRef<IntersectionObserver>();
+  const timeView = useAtomValue(timeViewAtom);
 
   useEffect(() => {
     setLoadedRows(observations.slice(0, PAGE_SIZE));
@@ -84,11 +87,7 @@ export const Table = ({
       )
       .map((dimension) => {
         return {
-          field: isMeasure(dimension.dimension)
-            ? "measure"
-            : dimension.dimension === "date"
-            ? "formatted-date"
-            : dimension.dimension,
+          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
           headerName: dimension.label,
           headerAlign:
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
@@ -99,10 +98,11 @@ export const Table = ({
               value: params.value,
               dimension: dimension.dimension,
               cubeDimensions: dimensions,
+              timeView,
             }),
         };
       });
-  }, [dimensions]);
+  }, [dimensions, timeView]);
 
   return (
     <DataGridPro<Observation>
