@@ -34,7 +34,7 @@ const sampleStructuredText = {
             {
               type: "span",
               value:
-                " erhebt der Fachbereich Marktanalysen des Bundesamtes für Landwirtschaft Preise und weitere preisbestimmende Indikatoren (z.B. Mengen) entlang den Lebensmittel-Wertschöpfungsketten von der landwirtschaftlichen Produktion bis zum Konsum. Dabei erfolgen Erhebungen zu nachfolgenden Märkten (vgl. ",
+                " erhebt der Fachbereich Marktanalysen des Bundesamtes für LandwirtschaftLandwirtschaftLandwirtschaftLandwirtschaft Preise und weitere preisbestimmende Indikatoren (z.B. Mengen) entlang den Lebensmittel-Wertschöpfungsketten von der landwirtschaftlichen Produktion bis zum Konsum. Dabei erfolgen Erhebungen zu nachfolgenden Märkten (vgl. ",
             },
             {
               url: "https://www.fedlex.admin.ch/eli/cc/1999/71/de?manifestation=https://fedlex.data.admin.ch/filestore/fedlex.data.admin.ch/eli/cc/1999/71/20170101/de/html/fedlex-data-admin-ch-eli-cc-1999-71-20170101-de-html-4.html",
@@ -106,5 +106,5 @@ export const NamedSection = () => {
 
 export default {
   component: NamedSection,
-  title: "App Components / NamedSection",
+  title: "App Components / NamedCallout",
 };
