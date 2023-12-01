@@ -111,8 +111,11 @@ const SidePanel = ({
               return null;
             }
 
-            const options = config.options.filter((option) => {
-              return availableBaseDimensionsValues[key].options.includes(option.value);
+            const options = config.options.map((option) => {
+              return {
+                ...option,
+                disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
+              };
             });
 
             if (!filterAtom) {

@@ -21,6 +21,7 @@ export type Option = {
   label: string;
   value: string;
   checked?: boolean;
+  disabled?: boolean;
   hierarchy?: {
     ["product-subgroup"]: {
       value?: string;
