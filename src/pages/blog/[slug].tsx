@@ -55,9 +55,9 @@ const useStyles = makeStyles()(({ palette: c }) => ({
     borderBottom: `${c.cobalt[100]} 1px solid`,
     display: "flex",
     position: "relative",
-    height: "88px",
+    height: "5.5rem",
     alignItems: "center",
-    gap: "1rem",
+    gap: "1.25rem",
   },
 }));
 
