@@ -1,6 +1,7 @@
 import { makeStyles } from "@/components/style-utils";
 import { Box } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import { ComponentProps } from "react";
 
 const useStyles = makeStyles()((theme) => ({
   root0: {
@@ -14,20 +15,25 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-export const Avatars: React.FC<{
+export const Avatars = ({
+  avatars,
+  avatarProps,
+}: {
   avatars: { url?: string; alt: string }[];
-}> = ({ avatars }) => {
-  const { classes } = useStyles();
+  avatarProps?: ComponentProps<typeof Avatar>;
+}) => {
+  const { classes, cx } = useStyles();
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       {avatars.map(({ url, alt }, i) => {
         return (
           <Avatar
-            style={{ zIndex: -i }}
             key={`${i}`}
             alt={`${alt}`}
             src={url}
-            className={classes.root0}
+            {...avatarProps}
+            className={cx(classes.root0, avatarProps?.className)}
+            style={{ zIndex: -i, ...avatarProps?.style }}
           />
         );
       })}

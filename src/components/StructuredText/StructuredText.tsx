@@ -29,13 +29,19 @@ import {
 } from "react-datocms";
 import NextImage from "next/image";
 
-const defaultParagraphTypographyProps = {
+type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
+  variant?: string;
+  className?: string;
+  component?: TypographyProps["component"];
+};
+
+const defaultParagraphTypographyProps: ParagraphTypographyProps = {
   variant: "body1",
 };
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
-  paragraphTypographyProps?: TypographyOwnProps & { component?: TypographyProps["component"] };
+  paragraphTypographyProps?: ParagraphTypographyProps;
   debug?: boolean;
   sx?: BoxProps["sx"];
 }
@@ -48,7 +54,7 @@ export const useStructuredTextDebug = () => React.useContext(DebugStructuredText
 
 const StructuredText = (props: Props) => {
   const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
-  const { classes } = useStructuredTextStyles({ debug: props.debug });
+  const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
@@ -128,8 +134,8 @@ const StructuredText = (props: Props) => {
                     /** @ts-ignore */
                     variant="body1"
                     component="p"
-                    className={classes.p}
                     {...paragraphTypographyProps}
+                    className={cx(classes.p, paragraphTypographyProps.className)}
                   >
                     {children}
                   </Typography>
@@ -144,7 +150,7 @@ const StructuredText = (props: Props) => {
                   const pages =
                     powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
                   return (
-                    <div style={{ position: "relative" }}>
+                    <div style={{ position: "relative", marginBottom: "0.5rem" }}>
                       <PowerBIReport
                         key={record.id}
                         datasetId={powerBiReport.dataset?.datasetId ?? ""}
@@ -201,11 +207,13 @@ const StructuredText = (props: Props) => {
                   const { label, page } = record as GQL.InternalLinkButtonRecord;
                   const url = getUrl(page as InternalLink);
                   return url ? (
-                    <NextLink legacyBehavior href={url} passHref>
-                      <Button variant="inline" className={classes.linkButton}>
-                        {label}
-                      </Button>
-                    </NextLink>
+                    <p className={cx(classes.p, classes.internalLinkParagraph)}>
+                      <NextLink legacyBehavior href={url} passHref>
+                        <Button variant="inline" className={classes.linkButton}>
+                          {label}
+                        </Button>
+                      </NextLink>
+                    </p>
                   ) : null;
                 }
 

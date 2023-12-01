@@ -96,6 +96,13 @@ const useStructuredTextStyles = makeStyles<
       color: theme.palette.cobalt[500],
     },
 
+    internalLinkParagraph: {
+      "&&": {
+        margin: 0,
+      },
+      [`& + .${classes.p}:not(&)`]: margins.lg,
+    },
+
     externalLink: {
       textDecoration: "none",
       color: "inherit",
@@ -107,6 +114,7 @@ const useStructuredTextStyles = makeStyles<
     },
 
     p: debugStyle("p", {
+      wordBreak: "break-word",
       "& + & ": margins.lg,
 
       "& ul": {
