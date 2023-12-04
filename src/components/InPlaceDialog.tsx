@@ -7,7 +7,7 @@ import { Trans } from "@lingui/macro";
 
 const IN_PLACE_DIALOG_OPENED = "in-place-dialog-opened";
 
-export const useInPlaceDialogStyles = makeStyles()(() => ({
+export const useInPlaceDialogStyles = makeStyles({ name: "InPlaceDialog" })(() => ({
   hideWhenOpened: {
     [`body.${IN_PLACE_DIALOG_OPENED} &`]: {
       display: "none !important",
