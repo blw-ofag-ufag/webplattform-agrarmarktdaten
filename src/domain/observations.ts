@@ -14,7 +14,7 @@ import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { isNumber, mapValues } from "lodash";
 import { mapToObj } from "remeda";
-import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom } from "./cubes";
+import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
 import {
   RangeOptions,
@@ -52,6 +52,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
 
   const cubePath = get(cubePathAtom);
   const cubes = get(cubesStatusAtom);
+  const lindas = get(lindasAtom);
 
   if (!cubes.isSuccess) return emptyQuery;
   const cubeDefinition = cubes.data.find((cube) => cube.cube === cubePath);
@@ -66,7 +67,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
   const queryTimeFilter = { minDate: null, maxDate: null, mode: timeFilter.mode };
 
   return {
-    queryKey: ["observations", cubePath, queryTimeFilter],
+    queryKey: ["observations", cubePath, lindas.value, queryTimeFilter],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
@@ -76,7 +77,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
         },
         // Filters are done client-side
         filters: {},
-
+        environment: lindas.url,
         timeFilter: queryTimeFilter,
       }),
     retry: false,
