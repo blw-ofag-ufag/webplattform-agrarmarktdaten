@@ -24,7 +24,6 @@ import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
-import { sparqlEndpoint } from "./sparql";
 
 export const fetchSparql = async (query: string, environment: EnvironmentUrl) => {
   const body = JSON.stringify({ query, environment });
@@ -372,26 +371,18 @@ export const fetchObservations = async ({
 
   const observationsRaw = await fetchSparql(query, environment);
   const observations = z.array(observationSchema).parse(observationsRaw);
+
   const end = performance.now();
   console.log(`fetchObservations took ${end - start}ms`);
   return {
     observations,
-    query: getSparqlEditorUrl(query),
+    query: getSparqlEditorUrl(query, environment),
   };
 };
 
-export const getSparqlEditorUrl = (query: string): string => {
-  return `${sparqlEndpoint}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
+export const getSparqlEditorUrl = (query: string, enviroment: EnvironmentUrl): string => {
+  return `${enviroment}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
 };
-
-const amdpSource = new Source({
-  endpointUrl: `${sparqlEndpoint}/query`,
-  sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
-});
-
-const sparqlClient = new StreamClient({
-  endpointUrl: `${sparqlEndpoint}/query`,
-});
 
 /**
  *
@@ -402,13 +393,25 @@ export const fetchHierarchy = async ({
   cubeIri,
   dimensionIri,
   locale,
+  environment,
 }: {
   cubeIri: string;
   dimensionIri: string;
   locale: Locale;
+  environment: EnvironmentUrl;
   asTree?: boolean;
 }) => {
   console.log("> fetchHierarchy");
+
+  const amdpSource = new Source({
+    endpointUrl: `${environment}/query`,
+    sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
+  });
+
+  const sparqlClient = new StreamClient({
+    endpointUrl: `${environment}/query`,
+  });
+
   const start = performance.now();
   const cube = await amdpSource.cube(amdp(cubeIri).value);
 

@@ -14,7 +14,10 @@ type EnvironmentDescription = {
   value: Environment;
 };
 
-export type EnvironmentUrl = "test.lindas.admin.ch" | "int.lindas.admin.ch" | "lindas.admin.ch";
+export type EnvironmentUrl =
+  | "https://test.lindas.admin.ch"
+  | "https://int.lindas.admin.ch"
+  | "https://lindas.admin.ch";
 export type Environment = "test" | "int" | "prod";
 
 export const environments = environmentsJson as Record<Environment, EnvironmentDescription>;

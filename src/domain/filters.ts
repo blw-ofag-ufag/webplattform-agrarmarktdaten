@@ -13,6 +13,7 @@ import {
   cubePathAtom,
   cubesStatusAtom,
   defaultCube,
+  lindasAtom,
 } from "./cubes";
 import { CubeDimension, Dimension, dataDimensions } from "./dimensions";
 import { t } from "@lingui/macro";
@@ -153,6 +154,7 @@ export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery
         locale,
         cubeIri: cubeIri,
         dimensionIri: dataDimensions.product.iri,
+        environment: get(lindasAtom).url,
       }),
   };
 });

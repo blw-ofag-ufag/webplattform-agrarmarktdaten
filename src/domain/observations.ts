@@ -189,6 +189,7 @@ export const observationsSparqlQueryAtom = atom((get) => {
   const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
   const cubeIri = get(cubePathAtom);
   const fullCubeIri = addNamespace(cubeIri);
+  const lindas = get(lindasAtom);
   const cubes = get(cubesStatusAtom);
   if (!cubes.isSuccess) return undefined;
 
@@ -224,5 +225,5 @@ export const observationsSparqlQueryAtom = atom((get) => {
     timeFilter,
   });
 
-  return getSparqlEditorUrl(query);
+  return getSparqlEditorUrl(query, lindas.url);
 });
