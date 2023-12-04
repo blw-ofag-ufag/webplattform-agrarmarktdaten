@@ -33,6 +33,7 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
+import EnvSwitch from "@/components/browser/EnvSwitch";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -55,6 +56,7 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 
 export default function DataPage(props: GQL.DataPageQuery) {
   const { dataPage, allMarketArticles, allFocusArticles } = props;
+  const showEnvironments = useFlag("environments");
 
   const alternates = dataPage?._allSlugLocales?.map((loc) => ({
     href: "/data",
@@ -70,6 +72,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
         >
+          {showEnvironments && <EnvSwitch />}
           <DataBrowser />
         </AppLayout>
       </ThemeProvider>
