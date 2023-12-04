@@ -34,6 +34,7 @@ import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
 import EnvSwitch from "@/components/browser/EnvSwitch";
+import { isUndefined } from "lodash";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -159,7 +160,7 @@ const DataBrowser = () => {
               {(observationsQueryStatus.isLoading || cubeDimensions.isLoading) && (
                 <Trans id="data.filters.loading">Loading </Trans>
               )}
-              {resultCount && (
+              {!isUndefined(resultCount) && (
                 <>
                   {`${resultCount} ${t({
                     id: "data.filters.results",

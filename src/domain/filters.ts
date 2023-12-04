@@ -208,6 +208,8 @@ export const productOptionsWithHierarchyAtom = atom((get) => {
 
   const cubeProducts = cubeDimensions.data.properties["product"]?.values;
 
+  if (!cubeProducts) return [];
+
   return getProductOptionsWithHierarchy(hierarchy.data, cubeProducts);
 });
 
@@ -227,7 +229,7 @@ export const filterDimensionsConfigurationAtom = atom((get) => {
     key: "sales-region",
     name:
       cubeDimensions.data.properties[dataDimensions["sales-region"].id]?.label ?? "sales-region",
-    options: cubeDimensions.data.properties?.[dataDimensions["sales-region"].id].values,
+    options: cubeDimensions.data.properties?.[dataDimensions["sales-region"].id]?.values ?? [],
     type: "multi" as const,
     search: true,
     groups: undefined,
@@ -235,7 +237,7 @@ export const filterDimensionsConfigurationAtom = atom((get) => {
 
   configs["product"] = {
     key: "product",
-    name: cubeDimensions.data.properties?.[dataDimensions.product.id].label ?? "product",
+    name: cubeDimensions.data.properties?.[dataDimensions.product.id]?.label ?? "product",
     options: productOptions,
     type: "multi" as const,
     groups: [
@@ -265,7 +267,7 @@ export const filterDimensionsSelectionAtom = atom((get) => {
     filters["sales-region"] = filterMultiHashAtomFamily({
       key: "sales-region",
       options: filterDimensionsConfiguration["sales-region"]?.options ?? [],
-      defaultOptions: cubeDimension.data.properties["sales-region"].values,
+      defaultOptions: cubeDimension.data.properties["sales-region"]?.values ?? [],
     });
   }
 
