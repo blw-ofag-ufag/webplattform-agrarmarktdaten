@@ -44,6 +44,13 @@ const useStyles = makeStyles()((theme) => ({
     display: "flex",
     flexDirection: "column",
     flexGrow: 1,
+
+    // Give some space to the fullscreen button
+    paddingBottom: "3rem",
+    [theme.breakpoints.down("sm")]: {
+      paddingBottom: 0,
+    },
+
     "& iframe": {
       border: "none",
     },
@@ -62,7 +69,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   fullscreenButton: {
     position: "absolute",
-    bottom: "-3rem",
+    bottom: "0rem",
     right: 0,
     zIndex: 1000,
     color: theme.palette.cobalt[500],
