@@ -177,7 +177,7 @@ msgstr "Daten herunterladen"
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.title"
-msgstr "Download dataset"
+msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -268,7 +268,7 @@ msgstr "Mehr erfahren"
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.loading"
-msgstr "Loading"
+msgstr "Laden"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -322,6 +322,16 @@ msgid "homepage.section.latestBlogPosts"
 msgstr "Analysen"
 
 #. js-lingui-explicit-id
+#: src/components/browser/Table.tsx
+msgid "data.table.empty"
+msgstr "Keine Ergebnisse"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "data.metadata.nodata"
+msgstr "No metadata available"
+
+#. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Search.tsx
 msgid "search.noOptions"
 msgstr "Keine Optionen"
@@ -355,7 +365,7 @@ msgstr "Zurücksetzen"
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "cta.reset-filters"
-msgstr "Reset Filters"
+msgstr "Filter zurücksetzen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx

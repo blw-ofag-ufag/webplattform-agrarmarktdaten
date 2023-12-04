@@ -9,6 +9,7 @@ import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
+import { isEmpty } from "lodash";
 
 export function MetadataPanel({
   dimensions,
@@ -46,6 +47,14 @@ export function MetadataContent({ dimensions }: { dimensions: CubeDimensions }) 
   >();
 
   const flatDimensions = { ...dimensions.properties, ...dimensions.measures };
+
+  if (isEmpty(flatDimensions)) {
+    return (
+      <Typography variant="body2">
+        <Trans id="data.metadata.nodata">No metadata available</Trans>
+      </Typography>
+    );
+  }
 
   return (
     <Stack>

@@ -1,0 +1,17 @@
+{
+  "test": {
+    "value": "test",
+    "label": "TEST",
+    "url": "https://test.lindas.admin.ch"
+  },
+  "int": {
+    "value": "int",
+    "label": "INT",
+    "url": "https://int.lindas.admin.ch"
+  },
+  "prod": {
+    "value": "prod",
+    "label": "PROD",
+    "url": "https://lindas.admin.ch"
+  }
+}

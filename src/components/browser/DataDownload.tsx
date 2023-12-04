@@ -72,6 +72,7 @@ export default function DataDownload() {
   const anchorRef = useRef<HTMLButtonElement>(null);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const dimensions = useAtomValue(cubeDimensionsStatusAtom);
+
   return (
     <DataDownloadStateProvider>
       <PopupState variant="popover" popupId="data-download-popup">
@@ -81,6 +82,7 @@ export default function DataDownload() {
               ref={anchorRef}
               size="small"
               startIcon={<IcControlDownload />}
+              disabled={filteredObservations.length === 0}
               {...bindToggle(popupState)}
             >
               <Trans id="data.actions.download">Data download</Trans>

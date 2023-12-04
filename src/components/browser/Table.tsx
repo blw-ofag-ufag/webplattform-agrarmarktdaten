@@ -6,6 +6,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
 import { useAtomValue } from "jotai";
 import { timeViewAtom } from "@/domain/filters";
+import { Stack, Typography } from "@mui/material";
+import { Trans } from "@lingui/macro";
 
 const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
   dataGrid: {
@@ -129,6 +131,13 @@ export const Table = ({
         });
       }}
       slots={{
+        noRowsOverlay: () => (
+          <Stack height="100%" justifyContent="center" alignItems="center">
+            <Typography variant="body2">
+              <Trans id="data.table.empty">No data</Trans>
+            </Typography>
+          </Stack>
+        ),
         row: (props) => {
           const index = props.index;
           const lastItemIndex = loadedRows.length - 2;

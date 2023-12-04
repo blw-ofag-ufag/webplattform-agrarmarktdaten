@@ -1,3 +1,4 @@
+import { EnvironmentUrl } from "@/domain/cubes";
 import { DIMENSIONS, Dimension, dataDimensions } from "@/domain/dimensions";
 import {
   TimeFilter,
@@ -15,6 +16,7 @@ import { toCamelCase, toKebabCase } from "@/utils/stringCase";
 import { regroupTrees } from "@/utils/trees";
 import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
 import { AnyPointer } from "clownface";
+import jsonpack from "jsonpack";
 import { groupBy, orderBy, uniqBy } from "lodash";
 import { Source } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
@@ -22,11 +24,9 @@ import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
-import { sparqlEndpoint } from "./sparql";
-import jsonpack from "jsonpack";
 
-export const fetchSparql = async (query: string) => {
-  const body = JSON.stringify({ query });
+export const fetchSparql = async (query: string, environment: EnvironmentUrl) => {
+  const body = JSON.stringify({ query, environment });
   const res = await fetch("/api/sparql", {
     method: "post",
     body,
@@ -74,11 +74,11 @@ export type CubeSpec = z.infer<typeof cubeSpecSchema>;
 /**
  * Fetches the list of available cubes.
  */
-export const fetchCubes = async () => {
+export const fetchCubes = async (environment: EnvironmentUrl) => {
   console.log("> fetchCubes");
   const start = performance.now();
   const query = queryCubes();
-  const cubesRaw = await fetchSparql(query);
+  const cubesRaw = await fetchSparql(query, environment);
   const cubes = z.array(cubeSpecSchema).parse(cubesRaw);
   const end = performance.now();
   console.log(`fetchCubes took ${end - start}ms`);
@@ -158,7 +158,13 @@ const basePropertiesSchema = z.object({
  * Therefore these do not depend on the cube itself.
  * Measure dimensions returned do not include min/max values, as these are cube-specific.
  */
-export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
+export const fetchBaseDimensions = async ({
+  locale,
+  environment,
+}: {
+  locale: Locale;
+  environment: EnvironmentUrl;
+}) => {
   console.log("> fetchBaseDimensions");
   const start = performance.now();
   const queryProperties = queryBasePropertyDimensions({
@@ -171,8 +177,8 @@ export const fetchBaseDimensions = async ({ locale }: { locale: Locale }) => {
   });
 
   const [propertiesRaw, measuresRaw] = await Promise.all([
-    fetchSparql(queryProperties),
-    fetchSparql(queryMeasures),
+    fetchSparql(queryProperties, environment),
+    fetchSparql(queryMeasures, environment),
   ]);
 
   const propertiesRawParsed = z.array(propertyRawSchema).parse(propertiesRaw);
@@ -233,7 +239,11 @@ const dimensionSpecSchema = z.object({
  * Fetches the dimensions of a cube. This includes the min/max values for measure dimensions, and
  * the values for property dimensions.
  */
-export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
+export const fetchCubeDimensions = async (
+  locale: Locale,
+  environment: EnvironmentUrl,
+  cubeIri: string
+) => {
   console.log("> fetchCubeDimensions");
   const start = performance.now();
   const fullCubeIri = ns.addNamespace(cubeIri);
@@ -242,7 +252,7 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
     cubeIri: fullCubeIri,
   });
 
-  const dimensionsRaw = await fetchSparql(queryDimensions);
+  const dimensionsRaw = await fetchSparql(queryDimensions, environment);
   const dimensionsRawParsed = z.array(dimensionSpecSchema).parse(dimensionsRaw);
 
   const measureDim = dimensionsRawParsed.filter(
@@ -261,7 +271,8 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
       dimensionsIris: propertyDim
         .map((dim) => dim.dimension)
         .filter((d) => d !== amdpDimension("date").value),
-    })
+    }),
+    environment
   );
 
   const propertyValuesPerDimension = groupBy(propertiesValues, "dimension");
@@ -280,7 +291,8 @@ export const fetchCubeDimensions = async (locale: Locale, cubeIri: string) => {
   const measures = await Promise.all([
     ...measureDim.map(async (dim) => {
       const range = await fetchSparql(
-        queryMeasureDimensionRange({ locale, cubeIri: fullCubeIri, dimensionIri: dim.dimension })
+        queryMeasureDimensionRange({ locale, cubeIri: fullCubeIri, dimensionIri: dim.dimension }),
+        environment
       );
 
       return measureSchema.parse({
@@ -331,11 +343,13 @@ export const fetchObservations = async ({
   filters = {},
   measure,
   timeFilter,
+  environment,
 }: {
   cubeIri: string;
   filters: Record<string, string[]>;
   measure: { iri: string; key: string };
   timeFilter: TimeFilter;
+  environment: EnvironmentUrl;
 }) => {
   console.log("> fetchObservations");
   const start = performance.now();
@@ -355,28 +369,20 @@ export const fetchObservations = async ({
     timeFilter,
   });
 
-  const observationsRaw = await fetchSparql(query);
+  const observationsRaw = await fetchSparql(query, environment);
   const observations = z.array(observationSchema).parse(observationsRaw);
+
   const end = performance.now();
   console.log(`fetchObservations took ${end - start}ms`);
   return {
     observations,
-    query: getSparqlEditorUrl(query),
+    query: getSparqlEditorUrl(query, environment),
   };
 };
 
-export const getSparqlEditorUrl = (query: string): string => {
-  return `${sparqlEndpoint}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
+export const getSparqlEditorUrl = (query: string, enviroment: EnvironmentUrl): string => {
+  return `${enviroment}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
 };
-
-const amdpSource = new Source({
-  endpointUrl: `${sparqlEndpoint}/query`,
-  sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
-});
-
-const sparqlClient = new StreamClient({
-  endpointUrl: `${sparqlEndpoint}/query`,
-});
 
 /**
  *
@@ -387,13 +393,25 @@ export const fetchHierarchy = async ({
   cubeIri,
   dimensionIri,
   locale,
+  environment,
 }: {
   cubeIri: string;
   dimensionIri: string;
   locale: Locale;
+  environment: EnvironmentUrl;
   asTree?: boolean;
 }) => {
   console.log("> fetchHierarchy");
+
+  const amdpSource = new Source({
+    endpointUrl: `${environment}/query`,
+    sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
+  });
+
+  const sparqlClient = new StreamClient({
+    endpointUrl: `${environment}/query`,
+  });
+
   const start = performance.now();
   const cube = await amdpSource.cube(amdp(cubeIri).value);
 

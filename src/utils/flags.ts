@@ -3,6 +3,8 @@ import { createComponents, createHooks } from "src/flags";
 export const specs = {
   /** Activates debug mode */
   debug: {},
+  /** Enables enviroment selection */
+  environments: {},
 } as const;
 
 const keysAsValues = <R extends Record<string | number | symbol, unknown>>(record: R) =>
@@ -28,6 +30,10 @@ if (typeof window !== "undefined") {
   // Development flags
   if (process.env.NODE_ENV === "development") {
     flag.enable([["debug", true]]);
+  }
+
+  if (process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_VERCEL_ENV === "preview") {
+    flag.enable([["environments", true]]);
   }
 }
 
