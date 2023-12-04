@@ -17,12 +17,20 @@ import { useIsDesktop, useIsMobile, useIsTablet } from "@/components/Grid/Grid";
 import slugs from "@/generated/slugs.json";
 import { useRouter } from "next/router";
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
   },
-});
+  wrapElement: {
+    [theme.breakpoints.only("lg")]: { width: "50%" },
+    [theme.breakpoints.only("md")]: { width: "50%" },
+  },
+  wrapElementInner: {
+    [theme.breakpoints.only("lg")]: { marginRight: "20px" },
+    [theme.breakpoints.only("md")]: { marginRight: "18px" },
+  },
+}));
 
 export const TopBlogpostsTeaser = (
   props: { blogposts: GQL.SimpleBlogPostFragment[] } & React.HTMLProps<HTMLDivElement>
@@ -57,35 +65,13 @@ export const TopBlogpostsTeaser = (
         if (blogposts[i + 1]) {
           cards.push(
             <Box key={i} display="flex">
-              <GridWrapElement
-                key={blogposts[i].id}
-                sx={{
-                  [theme.breakpoints.only("lg")]: { width: "50%" },
-                  [theme.breakpoints.only("md")]: { width: "50%" },
-                }}
-              >
-                <Box
-                  sx={{
-                    [theme.breakpoints.only("lg")]: { mr: "20px" },
-                    [theme.breakpoints.only("md")]: { mr: "18px" },
-                  }}
-                >
+              <GridWrapElement key={blogposts[i].id} className={classes.wrapElement}>
+                <Box className={classes.wrapElementInner}>
                   <BlogpostCard {...blogposts[i]} />
                 </Box>
               </GridWrapElement>
-              <GridWrapElement
-                key={blogposts[i + 1].id}
-                sx={{
-                  [theme.breakpoints.only("lg")]: { width: "50%" },
-                  [theme.breakpoints.only("md")]: { width: "50%" },
-                }}
-              >
-                <Box
-                  sx={{
-                    [theme.breakpoints.only("lg")]: { ml: "20px" },
-                    [theme.breakpoints.only("md")]: { ml: "18px" },
-                  }}
-                >
+              <GridWrapElement key={blogposts[i + 1].id} className={classes.wrapElement}>
+                <Box className={classes.wrapElementInner}>
                   <BlogpostCard {...blogposts[i + 1]} />
                 </Box>
               </GridWrapElement>
@@ -93,19 +79,8 @@ export const TopBlogpostsTeaser = (
           );
         } else {
           cards.push(
-            <GridWrapElement
-              key={blogposts[i].id}
-              sx={{
-                [theme.breakpoints.only("lg")]: { width: "50%" },
-                [theme.breakpoints.only("md")]: { width: "50%" },
-              }}
-            >
-              <Box
-                sx={{
-                  [theme.breakpoints.only("lg")]: { mr: "20px" },
-                  [theme.breakpoints.only("md")]: { mr: "18px" },
-                }}
-              >
+            <GridWrapElement key={blogposts[i].id} className={classes.wrapElement}>
+              <Box className={classes.wrapElementInner}>
                 <BlogpostCard {...blogposts[i]} />
               </Box>
             </GridWrapElement>
