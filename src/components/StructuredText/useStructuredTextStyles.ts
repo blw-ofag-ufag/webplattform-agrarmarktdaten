@@ -14,7 +14,7 @@ const debugStyles = {
  */
 const useStructuredTextStyles = makeStyles<
   { debug?: boolean },
-  "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "ul"
+  "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "ul" | "powerbiReportContainer"
 >()((theme, { debug }, classes) => {
   const debugStyle = (name: string, rules: Record<string, CSSInterpolation>) => {
     return {
@@ -101,6 +101,17 @@ const useStructuredTextStyles = makeStyles<
         margin: 0,
       },
       [`& + .${classes.p}:not(&)`]: margins.lg,
+
+      [`.${classes.powerbiReportContainer} + &`]: {
+        // Put the internal link paragraph at the same level as the fullscreen button
+        // of the PowerBI report
+        marginTop: "-3rem",
+
+        [theme.breakpoints.down("sm")]: {
+          // Remove margin since fullscreen button is not shown in mobile
+          marginTop: 0,
+        },
+      },
     },
 
     externalLink: {
@@ -111,6 +122,12 @@ const useStructuredTextStyles = makeStyles<
     imageTitle: {
       marginTop: theme.spacing(3),
       color: theme.palette.monochrome[500],
+    },
+
+    powerbiReportContainer: {
+      position: "relative",
+      marginBottom: 12,
+      marginTop: 12,
     },
 
     p: debugStyle("p", {

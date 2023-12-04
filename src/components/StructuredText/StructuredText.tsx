@@ -50,6 +50,23 @@ const DebugStructuredText = React.createContext({
   debug: false as boolean | undefined,
 });
 
+const hasReactChildClassName = (child: React.ReactNode, className: string) => {
+  if (React.isValidElement(child) && "props" in child) {
+    const childProps = child.props;
+    if (
+      childProps &&
+      typeof childProps === "object" &&
+      "className" in childProps &&
+      childProps.className &&
+      typeof childProps.className === "string" &&
+      childProps.className.includes(className)
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const useStructuredTextDebug = () => React.useContext(DebugStructuredText);
 
 const StructuredText = (props: Props) => {
@@ -128,6 +145,21 @@ const StructuredText = (props: Props) => {
                 return <List className={classes.ul}>{children}</List>;
               }),
               renderNodeRule(isParagraph, ({ children, key }) => {
+                /**
+                 * If the only child of a paragraph is a PowerBI report, then we do not render the paragraph,
+                 * but only the report. This is so that we can target the internal links internalLinkParagraph
+                 * that could be below a report, and adjust their margin so that they are at the same level
+                 * as the fullscreen button of the report.
+                 * In the future, it could be good to reflect, on whether the internal links below a report should
+                 * not belong to the PowerBI report model, so that their rendering is done inside the PowerBI
+                 * component. This would remove the need for such hacks.
+                 */
+                if (children?.length === 1) {
+                  const child = children[0];
+                  if (hasReactChildClassName(child, classes.powerbiReportContainer)) {
+                    return <>{child}</>;
+                  }
+                }
                 return (
                   <Typography
                     key={key}
@@ -150,7 +182,7 @@ const StructuredText = (props: Props) => {
                   const pages =
                     powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
                   return (
-                    <div style={{ position: "relative", marginBottom: "0.5rem" }}>
+                    <div className={classes.powerbiReportContainer}>
                       <PowerBIReport
                         key={record.id}
                         datasetId={powerBiReport.dataset?.datasetId ?? ""}
