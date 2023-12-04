@@ -1,4 +1,4 @@
-import environmentsJson from "@/assets/lindas.json";
+import environmentsJson from "@/domain/lindas.json";
 import { amdp } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/api/data";

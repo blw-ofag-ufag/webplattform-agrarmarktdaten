@@ -32,7 +32,7 @@ if (typeof window !== "undefined") {
     flag.enable([["debug", true]]);
   }
 
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV === "development" || process.env.NEXT_PUBLIC_VERCEL_ENV === "preview") {
     flag.enable([["environments", true]]);
   }
 }
