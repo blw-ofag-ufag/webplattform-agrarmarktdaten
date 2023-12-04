@@ -7,7 +7,7 @@ import { MetadataContent } from "./MetadataPanel";
 export const Metadata = () => {
   const dimensions = useQuery({
     queryKey: ["dimensions", defaultCube, "de"],
-    queryFn: () => fetchCubeDimensions("de", defaultCube),
+    queryFn: () => fetchCubeDimensions("de", "int.lindas.admin.ch", defaultCube),
   });
   return (
     <Stack gap={2}>
