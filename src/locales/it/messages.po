@@ -71,7 +71,7 @@ msgstr "{0} di {1}"
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.count"
-msgstr ""
+msgstr "{filteredChangedCount, plural, one {filtro applicato} other {filtri applicati}}"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -177,7 +177,7 @@ msgstr "Scarica i dati"
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.title"
-msgstr ""
+msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -268,7 +268,7 @@ msgstr "Per saperne di più"
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.loading"
-msgstr ""
+msgstr "Caricamento"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -322,6 +322,16 @@ msgid "homepage.section.latestBlogPosts"
 msgstr "Analisi"
 
 #. js-lingui-explicit-id
+#: src/components/browser/Table.tsx
+msgid "data.table.empty"
+msgstr "Nessun risultato"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "data.metadata.nodata"
+msgstr "Nessun risultato di metadati"
+
+#. js-lingui-explicit-id
 #: src/components/BlogpostGrid/internal/Search.tsx
 msgid "search.noOptions"
 msgstr "Nessuna opzione"
@@ -355,7 +365,7 @@ msgstr "Reset"
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "cta.reset-filters"
-msgstr ""
+msgstr "Ripristino dei filtri"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
