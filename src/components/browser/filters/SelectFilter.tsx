@@ -162,6 +162,7 @@ export default function Select<T extends Option>({
       ...option,
       checked: values.some((v) => v.value === option.value),
     }));
+
     const tree = stratify(optionsWithChecked, groups || []);
 
     return propagateValueInTree(allItemsTree, tree, "total");
@@ -332,6 +333,12 @@ const SelectItem = <T extends ScoredOption>({
 
   const values = getValues(node);
 
+  const sortedChildren = useMemo(() => {
+    return node.children.sort((a, b) => a.id.localeCompare(b.id));
+  }, [node.children]);
+
+  console.log(sortedChildren);
+
   return (
     <Accordion
       expanded={expanded}
@@ -374,7 +381,7 @@ const SelectItem = <T extends ScoredOption>({
       </AccordionSummary>
       <AccordionDetails>
         <Stack>
-          {node.children.map((child) => (
+          {sortedChildren.map((child) => (
             <SelectItem
               node={child}
               key={child.id}
