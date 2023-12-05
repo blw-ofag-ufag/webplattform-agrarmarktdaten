@@ -74,7 +74,7 @@ export function MetadataContent({ dimensions }: { dimensions: CubeDimensions }) 
             </Box>
           </>
         ) : (
-          <Stack gap={4}>
+          <Stack gap={6}>
             {Object.entries(flatDimensions).map(([key, value]) => {
               return (
                 <DataDimensionItem
