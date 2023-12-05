@@ -186,7 +186,9 @@ const useStructuredTextStyles = makeStyles<
     },
     h1Icon: debugStyle("h1Icon", {
       marginLeft: "-27px",
-      marginTop: "5px",
+      minWidth: "27px",
+      [theme.breakpoints.up("xxl")]: { marginTop: "10px" },
+      [theme.breakpoints.down("xxl")]: { marginTop: "5px" },
     }),
     h1Wrapper: debugStyle("h1Wrapper", {
       scrollMarginTop: "110px",
