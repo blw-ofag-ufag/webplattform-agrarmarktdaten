@@ -191,7 +191,6 @@ const useStructuredTextStyles = makeStyles<
       [theme.breakpoints.down("xxl")]: { marginTop: "5px" },
     }),
     h1Wrapper: debugStyle("h1Wrapper", {
-      scrollMarginTop: "110px",
       display: "flex",
       cursor: "pointer",
       [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
