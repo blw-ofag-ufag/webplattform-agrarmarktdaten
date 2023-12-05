@@ -109,7 +109,11 @@ export default function TimeFilter({
         fullWidth
         value={view}
         exclusive
-        onChange={(_, value) => onChangeView(value)}
+        onChange={(_, value) => {
+          if (value) {
+            onChangeView(value);
+          }
+        }}
       >
         <ToggleButton value="Year">
           <Trans id="data.filters.year">Year</Trans>
