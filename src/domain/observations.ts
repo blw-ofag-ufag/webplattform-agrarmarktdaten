@@ -116,13 +116,17 @@ export const valueFormatter = ({
   if (dim && dim.type === "measure") {
     if (!isNumber(value)) return value;
     if (dim.dimension !== "quantity") {
-      const formatter = match(locale)
-        .with("de", () => formatLocale(localeDE as FormatLocaleDefinition))
-        .with("fr", () => formatLocale(localeFR as FormatLocaleDefinition))
-        .with("it", () => formatLocale(localeIT as FormatLocaleDefinition))
-        .otherwise(() => formatLocale(localeDE as FormatLocaleDefinition));
+      const formatLocaleDef = match(locale)
+        .with("de", () => localeDE)
+        .with("fr", () => localeFR)
+        .with("it", () => localeIT)
+        .otherwise(() => localeDE);
+
+      const formatter = formatLocale(formatLocaleDef as FormatLocaleDefinition);
+
       return formatter.format(`.2f`)(value);
     }
+
     return millify(value, {
       locales: locale,
       precision: 2,

@@ -105,11 +105,6 @@ export const Table = ({
       sort: "desc",
     },
   ]);
-  const [loadedRows, setLoadedRows] = useState<Observation[]>(
-    observations.sort((a, b) => compareDates(a.date, b.date, "desc")).slice(0, PAGE_SIZE)
-  );
-  const observer = useRef<IntersectionObserver>();
-  const timeView = useAtomValue(timeViewAtom);
 
   const getObservationPage = useCallback(
     (pageSize: number) => {
@@ -124,6 +119,10 @@ export const Table = ({
   useEffect(() => {
     setLoadedRows(getObservationPage(PAGE_SIZE));
   }, [getObservationPage]);
+
+  const [loadedRows, setLoadedRows] = useState<Observation[]>(getObservationPage(PAGE_SIZE));
+  const observer = useRef<IntersectionObserver>();
+  const timeView = useAtomValue(timeViewAtom);
 
   const lastOptionElementRef = useCallback(
     (node: HTMLDivElement) => {
