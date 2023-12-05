@@ -30,6 +30,7 @@ import {
   useState,
 } from "react";
 import { mapToObj } from "remeda";
+import ActionButton from "./ActionButton";
 
 const FILE_FORMATS = ["csv", "xlsx", "json"] as const;
 export type FileFormat = (typeof FILE_FORMATS)[number];
@@ -78,15 +79,14 @@ export default function DataDownload() {
       <PopupState variant="popover" popupId="data-download-popup">
         {(popupState) => (
           <>
-            <Button
+            <ActionButton
               ref={anchorRef}
-              size="small"
               startIcon={<IcControlDownload />}
               disabled={filteredObservations.length === 0}
               {...bindToggle(popupState)}
             >
               <Trans id="data.actions.download">Data download</Trans>
-            </Button>
+            </ActionButton>
             <HoverMenu
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               transformOrigin={{ vertical: "top", horizontal: "center" }}
