@@ -157,15 +157,6 @@ export const Table = ({
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           align:
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
-          sortComparator: (v1, v2, param1, param2) => {
-            if (param1.field === param2.field && param1.field === "date") {
-              return dayjs(v1).isAfter(dayjs(v2)) ? 1 : -1;
-            }
-            if (param1.field === param2.field && param1.field === "measure") {
-              return v1 - v2;
-            }
-            return v1.localeCompare(v2);
-          },
           valueFormatter: (params) =>
             valueFormatter({
               value: params.value,

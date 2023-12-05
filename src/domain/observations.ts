@@ -125,6 +125,7 @@ export const valueFormatter = ({
     }
     return millify(value, {
       locales: locale,
+      precision: 2,
       space: true,
     });
   }
