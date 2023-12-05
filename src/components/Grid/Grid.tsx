@@ -215,14 +215,16 @@ export const GridWrap = ({ children, sx, ...rest }: Props) => {
   );
 };
 
-export const GridWrapElement = ({ children, sx, full, ...rest }: Props & { full?: boolean }) => {
-  const { classes } = useGridElementStyles({ full });
-  return (
-    <Box {...rest} className={classes.gridElement} sx={sx}>
-      {children}
-    </Box>
-  );
-};
+export const GridWrapElement = React.forwardRef(
+  ({ children, sx, full, ...rest }: Props & { full?: boolean }, ref) => {
+    const { classes } = useGridElementStyles({ full });
+    return (
+      <Box {...rest} ref={ref} className={classes.gridElement} sx={sx}>
+        {children}
+      </Box>
+    );
+  }
+);
 
 /**
  * For compatibility with swiss-federal-ci. Return value should be passed to ContentWrapperProps,

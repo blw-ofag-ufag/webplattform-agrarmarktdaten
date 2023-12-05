@@ -219,20 +219,19 @@ const DataBrowser = () => {
             )}
           </>
         </Paper>
-
-        {cubeDimensions.isSuccess && showMetadataPanel && (
-          <MetadataPanel
-            dimensions={cubeDimensions.data}
-            open={showMetadataPanel}
-            onClose={() => setShowMetadataPanel(false)}
-            slots={{
-              drawer: {
-                container: contentRef.current,
-              },
-            }}
-          />
-        )}
       </Stack>
+      {cubeDimensions.isSuccess && showMetadataPanel && (
+        <MetadataPanel
+          dimensions={cubeDimensions.data}
+          open={showMetadataPanel}
+          onClose={() => setShowMetadataPanel(false)}
+          slots={{
+            drawer: {
+              container: contentRef.current,
+            },
+          }}
+        />
+      )}
     </Stack>
   );
 };
