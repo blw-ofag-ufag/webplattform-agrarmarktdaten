@@ -146,7 +146,6 @@ const useStructuredTextStyles = makeStyles<
     }),
     h1: debugStyle("h1", {
       fontWeight: 700,
-      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
     }),
     h2: debugStyle("h2", {
       fontWeight: 700,
@@ -193,10 +192,11 @@ const useStructuredTextStyles = makeStyles<
       scrollMarginTop: "110px",
       display: "flex",
       cursor: "pointer",
+      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
       "& > svg": { display: "none" },
       "&:hover > svg": { display: "block" },
 
-      marginBottom: theme.spacing(3),
+      marginBottom: theme.spacing(5),
     }),
   };
 });
