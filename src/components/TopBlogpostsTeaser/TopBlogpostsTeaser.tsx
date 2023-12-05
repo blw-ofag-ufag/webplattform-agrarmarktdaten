@@ -11,7 +11,7 @@ import { makeStyles } from "@/components/style-utils";
 import { useIsDesktop, useIsMobile, useIsTablet } from "@/components/Grid/Grid";
 import slugs from "@/generated/slugs.json";
 import { useRouter } from "next/router";
-import { Carousel } from "./Carousel";
+import { Carousel } from "../Carousel";
 
 const useStyles = makeStyles()(() => ({
   container: {

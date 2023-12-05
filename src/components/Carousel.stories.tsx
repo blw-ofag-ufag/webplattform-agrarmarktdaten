@@ -1,5 +1,5 @@
 import { Box, Card, Fade, Theme, Typography, useMediaQuery } from "@mui/material";
-import { Carousel as CarouselComponent } from "@/components/TopBlogpostsTeaser/Carousel";
+import { Carousel as CarouselComponent } from "@/components/Carousel";
 
 export const Carousel = () => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
@@ -24,5 +24,6 @@ export const Carousel = () => {
 };
 
 export default {
+  title: "App components / Carousel",
   component: CarouselComponent,
 };
