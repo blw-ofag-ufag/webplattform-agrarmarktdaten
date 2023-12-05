@@ -93,10 +93,10 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
               (c) =>
                 (filterCubeSelection.measure
                   ? c.measure === get(filterCubeSelection.measure)?.value
-                  : true) &&
+                  : false) &&
                 (filterCubeSelection.market
                   ? c.market === get(filterCubeSelection.market)?.value
-                  : true)
+                  : false)
             )
             .map((c) => c.valueChain)
         : [],
@@ -108,10 +108,10 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
               (c) =>
                 (filterCubeSelection.measure
                   ? c.measure === get(filterCubeSelection.measure)?.value
-                  : true) &&
+                  : false) &&
                 (filterCubeSelection["value-chain"]
                   ? c.valueChain === get(filterCubeSelection["value-chain"])?.value
-                  : true)
+                  : false)
             )
             .map((c) => c.market)
         : [],
@@ -123,10 +123,10 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
               (c) =>
                 (filterCubeSelection.market
                   ? c.market === get(filterCubeSelection.market)?.value
-                  : true) &&
+                  : false) &&
                 (filterCubeSelection["value-chain"]
                   ? c.valueChain === get(filterCubeSelection["value-chain"])?.value
-                  : true)
+                  : false)
             )
             .map((c) => c.measure)
         : [],
