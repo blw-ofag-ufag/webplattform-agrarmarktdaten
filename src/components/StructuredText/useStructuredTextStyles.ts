@@ -187,6 +187,7 @@ const useStructuredTextStyles = makeStyles<
     },
     h1Icon: debugStyle("h1Icon", { position: "absolute", top: 10, left: -30 }),
     h1Wrapper: debugStyle("h1Wrapper", {
+      scrollMarginTop: "110px",
       cursor: "pointer",
       "& > svg": { display: "none" },
       "&:hover > svg": { display: "block" },

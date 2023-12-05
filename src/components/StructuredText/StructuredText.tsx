@@ -407,7 +407,6 @@ interface HeaderProps {
 const Header1 = (props: HeaderProps) => {
   const { id, children } = props;
   const { asPath, push } = useRouter();
-  const [, hash] = asPath.split("#");
   const textContent = extractTextContent(children as JSX.Element);
   const encodedContent = encodeURI(textContent);
   const ref = React.useRef(null);
@@ -416,24 +415,13 @@ const Header1 = (props: HeaderProps) => {
   const { classes } = useStructuredTextStyles({});
 
   React.useEffect(() => {
-    if (hash === encodedContent) {
-      setTimeout(() => {
-        const elem = document.getElementById(id);
-        const elementPosition = elem?.getBoundingClientRect().top;
-        const offsetPosition = (elementPosition ?? 0) + window.scrollY - 110;
-        window?.scrollTo({ behavior: "smooth", top: offsetPosition });
-      }, 200);
-    }
-  }, [hash, encodedContent, id]);
-
-  React.useEffect(() => {
     if (entry?.intersectionRatio === 1.0) {
       setSection(id);
     }
   }, [entry, setSection, id]);
 
   return (
-    <Box position="relative" className={classes.h1Wrapper}>
+    <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
       <IcLink width={27} height={27} className={classes.h1Icon} />
       <Typography
         ref={ref}
