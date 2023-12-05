@@ -1,5 +1,6 @@
 import { CubeDimensions } from "@/domain/cubes";
 import { Dimension, Measure } from "@/domain/dimensions";
+import { IcChevronDoubleRight } from "@/icons/icons-jsx/control";
 import SvgIcControlArrowLeft from "@/icons/icons-jsx/control/IcControlArrowLeft";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { Property as DimensionData, Measure as MeasureData } from "@/pages/api/data";
@@ -8,7 +9,7 @@ import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
-import IcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
+import { isEmpty } from "lodash";
 
 export function MetadataPanel({
   dimensions,
@@ -25,15 +26,15 @@ export function MetadataPanel({
 }) {
   return (
     <ContentDrawer anchor="right" open={open} onClose={onClose} {...slots.drawer}>
+      <Stack direction="row" justifyContent="space-between" px={4} py={6}>
+        <Typography variant="h2">
+          <Trans id="data.metadata.title">Metadata</Trans>
+        </Typography>
+        <IconButton onClick={onClose}>
+          <IcChevronDoubleRight />
+        </IconButton>
+      </Stack>
       <Box px={4} py={5}>
-        <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h3">
-            <Trans id="data.metadata.title">Metadata</Trans>
-          </Typography>
-          <IconButton onClick={onClose}>
-            <IcControlArrowRight />
-          </IconButton>
-        </Stack>
         <MetadataContent dimensions={dimensions} />
       </Box>
     </ContentDrawer>
@@ -46,6 +47,14 @@ export function MetadataContent({ dimensions }: { dimensions: CubeDimensions }) 
   >();
 
   const flatDimensions = { ...dimensions.properties, ...dimensions.measures };
+
+  if (isEmpty(flatDimensions)) {
+    return (
+      <Typography variant="body2">
+        <Trans id="data.metadata.nodata">No metadata available</Trans>
+      </Typography>
+    );
+  }
 
   return (
     <Stack>

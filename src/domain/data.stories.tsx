@@ -55,7 +55,7 @@ export const CubeDimensions = () => {
 
   const dimensions = useQuery({
     queryKey: ["dimensions", cube, locale],
-    queryFn: () => fetchCubeDimensions(locale, cube),
+    queryFn: () => fetchCubeDimensions(locale, "https://int.lindas.admin.ch", cube),
   });
 
   return (
@@ -100,15 +100,16 @@ export const Observations = () => {
         },
         timeFilter: {
           mode: "Year",
-          minDate: "2000",
-          maxDate: "2003",
+          minDate: { year: "2000" },
+          maxDate: { year: "2003" },
         },
+        environment: "https://int.lindas.admin.ch",
       }),
   });
 
   const dimensions = useQuery({
     queryKey: ["dimensions", cube],
-    queryFn: () => fetchCubeDimensions("de", cube),
+    queryFn: () => fetchCubeDimensions("de", "https://int.lindas.admin.ch", cube),
   });
 
   const columns: GridColDef[] = useMemo(() => {
@@ -185,12 +186,13 @@ export const Hierarchy = () => {
         cubeIri: cube,
         dimensionIri: amdpDimension("product").value,
         locale: "de",
+        environment: "https://int.lindas.admin.ch",
       }),
   });
 
   const dimensions = useQuery({
     queryKey: ["dimensions", cube, "de"],
-    queryFn: () => fetchCubeDimensions("de", cube),
+    queryFn: () => fetchCubeDimensions("de", "https://int.lindas.admin.ch", cube),
   });
 
   const productList = useMemo(() => {

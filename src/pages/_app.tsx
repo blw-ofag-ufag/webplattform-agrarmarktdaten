@@ -16,10 +16,23 @@ import { Provider } from "jotai";
 import { queryClientAtom } from "jotai-tanstack-query";
 import { useHydrateAtoms } from "jotai/react/utils";
 import { PropsWithChildren } from "react";
+import { LicenseInfo } from "@mui/x-license-pro";
 
 setupMatomo();
 
-const queryClient = new QueryClient();
+// https://mui.com/x/introduction/licensing/#next-js-pages
+LicenseInfo.setLicenseKey(
+  "849fcc78978d14fbb154f3821cb4e283Tz03NjgxMCxFPTE3MjkyNTY4NjkwMDAsUz1wcm8sTE09cGVycGV0dWFsLEtWPTI="
+);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    },
+  },
+});
+
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 

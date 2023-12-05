@@ -2,26 +2,33 @@ import * as React from "react";
 import { Typography, Box } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
 
-const useNamedCalloutStyles = makeStyles()(({ palette: c }) => ({
+const useNamedCalloutStyles = makeStyles()(({ palette: c, breakpoints: b }) => ({
   root: {
     position: "relative",
     paddingTop: "1rem",
+    "--px": "4.375rem",
+    "--py": "3rem",
+    "--border-size": "4px",
+    [b.down("md")]: {
+      "--px": "1.25rem",
+      "--py": "2rem",
+    },
   },
 
   content: {
-    border: `${c.cobalt[100]} 4px solid`,
+    border: `${c.cobalt[100]} var(--border-size) solid`,
     borderRadius: "12px",
     backgroundColor: `${c.cobalt[50]}`,
-    paddingLeft: "4.375rem",
-    paddingRight: "4.375rem",
-    paddingBottom: "3rem",
-    paddingTop: "3rem",
+    paddingLeft: "var(--px)",
+    paddingRight: "var(--px)",
+    paddingBottom: "var(--py)",
+    paddingTop: "var(--py)",
   },
 
   legend: {
     position: "absolute",
     top: 0,
-    left: 80,
+    left: "calc(var(--px) + var(--border-size))",
     backgroundColor: c.cobalt[100],
     width: "fit-content",
     borderRadius: "9999px",

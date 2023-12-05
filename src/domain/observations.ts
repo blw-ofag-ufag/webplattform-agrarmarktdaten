@@ -14,7 +14,7 @@ import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { isNumber, mapValues } from "lodash";
 import { mapToObj } from "remeda";
-import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom } from "./cubes";
+import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
 import {
   RangeOptions,
@@ -27,10 +27,9 @@ import {
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
   const [minDate, maxDate] = [dayjs.unix(minUnix), dayjs.unix(maxUnix)];
-  const fmtString = timeView === "Month" ? "YYYY-MM-DD" : "YYYY";
   return {
-    minDate: minDate.format(fmtString),
-    maxDate: maxDate.format(fmtString),
+    minDate: { year: minDate.year().toString(), month: minDate.month().toString() },
+    maxDate: { year: maxDate.year().toString(), month: maxDate.month().toString() },
     mode: timeView,
   };
 };
@@ -53,6 +52,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
 
   const cubePath = get(cubePathAtom);
   const cubes = get(cubesStatusAtom);
+  const lindas = get(lindasAtom);
 
   if (!cubes.isSuccess) return emptyQuery;
   const cubeDefinition = cubes.data.find((cube) => cube.cube === cubePath);
@@ -67,7 +67,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
   const queryTimeFilter = { minDate: null, maxDate: null, mode: timeFilter.mode };
 
   return {
-    queryKey: ["observations", cubePath, queryTimeFilter],
+    queryKey: ["observations", cubePath, lindas.value, queryTimeFilter],
     queryFn: () =>
       fetchObservations({
         cubeIri: cubeDefinition.cube,
@@ -77,10 +77,10 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
         },
         // Filters are done client-side
         filters: {},
-
+        environment: lindas.url,
         timeFilter: queryTimeFilter,
       }),
-    staleTime: Infinity,
+    retry: false,
   };
 });
 
@@ -88,12 +88,20 @@ export const valueFormatter = ({
   value,
   dimension,
   cubeDimensions,
+  timeView,
 }: {
   value?: string | number;
   dimension: string;
   cubeDimensions: Record<string, Property | Measure>;
+  timeView?: TimeView;
 }) => {
   const dim = cubeDimensions[dimension];
+  if (dim && dim.dimension === "date") {
+    if (timeView === "Year") {
+      return timeFormat("%Y")(dayjs(value).toDate());
+    }
+    return timeFormat("%m-%Y")(dayjs(value).toDate());
+  }
   if (dim && dim.type === "measure") {
     return isNumber(value) ? format(".2f")(value) : value;
   }
@@ -143,7 +151,6 @@ export const filteredObservationsAtom = atom((get) => {
   const observationsQuery = get(observationsQueryAtom);
   const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
   const timeRange = get(timeRangeAtom);
-  const timeView = get(timeViewAtom);
 
   if (!observationsQuery.data) return [];
 
@@ -158,11 +165,10 @@ export const filteredObservationsAtom = atom((get) => {
     [] as Array<(obs: Observation) => boolean>
   );
 
-  const formatDate = timeView === "Month" ? timeFormat("%Y-%m") : timeFormat("%Y");
-  const [minDate, maxDate] = timeRange.value.map((d) => formatDate(dayjs.unix(d).toDate()));
+  const [minDate, maxDate] = timeRange.value.map((d) => dayjs.unix(d));
   const timeFilterFn = (obs: Observation) => {
-    const formattedDate = obs["formatted-date"];
-    return formattedDate && formattedDate >= minDate && formattedDate <= maxDate;
+    const observationDate = dayjs(obs.date);
+    return observationDate && observationDate >= minDate && observationDate <= maxDate;
   };
 
   const filteredObservations = observationsQuery.data.observations
@@ -183,6 +189,7 @@ export const observationsSparqlQueryAtom = atom((get) => {
   const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
   const cubeIri = get(cubePathAtom);
   const fullCubeIri = addNamespace(cubeIri);
+  const lindas = get(lindasAtom);
   const cubes = get(cubesStatusAtom);
   if (!cubes.isSuccess) return undefined;
 
@@ -218,5 +225,5 @@ export const observationsSparqlQueryAtom = atom((get) => {
     timeFilter,
   });
 
-  return getSparqlEditorUrl(query);
+  return getSparqlEditorUrl(query, lindas.url);
 });

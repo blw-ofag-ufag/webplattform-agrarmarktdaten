@@ -12,8 +12,6 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useAtomValue } from "jotai";
 import React, { useEffect, useState } from "react";
 
@@ -21,7 +19,9 @@ import DataDownload from "@/components/browser/DataDownload";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
+import { makeStyles } from "@/components/style-utils";
 import { cubeDimensionsStatusAtom, visualizeUrlAtom } from "@/domain/cubes";
+import { resetCubeFiltersAtom } from "@/domain/filters";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
@@ -29,10 +29,12 @@ import {
 } from "@/domain/observations";
 import { IcChevronDoubleLeft, IcChevronDoubleRight } from "@/icons/icons-jsx/control";
 import { useFlag } from "@/utils/flags";
+import { s } from "@interactivethings/swiss-federal-ci";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import DebugDataPage from "../components/DebugDataPage";
-import { resetCubeFiltersAtom } from "@/domain/filters";
+import EnvSwitch from "@/components/browser/EnvSwitch";
+import { isUndefined } from "lodash";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -41,14 +43,6 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
     },
     secondary: {
       main: blwTheme.palette.grey[400],
-    },
-  },
-});
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: Infinity,
     },
   },
 });
@@ -63,6 +57,7 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 
 export default function DataPage(props: GQL.DataPageQuery) {
   const { dataPage, allMarketArticles, allFocusArticles } = props;
+  const showEnvironments = useFlag("environments");
 
   const alternates = dataPage?._allSlugLocales?.map((loc) => ({
     href: "/data",
@@ -78,28 +73,27 @@ export default function DataPage(props: GQL.DataPageQuery) {
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
         >
-          <Stack flexGrow={1} minHeight={0}>
-            <Box
-              zIndex={0}
-              display="flex"
-              flexGrow={1}
-              minHeight={0}
-              sx={{
-                borderTop: "1px solid",
-                borderColor: "grey.300",
-              }}
-            >
-              <DataBrowser />
-            </Box>
-          </Stack>
+          {showEnvironments && <EnvSwitch />}
+          <DataBrowser />
         </AppLayout>
       </ThemeProvider>
-      <ReactQueryDevtools client={queryClient} />
     </SafeHydrate>
   );
 }
 
+const useStyles = makeStyles()(() => ({
+  paper: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexGrow: 1,
+    minHeight: 0,
+    display: "flex",
+    position: "relative",
+  },
+}));
+
 const DataBrowser = () => {
+  const { classes } = useStyles();
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const [showFilters, setShowFilters] = useState(true);
   const contentRef = React.useRef<HTMLDivElement>(null);
@@ -115,7 +109,14 @@ const DataBrowser = () => {
   const debug = useFlag("debug");
 
   return (
-    <Stack direction="row" width="100%" ref={contentRef}>
+    <Stack
+      direction="row"
+      width="100vw"
+      ref={contentRef}
+      bgcolor="cobalt.50"
+      flexGrow={1}
+      minWidth={0}
+    >
       {debug ? <DebugDataPage /> : null}
 
       <Box width={showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
@@ -129,13 +130,13 @@ const DataBrowser = () => {
           }}
         />
       </Box>
-      <Stack bgcolor="cobalt.50" flexGrow={1} minWidth={0} p="24px" gap={4}>
-        <Stack height="80px" justifyContent="flex-end">
+      <Stack px={s(8)} gap={4} flexGrow={1} minHeight={0}>
+        <Box mt={s(24)} mb={s(4)}>
           <Box sx={{ width: "55px", height: "3px", backgroundColor: "#000" }} />
-          <Typography variant="h1" sx={{ fontSize: "64px" }}>
+          <Typography variant="display2" component="h1">
             <Trans id="data.hero.title">Data download</Trans>
           </Typography>
-        </Stack>
+        </Box>
         <Stack direction="row" justifyContent="space-between">
           <Stack
             direction="row"
@@ -145,6 +146,7 @@ const DataBrowser = () => {
           >
             <Button
               variant="inline"
+              size="small"
               startIcon={showFilters ? <IcChevronDoubleLeft /> : <IcChevronDoubleRight />}
               onClick={() => setShowFilters(!showFilters)}
             >
@@ -158,7 +160,7 @@ const DataBrowser = () => {
               {(observationsQueryStatus.isLoading || cubeDimensions.isLoading) && (
                 <Trans id="data.filters.loading">Loading </Trans>
               )}
-              {resultCount && (
+              {!isUndefined(resultCount) && (
                 <>
                   {`${resultCount} ${t({
                     id: "data.filters.results",
@@ -196,19 +198,10 @@ const DataBrowser = () => {
           </Stack>
         </Stack>
 
-        <Box flexGrow={1} minHeight={0} sx={{ overflowY: "auto" }}>
-          <Paper
-            elevation={4}
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <>
-              {observationsQueryStatus.isSuccess && cubeDimensions.isSuccess ? (
+        <Paper elevation={3} className={classes.paper}>
+          <>
+            {observationsQueryStatus.isSuccess && cubeDimensions.isSuccess ? (
+              <Box sx={{ position: "absolute", inset: 0 }}>
                 <Table
                   observations={filteredObservations}
                   dimensions={{
@@ -216,18 +209,19 @@ const DataBrowser = () => {
                     ...cubeDimensions.data.properties,
                   }}
                 />
-              ) : (
-                <Stack gap={2} alignItems="center">
-                  <CircularProgress size={24} />
-                  <Typography variant="h5" fontWeight="normal">
-                    <Trans id="data.loading.info">Loading data...</Trans>
-                  </Typography>
-                </Stack>
-              )}
-            </>
-          </Paper>
-        </Box>
-        {cubeDimensions.isSuccess && (
+              </Box>
+            ) : (
+              <Stack gap={2} alignItems="center">
+                <CircularProgress size={24} />
+                <Typography variant="h5" fontWeight="normal">
+                  <Trans id="data.loading.info">Loading data...</Trans>
+                </Typography>
+              </Stack>
+            )}
+          </>
+        </Paper>
+
+        {cubeDimensions.isSuccess && showMetadataPanel && (
           <MetadataPanel
             dimensions={cubeDimensions.data}
             open={showMetadataPanel}

@@ -359,14 +359,16 @@ const SelectItem = <T extends ScoredOption>({
             )
           }
           label={
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <Typography variant="body2">{node.value?.label || node.id}</Typography>
+            <span>
+              <Typography display="inline" variant="body2">
+                {node.value?.label || node.id}
+              </Typography>
               {isSearch && (
-                <Typography variant="body2" color="grey.600">
+                <Typography ml={2} display="inline" variant="body2" color="monochrome.500">
                   {t({ id: "filters.select.total", message: `(${node.total} total)` })}
                 </Typography>
               )}
-            </Stack>
+            </span>
           }
         />
       </AccordionSummary>

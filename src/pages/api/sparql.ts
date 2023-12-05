@@ -1,15 +1,11 @@
 import { Stream } from "stream";
 
-import { Literal } from "@rdfjs/types";
+import { Literal, Quad } from "@rdfjs/types";
 import { NextApiRequest, NextApiResponse } from "next";
+import jsonpack from "jsonpack";
+
 // @ts-ignore
 import ParsingClient from "sparql-http-client";
-
-export const sparqlEndpoint = "https://test.lindas.admin.ch";
-
-const client = new ParsingClient({
-  endpointUrl: `${sparqlEndpoint}/query`,
-});
 
 const parseRdf = (obj: Record<string, Literal | NamedNode>) => {
   const res = {} as Record<string, string>;
@@ -39,7 +35,7 @@ const streamAsPromise = (s: Stream) => {
   });
 };
 
-const select = async (query: string) => {
+const select = async (query: string, client: ParsingClient<Quad>) => {
   const stream = await client.query.select(query, {
     operation: "postUrlencoded",
   });
@@ -49,8 +45,14 @@ const select = async (query: string) => {
 
 const serve = async (req: NextApiRequest, res: NextApiResponse) => {
   const options = req.body ? JSON.parse(req.body) : {};
+
+  const client = new ParsingClient({
+    endpointUrl: `${options.environment}/query`,
+  });
+
   res.setHeader("Content-type", "application/json");
-  res.end(JSON.stringify((await select(options.query)).map((row) => parseRdf(row))));
+  const body = JSON.stringify((await select(options.query, client)).map((row) => parseRdf(row)));
+  res.end(jsonpack.pack(body));
 };
 
 export default serve;

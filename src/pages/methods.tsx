@@ -16,7 +16,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
     return null;
   }
   const alternates = methodsPage?._allSlugLocales?.map((loc) => ({
-    href: "/legal",
+    href: "/methods",
     as: `/${loc.value}`,
     locale: loc.locale as string,
   }));

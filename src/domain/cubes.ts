@@ -1,15 +1,47 @@
+import environmentsJson from "@/domain/lindas.json";
 import { amdp } from "@/lib/namespace";
 import { localeAtom } from "@/lib/use-locale";
 import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/api/data";
 import { atom } from "jotai";
+import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
+import { isEmpty } from "lodash";
 import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
 
-export const [cubesAtom, cubesStatusAtom] = atomsWithQuery(() => ({
-  queryKey: ["cubes"],
-  queryFn: () => fetchCubes(),
-  staleTime: Infinity,
-}));
+type EnvironmentDescription = {
+  label: string;
+  url: EnvironmentUrl;
+  value: Environment;
+};
+
+export type EnvironmentUrl =
+  | "https://test.lindas.admin.ch"
+  | "https://int.lindas.admin.ch"
+  | "https://lindas.admin.ch";
+export type Environment = "test" | "int" | "prod";
+
+export const environments = environmentsJson as Record<Environment, EnvironmentDescription>;
+
+export const lindasAtom = atomWithHash("lindas", environments.int, {
+  serialize: (value) => {
+    if (environments?.[value.value as Environment]) {
+      return environments[value.value as Environment].value;
+    }
+    return environments.int.value;
+  },
+  deserialize: (value) => {
+    const env = Object.values(environments).find((env) => env.value === value);
+    return env ?? environments.int;
+  },
+});
+
+export const [cubesAtom, cubesStatusAtom] = atomsWithQuery((get) => {
+  const environment = get(lindasAtom);
+  return {
+    queryKey: ["cubes", environment.value],
+    queryFn: () => fetchCubes(environment.url),
+  };
+});
 
 export const defaultCube = "cube/MilkDairyProducts/Production_Price_Year";
 
@@ -17,7 +49,7 @@ export const cubePathAtom = atom((get) => {
   const { status, data: allCubes } = get(cubesStatusAtom);
   const filterCubeSelection = get(filterCubeSelectionAtom);
 
-  if (status !== "success") return defaultCube;
+  if (status !== "success" || isEmpty(filterCubeSelection)) return defaultCube;
 
   const cubePath = allCubes.find(
     (cube) =>
@@ -42,9 +74,8 @@ export const cubePathAtom = atom((get) => {
  * filters.
  */
 export const [baseDimensionsAtom, baseDimensionsStatusAtom] = atomsWithQuery((get) => ({
-  queryKey: ["baseDimensions", get(localeAtom)],
-  queryFn: () => fetchBaseDimensions({ locale: get(localeAtom) }),
-  staleTime: Infinity,
+  queryKey: ["baseDimensions", get(localeAtom), get(lindasAtom).value],
+  queryFn: () => fetchBaseDimensions({ locale: get(localeAtom), environment: get(lindasAtom).url }),
 }));
 
 export const availableBaseDimensionsValuesAtom = atom((get) => {
@@ -109,11 +140,12 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
  */
 export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((get) => {
   const cubePath = get(cubePathAtom);
+  const lindas = get(lindasAtom);
   const locale = get(localeAtom);
+
   return {
-    queryKey: ["cubeDimensions", cubePath, locale],
-    queryFn: () => fetchCubeDimensions(locale, cubePath),
-    staleTime: Infinity,
+    queryKey: ["cubeDimensions", cubePath, locale, lindas.value],
+    queryFn: () => fetchCubeDimensions(locale, lindas.url, cubePath),
   };
 });
 

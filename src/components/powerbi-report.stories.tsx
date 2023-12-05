@@ -97,7 +97,7 @@ export const PowerBIReport = () => {
         reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
         pages={pages}
       />
-      Content below report
+      <Typography variant="body1">Content below report</Typography>
     </div>
   );
 };

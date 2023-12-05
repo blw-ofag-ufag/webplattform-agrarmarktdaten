@@ -1,5 +1,6 @@
 import { CubeDimensions, cubeDimensionsStatusAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
+import { timeViewAtom } from "@/domain/filters";
 import { filteredObservationsAtom, valueFormatter } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
 import { useLocale } from "@/lib/use-locale";
@@ -71,6 +72,7 @@ export default function DataDownload() {
   const anchorRef = useRef<HTMLButtonElement>(null);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const dimensions = useAtomValue(cubeDimensionsStatusAtom);
+
   return (
     <DataDownloadStateProvider>
       <PopupState variant="popover" popupId="data-download-popup">
@@ -80,6 +82,7 @@ export default function DataDownload() {
               ref={anchorRef}
               size="small"
               startIcon={<IcControlDownload />}
+              disabled={filteredObservations.length === 0}
               {...bindToggle(popupState)}
             >
               <Trans id="data.actions.download">Data download</Trans>
@@ -152,6 +155,7 @@ const DownloadMenuItem = ({
   dataset: Observation[];
 } & MenuItemProps) => {
   const [state, dispatch] = useDataDownloadState();
+  const timeView = useAtomValue(timeViewAtom);
   const locale = useLocale();
 
   const download = useCallback(async () => {
@@ -178,9 +182,10 @@ const DownloadMenuItem = ({
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
             valueFormatter({
-              value: dimension.dimension === "date" ? observation["formatted-date"] : value,
+              value: value,
               dimension: dimension.dimension,
               cubeDimensions: dimensions.properties,
+              timeView,
             }),
           ];
         } else {
@@ -194,13 +199,13 @@ const DownloadMenuItem = ({
     switch (format) {
       case "csv":
         const csv = await workbook.csv.writeBuffer();
-        saveAs(new Blob([csv], { type: "text/csv" }), fileName);
+        saveAs(new Blob([csv], { type: "text/csv;charset=utf-8" }), fileName);
         break;
       case "xlsx":
         const xlsx = await workbook.xlsx.writeBuffer();
         saveAs(
           new Blob([xlsx], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
           }),
           fileName
         );
