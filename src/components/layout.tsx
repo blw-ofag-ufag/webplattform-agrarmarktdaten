@@ -230,7 +230,7 @@ export const LayoutSections = (props: BoxProps) => {
     <Box
       {...props}
       sx={{
-        bgcolor: "cobalt.50",
+        bgcolor: "monochrome.50",
         pt: "5rem",
         pb: "92px",
         "& > * + *": { mt: "80px" },
