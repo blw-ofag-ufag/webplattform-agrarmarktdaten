@@ -762,6 +762,7 @@ fragment InternalLinkButton on InternalLinkButtonRecord {
     ...InternalLink
   }
   label
+  anchor
 }
 
 fragment ExternalLinkButton on ExternalLinkButtonRecord {
@@ -780,9 +781,6 @@ fragment AssetLinkButton on AssetLinkButtonRecord {
 
 fragment InternalLink on RecordInterface {
   ... on HomePageRecord {
-    id
-  }
-  ... on AboutPageRecord {
     id
   }
   ... on AnalysisPageRecord {
@@ -815,6 +813,12 @@ fragment InternalLink on RecordInterface {
   ... on InfoPageRecord {
     id
   }
+  ... on PowerBiPageRecord {
+    id
+  }
+}
+
+fragment InternalEmbed on RecordInterface {
   ... on PowerBiPageRecord {
     id
   }

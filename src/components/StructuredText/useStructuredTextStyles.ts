@@ -146,7 +146,6 @@ const useStructuredTextStyles = makeStyles<
     }),
     h1: debugStyle("h1", {
       fontWeight: 700,
-      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
     }),
     h2: debugStyle("h2", {
       fontWeight: 700,
@@ -185,6 +184,23 @@ const useStructuredTextStyles = makeStyles<
       marginTop: 64,
       marginBottom: 64,
     },
+    h1Icon: debugStyle("h1Icon", {
+      marginLeft: "-44px",
+      minWidth: "27px",
+      maxHeight: "44px",
+      [theme.breakpoints.up("xxl")]: { marginTop: "5px" },
+      [theme.breakpoints.down("xxl")]: {
+        marginTop: "-3px",
+      },
+    }),
+    h1Wrapper: debugStyle("h1Wrapper", {
+      display: "flex",
+      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
+      "& > button": { opacity: 0, transition: "opacity 0.15s ease-out" },
+      "&:hover > button": { opacity: 1 },
+
+      marginBottom: theme.spacing(5),
+    }),
   };
 });
 

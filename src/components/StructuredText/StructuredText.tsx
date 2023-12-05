@@ -16,6 +16,8 @@ import {
   Typography,
   TypographyOwnProps,
   TypographyProps,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import { isHeading, isLink, isList, isParagraph } from "datocms-structured-text-utils";
 import { useSetAtom } from "jotai";
@@ -28,6 +30,11 @@ import {
   renderNodeRule,
 } from "react-datocms";
 import NextImage from "next/image";
+import { NextRouter, useRouter } from "next/router";
+import IcLink from "@/icons/icons-jsx/control/IcLink";
+import slugs from "@/generated/slugs.json";
+import { copyToClipboard } from "@/lib/clipboard";
+import { t } from "@lingui/macro";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -71,6 +78,7 @@ export const useStructuredTextDebug = () => React.useContext(DebugStructuredText
 
 const StructuredText = (props: Props) => {
   const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
+  const router = useRouter();
   const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
@@ -218,7 +226,7 @@ const StructuredText = (props: Props) => {
             }}
             renderLinkToRecord={({ record: _record, children, transformedMeta }) => {
               const record = _record as InternalLink;
-              const url = getUrl(record) ?? "";
+              const url = getUrl(record, router) ?? "";
               return (
                 <NextLink {...transformedMeta} legacyBehavior href={url}>
                   <Typography
@@ -236,11 +244,12 @@ const StructuredText = (props: Props) => {
             renderBlock={({ record }) => {
               switch (record.__typename) {
                 case "InternalLinkButtonRecord": {
-                  const { label, page } = record as GQL.InternalLinkButtonRecord;
-                  const url = getUrl(page as InternalLink);
-                  return url ? (
+                  const { label, page, anchor } = record as GQL.InternalLinkButtonRecord;
+                  const url = getUrl(page as InternalLink, router);
+                  const fullUrl = anchor ? `${url}#${anchor}` : url;
+                  return fullUrl ? (
                     <p className={cx(classes.p, classes.internalLinkParagraph)}>
-                      <NextLink legacyBehavior href={url} passHref>
+                      <NextLink legacyBehavior href={fullUrl} passHref>
                         <Button variant="inline" className={classes.linkButton}>
                           {label}
                         </Button>
@@ -350,40 +359,38 @@ const StructuredText = (props: Props) => {
   );
 };
 
-const getUrl = (record: InternalLink) => {
+const getUrl = (record: InternalLink, router: NextRouter) => {
+  const localeSlugs = slugs.find(({ locale }) => locale === router.locale)?.slugs;
   switch (record.__typename) {
+    case "HomePageRecord": {
+      return `/`;
+    }
     case "BlogPostRecord": {
       return `/blog/${record.slug}`;
     }
     case "TermsPageRecord": {
-      return `/terms`;
+      return `/${localeSlugs?.terms}`;
     }
     case "MethodsPageRecord": {
-      return `/methods`;
+      return `/${localeSlugs?.methods}`;
     }
     case "MarketArticleRecord": {
-      return `/market/${record.slug}`;
+      return `/${localeSlugs?.market}/${record.slug}`;
     }
     case "LegalPageRecord": {
-      return `/legal`;
+      return `/${localeSlugs?.legal}`;
     }
     case "FocusArticleRecord": {
-      return `/focus/${record.slug}`;
+      return `/${localeSlugs?.focus}/${record.slug}`;
     }
     case "AnalysisPageRecord": {
-      return `/analysis`;
+      return `/${localeSlugs?.analysis}`;
     }
     case "DataPageRecord": {
-      return `/data`;
-    }
-    case "AboutPageRecord": {
-      return `/about`;
-    }
-    case "HomePageRecord": {
-      return `/about`;
+      return `/${localeSlugs?.data}`;
     }
     case "InfoPageRecord": {
-      return `/info`;
+      return `/${localeSlugs?.info}`;
     }
     case "PowerBiPageRecord": {
       return `/power-bi/${record.id}`;
@@ -402,9 +409,23 @@ interface HeaderProps {
 
 const Header1 = (props: HeaderProps) => {
   const { id, children } = props;
+  const { asPath, push } = useRouter();
+  const textContent = extractTextContent(children as JSX.Element);
+  const encodedContent = encodeURI(textContent);
   const ref = React.useRef(null);
   const entry = useIntersectionObserver(ref, { rootMargin: "0%", threshold: 1.0 });
   const setSection = useSetAtom(sectionAtom);
+  const { classes } = useStructuredTextStyles({});
+
+  const [isTooltipOpen, setTooltipOpen] = React.useState(false);
+
+  const handleTooltipOpen = () => {
+    setTooltipOpen(true);
+  };
+
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+  };
 
   React.useEffect(() => {
     if (entry?.intersectionRatio === 1.0) {
@@ -413,10 +434,48 @@ const Header1 = (props: HeaderProps) => {
   }, [entry, setSection, id]);
 
   return (
-    <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
-      {children}
-    </Typography>
+    <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
+      <Tooltip
+        PopperProps={{
+          disablePortal: true,
+        }}
+        onClose={handleTooltipClose}
+        open={isTooltipOpen}
+        leaveDelay={1000}
+        title={t({ id: "action.copy", message: "Copied to Clipboard" })}
+      >
+        <IconButton className={classes.h1Icon} onClick={handleTooltipOpen}>
+          <IcLink
+            width={27}
+            height={27}
+            onClick={async () => {
+              const newHashPath = asPath.includes("#")
+                ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
+                : `#${encodedContent}`;
+              await push(newHashPath);
+              await copyToClipboard(window.location.href);
+            }}
+          />
+        </IconButton>
+      </Tooltip>
+      <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
+        {children}
+      </Typography>
+    </Box>
   );
+};
+
+const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
+  if (Array.isArray(node)) {
+    return node.map(extractTextContent).join("");
+  }
+  if (typeof node === "string") {
+    return node;
+  }
+  if (typeof node === "object") {
+    return extractTextContent(node?.props.children);
+  }
+  return "";
 };
 
 export default StructuredText;

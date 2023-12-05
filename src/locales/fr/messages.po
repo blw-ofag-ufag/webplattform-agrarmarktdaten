@@ -155,6 +155,11 @@ msgid "header.close"
 msgstr "Fermer"
 
 #. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "action.copy"
+msgstr "Copié dans le presse-papiers"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.data"
 msgstr "Données"
