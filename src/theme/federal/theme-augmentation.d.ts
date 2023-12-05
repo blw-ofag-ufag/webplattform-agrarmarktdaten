@@ -49,6 +49,7 @@ declare module "@mui/material" {
       red: FederalColor;
       yellow: FederalColor;
     };
+    active: string;
   }
 }
 
