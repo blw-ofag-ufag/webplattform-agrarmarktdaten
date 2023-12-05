@@ -422,13 +422,10 @@ const Header1 = (props: HeaderProps) => {
 
   return (
     <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
-      <IcLink width={27} height={27} className={classes.h1Icon} />
-      <Typography
-        ref={ref}
-        id={id}
-        variant="h1"
-        component="h1"
-        className={props.className}
+      <IcLink
+        width={27}
+        height={27}
+        className={classes.h1Icon}
         onClick={async () => {
           const newHashPath = asPath.includes("#")
             ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
@@ -436,7 +433,8 @@ const Header1 = (props: HeaderProps) => {
           await push(newHashPath);
           await copyToClipboard(window.location.href);
         }}
-      >
+      />
+      <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
         {children}
       </Typography>
     </Box>
