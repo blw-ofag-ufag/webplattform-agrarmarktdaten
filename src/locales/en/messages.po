@@ -51,7 +51,7 @@ msgstr ""
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
-msgstr "({0} total)"
+msgstr "({0} of {1})"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
