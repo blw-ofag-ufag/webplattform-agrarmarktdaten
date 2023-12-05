@@ -24,6 +24,7 @@ const theme = createTheme(federalTheme, {
       red: colors.red,
       yellow: colors.yellow,
     },
+    active: "#F0F4F7",
   },
 
   shadows: {
