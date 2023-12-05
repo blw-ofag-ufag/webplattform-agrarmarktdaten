@@ -1,5 +1,6 @@
 import { TimeFilter, queryObservations } from "@/lib/cube-queries";
 import { addNamespace, amdpMeasure } from "@/lib/namespace";
+import { Locale, defaultLocale } from "@/locales/locales";
 import {
   Measure,
   Observation,
@@ -8,12 +9,20 @@ import {
   getSparqlEditorUrl,
 } from "@/pages/api/data";
 import { toCamelCase } from "@/utils/stringCase";
-import { format, timeFormat } from "d3";
+import { FormatLocaleDefinition, formatLocale, timeFormat } from "d3";
+// @ts-expect-error https://stackoverflow.com/questions/74072409/webpack-doesnt-resolve-imports-of-json-files-from-d3-packages
+import localeDE from "d3-format/locale/de-CH";
+// @ts-expect-error
+import localeFR from "d3-format/locale/fr-FR";
+// @ts-expect-error
+import localeIT from "d3-format/locale/it-IT";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { isNumber, mapValues } from "lodash";
+import millify from "millify";
 import { mapToObj } from "remeda";
+import { match } from "ts-pattern";
 import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
 import {
@@ -89,11 +98,13 @@ export const valueFormatter = ({
   dimension,
   cubeDimensions,
   timeView,
+  locale = defaultLocale,
 }: {
   value?: string | number;
   dimension: string;
   cubeDimensions: Record<string, Property | Measure>;
   timeView?: TimeView;
+  locale?: Locale;
 }) => {
   const dim = cubeDimensions[dimension];
   if (dim && dim.dimension === "date") {
@@ -103,7 +114,19 @@ export const valueFormatter = ({
     return timeFormat("%m-%Y")(dayjs(value).toDate());
   }
   if (dim && dim.type === "measure") {
-    return isNumber(value) ? format(".2f")(value) : value;
+    if (!isNumber(value)) return value;
+    if (dim.dimension !== "quantity") {
+      const formatter = match(locale)
+        .with("de", () => formatLocale(localeDE as FormatLocaleDefinition))
+        .with("fr", () => formatLocale(localeFR as FormatLocaleDefinition))
+        .with("it", () => formatLocale(localeIT as FormatLocaleDefinition))
+        .otherwise(() => formatLocale(localeDE as FormatLocaleDefinition));
+      return formatter.format(`.2f`)(value);
+    }
+    return millify(value, {
+      locales: locale,
+      space: true,
+    });
   }
   if (dim && dim.type === "property") {
     return dim.values.find((v) => v.value === value)?.label ?? value;

@@ -17,6 +17,7 @@ import { Stack, Typography } from "@mui/material";
 import { Trans } from "@lingui/macro";
 import dayjs from "dayjs";
 import { isNumber, isString, isUndefined } from "lodash";
+import { useLocale } from "@/lib/use-locale";
 
 const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
   dataGrid: {
@@ -95,6 +96,7 @@ export const Table = ({
 }) => {
   const PAGE_SIZE = 50;
   const apiRef = useGridApiRef();
+  const locale = useLocale();
 
   const { classes } = useStyles();
   const [sortModel, setSortModel] = useState<GridSortModel>([
@@ -111,6 +113,9 @@ export const Table = ({
 
   const getObservationPage = useCallback(
     (pageSize: number) => {
+      if (sortModel.length === 0 || !sortModel[0].field) {
+        return observations.slice(0, pageSize);
+      }
       return observations.sort((a, b) => sorter(sortModel, a, b)).slice(0, pageSize);
     },
     [observations, sortModel]
@@ -167,10 +172,11 @@ export const Table = ({
               dimension: dimension.dimension,
               cubeDimensions: dimensions,
               timeView,
+              locale,
             }),
         };
       });
-  }, [dimensions, timeView]);
+  }, [dimensions, timeView, locale]);
 
   return (
     <DataGridPro<Observation>
