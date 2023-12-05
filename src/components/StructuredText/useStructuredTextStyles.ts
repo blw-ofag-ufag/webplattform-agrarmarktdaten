@@ -185,17 +185,19 @@ const useStructuredTextStyles = makeStyles<
       marginBottom: 64,
     },
     h1Icon: debugStyle("h1Icon", {
-      marginLeft: "-27px",
+      marginLeft: "-44px",
       minWidth: "27px",
-      [theme.breakpoints.up("xxl")]: { marginTop: "10px" },
-      [theme.breakpoints.down("xxl")]: { marginTop: "5px" },
+      maxHeight: "44px",
+      [theme.breakpoints.up("xxl")]: { marginTop: "5px" },
+      [theme.breakpoints.down("xxl")]: {
+        marginTop: "-3px",
+      },
     }),
     h1Wrapper: debugStyle("h1Wrapper", {
       display: "flex",
-      cursor: "pointer",
       [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
-      "& > svg": { display: "none" },
-      "&:hover > svg": { display: "block" },
+      "& > button": { opacity: 0, transition: "opacity 0.15s ease-out" },
+      "&:hover > button": { opacity: 1 },
 
       marginBottom: theme.spacing(5),
     }),

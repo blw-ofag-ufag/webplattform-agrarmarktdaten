@@ -16,6 +16,8 @@ import {
   Typography,
   TypographyOwnProps,
   TypographyProps,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import { isHeading, isLink, isList, isParagraph } from "datocms-structured-text-utils";
 import { useSetAtom } from "jotai";
@@ -32,6 +34,7 @@ import { NextRouter, useRouter } from "next/router";
 import IcLink from "@/icons/icons-jsx/control/IcLink";
 import slugs from "@/generated/slugs.json";
 import { copyToClipboard } from "@/lib/clipboard";
+import { t } from "@lingui/macro";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -414,6 +417,16 @@ const Header1 = (props: HeaderProps) => {
   const setSection = useSetAtom(sectionAtom);
   const { classes } = useStructuredTextStyles({});
 
+  const [isTooltipOpen, setTooltipOpen] = React.useState(false);
+
+  const handleTooltipOpen = () => {
+    setTooltipOpen(true);
+  };
+
+  const handleTooltipClose = () => {
+    setTooltipOpen(false);
+  };
+
   React.useEffect(() => {
     if (entry?.intersectionRatio === 1.0) {
       setSection(id);
@@ -422,18 +435,29 @@ const Header1 = (props: HeaderProps) => {
 
   return (
     <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
-      <IcLink
-        width={27}
-        height={27}
-        className={classes.h1Icon}
-        onClick={async () => {
-          const newHashPath = asPath.includes("#")
-            ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
-            : `#${encodedContent}`;
-          await push(newHashPath);
-          await copyToClipboard(window.location.href);
+      <Tooltip
+        PopperProps={{
+          disablePortal: true,
         }}
-      />
+        onClose={handleTooltipClose}
+        open={isTooltipOpen}
+        leaveDelay={1000}
+        title={t({ id: "action.copy", message: "Copied to Clipboard" })}
+      >
+        <IconButton className={classes.h1Icon} onClick={handleTooltipOpen}>
+          <IcLink
+            width={27}
+            height={27}
+            onClick={async () => {
+              const newHashPath = asPath.includes("#")
+                ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
+                : `#${encodedContent}`;
+              await push(newHashPath);
+              await copyToClipboard(window.location.href);
+            }}
+          />
+        </IconButton>
+      </Tooltip>
       <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
         {children}
       </Typography>
