@@ -187,7 +187,7 @@ const useStructuredTextStyles = makeStyles<
     },
     h1Icon: debugStyle("h1Icon", {
       marginLeft: "-27px",
-      marginTop: "10px",
+      marginTop: "5px",
     }),
     h1Wrapper: debugStyle("h1Wrapper", {
       scrollMarginTop: "110px",
@@ -196,7 +196,6 @@ const useStructuredTextStyles = makeStyles<
       "& > svg": { display: "none" },
       "&:hover > svg": { display: "block" },
 
-      marginTop: theme.spacing(7),
       marginBottom: theme.spacing(3),
     }),
   };
