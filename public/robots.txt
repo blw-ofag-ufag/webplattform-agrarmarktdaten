@@ -67,7 +67,10 @@ Disallow: /analisi
 Disallow: /focus
 Disallow: /mercat
 Allow: /blog/
-
+Allow: /en/methods
+Allow: /de/methods
+Allow: /it/methods
+Allow: /fr/methods
 
 ## More specific rules for later
 # Disallow: /api/
