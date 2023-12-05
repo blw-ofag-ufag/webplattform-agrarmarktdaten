@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Box, IconButton, BoxProps } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
-import { clamp } from "remeda";
 import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 
 const bucketBy = <T,>(arr: T[], size: number) => {
@@ -70,29 +69,38 @@ const useCarouselStyles = makeStyles()((theme) => ({
     transform: "rotate(-90deg)",
   },
 }));
+
+const useCircle = (max: number, defaultValue?: number) => {
+  const [page, setPage] = React.useState(defaultValue ?? 0);
+  return {
+    value: page,
+    set: setPage,
+    prev: () => setPage((p) => (p + max) % (max + 1)),
+    next: () => setPage((p) => (p + 1) % (max + 1)),
+  };
+};
+
 export const Carousel = ({
   perPage,
   children,
   slidesClassName,
   ...props
 }: { perPage: number; children: React.ReactNode[]; slidesClassName?: string } & BoxProps) => {
-  const pageLimits = { min: 0, max: Math.ceil(children.length / perPage) - 1 };
   const childrenBuckets = React.useMemo(() => bucketBy(children, perPage), [children, perPage]);
   const { classes, cx } = useCarouselStyles();
-  const [page, setPage] = React.useState(0);
+
+  const maxPage = Math.ceil(children.length / perPage) - 1;
+  const { value: page, set: setPage, next: nextPage, prev: prevPage } = useCircle(maxPage);
 
   return (
     <Box className={classes.root} {...props}>
       <div className={cx(classes.slides, slidesClassName)}>{childrenBuckets[page]}</div>
       <div className={classes.controls}>
-        <IconButton
-          disabled={page === pageLimits.min}
-          onClick={() => setPage((p) => clamp(p - 1, pageLimits))}
-        >
+        <IconButton onClick={() => prevPage()}>
           <IcControlChevronDown className={classes.chevronLeft} />
         </IconButton>
         <div className={classes.dots}>
-          {Array.from({ length: pageLimits.max + 1 })
+          {Array.from({ length: maxPage + 1 })
             .fill(null)
             .map((_, i) => {
               return (
@@ -104,10 +112,7 @@ export const Carousel = ({
               );
             })}
         </div>
-        <IconButton
-          disabled={page === pageLimits.max}
-          onClick={() => setPage((p) => clamp(p + 1, pageLimits))}
-        >
+        <IconButton onClick={() => nextPage()}>
           <IcControlChevronDown className={classes.chevronRight} />
         </IconButton>
       </div>
