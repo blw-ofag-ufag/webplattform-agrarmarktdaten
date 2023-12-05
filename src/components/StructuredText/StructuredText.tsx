@@ -31,6 +31,7 @@ import NextImage from "next/image";
 import { NextRouter, useRouter } from "next/router";
 import IcLink from "@/icons/icons-jsx/control/IcLink";
 import slugs from "@/generated/slugs.json";
+import { copyToClipboard } from "@/lib/clipboard";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -440,11 +441,12 @@ const Header1 = (props: HeaderProps) => {
         variant="h1"
         component="h1"
         className={props.className}
-        onClick={() => {
+        onClick={async () => {
           const newHashPath = asPath.includes("#")
             ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
             : `#${encodedContent}`;
-          push(newHashPath);
+          await push(newHashPath);
+          await copyToClipboard(window.location.href);
         }}
       >
         {children}
