@@ -10,37 +10,51 @@ import { StructuredText } from "@/components/StructuredText";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { format } from "date-fns";
 import Chip from "@mui/material/Chip";
-import { Intersperse } from "@/components/Intersperse";
 import { GridContainer } from "@/components/Grid/Grid";
 import { MarketChip } from "@/components/MarketChip";
-import { Avatars } from "../../components/Avatars";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
 import { makeStyles } from "@/components/style-utils";
+import { Authors } from "@/components/Authors";
 
-const useStyles = makeStyles()(({ palette: c, spacing: s }) => ({
+const useStyles = makeStyles()(({ palette: c }) => ({
+  publishedDate: {
+    marginBottom: "2rem",
+    color: c.monochrome[500],
+  },
+
+  title: {
+    marginBottom: "1.5rem",
+    display: "block",
+    fontWeight: "regular",
+  },
+
+  marketChips: {
+    marginBottom: "2rem",
+  },
+
   chip: {
     backgroundColor: c.cobalt[100],
     color: c.monochrome[800],
     lineHeight: "18px",
     fontSize: "14px",
-    paddingX: "18px",
-    paddingY: "6px",
-  },
-
-  authors: {
-    marginTop: s(1),
-    borderTop: `${c.cobalt[100]} 1px solid`,
-    borderBottom: `${c.cobalt[100]} 1px solid`,
-    display: "flex",
-    position: "relative",
-    height: "88px",
-    alignItems: "center",
-    gap: "1rem",
   },
 
   lead: {
-    marginTop: s(8),
     color: c.monochrome[800],
+    marginBottom: "2.5rem",
+  },
+
+  leadParagraph: {
+    "&&": {
+      fontSize: "20px",
+      lineHeight: "32px",
+    },
+  },
+
+  authors: {
+    marginBottom: "6rem",
+    borderTop: `${c.cobalt[100]} 1px solid`,
+    borderBottom: `${c.cobalt[100]} 1px solid`,
   },
 }));
 
@@ -77,16 +91,16 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
         <div className={layoutClasses.content}>
           <Box sx={{ mb: 10 }}>
             {formattedDate && (
-              <Typography variant="body1" color="monochrome.500" data-datocms-noindex>
+              <Typography variant="body1" data-datocms-noindex className={classes.publishedDate}>
                 <Trans id="blogpost.publishedDate">Published on</Trans>
                 &nbsp;
                 {formattedDate}
               </Typography>
             )}
-            <Typography variant="display2" display="block" fontWeight="regular" my="2rem">
+            <Typography component="h1" variant="display2" className={classes.title}>
               {blogPost.title}
             </Typography>
-            <Box sx={{ display: "flex", gap: "16px" }}>
+            <Box sx={{ display: "flex", gap: "1rem" }} className={classes.marketChips}>
               {blogPost.markets.map(({ slug, title }) => {
                 return (
                   <MarketChip
@@ -105,28 +119,21 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
               })}
             </Box>
             <div className={classes.lead}>
-              <StructuredText data={blogPost.lead} sx={{ "&&": { pb: "2.5rem" } }} />
+              <StructuredText
+                data={blogPost.lead}
+                paragraphTypographyProps={{ className: classes.leadParagraph }}
+                sx={{ "&&": { pb: 0 } }}
+              />
             </div>
             {blogPost.authors.length > 0 && (
-              <div className={classes.authors}>
-                <Avatars
-                  avatars={blogPost.authors.map((x) => ({
-                    url: x.portrait?.url,
-                    alt: `${x.firstName} ${x.lastName}`,
-                  }))}
-                />
-                <Box display="flex" alignItems="center">
-                  <Intersperse separator=",&nbsp;">
-                    {blogPost.authors.map((author) => {
-                      return (
-                        <Typography variant="body1" key={`${author.firstName} ${author.lastName}`}>
-                          {`${author.firstName} ${author.lastName}`}
-                        </Typography>
-                      );
-                    })}
-                  </Intersperse>
-                </Box>
-              </div>
+              <Authors
+                authors={blogPost.authors.map((x) => ({
+                  img: x.portrait?.url,
+                  firstName: x.firstName,
+                  lastName: x.lastName,
+                }))}
+                className={classes.authors}
+              />
             )}
           </Box>
           {blogPost.content && <StructuredText data={blogPost.content} />}

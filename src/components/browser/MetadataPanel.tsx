@@ -9,6 +9,7 @@ import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
+import { isEmpty } from "lodash";
 
 export function MetadataPanel({
   dimensions,
@@ -47,6 +48,14 @@ export function MetadataContent({ dimensions }: { dimensions: CubeDimensions }) 
 
   const flatDimensions = { ...dimensions.properties, ...dimensions.measures };
 
+  if (isEmpty(flatDimensions)) {
+    return (
+      <Typography variant="body2">
+        <Trans id="data.metadata.nodata">No metadata available</Trans>
+      </Typography>
+    );
+  }
+
   return (
     <Stack>
       <AnimatePresence mode="wait">
@@ -65,7 +74,7 @@ export function MetadataContent({ dimensions }: { dimensions: CubeDimensions }) 
             </Box>
           </>
         ) : (
-          <Stack gap={4}>
+          <Stack gap={6}>
             {Object.entries(flatDimensions).map(([key, value]) => {
               return (
                 <DataDimensionItem
@@ -107,7 +116,7 @@ const DataDimensionItem = ({
       {description && <Typography variant="body2">{description}</Typography>}
       <AnimatePresence>
         {expanded ? (
-          <Stack>
+          <Stack mt={6}>
             <Typography
               sx={{ mt: 2, color: "textSecondary" }}
               variant="body2"
@@ -119,17 +128,17 @@ const DataDimensionItem = ({
             {dimension.type === "measure" && (
               <>
                 {dimension.range?.min && (
-                  <Typography variant="body2">Min: {dimension.range.min}</Typography>
+                  <Typography variant="body3">Min: {dimension.range.min}</Typography>
                 )}
                 {dimension.range?.max && (
-                  <Typography variant="body2">Max: {dimension.range.max}</Typography>
+                  <Typography variant="body3">Max: {dimension.range.max}</Typography>
                 )}
               </>
             )}
             {dimension.type === "property" && (
               <>
                 {dimension.values.map((value) => (
-                  <Typography key={value.value} variant="body2">
+                  <Typography key={value.value} variant="body3">
                     {value.label ?? value.value}
                   </Typography>
                 ))}

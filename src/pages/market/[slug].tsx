@@ -35,6 +35,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
       alternates={alternates}
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
+      backButtonColor={color}
       showBackButton
     >
       <Hero

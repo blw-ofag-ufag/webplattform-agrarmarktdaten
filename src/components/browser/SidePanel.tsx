@@ -73,6 +73,7 @@ const SidePanel = ({
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
   const filtersChangedCount = useAtomValue(resetCubeFiltersAtom);
   const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
+  const observationsQuery = useAtomValue(observationsQueryAtom);
 
   return (
     <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
@@ -135,39 +136,44 @@ const SidePanel = ({
               />
             );
           })}
-          <TimeAccordion {...getAccordionProps("time")} />
 
-          {/* Property filters */}
-
-          {cubeDimensionsStatus.isSuccess ? (
+          {observationsQuery.isSuccess && observationsQuery.data.observations.length > 0 && (
             <>
-              {Object.entries(filterDimensionsConfiguration).map(([key, value]) => {
-                const filterAtom =
-                  filterDimensionsSelection[key as keyof typeof filterDimensionsConfiguration];
-                if (!filterAtom) {
-                  return null;
-                }
-                return (
-                  <FilterSelectAccordion
-                    key={key}
-                    slots={{
-                      accordion: getAccordionProps(key),
-                      select: {
-                        withSearch: value.search,
-                        groups: value?.groups,
-                      },
-                    }}
-                    options={value.options}
-                    filterAtom={filterAtom}
-                    title={value.name ?? value.key}
-                  />
-                );
-              })}
+              <TimeAccordion {...getAccordionProps("time")} />
+
+              {/* Property filters */}
+
+              {cubeDimensionsStatus.isSuccess ? (
+                <>
+                  {Object.entries(filterDimensionsConfiguration).map(([key, value]) => {
+                    const filterAtom =
+                      filterDimensionsSelection[key as keyof typeof filterDimensionsConfiguration];
+                    if (!filterAtom || value.options.length === 0) {
+                      return null;
+                    }
+                    return (
+                      <FilterSelectAccordion
+                        key={key}
+                        slots={{
+                          accordion: getAccordionProps(key),
+                          select: {
+                            withSearch: value.search,
+                            groups: value?.groups,
+                          },
+                        }}
+                        options={value.options}
+                        filterAtom={filterAtom}
+                        title={value.name ?? value.key}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <AccordionSummary>
+                  <CircularProgress />
+                </AccordionSummary>
+              )}
             </>
-          ) : (
-            <AccordionSummary>
-              <CircularProgress />
-            </AccordionSummary>
           )}
         </Box>
       </Stack>
@@ -196,10 +202,10 @@ const FilterRadioAccordion = <T extends Option>({
   slots: {
     accordion: Omit<AccordionProps, "children">;
   };
-  defaultValue: T;
+  defaultValue?: T;
 }) => {
   const [value, setValue] = useAtom(filterAtom);
-  const isTainted = value?.value !== defaultValue.value;
+  const isTainted = value?.value !== defaultValue?.value;
 
   return (
     <FilterAccordion {...slots.accordion}>

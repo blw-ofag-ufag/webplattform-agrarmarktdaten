@@ -29,13 +29,19 @@ import {
 } from "react-datocms";
 import NextImage from "next/image";
 
-const defaultParagraphTypographyProps = {
+type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
+  variant?: string;
+  className?: string;
+  component?: TypographyProps["component"];
+};
+
+const defaultParagraphTypographyProps: ParagraphTypographyProps = {
   variant: "body1",
 };
 
 interface Props {
   data?: StructuredTextGraphQlResponse;
-  paragraphTypographyProps?: TypographyOwnProps & { component?: TypographyProps["component"] };
+  paragraphTypographyProps?: ParagraphTypographyProps;
   debug?: boolean;
   sx?: BoxProps["sx"];
 }
@@ -44,11 +50,28 @@ const DebugStructuredText = React.createContext({
   debug: false as boolean | undefined,
 });
 
+const hasReactChildClassName = (child: React.ReactNode, className: string) => {
+  if (React.isValidElement(child) && "props" in child) {
+    const childProps = child.props;
+    if (
+      childProps &&
+      typeof childProps === "object" &&
+      "className" in childProps &&
+      childProps.className &&
+      typeof childProps.className === "string" &&
+      childProps.className.includes(className)
+    ) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export const useStructuredTextDebug = () => React.useContext(DebugStructuredText);
 
 const StructuredText = (props: Props) => {
   const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
-  const { classes } = useStructuredTextStyles({ debug: props.debug });
+  const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
@@ -122,14 +145,29 @@ const StructuredText = (props: Props) => {
                 return <List className={classes.ul}>{children}</List>;
               }),
               renderNodeRule(isParagraph, ({ children, key }) => {
+                /**
+                 * If the only child of a paragraph is a PowerBI report, then we do not render the paragraph,
+                 * but only the report. This is so that we can target the internal links internalLinkParagraph
+                 * that could be below a report, and adjust their margin so that they are at the same level
+                 * as the fullscreen button of the report.
+                 * In the future, it could be good to reflect, on whether the internal links below a report should
+                 * not belong to the PowerBI report model, so that their rendering is done inside the PowerBI
+                 * component. This would remove the need for such hacks.
+                 */
+                if (children?.length === 1) {
+                  const child = children[0];
+                  if (hasReactChildClassName(child, classes.powerbiReportContainer)) {
+                    return <>{child}</>;
+                  }
+                }
                 return (
                   <Typography
                     key={key}
                     /** @ts-ignore */
                     variant="body1"
                     component="p"
-                    className={classes.p}
                     {...paragraphTypographyProps}
+                    className={cx(classes.p, paragraphTypographyProps.className)}
                   >
                     {children}
                   </Typography>
@@ -144,7 +182,7 @@ const StructuredText = (props: Props) => {
                   const pages =
                     powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
                   return (
-                    <div style={{ position: "relative" }}>
+                    <div className={classes.powerbiReportContainer}>
                       <PowerBIReport
                         key={record.id}
                         datasetId={powerBiReport.dataset?.datasetId ?? ""}
@@ -201,11 +239,13 @@ const StructuredText = (props: Props) => {
                   const { label, page } = record as GQL.InternalLinkButtonRecord;
                   const url = getUrl(page as InternalLink);
                   return url ? (
-                    <NextLink legacyBehavior href={url} passHref>
-                      <Button variant="inline" className={classes.linkButton}>
-                        {label}
-                      </Button>
-                    </NextLink>
+                    <p className={cx(classes.p, classes.internalLinkParagraph)}>
+                      <NextLink legacyBehavior href={url} passHref>
+                        <Button variant="inline" className={classes.linkButton}>
+                          {label}
+                        </Button>
+                      </NextLink>
+                    </p>
                   ) : null;
                 }
 

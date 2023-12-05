@@ -27,6 +27,7 @@ type BreakpointSpec = {
  * @see https://www.sketch.com/s/81803335-dd26-42f1-a505-6845270a91b7/p/6000F394-096F-4CAD-96D6-3F8056F9DE4B/canvas
  */
 export const specs: Record<Breakpoint, BreakpointSpec> = {
+  // Desktop
   xxxl: {
     totalWidth: 1676,
     offset: 0,
@@ -45,6 +46,7 @@ export const specs: Record<Breakpoint, BreakpointSpec> = {
     rowGutterWidth: 40,
   },
 
+  // Tablet
   xl: {
     totalWidth: 1280,
     offset: 64,
@@ -72,6 +74,7 @@ export const specs: Record<Breakpoint, BreakpointSpec> = {
     rowGutterWidth: 40,
   },
 
+  // Mobile
   sm: {
     totalWidth: 640,
     offset: 35,
@@ -212,14 +215,16 @@ export const GridWrap = ({ children, sx, ...rest }: Props) => {
   );
 };
 
-export const GridWrapElement = ({ children, sx, full, ...rest }: Props & { full?: boolean }) => {
-  const { classes } = useGridElementStyles({ full });
-  return (
-    <Box {...rest} className={classes.gridElement} sx={sx}>
-      {children}
-    </Box>
-  );
-};
+export const GridWrapElement = React.forwardRef(
+  ({ children, sx, full, ...rest }: Props & { full?: boolean }, ref) => {
+    const { classes } = useGridElementStyles({ full });
+    return (
+      <Box {...rest} ref={ref} className={classes.gridElement} sx={sx}>
+        {children}
+      </Box>
+    );
+  }
+);
 
 /**
  * For compatibility with swiss-federal-ci. Return value should be passed to ContentWrapperProps,
@@ -229,8 +234,10 @@ export const makeContentWrapperSx = (theme: Theme) => {
   const getSxForBreakpoint = (bp: Breakpoint) => {
     const spec = specs[bp];
     return {
-      maxWidth: `${spec.totalWidth}px`,
-      paddingX: `${spec.offset}px`,
+      "&&": {
+        maxWidth: `${spec.totalWidth}px`,
+        paddingX: `${spec.offset}px`,
+      },
     };
   };
   const sx = Object.fromEntries(

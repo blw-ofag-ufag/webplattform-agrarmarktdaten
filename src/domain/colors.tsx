@@ -5,7 +5,7 @@ export const colorsPerMarket = {
     backgroundColor: "#6C84B5",
     contrastText: "#000000",
     dashColor: "#6C84B5",
-    color: "#1F2937",
+    color: "#111827",
   },
   "milk-and-meat-substitutes": {
     backgroundColor: "#B0BDD7",
