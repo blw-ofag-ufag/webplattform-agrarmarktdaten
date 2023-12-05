@@ -1,13 +1,22 @@
 import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
 import { valueFormatter } from "@/domain/observations";
 import { Measure, Observation, Property } from "@/pages/api/data";
-import { DataGridPro, GridColDef, GridRow, gridClasses, useGridApiRef } from "@mui/x-data-grid-pro";
+import {
+  DataGridPro,
+  GridColDef,
+  GridRow,
+  GridSortModel,
+  gridClasses,
+  useGridApiRef,
+} from "@mui/x-data-grid-pro";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
 import { useAtomValue } from "jotai";
 import { timeViewAtom } from "@/domain/filters";
 import { Stack, Typography } from "@mui/material";
 import { Trans } from "@lingui/macro";
+import dayjs from "dayjs";
+import { isNumber, isString, isUndefined } from "lodash";
 
 const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
   dataGrid: {
@@ -17,6 +26,7 @@ const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
     borderColor: c.cobalt[100],
     boxShadow: e.xxl,
     color: c.monochrome[600],
+    ...typography.body3,
     [`& .${gridClasses.columnHeaders}`]: {
       backgroundColor: c.cobalt[50],
       borderBottom: "2px solid",
@@ -44,6 +54,38 @@ const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
   },
 }));
 
+const compareDates = (
+  date1?: string | number,
+  date2?: string | number,
+  direction: "asc" | "desc" = "asc"
+) => {
+  const compare = dayjs(date1).isAfter(dayjs(date2)) ? 1 : -1;
+  return direction === "asc" ? compare : compare * -1;
+};
+
+const sorter = (sortModel: GridSortModel, obs1: Observation, obs2: Observation) => {
+  const v1 = obs1[sortModel[0].field as keyof Observation];
+  const v2 = obs2[sortModel[0].field as keyof Observation];
+
+  let compare = 0;
+  if (sortModel[0].field === "date") {
+    compare = compareDates(v1, v2);
+  }
+  if (isNumber(v1) && isNumber(v2)) {
+    compare = v1 - v2;
+  }
+  if (isString(v1) && isString(v2)) {
+    compare = v1.localeCompare(v2);
+  }
+  if (!isUndefined(v1) && isUndefined(v2)) {
+    compare = 1;
+  }
+  if (isUndefined(v1) && !isUndefined(v2)) {
+    compare = -1;
+  }
+  return sortModel[0].sort === "asc" ? compare : compare * -1;
+};
+
 export const Table = ({
   observations,
   dimensions,
@@ -55,13 +97,28 @@ export const Table = ({
   const apiRef = useGridApiRef();
 
   const { classes } = useStyles();
-  const [loadedRows, setLoadedRows] = useState<Observation[]>(observations.slice(0, PAGE_SIZE));
+  const [sortModel, setSortModel] = useState<GridSortModel>([
+    {
+      field: "date",
+      sort: "desc",
+    },
+  ]);
+  const [loadedRows, setLoadedRows] = useState<Observation[]>(
+    observations.sort((a, b) => compareDates(a.date, b.date, "desc")).slice(0, PAGE_SIZE)
+  );
   const observer = useRef<IntersectionObserver>();
   const timeView = useAtomValue(timeViewAtom);
 
+  const getObservationPage = useCallback(
+    (pageSize: number) => {
+      return observations.sort((a, b) => sorter(sortModel, a, b)).slice(0, pageSize);
+    },
+    [observations, sortModel]
+  );
+
   useEffect(() => {
-    setLoadedRows(observations.slice(0, PAGE_SIZE));
-  }, [observations]);
+    setLoadedRows(getObservationPage(PAGE_SIZE));
+  }, [getObservationPage]);
 
   const lastOptionElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -69,12 +126,12 @@ export const Table = ({
       observer.current = new IntersectionObserver(async (entries) => {
         const [target] = entries;
         if (target.isIntersecting && observations.length > loadedRows.length) {
-          setLoadedRows(observations.slice(0, loadedRows.length + PAGE_SIZE));
+          setLoadedRows(getObservationPage(loadedRows.length + PAGE_SIZE));
         }
       });
       if (node) observer.current.observe(node);
     },
-    [loadedRows, setLoadedRows, observations]
+    [loadedRows, setLoadedRows, getObservationPage, observations]
   );
 
   const columns: GridColDef[] = useMemo(() => {
@@ -95,6 +152,15 @@ export const Table = ({
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           align:
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
+          sortComparator: (v1, v2, param1, param2) => {
+            if (param1.field === param2.field && param1.field === "date") {
+              return dayjs(v1).isAfter(dayjs(v2)) ? 1 : -1;
+            }
+            if (param1.field === param2.field && param1.field === "measure") {
+              return v1 - v2;
+            }
+            return v1.localeCompare(v2);
+          },
           valueFormatter: (params) =>
             valueFormatter({
               value: params.value,
@@ -110,6 +176,13 @@ export const Table = ({
     <DataGridPro<Observation>
       apiRef={apiRef}
       rows={loadedRows}
+      sortModel={sortModel}
+      onSortModelChange={(model) => {
+        setSortModel(model);
+        apiRef.current.scrollToIndexes({
+          rowIndex: 0,
+        });
+      }}
       columns={columns}
       getRowId={(row) => row.observation as string}
       className={classes.dataGrid}
