@@ -42,8 +42,6 @@ Disallow: /de/terms-and-conditions
 Disallow: /it/terms-and-conditions
 Disallow: /fr/terms-and-conditions
 Disallow: /power-bi
-
-# German
 Disallow: /methoden
 Disallow: /daten
 Disallow: /auftrag-und-rechtliche-grundlage
@@ -52,8 +50,6 @@ Disallow: /informationen
 Disallow: /analysen
 Disallow: /fokus
 Disallow: /mark
-
-# French
 Disallow: /methodes
 Disallow: /donnees
 Disallow: /mission-et-bases-legales
@@ -62,8 +58,6 @@ Disallow: /informations
 Disallow: /analyses
 Disallow: /focus
 Disallow: /march
-
-# Italian
 Disallow: /metodi
 Disallow: /dati
 Disallow: /compiti-e-basi-legali
@@ -72,7 +66,6 @@ Disallow: /informazioni
 Disallow: /analisi
 Disallow: /focus
 Disallow: /mercat
-
 Allow: /blog/
 
 
