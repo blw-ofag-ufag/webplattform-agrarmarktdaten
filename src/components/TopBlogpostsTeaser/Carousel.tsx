@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, IconButton, BoxProps } from "@mui/material";
+import { Box, IconButton, BoxProps, styled } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
 import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 
@@ -55,9 +55,12 @@ const useCarouselStyles = makeStyles()((theme) => ({
       borderColor: theme.palette.cobalt[600],
       transition: "0.3s ease background-color",
     },
+
+    "&:hover": {
+      backgroundColor: theme.palette.active,
+    },
   },
   activeDot: {
-    backgroundColor: theme.palette.active,
     "&::before": {
       backgroundColor: theme.palette.cobalt[600],
     },
@@ -80,6 +83,12 @@ const useCircle = (max: number, defaultValue?: number) => {
   };
 };
 
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  "&:hover": {
+    backgroundColor: theme.palette.active,
+  },
+}));
+
 export const Carousel = ({
   perPage,
   children,
@@ -96,9 +105,9 @@ export const Carousel = ({
     <Box className={classes.root} {...props}>
       <div className={cx(classes.slides, slidesClassName)}>{childrenBuckets[page]}</div>
       <div className={classes.controls}>
-        <IconButton onClick={() => prevPage()}>
+        <StyledIconButton onClick={() => prevPage()}>
           <IcControlChevronDown className={classes.chevronLeft} />
-        </IconButton>
+        </StyledIconButton>
         <div className={classes.dots}>
           {Array.from({ length: maxPage + 1 })
             .fill(null)
@@ -112,9 +121,9 @@ export const Carousel = ({
               );
             })}
         </div>
-        <IconButton onClick={() => nextPage()}>
+        <StyledIconButton onClick={() => nextPage()}>
           <IcControlChevronDown className={classes.chevronRight} />
-        </IconButton>
+        </StyledIconButton>
       </div>
     </Box>
   );
