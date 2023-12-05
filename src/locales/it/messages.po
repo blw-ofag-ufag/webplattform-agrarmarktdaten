@@ -155,6 +155,11 @@ msgid "header.close"
 msgstr "Chiudi"
 
 #. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "action.copy"
+msgstr "Copiato negli Appunti"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.data"
 msgstr "Dati"

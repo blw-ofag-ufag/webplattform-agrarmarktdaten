@@ -42,6 +42,30 @@ Disallow: /de/terms-and-conditions
 Disallow: /it/terms-and-conditions
 Disallow: /fr/terms-and-conditions
 Disallow: /power-bi
+Disallow: /methoden
+Disallow: /daten
+Disallow: /auftrag-und-rechtliche-grundlage
+Disallow: /nutzungsbedingungen
+Disallow: /informationen
+Disallow: /analysen
+Disallow: /fokus
+Disallow: /mark
+Disallow: /methodes
+Disallow: /donnees
+Disallow: /mission-et-bases-legales
+Disallow: /conditions-utilisations
+Disallow: /informations
+Disallow: /analyses
+Disallow: /focus
+Disallow: /march
+Disallow: /metodi
+Disallow: /dati
+Disallow: /compiti-e-basi-legali
+Disallow: /condizioni-uso
+Disallow: /informazioni
+Disallow: /analisi
+Disallow: /focus
+Disallow: /mercat
 Allow: /blog/
 
 
