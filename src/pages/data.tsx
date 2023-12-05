@@ -146,7 +146,6 @@ const DataBrowser = () => {
           >
             <Button
               variant="inline"
-              size="small"
               startIcon={showFilters ? <IcChevronDoubleLeft /> : <IcChevronDoubleRight />}
               onClick={() => setShowFilters(!showFilters)}
             >
