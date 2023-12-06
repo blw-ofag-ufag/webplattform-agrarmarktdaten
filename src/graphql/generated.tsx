@@ -6869,6 +6869,13 @@ export type AllPowerBiReportsQueryVariables = Exact<{
 
 export type AllPowerBiReportsQuery = { __typename: 'Query', allPowerBiReports: Array<{ __typename: 'PowerBiReportRecord', id: any, reportId?: string | null, dataset?: { __typename: 'PowerBiDatasetRecord', datasetId?: string | null } | null, workspace?: { __typename: 'PowerBiWorkspaceRecord', workspaceId?: string | null } | null, pages: Array<{ __typename: 'PowerBiPageRecord', name?: string | null, pageId?: string | null }> }> };
 
+export type ErrorPageQueryVariables = Exact<{
+  locale: SiteLocale;
+}>;
+
+
+export type ErrorPageQuery = { __typename: 'Query', allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
+
 export type AllMarketArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8183,6 +8190,17 @@ export const AllPowerBiReportsDocument = gql`
 
 export function useAllPowerBiReportsQuery(options: Omit<Urql.UseQueryArgs<AllPowerBiReportsQueryVariables>, 'query'>) {
   return Urql.useQuery<AllPowerBiReportsQuery, AllPowerBiReportsQueryVariables>({ query: AllPowerBiReportsDocument, ...options });
+};
+export const ErrorPageDocument = gql`
+    query ErrorPage($locale: SiteLocale!) {
+  ...MenuItems
+}
+    ${MenuItemsFragmentDoc}
+${SimpleMarketArticleFragmentDoc}
+${SimpleFocusArticleFragmentDoc}`;
+
+export function useErrorPageQuery(options: Omit<Urql.UseQueryArgs<ErrorPageQueryVariables>, 'query'>) {
+  return Urql.useQuery<ErrorPageQuery, ErrorPageQueryVariables>({ query: ErrorPageDocument, ...options });
 };
 export const AllMarketArticlesSlugLocalesDocument = gql`
     query AllMarketArticlesSlugLocales {
