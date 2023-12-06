@@ -11,9 +11,11 @@ import { GridContainer } from "@/components/Grid/Grid";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 import { isValidLocale } from "@/locales/locales";
 import slugs from "@/generated/slugs.json";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
-  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
 
@@ -28,30 +30,33 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
   }));
 
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-      showBackButton
-    >
-      <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shiftedLeft />
-      <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <div className={classes.aside} ref={stickyRef}>
-          {focusArticle.content && (
-            <TableOfContents
-              data={focusArticle.content}
-              sx={{ height: "fit-content", width: "100%" }}
-            />
-          )}
-        </div>
-        <div className={classes.content}>
-          {focusArticle.content && <StructuredText data={focusArticle.content} />}
-        </div>
-      </GridContainer>
-      <LayoutSections>
-        <TopBlogpostsTeaser blogposts={topBlogPosts} />
-      </LayoutSections>
-    </AppLayout>
+    <>
+      <Head>{renderMetaTags([...focusArticle.seo, ...site?.favicon])}</Head>
+      <AppLayout
+        alternates={alternates}
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+        showBackButton
+      >
+        <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shiftedLeft />
+        <GridContainer sx={{ mt: 4, position: "relative" }}>
+          <div className={classes.aside} ref={stickyRef}>
+            {focusArticle.content && (
+              <TableOfContents
+                data={focusArticle.content}
+                sx={{ height: "fit-content", width: "100%" }}
+              />
+            )}
+          </div>
+          <div className={classes.content}>
+            {focusArticle.content && <StructuredText data={focusArticle.content} />}
+          </div>
+        </GridContainer>
+        <LayoutSections>
+          <TopBlogpostsTeaser blogposts={topBlogPosts} />
+        </LayoutSections>
+      </AppLayout>
+    </>
   );
 }
 

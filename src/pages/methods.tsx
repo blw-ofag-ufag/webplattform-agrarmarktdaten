@@ -7,9 +7,11 @@ import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
@@ -21,29 +23,32 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
     locale: loc.locale as string,
   }));
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-    >
-      <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
-      <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <div ref={stickyRef} className={classes.aside}>
-          {methodsPage.content && (
-            <TableOfContents
-              data={methodsPage.content}
-              sx={{ height: "fit-content", width: "100%" }}
-            />
-          )}
-        </div>
-        <div className={classes.content}>
-          {methodsPage.content && <StructuredText data={methodsPage.content} />}
-        </div>
-      </GridContainer>
-      <LayoutSections>
-        <TopBlogpostsTeaser blogposts={topBlogPosts} />
-      </LayoutSections>
-    </AppLayout>
+    <>
+      <Head>{renderMetaTags([...methodsPage.seo, ...site?.favicon])}</Head>
+      <AppLayout
+        alternates={alternates}
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+      >
+        <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
+        <GridContainer sx={{ mt: 4, position: "relative" }}>
+          <div ref={stickyRef} className={classes.aside}>
+            {methodsPage.content && (
+              <TableOfContents
+                data={methodsPage.content}
+                sx={{ height: "fit-content", width: "100%" }}
+              />
+            )}
+          </div>
+          <div className={classes.content}>
+            {methodsPage.content && <StructuredText data={methodsPage.content} />}
+          </div>
+        </GridContainer>
+        <LayoutSections>
+          <TopBlogpostsTeaser blogposts={topBlogPosts} />
+        </LayoutSections>
+      </AppLayout>
+    </>
   );
 }
 

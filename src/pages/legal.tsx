@@ -5,9 +5,11 @@ import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { Hero } from "@/components/hero";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 export default function LegalPage(props: GQL.LegalPageQuery) {
-  const { legalPage, allMarketArticles, allFocusArticles } = props;
+  const { legalPage, allMarketArticles, allFocusArticles, site } = props;
   const { classes } = useLayoutStyles();
   if (!legalPage?.title || !legalPage.lead) {
     return null;
@@ -18,26 +20,29 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
     locale: loc.locale as string,
   }));
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-      showBackButton
-    >
-      <Hero title={legalPage.title} lead={legalPage.lead} showTitleLine={false} shiftedLeft />
-      <GridContainer
-        sx={{
-          mt: 4,
-          mb: 8,
-          position: "relative",
-        }}
+    <>
+      <Head>{renderMetaTags([...legalPage.seo, ...site?.favicon])}</Head>
+      <AppLayout
+        alternates={alternates}
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+        showBackButton
       >
-        <div className={classes.aside} />
-        <div className={classes.content}>
-          {legalPage.content && <StructuredText data={legalPage.content} />}
-        </div>
-      </GridContainer>
-    </AppLayout>
+        <Hero title={legalPage.title} lead={legalPage.lead} showTitleLine={false} shiftedLeft />
+        <GridContainer
+          sx={{
+            mt: 4,
+            mb: 8,
+            position: "relative",
+          }}
+        >
+          <div className={classes.aside} />
+          <div className={classes.content}>
+            {legalPage.content && <StructuredText data={legalPage.content} />}
+          </div>
+        </GridContainer>
+      </AppLayout>
+    </>
   );
 }
 

@@ -37,6 +37,8 @@ import { Circle } from "@mui/icons-material";
 import { isUndefined } from "lodash";
 import DebugDataPage from "../components/DebugDataPage";
 import ActionButton from "@/components/browser/ActionButton";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -58,7 +60,7 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 }
 
 export default function DataPage(props: GQL.DataPageQuery) {
-  const { dataPage, allMarketArticles, allFocusArticles } = props;
+  const { dataPage, allMarketArticles, allFocusArticles, site } = props;
   const showEnvironments = useFlag("environments");
 
   const alternates = dataPage?._allSlugLocales?.map((loc) => ({
@@ -69,6 +71,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
 
   return (
     <SafeHydrate>
+      <Head>{renderMetaTags([...(dataPage?.seo ?? []), ...site?.favicon])}</Head>
       <ThemeProvider theme={blackAndWhiteTheme}>
         <AppLayout
           alternates={alternates}

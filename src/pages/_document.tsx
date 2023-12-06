@@ -35,7 +35,6 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         <style>{documentStyles}</style>
         {/* PWA primary color, background of the page on Safari (cobalt[600]). */}
         <meta name="theme-color" content="2f4356" />
-        <link rel="shortcut icon" href="/favicon.ico" />
 
         {/* The following lines need to be in sync with storybook/main.js:previewHead */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
