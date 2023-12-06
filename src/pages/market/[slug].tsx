@@ -12,9 +12,11 @@ import { GridContainer } from "@/components/Grid/Grid";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 import { isValidLocale } from "@/locales/locales";
 import slugs from "@/generated/slugs.json";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 export default function MarketPage(props: GQL.MarketPageQuery) {
-  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
 
   const stickyRef = useTableOfContentsSticky();
 
@@ -31,38 +33,41 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
   }
   const [color, marketColor] = getMarketColor(marketArticle.slug);
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-      backButtonColor={color}
-      showBackButton
-    >
-      <Hero
-        title={marketArticle.title}
-        lead={marketArticle.lead}
-        bgColor={marketColor}
-        color={color}
-        shiftedLeft
-      />
-      <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <div className={classes.aside} ref={stickyRef}>
-          {marketArticle.content && (
-            <TableOfContents
-              data={marketArticle.content}
-              activeColor={marketColor}
-              sx={{ height: "fit-content", width: "100%" }}
-            />
-          )}
-        </div>
-        <div className={classes.content}>
-          {marketArticle.content && <StructuredText data={marketArticle.content} />}
-        </div>
-      </GridContainer>
-      <LayoutSections>
-        <TopBlogpostsTeaser blogposts={topBlogPosts} />
-      </LayoutSections>
-    </AppLayout>
+    <>
+      <Head>{renderMetaTags([...marketArticle.seo, ...site?.favicon])}</Head>
+      <AppLayout
+        alternates={alternates}
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+        backButtonColor={color}
+        showBackButton
+      >
+        <Hero
+          title={marketArticle.title}
+          lead={marketArticle.lead}
+          bgColor={marketColor}
+          color={color}
+          shiftedLeft
+        />
+        <GridContainer sx={{ mt: 4, position: "relative" }}>
+          <div className={classes.aside} ref={stickyRef}>
+            {marketArticle.content && (
+              <TableOfContents
+                data={marketArticle.content}
+                activeColor={marketColor}
+                sx={{ height: "fit-content", width: "100%" }}
+              />
+            )}
+          </div>
+          <div className={classes.content}>
+            {marketArticle.content && <StructuredText data={marketArticle.content} />}
+          </div>
+        </GridContainer>
+        <LayoutSections>
+          <TopBlogpostsTeaser blogposts={topBlogPosts} />
+        </LayoutSections>
+      </AppLayout>
+    </>
   );
 }
 
