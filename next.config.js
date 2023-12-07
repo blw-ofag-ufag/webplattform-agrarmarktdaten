@@ -1,5 +1,11 @@
 const { withSentryConfig } = require("@sentry/nextjs");
-const { locales, defaultLocale, domains, localDomains } = require("./src/locales/locales.json");
+const {
+  locales,
+  defaultLocale,
+  domains,
+  previewDomains,
+  localDomains,
+} = require("./src/locales/locales.json");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -20,7 +26,12 @@ const config = withBundleAnalyzer(
     i18n: {
       locales,
       defaultLocale,
-      domains: process.env.NODE_ENV === "production" ? domains : localDomains,
+      domains:
+        process.env.NODE_ENV === "production"
+          ? domains
+          : process.env.VERCEL_ENV
+          ? previewDomains
+          : localDomains,
       localeDetection: false,
     },
 
