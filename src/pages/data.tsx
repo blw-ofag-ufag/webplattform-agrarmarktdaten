@@ -22,7 +22,7 @@ import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
 import { makeStyles } from "@/components/style-utils";
-import { cubeDimensionsStatusAtom, visualizeUrlAtom } from "@/domain/cubes";
+import { cubeDimensionsStatusAtom } from "@/domain/cubes";
 import { resetCubeFiltersAtom } from "@/domain/filters";
 import {
   filteredObservationsAtom,
@@ -110,7 +110,7 @@ const DataBrowser = () => {
   const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const query = useAtomValue(observationsSparqlQueryAtom);
-  const visualizeUrl = useAtomValue(visualizeUrlAtom);
+  // const visualizeUrl = useAtomValue(visualizeUrlAtom);
   const filteredChangedCount = useAtomValue(resetCubeFiltersAtom);
 
   const queriesCompleted = observationsQueryStatus.isSuccess && cubeDimensions.isSuccess;
@@ -205,9 +205,13 @@ const DataBrowser = () => {
             <ActionButton disabled={!query} href={query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
             </ActionButton>
-            <ActionButton href={visualizeUrl ?? ""} target="_blank">
+            {/**
+             * Hide visualize button for now, as support for BLW datasets in Visualize is still
+             * in progress.
+             */}
+            {/* <ActionButton href={visualizeUrl ?? ""} target="_blank">
               <Trans id="data.actions.visualize">Visualize</Trans>
-            </ActionButton>
+            </ActionButton> */}
             <ActionButton onClick={() => setShowMetadataPanel(true)}>
               <Trans id="data.actions.metadata">Metadata</Trans>
             </ActionButton>
