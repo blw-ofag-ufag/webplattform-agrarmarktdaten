@@ -6,6 +6,11 @@
     { "domain": "local-dati-agrimercato.ch", "defaultLocale": "it", "http": true },
     { "domain": "local-donnees-agrimarche.ch", "defaultLocale": "fr", "http": true }
   ],
+  "previewDomains": [
+    { "domain": "blw-agricultural-market-data-platform.vercel.app", "defaultLocale": "de" },
+    { "domain": "it-blw-agricultural-market-data-platform.vercel.app", "defaultLocale": "it" },
+    { "domain": "fr-blw-agricultural-market-data-platform.vercel.app", "defaultLocale": "fr" }
+  ],
   "domains": [
     { "domain": "agrarmarktdaten.ch", "defaultLocale": "de" },
     { "domain": "dati-agrimercato.ch", "defaultLocale": "it" },
