@@ -211,7 +211,7 @@ const FilterRadioAccordion = <T extends Option>({
     <FilterAccordion {...slots.accordion}>
       <AccordionSummary className={isTainted ? "tainted" : ""}>
         <AccordionTitle>{title}</AccordionTitle>
-        <PreviewFilter tainted={isTainted} show={!slots.accordion.expanded && !!value}>
+        <PreviewFilter tainted={isTainted} show={!!value}>
           {value && value.label}
         </PreviewFilter>
       </AccordionSummary>
@@ -259,12 +259,7 @@ const FilterSelectAccordion = <T extends Option>({
     <FilterAccordion {...slots.accordion}>
       <AccordionSummary className={isTainted ? "tainted" : ""}>
         <AccordionTitle>{title}</AccordionTitle>
-        <PreviewSelect
-          tainted={isTainted}
-          show={!slots.accordion.expanded}
-          values={values}
-          options={options}
-        />
+        <PreviewSelect tainted={isTainted} values={values} options={options} />
       </AccordionSummary>
       <AccordionDetails>
         <Select values={values} onChange={setValues} options={options} {...slots.select} />
@@ -317,7 +312,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
         <AccordionTitle>
           <Trans id="data.filters.time">Time</Trans>
         </AccordionTitle>
-        <PreviewFilter show={!props.expanded}>
+        <PreviewFilter show={!props.expanded} tainted={isTainted}>
           {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
         </PreviewFilter>
       </AccordionSummary>

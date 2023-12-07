@@ -61,7 +61,7 @@ msgstr "Startseite"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
-msgstr "({0} insgesamt)"
+msgstr "({0} von {1})"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx

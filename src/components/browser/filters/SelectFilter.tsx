@@ -36,6 +36,7 @@ type Node<T extends Option> = {
   checked?: boolean;
   total?: number;
   indeterminate?: boolean;
+  selectedCount?: number;
 };
 
 type ScoredOption = Option & { score?: ScoredResult<Option> };
@@ -84,6 +85,7 @@ const stratify = <T extends Option>(
         checked,
         total: allValues.length,
         indeterminate: !checked && allValues.some((c) => c.checked),
+        selectedCount: allValues.filter((c) => c.checked).length,
         children,
       });
     } else {
@@ -113,19 +115,30 @@ const search = <T extends Option>(items: T[], searchString: string) => {
 const propagateValueInTree = <T extends Option>(
   source: Node<T>[],
   target: Node<T & { checked: boolean }>[],
-  field: keyof Node<T>
+  fields: (keyof Node<T>)[]
 ): Node<T & { checked: boolean }>[] => {
   return target.map((node) => {
     const match = source.find((n) => n.id === node.id);
+
+    const propagated = fields.reduce(
+      (acc, field) => {
+        if (match?.[field]) {
+          acc[field] = match[field] as any;
+        }
+        return acc;
+      },
+      {} as Partial<Node<T>>
+    );
+
     if (match) {
       return {
         ...node,
-        [field]: match[field],
-        children: propagateValueInTree(match.children, node.children, field),
+        ...propagated,
+        children: propagateValueInTree(match.children, node.children, fields),
       };
     }
     return node;
-  });
+  }) as Node<T & { checked: boolean }>[];
 };
 
 export type SelectProps<T extends Option> = {
@@ -155,16 +168,24 @@ export default function Select<T extends Option>({
     return search(options, deferredSearch);
   }, [options, searchString, deferredSearch]);
 
-  const allItemsTree = useMemo(() => stratify(options, groups || []), [options, groups]);
+  const allItemsTree = useMemo(() => {
+    const optionsWithChecked = options.map((option) => ({
+      ...option,
+      checked: values.some((v) => v.value === option.value),
+    }));
+
+    return stratify(optionsWithChecked, groups || []);
+  }, [options, groups, values]);
 
   const itemTree = useMemo(() => {
     const optionsWithChecked = searchOptions.map((option) => ({
       ...option,
       checked: values.some((v) => v.value === option.value),
     }));
+
     const tree = stratify(optionsWithChecked, groups || []);
 
-    return propagateValueInTree(allItemsTree, tree, "total");
+    return propagateValueInTree(allItemsTree, tree, ["total", "selectedCount"]);
   }, [searchOptions, values, groups, allItemsTree]);
 
   const onChangeItem = (node: Node<T>, checked: boolean) => {
@@ -302,6 +323,10 @@ const SelectItem = <T extends ScoredOption>({
     setExpanded(node.level === 0 || hasResults);
   }, [node.level, hasResults]);
 
+  const sortedChildren = useMemo(() => {
+    return node.children.sort((a, b) => a.id.localeCompare(b.id));
+  }, [node.children]);
+
   if (node.children.length === 0) {
     return (
       <FormControlLabel
@@ -365,7 +390,10 @@ const SelectItem = <T extends ScoredOption>({
               </Typography>
               {isSearch && (
                 <Typography ml={2} display="inline" variant="body2" color="monochrome.500">
-                  {t({ id: "filters.select.total", message: `(${node.total} total)` })}
+                  {t({
+                    id: "filters.select.total",
+                    message: `(${node.selectedCount ?? 0} of ${node.total})`,
+                  })}
                 </Typography>
               )}
             </span>
@@ -374,7 +402,7 @@ const SelectItem = <T extends ScoredOption>({
       </AccordionSummary>
       <AccordionDetails>
         <Stack>
-          {node.children.map((child) => (
+          {sortedChildren.map((child) => (
             <SelectItem
               node={child}
               key={child.id}
@@ -475,12 +503,12 @@ const SelectCheckbox = ({ color, ...props }: Omit<CheckboxProps, "color"> & { co
 export const PreviewSelect = <T extends Option>({
   options,
   values,
-  show,
+  show = true,
   tainted = false,
 }: {
   options: T[];
   values: T[];
-  show: boolean;
+  show?: boolean;
   tainted?: boolean;
 }) => {
   return (
