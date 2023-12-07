@@ -329,6 +329,11 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
           view={timeView}
           onChangeRange={handleTimeRangeChange}
           onChangeView={setTimeView}
+          resettable={isTainted}
+          onReset={() => {
+            setTimeRange(timeRangeDefault);
+            setTimeView("Year");
+          }}
         />
       </AccordionDetails>
     </FilterAccordion>

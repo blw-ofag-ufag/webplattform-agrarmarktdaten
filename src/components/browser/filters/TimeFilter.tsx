@@ -52,6 +52,8 @@ export default function TimeFilter({
   view,
   onChangeRange = () => {},
   onChangeView = () => {},
+  onReset = () => {},
+  resettable,
 }: {
   min: number;
   max: number;
@@ -59,6 +61,8 @@ export default function TimeFilter({
   view: TimeView;
   onChangeRange?: (newValues: [number, number]) => void;
   onChangeView?: (newGranularity: TimeView) => void;
+  onReset?: () => void;
+  resettable?: boolean;
 }) {
   const { classes } = useStyles();
   const minDate = useMemo(() => dayjs.unix(min), [min]);
@@ -97,17 +101,14 @@ export default function TimeFilter({
   return (
     <Stack gap={3}>
       <Box minHeight={28}>
-        {(sliderRange[0] !== min || sliderRange[1] !== max) && (
+        {resettable && (
           <Button
             variant="text"
             size="small"
             sx={{
               width: "fit-content",
             }}
-            onClick={() => {
-              setSliderRange([min, max]);
-              onChangeRange([min, max]);
-            }}
+            onClick={onReset}
           >
             <Trans id="data.control.reset">Reset</Trans>
           </Button>

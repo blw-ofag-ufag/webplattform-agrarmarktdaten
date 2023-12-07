@@ -76,7 +76,7 @@ export const timeRangeDefault = {
   value: [MIN_DATE.unix(), MAX_DATE.unix()] as [number, number],
 };
 
-export const timeViewAtom = atom<TimeView>("Year");
+export const timeViewAtom = atomWithHash<TimeView>("timeView", "Year");
 
 export const timeRangeAtom = atomWithHash("timeRange", timeRangeDefault);
 
