@@ -323,6 +323,10 @@ const SelectItem = <T extends ScoredOption>({
     setExpanded(node.level === 0 || hasResults);
   }, [node.level, hasResults]);
 
+  const sortedChildren = useMemo(() => {
+    return node.children.sort((a, b) => a.id.localeCompare(b.id));
+  }, [node.children]);
+
   if (node.children.length === 0) {
     return (
       <FormControlLabel
@@ -352,10 +356,6 @@ const SelectItem = <T extends ScoredOption>({
   }
 
   const values = getValues(node);
-
-  const sortedChildren = useMemo(() => {
-    return node.children.sort((a, b) => a.id.localeCompare(b.id));
-  }, [node.children]);
 
   return (
     <Accordion
