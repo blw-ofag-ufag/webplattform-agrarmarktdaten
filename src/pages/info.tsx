@@ -7,9 +7,11 @@ import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 export default function InfoPage(props: GQL.InfoPageQuery) {
-  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!infoPage?.title || !infoPage.lead) {
@@ -21,29 +23,32 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
     locale: loc.locale as string,
   }));
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-    >
-      <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
-      <GridContainer sx={{ mt: 4, position: "relative" }}>
-        <div ref={stickyRef} className={classes.aside}>
-          {infoPage.content && (
-            <TableOfContents
-              data={infoPage.content}
-              sx={{ height: "fit-content", width: "100%" }}
-            />
-          )}
-        </div>
-        <div className={classes.content}>
-          {infoPage.content && <StructuredText data={infoPage.content} />}
-        </div>
-      </GridContainer>
-      <LayoutSections>
-        <TopBlogpostsTeaser blogposts={topBlogPosts} />
-      </LayoutSections>
-    </AppLayout>
+    <>
+      <Head>{renderMetaTags([...infoPage.seo, ...site?.favicon])}</Head>
+      <AppLayout
+        alternates={alternates}
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+      >
+        <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
+        <GridContainer sx={{ mt: 4, position: "relative" }}>
+          <div ref={stickyRef} className={classes.aside}>
+            {infoPage.content && (
+              <TableOfContents
+                data={infoPage.content}
+                sx={{ height: "fit-content", width: "100%" }}
+              />
+            )}
+          </div>
+          <div className={classes.content}>
+            {infoPage.content && <StructuredText data={infoPage.content} />}
+          </div>
+        </GridContainer>
+        <LayoutSections>
+          <TopBlogpostsTeaser blogposts={topBlogPosts} />
+        </LayoutSections>
+      </AppLayout>
+    </>
   );
 }
 

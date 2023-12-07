@@ -15,9 +15,6 @@ query HomePage($locale: SiteLocale!) {
       id
       url
     }
-    seo {
-      ...FullSEO
-    }
     markets {
       id
       title
@@ -29,8 +26,10 @@ query HomePage($locale: SiteLocale!) {
       title
       slug
     }
+    ...SEOMetaTags
   }
 
+  ...SiteFavIcon
   ...MenuItems
   ...TopBlogPosts
 }
@@ -41,7 +40,9 @@ query DataPage($locale: SiteLocale!) {
       locale
       value
     }
+    ...SEOMetaTags
   }
+  ...SiteFavIcon
   ...MenuItems
 }
 
@@ -53,6 +54,7 @@ query LegalPage($locale: SiteLocale!) {
     }
     id
     title
+    ...SEOMetaTags
     lead {
       value
       links {
@@ -78,7 +80,7 @@ query LegalPage($locale: SiteLocale!) {
       }
     }
   }
-
+  ...SiteFavIcon
   ...MenuItems
 }
 
@@ -89,6 +91,7 @@ query TermsPage($locale: SiteLocale!) {
       value
     }
     title
+    ...SEOMetaTags
     lead {
       value
       links {
@@ -114,7 +117,7 @@ query TermsPage($locale: SiteLocale!) {
       }
     }
   }
-
+  ...SiteFavIcon
   ...MenuItems
 }
 
@@ -124,9 +127,10 @@ query MarketPage($locale: SiteLocale!, $slug: String!) {
       locale
       value
     }
+    ...SEOMetaTags
     ...FullMarketArticle
   }
-
+  ...SiteFavIcon
   ...MenuItems
   ...TopBlogPosts
 }
@@ -137,9 +141,10 @@ query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
       locale
       value
     }
+    ...SEOMetaTags
     ...FullFocusArticle
   }
-
+  ...SiteFavIcon
   ...MenuItems
   ...TopBlogPosts
 }
@@ -159,9 +164,7 @@ query MethodsPage($locale: SiteLocale!) {
         ...InternalLink
       }
     }
-    seo {
-      ...FullSEO
-    }
+    ...SEOMetaTags
     content {
       value
       blocks {
@@ -181,7 +184,7 @@ query MethodsPage($locale: SiteLocale!) {
       }
     }
   }
-
+  ...SiteFavIcon
   ...MenuItems
   ...TopBlogPosts
 }
@@ -201,9 +204,7 @@ query InfoPage($locale: SiteLocale!) {
         ...InternalLink
       }
     }
-    seo {
-      ...FullSEO
-    }
+    ...SEOMetaTags
     content {
       value
       blocks {
@@ -223,7 +224,7 @@ query InfoPage($locale: SiteLocale!) {
       }
     }
   }
-
+  ...SiteFavIcon
   ...MenuItems
   ...TopBlogPosts
 }
@@ -243,11 +244,9 @@ query AnalysisPage($locale: SiteLocale!) {
         ...InternalLink
       }
     }
-    seo {
-      ...FullSEO
-    }
+    ...SEOMetaTags
   }
-
+  ...SiteFavIcon
   ...MenuItems
 }
 
@@ -300,9 +299,11 @@ query BlogPost($locale: SiteLocale!, $slug: String!) {
       locale
       value
     }
+    ...SEOMetaTags
     id
     ...BlogPost
   }
+  ...SiteFavIcon
   ...MenuItems
   ...TopBlogPosts
 }
@@ -407,16 +408,6 @@ query AllRedirects {
 }
 
 # Fragments
-fragment FullSEO on SeoField {
-  title
-  description
-  image {
-    id
-    url
-  }
-  twitterCard
-}
-
 fragment SimpleMarketArticle on MarketArticleRecord {
   id
   title
@@ -458,9 +449,6 @@ fragment FullMarketArticle on MarketArticleRecord {
       ...InternalLink
     }
   }
-  seo {
-    ...FullSEO
-  }
 }
 
 fragment FullFocusArticle on FocusArticleRecord {
@@ -492,9 +480,6 @@ fragment FullFocusArticle on FocusArticleRecord {
       ...HighlightSection
       ...PowerBI
     }
-  }
-  seo {
-    ...FullSEO
   }
 }
 
@@ -847,5 +832,23 @@ fragment MenuItems on Query {
 fragment TopBlogPosts on Query {
   topBlogPosts: allBlogPosts(locale: $locale, first: 3, orderBy: [publishedDate_DESC]) {
     ...SimpleBlogPost
+  }
+}
+
+fragment SEOMetaTags on RecordInterface {
+  seo: _seoMetaTags {
+    attributes
+    content
+    tag
+  }
+}
+
+fragment SiteFavIcon on Query {
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
   }
 }
