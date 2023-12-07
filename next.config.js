@@ -29,7 +29,7 @@ const config = withBundleAnalyzer(
       domains:
         process.env.NODE_ENV === "production"
           ? domains
-          : process.env.VERCEL_ENV
+          : process.env.VERCEL_ENV === "preview"
           ? previewDomains
           : localDomains,
       localeDetection: false,
