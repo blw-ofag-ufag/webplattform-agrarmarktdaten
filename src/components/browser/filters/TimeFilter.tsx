@@ -203,8 +203,8 @@ const useDatePickerStyles = makeStyles()((theme) => {
         paddingBottom: theme.spacing(2),
       },
       [`& .${dateCalendarClasses.root}`]: {
-        height: "200px",
-        maxHeight: "200px",
+        height: "212px",
+        maxHeight: "212px",
         overflow: "scroll",
       },
       [`& .${yearCalendarClasses.root}`]: {

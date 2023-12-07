@@ -62,6 +62,8 @@ const theme = createTheme(federalTheme, {
           [`&.${toggleButtonClasses.selected}`]: {
             backgroundColor: federalTheme.palette.cobalt[500],
             color: federalTheme.palette.cobalt[50],
+            borderColor: federalTheme.palette.cobalt[500],
+
             "&:hover": {
               backgroundColor: federalTheme.palette.cobalt[700],
             },
