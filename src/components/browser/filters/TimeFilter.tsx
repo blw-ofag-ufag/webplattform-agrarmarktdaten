@@ -1,5 +1,5 @@
 import { TimeView } from "@/domain/filters";
-import { IcControlCalendar } from "@/icons/icons-jsx/control";
+import { IcControlCalendar, IcControlChevronUp } from "@/icons/icons-jsx/control";
 import { useLocale } from "@/lib/use-locale";
 import { Trans, t } from "@lingui/macro";
 import {
@@ -14,7 +14,16 @@ import {
   Typography,
   sliderClasses,
 } from "@mui/material";
-import { DatePicker, DatePickerProps, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  DatePickerProps,
+  LocalizationProvider,
+  dateCalendarClasses,
+  pickersCalendarHeaderClasses,
+  pickersMonthClasses,
+  pickersYearClasses,
+  yearCalendarClasses,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/de";
@@ -43,6 +52,8 @@ export default function TimeFilter({
   view,
   onChangeRange = () => {},
   onChangeView = () => {},
+  onReset = () => {},
+  resettable,
 }: {
   min: number;
   max: number;
@@ -50,6 +61,8 @@ export default function TimeFilter({
   view: TimeView;
   onChangeRange?: (newValues: [number, number]) => void;
   onChangeView?: (newGranularity: TimeView) => void;
+  onReset?: () => void;
+  resettable?: boolean;
 }) {
   const { classes } = useStyles();
   const minDate = useMemo(() => dayjs.unix(min), [min]);
@@ -88,17 +101,14 @@ export default function TimeFilter({
   return (
     <Stack gap={3}>
       <Box minHeight={28}>
-        {(sliderRange[0] !== min || sliderRange[1] !== max) && (
+        {resettable && (
           <Button
             variant="text"
             size="small"
             sx={{
               width: "fit-content",
             }}
-            onClick={() => {
-              setSliderRange([min, max]);
-              onChangeRange([min, max]);
-            }}
+            onClick={onReset}
           >
             <Trans id="data.control.reset">Reset</Trans>
           </Button>
@@ -109,7 +119,11 @@ export default function TimeFilter({
         fullWidth
         value={view}
         exclusive
-        onChange={(_, value) => onChangeView(value)}
+        onChange={(_, value) => {
+          if (value) {
+            onChangeView(value);
+          }
+        }}
       >
         <ToggleButton value="Year">
           <Trans id="data.filters.year">Year</Trans>
@@ -178,6 +192,53 @@ export const previewTime = (min: number, max: number, view: TimeView) => {
     .format(formatTimeView(view))}`;
 };
 
+const useDatePickerStyles = makeStyles()((theme) => {
+  return {
+    layout: {
+      [`& .${pickersCalendarHeaderClasses.root}`]: {
+        paddingLeft: theme.spacing(3),
+        fontWeight: "bold",
+        borderBottom: "1px solid",
+        borderColor: theme.palette.cobalt[100],
+        paddingBottom: theme.spacing(2),
+      },
+      [`& .${dateCalendarClasses.root}`]: {
+        height: "212px",
+        maxHeight: "212px",
+        overflow: "scroll",
+      },
+      [`& .${yearCalendarClasses.root}`]: {
+        maxHeight: "none",
+        px: theme.spacing(2),
+      },
+      [`& .${pickersMonthClasses.root}`]: {
+        flexBasis: "25%",
+      },
+
+      [`& .${pickersYearClasses.yearButton}`]: {
+        borderRadius: theme.spacing(1),
+        [`&.${pickersYearClasses.selected}`]: {
+          color: "white",
+          ":focus": {
+            backgroundColor: theme.palette.cobalt[500],
+          },
+        },
+      },
+      [`& .${pickersMonthClasses.monthButton}`]: {
+        mx: 0,
+        my: theme.spacing(1),
+        borderRadius: theme.spacing(1),
+        [`&.${pickersMonthClasses.selected}`]: {
+          color: "white",
+          ":focus": {
+            backgroundColor: theme.palette.cobalt[500],
+          },
+        },
+      },
+    },
+  };
+});
+
 const DatePickerField = ({
   min,
   max,
@@ -189,6 +250,7 @@ const DatePickerField = ({
   format: string;
   label: string;
 } & DatePickerProps<Dayjs>) => {
+  const { classes } = useDatePickerStyles();
   return (
     <Stack>
       <InputLabel shrink={false} htmlFor={`picker-${label}`}>
@@ -200,7 +262,16 @@ const DatePickerField = ({
         slots={{
           openPickerIcon: IcControlCalendar,
         }}
+        {...props}
         slotProps={{
+          calendarHeader: {
+            slots: {
+              switchViewIcon: IcControlChevronUp,
+            },
+          },
+          layout: {
+            className: classes.layout,
+          },
           textField: {
             size: "small",
             id: "picker-from",
@@ -208,8 +279,8 @@ const DatePickerField = ({
               shrink: true,
             },
           },
+          ...props.slotProps,
         }}
-        {...props}
       />
     </Stack>
   );
