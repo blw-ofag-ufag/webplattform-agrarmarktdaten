@@ -325,6 +325,10 @@ query AllPowerBIReports($locale: SiteLocale!) {
   }
 }
 
+query ErrorPage($locale: SiteLocale!) {
+  ...MenuItems
+}
+
 ## Slugs
 query AllMarketArticlesSlugLocales {
   allMarketArticles {
