@@ -69,7 +69,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   fullscreenButton: {
     position: "absolute",
-    bottom: "0rem",
+    bottom: "-2px",
     right: 0,
     zIndex: 1000,
     color: theme.palette.cobalt[500],
