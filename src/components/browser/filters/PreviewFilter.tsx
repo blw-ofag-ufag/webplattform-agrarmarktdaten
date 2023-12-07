@@ -7,7 +7,7 @@ const PreviewFilter = ({
   children,
   ...props
 }: {
-  show: boolean;
+  show?: boolean;
   tainted?: boolean;
 } & TypographyProps &
   PropsWithChildren) => {

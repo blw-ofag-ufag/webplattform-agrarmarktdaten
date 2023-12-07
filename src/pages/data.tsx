@@ -15,6 +15,7 @@ import {
 import { useAtomValue } from "jotai";
 import React, { useEffect, useState } from "react";
 
+import ActionButton from "@/components/browser/ActionButton";
 import DataDownload from "@/components/browser/DataDownload";
 import EnvSwitch from "@/components/browser/EnvSwitch";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
@@ -35,10 +36,9 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import { isUndefined } from "lodash";
-import DebugDataPage from "../components/DebugDataPage";
-import ActionButton from "@/components/browser/ActionButton";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
+import DebugDataPage from "../components/DebugDataPage";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
