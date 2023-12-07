@@ -27,7 +27,7 @@ export const setup = () => {
 
   const u = "https://analytics.bit.admin.ch/";
   _paq.push(["setTrackerUrl", u + "matomo.php"]);
-  _paq.push(["setSiteId", "32"]);
+  _paq.push(["setSiteId", "255"]);
   const d = document,
     g = d.createElement("script"),
     s = d.getElementsByTagName("script")[0];
