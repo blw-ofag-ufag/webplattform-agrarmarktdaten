@@ -185,7 +185,7 @@ export default function Select<T extends Option>({
 
     const tree = stratify(optionsWithChecked, groups || []);
 
-    return propagateValueInTree(allItemsTree, tree, ["total", "selectedCount"]);
+    return propagateValueInTree(allItemsTree, tree, ["total", "selectedCount"]).sort(nodeSorter);
   }, [searchOptions, values, groups, allItemsTree]);
 
   const onChangeItem = (node: Node<T>, checked: boolean) => {
@@ -199,10 +199,6 @@ export default function Select<T extends Option>({
       onChange(values.filter((v) => !targetIds.includes(v.value)));
     }
   };
-
-  const sortedItemTree = useMemo(() => {
-    return itemTree.sort(nodeSorter);
-  }, [itemTree]);
 
   return (
     <Stack spacing={3} py={2}>
@@ -267,7 +263,7 @@ export default function Select<T extends Option>({
         </Button>
       </Stack>
       <Stack spacing={1}>
-        {sortedItemTree.map((item) => {
+        {itemTree.map((item) => {
           return (
             <SelectItem
               key={item.id}

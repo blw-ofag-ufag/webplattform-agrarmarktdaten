@@ -199,7 +199,7 @@ const DownloadMenuItem = ({
     switch (format) {
       case "csv":
         const csv = await workbook.csv.writeBuffer();
-        saveAs(new Blob([csv], { type: "text/csv;charset=utf-8" }), fileName);
+        saveAs(new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" }), fileName);
         break;
       case "xlsx":
         const xlsx = await workbook.xlsx.writeBuffer();
@@ -214,12 +214,12 @@ const DownloadMenuItem = ({
         saveAs(new Blob([JSON.stringify(parsedRows)], { type: "application/json" }), fileName);
         break;
     }
-  }, [format, dataset, dimensions, locale]);
+  }, [format, dataset, dimensions, timeView, locale]);
 
   return (
     <MenuItem key={format} {...props}>
       <Button
-        variant="text"
+        variant="inverted"
         sx={{
           display: "flex",
           justifyContent: "space-between",
