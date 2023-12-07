@@ -200,6 +200,10 @@ export default function Select<T extends Option>({
     }
   };
 
+  const sortedItemTree = useMemo(() => {
+    return itemTree.sort(nodeSorter);
+  }, [itemTree]);
+
   return (
     <Stack spacing={3} py={2}>
       {withSearch && (
@@ -263,7 +267,7 @@ export default function Select<T extends Option>({
         </Button>
       </Stack>
       <Stack spacing={1}>
-        {itemTree.map((item) => {
+        {sortedItemTree.map((item) => {
           return (
             <SelectItem
               key={item.id}
@@ -302,6 +306,12 @@ const MatchedString = <T extends Option>({
   return <span>{React.Children.toArray(substrings)}</span>;
 };
 
+const nodeSorter = <T extends Option>(a: Node<T>, b: Node<T>) => {
+  const aLabel = a.value?.label || a.id;
+  const bLabel = b.value?.label || b.id;
+  return aLabel.localeCompare(bLabel);
+};
+
 const SelectItem = <T extends ScoredOption>({
   node,
   onChangeItem,
@@ -324,7 +334,7 @@ const SelectItem = <T extends ScoredOption>({
   }, [node.level, hasResults]);
 
   const sortedChildren = useMemo(() => {
-    return node.children.sort((a, b) => a.id.localeCompare(b.id));
+    return node.children.sort(nodeSorter);
   }, [node.children]);
 
   if (node.children.length === 0) {
