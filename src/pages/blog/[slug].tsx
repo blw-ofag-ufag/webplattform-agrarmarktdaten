@@ -8,7 +8,6 @@ import { Locale, isValidLocale } from "@/locales/locales";
 import { Box } from "@mui/material";
 import { StructuredText } from "@/components/StructuredText";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
-import { format } from "date-fns";
 import Chip from "@mui/material/Chip";
 import { GridContainer } from "@/components/Grid/Grid";
 import { MarketChip } from "@/components/MarketChip";
@@ -17,6 +16,7 @@ import { makeStyles } from "@/components/style-utils";
 import { Authors } from "@/components/Authors";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
+import { i18n } from "@lingui/core";
 
 const useStyles = makeStyles()(({ palette: c }) => ({
   publishedDate: {
@@ -78,7 +78,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
   }
 
   const formattedDate = blogPost.publishedDate
-    ? format(new Date(blogPost.publishedDate), "dd MMM yyyy")
+    ? i18n.date(blogPost.publishedDate, { year: "numeric", month: "long", day: "numeric" })
     : null;
 
   return (
