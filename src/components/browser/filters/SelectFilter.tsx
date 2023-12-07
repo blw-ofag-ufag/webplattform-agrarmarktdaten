@@ -23,7 +23,7 @@ import {
   accordionSummaryClasses,
   styled,
 } from "@mui/material";
-import { isUndefined, keyBy, uniqBy } from "lodash";
+import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
 import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 import PreviewFilter from "./PreviewFilter";
@@ -503,12 +503,12 @@ const SelectCheckbox = ({ color, ...props }: Omit<CheckboxProps, "color"> & { co
 export const PreviewSelect = <T extends Option>({
   options,
   values,
-  show,
+  show = true,
   tainted = false,
 }: {
   options: T[];
   values: T[];
-  show: boolean;
+  show?: boolean;
   tainted?: boolean;
 }) => {
   return (
