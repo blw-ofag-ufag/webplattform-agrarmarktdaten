@@ -15,6 +15,8 @@ import { MarketChip } from "@/components/MarketChip";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
 import { makeStyles } from "@/components/style-utils";
 import { Authors } from "@/components/Authors";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 const useStyles = makeStyles()(({ palette: c }) => ({
   publishedDate: {
@@ -59,7 +61,7 @@ const useStyles = makeStyles()(({ palette: c }) => ({
 }));
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
-  const { blogPost, allMarketArticles, allFocusArticles, topBlogPosts } = props;
+  const { blogPost, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
   const { classes: layoutClasses } = useLayoutStyles();
   const { classes } = useStyles();
 
@@ -80,69 +82,72 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
     : null;
 
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-      showBackButton
-    >
-      <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
-        <div className={layoutClasses.aside} />
-        <div className={layoutClasses.content}>
-          <Box sx={{ mb: 10 }}>
-            {formattedDate && (
-              <Typography variant="body1" data-datocms-noindex className={classes.publishedDate}>
-                <Trans id="blogpost.publishedDate">Published on</Trans>
-                &nbsp;
-                {formattedDate}
+    <>
+      <Head>{renderMetaTags([...blogPost.seo, ...site?.favicon])}</Head>
+      <AppLayout
+        alternates={alternates}
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+        showBackButton
+      >
+        <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
+          <div className={layoutClasses.aside} />
+          <div className={layoutClasses.content}>
+            <Box sx={{ mb: 10 }}>
+              {formattedDate && (
+                <Typography variant="body1" data-datocms-noindex className={classes.publishedDate}>
+                  <Trans id="blogpost.publishedDate">Published on</Trans>
+                  &nbsp;
+                  {formattedDate}
+                </Typography>
+              )}
+              <Typography component="h1" variant="display2" className={classes.title}>
+                {blogPost.title}
               </Typography>
-            )}
-            <Typography component="h1" variant="display2" className={classes.title}>
-              {blogPost.title}
-            </Typography>
-            <Box sx={{ display: "flex", gap: "1rem" }} className={classes.marketChips}>
-              {blogPost.markets.map(({ slug, title }) => {
-                return (
-                  <MarketChip
-                    key={slug}
-                    label={title}
-                    slug={slug}
-                    sx={{
-                      paddingX: "18px",
-                      paddingY: "6px",
-                    }}
-                  />
-                );
-              })}
-              {blogPost.focusArticles.map(({ slug, title }) => {
-                return <Chip key={slug} label={title} className={classes.chip} />;
-              })}
+              <Box sx={{ display: "flex", gap: "1rem" }} className={classes.marketChips}>
+                {blogPost.markets.map(({ slug, title }) => {
+                  return (
+                    <MarketChip
+                      key={slug}
+                      label={title}
+                      slug={slug}
+                      sx={{
+                        paddingX: "18px",
+                        paddingY: "6px",
+                      }}
+                    />
+                  );
+                })}
+                {blogPost.focusArticles.map(({ slug, title }) => {
+                  return <Chip key={slug} label={title} className={classes.chip} />;
+                })}
+              </Box>
+              <div className={classes.lead}>
+                <StructuredText
+                  data={blogPost.lead}
+                  paragraphTypographyProps={{ className: classes.leadParagraph }}
+                  sx={{ "&&": { pb: 0 } }}
+                />
+              </div>
+              {blogPost.authors.length > 0 && (
+                <Authors
+                  authors={blogPost.authors.map((x) => ({
+                    img: x.portrait?.url,
+                    firstName: x.firstName,
+                    lastName: x.lastName,
+                  }))}
+                  className={classes.authors}
+                />
+              )}
             </Box>
-            <div className={classes.lead}>
-              <StructuredText
-                data={blogPost.lead}
-                paragraphTypographyProps={{ className: classes.leadParagraph }}
-                sx={{ "&&": { pb: 0 } }}
-              />
-            </div>
-            {blogPost.authors.length > 0 && (
-              <Authors
-                authors={blogPost.authors.map((x) => ({
-                  img: x.portrait?.url,
-                  firstName: x.firstName,
-                  lastName: x.lastName,
-                }))}
-                className={classes.authors}
-              />
-            )}
-          </Box>
-          {blogPost.content && <StructuredText data={blogPost.content} />}
-        </div>
-      </GridContainer>
-      <LayoutSections>
-        <TopBlogpostsTeaser blogposts={topBlogPosts} />
-      </LayoutSections>
-    </AppLayout>
+            {blogPost.content && <StructuredText data={blogPost.content} />}
+          </div>
+        </GridContainer>
+        <LayoutSections>
+          <TopBlogpostsTeaser blogposts={topBlogPosts} />
+        </LayoutSections>
+      </AppLayout>
+    </>
   );
 }
 

@@ -16,6 +16,7 @@ import { useAtomValue } from "jotai";
 import React, { useEffect, useState } from "react";
 
 import DataDownload from "@/components/browser/DataDownload";
+import EnvSwitch from "@/components/browser/EnvSwitch";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
@@ -29,12 +30,15 @@ import {
 } from "@/domain/observations";
 import { IcChevronDoubleLeft, IcChevronDoubleRight } from "@/icons/icons-jsx/control";
 import { useFlag } from "@/utils/flags";
+import { CSSObject } from "@emotion/react";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
-import DebugDataPage from "../components/DebugDataPage";
-import EnvSwitch from "@/components/browser/EnvSwitch";
 import { isUndefined } from "lodash";
+import DebugDataPage from "../components/DebugDataPage";
+import ActionButton from "@/components/browser/ActionButton";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -56,7 +60,7 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 }
 
 export default function DataPage(props: GQL.DataPageQuery) {
-  const { dataPage, allMarketArticles, allFocusArticles } = props;
+  const { dataPage, allMarketArticles, allFocusArticles, site } = props;
   const showEnvironments = useFlag("environments");
 
   const alternates = dataPage?._allSlugLocales?.map((loc) => ({
@@ -67,6 +71,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
 
   return (
     <SafeHydrate>
+      <Head>{renderMetaTags([...(dataPage?.seo ?? []), ...site?.favicon])}</Head>
       <ThemeProvider theme={blackAndWhiteTheme}>
         <AppLayout
           alternates={alternates}
@@ -81,7 +86,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
   );
 }
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme) => ({
   paper: {
     justifyContent: "center",
     alignItems: "center",
@@ -89,6 +94,10 @@ const useStyles = makeStyles()(() => ({
     minHeight: 0,
     display: "flex",
     position: "relative",
+  },
+  filterButton: {
+    padding: theme.spacing(2, 1),
+    ...(theme.typography.body2 as CSSObject),
   },
 }));
 
@@ -137,16 +146,23 @@ const DataBrowser = () => {
             <Trans id="data.hero.title">Data download</Trans>
           </Typography>
         </Box>
-        <Stack direction="row" justifyContent="space-between">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          flexWrap="wrap"
+          rowGap={3}
+          columnGap={2}
+        >
           <Stack
             direction="row"
-            gap={1}
             alignItems="center"
             divider={<Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />}
+            gap={2}
+            flexWrap="wrap-reverse"
           >
             <Button
               variant="inline"
-              size="small"
+              className={classes.filterButton}
               startIcon={showFilters ? <IcChevronDoubleLeft /> : <IcChevronDoubleRight />}
               onClick={() => setShowFilters(!showFilters)}
             >
@@ -156,7 +172,7 @@ const DataBrowser = () => {
                 <Trans id="data.actions.showFilter">Show Filters</Trans>
               )}
             </Button>
-            <Typography variant="body2" color="grey.600" padding={2}>
+            <Typography variant="body2" color="grey.600">
               {(observationsQueryStatus.isLoading || cubeDimensions.isLoading) && (
                 <Trans id="data.filters.loading">Loading </Trans>
               )}
@@ -170,7 +186,7 @@ const DataBrowser = () => {
               )}
             </Typography>
             {filteredChangedCount > 0 && queriesCompleted && (
-              <Typography variant="body2" color="grey.600" padding={2}>
+              <Typography variant="body2" color="grey.600">
                 {`${filteredChangedCount} ${t({
                   id: "data.filters.count",
                   message: plural(filteredChangedCount, {
@@ -184,17 +200,17 @@ const DataBrowser = () => {
             {filteredChangedCount > 0 && queriesCompleted && <ResetFiltersButton />}
           </Stack>
 
-          <Stack direction="row" gap={2}>
+          <Stack direction="row" gap={3} flexWrap="wrap">
             <DataDownload />
-            <Button size="small" disabled={!query} href={query ?? ""} target="_blank">
+            <ActionButton disabled={!query} href={query ?? ""} target="_blank">
               <Trans id="data.actions.query">SPARQL query</Trans>
-            </Button>
-            <Button size="small" href={visualizeUrl ?? ""} target="_blank">
+            </ActionButton>
+            <ActionButton href={visualizeUrl ?? ""} target="_blank">
               <Trans id="data.actions.visualize">Visualize</Trans>
-            </Button>
-            <Button size="small" onClick={() => setShowMetadataPanel(true)}>
+            </ActionButton>
+            <ActionButton onClick={() => setShowMetadataPanel(true)}>
               <Trans id="data.actions.metadata">Metadata</Trans>
-            </Button>
+            </ActionButton>
           </Stack>
         </Stack>
 

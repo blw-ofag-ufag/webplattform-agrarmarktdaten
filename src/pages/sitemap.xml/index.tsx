@@ -9,7 +9,7 @@ import { isValidLocale } from "@/locales/locales";
 //   ? "https://www.agrimarketdata.ch"
 //   : "https://blw-agricultural-market-data-platform-ixt1.vercel.app";
 
-const DOMAIN = "https://blw-agricultural-market-data-platform-ixt1.vercel.app";
+const DOMAIN = "https://blw-agricultural-market-data-platform-git-main-ixt1.vercel.app/";
 
 interface Paths {
   locale: Locale;

@@ -348,8 +348,12 @@ export const ResetFiltersButton = () => {
       sx={{
         backgroundColor: "cobalt.100",
         color: "grey.800",
-        "&:hover": {
+        border: "1px solid",
+        borderColor: "cobalt.100",
+        transition: "border 0.2s ease-in-out",
+        "&:hover, &:active, &:focus": {
           backgroundColor: "cobalt.100",
+          borderColor: "cobalt.800",
         },
       }}
     />

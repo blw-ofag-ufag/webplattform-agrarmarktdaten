@@ -5,9 +5,11 @@ import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { Hero } from "@/components/hero";
 import { useLayoutStyles } from "@/components/useLayoutStyles";
+import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 
 export default function LegalPage(props: GQL.TermsPageQuery) {
-  const { termsPage, allMarketArticles, allFocusArticles } = props;
+  const { termsPage, allMarketArticles, allFocusArticles, site } = props;
   const { classes } = useLayoutStyles();
 
   if (!termsPage?.title || !termsPage.lead) {
@@ -19,20 +21,23 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
     locale: loc.locale as string,
   }));
   return (
-    <AppLayout
-      alternates={alternates}
-      allMarkets={allMarketArticles}
-      allFocusArticles={allFocusArticles}
-      showBackButton
-    >
-      <Hero title={termsPage.title} lead={termsPage.lead} showTitleLine={false} shiftedLeft />
-      <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
-        <div className={classes.aside} />
-        <div className={classes.content}>
-          {termsPage.content && <StructuredText data={termsPage.content} />}
-        </div>
-      </GridContainer>
-    </AppLayout>
+    <>
+      <Head>{renderMetaTags([...termsPage.seo, ...site?.favicon])}</Head>
+      <AppLayout
+        alternates={alternates}
+        allMarkets={allMarketArticles}
+        allFocusArticles={allFocusArticles}
+        showBackButton
+      >
+        <Hero title={termsPage.title} lead={termsPage.lead} showTitleLine={false} shiftedLeft />
+        <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
+          <div className={classes.aside} />
+          <div className={classes.content}>
+            {termsPage.content && <StructuredText data={termsPage.content} />}
+          </div>
+        </GridContainer>
+      </AppLayout>
+    </>
   );
 }
 

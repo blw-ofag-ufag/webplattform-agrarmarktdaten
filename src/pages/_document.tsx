@@ -18,14 +18,23 @@ interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: JSX.Element[];
 }
 
+const documentStyles = `
+  html {
+    @media screen and (min-width: 1024px) {
+      scroll-padding-top: 110px;
+    }
+    scroll-padding-top: 30px;
+  }
+`;
+
 // See https://github.com/mui/material-ui/blob/master/examples/material-next-ts/pages/_app.tsx.
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html>
+    <Html style={{ scrollBehavior: "smooth" }}>
       <Head>
+        <style>{documentStyles}</style>
         {/* PWA primary color, background of the page on Safari (cobalt[600]). */}
         <meta name="theme-color" content="2f4356" />
-        <link rel="shortcut icon" href="/favicon.ico" />
 
         {/* The following lines need to be in sync with storybook/main.js:previewHead */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

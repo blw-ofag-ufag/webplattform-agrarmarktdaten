@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.home"
+msgstr "Pagina iniziale"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 #~ msgid "data.filters.addedValue"
 #~ msgstr "Valore aggiunto"
@@ -153,6 +158,11 @@ msgstr "Azzera i filtri"
 #: src/components/layout.tsx
 msgid "header.close"
 msgstr "Chiudi"
+
+#. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "action.copy"
+msgstr "Copiato negli Appunti"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx

@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.home"
+msgstr "Homepage"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 #~ msgid "data.filters.addedValue"
 #~ msgstr "Added value"
@@ -153,6 +158,11 @@ msgstr "Data download"
 #: src/pages/data.tsx
 msgid "data.actions.download"
 msgstr "Data download"
+
+#. js-lingui-explicit-id
+#: src/components/StructuredText/StructuredText.tsx
+msgid "action.copy"
+msgstr "Copied to Clipboard"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
