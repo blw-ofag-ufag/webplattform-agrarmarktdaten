@@ -114,10 +114,10 @@ export const filteredObservationsAtom = atom((get) => {
 
   if (!observationsQuery.data) return undefined;
 
-  const filters = Object.entries(dimensionsSelection).reduce(
+  const filters = Object.entries(dimensionsSelection.dimensions).reduce(
     (acc, [key]) => {
-      const dim = key as keyof typeof dimensionsSelection;
-      const selectedOptions = dimensionsSelection[dim].value;
+      const dim = key as keyof typeof dimensionsSelection.dimensions;
+      const selectedOptions = dimensionsSelection.dimensions[dim].value;
       const optionsSet = new Set(selectedOptions.map((option) => option.value));
       const filterFn = (obs: Observation) => optionsSet.has(obs[dim] as string);
       return [...acc, filterFn];
@@ -163,7 +163,7 @@ export const observationsSparqlQueryAtom = atom((get) => {
   const timeFilter = getTimeFilter(timeRange, timeView);
 
   if (!cubeDefinition) return "";
-  const filters = mapValues(dimensionsSelection, (value) => {
+  const filters = mapValues(dimensionsSelection.dimensions, (value) => {
     if (value) {
       const selectedOptions = value.value;
       return selectedOptions.map((option) => option.value);

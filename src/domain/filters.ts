@@ -116,30 +116,35 @@ export const cubeSelectionAtom = atom((get) => {
   });
 
   return {
-    measure: {
-      name: t({ id: "data.filters.measure", message: "Measure" }),
-      value: get(measureAtom),
-      options: measureOptions,
-      atom: measureAtom,
-      default: "price",
-      isChanged: get(measureAtom)?.value !== "price",
+    dimensions: {
+      measure: {
+        name: t({ id: "data.filters.measure", message: "Measure" }),
+        value: get(measureAtom),
+        options: measureOptions,
+        atom: measureAtom,
+        default: "price",
+        isChanged: get(measureAtom)?.value !== "price",
+      },
+      market: {
+        name: baseDimensionsQuery?.data?.properties.market?.label,
+        atom: marketAtom,
+        value: get(marketAtom),
+        options: marketOptions,
+        default: "market/1",
+        isChanged: get(marketAtom)?.value !== "market/1",
+      },
+      "value-chain": {
+        name: baseDimensionsQuery?.data?.properties["value-chain"]?.label,
+        atom: valueChainAtom,
+        value: get(valueChainAtom),
+        options: valueChainOptions,
+        default: "value-chain/1",
+        isChanged: get(valueChainAtom)?.value !== "value-chain/1",
+      },
     },
-    market: {
-      name: baseDimensionsQuery?.data?.properties.market?.label ?? "market",
-      atom: marketAtom,
-      value: get(marketAtom),
-      options: marketOptions,
-      default: "market/1",
-      isChanged: get(marketAtom)?.value !== "market/1",
-    },
-    "value-chain": {
-      name: baseDimensionsQuery?.data?.properties["value-chain"]?.label ?? "value-chain",
-      atom: valueChainAtom,
-      value: get(valueChainAtom),
-      options: valueChainOptions,
-      default: "value-chain/1",
-      isChanged: get(valueChainAtom)?.value !== "value-chain/1",
-    },
+    isLoading: baseDimensionsQuery.isLoading,
+    isSuccess: baseDimensionsQuery.isSuccess,
+    isError: baseDimensionsQuery.isError,
   };
 });
 
@@ -167,28 +172,33 @@ export const dimensionsSelectionAtom = atom((get) => {
   });
 
   return {
-    product: {
-      name: cubeDimensionsQuery?.data?.properties["product"]?.label ?? "product",
-      options: productOptions,
-      atom: productsAtom,
-      value: get(productsAtom),
-      search: true,
-      isChanged: get(productsAtom).length < productOptions.length,
-      groups: [
-        (d: Option) => d.hierarchy?.["market"].label ?? "market",
-        (d: Option) => d.hierarchy?.["product-group"].label ?? "product-group",
-        (d: Option) => d.hierarchy?.["product-subgroup"].label ?? "product-subgroup",
-      ],
+    dimensions: {
+      product: {
+        name: cubeDimensionsQuery?.data?.properties["product"]?.label ?? "product",
+        options: productOptions,
+        atom: productsAtom,
+        value: get(productsAtom),
+        search: true,
+        isChanged: get(productsAtom).length < productOptions.length,
+        groups: [
+          (d: Option) => d.hierarchy?.["market"].label ?? "market",
+          (d: Option) => d.hierarchy?.["product-group"].label ?? "product-group",
+          (d: Option) => d.hierarchy?.["product-subgroup"].label ?? "product-subgroup",
+        ],
+      },
+      "sales-region": {
+        name: cubeDimensionsQuery?.data?.properties["sales-region"]?.label ?? "sales-region",
+        options: salesRegionOptions,
+        atom: salesRegionAtom,
+        value: get(salesRegionAtom),
+        search: true,
+        isChanged: get(salesRegionAtom).length < salesRegionOptions.length,
+        groups: undefined,
+      },
     },
-    "sales-region": {
-      name: cubeDimensionsQuery?.data?.properties["sales-region"]?.label ?? "sales-region",
-      options: salesRegionOptions,
-      atom: salesRegionAtom,
-      value: get(salesRegionAtom),
-      search: true,
-      isChanged: get(salesRegionAtom).length < salesRegionOptions.length,
-      groups: undefined,
-    },
+    isLoading: cubeDimensionsQuery.isLoading,
+    isSuccess: cubeDimensionsQuery.isSuccess,
+    isError: cubeDimensionsQuery.isError,
   };
 });
 
@@ -210,10 +220,10 @@ export const filterAtom = atom(
     const filterDimensionsSelection = get(dimensionsSelectionAtom);
     const timeRange = get(timeRangeAtom);
 
-    const changedCubeFilters = Object.values(filterCubeSelection).filter(
+    const changedCubeFilters = Object.values(filterCubeSelection.dimensions).filter(
       (value) => value.isChanged
     );
-    const changedDimensionFilters = Object.values(filterDimensionsSelection).filter(
+    const changedDimensionFilters = Object.values(filterDimensionsSelection.dimensions).filter(
       (value) => value.isChanged
     );
 
@@ -244,14 +254,14 @@ export const filterAtom = atom(
 
     switch (action) {
       case "reset":
-        Object.values(filterCubeSelection).forEach((filter) => {
+        Object.values(filterCubeSelection.dimensions).forEach((filter) => {
           set(
             filter.atom,
             filter.options.find((option) => option.value === filter.default)
           );
         });
 
-        Object.values(filterDimensionsSelection).forEach((filter) => {
+        Object.values(filterDimensionsSelection.dimensions).forEach((filter) => {
           set(filter.atom, filter.options);
         });
 

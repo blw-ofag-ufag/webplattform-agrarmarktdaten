@@ -54,9 +54,9 @@ export const cubePathAtom = atom((get) => {
 
   const cubePath = allCubes.find(
     (cube) =>
-      cube.measure === cubeSelection.measure.value?.value &&
-      cube.market === cubeSelection.market.value?.value &&
-      cube.valueChain === cubeSelection["value-chain"].value?.value &&
+      cube.measure === cubeSelection.dimensions.measure.value?.value &&
+      cube.market === cubeSelection.dimensions.market.value?.value &&
+      cube.valueChain === cubeSelection.dimensions["value-chain"].value?.value &&
       cube.timeView === get(timeViewAtom)
   );
   return cubePath?.cube;
@@ -88,8 +88,8 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
         ? cubes.data
             .filter(
               (c) =>
-                c.measure === filters.cube.measure.value?.value &&
-                c.market === filters.cube.market.value?.value &&
+                c.measure === filters.cube.dimensions.measure.value?.value &&
+                c.market === filters.cube.dimensions.market.value?.value &&
                 c.timeView === timeView
             )
             .map((c) => c.valueChain)
@@ -100,8 +100,8 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
         ? cubes.data
             .filter(
               (c) =>
-                c.measure === filters.cube.measure.value?.value &&
-                c.valueChain === filters.cube["value-chain"].value?.value &&
+                c.measure === filters.cube.dimensions.measure.value?.value &&
+                c.valueChain === filters.cube.dimensions["value-chain"].value?.value &&
                 c.timeView === timeView
             )
             .map((c) => c.market)
@@ -112,8 +112,8 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
         ? cubes.data
             .filter(
               (c) =>
-                c.market === filters.cube.market.value?.value &&
-                c.valueChain === filters.cube["value-chain"].value?.value &&
+                c.market === filters.cube.dimensions.market.value?.value &&
+                c.valueChain === filters.cube.dimensions["value-chain"].value?.value &&
                 c.timeView === timeView
             )
             .map((c) => c.measure)

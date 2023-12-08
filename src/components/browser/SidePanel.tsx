@@ -1,6 +1,11 @@
-import { filterAtom } from "@/domain/filters";
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { Option, timeRangeAtom, timeRangeDefault, timeViewAtom } from "@/domain/filters";
+import {
+  Option,
+  filterAtom,
+  timeRangeAtom,
+  timeRangeDefault,
+  timeViewAtom,
+} from "@/domain/filters";
 import { observationsQueryAtom } from "@/domain/observations";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
@@ -11,6 +16,7 @@ import {
   AccordionSummary as AccordionSummaryMui,
   Box,
   Chip,
+  CircularProgress,
   IconButton,
   Stack,
   Typography,
@@ -19,6 +25,7 @@ import dayjs from "dayjs";
 import { Atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { maxBy, minBy, xor } from "lodash";
 import { SyntheticEvent, useEffect, useMemo, useState } from "react";
+import { TransitionGroup } from "react-transition-group";
 import FilterAccordion from "../filter-accordion";
 import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
@@ -60,8 +67,6 @@ const SidePanel = ({
   const { getAccordionProps } = useExclusiveAccordion("accordion");
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
   const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
-  const observationsQuery = useAtomValue(observationsQueryAtom);
-
   const filters = useAtomValue(filterAtom);
 
   return (
@@ -92,66 +97,85 @@ const SidePanel = ({
               </IconButton>
             </Stack>
           </Box>
-          {/* Cube path filters */}
-          {orderedCubeFilters.map((key) => {
-            const config = filters.cube[key];
+          <TransitionGroup>
+            {/* Cube path filters */}
+            {orderedCubeFilters.map((key) => {
+              if (filters.cube.isError) {
+                return null;
+              }
+              const config = filters.cube.dimensions[key];
 
-            if (!config) {
-              return null;
-            }
+              const options = config.options.map((option) => {
+                return {
+                  ...option,
+                  disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
+                };
+              });
 
-            const options = config.options.map((option) => {
-              return {
-                ...option,
-                disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
-              };
-            });
+              return (
+                <>
+                  {filters.cube.isLoading && (
+                    <FilterAccordion key={key} {...getAccordionProps(key)}>
+                      <AccordionSummary>
+                        <CircularProgress />
+                      </AccordionSummary>
+                    </FilterAccordion>
+                  )}
+                  {filters.cube.isSuccess && (
+                    <FilterRadioAccordion
+                      key={key}
+                      slots={{
+                        accordion: getAccordionProps(key),
+                      }}
+                      options={options}
+                      filterAtom={config.atom}
+                      title={config.name ?? key}
+                      defaultValue={config.default}
+                    />
+                  )}
+                </>
+              );
+            })}
 
-            return (
-              <FilterRadioAccordion
-                key={key}
-                slots={{
-                  accordion: getAccordionProps(key),
-                }}
-                options={options}
-                filterAtom={config.atom}
-                title={config.name}
-                defaultValue={config.default}
-              />
-            );
-          })}
+            <TimeAccordion {...getAccordionProps("time")} />
 
-          {observationsQuery.isSuccess && observationsQuery.data.observations.length > 0 && (
-            <>
-              <TimeAccordion {...getAccordionProps("time")} />
+            {/* Property filters */}
 
-              {/* Property filters */}
+            {orderedDimensionFilters.map((key) => {
+              const config = filters.dimensions.dimensions[key];
 
-              {orderedDimensionFilters.map((key) => {
-                const config = filters.dimensions[key];
+              if (filters.cube.isError) {
+                return null;
+              }
 
-                if (!config || !config.atom || config.options.length === 0) {
-                  return null;
-                }
-
-                return (
-                  <FilterSelectAccordion
-                    key={key}
-                    slots={{
-                      accordion: getAccordionProps(key),
-                      select: {
-                        withSearch: config.search,
-                        groups: config?.groups,
-                      },
-                    }}
-                    options={config.options}
-                    filterAtom={config.atom}
-                    title={config.name}
-                  />
-                );
-              })}
-            </>
-          )}
+              return (
+                <>
+                  {filters.dimensions.isLoading && (
+                    <FilterAccordion key={key} {...getAccordionProps(key)}>
+                      <AccordionSummary>
+                        <CircularProgress />
+                      </AccordionSummary>
+                    </FilterAccordion>
+                  )}
+                  {filters.dimensions.isSuccess && (
+                    <FilterSelectAccordion
+                      key={key}
+                      slots={{
+                        accordion: getAccordionProps(key),
+                        select: {
+                          withSearch: config.search,
+                          groups: config?.groups,
+                        },
+                      }}
+                      options={config.options}
+                      filterAtom={config.atom}
+                      title={config.name}
+                    />
+                  )}
+                </>
+              );
+            })}
+          </TransitionGroup>
         </Box>
       </Stack>
     </ContentDrawer>
@@ -286,31 +310,42 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
   }, [timeRange, timeView]);
 
   return (
-    <FilterAccordion {...props}>
-      <AccordionSummary className={isTainted ? "tainted" : ""}>
-        <AccordionTitle>
-          <Trans id="data.filters.time">Time</Trans>
-        </AccordionTitle>
-        <PreviewFilter show={!props.expanded} tainted={isTainted}>
-          {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
-        </PreviewFilter>
-      </AccordionSummary>
-      <AccordionDetails>
-        <TimeFilter
-          min={timeRange.min}
-          max={timeRange.max}
-          value={timeRange.value}
-          view={timeView}
-          onChangeRange={handleTimeRangeChange}
-          onChangeView={setTimeView}
-          resettable={isTainted}
-          onReset={() => {
-            setTimeRange(timeRangeDefault);
-            setTimeView("Year");
-          }}
-        />
-      </AccordionDetails>
-    </FilterAccordion>
+    <>
+      {observationsQuery.isLoading && (
+        <FilterAccordion {...props}>
+          <AccordionSummary>
+            <CircularProgress />
+          </AccordionSummary>
+        </FilterAccordion>
+      )}
+      {observationsQuery.isSuccess && (
+        <FilterAccordion {...props}>
+          <AccordionSummary className={isTainted ? "tainted" : ""}>
+            <AccordionTitle>
+              <Trans id="data.filters.time">Time</Trans>
+            </AccordionTitle>
+            <PreviewFilter show={!props.expanded} tainted={isTainted}>
+              {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
+            </PreviewFilter>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TimeFilter
+              min={timeRange.min}
+              max={timeRange.max}
+              value={timeRange.value}
+              view={timeView}
+              onChangeRange={handleTimeRangeChange}
+              onChangeView={setTimeView}
+              resettable={isTainted}
+              onReset={() => {
+                setTimeRange(timeRangeDefault);
+                setTimeView("Year");
+              }}
+            />
+          </AccordionDetails>
+        </FilterAccordion>
+      )}
+    </>
   );
 };
 
