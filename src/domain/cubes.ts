@@ -5,8 +5,7 @@ import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/ap
 import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { cubeSelectionAtom, filterAtom } from "./filters";
-import { timeViewAtom } from "./filters";
+import { cubeSelectionAtom, filterAtom, timeViewAtom } from "./filters";
 
 type EnvironmentDescription = {
   label: string;

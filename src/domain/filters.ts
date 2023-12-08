@@ -79,6 +79,13 @@ export const timeViewAtom = atomWithHash<TimeView>("timeView", "Year");
 export const timeRangeAtom = atomWithHash("timeRange", timeRangeDefault);
 
 /**
+ * Make sure this combination of filters is a valid cube.
+ */
+const DEFAULT_MARKET = "market/1";
+const DEFAULT_VALUE_CHAIN = "value-chain/1";
+const DEFAULT_MEASURE = "price";
+
+/**
  * Cube selection atom. This atoms contains the information on the filters that we apply to select
  * the cube we fetch.
  */
@@ -95,6 +102,7 @@ export const cubeSelectionAtom = atom((get) => {
   const measureAtom = filterSingleHashAtomFamily({
     key: "measure",
     options: measureOptions,
+    defaultOption: measureOptions.find((option) => option.value === DEFAULT_MEASURE),
   });
 
   const marketOptions = baseDimensionsQuery.isSuccess
@@ -104,6 +112,7 @@ export const cubeSelectionAtom = atom((get) => {
   const marketAtom = filterSingleHashAtomFamily({
     key: "market",
     options: marketOptions,
+    defaultOption: marketOptions.find((option) => option.value === DEFAULT_MARKET),
   });
 
   const valueChainOptions = baseDimensionsQuery.isSuccess
@@ -113,6 +122,7 @@ export const cubeSelectionAtom = atom((get) => {
   const valueChainAtom = filterSingleHashAtomFamily({
     key: "value-chain",
     options: valueChainOptions,
+    defaultOption: valueChainOptions.find((option) => option.value === DEFAULT_VALUE_CHAIN),
   });
 
   return {
@@ -122,24 +132,24 @@ export const cubeSelectionAtom = atom((get) => {
         value: get(measureAtom),
         options: measureOptions,
         atom: measureAtom,
-        default: "price",
-        isChanged: get(measureAtom)?.value !== "price",
+        default: DEFAULT_MEASURE,
+        isChanged: get(measureAtom)?.value !== DEFAULT_MEASURE,
       },
       market: {
         name: baseDimensionsQuery?.data?.properties.market?.label,
         atom: marketAtom,
         value: get(marketAtom),
         options: marketOptions,
-        default: "market/1",
-        isChanged: get(marketAtom)?.value !== "market/1",
+        default: DEFAULT_MARKET,
+        isChanged: get(marketAtom)?.value !== DEFAULT_MARKET,
       },
       "value-chain": {
         name: baseDimensionsQuery?.data?.properties["value-chain"]?.label,
         atom: valueChainAtom,
         value: get(valueChainAtom),
         options: valueChainOptions,
-        default: "value-chain/1",
-        isChanged: get(valueChainAtom)?.value !== "value-chain/1",
+        default: DEFAULT_VALUE_CHAIN,
+        isChanged: get(valueChainAtom)?.value !== DEFAULT_VALUE_CHAIN,
       },
     },
     isLoading: baseDimensionsQuery.isLoading,

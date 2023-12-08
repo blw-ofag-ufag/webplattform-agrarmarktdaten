@@ -66,7 +66,6 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
       });
     },
     skip: isUndefined(cubeDefinition) || isUndefined(cubePath),
-    retry: false,
     placeholderData: (previousData) => previousData,
   };
 });

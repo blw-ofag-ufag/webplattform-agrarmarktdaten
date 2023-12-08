@@ -15,14 +15,17 @@ import {
 import { useAtomValue } from "jotai";
 import React, { useEffect, useState } from "react";
 
+import { useIsDesktop, useIsTablet } from "@/components/Grid/Grid";
 import ActionButton from "@/components/browser/ActionButton";
 import DataDownload from "@/components/browser/DataDownload";
 import EnvSwitch from "@/components/browser/EnvSwitch";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
+import MobileIntercept from "@/components/browser/MobileIntercept";
 import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
 import { makeStyles } from "@/components/style-utils";
 import { cubeDimensionsStatusAtom } from "@/domain/cubes";
+import { filterAtom } from "@/domain/filters";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
@@ -34,14 +37,11 @@ import { CSSObject } from "@emotion/react";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
+import { DevTools } from "jotai-devtools";
 import { isUndefined } from "lodash";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 import DebugDataPage from "../components/DebugDataPage";
-import { useIsDesktop, useIsTablet } from "@/components/Grid/Grid";
-import MobileIntercept from "@/components/browser/MobileIntercept";
-import { DevTools } from "jotai-devtools";
-import { filterAtom } from "@/domain/filters";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -237,25 +237,27 @@ const DataBrowser = () => {
         <Paper elevation={3} className={classes.paper}>
           <>
             {observationsQueryStatus.isSuccess &&
-            cubeDimensions.isSuccess &&
-            filteredObservations ? (
-              <Box sx={{ position: "absolute", inset: 0 }}>
-                <Table
-                  observations={filteredObservations}
-                  dimensions={{
-                    ...cubeDimensions.data.measures,
-                    ...cubeDimensions.data.properties,
-                  }}
-                />
-              </Box>
-            ) : (
-              <Stack gap={2} alignItems="center">
-                <CircularProgress size={24} />
-                <Typography variant="h5" fontWeight="normal">
-                  <Trans id="data.loading.info">Loading data...</Trans>
-                </Typography>
-              </Stack>
-            )}
+              cubeDimensions.isSuccess &&
+              filteredObservations && (
+                <Box sx={{ position: "absolute", inset: 0 }}>
+                  <Table
+                    observations={filteredObservations}
+                    dimensions={{
+                      ...cubeDimensions.data.measures,
+                      ...cubeDimensions.data.properties,
+                    }}
+                  />
+                </Box>
+              )}
+            {observationsQueryStatus.isLoading ||
+              (cubeDimensions.isLoading && (
+                <Stack gap={2} alignItems="center">
+                  <CircularProgress size={24} />
+                  <Typography variant="h5" fontWeight="normal">
+                    <Trans id="data.loading.info">Loading data...</Trans>
+                  </Typography>
+                </Stack>
+              ))}
           </>
         </Paper>
       </Stack>
