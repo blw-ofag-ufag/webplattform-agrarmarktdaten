@@ -14,11 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.home"
-msgstr "Startseite"
-
-#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 #~ msgid "data.filters.addedValue"
 #~ msgstr "Wertschöpfungsstufe"
@@ -57,6 +52,11 @@ msgstr "Startseite"
 #: src/pages/data.tsx
 #~ msgid "data.actions.showFiler"
 #~ msgstr "Filter anzeigen"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.actions.visualize"
+#~ msgstr "Visualize"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -109,7 +109,7 @@ msgstr "Alle Beiträge anzeigen"
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.filename"
-msgstr "AMDP_data"
+msgstr "AMDP_daten"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -125,6 +125,11 @@ msgstr "Anwenden"
 #: src/components/browser/MetadataPanel.tsx
 msgid "controls.metadata-panel.available-values"
 msgstr "Verfügbare Werte"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MobileIntercept.tsx
+msgid "data.mobile.button"
+msgstr "Zurück zur Startseite"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -413,6 +418,11 @@ msgid "data.actions.query"
 msgstr "SPARQL-Abfrage"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.home"
+msgstr "Startseite"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.newsletter"
 msgstr "Newsletter Anmeldung"
@@ -421,6 +431,11 @@ msgstr "Newsletter Anmeldung"
 #: src/components/Footer/Footer.tsx
 msgid "footer.terms"
 msgstr "Nutzungsbedingungen"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MobileIntercept.tsx
+msgid "data.mobile.message"
+msgstr "Das Datenportal Agrar- und Lebensmittelmärkte <0>ist noch nicht vollständig für kleinere Bildschirme optimiert</0>. Bitte verwenden Sie einen Desktop-Computer oder ändern Sie die Grösse Ihres Browser-Fensters, um eine optimale Darstellung zu gewährleisten."
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -446,11 +461,6 @@ msgstr "An"
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
 msgstr "Über den Daten-Download können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten."
-
-#. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.actions.visualize"
-msgstr "Visualize"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

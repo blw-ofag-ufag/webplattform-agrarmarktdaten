@@ -27,7 +27,7 @@ export default function MobileIntercept() {
           <IcWarningCircle width={80} height={80} />
           <Typography variant="h3" fontWeight="regular">
             <Trans id="data.mobile.message">
-              The Agricultural and Food Markets data portal{" "}
+              The Agricultural and Food Markets data portal
               <strong> is not yet fully optimized for smaller screens</strong>. Please use a desktop
               computer or change the size of your browser window to ensure an optimal display.
             </Trans>
