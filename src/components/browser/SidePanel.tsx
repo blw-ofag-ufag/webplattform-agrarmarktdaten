@@ -257,12 +257,14 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 
       const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
       const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;
+
       setTimeRange({
-        value: [min, max],
+        value: [Math.max(min, timeRange.value[0]), Math.min(max, timeRange.value[1])],
         min,
         max,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [observationsQuery.data, setTimeRange]);
 
   const handleTimeRangeChange = useEvent((value: [number, number]) => {
