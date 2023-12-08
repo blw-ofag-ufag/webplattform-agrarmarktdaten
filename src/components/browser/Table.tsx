@@ -1,6 +1,6 @@
 import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
 import { timeViewAtom } from "@/domain/filters";
-import { valueFormatter } from "@/domain/observations";
+import { tableFormatter } from "@/lib/formatter";
 import { useLocale } from "@/lib/use-locale";
 import { Measure, Observation, Property } from "@/pages/api/data";
 import { Trans } from "@lingui/macro";
@@ -168,7 +168,7 @@ export const Table = ({
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           sortingOrder: ["desc", "asc", null],
           valueFormatter: (params) =>
-            valueFormatter({
+            tableFormatter({
               value: params.value,
               dimension: dimension.dimension,
               cubeDimensions: dimensions,
