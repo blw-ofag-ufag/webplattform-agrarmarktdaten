@@ -35,7 +35,11 @@ const config = withBundleAnalyzer(
       localeDetection: false,
     },
 
-    transpilePackages: ["jotai-devtools"],
+    /**
+     * Jotai documentation recommends to transpile jotai-devtools, however
+     * this causes an error, so we leave it out for now.
+     */
+    // transpilePackages: ["jotai-devtools"],
 
     pageExtensions: ["js", "ts", "tsx", "mdx"],
 

@@ -32,6 +32,7 @@ import {
 } from "react";
 import { mapToObj } from "remeda";
 import ActionButton from "./ActionButton";
+import { isUndefined } from "lodash";
 
 const FILE_FORMATS = ["csv", "xlsx", "json"] as const;
 export type FileFormat = (typeof FILE_FORMATS)[number];
@@ -83,7 +84,7 @@ export default function DataDownload() {
             <ActionButton
               ref={anchorRef}
               startIcon={<IcControlDownload />}
-              disabled={filteredObservations.length === 0}
+              disabled={isUndefined(filteredObservations) || filteredObservations.length === 0}
               {...bindToggle(popupState)}
             >
               <Trans id="data.actions.download">Data download</Trans>
@@ -112,7 +113,7 @@ export default function DataDownload() {
                 </Typography>
               </ListItem>
 
-              {dimensions.isSuccess ? (
+              {dimensions.isSuccess && filteredObservations ? (
                 <>
                   {FILE_FORMATS.map((format, i) => (
                     <>

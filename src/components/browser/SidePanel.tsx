@@ -1,15 +1,6 @@
+import { filterAtom } from "@/domain/filters";
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import {
-  Option,
-  filterCubeConfigurationAtom,
-  filterCubeSelectionAtom,
-  filterDimensionsConfigurationAtom,
-  filterDimensionsSelectionAtom,
-  resetCubeFiltersAtom,
-  timeRangeAtom,
-  timeRangeDefault,
-  timeViewAtom,
-} from "@/domain/filters";
+import { Option, timeRangeAtom, timeRangeDefault, timeViewAtom } from "@/domain/filters";
 import { observationsQueryAtom } from "@/domain/observations";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
@@ -20,7 +11,6 @@ import {
   AccordionSummary as AccordionSummaryMui,
   Box,
   Chip,
-  CircularProgress,
   IconButton,
   Stack,
   Typography,
@@ -54,6 +44,8 @@ const useExclusiveAccordion = (defaultState: string) => {
 };
 
 const orderedCubeFilters = ["value-chain", /* "market", */ "measure"] as const;
+const orderedDimensionFilters = ["sales-region", "product"] as const;
+
 const SidePanel = ({
   open = true,
   onClose = () => {},
@@ -66,14 +58,11 @@ const SidePanel = ({
   };
 }) => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
-  const filterCubeConfiguration = useAtomValue(filterCubeConfigurationAtom);
-  const filterDimensionsConfiguration = useAtomValue(filterDimensionsConfigurationAtom);
-  const filterCubeSelection = useAtomValue(filterCubeSelectionAtom);
-  const filterDimensionsSelection = useAtomValue(filterDimensionsSelectionAtom);
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
-  const filtersChangedCount = useAtomValue(resetCubeFiltersAtom);
   const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
   const observationsQuery = useAtomValue(observationsQueryAtom);
+
+  const filters = useAtomValue(filterAtom);
 
   return (
     <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
@@ -97,7 +86,7 @@ const SidePanel = ({
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
             <Stack direction="row" gap={0.5} alignItems="center">
-              {cubeDimensionsStatus.isSuccess && filtersChangedCount > 0 && <ResetFiltersButton />}
+              {cubeDimensionsStatus.isSuccess && filters.changed > 0 && <ResetFiltersButton />}
               <IconButton onClick={onClose}>
                 <IcChevronDoubleLeft />
               </IconButton>
@@ -105,8 +94,7 @@ const SidePanel = ({
           </Box>
           {/* Cube path filters */}
           {orderedCubeFilters.map((key) => {
-            const config = filterCubeConfiguration[key];
-            const filterAtom = filterCubeSelection[key];
+            const config = filters.cube[key];
 
             if (!config) {
               return null;
@@ -119,10 +107,6 @@ const SidePanel = ({
               };
             });
 
-            if (!filterAtom) {
-              return null;
-            }
-
             return (
               <FilterRadioAccordion
                 key={key}
@@ -130,9 +114,9 @@ const SidePanel = ({
                   accordion: getAccordionProps(key),
                 }}
                 options={options}
-                filterAtom={filterAtom}
+                filterAtom={config.atom}
                 title={config.name}
-                defaultValue={config.defaultOption}
+                defaultValue={config.default}
               />
             );
           })}
@@ -143,36 +127,29 @@ const SidePanel = ({
 
               {/* Property filters */}
 
-              {cubeDimensionsStatus.isSuccess ? (
-                <>
-                  {Object.entries(filterDimensionsConfiguration).map(([key, value]) => {
-                    const filterAtom =
-                      filterDimensionsSelection[key as keyof typeof filterDimensionsConfiguration];
-                    if (!filterAtom || value.options.length === 0) {
-                      return null;
-                    }
-                    return (
-                      <FilterSelectAccordion
-                        key={key}
-                        slots={{
-                          accordion: getAccordionProps(key),
-                          select: {
-                            withSearch: value.search,
-                            groups: value?.groups,
-                          },
-                        }}
-                        options={value.options}
-                        filterAtom={filterAtom}
-                        title={value.name ?? value.key}
-                      />
-                    );
-                  })}
-                </>
-              ) : (
-                <AccordionSummary>
-                  <CircularProgress />
-                </AccordionSummary>
-              )}
+              {orderedDimensionFilters.map((key) => {
+                const config = filters.dimensions[key];
+
+                if (!config || !config.atom || config.options.length === 0) {
+                  return null;
+                }
+
+                return (
+                  <FilterSelectAccordion
+                    key={key}
+                    slots={{
+                      accordion: getAccordionProps(key),
+                      select: {
+                        withSearch: config.search,
+                        groups: config?.groups,
+                      },
+                    }}
+                    options={config.options}
+                    filterAtom={config.atom}
+                    title={config.name}
+                  />
+                );
+              })}
             </>
           )}
         </Box>
@@ -202,10 +179,10 @@ const FilterRadioAccordion = <T extends Option>({
   slots: {
     accordion: Omit<AccordionProps, "children">;
   };
-  defaultValue?: T;
+  defaultValue: string;
 }) => {
   const [value, setValue] = useAtom(filterAtom);
-  const isTainted = value?.value !== defaultValue?.value;
+  const isTainted = value?.value !== defaultValue;
 
   return (
     <FilterAccordion {...slots.accordion}>
@@ -338,11 +315,11 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 export default SidePanel;
 
 export const ResetFiltersButton = () => {
-  const resetCubeFilters = useSetAtom(resetCubeFiltersAtom);
+  const dispatchFilters = useSetAtom(filterAtom);
   return (
     <Chip
       clickable
-      onClick={() => resetCubeFilters()}
+      onClick={() => dispatchFilters({ action: "reset" })}
       label={t({ id: "cta.reset-filters", message: "Reset Filters" })}
       icon={<IcRepeat width={24} height={24} />}
       sx={{

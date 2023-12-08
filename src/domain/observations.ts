@@ -3,21 +3,16 @@ import { addNamespace, amdpMeasure } from "@/lib/namespace";
 import { Observation, fetchObservations, getSparqlEditorUrl } from "@/pages/api/data";
 import { toCamelCase } from "@/utils/stringCase";
 
+import { tableFormatter } from "@/lib/formatter";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { mapValues } from "lodash";
+import { isUndefined, mapValues } from "lodash";
 import { mapToObj } from "remeda";
+import { dimensionsSelectionAtom } from "./filters";
 import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
-import {
-  RangeOptions,
-  TimeView,
-  filterDimensionsSelectionAtom,
-  timeRangeAtom,
-  timeViewAtom,
-} from "./filters";
-import { tableFormatter } from "@/lib/formatter";
+import { RangeOptions, TimeView, timeRangeAtom, timeViewAtom } from "./filters";
 
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
@@ -37,45 +32,42 @@ const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter 
 export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
   ReturnType<typeof fetchObservations> extends Promise<infer T> ? T : never
 >((get) => {
-  const emptyQuery = {
-    queryKey: ["observations"],
-    queryFn: () => ({
-      observations: [],
-      query: "",
-    }),
-  };
-
   const cubePath = get(cubePathAtom);
   const cubes = get(cubesStatusAtom);
   const lindas = get(lindasAtom);
 
-  if (!cubes.isSuccess) return emptyQuery;
-  const cubeDefinition = cubes.data.find((cube) => cube.cube === cubePath);
+  const cubeDefinition = cubes.isSuccess
+    ? cubes.data.find((cube) => cube.cube === cubePath)
+    : undefined;
 
   const timeRange = get(timeRangeAtom);
   const timeView = get(timeViewAtom);
   const timeFilter = getTimeFilter(timeRange, timeView);
-
-  if (!cubeDefinition) return emptyQuery;
 
   // Time filters are done client-side
   const queryTimeFilter = { minDate: null, maxDate: null, mode: timeFilter.mode };
 
   return {
     queryKey: ["observations", cubePath, lindas.value, queryTimeFilter],
-    queryFn: () =>
-      fetchObservations({
-        cubeIri: cubeDefinition.cube,
+    queryFn: () => {
+      if (!cubeDefinition) {
+        return Promise.reject(new Error("Cube not found"));
+      }
+      return fetchObservations({
+        cubeIri: cubeDefinition?.cube,
         measure: {
-          iri: amdpMeasure(cubeDefinition.measure).value,
-          key: cubeDefinition.measure,
+          iri: amdpMeasure(cubeDefinition?.measure).value,
+          key: cubeDefinition?.measure,
         },
         // Filters are done client-side
         filters: {},
         environment: lindas.url,
         timeFilter: queryTimeFilter,
-      }),
+      });
+    },
+    skip: isUndefined(cubeDefinition) || isUndefined(cubePath),
     retry: false,
+    placeholderData: (previousData) => previousData,
   };
 });
 
@@ -117,15 +109,15 @@ export const parsedObservationsAtom = atom(async (get) => {
  */
 export const filteredObservationsAtom = atom((get) => {
   const observationsQuery = get(observationsQueryAtom);
-  const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
+  const dimensionsSelection = get(dimensionsSelectionAtom);
   const timeRange = get(timeRangeAtom);
 
-  if (!observationsQuery.data) return [];
+  if (!observationsQuery.data) return undefined;
 
-  const filters = Object.entries(filterDimensionsSelection).reduce(
-    (acc, [key, atom]) => {
-      const dim = key as keyof typeof filterDimensionsSelection;
-      const selectedOptions = get(atom);
+  const filters = Object.entries(dimensionsSelection).reduce(
+    (acc, [key]) => {
+      const dim = key as keyof typeof dimensionsSelection;
+      const selectedOptions = dimensionsSelection[dim].value;
       const optionsSet = new Set(selectedOptions.map((option) => option.value));
       const filterFn = (obs: Observation) => optionsSet.has(obs[dim] as string);
       return [...acc, filterFn];
@@ -154,8 +146,11 @@ export const filteredObservationsAtom = atom((get) => {
  * `filteredObservationsAtom`.
  */
 export const observationsSparqlQueryAtom = atom((get) => {
-  const filterDimensionsSelection = get(filterDimensionsSelectionAtom);
+  const dimensionsSelection = get(dimensionsSelectionAtom);
   const cubeIri = get(cubePathAtom);
+
+  if (!cubeIri) return undefined;
+
   const fullCubeIri = addNamespace(cubeIri);
   const lindas = get(lindasAtom);
   const cubes = get(cubesStatusAtom);
@@ -168,9 +163,9 @@ export const observationsSparqlQueryAtom = atom((get) => {
   const timeFilter = getTimeFilter(timeRange, timeView);
 
   if (!cubeDefinition) return "";
-  const filters = mapValues(filterDimensionsSelection, (atom) => {
-    if (atom) {
-      const selectedOptions = get(atom);
+  const filters = mapValues(dimensionsSelection, (value) => {
+    if (value) {
+      const selectedOptions = value.value;
       return selectedOptions.map((option) => option.value);
     }
     return [];

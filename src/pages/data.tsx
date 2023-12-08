@@ -23,7 +23,6 @@ import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
 import { makeStyles } from "@/components/style-utils";
 import { cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { resetCubeFiltersAtom } from "@/domain/filters";
 import {
   filteredObservationsAtom,
   observationsQueryAtom,
@@ -41,6 +40,8 @@ import { renderMetaTags } from "react-datocms";
 import DebugDataPage from "../components/DebugDataPage";
 import { useIsDesktop, useIsTablet } from "@/components/Grid/Grid";
 import MobileIntercept from "@/components/browser/MobileIntercept";
+import { DevTools } from "jotai-devtools";
+import { filterAtom } from "@/domain/filters";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -87,6 +88,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
             <>
               {showEnvironments && <EnvSwitch />}
               <DataBrowser />
+              {process.env.NODE_ENV === "development" && <DevTools />}
             </>
           ) : (
             <MobileIntercept />
@@ -122,11 +124,13 @@ const DataBrowser = () => {
   const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const query = useAtomValue(observationsSparqlQueryAtom);
+
   // const visualizeUrl = useAtomValue(visualizeUrlAtom);
-  const filteredChangedCount = useAtomValue(resetCubeFiltersAtom);
+  const { changed: filteredChangedCount } = useAtomValue(filterAtom);
 
   const queriesCompleted = observationsQueryStatus.isSuccess && cubeDimensions.isSuccess;
-  const resultCount = queriesCompleted ? filteredObservations.length : undefined;
+  const resultCount =
+    queriesCompleted && filteredObservations ? filteredObservations.length : undefined;
   const debug = useFlag("debug");
 
   return (
@@ -232,7 +236,9 @@ const DataBrowser = () => {
 
         <Paper elevation={3} className={classes.paper}>
           <>
-            {observationsQueryStatus.isSuccess && cubeDimensions.isSuccess ? (
+            {observationsQueryStatus.isSuccess &&
+            cubeDimensions.isSuccess &&
+            filteredObservations ? (
               <Box sx={{ position: "absolute", inset: 0 }}>
                 <Table
                   observations={filteredObservations}

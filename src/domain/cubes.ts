@@ -5,8 +5,8 @@ import { fetchBaseDimensions, fetchCubeDimensions, fetchCubes } from "@/pages/ap
 import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { isEmpty } from "lodash";
-import { filterCubeSelectionAtom, timeViewAtom } from "./filters";
+import { cubeSelectionAtom, filterAtom } from "./filters";
+import { timeViewAtom } from "./filters";
 
 type EnvironmentDescription = {
   label: string;
@@ -40,6 +40,7 @@ export const [cubesAtom, cubesStatusAtom] = atomsWithQuery((get) => {
   return {
     queryKey: ["cubes", environment.value],
     queryFn: () => fetchCubes(environment.url),
+    placeholderData: (previousData) => previousData,
   };
 });
 
@@ -47,24 +48,18 @@ export const defaultCube = "cube/MilkDairyProducts/Production_Price_Year";
 
 export const cubePathAtom = atom((get) => {
   const { status, data: allCubes } = get(cubesStatusAtom);
-  const filterCubeSelection = get(filterCubeSelectionAtom);
+  const cubeSelection = get(cubeSelectionAtom);
 
-  if (status !== "success" || isEmpty(filterCubeSelection)) return defaultCube;
+  if (status !== "success") return;
 
   const cubePath = allCubes.find(
     (cube) =>
-      (filterCubeSelection["value-chain"]
-        ? cube.valueChain === get(filterCubeSelection["value-chain"])?.value
-        : true) &&
-      (filterCubeSelection.market
-        ? cube.market === get(filterCubeSelection.market)?.value
-        : true) &&
-      (filterCubeSelection.measure
-        ? cube.measure === get(filterCubeSelection.measure)?.value
-        : true) &&
+      cube.measure === cubeSelection.measure.value?.value &&
+      cube.market === cubeSelection.market.value?.value &&
+      cube.valueChain === cubeSelection["value-chain"].value?.value &&
       cube.timeView === get(timeViewAtom)
   );
-  return cubePath?.cube || defaultCube;
+  return cubePath?.cube;
 });
 
 /**
@@ -76,11 +71,13 @@ export const cubePathAtom = atom((get) => {
 export const [baseDimensionsAtom, baseDimensionsStatusAtom] = atomsWithQuery((get) => ({
   queryKey: ["baseDimensions", get(localeAtom), get(lindasAtom).value],
   queryFn: () => fetchBaseDimensions({ locale: get(localeAtom), environment: get(lindasAtom).url }),
+  placeholderData: (previousData) => previousData,
 }));
 
 export const availableBaseDimensionsValuesAtom = atom((get) => {
   const cubes = get(cubesStatusAtom);
-  const filterCubeSelection = get(filterCubeSelectionAtom);
+  const timeView = get(timeViewAtom);
+  const filters = get(filterAtom);
 
   /**
    * This probably could be done in a more elegant way.
@@ -91,12 +88,9 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
         ? cubes.data
             .filter(
               (c) =>
-                (filterCubeSelection.measure
-                  ? c.measure === get(filterCubeSelection.measure)?.value
-                  : false) &&
-                (filterCubeSelection.market
-                  ? c.market === get(filterCubeSelection.market)?.value
-                  : false)
+                c.measure === filters.cube.measure.value?.value &&
+                c.market === filters.cube.market.value?.value &&
+                c.timeView === timeView
             )
             .map((c) => c.valueChain)
         : [],
@@ -106,12 +100,9 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
         ? cubes.data
             .filter(
               (c) =>
-                (filterCubeSelection.measure
-                  ? c.measure === get(filterCubeSelection.measure)?.value
-                  : false) &&
-                (filterCubeSelection["value-chain"]
-                  ? c.valueChain === get(filterCubeSelection["value-chain"])?.value
-                  : false)
+                c.measure === filters.cube.measure.value?.value &&
+                c.valueChain === filters.cube["value-chain"].value?.value &&
+                c.timeView === timeView
             )
             .map((c) => c.market)
         : [],
@@ -121,12 +112,9 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
         ? cubes.data
             .filter(
               (c) =>
-                (filterCubeSelection.market
-                  ? c.market === get(filterCubeSelection.market)?.value
-                  : false) &&
-                (filterCubeSelection["value-chain"]
-                  ? c.valueChain === get(filterCubeSelection["value-chain"])?.value
-                  : false)
+                c.market === filters.cube.market.value?.value &&
+                c.valueChain === filters.cube["value-chain"].value?.value &&
+                c.timeView === timeView
             )
             .map((c) => c.measure)
         : [],
@@ -145,7 +133,14 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((ge
 
   return {
     queryKey: ["cubeDimensions", cubePath, locale, lindas.value],
-    queryFn: () => fetchCubeDimensions(locale, lindas.url, cubePath),
+    queryFn: () => {
+      if (!cubePath) {
+        return Promise.reject(new Error("Cube not found"));
+      }
+      return fetchCubeDimensions(locale, lindas.url, cubePath);
+    },
+    placeholderData: (previousData) => previousData,
+    skip: !cubePath,
   };
 });
 

@@ -80,7 +80,7 @@
     "graphql-tag": "^2.10.3",
     "isomorphic-unfetch": "^4.0.2",
     "jotai": "^2.4.1",
-    "jotai-devtools": "^0.7.0",
+    "jotai-devtools": "^0.7.1",
     "jotai-location": "^0.5.1",
     "jotai-tanstack-query": "^0.7.2",
     "jsonpack": "^1.1.5",
