@@ -1,28 +1,13 @@
 import { TimeFilter, queryObservations } from "@/lib/cube-queries";
 import { addNamespace, amdpMeasure } from "@/lib/namespace";
-import { Locale, defaultLocale } from "@/locales/locales";
-import {
-  Measure,
-  Observation,
-  Property,
-  fetchObservations,
-  getSparqlEditorUrl,
-} from "@/pages/api/data";
+import { Observation, fetchObservations, getSparqlEditorUrl } from "@/pages/api/data";
 import { toCamelCase } from "@/utils/stringCase";
-import { FormatLocaleDefinition, formatLocale, timeFormat } from "d3";
-// @ts-expect-error https://stackoverflow.com/questions/74072409/webpack-doesnt-resolve-imports-of-json-files-from-d3-packages
-import localeDE from "d3-format/locale/de-CH";
-// @ts-expect-error
-import localeFR from "d3-format/locale/fr-FR";
-// @ts-expect-error
-import localeIT from "d3-format/locale/it-IT";
+
 import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { isNumber, mapValues } from "lodash";
-import millify from "millify";
+import { mapValues } from "lodash";
 import { mapToObj } from "remeda";
-import { match } from "ts-pattern";
 import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
 import {
@@ -32,6 +17,7 @@ import {
   timeRangeAtom,
   timeViewAtom,
 } from "./filters";
+import { tableFormatter } from "@/lib/formatter";
 
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
@@ -93,52 +79,6 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
   };
 });
 
-export const valueFormatter = ({
-  value,
-  dimension,
-  cubeDimensions,
-  timeView,
-  locale = defaultLocale,
-}: {
-  value?: string | number;
-  dimension: string;
-  cubeDimensions: Record<string, Property | Measure>;
-  timeView?: TimeView;
-  locale?: Locale;
-}) => {
-  const dim = cubeDimensions[dimension];
-  if (dim && dim.dimension === "date") {
-    if (timeView === "Year") {
-      return timeFormat("%Y")(dayjs(value).toDate());
-    }
-    return timeFormat("%m-%Y")(dayjs(value).toDate());
-  }
-  if (dim && dim.type === "measure") {
-    if (!isNumber(value)) return value;
-    if (dim.dimension !== "quantity") {
-      const formatLocaleDef = match(locale)
-        .with("de", () => localeDE)
-        .with("fr", () => localeFR)
-        .with("it", () => localeIT)
-        .otherwise(() => localeDE);
-
-      const formatter = formatLocale(formatLocaleDef as FormatLocaleDefinition);
-
-      return formatter.format(`.2f`)(value);
-    }
-
-    return millify(value, {
-      locales: locale,
-      precision: 2,
-      space: true,
-    });
-  }
-  if (dim && dim.type === "property") {
-    return dim.values.find((v) => v.value === value)?.label ?? value;
-  }
-  return value;
-};
-
 /**
  * Parsed observations atom. This atom contains the observations of the cube that we are currently
  * viewing. The observations are filtered by the selected dimensions.
@@ -154,7 +94,7 @@ export const parsedObservationsAtom = atom(async (get) => {
     Object.entries(obs).reduce((acc, [key, value]) => {
       return {
         ...acc,
-        [key]: valueFormatter({
+        [key]: tableFormatter({
           value: value as string | number,
           dimension: key,
           cubeDimensions: {

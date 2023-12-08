@@ -1,8 +1,9 @@
 import { CubeDimensions, cubeDimensionsStatusAtom } from "@/domain/cubes";
 import { isMeasure } from "@/domain/dimensions";
 import { timeViewAtom } from "@/domain/filters";
-import { filteredObservationsAtom, valueFormatter } from "@/domain/observations";
+import { filteredObservationsAtom } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
+import { tableFormatter } from "@/lib/formatter";
 import { useLocale } from "@/lib/use-locale";
 import { Observation } from "@/pages/api/data";
 import { Trans, t } from "@lingui/macro";
@@ -181,7 +182,7 @@ const DownloadMenuItem = ({
         if (dimension && value) {
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
-            valueFormatter({
+            tableFormatter({
               value: value,
               dimension: dimension.dimension,
               cubeDimensions: dimensions.properties,
