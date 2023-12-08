@@ -155,13 +155,7 @@ const DataBrowser = () => {
           }}
         />
       </Box>
-      <Stack px={s(8)} gap={4} flexGrow={1} minHeight={0}>
-        <Box mt={s(24)} mb={s(4)}>
-          <Box sx={{ width: "55px", height: "3px", backgroundColor: "#000" }} />
-          <Typography variant="display2" component="h1">
-            <Trans id="data.hero.title">Data download</Trans>
-          </Typography>
-        </Box>
+      <Stack px={s(8)} pt={s(8)} gap={4} flexGrow={1} minHeight={0}>
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -249,15 +243,14 @@ const DataBrowser = () => {
                   />
                 </Box>
               )}
-            {observationsQueryStatus.isLoading ||
-              (cubeDimensions.isLoading && (
-                <Stack gap={2} alignItems="center">
-                  <CircularProgress size={24} />
-                  <Typography variant="h5" fontWeight="normal">
-                    <Trans id="data.loading.info">Loading data...</Trans>
-                  </Typography>
-                </Stack>
-              ))}
+            {(observationsQueryStatus.isLoading || cubeDimensions.isLoading) && (
+              <Stack gap={2} alignItems="center">
+                <CircularProgress size={24} />
+                <Typography variant="h5" fontWeight="normal">
+                  <Trans id="data.loading.info">Loading data...</Trans>
+                </Typography>
+              </Stack>
+            )}
           </>
         </Paper>
       </Stack>
