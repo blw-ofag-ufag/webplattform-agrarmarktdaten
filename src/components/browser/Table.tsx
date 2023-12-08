@@ -167,6 +167,7 @@ export const Table = ({
           align:
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           sortingOrder: ["desc", "asc", null],
+          minWidth: 100,
           valueFormatter: (params) =>
             tableFormatter({
               value: params.value,
