@@ -39,6 +39,8 @@ import { isUndefined } from "lodash";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 import DebugDataPage from "../components/DebugDataPage";
+import { useIsDesktop, useIsTablet } from "@/components/Grid/Grid";
+import MobileIntercept from "@/components/browser/MobileIntercept";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -69,6 +71,9 @@ export default function DataPage(props: GQL.DataPageQuery) {
     locale: loc.locale as string,
   }));
 
+  const isTablet = useIsTablet();
+  const isDesktop = useIsDesktop();
+
   return (
     <SafeHydrate>
       <Head>{renderMetaTags([...(dataPage?.seo ?? []), ...site?.favicon])}</Head>
@@ -78,8 +83,14 @@ export default function DataPage(props: GQL.DataPageQuery) {
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
         >
-          {showEnvironments && <EnvSwitch />}
-          <DataBrowser />
+          {isTablet || isDesktop ? (
+            <>
+              {showEnvironments && <EnvSwitch />}
+              <DataBrowser />
+            </>
+          ) : (
+            <MobileIntercept />
+          )}
         </AppLayout>
       </ThemeProvider>
     </SafeHydrate>
@@ -103,8 +114,9 @@ const useStyles = makeStyles()((theme) => ({
 
 const DataBrowser = () => {
   const { classes } = useStyles();
+  const isDesktop = useIsDesktop();
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(isDesktop);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observationsQueryStatus = useAtomValue(observationsQueryAtom);
   const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);

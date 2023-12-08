@@ -2,6 +2,7 @@ export { default as Download } from "./Download";
 export { default as IcExpand } from "./IcExpand";
 export { default as IcLink } from "./IcLink";
 export { default as IcRepeat } from "./IcRepeat";
+export { default as IcWarningCircle } from "./IcWarningCircle";
 export { default as IcChevronDoubleLeft } from "./IcChevronDoubleLeft";
 export { default as IcChevronDoubleRight } from "./IcChevronDoubleRight";
 export { default as IcControlArrowLeft } from "./IcControlArrowLeft";
