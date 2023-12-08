@@ -10,7 +10,6 @@ import localeDE from "d3-format/locale/de-CH";
 import localeFR from "d3-format/locale/fr-FR";
 // @ts-expect-error
 import localeIT from "d3-format/locale/it-IT";
-import millify from "millify";
 
 // Decided not to use abbreviations for now, following https://blw-ofag-ufag.atlassian.net/browse/WAM-397?focusedCommentId=12148
 export const units: Record<Locale, string[]> = {

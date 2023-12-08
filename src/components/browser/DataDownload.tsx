@@ -182,12 +182,14 @@ const DownloadMenuItem = ({
         if (dimension && value) {
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
-            tableFormatter({
-              value: value,
-              dimension: dimension.dimension,
-              cubeDimensions: dimensions.properties,
-              timeView,
-            }),
+            isMeasure(key)
+              ? value
+              : tableFormatter({
+                  value: value,
+                  dimension: dimension.dimension,
+                  cubeDimensions: dimensions.properties,
+                  timeView,
+                }),
           ];
         } else {
           return [key, value];

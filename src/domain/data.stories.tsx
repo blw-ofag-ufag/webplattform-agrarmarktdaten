@@ -16,8 +16,8 @@ import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
 import { ObjectInspector } from "react-inspector";
 import { baseDimensionsAtom, cubesAtom, defaultCube } from "./cubes";
-import { valueFormatter } from "./observations";
 import { getProductOptionsWithHierarchy } from "./filters";
+import { tableFormatter } from "@/lib/formatter";
 
 export const AvailableCubes = () => {
   const cubes = useAtomValue(cubesAtom);
@@ -124,7 +124,7 @@ export const Observations = () => {
         width: 200,
         valueFormatter: (params) => {
           if (dimensions.data && showParsed) {
-            return valueFormatter({
+            return tableFormatter({
               value: params.value,
               dimension: key,
               cubeDimensions: {
