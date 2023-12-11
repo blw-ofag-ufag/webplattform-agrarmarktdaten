@@ -172,7 +172,7 @@ msgstr "Copié dans le presse-papiers"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.data"
-msgstr "Données"
+msgstr "Télécharger des données"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx

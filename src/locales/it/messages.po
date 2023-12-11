@@ -172,7 +172,7 @@ msgstr "Copiato negli Appunti"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.data"
-msgstr "Dati"
+msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
