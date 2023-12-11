@@ -59,6 +59,11 @@ msgstr ""
 #~ msgstr "Visualize"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.hero.title"
+#~ msgstr "Scarica i dati"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} di {1})"
@@ -109,7 +114,7 @@ msgstr "Mostra tutti i posts"
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.filename"
-msgstr "PDMA_donnees"
+msgstr "Donnes"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -182,11 +187,6 @@ msgstr "Dati"
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.actions.download"
-msgstr "Scarica i dati"
-
-#. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.hero.title"
 msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
