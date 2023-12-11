@@ -1,12 +1,5 @@
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import {
-  Option,
-  filterAtom,
-  timeRangeAtom,
-  timeRangeDefault,
-  timeViewAtom,
-} from "@/domain/filters";
-import { observationsQueryAtom } from "@/domain/observations";
+import { Option, filterAtom } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, t } from "@lingui/macro";
@@ -21,10 +14,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import dayjs from "dayjs";
 import { Atom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { maxBy, minBy, xor } from "lodash";
-import { SyntheticEvent, useEffect, useMemo, useState } from "react";
+import { xor } from "lodash";
+import { SyntheticEvent, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
 import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
@@ -267,77 +259,55 @@ const FilterSelectAccordion = <T extends Option>({
 };
 
 const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
-  const [timeRange, setTimeRange] = useAtom(timeRangeAtom);
-  const [timeView, setTimeView] = useAtom(timeViewAtom);
-  const observationsQuery = useAtomValue(observationsQueryAtom);
-
-  useEffect(() => {
-    if (observationsQuery.data) {
-      const minDate = minBy(observationsQuery.data.observations, (d) => dayjs(d.date))?.date;
-      const maxDate = maxBy(observationsQuery.data.observations, (d) => dayjs(d.date))?.date;
-
-      const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
-      const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;
-
-      setTimeRange({
-        value: [Math.max(min, timeRange.value[0]), Math.min(max, timeRange.value[1])],
-        min,
-        max,
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [observationsQuery.data, setTimeRange]);
+  const filters = useAtomValue(filterAtom);
+  const [timeRange, setTimeRange] = useAtom(filters.dimensions.time.range.atom);
+  const [timeView, setTimeView] = useAtom(filters.cube.time.view.atom);
 
   const handleTimeRangeChange = useEvent((value: [number, number]) => {
     if (!Array.isArray(value)) {
       return;
     }
-    setTimeRange({
-      ...timeRange,
-      value: value as [number, number],
-    });
+
+    setTimeRange(value as [number, number]);
   });
 
-  const isTainted = useMemo(() => {
-    return (
-      timeRange.value[0] !== timeRange.min ||
-      timeRange.value[1] !== timeRange.max ||
-      timeView !== "Year"
-    );
-  }, [timeRange, timeView]);
+  const handleReset = useEvent(() => {
+    setTimeRange(filters.dimensions.time.range.dataRange);
+    setTimeView("Year");
+  });
+
+  const isTainted = filters.cube.time.view.isChanged || filters.dimensions.time.range.isChanged;
 
   return (
     <>
-      {observationsQuery.isLoading && (
-        <FilterAccordion {...props}>
-          <AccordionSummary>
-            <CircularProgress />
-          </AccordionSummary>
-        </FilterAccordion>
-      )}
-      {observationsQuery.isSuccess && (
+      {filters.dimensions.isLoading ||
+        (filters.cube.isLoading && (
+          <FilterAccordion {...props}>
+            <AccordionSummary>
+              <CircularProgress />
+            </AccordionSummary>
+          </FilterAccordion>
+        ))}
+      {filters.dimensions.isSuccess && filters.cube.isSuccess && (
         <FilterAccordion {...props}>
           <AccordionSummary className={isTainted ? "tainted" : ""}>
             <AccordionTitle>
               <Trans id="data.filters.time">Time</Trans>
             </AccordionTitle>
-            <PreviewFilter show={!props.expanded} tainted={isTainted}>
-              {previewTime(timeRange.value[0], timeRange.value[1], timeView)}
+            <PreviewFilter tainted={isTainted}>
+              {previewTime(timeRange[0], timeRange[1], timeView)}
             </PreviewFilter>
           </AccordionSummary>
           <AccordionDetails>
             <TimeFilter
-              min={timeRange.min}
-              max={timeRange.max}
-              value={timeRange.value}
+              min={filters.dimensions.time.range.dataRange[0]}
+              max={filters.dimensions.time.range.dataRange[1]}
+              value={timeRange}
               view={timeView}
               onChangeRange={handleTimeRangeChange}
               onChangeView={setTimeView}
               resettable={isTainted}
-              onReset={() => {
-                setTimeRange(timeRangeDefault);
-                setTimeView("Year");
-              }}
+              onReset={handleReset}
             />
           </AccordionDetails>
         </FilterAccordion>

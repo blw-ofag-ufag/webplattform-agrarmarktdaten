@@ -9,10 +9,9 @@ import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { isUndefined, mapValues } from "lodash";
 import { mapToObj } from "remeda";
-import { dimensionsSelectionAtom } from "./filters";
 import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
-import { RangeOptions, TimeView, timeRangeAtom, timeViewAtom } from "./filters";
+import { RangeOptions, TimeView, dimensionsSelectionAtom, timeViewAtom } from "./filters";
 
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
@@ -40,12 +39,10 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
     ? cubes.data.find((cube) => cube.cube === cubePath)
     : undefined;
 
-  const timeRange = get(timeRangeAtom);
   const timeView = get(timeViewAtom);
-  const timeFilter = getTimeFilter(timeRange, timeView);
 
   // Time filters are done client-side
-  const queryTimeFilter = { minDate: null, maxDate: null, mode: timeFilter.mode };
+  const queryTimeFilter = { minDate: null, maxDate: null, mode: timeView };
 
   return {
     queryKey: ["observations", cubePath, lindas.value, queryTimeFilter],
@@ -109,7 +106,6 @@ export const parsedObservationsAtom = atom(async (get) => {
 export const filteredObservationsAtom = atom((get) => {
   const observationsQuery = get(observationsQueryAtom);
   const dimensionsSelection = get(dimensionsSelectionAtom);
-  const timeRange = get(timeRangeAtom);
 
   if (!observationsQuery.data) return undefined;
 
@@ -124,7 +120,13 @@ export const filteredObservationsAtom = atom((get) => {
     [] as Array<(obs: Observation) => boolean>
   );
 
-  const [minDate, maxDate] = timeRange.value.map((d) => dayjs.unix(d));
+  const [minDate, maxDate] = [
+    dayjs.unix(dimensionsSelection.time.range.value[0]),
+    dayjs.unix(dimensionsSelection.time.range.value[1]),
+  ];
+
+  console.log({ minDate, maxDate });
+
   const timeFilterFn = (obs: Observation) => {
     const observationDate = dayjs(obs.date);
     return observationDate && observationDate >= minDate && observationDate <= maxDate;
@@ -157,9 +159,15 @@ export const observationsSparqlQueryAtom = atom((get) => {
 
   const cubeDefinition = cubes.data.find((cube) => cube.cube === cubeIri);
 
-  const timeRange = get(timeRangeAtom);
   const timeView = get(timeViewAtom);
-  const timeFilter = getTimeFilter(timeRange, timeView);
+  const timeFilter = getTimeFilter(
+    {
+      min: dimensionsSelection.time.range.dataRange[0],
+      max: dimensionsSelection.time.range.dataRange[1],
+      value: dimensionsSelection.time.range.value,
+    },
+    timeView
+  );
 
   if (!cubeDefinition) return "";
   const filters = mapValues(dimensionsSelection.dimensions, (value) => {

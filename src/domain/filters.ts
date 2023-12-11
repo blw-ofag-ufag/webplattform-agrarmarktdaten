@@ -1,12 +1,13 @@
 import { localeAtom } from "@/lib/use-locale";
-import { HierarchyValue, fetchHierarchy } from "@/pages/api/data";
+import { HierarchyValue, Observation, fetchHierarchy } from "@/pages/api/data";
 import { findInHierarchy } from "@/utils/trees";
+import { t } from "@lingui/macro";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
-import { isEmpty, isEqual, max, min } from "lodash";
+import { isEmpty, isEqual, maxBy, minBy } from "lodash";
 import {
   baseDimensionsStatusAtom,
   cubeDimensionsStatusAtom,
@@ -15,7 +16,6 @@ import {
 } from "./cubes";
 import { dataDimensions } from "./dimensions";
 import { observationsQueryAtom } from "./observations";
-import { t } from "@lingui/macro";
 
 export type Option = {
   label: string;
@@ -76,7 +76,6 @@ export const timeRangeDefault = {
 };
 
 export const timeViewAtom = atomWithHash<TimeView>("timeView", "Year");
-export const timeRangeAtom = atomWithHash("timeRange", timeRangeDefault);
 
 /**
  * Make sure this combination of filters is a valid cube.
@@ -152,11 +151,36 @@ export const cubeSelectionAtom = atom((get) => {
         isChanged: get(valueChainAtom)?.value !== DEFAULT_VALUE_CHAIN,
       },
     },
+    time: {
+      view: {
+        atom: timeViewAtom,
+        value: get(timeViewAtom),
+        default: "Year",
+        isChanged: get(timeViewAtom) !== "Year",
+      },
+    },
     isLoading: baseDimensionsQuery.isLoading,
     isSuccess: baseDimensionsQuery.isSuccess,
     isError: baseDimensionsQuery.isError,
   };
 });
+
+const getDefaultTimeRange = (
+  observations: Observation[]
+): {
+  min: number;
+  max: number;
+} => {
+  const minDate = minBy(observations, (d) => dayjs(d.date))?.date;
+  const maxDate = maxBy(observations, (d) => dayjs(d.date))?.date;
+
+  const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
+  const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;
+  return {
+    min,
+    max,
+  };
+};
 
 /**
  * Dimensions selection atom. This atoms contains the information on the filters on the cube dimensions.
@@ -165,6 +189,7 @@ export const cubeSelectionAtom = atom((get) => {
 export const dimensionsSelectionAtom = atom((get) => {
   const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
   const productOptions = get(productOptionsWithHierarchyAtom);
+  const observationsQuery = get(observationsQueryAtom);
 
   const productsAtom = filterMultiHashAtomFamily({
     key: "products",
@@ -179,6 +204,16 @@ export const dimensionsSelectionAtom = atom((get) => {
   const salesRegionAtom = filterMultiHashAtomFamily({
     key: "salesRegion",
     options: salesRegionOptions,
+  });
+
+  const defaultTimeRange = observationsQuery.isSuccess
+    ? getDefaultTimeRange(observationsQuery.data.observations)
+    : timeRangeDefault;
+
+  const timeRangeAtom = filterTimeRangeHashAtomFamily({
+    key: "timeRange",
+    value: [defaultTimeRange.min, defaultTimeRange.max],
+    defaultRange: [defaultTimeRange.min, defaultTimeRange.max],
   });
 
   return {
@@ -206,6 +241,16 @@ export const dimensionsSelectionAtom = atom((get) => {
         groups: undefined,
       },
     },
+    time: {
+      range: {
+        atom: timeRangeAtom,
+        value: get(timeRangeAtom),
+        dataRange: [defaultTimeRange.min, defaultTimeRange.max] as [number, number],
+        isChanged:
+          get(timeRangeAtom)[0] !== defaultTimeRange.min ||
+          get(timeRangeAtom)[1] !== defaultTimeRange.max,
+      },
+    },
     isLoading: cubeDimensionsQuery.isLoading,
     isSuccess: cubeDimensionsQuery.isSuccess,
     isError: cubeDimensionsQuery.isError,
@@ -225,10 +270,8 @@ export const dimensionsSelectionAtom = atom((get) => {
  */
 export const filterAtom = atom(
   (get) => {
-    const observationsQuery = get(observationsQueryAtom);
     const filterCubeSelection = get(cubeSelectionAtom);
     const filterDimensionsSelection = get(dimensionsSelectionAtom);
-    const timeRange = get(timeRangeAtom);
 
     const changedCubeFilters = Object.values(filterCubeSelection.dimensions).filter(
       (value) => value.isChanged
@@ -237,25 +280,17 @@ export const filterAtom = atom(
       (value) => value.isChanged
     );
 
-    const observationTimeRange = observationsQuery.isSuccess
-      ? {
-          min: min(observationsQuery.data.observations.map((d) => dayjs(d.date).unix())),
-          max: max(observationsQuery.data.observations.map((d) => dayjs(d.date).unix())),
-        }
-      : undefined;
-    const isTimeRangeChanged =
-      observationTimeRange &&
-      (observationTimeRange.min !== timeRange.min || observationTimeRange.max !== timeRange.max);
-
-    const isTimeFilterChanged = get(timeViewAtom) !== "Year" || isTimeRangeChanged;
-
     return {
       cube: filterCubeSelection,
       dimensions: filterDimensionsSelection,
       total:
         Object.values(filterCubeSelection).length + Object.values(filterDimensionsSelection).length,
       changed:
-        changedCubeFilters.length + changedDimensionFilters.length + (isTimeFilterChanged ? 1 : 0),
+        changedCubeFilters.length +
+        changedDimensionFilters.length +
+        (filterCubeSelection.time.view.isChanged || filterDimensionsSelection.time.range.isChanged
+          ? 1
+          : 0),
     };
   },
   (get, set, { action }: { action: "reset" }) => {
@@ -275,14 +310,11 @@ export const filterAtom = atom(
           set(filter.atom, filter.options);
         });
 
-        const timeRange = get(timeRangeAtom);
-
         set(timeViewAtom, "Year");
-        set(timeRangeAtom, {
-          min: timeRange.min,
-          max: timeRange.max,
-          value: [timeRange.min, timeRange.max],
-        });
+        set(
+          filterDimensionsSelection.time.range.atom,
+          filterDimensionsSelection.time.range.dataRange
+        );
         break;
     }
   }
@@ -398,6 +430,22 @@ export const optionCodec = <T extends Option>(options: T[]) => ({
   },
 });
 
+export const timeRangeCodec = (defaultRange: RangeOptions["value"]) => ({
+  serialize: (value: RangeOptions["value"]) => {
+    if (value[0] === defaultRange[0] && value[1] === defaultRange[1]) {
+      return "All";
+    }
+    return `${value[0]},${value[1]}`;
+  },
+  deserialize: (value: string): RangeOptions["value"] => {
+    if (value === "All" || value === "") {
+      return defaultRange;
+    }
+    const [min, max] = value.split(",");
+    return [Number(min), Number(max)];
+  },
+});
+
 export const filterSingleHashAtomFamily = atomFamily(
   ({ key, options, defaultOption }: { key: string; defaultOption?: Option; options: Option[] }) => {
     return atomWithHash(key, defaultOption, optionCodec(options));
@@ -428,4 +476,22 @@ export const filterMultiHashAtomFamily = atomFamily(
       a.options.map((optA) => optA.value),
       b.options.map((optB) => optB.value)
     )
+);
+
+export const filterTimeRangeHashAtomFamily = atomFamily(
+  ({
+    key,
+    value,
+    defaultRange,
+  }: {
+    key: string;
+    value: RangeOptions["value"];
+    defaultRange: RangeOptions["value"];
+  }) => {
+    return atomWithHash(key, value ?? defaultRange, timeRangeCodec(defaultRange));
+  },
+  (a, b) =>
+    a.key === b.key &&
+    a.defaultRange[0] === b.defaultRange[0] &&
+    a.defaultRange[1] === b.defaultRange[1]
 );
