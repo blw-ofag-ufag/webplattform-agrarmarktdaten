@@ -114,27 +114,25 @@ export default function DataDownload() {
               </ListItem>
 
               {dimensions.isSuccess && filteredObservations ? (
-                <>
+                <div>
                   {FILE_FORMATS.map((format, i) => (
-                    <>
-                      <DownloadMenuItem
-                        key={format}
-                        format={format}
-                        dataset={filteredObservations}
-                        dimensions={dimensions.data}
-                        disableRipple
-                        sx={{
-                          borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
-                          borderColor: "grey.300",
-                          p: 0,
-                        }}
-                      >
-                        <Typography variant="body1">{format.toUpperCase()}</Typography>
-                        <IcControlDownload width={20} height={20} />
-                      </DownloadMenuItem>
-                    </>
+                    <DownloadMenuItem
+                      key={format}
+                      format={format}
+                      dataset={filteredObservations}
+                      dimensions={dimensions.data}
+                      disableRipple
+                      sx={{
+                        borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
+                        borderColor: "grey.300",
+                        p: 0,
+                      }}
+                    >
+                      <Typography variant="body1">{format.toUpperCase()}</Typography>
+                      <IcControlDownload width={20} height={20} />
+                    </DownloadMenuItem>
                   ))}
-                </>
+                </div>
               ) : (
                 <CircularProgress />
               )}
