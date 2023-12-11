@@ -32,6 +32,12 @@ export const localeAtom = atom<Locale>((get) => {
   // @ts-ignore location is enriched with hostname by atomWithLocation
   const locale = localizedHosts.find((host) => host.domain === location?.hostname)?.defaultLocale;
   if (locale && locales.includes(locale as Locale)) return locale as Locale;
+
+  // Check if locale is in sub route
+  const localeInPath = location.pathname?.split("/")[1];
+  if (locales.includes(localeInPath as Locale)) return localeInPath as Locale;
+
+  // Fall back to default locale
   return defaultLocale;
 });
 
