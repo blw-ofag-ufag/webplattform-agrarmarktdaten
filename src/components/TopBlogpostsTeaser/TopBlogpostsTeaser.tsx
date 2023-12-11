@@ -17,6 +17,7 @@ const useStyles = makeStyles()(() => ({
   container: {
     display: "flex",
     flexDirection: "column",
+    zIndex: 0,
   },
   indicatorIcon: {
     fontSize: "1rem",

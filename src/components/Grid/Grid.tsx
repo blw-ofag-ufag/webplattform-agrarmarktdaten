@@ -94,7 +94,8 @@ export const specs: Record<Breakpoint, BreakpointSpec> = {
   },
 
   xxs: {
-    totalWidth: 380,
+    //TODO: we made the xxs quick fix for the release but should be properly handled at some point
+    totalWidth: 374,
     offset: 20,
     nbColumns: 4,
     columnGutterWidth: 20,

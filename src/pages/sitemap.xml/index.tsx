@@ -3,13 +3,15 @@ import * as GQL from "@/graphql";
 import { Locale } from "@/locales/locales";
 import { GetServerSideProps } from "next";
 import { isValidLocale } from "@/locales/locales";
-// import { IS_PROD_ENVIRONMENT } from "@/domain/env";
+import { domains, previewDomains, defaultLocale as fallbackLocale } from "@/locales/locales.json";
 
-// const DOMAIN = IS_PROD_ENVIRONMENT
-//   ? "https://www.agrimarketdata.ch"
-//   : "https://blw-agricultural-market-data-platform-ixt1.vercel.app";
-
-const DOMAIN = "https://blw-agricultural-market-data-platform-git-main-ixt1.vercel.app/";
+const getDomain = (locale: Locale) => {
+  const currentDomain = process.env.VERCEL_ENV === "production" ? domains : previewDomains;
+  const found = currentDomain.find(({ defaultLocale }) => defaultLocale === locale);
+  return found
+    ? found.domain
+    : currentDomain.find(({ defaultLocale }) => defaultLocale === fallbackLocale)?.domain;
+};
 
 interface Paths {
   locale: Locale;
@@ -23,10 +25,11 @@ function generateSiteMap(blogposts: Paths[]) {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
       ${blogposts
         .map(({ locale, params: { slug } }) => {
+          const domain = getDomain(locale);
           return `
         <url>
-            <loc>${`${DOMAIN}/${locale}/blog/${slug}`}</loc>
-            <xhtml:link rel="alternate" hreflang="${locale}" href="${`${DOMAIN}/${locale}/blog/${slug}`}"/>
+            <loc>${`https://${domain}/blog/${slug}`}</loc>
+            <xhtml:link rel="alternate" hreflang="${locale}" href="${`https://${domain}/blog/${slug}`}"/>
         </url>
       `;
         })

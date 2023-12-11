@@ -69,13 +69,14 @@ export type TimeView = "Year" | "Month";
 const MIN_DATE = dayjs("2000-01");
 const MAX_DATE = dayjs("2023-01");
 
-export const timeRangeDefault = {
+export const DEFAULT_TIME_RANGE = {
   min: MIN_DATE.unix(),
   max: MAX_DATE.unix(),
   value: [MIN_DATE.unix(), MAX_DATE.unix()] as [number, number],
 };
 
-export const timeViewAtom = atomWithHash<TimeView>("timeView", "Year");
+export const DEFAULT_TIME_VIEW = "Month";
+export const timeViewAtom = atomWithHash<TimeView>("timeView", DEFAULT_TIME_VIEW);
 
 /**
  * Make sure this combination of filters is a valid cube.
@@ -156,7 +157,7 @@ export const cubeSelectionAtom = atom((get) => {
         atom: timeViewAtom,
         value: get(timeViewAtom),
         default: "Year",
-        isChanged: get(timeViewAtom) !== "Year",
+        isChanged: get(timeViewAtom) !== DEFAULT_TIME_VIEW,
       },
     },
     isLoading: baseDimensionsQuery.isLoading,
@@ -174,8 +175,8 @@ const getDefaultTimeRange = (
   const minDate = minBy(observations, (d) => dayjs(d.date))?.date;
   const maxDate = maxBy(observations, (d) => dayjs(d.date))?.date;
 
-  const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
-  const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;
+  const min = minDate ? dayjs(minDate).unix() : DEFAULT_TIME_RANGE.min;
+  const max = maxDate ? dayjs(maxDate).unix() : DEFAULT_TIME_RANGE.max;
   return {
     min,
     max,
@@ -190,6 +191,7 @@ export const dimensionsSelectionAtom = atom((get) => {
   const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
   const productOptions = get(productOptionsWithHierarchyAtom);
   const observationsQuery = get(observationsQueryAtom);
+  const productHierarchyQuery = get(productHierarchyStatusAtom);
 
   const productsAtom = filterMultiHashAtomFamily({
     key: "products",
@@ -208,7 +210,7 @@ export const dimensionsSelectionAtom = atom((get) => {
 
   const defaultTimeRange = observationsQuery.isSuccess
     ? getDefaultTimeRange(observationsQuery.data.observations)
-    : timeRangeDefault;
+    : DEFAULT_TIME_RANGE;
 
   const timeRangeAtom = filterTimeRangeHashAtomFamily({
     key: "timeRange",
@@ -251,9 +253,9 @@ export const dimensionsSelectionAtom = atom((get) => {
           get(timeRangeAtom)[1] !== defaultTimeRange.max,
       },
     },
-    isLoading: cubeDimensionsQuery.isLoading,
-    isSuccess: cubeDimensionsQuery.isSuccess,
-    isError: cubeDimensionsQuery.isError,
+    isLoading: cubeDimensionsQuery.isLoading || productHierarchyQuery.isLoading,
+    isSuccess: cubeDimensionsQuery.isSuccess && productHierarchyQuery.isSuccess,
+    isError: cubeDimensionsQuery.isError || productHierarchyQuery.isError,
   };
 });
 
@@ -310,7 +312,7 @@ export const filterAtom = atom(
           set(filter.atom, filter.options);
         });
 
-        set(timeViewAtom, "Year");
+        set(timeViewAtom, DEFAULT_TIME_VIEW);
         set(
           filterDimensionsSelection.time.range.atom,
           filterDimensionsSelection.time.range.dataRange

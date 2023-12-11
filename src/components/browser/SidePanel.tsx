@@ -1,5 +1,5 @@
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { Option, filterAtom } from "@/domain/filters";
+import { DEFAULT_TIME_VIEW, Option, filterAtom } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, t } from "@lingui/macro";
@@ -273,7 +273,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 
   const handleReset = useEvent(() => {
     setTimeRange(filters.dimensions.time.range.dataRange);
-    setTimeView("Year");
+    setTimeView(DEFAULT_TIME_VIEW);
   });
 
   const isTainted = filters.cube.time.view.isChanged || filters.dimensions.time.range.isChanged;

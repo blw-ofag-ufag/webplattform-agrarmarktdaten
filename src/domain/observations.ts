@@ -63,7 +63,6 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
       });
     },
     skip: isUndefined(cubeDefinition) || isUndefined(cubePath),
-    placeholderData: (previousData) => previousData,
   };
 });
 
@@ -107,14 +106,26 @@ export const filteredObservationsAtom = atom((get) => {
   const observationsQuery = get(observationsQueryAtom);
   const dimensionsSelection = get(dimensionsSelectionAtom);
 
-  if (!observationsQuery.data) return undefined;
+  if (!dimensionsSelection.isSuccess || !observationsQuery.isSuccess) return undefined;
 
   const filters = Object.entries(dimensionsSelection.dimensions).reduce(
     (acc, [key]) => {
       const dim = key as keyof typeof dimensionsSelection.dimensions;
       const selectedOptions = dimensionsSelection.dimensions[dim].value;
-      const optionsSet = new Set(selectedOptions.map((option) => option.value));
-      const filterFn = (obs: Observation) => optionsSet.has(obs[dim] as string);
+      const selectedOptionsSet = new Set(selectedOptions.map((option) => option.value));
+      const optionsSet = new Set(
+        dimensionsSelection.dimensions[dim].options.map((option) => option.value)
+      );
+      const filterFn = (obs: Observation) =>
+        // If there are no options, we don't filter
+        optionsSet.size === 0 ||
+        /**
+         * @FIXME: This is a hack to manage inconsistent state where the dimension options are not
+         * yet updated, and so the dimension values is not in the list of options - probably due to
+         * the fact that the dimensionsSelectionAtom is not yet updated
+         */
+        !optionsSet.has(obs[dim] as string) ||
+        selectedOptionsSet.has(obs[dim] as string);
       return [...acc, filterFn];
     },
     [] as Array<(obs: Observation) => boolean>

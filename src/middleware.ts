@@ -11,7 +11,6 @@ const productionUrls = [
 ];
 
 export function middleware(req: NextRequest) {
-  const basicAuth = req.headers.get("authorization");
   const url = req.nextUrl;
   const { pathname, search } = url;
 
@@ -32,17 +31,6 @@ export function middleware(req: NextRequest) {
   ) {
     return NextResponse.next();
   }
-
-  if (basicAuth) {
-    const authValue = basicAuth.split(" ")[1];
-    const [user, pwd] = atob(authValue).split(":");
-
-    if (user === "demo" && pwd === "amdp2023") {
-      return NextResponse.next();
-    }
-  }
-
-  url.pathname = "/api/basicauth";
 
   return NextResponse.rewrite(url);
 }
