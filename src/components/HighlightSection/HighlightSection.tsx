@@ -1,4 +1,4 @@
-import { Typography, Button, List } from "@mui/material";
+import { Box, Typography, Button, List } from "@mui/material";
 import * as GQL from "@/graphql";
 import { s } from "@interactivethings/swiss-federal-ci";
 import { StructuredText, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
@@ -9,6 +9,7 @@ import { makeStyles } from "@/components/style-utils";
 import { NamedCallout } from "@/components/NamedCallout";
 import useStructuredTextStyles from "@/components/StructuredText/useStructuredTextStyles";
 import { useStructuredTextDebug } from "@/components/StructuredText/StructuredText";
+import { OpenInNew } from "@mui/icons-material";
 
 const useStyles = makeStyles()(({ palette: c }) => ({
   button: {
@@ -64,21 +65,32 @@ const HighlightSection = (
             renderNodeRule(isList, ({ children }) => {
               return <List className={structuredTextClasses.ul}>{children}</List>;
             }),
-            renderNodeRule(isLink, ({ node, children, key }) => (
-              <Typography
-                variant="body1"
-                component="a"
-                sx={{
-                  color: "inherit",
-                  textUnderlineOffset: "2px",
-                  ":hover": { color: "#4B5563" },
-                }}
-                key={key}
-                href={node.url}
-              >
-                {children}
-              </Typography>
-            )),
+            renderNodeRule(isLink, ({ node, children, key }) => {
+              const target = node.meta?.find((e) => e.id === "target")?.value;
+              const rel = node.meta?.find((e) => e.id === "rel")?.value;
+              return (
+                <Typography
+                  variant="body1"
+                  component="a"
+                  rel={rel}
+                  target={target}
+                  sx={{
+                    color: "inherit",
+                    textUnderlineOffset: "2px",
+                    ":hover": { color: "#4B5563" },
+                  }}
+                  key={key}
+                  href={node.url}
+                >
+                  {children}
+                  {target === "_blank" ? (
+                    <Box display="inline-block" component="span" fontSize="0.85em" ml="0.25rem">
+                      <OpenInNew fontSize="inherit" />
+                    </Box>
+                  ) : null}
+                </Typography>
+              );
+            }),
           ]}
           renderInlineRecord={({ record }) => {
             switch (record.__typename) {
