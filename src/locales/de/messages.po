@@ -456,7 +456,7 @@ msgstr "Zeitraum"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.to"
-msgstr "An"
+msgstr "Bis"
 
 #. js-lingui-explicit-id
 #: src/components/DataPageCard.tsx
