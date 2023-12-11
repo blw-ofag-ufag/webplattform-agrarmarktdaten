@@ -21,16 +21,16 @@ export type Environment = "test" | "int" | "prod";
 
 export const environments = environmentsJson as Record<Environment, EnvironmentDescription>;
 
-export const lindasAtom = atomWithHash("lindas", environments.int, {
+export const lindasAtom = atomWithHash("env", environments.prod, {
   serialize: (value) => {
     if (environments?.[value.value as Environment]) {
       return environments[value.value as Environment].value;
     }
-    return environments.int.value;
+    return environments.prod.value;
   },
   deserialize: (value) => {
     const env = Object.values(environments).find((env) => env.value === value);
-    return env ?? environments.int;
+    return env ?? environments.prod;
   },
 });
 
