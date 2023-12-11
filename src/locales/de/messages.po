@@ -172,7 +172,7 @@ msgstr "In die Zwischenablage kopiert"
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.data"
-msgstr "Daten"
+msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
