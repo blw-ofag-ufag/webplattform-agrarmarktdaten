@@ -17,12 +17,18 @@ import { useRouter } from "next/router";
 import { t } from "@lingui/macro";
 import { makeContentWrapperSx } from "@/components/Grid/Grid";
 import slugs from "@/generated/slugs.json";
+import { isValidLocale, defaultLocale, Locale } from "@/locales/locales";
 
 const FooterBLW = () => {
   const theme = useTheme();
   const { locale } = useRouter();
   const localeSlugs = slugs.find((slug) => slug.locale === locale)?.slugs;
   const isXXlAndUp = useMediaQuery(theme.breakpoints.up("xxl"));
+  const newsletterLink = {
+    de: "https://www.blw.admin.ch/blw/de/home/services/newsletter.html#1116955223",
+    fr: "https://www.blw.admin.ch/blw/fr/home/services/newsletter.html#535003298",
+    it: "https://www.blw.admin.ch/blw/it/home/services/newsletter.html#-202135807",
+  } as Record<Locale, string>;
   return (
     <Footer
       ContentWrapperProps={{ sx: makeContentWrapperSx(theme) }}
@@ -89,7 +95,7 @@ const FooterBLW = () => {
           }}
         >
           <Link
-            href={`https://www.blw.admin.ch/blw/${locale}/home/services/newsletter.html`}
+            href={newsletterLink[isValidLocale(locale) ? locale : defaultLocale]}
             target="_blank"
           >
             <Typography sx={{ mr: 2 }}>
