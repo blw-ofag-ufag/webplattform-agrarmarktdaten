@@ -46,9 +46,8 @@ export const DataPageCard: React.FC<{}> = () => {
     <Card sx={{ p: s(8) }} className={classes.card}>
       <Typography variant="body1" className={classes.text}>
         <Trans id="homepage.section.data.content">
-          Various data can be selected and downloaded via the data download, in particular price
-          series, and in some cases also quantity and area data. Data are available from the year
-          2000 onwards.
+          Unter <i>Daten herunterladen</i> können verschiedene Daten ausgewählt und heruntergeladen
+          werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten.
         </Trans>
       </Typography>
       <Button className={classes.button} component={Link} href="/data">

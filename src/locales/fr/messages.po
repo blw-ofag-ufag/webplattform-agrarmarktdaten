@@ -461,7 +461,7 @@ msgstr "Pour"
 #. js-lingui-explicit-id
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
-msgstr "Sous *Télécharger des données*, il est possible de sélectionner et de télécharger différentes données, notamment des séries de prix, mais aussi, dans certains cas, des données relatives aux quantités et aux surfaces."
+msgstr "Sous <0>Télécharger des données</0>, il est possible de sélectionner et de télécharger différentes données, notamment des séries de prix, mais aussi, dans certains cas, des données relatives aux quantités et aux surfaces."
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

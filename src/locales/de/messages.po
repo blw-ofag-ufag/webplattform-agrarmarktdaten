@@ -461,7 +461,7 @@ msgstr "An"
 #. js-lingui-explicit-id
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
-msgstr "Unter Daten herunterladen können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten."
+msgstr "Unter <0>Daten herunterladen</0> können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten."
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
