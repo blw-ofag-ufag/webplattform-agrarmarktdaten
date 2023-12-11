@@ -154,7 +154,8 @@ const theme = createTheme({
     red: c.red,
   },
   breakpoints: {
-    values: { ...b.values, xxxl: 1920 },
+    //TODO: we made the xxs quick fix for the release but should be properly handled at some point
+    values: { ...b.values, xxxl: 1920, xxs: 374 },
   },
   spacing: [0, 4, 8, 12, 16, 24, 32, 64, 72, 84, 96],
 
