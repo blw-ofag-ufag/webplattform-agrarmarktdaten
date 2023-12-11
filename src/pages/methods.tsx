@@ -29,6 +29,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        showBackButton
       >
         <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
         <GridContainer sx={{ mt: 4, position: "relative" }}>
