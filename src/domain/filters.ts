@@ -69,14 +69,16 @@ export type TimeView = "Year" | "Month";
 const MIN_DATE = dayjs("2000-01");
 const MAX_DATE = dayjs("2023-01");
 
-export const timeRangeDefault = {
+export const DEFAULT_TIME_RANGE = {
   min: MIN_DATE.unix(),
   max: MAX_DATE.unix(),
   value: [MIN_DATE.unix(), MAX_DATE.unix()] as [number, number],
 };
 
-export const timeViewAtom = atomWithHash<TimeView>("timeView", "Year");
-export const timeRangeAtom = atomWithHash("timeRange", timeRangeDefault);
+export const DEFAULT_TIME_VIEW = "Month";
+
+export const timeViewAtom = atomWithHash<TimeView>("timeView", DEFAULT_TIME_VIEW);
+export const timeRangeAtom = atomWithHash("timeRange", DEFAULT_TIME_RANGE);
 
 /**
  * Make sure this combination of filters is a valid cube.
@@ -247,7 +249,7 @@ export const filterAtom = atom(
       observationTimeRange &&
       (observationTimeRange.min !== timeRange.min || observationTimeRange.max !== timeRange.max);
 
-    const isTimeFilterChanged = get(timeViewAtom) !== "Year" || isTimeRangeChanged;
+    const isTimeFilterChanged = get(timeViewAtom) !== DEFAULT_TIME_VIEW || isTimeRangeChanged;
 
     return {
       cube: filterCubeSelection,
@@ -277,7 +279,7 @@ export const filterAtom = atom(
 
         const timeRange = get(timeRangeAtom);
 
-        set(timeViewAtom, "Year");
+        set(timeViewAtom, DEFAULT_TIME_VIEW);
         set(timeRangeAtom, {
           min: timeRange.min,
           max: timeRange.max,
