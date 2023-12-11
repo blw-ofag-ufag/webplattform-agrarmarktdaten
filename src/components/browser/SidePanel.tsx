@@ -278,6 +278,13 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
 
   const isTainted = filters.cube.time.view.isChanged || filters.dimensions.time.range.isChanged;
 
+  const timeDomain = useMemo(() => {
+    return [
+      Math.max(timeRange[0], filters.dimensions.time.range.dataRange[0]),
+      Math.min(timeRange[1], filters.dimensions.time.range.dataRange[1]),
+    ] as [number, number];
+  }, [timeRange, filters.dimensions.time.range.dataRange]);
+
   return (
     <>
       {filters.dimensions.isLoading ||
@@ -295,14 +302,14 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
               <Trans id="data.filters.time">Time</Trans>
             </AccordionTitle>
             <PreviewFilter tainted={isTainted}>
-              {previewTime(timeRange[0], timeRange[1], timeView)}
+              {previewTime(timeDomain[0], timeDomain[1], timeView)}
             </PreviewFilter>
           </AccordionSummary>
           <AccordionDetails>
             <TimeFilter
               min={filters.dimensions.time.range.dataRange[0]}
               max={filters.dimensions.time.range.dataRange[1]}
-              value={timeRange}
+              value={timeDomain}
               view={timeView}
               onChangeRange={handleTimeRangeChange}
               onChangeView={setTimeView}

@@ -212,6 +212,8 @@ export const dimensionsSelectionAtom = atom((get) => {
     ? getDefaultTimeRange(observationsQuery.data.observations)
     : DEFAULT_TIME_RANGE;
 
+  console.log({ defaultTimeRange });
+
   const timeRangeAtom = filterTimeRangeHashAtomFamily({
     key: "timeRange",
     value: [defaultTimeRange.min, defaultTimeRange.max],
@@ -249,8 +251,10 @@ export const dimensionsSelectionAtom = atom((get) => {
         value: get(timeRangeAtom),
         dataRange: [defaultTimeRange.min, defaultTimeRange.max] as [number, number],
         isChanged:
-          get(timeRangeAtom)[0] !== defaultTimeRange.min ||
-          get(timeRangeAtom)[1] !== defaultTimeRange.max,
+          (get(timeRangeAtom)[0] !== defaultTimeRange.min ||
+            get(timeRangeAtom)[1] !== defaultTimeRange.max) &&
+          get(timeRangeAtom)[0] > defaultTimeRange.min &&
+          get(timeRangeAtom)[1] < defaultTimeRange.max,
       },
     },
     isLoading: cubeDimensionsQuery.isLoading || productHierarchyQuery.isLoading,

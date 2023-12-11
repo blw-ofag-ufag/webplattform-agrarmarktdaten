@@ -136,8 +136,6 @@ export const filteredObservationsAtom = atom((get) => {
     dayjs.unix(dimensionsSelection.time.range.value[1]),
   ];
 
-  console.log({ minDate, maxDate });
-
   const timeFilterFn = (obs: Observation) => {
     const observationDate = dayjs(obs.date);
     return observationDate && observationDate >= minDate && observationDate <= maxDate;
