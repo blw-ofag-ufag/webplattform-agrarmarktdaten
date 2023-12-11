@@ -1,9 +1,9 @@
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
 import {
+  DEFAULT_TIME_RANGE,
   Option,
   filterAtom,
   timeRangeAtom,
-  timeRangeDefault,
   timeViewAtom,
 } from "@/domain/filters";
 import { observationsQueryAtom } from "@/domain/observations";
@@ -276,8 +276,8 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
       const minDate = minBy(observationsQuery.data.observations, (d) => dayjs(d.date))?.date;
       const maxDate = maxBy(observationsQuery.data.observations, (d) => dayjs(d.date))?.date;
 
-      const min = minDate ? dayjs(minDate).unix() : timeRangeDefault.min;
-      const max = maxDate ? dayjs(maxDate).unix() : timeRangeDefault.max;
+      const min = minDate ? dayjs(minDate).unix() : DEFAULT_TIME_RANGE.min;
+      const max = maxDate ? dayjs(maxDate).unix() : DEFAULT_TIME_RANGE.max;
 
       setTimeRange({
         value: [Math.max(min, timeRange.value[0]), Math.min(max, timeRange.value[1])],
@@ -335,7 +335,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
               onChangeView={setTimeView}
               resettable={isTainted}
               onReset={() => {
-                setTimeRange(timeRangeDefault);
+                setTimeRange(DEFAULT_TIME_RANGE);
                 setTimeView("Year");
               }}
             />
