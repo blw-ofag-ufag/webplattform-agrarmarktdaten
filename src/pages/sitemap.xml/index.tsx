@@ -29,8 +29,8 @@ function generateSiteMap(blogposts: Paths[]) {
           const domain = getDomain(locale);
           return `
         <url>
-            <loc>${`https://${domain}/${locale}/blog/${slug}`}</loc>
-            <xhtml:link rel="alternate" hreflang="${locale}" href="${`https://${domain}/${locale}/blog/${slug}`}"/>
+            <loc>${`https://${domain}/blog/${slug}`}</loc>
+            <xhtml:link rel="alternate" hreflang="${locale}" href="${`https://${domain}/blog/${slug}`}"/>
         </url>
       `;
         })
