@@ -25,7 +25,6 @@ import dayjs from "dayjs";
 import { Atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { maxBy, minBy, xor } from "lodash";
 import { SyntheticEvent, useEffect, useMemo, useState } from "react";
-import { TransitionGroup } from "react-transition-group";
 import FilterAccordion from "../filter-accordion";
 import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
@@ -97,85 +96,83 @@ const SidePanel = ({
               </IconButton>
             </Stack>
           </Box>
-          <TransitionGroup>
-            {/* Cube path filters */}
-            {orderedCubeFilters.map((key) => {
-              if (filters.cube.isError) {
-                return null;
-              }
-              const config = filters.cube.dimensions[key];
+          {/* Cube path filters */}
+          {orderedCubeFilters.map((key) => {
+            if (filters.cube.isError) {
+              return null;
+            }
+            const config = filters.cube.dimensions[key];
 
-              const options = config.options.map((option) => {
-                return {
-                  ...option,
-                  disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
-                };
-              });
+            const options = config.options.map((option) => {
+              return {
+                ...option,
+                disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
+              };
+            });
 
-              return (
-                <>
-                  {filters.cube.isLoading && (
-                    <FilterAccordion key={key} {...getAccordionProps(key)}>
-                      <AccordionSummary>
-                        <CircularProgress />
-                      </AccordionSummary>
-                    </FilterAccordion>
-                  )}
-                  {filters.cube.isSuccess && (
-                    <FilterRadioAccordion
-                      key={key}
-                      slots={{
-                        accordion: getAccordionProps(key),
-                      }}
-                      options={options}
-                      filterAtom={config.atom}
-                      title={config.name ?? key}
-                      defaultValue={config.default}
-                    />
-                  )}
-                </>
-              );
-            })}
+            return (
+              <>
+                {filters.cube.isLoading && (
+                  <FilterAccordion key={key} {...getAccordionProps(key)}>
+                    <AccordionSummary>
+                      <CircularProgress />
+                    </AccordionSummary>
+                  </FilterAccordion>
+                )}
+                {filters.cube.isSuccess && (
+                  <FilterRadioAccordion
+                    key={key}
+                    slots={{
+                      accordion: getAccordionProps(key),
+                    }}
+                    options={options}
+                    filterAtom={config.atom}
+                    title={config.name ?? key}
+                    defaultValue={config.default}
+                  />
+                )}
+              </>
+            );
+          })}
 
-            <TimeAccordion {...getAccordionProps("time")} />
+          <TimeAccordion {...getAccordionProps("time")} />
 
-            {/* Property filters */}
+          {/* Property filters */}
 
-            {orderedDimensionFilters.map((key) => {
-              const config = filters.dimensions.dimensions[key];
+          {orderedDimensionFilters.map((key) => {
+            const config = filters.dimensions.dimensions[key];
 
-              if (filters.cube.isError) {
-                return null;
-              }
+            if (filters.cube.isError) {
+              return null;
+            }
 
-              return (
-                <>
-                  {filters.dimensions.isLoading && (
-                    <FilterAccordion key={key} {...getAccordionProps(key)}>
-                      <AccordionSummary>
-                        <CircularProgress />
-                      </AccordionSummary>
-                    </FilterAccordion>
-                  )}
-                  {filters.dimensions.isSuccess && (
-                    <FilterSelectAccordion
-                      key={key}
-                      slots={{
-                        accordion: getAccordionProps(key),
-                        select: {
-                          withSearch: config.search,
-                          groups: config?.groups,
-                        },
-                      }}
-                      options={config.options}
-                      filterAtom={config.atom}
-                      title={config.name}
-                    />
-                  )}
-                </>
-              );
-            })}
-          </TransitionGroup>
+            return (
+              <>
+                {filters.dimensions.isLoading && (
+                  <FilterAccordion key={key} {...getAccordionProps(key)}>
+                    <AccordionSummary>
+                      <CircularProgress />
+                    </AccordionSummary>
+                  </FilterAccordion>
+                )}
+                {filters.dimensions.isSuccess && (
+                  <FilterSelectAccordion
+                    key={key}
+                    slots={{
+                      accordion: getAccordionProps(key),
+                      select: {
+                        withSearch: config.search,
+                        groups: config?.groups,
+                      },
+                    }}
+                    options={config.options}
+                    filterAtom={config.atom}
+                    title={config.name}
+                  />
+                )}
+              </>
+            );
+          })}
         </Box>
       </Stack>
     </ContentDrawer>
