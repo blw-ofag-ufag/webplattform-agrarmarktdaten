@@ -29,6 +29,7 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        showBackButton
       >
         <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
         <GridContainer sx={{ mt: 4, position: "relative" }}>
