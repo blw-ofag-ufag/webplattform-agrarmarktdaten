@@ -251,9 +251,7 @@ export const dimensionsSelectionAtom = atom((get) => {
         value: get(timeRangeAtom),
         dataRange: [defaultTimeRange.min, defaultTimeRange.max] as [number, number],
         isChanged:
-          (get(timeRangeAtom)[0] !== defaultTimeRange.min ||
-            get(timeRangeAtom)[1] !== defaultTimeRange.max) &&
-          get(timeRangeAtom)[0] > defaultTimeRange.min &&
+          get(timeRangeAtom)[0] > defaultTimeRange.min ||
           get(timeRangeAtom)[1] < defaultTimeRange.max,
       },
     },
