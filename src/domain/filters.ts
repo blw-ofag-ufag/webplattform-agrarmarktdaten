@@ -165,6 +165,7 @@ export const cubeSelectionAtom = atom((get) => {
 export const dimensionsSelectionAtom = atom((get) => {
   const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
   const productOptions = get(productOptionsWithHierarchyAtom);
+  const productHierarchyQuery = get(productHierarchyStatusAtom);
 
   const productsAtom = filterMultiHashAtomFamily({
     key: "products",
@@ -206,9 +207,9 @@ export const dimensionsSelectionAtom = atom((get) => {
         groups: undefined,
       },
     },
-    isLoading: cubeDimensionsQuery.isLoading,
-    isSuccess: cubeDimensionsQuery.isSuccess,
-    isError: cubeDimensionsQuery.isError,
+    isLoading: cubeDimensionsQuery.isLoading || productHierarchyQuery.isLoading,
+    isSuccess: cubeDimensionsQuery.isSuccess && productHierarchyQuery.isSuccess,
+    isError: cubeDimensionsQuery.isError || productHierarchyQuery.isError,
   };
 });
 

@@ -121,8 +121,8 @@ const DataBrowser = () => {
   const [showFilters, setShowFilters] = useState(isDesktop);
   const contentRef = React.useRef<HTMLDivElement>(null);
   const observationsQueryStatus = useAtomValue(observationsQueryAtom);
-  const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
+  const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);
   const query = useAtomValue(observationsSparqlQueryAtom);
 
   // const visualizeUrl = useAtomValue(visualizeUrlAtom);
