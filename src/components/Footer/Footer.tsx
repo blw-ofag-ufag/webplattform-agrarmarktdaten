@@ -157,10 +157,7 @@ const FooterBLW = () => {
           </FooterSection>
           <FooterSection>
             <FooterSectionTitle title="Feedback" />
-            <Link
-              href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
-              target="_blank"
-            >
+            <Link href="mailto:marktanalysen@blw.admin.ch" target="_blank">
               <FooterSectionButton
                 iconName="external"
                 label={t({ id: "footer.feedback", message: "Feedback" })}
@@ -244,10 +241,7 @@ const FooterBLW = () => {
               }}
             >
               <FooterSectionTitle title="Feedback" />
-              <Link
-                href={`https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`}
-                target="_blank"
-              >
+              <Link href="mailto:marktanalysen@blw.admin.ch" target="_blank">
                 <FooterSectionButton
                   iconName="external"
                   label={t({ id: "footer.feedback", message: "Feedback" })}
