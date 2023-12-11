@@ -182,7 +182,7 @@ msgstr "Scarica i dati"
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data"
-msgstr "Dati"
+msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
@@ -461,7 +461,7 @@ msgstr "A"
 #. js-lingui-explicit-id
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
-msgstr "È possibile selezionare e scaricare diversi dati, in particolare le serie dei prezzi e, in alcuni casi, anche i dati relativi alle quantità e alle superfici."
+msgstr "Cliccando su Scarica i dati è possibile selezionare e scaricare diversi dati, tra cui le serie di prezzi e, in alcuni casi, i dati relativi alle quantità e alle superfici."
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

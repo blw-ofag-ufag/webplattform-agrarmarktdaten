@@ -182,7 +182,7 @@ msgstr "Télécharger des données"
 #. js-lingui-explicit-id
 #: src/pages/index.tsx
 msgid "homepage.section.data"
-msgstr "Données"
+msgstr "Télécharger des données"
 
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
@@ -461,7 +461,7 @@ msgstr "Pour"
 #. js-lingui-explicit-id
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
-msgstr "Différentes données peuvent être sélectionnées et téléchargées via l’option “téléchargement de données”, en particulier des séries de prix et, dans certains cas, des données de quantité et de superficie."
+msgstr "Sous *Télécharger des données*, il est possible de sélectionner et de télécharger différentes données, notamment des séries de prix, mais aussi, dans certains cas, des données relatives aux quantités et aux surfaces."
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
