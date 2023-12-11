@@ -81,7 +81,7 @@ msgstr "{0} von {1}"
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.count"
-msgstr "{filteredChangedCount, plural, one {filter applied} other {filters applied}}"
+msgstr "{filteredChangedCount, plural, one {angewandter Filter} other {angewandte Filter}}"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
