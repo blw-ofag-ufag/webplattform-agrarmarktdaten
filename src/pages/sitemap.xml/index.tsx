@@ -4,10 +4,9 @@ import { Locale } from "@/locales/locales";
 import { GetServerSideProps } from "next";
 import { isValidLocale } from "@/locales/locales";
 import { domains, previewDomains, defaultLocale as fallbackLocale } from "@/locales/locales.json";
-import { IS_PROD_ENVIRONMENT } from "@/domain/env";
 
 const getDomain = (locale: Locale) => {
-  const currentDomain = IS_PROD_ENVIRONMENT ? domains : previewDomains;
+  const currentDomain = process.env.VERCEL_ENV === "production" ? domains : previewDomains;
   const found = currentDomain.find(({ defaultLocale }) => defaultLocale === locale);
   return found
     ? found.domain
@@ -29,8 +28,8 @@ function generateSiteMap(blogposts: Paths[]) {
           const domain = getDomain(locale);
           return `
         <url>
-            <loc>${`${domain}/${locale}/blog/${slug}`}</loc>
-            <xhtml:link rel="alternate" hreflang="${locale}" href="${`${domain}/${locale}/blog/${slug}`}"/>
+            <loc>${`https://${domain}/blog/${slug}`}</loc>
+            <xhtml:link rel="alternate" hreflang="${locale}" href="${`https://${domain}/blog/${slug}`}"/>
         </url>
       `;
         })
