@@ -12,7 +12,7 @@ export type Locale = (typeof locales)[number];
 
 export const defaultLocale = "de" as Locale;
 
-export const isValidLocale = (maybeLocale: string | undefined | null) => {
+export const isValidLocale = (maybeLocale: string | undefined | null): maybeLocale is Locale => {
   if (!maybeLocale) {
     return false;
   }
