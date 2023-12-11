@@ -153,6 +153,7 @@ export const AppLayout = (props: Props) => {
           shortTitle={t({ id: "header.shortTitle", message: "BLW" })}
           longTitle={t({ id: "header.longTitle", message: "Bundesamt für Landwirtschaft" })}
           rootHref="/"
+          goBackLabel={t({ id: "cta.back", message: "Geh zurück" })}
           sections={headerSections}
           ContentWrapperProps={{ sx: contentWrapperSx }}
           sx={{ borderBottom: "none", px: 0, mx: 0 }}

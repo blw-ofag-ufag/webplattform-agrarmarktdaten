@@ -59,6 +59,11 @@ msgstr ""
 #~ msgstr "Visualize"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.hero.title"
+#~ msgstr "Scarica i dati"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} di {1})"
@@ -185,11 +190,6 @@ msgid "data.actions.download"
 msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
-#: src/pages/data.tsx
-msgid "data.hero.title"
-msgstr "Scarica i dati"
-
-#. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.title"
 msgstr "Scarica i dati"
@@ -250,6 +250,7 @@ msgstr "Ulteriori informazioni"
 #. js-lingui-explicit-id
 #: src/components/back-button.tsx
 #: src/components/browser/MetadataPanel.tsx
+#: src/components/layout.tsx
 msgid "cta.back"
 msgstr "Indietro"
 
