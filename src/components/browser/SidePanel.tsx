@@ -1,5 +1,5 @@
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { DEFAULT_TIME_VIEW, Option, filterAtom } from "@/domain/filters";
+import { DEFAULT_TIME_VIEW, Option, TimeView, filterAtom } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, t } from "@lingui/macro";
@@ -24,6 +24,7 @@ import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
 import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
+import dayjs from "dayjs";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -271,6 +272,18 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
     setTimeRange(value as [number, number]);
   });
 
+  const handleTimeViewChange = useEvent((value: TimeView) => {
+    setTimeView(value);
+    if (value === "Month") {
+      const endOfYear = dayjs.unix(timeRange[1]).endOf("year").unix();
+      const rangeEnd =
+        endOfYear > filters.dimensions.time.range.dataRange[1]
+          ? filters.dimensions.time.range.dataRange[1]
+          : endOfYear;
+      setTimeRange([timeRange[0], rangeEnd]);
+    }
+  });
+
   const handleReset = useEvent(() => {
     setTimeRange(filters.dimensions.time.range.dataRange);
     setTimeView(DEFAULT_TIME_VIEW);
@@ -312,7 +325,7 @@ const TimeAccordion = (props: Omit<AccordionProps, "children">) => {
               value={timeDomain}
               view={timeView}
               onChangeRange={handleTimeRangeChange}
-              onChangeView={setTimeView}
+              onChangeView={handleTimeViewChange}
               resettable={isTainted}
               onReset={handleReset}
             />
