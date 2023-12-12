@@ -127,7 +127,7 @@ const BlogPostGrid = (props: Props) => {
               </GridWrapElement>
             );
           })}
-          {data?.blogpostCount && data?.blogpostCount?.count > 0 && (
+          {data?.blogpostCount && data?.blogpostCount?.count > 7 && (
             <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
               <Pagination
                 //first page has 7 articles, the remaining ones have 9
