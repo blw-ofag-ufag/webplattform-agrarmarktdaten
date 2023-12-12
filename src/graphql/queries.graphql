@@ -254,8 +254,8 @@ query paginatedFilteredBlogposts(
   $locale: SiteLocale!
   $first: IntType!
   $skip: IntType!
-  $marketFilter: ItemId
-  $focusFilter: ItemId
+  $marketFilter: [ItemId]
+  $focusFilter: [ItemId]
   $orderBy: [BlogPostModelOrderBy]
 ) {
   blogposts: allBlogPosts(
@@ -263,7 +263,7 @@ query paginatedFilteredBlogposts(
     first: $first
     skip: $skip
     filter: {
-      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+      OR: [{ markets: { anyIn: $marketFilter } }, { focusArticles: { anyIn: $focusFilter } }]
     }
     orderBy: $orderBy
   ) {
@@ -272,23 +272,9 @@ query paginatedFilteredBlogposts(
   blogpostCount: _allBlogPostsMeta(
     locale: $locale
     filter: {
-      OR: [{ markets: { anyIn: [$marketFilter] } }, { focusArticles: { anyIn: [$focusFilter] } }]
+      OR: [{ markets: { anyIn: $marketFilter } }, { focusArticles: { anyIn: $focusFilter } }]
     }
   ) {
-    count
-  }
-}
-
-query paginatedBlogposts(
-  $locale: SiteLocale!
-  $first: IntType!
-  $skip: IntType!
-  $orderBy: [BlogPostModelOrderBy]
-) {
-  blogposts: allBlogPosts(locale: $locale, first: $first, skip: $skip, orderBy: $orderBy) {
-    ...SimpleBlogPost
-  }
-  blogpostCount: _allBlogPostsMeta(locale: $locale) {
     count
   }
 }

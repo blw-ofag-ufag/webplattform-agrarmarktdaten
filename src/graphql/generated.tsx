@@ -6052,23 +6052,13 @@ export type PaginatedFilteredBlogpostsQueryVariables = Exact<{
   locale: SiteLocale;
   first: Scalars['IntType']['input'];
   skip: Scalars['IntType']['input'];
-  marketFilter?: InputMaybe<Scalars['ItemId']['input']>;
-  focusFilter?: InputMaybe<Scalars['ItemId']['input']>;
+  marketFilter?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
+  focusFilter?: InputMaybe<Array<InputMaybe<Scalars['ItemId']['input']>> | InputMaybe<Scalars['ItemId']['input']>>;
   orderBy?: InputMaybe<Array<InputMaybe<BlogPostModelOrderBy>> | InputMaybe<BlogPostModelOrderBy>>;
 }>;
 
 
 export type PaginatedFilteredBlogpostsQuery = { __typename: 'Query', blogposts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, leadCard?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }>, blogpostCount: { __typename: 'CollectionMetadata', count: number } };
-
-export type PaginatedBlogpostsQueryVariables = Exact<{
-  locale: SiteLocale;
-  first: Scalars['IntType']['input'];
-  skip: Scalars['IntType']['input'];
-  orderBy?: InputMaybe<Array<InputMaybe<BlogPostModelOrderBy>> | InputMaybe<BlogPostModelOrderBy>>;
-}>;
-
-
-export type PaginatedBlogpostsQuery = { __typename: 'Query', blogposts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, leadCard?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }>, blogpostCount: { __typename: 'CollectionMetadata', count: number } };
 
 export type BlogPostQueryVariables = Exact<{
   locale: SiteLocale;
@@ -7270,19 +7260,19 @@ export function useAnalysisPageQuery(options: Omit<Urql.UseQueryArgs<AnalysisPag
   return Urql.useQuery<AnalysisPageQuery, AnalysisPageQueryVariables>({ query: AnalysisPageDocument, ...options });
 };
 export const PaginatedFilteredBlogpostsDocument = gql`
-    query paginatedFilteredBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $marketFilter: ItemId, $focusFilter: ItemId, $orderBy: [BlogPostModelOrderBy]) {
+    query paginatedFilteredBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $marketFilter: [ItemId], $focusFilter: [ItemId], $orderBy: [BlogPostModelOrderBy]) {
   blogposts: allBlogPosts(
     locale: $locale
     first: $first
     skip: $skip
-    filter: {OR: [{markets: {anyIn: [$marketFilter]}}, {focusArticles: {anyIn: [$focusFilter]}}]}
+    filter: {OR: [{markets: {anyIn: $marketFilter}}, {focusArticles: {anyIn: $focusFilter}}]}
     orderBy: $orderBy
   ) {
     ...SimpleBlogPost
   }
   blogpostCount: _allBlogPostsMeta(
     locale: $locale
-    filter: {OR: [{markets: {anyIn: [$marketFilter]}}, {focusArticles: {anyIn: [$focusFilter]}}]}
+    filter: {OR: [{markets: {anyIn: $marketFilter}}, {focusArticles: {anyIn: $focusFilter}}]}
   ) {
     count
   }
@@ -7291,25 +7281,6 @@ export const PaginatedFilteredBlogpostsDocument = gql`
 
 export function usePaginatedFilteredBlogpostsQuery(options: Omit<Urql.UseQueryArgs<PaginatedFilteredBlogpostsQueryVariables>, 'query'>) {
   return Urql.useQuery<PaginatedFilteredBlogpostsQuery, PaginatedFilteredBlogpostsQueryVariables>({ query: PaginatedFilteredBlogpostsDocument, ...options });
-};
-export const PaginatedBlogpostsDocument = gql`
-    query paginatedBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $orderBy: [BlogPostModelOrderBy]) {
-  blogposts: allBlogPosts(
-    locale: $locale
-    first: $first
-    skip: $skip
-    orderBy: $orderBy
-  ) {
-    ...SimpleBlogPost
-  }
-  blogpostCount: _allBlogPostsMeta(locale: $locale) {
-    count
-  }
-}
-    ${SimpleBlogPostFragmentDoc}`;
-
-export function usePaginatedBlogpostsQuery(options: Omit<Urql.UseQueryArgs<PaginatedBlogpostsQueryVariables>, 'query'>) {
-  return Urql.useQuery<PaginatedBlogpostsQuery, PaginatedBlogpostsQueryVariables>({ query: PaginatedBlogpostsDocument, ...options });
 };
 export const BlogPostDocument = gql`
     query BlogPost($locale: SiteLocale!, $slug: String!) {
