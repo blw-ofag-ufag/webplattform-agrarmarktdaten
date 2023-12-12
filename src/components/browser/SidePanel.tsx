@@ -186,7 +186,7 @@ const FilterRadioAccordion = <T extends Option>({
   options,
   defaultValue,
 }: {
-  filterAtom: Atom<T | undefined>;
+  filterAtom: Atom<string | undefined>;
   options: T[];
   title: string;
   slots: {
@@ -195,18 +195,22 @@ const FilterRadioAccordion = <T extends Option>({
   defaultValue: string;
 }) => {
   const [value, setValue] = useAtom(filterAtom);
-  const isTainted = value?.value !== defaultValue;
+  const isTainted = value !== defaultValue;
+
+  const optionValue = useMemo(() => {
+    return options.find((option) => option.value === value);
+  }, [options, value]);
 
   return (
     <FilterAccordion {...slots.accordion}>
       <AccordionSummary className={isTainted ? "tainted" : ""}>
         <AccordionTitle>{title}</AccordionTitle>
         <PreviewFilter tainted={isTainted} show={!!value}>
-          {value && value.label}
+          {optionValue && optionValue.label}
         </PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
-        <RadioFilter value={value} onChange={setValue} options={options} />
+        <RadioFilter value={optionValue} onChange={setValue} options={options} />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -227,7 +231,7 @@ const FilterSelectAccordion = <T extends Option>({
   slots,
   options,
 }: {
-  filterAtom: Atom<T[]>;
+  filterAtom: Atom<string[]>;
   options: T[];
   title: string;
   slots: {
@@ -239,20 +243,24 @@ const FilterSelectAccordion = <T extends Option>({
   const isTainted = useMemo(() => {
     return (
       xor(
-        values.map((v) => v.value),
+        values,
         options.map((o) => o.value)
       ).length > 0
     );
+  }, [values, options]);
+
+  const valuesOptions = useMemo(() => {
+    return options.filter((option) => values.includes(option.value));
   }, [values, options]);
 
   return (
     <FilterAccordion {...slots.accordion}>
       <AccordionSummary className={isTainted ? "tainted" : ""}>
         <AccordionTitle>{title}</AccordionTitle>
-        <PreviewSelect tainted={isTainted} values={values} options={options} />
+        <PreviewSelect tainted={isTainted} values={valuesOptions} options={options} />
       </AccordionSummary>
       <AccordionDetails>
-        <Select values={values} onChange={setValues} options={options} {...slots.select} />
+        <Select values={valuesOptions} onChange={setValues} options={options} {...slots.select} />
       </AccordionDetails>
     </FilterAccordion>
   );

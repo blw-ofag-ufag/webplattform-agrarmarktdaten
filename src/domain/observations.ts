@@ -112,7 +112,7 @@ export const filteredObservationsAtom = atom((get) => {
     (acc, [key]) => {
       const dim = key as keyof typeof dimensionsSelection.dimensions;
       const selectedOptions = dimensionsSelection.dimensions[dim].value;
-      const selectedOptionsSet = new Set(selectedOptions.map((option) => option.value));
+      const selectedOptionsSet = new Set(selectedOptions);
       const optionsSet = new Set(
         dimensionsSelection.dimensions[dim].options.map((option) => option.value)
       );
@@ -181,8 +181,7 @@ export const observationsSparqlQueryAtom = atom((get) => {
   if (!cubeDefinition) return "";
   const filters = mapValues(dimensionsSelection.dimensions, (value) => {
     if (value) {
-      const selectedOptions = value.value;
-      return selectedOptions.map((option) => option.value);
+      return value.value;
     }
     return [];
   });

@@ -101,8 +101,8 @@ export const cubeSelectionAtom = atom((get) => {
 
   const measureAtom = filterSingleHashAtomFamily({
     key: "measure",
-    options: measureOptions,
-    defaultOption: measureOptions.find((option) => option.value === DEFAULT_MEASURE),
+    options: measureOptions.map((m) => m.value),
+    defaultOption: measureOptions.find((option) => option.value === DEFAULT_MEASURE)?.value,
   });
 
   const marketOptions = baseDimensionsQuery.isSuccess
@@ -111,8 +111,8 @@ export const cubeSelectionAtom = atom((get) => {
 
   const marketAtom = filterSingleHashAtomFamily({
     key: "market",
-    options: marketOptions,
-    defaultOption: marketOptions.find((option) => option.value === DEFAULT_MARKET),
+    options: marketOptions.map((m) => m.value),
+    defaultOption: marketOptions.find((option) => option.value === DEFAULT_MARKET)?.value,
   });
 
   const valueChainOptions = baseDimensionsQuery.isSuccess
@@ -121,8 +121,8 @@ export const cubeSelectionAtom = atom((get) => {
 
   const valueChainAtom = filterSingleHashAtomFamily({
     key: "value-chain",
-    options: valueChainOptions,
-    defaultOption: valueChainOptions.find((option) => option.value === DEFAULT_VALUE_CHAIN),
+    options: valueChainOptions.map((m) => m.value),
+    defaultOption: valueChainOptions.find((option) => option.value === DEFAULT_VALUE_CHAIN)?.value,
   });
 
   return {
@@ -133,7 +133,7 @@ export const cubeSelectionAtom = atom((get) => {
         options: measureOptions,
         atom: measureAtom,
         default: DEFAULT_MEASURE,
-        isChanged: get(measureAtom)?.value !== DEFAULT_MEASURE,
+        isChanged: get(measureAtom) !== DEFAULT_MEASURE,
       },
       market: {
         name: baseDimensionsQuery?.data?.properties.market?.label,
@@ -141,7 +141,7 @@ export const cubeSelectionAtom = atom((get) => {
         value: get(marketAtom),
         options: marketOptions,
         default: DEFAULT_MARKET,
-        isChanged: get(marketAtom)?.value !== DEFAULT_MARKET,
+        isChanged: get(marketAtom) !== DEFAULT_MARKET,
       },
       "value-chain": {
         name: baseDimensionsQuery?.data?.properties["value-chain"]?.label,
@@ -149,7 +149,7 @@ export const cubeSelectionAtom = atom((get) => {
         value: get(valueChainAtom),
         options: valueChainOptions,
         default: DEFAULT_VALUE_CHAIN,
-        isChanged: get(valueChainAtom)?.value !== DEFAULT_VALUE_CHAIN,
+        isChanged: get(valueChainAtom) !== DEFAULT_VALUE_CHAIN,
       },
     },
     time: {
@@ -195,7 +195,7 @@ export const dimensionsSelectionAtom = atom((get) => {
 
   const productsAtom = filterMultiHashAtomFamily({
     key: "products",
-    options: productOptions,
+    options: productOptions.map((p) => p.value),
   });
 
   const salesRegionOptions =
@@ -205,7 +205,7 @@ export const dimensionsSelectionAtom = atom((get) => {
 
   const salesRegionAtom = filterMultiHashAtomFamily({
     key: "salesRegion",
-    options: salesRegionOptions,
+    options: salesRegionOptions.map((p) => p.value),
   });
 
   const defaultTimeRange = observationsQuery.isSuccess
@@ -304,14 +304,14 @@ export const filterAtom = atom(
     switch (action) {
       case "reset":
         Object.values(filterCubeSelection.dimensions).forEach((filter) => {
-          set(
-            filter.atom,
-            filter.options.find((option) => option.value === filter.default)
-          );
+          set(filter.atom, filter.options.find((option) => option.value === filter.default)?.value);
         });
 
         Object.values(filterDimensionsSelection.dimensions).forEach((filter) => {
-          set(filter.atom, filter.options);
+          set(
+            filter.atom,
+            filter.options.map((option) => option.value)
+          );
         });
 
         set(timeViewAtom, DEFAULT_TIME_VIEW);
@@ -401,18 +401,14 @@ export const productOptionsWithHierarchyAtom = atom((get) => {
 });
 
 /* Codecs to save state in URL hash */
-export const multiOptionsCodec = <T extends Option>(options: T[]) => ({
-  serialize: (value: Option[]) =>
-    value.length === 0
-      ? "None"
-      : value.length === options.length
-      ? "All"
-      : value.map((v) => v.value).join(","),
+export const multiOptionsCodec = (options: string[]) => ({
+  serialize: (value: string[]) =>
+    value.length === 0 ? "None" : value.length === options.length ? "All" : value.join(","),
   deserialize: (value: string) => {
     if (value === "None") return [];
     if (value === "All") return options;
     const values = value.split(",");
-    const valuesOptions = options.filter((p) => values.includes(p.value));
+    const valuesOptions = options.filter((p) => values.includes(p));
 
     // This case covers the situation where the options have changed and the saved values are not in
     // the new options. In this case we return all the options.
@@ -420,16 +416,16 @@ export const multiOptionsCodec = <T extends Option>(options: T[]) => ({
       return options;
     }
 
-    return options.filter((p) => values.includes(p.value));
+    return options.filter((p) => values.includes(p));
   },
 });
 
-export const optionCodec = <T extends Option>(options: T[]) => ({
-  serialize: (value?: Option) => (value ? value.value : ""),
+export const optionCodec = (options: string[]) => ({
+  serialize: (value?: string) => value ?? "",
   deserialize: (value: string) => {
-    const option = options.find((o) => o.value === value);
+    const option = options.find((o) => o === value);
     if (option) {
-      return option as Option;
+      return option;
     }
   },
 });
@@ -451,15 +447,10 @@ export const timeRangeCodec = (defaultRange: RangeOptions["value"]) => ({
 });
 
 export const filterSingleHashAtomFamily = atomFamily(
-  ({ key, options, defaultOption }: { key: string; defaultOption?: Option; options: Option[] }) => {
+  ({ key, options, defaultOption }: { key: string; defaultOption?: string; options: string[] }) => {
     return atomWithHash(key, defaultOption, optionCodec(options));
   },
-  (a, b) =>
-    a.key === b.key &&
-    isEqual(
-      a.options.map((optA) => optA.value),
-      b.options.map((optB) => optB.value)
-    )
+  (a, b) => a.key === b.key && isEqual(a.options, b.options)
 );
 
 export const filterMultiHashAtomFamily = atomFamily(
@@ -469,17 +460,12 @@ export const filterMultiHashAtomFamily = atomFamily(
     defaultOptions,
   }: {
     key: string;
-    options: Option[];
-    defaultOptions?: Option[];
+    options: string[];
+    defaultOptions?: string[];
   }) => {
     return atomWithHash(key, defaultOptions ?? options, multiOptionsCodec(options));
   },
-  (a, b) =>
-    a.key === b.key &&
-    isEqual(
-      a.options.map((optA) => optA.value),
-      b.options.map((optB) => optB.value)
-    )
+  (a, b) => a.key === b.key && isEqual(a.options, b.options)
 );
 
 export const filterTimeRangeHashAtomFamily = atomFamily(
