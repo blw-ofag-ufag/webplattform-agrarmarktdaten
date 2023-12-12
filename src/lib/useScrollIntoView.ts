@@ -5,7 +5,9 @@ import { useAtom, useSetAtom, useAtomValue } from "jotai";
 import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
 
 // Good compromise that takes into consideration height of the average section. Eyeballed
-const SCREEN_VISIBLE_THRESHOLD = 0.2;
+const SCREEN_VISIBLE_THRESHOLD = 0.25;
+// Mostly to take care of the menu
+const SCREEN_UPPER_THRESHOLD = 90;
 
 export const useInitSections = (max: number) => {
   const setMaxSections = useSetAtom(maxSectionsAtom);
@@ -37,12 +39,15 @@ export const useScrollIntoView = (id: number) => {
           event.currentTarget.visualViewport;
         //We're scrolling down
         if (howFarWeHaveScrolled >= previousScroll) {
-          if (elemViewportOffset < 0) {
+          if (elemViewportOffset < SCREEN_UPPER_THRESHOLD) {
             //The element is beyond the top of the viewport
             // if (id === focusSection && focusSection < maxSections) {
             // setFocusSection(id + 1);
             // }
-          } else if (elemViewportOffset <= viewportHeight * SCREEN_VISIBLE_THRESHOLD) {
+          } else if (
+            elemViewportOffset <=
+            SCREEN_UPPER_THRESHOLD + viewportHeight * SCREEN_VISIBLE_THRESHOLD
+          ) {
             //Element is in the sweet spot and is in focus
             if (id !== focusSection) {
               setFocusSection(id);
@@ -50,9 +55,12 @@ export const useScrollIntoView = (id: number) => {
           }
         } else {
           //We're scrolling up
-          if (elemViewportOffset < 0) {
+          if (elemViewportOffset < SCREEN_UPPER_THRESHOLD) {
             // not sure we need to do something here
-          } else if (elemViewportOffset <= viewportHeight * SCREEN_VISIBLE_THRESHOLD) {
+          } else if (
+            elemViewportOffset <=
+            SCREEN_UPPER_THRESHOLD + viewportHeight * SCREEN_VISIBLE_THRESHOLD
+          ) {
             if (id !== focusSection) {
               //Element is in the sweet spot and is in focus
               setFocusSection(id);
