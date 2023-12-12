@@ -14,7 +14,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { WritableAtom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { xor } from "lodash";
 import { SyntheticEvent, useMemo, useState } from "react";
 import FilterAccordion from "../filter-accordion";
@@ -186,7 +186,7 @@ const FilterRadioAccordion = <T extends Option>({
   options,
   defaultValue,
 }: {
-  filterAtom: Atom<string | undefined>;
+  filterAtom: WritableAtom<string | undefined, any, void>;
   options: T[];
   title: string;
   slots: {
@@ -210,7 +210,11 @@ const FilterRadioAccordion = <T extends Option>({
         </PreviewFilter>
       </AccordionSummary>
       <AccordionDetails>
-        <RadioFilter value={optionValue} onChange={setValue} options={options} />
+        <RadioFilter
+          value={optionValue}
+          onChange={(option) => setValue(option.value)}
+          options={options}
+        />
       </AccordionDetails>
     </FilterAccordion>
   );
@@ -231,7 +235,7 @@ const FilterSelectAccordion = <T extends Option>({
   slots,
   options,
 }: {
-  filterAtom: Atom<string[]>;
+  filterAtom: WritableAtom<string[], any, void>;
   options: T[];
   title: string;
   slots: {
@@ -260,7 +264,12 @@ const FilterSelectAccordion = <T extends Option>({
         <PreviewSelect tainted={isTainted} values={valuesOptions} options={options} />
       </AccordionSummary>
       <AccordionDetails>
-        <Select values={valuesOptions} onChange={setValues} options={options} {...slots.select} />
+        <Select
+          values={valuesOptions}
+          onChange={(options) => setValues(options.map((o) => o.value))}
+          options={options}
+          {...slots.select}
+        />
       </AccordionDetails>
     </FilterAccordion>
   );
