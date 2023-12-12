@@ -4,7 +4,7 @@ import { render, renderNodeRule } from "datocms-structured-text-to-html-string";
 import { isHeading, Heading } from "datocms-structured-text-utils";
 import { Box } from "@mui/material";
 import { SxProps } from "@mui/material";
-import { sectionAtom } from "@/lib/atoms";
+import { focusSectionAtom } from "@/lib/atoms";
 import { useAtomValue } from "jotai";
 import { makeStyles } from "@/components/style-utils";
 
@@ -58,7 +58,8 @@ const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
   const { data, activeColor = "#ACB4BD", sx } = props;
   const toc = React.useMemo(() => extractH6s(data), [data]);
 
-  const activeSection = useAtomValue(sectionAtom);
+  const focusSection = useAtomValue(focusSectionAtom);
+
   const { classes, cx } = useStyles({ activeColor });
 
   if (toc) {
@@ -76,7 +77,7 @@ const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
                   key={key}
                   className={cx(
                     classes.tocEntry,
-                    activeSection === `heading${i}` ? classes.tocEntryActive : null
+                    focusSection === i ? classes.tocEntryActive : null
                   )}
                   onClick={() => {
                     const elem = document.getElementById(`heading${i}`);
