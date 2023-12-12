@@ -212,8 +212,6 @@ export const dimensionsSelectionAtom = atom((get) => {
     ? getDefaultTimeRange(observationsQuery.data.observations)
     : DEFAULT_TIME_RANGE;
 
-  console.log({ defaultTimeRange });
-
   const timeRangeAtom = filterTimeRangeHashAtomFamily({
     key: "timeRange",
     value: [defaultTimeRange.min, defaultTimeRange.max],
