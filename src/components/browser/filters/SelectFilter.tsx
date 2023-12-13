@@ -356,6 +356,7 @@ const SelectItem = <T extends ScoredOption>({
         }
         sx={{
           paddingLeft: node.level === 0 ? 0 : "48px",
+          alignItems: "flex-start",
         }}
       />
     );
