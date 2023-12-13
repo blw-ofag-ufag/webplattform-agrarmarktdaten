@@ -1,7 +1,6 @@
-import { IcControlArrowLeft, IcWarningCircle } from "@/icons/icons-jsx/control";
+import { IcControlArrowRight, IcWarningCircle } from "@/icons/icons-jsx/control";
 import { Trans } from "@lingui/macro";
 import { Box, Button, Typography } from "@mui/material";
-import NextLink from "next/link";
 import { GridContainer } from "../Grid";
 import { makeStyles } from "../style-utils";
 
@@ -18,7 +17,7 @@ const useStyles = makeStyles()(({ spacing, palette }) => ({
   },
 }));
 
-export default function MobileIntercept() {
+export default function MobileIntercept({ onAccept = () => {} }: { onAccept?: () => void }) {
   const { classes } = useStyles();
   return (
     <Box className={classes.wrapper} bgcolor={"cobalt.50"}>
@@ -33,16 +32,15 @@ export default function MobileIntercept() {
             </Trans>
           </Typography>
           <Button
-            component={NextLink}
-            href="/"
+            onClick={onAccept}
             variant="contained"
             color="primary"
-            startIcon={<IcControlArrowLeft />}
+            endIcon={<IcControlArrowRight />}
             sx={{
               width: "fit-content",
             }}
           >
-            <Trans id="data.mobile.button">Back to Homepage</Trans>
+            <Trans id="data.mobile.button">Continue to Data Page</Trans>
           </Button>
         </Box>
       </GridContainer>

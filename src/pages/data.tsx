@@ -64,6 +64,8 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 
 export default function DataPage(props: GQL.DataPageQuery) {
   const { dataPage, allMarketArticles, allFocusArticles, site } = props;
+  const [acceptedWarning, setAcceptedWarning] = useState(false);
+
   const showEnvironments = useFlag("environments");
 
   const alternates = dataPage?._allSlugLocales?.map((loc) => ({
@@ -84,7 +86,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
         >
-          {isTablet || isDesktop ? (
+          {isTablet || isDesktop || acceptedWarning ? (
             <>
               {showEnvironments && <EnvSwitch />}
               <DataBrowser />
@@ -95,7 +97,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
               )}
             </>
           ) : (
-            <MobileIntercept />
+            <MobileIntercept onAccept={() => setAcceptedWarning(true)} />
           )}
         </AppLayout>
       </ThemeProvider>
