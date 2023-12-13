@@ -120,6 +120,7 @@ const useStyles = makeStyles()((theme) => ({
 
 const DataBrowser = () => {
   const { classes } = useStyles();
+  const isTablet = useIsTablet();
   const isDesktop = useIsDesktop();
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const [showFilters, setShowFilters] = useState(isDesktop);
@@ -148,7 +149,7 @@ const DataBrowser = () => {
     >
       {debug ? <DebugDataPage /> : null}
 
-      <Box width={showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
+      <Box width={isTablet && showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
         <SidePanel
           open={showFilters}
           onClose={() => setShowFilters(false)}
