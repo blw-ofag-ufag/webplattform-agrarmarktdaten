@@ -72,22 +72,15 @@ const BlogPostGrid = (props: Props) => {
       //first page has 7 articles, the remaining ones have 9
       const skip = page === 1 ? 0 : (page - 2) * 9 + 7;
 
-      const filtersArePresent = market !== "all" || focusArticle !== "all";
-
       const result = await client
-        .query<GQL.PaginatedBlogpostsQuery>(
-          filtersArePresent
-            ? GQL.PaginatedFilteredBlogpostsDocument
-            : GQL.PaginatedBlogpostsDocument,
-          {
-            locale,
-            first,
-            skip,
-            orderBy: order,
-            ...(market !== "all" && { marketFilter: market }),
-            ...(focusArticle !== "all" && { focusFilter: focusArticle }),
-          }
-        )
+        .query<GQL.PaginatedFilteredBlogpostsQuery>(GQL.PaginatedFilteredBlogpostsDocument, {
+          locale,
+          first,
+          skip,
+          orderBy: order,
+          marketFilter: market === "all" ? markets.map(({ id }) => id) : market,
+          focusFilter: focusArticle === "all" ? focusArticles.map(({ id }) => id) : focusArticle,
+        })
         .toPromise();
 
       if (!result.data) {
