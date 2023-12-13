@@ -17,3 +17,4 @@ export const SEARCH_BUILD_TRIGGER = IS_PROD_ENVIRONMENT ? 7249 : 30119;
 // export const SEARCH_BUILD_TRIGGER = 7249;
 
 export const REINDEX_TOKEN = process.env.REINDEX_TOKEN;
+export const ENV_TOKEN = process.env.ENV_TOKEN;
