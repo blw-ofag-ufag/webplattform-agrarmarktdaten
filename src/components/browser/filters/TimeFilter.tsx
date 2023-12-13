@@ -140,6 +140,8 @@ export default function TimeFilter({
             label={t({ id: "data.filters.from", message: "From" })}
             views={view === "Year" ? ["year"] : ["year", "month"]}
             format={timeFormat}
+            shouldDisableYear={(date) => date.isAfter(dayjs.unix(value[1]))}
+            shouldDisableMonth={(date) => date.isAfter(dayjs.unix(value[1]))}
             value={dayjs.unix(value[0])}
             onChange={(date) => {
               if (date) onChangeRange([date.unix(), value[1]]);
@@ -149,6 +151,8 @@ export default function TimeFilter({
           <DatePickerField
             min={minDate}
             max={maxDate}
+            shouldDisableYear={(date) => date.isBefore(dayjs.unix(value[0]))}
+            shouldDisableMonth={(date) => date.isBefore(dayjs.unix(value[0]))}
             label={t({ id: "data.filters.to", message: "To" })}
             views={view === "Year" ? ["year"] : ["year", "month"]}
             format={timeFormat}
@@ -214,7 +218,6 @@ const useDatePickerStyles = makeStyles()((theme) => {
       [`& .${pickersMonthClasses.root}`]: {
         flexBasis: "25%",
       },
-
       [`& .${pickersYearClasses.yearButton}`]: {
         borderRadius: theme.spacing(1),
         [`&.${pickersYearClasses.selected}`]: {
@@ -222,6 +225,9 @@ const useDatePickerStyles = makeStyles()((theme) => {
           ":focus": {
             backgroundColor: theme.palette.cobalt[500],
           },
+        },
+        [`&.${pickersYearClasses.disabled}`]: {
+          color: theme.palette.grey[500],
         },
       },
       [`& .${pickersMonthClasses.monthButton}`]: {
@@ -233,6 +239,9 @@ const useDatePickerStyles = makeStyles()((theme) => {
           ":focus": {
             backgroundColor: theme.palette.cobalt[500],
           },
+        },
+        [`&.${pickersMonthClasses.disabled}`]: {
+          color: theme.palette.grey[500],
         },
       },
     },
