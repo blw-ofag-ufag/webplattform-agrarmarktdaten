@@ -88,7 +88,11 @@ export default function DataPage(props: GQL.DataPageQuery) {
             <>
               {showEnvironments && <EnvSwitch />}
               <DataBrowser />
-              {process.env.NODE_ENV === "development" && <DevTools />}
+              {process.env.NODE_ENV === "development" && (
+                <Box sx={{ position: "absolute", bottom: 0 }}>
+                  <DevTools />
+                </Box>
+              )}
             </>
           ) : (
             <MobileIntercept />
