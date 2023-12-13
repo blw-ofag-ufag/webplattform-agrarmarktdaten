@@ -29,8 +29,12 @@ const config = withBundleAnalyzer(
     i18n: {
       locales,
       defaultLocale,
-      domains:
-        process.env.NODE_ENV === "production" ? domains : isPreview ? previewDomains : localDomains,
+      // isPreview needs to come first because NODE_ENV = production on preview :😤
+      domains: isPreview
+        ? previewDomains
+        : process.env.NODE_ENV === "production"
+        ? domains
+        : localDomains,
       localeDetection: false,
     },
 
