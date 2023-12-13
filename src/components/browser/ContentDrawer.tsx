@@ -1,6 +1,7 @@
 import { Drawer, DrawerProps } from "@mui/material";
 import { PropsWithChildren } from "react";
 import { makeStyles } from "../style-utils";
+import { useIsMobile } from "../Grid/Grid";
 
 export type ContentDrawerProps = {
   container: HTMLDivElement | null;
@@ -9,7 +10,6 @@ export type ContentDrawerProps = {
 
 const useStyles = makeStyles()(() => ({
   paper: {
-    width: "388px",
     position: "absolute",
     border: "none",
     top: 0,
@@ -20,11 +20,16 @@ const useStyles = makeStyles()(() => ({
 
 export const ContentDrawer = ({ children, container, ...props }: ContentDrawerProps) => {
   const { classes } = useStyles();
+  const isMobile = useIsMobile();
+
   return (
     <Drawer
       PaperProps={{
         className: classes.paper,
         elevation: 8,
+        sx: {
+          width: isMobile ? "100%" : "388px",
+        },
       }}
       hideBackdrop
       ModalProps={{

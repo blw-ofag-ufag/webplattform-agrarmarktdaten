@@ -134,7 +134,7 @@ msgstr "Valori disponibili"
 #. js-lingui-explicit-id
 #: src/components/browser/MobileIntercept.tsx
 msgid "data.mobile.button"
-msgstr "Torna alla pagina iniziale"
+msgstr "Continua a scaricare i dati"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx

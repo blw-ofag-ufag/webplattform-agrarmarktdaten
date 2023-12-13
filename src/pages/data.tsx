@@ -64,6 +64,8 @@ export function SafeHydrate({ children }: { children: React.ReactNode }) {
 
 export default function DataPage(props: GQL.DataPageQuery) {
   const { dataPage, allMarketArticles, allFocusArticles, site } = props;
+  const [acceptedWarning, setAcceptedWarning] = useState(false);
+
   const showEnvironments = useFlag("environments");
 
   const alternates = dataPage?._allSlugLocales?.map((loc) => ({
@@ -84,14 +86,18 @@ export default function DataPage(props: GQL.DataPageQuery) {
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
         >
-          {isTablet || isDesktop ? (
+          {isTablet || isDesktop || acceptedWarning ? (
             <>
               {showEnvironments && <EnvSwitch />}
               <DataBrowser />
-              {process.env.NODE_ENV === "development" && <DevTools />}
+              {process.env.NODE_ENV === "development" && (
+                <Box sx={{ position: "absolute", bottom: 0 }}>
+                  <DevTools />
+                </Box>
+              )}
             </>
           ) : (
-            <MobileIntercept />
+            <MobileIntercept onAccept={() => setAcceptedWarning(true)} />
           )}
         </AppLayout>
       </ThemeProvider>
@@ -116,6 +122,7 @@ const useStyles = makeStyles()((theme) => ({
 
 const DataBrowser = () => {
   const { classes } = useStyles();
+  const isTablet = useIsTablet();
   const isDesktop = useIsDesktop();
   const [showMetadataPanel, setShowMetadataPanel] = useState(false);
   const [showFilters, setShowFilters] = useState(isDesktop);
@@ -144,7 +151,7 @@ const DataBrowser = () => {
     >
       {debug ? <DebugDataPage /> : null}
 
-      <Box width={showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
+      <Box width={isTablet && showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
         <SidePanel
           open={showFilters}
           onClose={() => setShowFilters(false)}
