@@ -17,8 +17,8 @@ const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter 
   const [minUnix, maxUnix] = timeRange.value;
   const [minDate, maxDate] = [dayjs.unix(minUnix), dayjs.unix(maxUnix)];
   return {
-    minDate: { year: minDate.year().toString(), month: minDate.month().toString() },
-    maxDate: { year: maxDate.year().toString(), month: maxDate.month().toString() },
+    minDate: { year: minDate.year().toString(), month: (minDate.month() + 1).toString() },
+    maxDate: { year: maxDate.year().toString(), month: (maxDate.month() + 1).toString() },
     mode: timeView,
   };
 };
