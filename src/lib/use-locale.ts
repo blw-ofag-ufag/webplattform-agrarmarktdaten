@@ -3,6 +3,7 @@ import { atom, useAtomValue } from "jotai";
 import { atomWithLocation } from "jotai-location";
 import { Router } from "next/router";
 import routeLocales from "@/locales/locales.json";
+import { match } from "ts-pattern";
 
 const locationAtom = atomWithLocation({
   // Needed to make sure atom is synced with Next.js router
@@ -26,8 +27,11 @@ const locationAtom = atomWithLocation({
 
 export const localeAtom = atom<Locale>((get) => {
   const location = get(locationAtom);
-  const localizedHosts =
-    process.env.NODE_ENV === "development" ? routeLocales.localDomains : routeLocales.domains;
+  const localizedHosts = match(process.env.NEXT_PUBLIC_VERCEL_ENV)
+    .with("development", () => routeLocales.localDomains)
+    .with("preview", () => routeLocales.previewDomains)
+    .with("production", () => routeLocales.domains)
+    .otherwise(() => routeLocales.domains);
 
   // @ts-ignore location is enriched with hostname by atomWithLocation
   const locale = localizedHosts.find((host) => host.domain === location?.hostname)?.defaultLocale;
