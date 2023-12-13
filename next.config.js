@@ -17,6 +17,9 @@ const VERSION = `v${pkg.version}`;
 
 console.log("Version", VERSION);
 
+const isPreview =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" || process.env.IS_PREVIEW === "true";
+
 const config = withBundleAnalyzer(
   withMDX({
     // Build-time env variables
@@ -27,11 +30,7 @@ const config = withBundleAnalyzer(
       locales,
       defaultLocale,
       domains:
-        process.env.NODE_ENV === "production"
-          ? domains
-          : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
-          ? previewDomains
-          : localDomains,
+        process.env.NODE_ENV === "production" ? domains : isPreview ? previewDomains : localDomains,
       localeDetection: false,
     },
 
