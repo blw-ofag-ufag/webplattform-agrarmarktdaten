@@ -151,7 +151,7 @@ const DataBrowser = () => {
     >
       {debug ? <DebugDataPage /> : null}
 
-      <Box width={isTablet && showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
+      <Box width={(isTablet || isDesktop) && showFilters ? "388px" : 0} flexGrow={0} flexShrink={0}>
         <SidePanel
           open={showFilters}
           onClose={() => setShowFilters(false)}
