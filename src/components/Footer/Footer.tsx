@@ -128,7 +128,7 @@ const FooterBLW = () => {
               />
             </Link>
             <Link
-              href={`https://2022.agrarbericht.ch/${locale}`}
+              href={`https://www.agrarbericht.ch/${locale}`}
               target="_blank"
               sx={{ textDecoration: "none" }}
             >
@@ -202,7 +202,7 @@ const FooterBLW = () => {
                 />
               </Link>
               <Link
-                href={`https://2022.agrarbericht.ch/${locale}`}
+                href={`https://www.agrarbericht.ch/${locale}`}
                 target="_blank"
                 sx={{ textDecoration: "none" }}
               >
