@@ -3,8 +3,6 @@ import { HighlightSection } from "@/components/HighlightSection";
 import useStructuredTextStyles from "@/components/StructuredText/useStructuredTextStyles";
 import { PowerBIReport } from "@/components/powerbi-report";
 import * as GQL from "@/graphql";
-import { sectionAtom } from "@/lib/atoms";
-import { useIntersectionObserver } from "@/lib/useIntersectionObserver";
 import { InlineRecord, InternalLink } from "@/utils/dato";
 import { c } from "@interactivethings/swiss-federal-ci";
 import { OpenInNew } from "@mui/icons-material";
@@ -20,7 +18,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { isHeading, isLink, isList, isParagraph } from "datocms-structured-text-utils";
-import { useSetAtom } from "jotai";
 import NextLink from "next/link";
 import * as React from "react";
 import {
@@ -35,6 +32,8 @@ import IcLink from "@/icons/icons-jsx/control/IcLink";
 import slugs from "@/generated/slugs.json";
 import { copyToClipboard } from "@/lib/clipboard";
 import { t } from "@lingui/macro";
+import { useScrollIntoView, useInitSections } from "@/lib/useScrollIntoView";
+import { render } from "datocms-structured-text-to-html-string";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -84,12 +83,14 @@ const StructuredText = (props: Props) => {
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
   const [isClient, setIsClient] = React.useState(false);
+  let i = 0;
+
+  const h1Count = countH1s(data);
+  useInitSections(h1Count);
 
   React.useEffect(() => {
     setIsClient(true);
   }, []);
-
-  let i = 0;
 
   return (
     isClient && (
@@ -126,12 +127,12 @@ const StructuredText = (props: Props) => {
                   return null;
                 }
                 //We save the ids of h1s in order to then easily scroll to them
-                let id = undefined;
+                let id = "";
                 if (node.level === 1) {
                   i += 1;
                   id = `heading${i}`;
                   return (
-                    <Header1 key={id} id={id} className={classes.h1}>
+                    <Header1 key={id} id={i} className={classes.h1}>
                       {children}
                     </Header1>
                   );
@@ -402,7 +403,7 @@ const getUrl = (record: InternalLink, router: NextRouter) => {
 };
 
 interface HeaderProps {
-  id: string;
+  id: number;
   children: React.ReactNode;
   className?: string;
 }
@@ -412,26 +413,13 @@ const Header1 = (props: HeaderProps) => {
   const { asPath, push } = useRouter();
   const textContent = extractTextContent(children as JSX.Element);
   const encodedContent = encodeURI(textContent);
-  const ref = React.useRef(null);
-  const entry = useIntersectionObserver(ref, { rootMargin: "0%", threshold: 1.0 });
-  const setSection = useSetAtom(sectionAtom);
   const { classes } = useStructuredTextStyles({});
 
+  const [ref] = useScrollIntoView(id);
+
   const [isTooltipOpen, setTooltipOpen] = React.useState(false);
-
-  const handleTooltipOpen = () => {
-    setTooltipOpen(true);
-  };
-
-  const handleTooltipClose = () => {
-    setTooltipOpen(false);
-  };
-
-  React.useEffect(() => {
-    if (entry?.intersectionRatio === 1.0) {
-      setSection(id);
-    }
-  }, [entry, setSection, id]);
+  const handleTooltipOpen = () => setTooltipOpen(true);
+  const handleTooltipClose = () => setTooltipOpen(false);
 
   return (
     <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
@@ -458,7 +446,13 @@ const Header1 = (props: HeaderProps) => {
           />
         </IconButton>
       </Tooltip>
-      <Typography ref={ref} id={id} variant="h1" component="h1" className={props.className}>
+      <Typography
+        ref={ref}
+        id={`heading${id}`}
+        variant="h1"
+        component="h1"
+        className={props.className}
+      >
         {children}
       </Typography>
     </Box>
@@ -476,6 +470,25 @@ const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
     return extractTextContent(node?.props.children);
   }
   return "";
+};
+
+const countH1s = (data?: StructuredTextGraphQlResponse) => {
+  let count = 0;
+  render(data, {
+    renderBlock: () => null,
+    renderInlineRecord: () => null,
+    metaTransformer: () => null,
+    renderLinkToRecord: () => null,
+    customNodeRules: [
+      renderNodeRule(isHeading, ({ node }) => {
+        if (node.level === 1) {
+          count += 1;
+        }
+        return null;
+      }),
+    ],
+  });
+  return count;
 };
 
 export default StructuredText;
