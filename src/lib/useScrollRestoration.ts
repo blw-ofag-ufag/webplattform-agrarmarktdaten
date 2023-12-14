@@ -6,11 +6,13 @@ import Router, { NextRouter } from "next/router";
 
 function saveScrollPos(url: string) {
   const scrollPos = { x: window.scrollX, y: window.scrollY };
-  sessionStorage.setItem(url, JSON.stringify(scrollPos));
+  sessionStorage.setItem(`scrollRestoration.${url}`, JSON.stringify(scrollPos));
 }
 
 function restoreScrollPos(url: string) {
-  const scrollPos = JSON.parse(sessionStorage.getItem(url) ?? '{ "x": 0, "y": 0 }');
+  const scrollPos = JSON.parse(
+    sessionStorage.getItem(`scrollRestoration.${url}`) ?? '{ "x": 0, "y": 0 }'
+  );
   if (scrollPos) {
     window.scrollTo(scrollPos.x, scrollPos.y);
   }
