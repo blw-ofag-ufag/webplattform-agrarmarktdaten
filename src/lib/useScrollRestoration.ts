@@ -22,6 +22,8 @@ function restoreScrollPos(url: string) {
  * For some unknown reason the scroll restoration behaviour of the browser is not working as intended
  * and because this was a bug pointed out by the client we've implemented a workaround that allows the
  * intended behaviour to take place.
+ *
+ * NOTE: the behaviour is not quite what's expected with firefox and the the reduced motion setting set to true
  */
 export default function useScrollRestoration(router: NextRouter) {
   useEffect(() => {
