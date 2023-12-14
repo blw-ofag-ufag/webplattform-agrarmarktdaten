@@ -10,6 +10,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 const withMDX = require("@next/mdx")();
+const { match } = require("ts-pattern");
 
 const pkg = require("./package.json");
 
@@ -26,12 +27,11 @@ const config = withBundleAnalyzer(
     i18n: {
       locales,
       defaultLocale,
-      domains:
-        process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
-          ? previewDomains
-          : process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-          ? domains
-          : localDomains,
+      domains: match(process.env.NEXT_PUBLIC_VERCEL_ENV)
+        .with("development", () => localDomains)
+        .with("preview", () => previewDomains)
+        .with("production", () => domains)
+        .otherwise(() => localDomains),
       localeDetection: false,
     },
 
