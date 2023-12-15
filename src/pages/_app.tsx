@@ -17,6 +17,7 @@ import { queryClientAtom } from "jotai-tanstack-query";
 import { useHydrateAtoms } from "jotai/react/utils";
 import { PropsWithChildren } from "react";
 import { LicenseInfo } from "@mui/x-license-pro";
+import useScrollRestoration from "@/lib/useScrollRestoration";
 
 setupMatomo();
 
@@ -51,6 +52,7 @@ export default function App({
   emotionCache = clientSideEmotionCache,
 }: MyAppProps) {
   const router = useRouter();
+  useScrollRestoration(router);
 
   const locale = (router.locale || "de") as Locale;
 
