@@ -34,6 +34,7 @@ import { copyToClipboard } from "@/lib/clipboard";
 import { t } from "@lingui/macro";
 import { useScrollIntoView, useInitSections } from "@/lib/useScrollIntoView";
 import { render } from "datocms-structured-text-to-html-string";
+import { sanitizeBigNumbers } from "./utils";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -79,6 +80,7 @@ const StructuredText = (props: Props) => {
   const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
   const router = useRouter();
   const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
+  const sanatizedData = data ? { ...data, value: sanitizeBigNumbers(data?.value) } : data;
 
   //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
   // I'll take another look at this at a later point
@@ -97,7 +99,7 @@ const StructuredText = (props: Props) => {
       <DebugStructuredText.Provider value={{ debug: props.debug }}>
         <Box className={classes.content} sx={props.sx}>
           <ST
-            data={data}
+            data={sanatizedData}
             customNodeRules={[
               renderNodeRule(isLink, ({ node, children, key }) => {
                 const target = node.meta?.find((e) => e.id === "target")?.value;
