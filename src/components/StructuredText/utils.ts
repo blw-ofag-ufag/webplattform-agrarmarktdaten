@@ -12,6 +12,7 @@ import {
   ListItem,
   Root,
 } from "datocms-structured-text-utils";
+import { replaceNumberSeparators } from "@/domain/string";
 
 type Node =
   | Paragraph
@@ -61,6 +62,3 @@ const traverse = (node: Node): Node => {
     ...("children" in visitedNode && { children: visitedNode.children.map(traverse) }),
   } as $FixMe; // Types in this instance make this whole ordeal a headache.
 };
-
-const BIGNUMBER_SPACE_REGEX = /(?<=\b\d{1,3})\s(?=\d{1,3}\b)/g;
-const replaceNumberSeparators = (string: string) => string.replace(BIGNUMBER_SPACE_REGEX, "\u00A0");
