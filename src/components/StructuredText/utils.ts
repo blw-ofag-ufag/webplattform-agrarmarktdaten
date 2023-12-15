@@ -37,10 +37,7 @@ export const sanitizeBigNumbers = (
   return data;
 };
 
-/**
- * Traverse the DAST tree, find the spans and sanitize them
- */
-const traverse = (node: Node): Node => {
+const spanVisitor = (node: Node) => {
   const { type, ...rest } = node;
   if (node?.type === "span") {
     return {
@@ -49,10 +46,19 @@ const traverse = (node: Node): Node => {
       value: replaceNumberSeparators(node.value),
     } as Span;
   }
+  return node;
+};
+
+/**
+ * Traverse the DAST tree, find the spans and sanitize them
+ */
+const traverse = (node: Node): Node => {
+  const visitedNode = spanVisitor(node);
+  const { type, ...rest } = visitedNode;
   return {
     type,
     ...rest,
-    ...("children" in node && { children: node.children.map(traverse) }),
+    ...("children" in visitedNode && { children: visitedNode.children.map(traverse) }),
   } as $FixMe; // Types in this instance make this whole ordeal a headache.
 };
 
