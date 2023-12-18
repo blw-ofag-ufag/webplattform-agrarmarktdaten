@@ -16,8 +16,17 @@ const useStyles = makeStyles<{ isUrlUnlocked: boolean }>()(
   ({ palette: c, spacing }, { isUrlUnlocked }) => ({
     shareButton: {
       position: "absolute",
+      width: "44px",
+      height: "44px",
+      minWidth: "44px",
+      padding: "8px",
       top: 16,
       right: 0,
+    },
+    shareIcon: {
+      width: "32px!important",
+      height: "32px",
+      margin: "0!important",
     },
     socialButton: {
       borderRadius: "4px",
@@ -87,7 +96,7 @@ const ShareButton = () => {
         variant="ghost"
         onClick={() => setIsOpen((x) => !x)}
       >
-        <ShareIcon width={32} height={32} />
+        <ShareIcon width={32} height={32} className={classes.shareIcon} />
       </Button>
       <Popover
         id="share"
