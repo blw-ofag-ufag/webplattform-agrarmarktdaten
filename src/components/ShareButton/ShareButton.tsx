@@ -46,6 +46,9 @@ const useStyles = makeStyles<{ isUrlUnlocked: boolean }>()(
       whiteSpace: "nowrap",
       maxWidth: "254px",
       lineHeight: "39px!important",
+      "&:focus-visible": {
+        outline: "none",
+      },
     },
     copyIcon: {
       borderTopRightRadius: "4px",
@@ -120,9 +123,7 @@ const ShareButton = () => {
           </Box>
           <Box display="flex">
             <Box onClick={() => setIsUrlUnlocked(true)}>
-              <Typography variant="body3" className={classes.url}>
-                {url}
-              </Typography>
+              <input className={classes.url} value={url} />
             </Box>
             <IconButton className={classes.copyIcon} onClick={handleCopy}>
               {isCopied ? (
