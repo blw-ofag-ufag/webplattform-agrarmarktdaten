@@ -54,6 +54,7 @@ const useStyles = makeStyles<{ isUrlUnlocked: boolean }>()(
       overflowX: isUrlUnlocked ? "scroll" : "hidden",
       whiteSpace: "nowrap",
       maxWidth: "254px",
+      width: "100%",
       lineHeight: "39px!important",
       "&:focus-visible": {
         outline: "none",
@@ -130,8 +131,8 @@ const ShareButton = () => {
               </IconButton>
             </NextLink>
           </Box>
-          <Box display="flex">
-            <Box onClick={() => setIsUrlUnlocked(true)}>
+          <Box display="flex" width={290}>
+            <Box onClick={() => setIsUrlUnlocked(true)} width="100%">
               <input className={classes.url} value={url} />
             </Box>
             <IconButton className={classes.copyIcon} onClick={handleCopy}>
