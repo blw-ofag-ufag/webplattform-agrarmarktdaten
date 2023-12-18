@@ -17,7 +17,7 @@ export const DATOCMS_FULL_ACCESS_API_TOKEN = process.env.DATOCMS_FULL_ACCESS_API
 // https://blw-agricultural-market-data-platform.admin.datocms.com/project_settings/build_triggers/7249/edit
 // Check the url for the actual id
 export const getSearchBuildTrigger = (locale?: string) => {
-  match([process.env.NEXT_PUBLIC_VERCEL_ENV, locale])
+  return match([process.env.NEXT_PUBLIC_VERCEL_ENV, locale])
     .with(["preview", "de"], () => 7249)
     .with(["preview", "fr"], () => 30850)
     .with(["preview", "it"], () => 30849)
@@ -27,6 +27,9 @@ export const getSearchBuildTrigger = (locale?: string) => {
     .with(["development", "de"], () => 7249)
     .with(["development", "fr"], () => 30850)
     .with(["development", "it"], () => 30849)
+    .with([undefined, "de"], () => 7249)
+    .with([undefined, "fr"], () => 30850)
+    .with([undefined, "it"], () => 30849)
     .otherwise(() => 7249);
 };
 
