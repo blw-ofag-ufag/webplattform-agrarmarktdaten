@@ -3,7 +3,7 @@ import * as GQL from "@/graphql";
 import { GridContainer, GridWrap, GridWrapElement } from "@/components/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Trans } from "@lingui/macro";
-import { SEARCH_BUILD_TRIGGER } from "@/domain/env";
+import { getSearchBuildTrigger } from "@/domain/env";
 import { client } from "@/lib/dato";
 import * as React from "react";
 import { SchemaTypes } from "@datocms/cma-client-browser";
@@ -69,7 +69,7 @@ const Controls = (props: Props) => {
         filter: {
           fuzzy: true,
           query: debouncedSearchString,
-          build_trigger_id: `${SEARCH_BUILD_TRIGGER}`,
+          build_trigger_id: `${getSearchBuildTrigger(locale)}`,
           locale,
         },
         page: { limit: 20, offset: 0 },
