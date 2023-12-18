@@ -13,7 +13,7 @@ import { SafeHydrate } from "@/components/SafeHydrate";
 import { Trans } from "@lingui/macro";
 
 const useStyles = makeStyles<{ isUrlUnlocked: boolean }>()(
-  ({ palette: c, spacing }, { isUrlUnlocked }) => ({
+  ({ palette: c, spacing, breakpoints: b }, { isUrlUnlocked }) => ({
     shareButton: {
       position: "absolute",
       width: "44px",
@@ -22,6 +22,11 @@ const useStyles = makeStyles<{ isUrlUnlocked: boolean }>()(
       padding: "8px",
       top: 16,
       right: 0,
+      [b.only("xl")]: { right: 64 },
+      [b.only("lg")]: { right: 49 },
+      [b.only("md")]: { right: 36 },
+      [b.only("sm")]: { right: 35 },
+      [b.down("sm")]: { right: 28 },
     },
     shareIcon: {
       width: "32px!important",
