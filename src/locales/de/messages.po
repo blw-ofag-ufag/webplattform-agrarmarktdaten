@@ -132,11 +132,6 @@ msgid "controls.metadata-panel.available-values"
 msgstr "Verfügbare Werte"
 
 #. js-lingui-explicit-id
-#: src/components/browser/MobileIntercept.tsx
-msgid "data.mobile.button"
-msgstr "Weiter zum Data Herunterladen"
-
-#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "header.shortTitle"
 msgstr "BLW"
@@ -168,6 +163,11 @@ msgstr "Filter zurücksetzen"
 #: src/components/layout.tsx
 msgid "header.close"
 msgstr "Schliessen"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MobileIntercept.tsx
+msgid "data.mobile.button"
+msgstr "Weiter zum Data Herunterladen"
 
 #. js-lingui-explicit-id
 #: src/components/StructuredText/StructuredText.tsx
@@ -427,6 +427,11 @@ msgstr "Startseite"
 #: src/components/Footer/Footer.tsx
 msgid "footer.newsletter"
 msgstr "Newsletter Anmeldung"
+
+#. js-lingui-explicit-id
+#: src/components/ShareButton/ShareButton.tsx
+msgid "social.share"
+msgstr "Teilen"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
