@@ -27,6 +27,7 @@ const useStyles = makeStyles<{ isUrlUnlocked: boolean }>()(
       [b.only("md")]: { right: 36 },
       [b.only("sm")]: { right: 35 },
       [b.down("sm")]: { right: 28 },
+      [b.down("xs")]: { right: 20 },
     },
     shareIcon: {
       width: "32px!important",
