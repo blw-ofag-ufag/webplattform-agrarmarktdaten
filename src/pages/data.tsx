@@ -13,7 +13,7 @@ import {
   createTheme,
 } from "@mui/material";
 import { useAtomValue } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useIsDesktop, useIsTablet } from "@/components/Grid/Grid";
 import ActionButton from "@/components/browser/ActionButton";
@@ -42,6 +42,7 @@ import { isUndefined } from "lodash";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 import DebugDataPage from "../components/DebugDataPage";
+import { SafeHydrate } from "@/components/SafeHydrate";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -53,14 +54,6 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
     },
   },
 });
-
-export function SafeHydrate({ children }: { children: React.ReactNode }) {
-  const [display, setDisplay] = useState(false);
-  useEffect(() => {
-    setDisplay(true);
-  }, []);
-  return display ? <>{children}</> : null;
-}
 
 export default function DataPage(props: GQL.DataPageQuery) {
   const { dataPage, allMarketArticles, allFocusArticles, site } = props;

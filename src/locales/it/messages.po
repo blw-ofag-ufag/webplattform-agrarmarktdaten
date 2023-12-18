@@ -132,11 +132,6 @@ msgid "controls.metadata-panel.available-values"
 msgstr "Valori disponibili"
 
 #. js-lingui-explicit-id
-#: src/components/browser/MobileIntercept.tsx
-msgid "data.mobile.button"
-msgstr "Continua a scaricare i dati"
-
-#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "header.shortTitle"
 msgstr "UFAG"
@@ -168,6 +163,11 @@ msgstr "Azzera i filtri"
 #: src/components/layout.tsx
 msgid "header.close"
 msgstr "Chiudi"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MobileIntercept.tsx
+msgid "data.mobile.button"
+msgstr "Continua a scaricare i dati"
 
 #. js-lingui-explicit-id
 #: src/components/StructuredText/StructuredText.tsx
@@ -427,6 +427,11 @@ msgstr "Pagina iniziale"
 #: src/components/Footer/Footer.tsx
 msgid "footer.newsletter"
 msgstr "Abbonarsi alla newsletter"
+
+#. js-lingui-explicit-id
+#: src/components/ShareButton/ShareButton.tsx
+msgid "social.share"
+msgstr "Condividi"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx

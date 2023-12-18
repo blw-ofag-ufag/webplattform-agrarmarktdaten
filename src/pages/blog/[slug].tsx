@@ -89,6 +89,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
         showBackButton
+        showShareButton
       >
         <GridContainer sx={{ mt: 9, mb: 8, position: "relative" }}>
           <div className={layoutClasses.aside} />

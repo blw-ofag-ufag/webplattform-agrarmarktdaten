@@ -25,12 +25,13 @@ import { Footer } from "@/components/Footer";
 import { IcInfoCircle } from "@/icons/icons-jsx/control";
 import slugs from "@/generated/slugs.json";
 import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
+import { ShareButton } from "@/components/ShareButton";
 
 const useStyles = makeStyles()({
   headerContainer: {
     zIndex: 10,
   },
-  backButton: {
+  overlay: {
     position: "absolute",
     width: "100%",
     zIndex: 2,
@@ -49,6 +50,7 @@ interface Props {
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
   alternates?: { href: string; as: string; locale: string }[];
   showBackButton?: boolean;
+  showShareButton?: boolean;
   backButtonColor?: string;
 }
 
@@ -60,6 +62,7 @@ export const AppLayout = (props: Props) => {
     allFocusArticles,
     alternates,
     showBackButton = false,
+    showShareButton = false,
     backButtonColor,
   } = props;
   const theme = useTheme();
@@ -200,19 +203,12 @@ export const AppLayout = (props: Props) => {
           minHeight: 0,
         }}
       >
-        {showBackButton && (
-          <div className={classes.backButton}>
-            <GridContainer
-              sx={{
-                width: "100%",
-                height: "50px",
-              }}
-              data-datocms-noindex
-            >
-              <BackButton color={backButtonColor} />
-            </GridContainer>
-          </div>
-        )}
+        <div className={classes.overlay} data-datocms-noindex>
+          <GridContainer sx={{ width: "100%", height: "50px" }}>
+            {showBackButton && <BackButton color={backButtonColor} />}
+            {showShareButton && <ShareButton />}
+          </GridContainer>
+        </div>
         {children}
         {router.pathname !== "/data" ? <ScrollToTop /> : null}
       </Box>
