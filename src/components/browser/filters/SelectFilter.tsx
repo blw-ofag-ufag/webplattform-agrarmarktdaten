@@ -30,6 +30,7 @@ import PreviewFilter from "./PreviewFilter";
 
 type Node<T extends Option> = {
   id: string;
+  label: string;
   level: number;
   children: Node<T>[];
   value?: T & { score?: ScoredResult<T> };
@@ -43,15 +44,26 @@ type ScoredOption = Option & { score?: ScoredResult<Option> };
 
 const nodeFromOption = <T extends Option>(option: T, level: number): Node<T> => ({
   id: option.value,
+  label: option.label || option.value,
   level,
   children: [],
   value: option,
   checked: option.checked,
 });
 
+/**
+ * A level is collapsible if it has only one child, and the child has the same label as the parent.
+ * This is a bit of a hack to avoid showing a level with only one child that has the same label as the
+ * parent. We do this to avoid redundant clicking. The ids are different as they correspond to
+ * different levels in the product hierarchy.
+ */
+export const isLevelCollapsible = <T extends Option>(node: Node<T>): boolean => {
+  return node.children.length === 1 && node.children[0].value?.label === node.label;
+};
+
 const stratify = <T extends Option>(
   items: T[],
-  groupFunctions: ((item: T) => string | undefined)[],
+  groupFunctions: ((item: T) => { value?: string; label?: string } | undefined)[],
   level = 0
 ) => {
   if (groupFunctions.length === 0) {
@@ -60,14 +72,23 @@ const stratify = <T extends Option>(
 
   const groupFn = groupFunctions[0];
   const groupedItems = new Map<string, T[]>();
+  const groups = new Map<string, { value?: string; label?: string }>();
+  groupedItems.set("ungrouped", []);
+  groups.set("ungrouped", { value: "ungrouped" });
 
   for (const item of items) {
-    const key = groupFn(item);
+    const group = groupFn(item);
+    const key = group?.value;
+
     if (key) {
+      groups.set(key, group);
+
       if (!groupedItems.has(key)) {
         groupedItems.set(key, []);
       }
       groupedItems.get(key)!.push(item);
+    } else {
+      groupedItems.get("ungrouped")!.push(item);
     }
   }
 
@@ -81,6 +102,7 @@ const stratify = <T extends Option>(
       const checked = children.every((c) => c.checked);
       result.push({
         id: key,
+        label: groups.get(key)?.label || key,
         level,
         checked,
         total: allValues.length,
@@ -98,7 +120,7 @@ const stratify = <T extends Option>(
 
 const getValues = <T extends Option>(node: Node<T>): T[] => {
   if (node.children.length === 0) {
-    return [node.value!];
+    return node?.value ? [node.value] : [];
   }
   return node.children.flatMap(getValues);
 };
@@ -144,7 +166,7 @@ const propagateValueInTree = <T extends Option>(
 export type SelectProps<T extends Option> = {
   options: T[];
   values: T[];
-  groups?: Array<(item: T) => string | undefined>;
+  groups?: Array<(item: T) => { value?: string; label?: string } | undefined>;
   onChange: (newValues: T[]) => void;
   colorCheckbox?: (item: T) => string;
   withSearch?: boolean;
@@ -303,8 +325,8 @@ const MatchedString = <T extends Option>({
 };
 
 const nodeSorter = <T extends Option>(a: Node<T>, b: Node<T>) => {
-  const aLabel = a.value?.label || a.id;
-  const bLabel = b.value?.label || b.id;
+  const aLabel = a.value?.label || a.label;
+  const bLabel = b.value?.label || b.label;
   return aLabel.localeCompare(bLabel);
 };
 
@@ -313,11 +335,13 @@ const SelectItem = <T extends ScoredOption>({
   onChangeItem,
   isSearch = false,
   colorCheckbox = () => "primary",
+  indent = false,
 }: {
   node: Node<T & { checked: boolean }>;
   onChangeItem: (node: Node<T>, checked: boolean) => void;
   isSearch: boolean;
   colorCheckbox?: (item: T) => string;
+  indent?: boolean;
 }) => {
   const [expanded, setExpanded] = useState(false);
   const hasResults = useMemo(
@@ -334,6 +358,10 @@ const SelectItem = <T extends ScoredOption>({
   }, [node.children]);
 
   if (node.children.length === 0) {
+    if (node.id === "ungrouped") {
+      return null;
+    }
+
     return (
       <FormControlLabel
         checked={node.checked}
@@ -343,7 +371,12 @@ const SelectItem = <T extends ScoredOption>({
         }}
         control={<SelectCheckbox color={node.value && colorCheckbox(node.value)} />}
         label={
-          <Typography variant="body2">
+          <Typography
+            variant="body2"
+            sx={{
+              marginTop: "2px",
+            }}
+          >
             {isSearch && node.value?.score?.matches ? (
               <MatchedString
                 string={node.value?.label}
@@ -355,9 +388,39 @@ const SelectItem = <T extends ScoredOption>({
           </Typography>
         }
         sx={{
-          paddingLeft: node.level === 0 ? 0 : "48px",
           alignItems: "flex-start",
+          paddingLeft: indent ? "44px" : "0px",
         }}
+      />
+    );
+  }
+
+  if (node.id === "ungrouped") {
+    return (
+      <>
+        {sortedChildren.map((child) => (
+          <SelectItem
+            node={child}
+            key={child.id}
+            onChangeItem={onChangeItem}
+            isSearch={isSearch}
+            colorCheckbox={colorCheckbox}
+          />
+        ))}
+      </>
+    );
+  }
+
+  if (isLevelCollapsible(node)) {
+    const child = node.children[0];
+    return (
+      <SelectItem
+        node={child}
+        key={child.id}
+        onChangeItem={onChangeItem}
+        isSearch={isSearch}
+        colorCheckbox={colorCheckbox}
+        indent
       />
     );
   }
@@ -391,9 +454,13 @@ const SelectItem = <T extends ScoredOption>({
             )
           }
           label={
-            <span>
+            <Box
+              sx={{
+                marginTop: "-1px",
+              }}
+            >
               <Typography display="inline" variant="body2">
-                {node.value?.label || node.id}
+                {node.label}
               </Typography>
               {isSearch && (
                 <Typography ml={2} display="inline" variant="body2" color="monochrome.500">
@@ -403,8 +470,11 @@ const SelectItem = <T extends ScoredOption>({
                   })}
                 </Typography>
               )}
-            </span>
+            </Box>
           }
+          sx={{
+            alignItems: "flex-start",
+          }}
         />
       </AccordionSummary>
       <AccordionDetails>
@@ -416,6 +486,7 @@ const SelectItem = <T extends ScoredOption>({
               onChangeItem={onChangeItem}
               isSearch={isSearch}
               colorCheckbox={colorCheckbox}
+              indent
             />
           ))}
         </Stack>
@@ -441,14 +512,14 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   flexDirection: "row-reverse",
 
   [`&.${accordionSummaryClasses.root}`]: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(0),
+    paddingBottom: theme.spacing(0),
     minHeight: 0,
     [`&.${accordionSummaryClasses.expanded}`]: {
       minHeight: 0,
       margin: theme.spacing(0),
-      paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
+      paddingTop: theme.spacing(0),
+      paddingBottom: theme.spacing(0),
     },
   },
 
@@ -474,6 +545,7 @@ const AccordionDetails = styled((props: AccordionDetailsProps) => (
     padding: 0,
     paddingLeft: theme.spacing(1),
     marginLeft: theme.spacing(4),
+    paddingBottom: theme.spacing(1),
   },
 }));
 
