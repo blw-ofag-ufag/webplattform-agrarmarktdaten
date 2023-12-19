@@ -30,6 +30,7 @@ import PreviewFilter from "./PreviewFilter";
 
 type Node<T extends Option> = {
   id: string;
+  label: string;
   level: number;
   children: Node<T>[];
   value?: T & { score?: ScoredResult<T> };
@@ -43,27 +44,26 @@ type ScoredOption = Option & { score?: ScoredResult<Option> };
 
 const nodeFromOption = <T extends Option>(option: T, level: number): Node<T> => ({
   id: option.value,
+  label: option.label || option.value,
   level,
   children: [],
   value: option,
   checked: option.checked,
 });
 
+/**
+ * A level is collapsible if it has only one child, and the child has the same label as the parent.
+ * This is a bit of a hack to avoid showing a level with only one child that has the same label as the
+ * parent. We do this to avoid redundant clicking. The ids are different as they correspond to
+ * different levels in the product hierarchy.
+ */
 export const isLevelCollapsible = <T extends Option>(node: Node<T>): boolean => {
-  return node.children.length === 1 && node.children[0].value?.label === node.id;
-};
-
-export const isTreeCollapsible = <T extends Option>(node: Node<T>): boolean => {
-  return (
-    node.children?.length === 1 &&
-    node.children[0].value?.label === node.value?.label &&
-    isTreeCollapsible(node.children[0])
-  );
+  return node.children.length === 1 && node.children[0].value?.label === node.label;
 };
 
 const stratify = <T extends Option>(
   items: T[],
-  groupFunctions: ((item: T) => string | undefined)[],
+  groupFunctions: ((item: T) => { value?: string; label?: string } | undefined)[],
   level = 0
 ) => {
   if (groupFunctions.length === 0) {
@@ -72,10 +72,15 @@ const stratify = <T extends Option>(
 
   const groupFn = groupFunctions[0];
   const groupedItems = new Map<string, T[]>();
+  const groups = new Map<string, { value?: string; label?: string }>();
 
   for (const item of items) {
-    const key = groupFn(item);
+    const group = groupFn(item);
+    const key = group?.value;
+
     if (key) {
+      groups.set(key, group);
+
       if (!groupedItems.has(key)) {
         groupedItems.set(key, []);
       }
@@ -93,6 +98,7 @@ const stratify = <T extends Option>(
       const checked = children.every((c) => c.checked);
       result.push({
         id: key,
+        label: groups.get(key)?.label || key,
         level,
         checked,
         total: allValues.length,
@@ -156,7 +162,7 @@ const propagateValueInTree = <T extends Option>(
 export type SelectProps<T extends Option> = {
   options: T[];
   values: T[];
-  groups?: Array<(item: T) => string | undefined>;
+  groups?: Array<(item: T) => { value?: string; label?: string } | undefined>;
   onChange: (newValues: T[]) => void;
   colorCheckbox?: (item: T) => string;
   withSearch?: boolean;
@@ -315,8 +321,8 @@ const MatchedString = <T extends Option>({
 };
 
 const nodeSorter = <T extends Option>(a: Node<T>, b: Node<T>) => {
-  const aLabel = a.value?.label || a.id;
-  const bLabel = b.value?.label || b.id;
+  const aLabel = a.value?.label || a.label;
+  const bLabel = b.value?.label || b.label;
   return aLabel.localeCompare(bLabel);
 };
 
@@ -427,7 +433,7 @@ const SelectItem = <T extends ScoredOption>({
               }}
             >
               <Typography display="inline" variant="body2">
-                {node.value?.label || node.id}
+                {node.label}
               </Typography>
               {isSearch && (
                 <Typography ml={2} display="inline" variant="body2" color="monochrome.500">

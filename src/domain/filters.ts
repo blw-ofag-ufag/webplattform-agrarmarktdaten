@@ -44,7 +44,7 @@ export type Filter = {
   type: "single" | "multi";
   key: string;
   search?: boolean;
-  groups?: Array<(d: $FixMe) => string>;
+  groups?: Array<(d: $FixMe) => { value: string; label: string }>;
 };
 
 export type FilterConfig = {
@@ -228,9 +228,9 @@ export const dimensionsSelectionAtom = atom((get) => {
         search: true,
         isChanged: get(productsAtom).length < productOptions.length,
         groups: [
-          (d: Option) => d.hierarchy?.["market"].label ?? "market",
-          (d: Option) => d.hierarchy?.["product-group"].label ?? "product-group",
-          (d: Option) => d.hierarchy?.["product-subgroup"].label ?? "product-subgroup",
+          (d: Option) => d.hierarchy?.["market"],
+          (d: Option) => d.hierarchy?.["product-group"],
+          (d: Option) => d.hierarchy?.["product-subgroup"],
         ],
       },
       "sales-region": {
@@ -381,7 +381,6 @@ export const getProductOptionsWithHierarchy = (
       },
     };
   });
-
   return productOptions;
 };
 
