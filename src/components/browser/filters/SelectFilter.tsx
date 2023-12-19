@@ -49,6 +49,18 @@ const nodeFromOption = <T extends Option>(option: T, level: number): Node<T> => 
   checked: option.checked,
 });
 
+export const isLevelCollapsible = <T extends Option>(node: Node<T>): boolean => {
+  return node.children.length === 1 && node.children[0].value?.label === node.id;
+};
+
+export const isTreeCollapsible = <T extends Option>(node: Node<T>): boolean => {
+  return (
+    node.children?.length === 1 &&
+    node.children[0].value?.label === node.value?.label &&
+    isTreeCollapsible(node.children[0])
+  );
+};
+
 const stratify = <T extends Option>(
   items: T[],
   groupFunctions: ((item: T) => string | undefined)[],
@@ -343,7 +355,12 @@ const SelectItem = <T extends ScoredOption>({
         }}
         control={<SelectCheckbox color={node.value && colorCheckbox(node.value)} />}
         label={
-          <Typography variant="body2">
+          <Typography
+            variant="body2"
+            sx={{
+              marginTop: "2px",
+            }}
+          >
             {isSearch && node.value?.score?.matches ? (
               <MatchedString
                 string={node.value?.label}
@@ -355,9 +372,22 @@ const SelectItem = <T extends ScoredOption>({
           </Typography>
         }
         sx={{
-          paddingLeft: node.level === 0 ? 0 : "48px",
           alignItems: "flex-start",
+          paddingLeft: node.level === 0 ? 0 : "44px",
         }}
+      />
+    );
+  }
+
+  if (isLevelCollapsible(node)) {
+    const child = node.children[0];
+    return (
+      <SelectItem
+        node={child}
+        key={child.id}
+        onChangeItem={onChangeItem}
+        isSearch={isSearch}
+        colorCheckbox={colorCheckbox}
       />
     );
   }
@@ -391,7 +421,11 @@ const SelectItem = <T extends ScoredOption>({
             )
           }
           label={
-            <span>
+            <Box
+              sx={{
+                marginTop: "-1px",
+              }}
+            >
               <Typography display="inline" variant="body2">
                 {node.value?.label || node.id}
               </Typography>
@@ -403,8 +437,11 @@ const SelectItem = <T extends ScoredOption>({
                   })}
                 </Typography>
               )}
-            </span>
+            </Box>
           }
+          sx={{
+            alignItems: "flex-start",
+          }}
         />
       </AccordionSummary>
       <AccordionDetails>
@@ -441,14 +478,14 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   flexDirection: "row-reverse",
 
   [`&.${accordionSummaryClasses.root}`]: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(0),
+    paddingBottom: theme.spacing(0),
     minHeight: 0,
     [`&.${accordionSummaryClasses.expanded}`]: {
       minHeight: 0,
       margin: theme.spacing(0),
-      paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
+      paddingTop: theme.spacing(0),
+      paddingBottom: theme.spacing(0),
     },
   },
 
@@ -474,6 +511,7 @@ const AccordionDetails = styled((props: AccordionDetailsProps) => (
     padding: 0,
     paddingLeft: theme.spacing(1),
     marginLeft: theme.spacing(4),
+    paddingBottom: theme.spacing(1),
   },
 }));
 
