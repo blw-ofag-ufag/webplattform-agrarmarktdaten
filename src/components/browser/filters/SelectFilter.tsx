@@ -73,6 +73,8 @@ const stratify = <T extends Option>(
   const groupFn = groupFunctions[0];
   const groupedItems = new Map<string, T[]>();
   const groups = new Map<string, { value?: string; label?: string }>();
+  groupedItems.set("ungrouped", []);
+  groups.set("ungrouped", { value: "ungrouped" });
 
   for (const item of items) {
     const group = groupFn(item);
@@ -85,6 +87,8 @@ const stratify = <T extends Option>(
         groupedItems.set(key, []);
       }
       groupedItems.get(key)!.push(item);
+    } else {
+      groupedItems.get("ungrouped")!.push(item);
     }
   }
 
@@ -116,7 +120,7 @@ const stratify = <T extends Option>(
 
 const getValues = <T extends Option>(node: Node<T>): T[] => {
   if (node.children.length === 0) {
-    return [node.value!];
+    return node?.value ? [node.value] : [];
   }
   return node.children.flatMap(getValues);
 };
@@ -331,11 +335,13 @@ const SelectItem = <T extends ScoredOption>({
   onChangeItem,
   isSearch = false,
   colorCheckbox = () => "primary",
+  indent = false,
 }: {
   node: Node<T & { checked: boolean }>;
   onChangeItem: (node: Node<T>, checked: boolean) => void;
   isSearch: boolean;
   colorCheckbox?: (item: T) => string;
+  indent?: boolean;
 }) => {
   const [expanded, setExpanded] = useState(false);
   const hasResults = useMemo(
@@ -352,6 +358,10 @@ const SelectItem = <T extends ScoredOption>({
   }, [node.children]);
 
   if (node.children.length === 0) {
+    if (node.id === "ungrouped") {
+      return null;
+    }
+
     return (
       <FormControlLabel
         checked={node.checked}
@@ -379,9 +389,25 @@ const SelectItem = <T extends ScoredOption>({
         }
         sx={{
           alignItems: "flex-start",
-          paddingLeft: node.level === 0 ? 0 : "44px",
+          paddingLeft: indent ? "44px" : "0px",
         }}
       />
+    );
+  }
+
+  if (node.id === "ungrouped") {
+    return (
+      <>
+        {sortedChildren.map((child) => (
+          <SelectItem
+            node={child}
+            key={child.id}
+            onChangeItem={onChangeItem}
+            isSearch={isSearch}
+            colorCheckbox={colorCheckbox}
+          />
+        ))}
+      </>
     );
   }
 
@@ -394,6 +420,7 @@ const SelectItem = <T extends ScoredOption>({
         onChangeItem={onChangeItem}
         isSearch={isSearch}
         colorCheckbox={colorCheckbox}
+        indent
       />
     );
   }
@@ -459,6 +486,7 @@ const SelectItem = <T extends ScoredOption>({
               onChangeItem={onChangeItem}
               isSearch={isSearch}
               colorCheckbox={colorCheckbox}
+              indent
             />
           ))}
         </Stack>
