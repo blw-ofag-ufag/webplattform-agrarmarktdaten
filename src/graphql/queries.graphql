@@ -574,6 +574,7 @@ fragment BlogPost on BlogPostRecord {
     value
     blocks {
       __typename
+      ...IframeBlock
       ...DataButton
       ...InternalLinkButton
       ...ExternalLinkButton
@@ -628,6 +629,8 @@ fragment IframeBlock on IframeBlockRecord {
   caption
   height
   url
+  height
+  caption
 }
 
 fragment MarkdownBlock on MarkdownBlockRecord {

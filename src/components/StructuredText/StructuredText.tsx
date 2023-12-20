@@ -252,6 +252,23 @@ const StructuredText = (props: Props) => {
             }}
             renderBlock={({ record }) => {
               switch (record.__typename) {
+                case "IframeBlockRecord": {
+                  const { caption, height, url } = record as GQL.IframeBlockRecord;
+                  return url ? (
+                    <>
+                      <iframe
+                        className={classes.iframe}
+                        src={url}
+                        style={{ height: height ?? 500 }}
+                      />
+                      {caption && (
+                        <Typography variant="body1" className={classes.imageTitle}>
+                          {caption}
+                        </Typography>
+                      )}
+                    </>
+                  ) : null;
+                }
                 case "InternalLinkButtonRecord": {
                   const { label, page, anchor } = record as GQL.InternalLinkButtonRecord;
                   const url = getUrl(page as InternalLink, router);
