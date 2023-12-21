@@ -103,7 +103,7 @@ const StructuredText = (props: Props) => {
             customMarkRules={[
               renderMarkRule(
                 (mark) => mark === "non-breaking",
-                ({ children }) => <span style={{ whiteSpace: "nowrap" }}>{children}</span>
+                ({ children }) => <span className={classes.nonBreakable}>{children}</span>
               ),
             ]}
             customNodeRules={[
