@@ -629,7 +629,6 @@ fragment IframeBlock on IframeBlockRecord {
   caption
   height
   url
-  height
   caption
 }
 

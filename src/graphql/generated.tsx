@@ -6758,7 +6758,6 @@ export const IframeBlockFragmentDoc = gql`
   caption
   height
   url
-  height
   caption
 }
     `;
