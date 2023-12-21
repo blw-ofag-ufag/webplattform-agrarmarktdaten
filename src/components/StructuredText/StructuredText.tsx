@@ -35,6 +35,7 @@ import { t } from "@lingui/macro";
 import { useScrollIntoView, useInitSections } from "@/lib/useScrollIntoView";
 import { render } from "datocms-structured-text-to-html-string";
 import { sanitizeBigNumbers } from "./utils";
+import { slugify } from "@/domain/string";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -414,7 +415,7 @@ const Header1 = (props: HeaderProps) => {
   const { id, children } = props;
   const { asPath, push } = useRouter();
   const textContent = extractTextContent(children as JSX.Element);
-  const encodedContent = encodeURI(textContent);
+  const encodedContent = slugify(textContent);
   const { classes } = useStructuredTextStyles({});
 
   const [ref] = useScrollIntoView(id);
