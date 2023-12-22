@@ -414,6 +414,94 @@ export type ColorField = {
   red: Scalars['IntType']['output'];
 };
 
+export type CookieBannerModelContentField = {
+  __typename: 'CookieBannerModelContentField';
+  blocks: Array<Scalars['String']['output']>;
+  links: Array<Scalars['String']['output']>;
+  value: Scalars['JsonField']['output'];
+};
+
+export type CookieBannerModelContentFieldMultiLocaleField = {
+  __typename: 'CookieBannerModelContentFieldMultiLocaleField';
+  locale?: Maybe<SiteLocale>;
+  value?: Maybe<CookieBannerModelContentField>;
+};
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecord = RecordInterface & {
+  __typename: 'CookieBannerRecord';
+  _allAcceptLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allContentLocales?: Maybe<Array<CookieBannerModelContentFieldMultiLocaleField>>;
+  _allRejectLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _createdAt: Scalars['DateTime']['output'];
+  /** Editing URL */
+  _editingUrl?: Maybe<Scalars['String']['output']>;
+  _firstPublishedAt?: Maybe<Scalars['DateTime']['output']>;
+  _isValid: Scalars['BooleanType']['output'];
+  _modelApiKey: Scalars['String']['output'];
+  _publicationScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** Generates SEO and Social card meta tags to be used in your frontend */
+  _seoMetaTags: Array<Tag>;
+  _status: ItemStatus;
+  _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  _updatedAt: Scalars['DateTime']['output'];
+  accept?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<CookieBannerModelContentField>;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ItemId']['output'];
+  reject?: Maybe<Scalars['String']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecordAllAcceptLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecordAllContentLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecordAllRejectLocalesArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecordSeoMetaTagsArgs = {
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecordAcceptArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecordContentArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** Record of type 🍪 Cookie Banner (cookie_banner) */
+export type CookieBannerRecordRejectArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
 /** Specifies how to filter by creation datetime */
 export type CreatedAtFilter = {
   /** Filter records with a value that's within the specified minute range. Seconds and milliseconds are truncated from the argument. */
@@ -1846,6 +1934,7 @@ export type IframeBlockRecord = RecordInterface & {
   _status: ItemStatus;
   _unpublishingScheduledAt?: Maybe<Scalars['DateTime']['output']>;
   _updatedAt: Scalars['DateTime']['output'];
+  caption?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -4674,6 +4763,8 @@ export type Query = {
   /** Returns a specific record */
   blogPost?: Maybe<BlogPostRecord>;
   /** Returns the single instance record */
+  cookieBanner?: Maybe<CookieBannerRecord>;
+  /** Returns the single instance record */
   dataPage?: Maybe<DataPageRecord>;
   /** Returns a specific record */
   fileDownloadItem?: Maybe<FileDownloadItemRecord>;
@@ -5007,6 +5098,13 @@ export type QueryBlogPostArgs = {
 
 
 /** The query root for this schema */
+export type QueryCookieBannerArgs = {
+  fallbackLocales?: InputMaybe<Array<SiteLocale>>;
+  locale?: InputMaybe<SiteLocale>;
+};
+
+
+/** The query root for this schema */
 export type QueryDataPageArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
@@ -5238,6 +5336,7 @@ export type SeoField = {
   __typename: 'SeoField';
   description?: Maybe<Scalars['String']['output']>;
   image?: Maybe<FileField>;
+  noIndex?: Maybe<Scalars['BooleanType']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   twitterCard?: Maybe<Scalars['String']['output']>;
 };
@@ -5260,6 +5359,7 @@ export type Site = {
   faviconMetaTags: Array<Tag>;
   globalSeo?: Maybe<GlobalSeoField>;
   locales: Array<SiteLocale>;
+  noIndex?: Maybe<Scalars['BooleanType']['output']>;
 };
 
 
@@ -6102,6 +6202,13 @@ export type AllRedirectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllRedirectsQuery = { __typename: 'Query', methodsPage?: { __typename: 'MethodsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, termsPage?: { __typename: 'TermsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, legalPage?: { __typename: 'LegalPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, infoPage?: { __typename: 'InfoPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, dataPage?: { __typename: 'DataPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, analysisPage?: { __typename: 'AnalysisPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, focusModel?: { __typename: 'FocusModelRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, market?: { __typename: 'MarketRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null };
 
+export type CookieBannerQueryVariables = Exact<{
+  locale: SiteLocale;
+}>;
+
+
+export type CookieBannerQuery = { __typename: 'Query', cookieBanner?: { __typename: 'CookieBannerRecord', accept?: string | null, reject?: string | null, content?: { __typename: 'CookieBannerModelContentField', value: any } | null } | null };
+
 export type SimpleMarketArticleFragment = { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null };
 
 export type SimpleFocusArticleFragment = { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null };
@@ -6151,6 +6258,8 @@ type InternalLinkAnalysisPageRecordFragment = { __typename: 'AnalysisPageRecord'
 type InternalLinkAssetLinkButtonRecordFragment = { __typename: 'AssetLinkButtonRecord' };
 
 type InternalLinkBlogPostRecordFragment = { __typename: 'BlogPostRecord', id: any, slug?: string | null };
+
+type InternalLinkCookieBannerRecordFragment = { __typename: 'CookieBannerRecord' };
 
 type InternalLinkDataButtonRecordFragment = { __typename: 'DataButtonRecord' };
 
@@ -6220,13 +6329,15 @@ type InternalLinkSurveyQuestionRecordFragment = { __typename: 'SurveyQuestionRec
 
 type InternalLinkTermsPageRecordFragment = { __typename: 'TermsPageRecord', id: any };
 
-export type InternalLinkFragment = InternalLinkAnalysisPageRecordFragment | InternalLinkAssetLinkButtonRecordFragment | InternalLinkBlogPostRecordFragment | InternalLinkDataButtonRecordFragment | InternalLinkDataPageRecordFragment | InternalLinkDownloadTeaserAssetRecordFragment | InternalLinkDownloadTeaserBlockRecordFragment | InternalLinkExternalLinkButtonRecordFragment | InternalLinkExternalVideoBlockRecordFragment | InternalLinkFileDownloadItemRecordFragment | InternalLinkFileDownloadSectionRecordFragment | InternalLinkFocusArticleRecordFragment | InternalLinkFocusModelRecordFragment | InternalLinkGalleryBlockRecordFragment | InternalLinkHighlightSectionFileRecordFragment | InternalLinkHighlightSectionLinkRecordFragment | InternalLinkHighlightSectionRecordFragment | InternalLinkHomePageRecordFragment | InternalLinkIframeBlockRecordFragment | InternalLinkImageTeaserBlockRecordFragment | InternalLinkInfoPageRecordFragment | InternalLinkInternalLinkButtonRecordFragment | InternalLinkLegalPageRecordFragment | InternalLinkMarkdownBlockRecordFragment | InternalLinkMarketArticleRecordFragment | InternalLinkMarketRecordFragment | InternalLinkMethodsPageRecordFragment | InternalLinkPersonRecordFragment | InternalLinkPowerBiDatasetRecordFragment | InternalLinkPowerBiPageRecordFragment | InternalLinkPowerBiReportPageRecordFragment | InternalLinkPowerBiReportRecordFragment | InternalLinkPowerBiWorkspaceRecordFragment | InternalLinkSurveyAnswerRecordFragment | InternalLinkSurveyBlockRecordFragment | InternalLinkSurveyQuestionRecordFragment | InternalLinkTermsPageRecordFragment;
+export type InternalLinkFragment = InternalLinkAnalysisPageRecordFragment | InternalLinkAssetLinkButtonRecordFragment | InternalLinkBlogPostRecordFragment | InternalLinkCookieBannerRecordFragment | InternalLinkDataButtonRecordFragment | InternalLinkDataPageRecordFragment | InternalLinkDownloadTeaserAssetRecordFragment | InternalLinkDownloadTeaserBlockRecordFragment | InternalLinkExternalLinkButtonRecordFragment | InternalLinkExternalVideoBlockRecordFragment | InternalLinkFileDownloadItemRecordFragment | InternalLinkFileDownloadSectionRecordFragment | InternalLinkFocusArticleRecordFragment | InternalLinkFocusModelRecordFragment | InternalLinkGalleryBlockRecordFragment | InternalLinkHighlightSectionFileRecordFragment | InternalLinkHighlightSectionLinkRecordFragment | InternalLinkHighlightSectionRecordFragment | InternalLinkHomePageRecordFragment | InternalLinkIframeBlockRecordFragment | InternalLinkImageTeaserBlockRecordFragment | InternalLinkInfoPageRecordFragment | InternalLinkInternalLinkButtonRecordFragment | InternalLinkLegalPageRecordFragment | InternalLinkMarkdownBlockRecordFragment | InternalLinkMarketArticleRecordFragment | InternalLinkMarketRecordFragment | InternalLinkMethodsPageRecordFragment | InternalLinkPersonRecordFragment | InternalLinkPowerBiDatasetRecordFragment | InternalLinkPowerBiPageRecordFragment | InternalLinkPowerBiReportPageRecordFragment | InternalLinkPowerBiReportRecordFragment | InternalLinkPowerBiWorkspaceRecordFragment | InternalLinkSurveyAnswerRecordFragment | InternalLinkSurveyBlockRecordFragment | InternalLinkSurveyQuestionRecordFragment | InternalLinkTermsPageRecordFragment;
 
 type InternalEmbedAnalysisPageRecordFragment = { __typename: 'AnalysisPageRecord' };
 
 type InternalEmbedAssetLinkButtonRecordFragment = { __typename: 'AssetLinkButtonRecord' };
 
 type InternalEmbedBlogPostRecordFragment = { __typename: 'BlogPostRecord' };
+
+type InternalEmbedCookieBannerRecordFragment = { __typename: 'CookieBannerRecord' };
 
 type InternalEmbedDataButtonRecordFragment = { __typename: 'DataButtonRecord' };
 
@@ -6296,7 +6407,7 @@ type InternalEmbedSurveyQuestionRecordFragment = { __typename: 'SurveyQuestionRe
 
 type InternalEmbedTermsPageRecordFragment = { __typename: 'TermsPageRecord' };
 
-export type InternalEmbedFragment = InternalEmbedAnalysisPageRecordFragment | InternalEmbedAssetLinkButtonRecordFragment | InternalEmbedBlogPostRecordFragment | InternalEmbedDataButtonRecordFragment | InternalEmbedDataPageRecordFragment | InternalEmbedDownloadTeaserAssetRecordFragment | InternalEmbedDownloadTeaserBlockRecordFragment | InternalEmbedExternalLinkButtonRecordFragment | InternalEmbedExternalVideoBlockRecordFragment | InternalEmbedFileDownloadItemRecordFragment | InternalEmbedFileDownloadSectionRecordFragment | InternalEmbedFocusArticleRecordFragment | InternalEmbedFocusModelRecordFragment | InternalEmbedGalleryBlockRecordFragment | InternalEmbedHighlightSectionFileRecordFragment | InternalEmbedHighlightSectionLinkRecordFragment | InternalEmbedHighlightSectionRecordFragment | InternalEmbedHomePageRecordFragment | InternalEmbedIframeBlockRecordFragment | InternalEmbedImageTeaserBlockRecordFragment | InternalEmbedInfoPageRecordFragment | InternalEmbedInternalLinkButtonRecordFragment | InternalEmbedLegalPageRecordFragment | InternalEmbedMarkdownBlockRecordFragment | InternalEmbedMarketArticleRecordFragment | InternalEmbedMarketRecordFragment | InternalEmbedMethodsPageRecordFragment | InternalEmbedPersonRecordFragment | InternalEmbedPowerBiDatasetRecordFragment | InternalEmbedPowerBiPageRecordFragment | InternalEmbedPowerBiReportPageRecordFragment | InternalEmbedPowerBiReportRecordFragment | InternalEmbedPowerBiWorkspaceRecordFragment | InternalEmbedSurveyAnswerRecordFragment | InternalEmbedSurveyBlockRecordFragment | InternalEmbedSurveyQuestionRecordFragment | InternalEmbedTermsPageRecordFragment;
+export type InternalEmbedFragment = InternalEmbedAnalysisPageRecordFragment | InternalEmbedAssetLinkButtonRecordFragment | InternalEmbedBlogPostRecordFragment | InternalEmbedCookieBannerRecordFragment | InternalEmbedDataButtonRecordFragment | InternalEmbedDataPageRecordFragment | InternalEmbedDownloadTeaserAssetRecordFragment | InternalEmbedDownloadTeaserBlockRecordFragment | InternalEmbedExternalLinkButtonRecordFragment | InternalEmbedExternalVideoBlockRecordFragment | InternalEmbedFileDownloadItemRecordFragment | InternalEmbedFileDownloadSectionRecordFragment | InternalEmbedFocusArticleRecordFragment | InternalEmbedFocusModelRecordFragment | InternalEmbedGalleryBlockRecordFragment | InternalEmbedHighlightSectionFileRecordFragment | InternalEmbedHighlightSectionLinkRecordFragment | InternalEmbedHighlightSectionRecordFragment | InternalEmbedHomePageRecordFragment | InternalEmbedIframeBlockRecordFragment | InternalEmbedImageTeaserBlockRecordFragment | InternalEmbedInfoPageRecordFragment | InternalEmbedInternalLinkButtonRecordFragment | InternalEmbedLegalPageRecordFragment | InternalEmbedMarkdownBlockRecordFragment | InternalEmbedMarketArticleRecordFragment | InternalEmbedMarketRecordFragment | InternalEmbedMethodsPageRecordFragment | InternalEmbedPersonRecordFragment | InternalEmbedPowerBiDatasetRecordFragment | InternalEmbedPowerBiPageRecordFragment | InternalEmbedPowerBiReportPageRecordFragment | InternalEmbedPowerBiReportRecordFragment | InternalEmbedPowerBiWorkspaceRecordFragment | InternalEmbedSurveyAnswerRecordFragment | InternalEmbedSurveyBlockRecordFragment | InternalEmbedSurveyQuestionRecordFragment | InternalEmbedTermsPageRecordFragment;
 
 export type MenuItemsFragment = { __typename: 'Query', allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
 
@@ -6307,6 +6418,8 @@ type SeoMetaTagsAnalysisPageRecordFragment = { __typename: 'AnalysisPageRecord',
 type SeoMetaTagsAssetLinkButtonRecordFragment = { __typename: 'AssetLinkButtonRecord', seo: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
 
 type SeoMetaTagsBlogPostRecordFragment = { __typename: 'BlogPostRecord', seo: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
+
+type SeoMetaTagsCookieBannerRecordFragment = { __typename: 'CookieBannerRecord', seo: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
 
 type SeoMetaTagsDataButtonRecordFragment = { __typename: 'DataButtonRecord', seo: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
 
@@ -6376,7 +6489,7 @@ type SeoMetaTagsSurveyQuestionRecordFragment = { __typename: 'SurveyQuestionReco
 
 type SeoMetaTagsTermsPageRecordFragment = { __typename: 'TermsPageRecord', seo: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> };
 
-export type SeoMetaTagsFragment = SeoMetaTagsAnalysisPageRecordFragment | SeoMetaTagsAssetLinkButtonRecordFragment | SeoMetaTagsBlogPostRecordFragment | SeoMetaTagsDataButtonRecordFragment | SeoMetaTagsDataPageRecordFragment | SeoMetaTagsDownloadTeaserAssetRecordFragment | SeoMetaTagsDownloadTeaserBlockRecordFragment | SeoMetaTagsExternalLinkButtonRecordFragment | SeoMetaTagsExternalVideoBlockRecordFragment | SeoMetaTagsFileDownloadItemRecordFragment | SeoMetaTagsFileDownloadSectionRecordFragment | SeoMetaTagsFocusArticleRecordFragment | SeoMetaTagsFocusModelRecordFragment | SeoMetaTagsGalleryBlockRecordFragment | SeoMetaTagsHighlightSectionFileRecordFragment | SeoMetaTagsHighlightSectionLinkRecordFragment | SeoMetaTagsHighlightSectionRecordFragment | SeoMetaTagsHomePageRecordFragment | SeoMetaTagsIframeBlockRecordFragment | SeoMetaTagsImageTeaserBlockRecordFragment | SeoMetaTagsInfoPageRecordFragment | SeoMetaTagsInternalLinkButtonRecordFragment | SeoMetaTagsLegalPageRecordFragment | SeoMetaTagsMarkdownBlockRecordFragment | SeoMetaTagsMarketArticleRecordFragment | SeoMetaTagsMarketRecordFragment | SeoMetaTagsMethodsPageRecordFragment | SeoMetaTagsPersonRecordFragment | SeoMetaTagsPowerBiDatasetRecordFragment | SeoMetaTagsPowerBiPageRecordFragment | SeoMetaTagsPowerBiReportPageRecordFragment | SeoMetaTagsPowerBiReportRecordFragment | SeoMetaTagsPowerBiWorkspaceRecordFragment | SeoMetaTagsSurveyAnswerRecordFragment | SeoMetaTagsSurveyBlockRecordFragment | SeoMetaTagsSurveyQuestionRecordFragment | SeoMetaTagsTermsPageRecordFragment;
+export type SeoMetaTagsFragment = SeoMetaTagsAnalysisPageRecordFragment | SeoMetaTagsAssetLinkButtonRecordFragment | SeoMetaTagsBlogPostRecordFragment | SeoMetaTagsCookieBannerRecordFragment | SeoMetaTagsDataButtonRecordFragment | SeoMetaTagsDataPageRecordFragment | SeoMetaTagsDownloadTeaserAssetRecordFragment | SeoMetaTagsDownloadTeaserBlockRecordFragment | SeoMetaTagsExternalLinkButtonRecordFragment | SeoMetaTagsExternalVideoBlockRecordFragment | SeoMetaTagsFileDownloadItemRecordFragment | SeoMetaTagsFileDownloadSectionRecordFragment | SeoMetaTagsFocusArticleRecordFragment | SeoMetaTagsFocusModelRecordFragment | SeoMetaTagsGalleryBlockRecordFragment | SeoMetaTagsHighlightSectionFileRecordFragment | SeoMetaTagsHighlightSectionLinkRecordFragment | SeoMetaTagsHighlightSectionRecordFragment | SeoMetaTagsHomePageRecordFragment | SeoMetaTagsIframeBlockRecordFragment | SeoMetaTagsImageTeaserBlockRecordFragment | SeoMetaTagsInfoPageRecordFragment | SeoMetaTagsInternalLinkButtonRecordFragment | SeoMetaTagsLegalPageRecordFragment | SeoMetaTagsMarkdownBlockRecordFragment | SeoMetaTagsMarketArticleRecordFragment | SeoMetaTagsMarketRecordFragment | SeoMetaTagsMethodsPageRecordFragment | SeoMetaTagsPersonRecordFragment | SeoMetaTagsPowerBiDatasetRecordFragment | SeoMetaTagsPowerBiPageRecordFragment | SeoMetaTagsPowerBiReportPageRecordFragment | SeoMetaTagsPowerBiReportRecordFragment | SeoMetaTagsPowerBiWorkspaceRecordFragment | SeoMetaTagsSurveyAnswerRecordFragment | SeoMetaTagsSurveyBlockRecordFragment | SeoMetaTagsSurveyQuestionRecordFragment | SeoMetaTagsTermsPageRecordFragment;
 
 export type SiteFavIconFragment = { __typename: 'Query', site: { __typename: 'Site', favicon: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> } };
 
@@ -7453,4 +7566,19 @@ export const AllRedirectsDocument = gql`
 
 export function useAllRedirectsQuery(options?: Omit<Urql.UseQueryArgs<AllRedirectsQueryVariables>, 'query'>) {
   return Urql.useQuery<AllRedirectsQuery, AllRedirectsQueryVariables>({ query: AllRedirectsDocument, ...options });
+};
+export const CookieBannerDocument = gql`
+    query CookieBanner($locale: SiteLocale!) {
+  cookieBanner(locale: $locale) {
+    content {
+      value
+    }
+    accept
+    reject
+  }
+}
+    `;
+
+export function useCookieBannerQuery(options: Omit<Urql.UseQueryArgs<CookieBannerQueryVariables>, 'query'>) {
+  return Urql.useQuery<CookieBannerQuery, CookieBannerQueryVariables>({ query: CookieBannerDocument, ...options });
 };

@@ -397,6 +397,16 @@ query AllRedirects {
   }
 }
 
+query CookieBanner($locale: SiteLocale!) {
+  cookieBanner(locale: $locale) {
+    content {
+      value
+    }
+    accept
+    reject
+  }
+}
+
 # Fragments
 fragment SimpleMarketArticle on MarketArticleRecord {
   id
