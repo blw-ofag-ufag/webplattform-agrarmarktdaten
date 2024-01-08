@@ -54,10 +54,8 @@ const CookieBanner = () => {
     const _paq = (window._paq = window._paq || []);
 
     // remember tracking consent was given for all subsequent page views and visits
-    _paq.push(["rememberConsentGiven"]);
+    _paq.push(["setConsentGiven"]);
 
-    // OR remember cookie consent was given for all subsequent page views and visits
-    _paq.push(["rememberCookieConsentGiven"]);
     setShowBanner(false);
   };
 

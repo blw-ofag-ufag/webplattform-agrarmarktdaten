@@ -25,9 +25,6 @@ export const setup = () => {
   // require user tracking consent before processing data
   _paq.push(["requireConsent"]);
 
-  // OR require user cookie consent before storing and using any cookies
-  _paq.push(["requireCookieConsent"]);
-
   _paq.push(["trackPageView"]);
   _paq.push(["enableLinkTracking"]);
 
