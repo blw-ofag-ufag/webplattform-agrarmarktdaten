@@ -51,6 +51,13 @@ const CookieBanner = () => {
 
   const handleAccept = () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, "accepted");
+    const _paq = (window._paq = window._paq || []);
+
+    // remember tracking consent was given for all subsequent page views and visits
+    _paq.push(["rememberConsentGiven"]);
+
+    // OR remember cookie consent was given for all subsequent page views and visits
+    _paq.push(["rememberCookieConsentGiven"]);
     setShowBanner(false);
   };
 
