@@ -90,30 +90,30 @@ const CookieBanner = () => {
   });
 
   return (
-    <Fade in={showBanner}>
-      <Box className={classes.wrapper}>
-        <GridContainer>
-          <Box className={classes.innerWrapper}>
-            {data?.cookieBanner?.content && (
+    data?.cookieBanner?.content && (
+      <Fade in={showBanner}>
+        <Box className={classes.wrapper}>
+          <GridContainer>
+            <Box className={classes.innerWrapper}>
               <StructuredText
                 data={data?.cookieBanner.content}
                 sx={{ paddingBottom: "0!important", display: "inline-block", marginRight: "20px" }}
               />
-            )}
-            <Box className={classes.buttonsContainer}>
-              <Button variant="outlined" className={classes.acceptButton} onClick={handleAccept}>
-                {data?.cookieBanner?.accept}
-                <IcCheckmarkIcon width={24} height={24} />
-              </Button>
-              <Button variant="ghost" className={classes.rejectButton} onClick={handleReject}>
-                {data?.cookieBanner?.reject}
-                <IcCloseIcon width={16} height={16} />
-              </Button>
+              <Box className={classes.buttonsContainer}>
+                <Button variant="outlined" className={classes.acceptButton} onClick={handleAccept}>
+                  {data?.cookieBanner?.accept}
+                  <IcCheckmarkIcon width={24} height={24} />
+                </Button>
+                <Button variant="ghost" className={classes.rejectButton} onClick={handleReject}>
+                  {data?.cookieBanner?.reject}
+                  <IcCloseIcon width={16} height={16} />
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </GridContainer>
-      </Box>
-    </Fade>
+          </GridContainer>
+        </Box>
+      </Fade>
+    )
   );
 };
 
