@@ -253,10 +253,13 @@ const StructuredText = (props: Props) => {
             renderBlock={({ record }) => {
               switch (record.__typename) {
                 case "IframeBlockRecord": {
-                  const { caption, url } = record as GQL.IframeBlockRecord;
+                  const { caption, url, height } = record as GQL.IframeBlockRecord;
                   return url ? (
                     <>
-                      <Box className={classes.iframeContainer}>
+                      <Box
+                        className={classes.iframeContainer}
+                        sx={{ height: height ? `${height}px!important` : "auto" }}
+                      >
                         <iframe className={classes.iframe} src={url} />
                       </Box>
                       {caption && (

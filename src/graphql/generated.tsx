@@ -6759,6 +6759,7 @@ export const IframeBlockFragmentDoc = gql`
   height
   url
   caption
+  height
 }
     `;
 export const BlogPostFragmentDoc = gql`

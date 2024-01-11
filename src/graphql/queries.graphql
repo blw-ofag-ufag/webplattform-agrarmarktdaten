@@ -630,6 +630,7 @@ fragment IframeBlock on IframeBlockRecord {
   height
   url
   caption
+  height
 }
 
 fragment MarkdownBlock on MarkdownBlockRecord {
