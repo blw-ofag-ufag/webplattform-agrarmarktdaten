@@ -10,7 +10,7 @@ import IcCheckmarkIcon from "@/icons/icons-jsx/control/IcCheckmark";
 import IcCloseIcon from "@/icons/icons-jsx/control/IcControlClose";
 import { useRouter } from "next/router";
 
-const useStyles = makeStyles()(({ spacing: s, breakpoints: b }) => ({
+const useStyles = makeStyles()(({ spacing: s, breakpoints: b, palette: c }) => ({
   wrapper: {
     position: "sticky",
     bottom: 0,
@@ -34,6 +34,8 @@ const useStyles = makeStyles()(({ spacing: s, breakpoints: b }) => ({
   acceptButton: {
     height: "fit-content",
     whiteSpace: "nowrap",
+    borderColor: c.info.main,
+    color: c.info.main,
   },
   rejectButton: {
     height: "fit-content",
