@@ -9,6 +9,7 @@ import { GridContainer } from "@/components/Grid";
 import IcCheckmarkIcon from "@/icons/icons-jsx/control/IcCheckmark";
 import IcCloseIcon from "@/icons/icons-jsx/control/IcControlClose";
 import { useRouter } from "next/router";
+import { giveConsent } from "@/utils/matomo";
 
 const useStyles = makeStyles()(({ spacing: s, breakpoints: b, palette: c }) => ({
   wrapper: {
@@ -53,11 +54,7 @@ const CookieBanner = () => {
 
   const handleAccept = () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, "accepted");
-    const _paq = (window._paq = window._paq || []);
-
-    // remember tracking consent was given for all subsequent page views and visits
-    _paq.push(["setConsentGiven"]);
-
+    giveConsent();
     setShowBanner(false);
   };
 

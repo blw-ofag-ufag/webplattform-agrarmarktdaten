@@ -44,6 +44,12 @@ export const setup = () => {
   s.parentNode.insertBefore(g, s);
 };
 
+export function giveConsent() {
+  const _paq = (window._paq = window._paq || []);
+  // remember tracking consent was given for all subsequent page views and visits
+  _paq.push(["rememberConsentGiven"]);
+}
+
 export const useMatomo = () => {
   const router = useRouter();
 
