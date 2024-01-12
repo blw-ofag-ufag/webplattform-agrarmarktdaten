@@ -336,6 +336,29 @@ query AllFocusArticlesSlugLocales {
   }
 }
 
+query SiteMap {
+  allBlogPosts {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  allMarketArticles {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  market {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
 query AllBlogPostsSlugLocales {
   allBlogPosts {
     id

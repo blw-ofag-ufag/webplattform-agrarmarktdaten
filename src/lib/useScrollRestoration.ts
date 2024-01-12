@@ -10,12 +10,15 @@ function saveScrollPos(url: string) {
 }
 
 function restoreScrollPos(url: string) {
-  const scrollPos = JSON.parse(
-    sessionStorage.getItem(`scrollRestoration.${url}`) ?? '{ "x": 0, "y": 0 }'
-  );
-  if (scrollPos) {
-    window.scrollTo(scrollPos.x, scrollPos.y);
-  }
+  try {
+    const storedPos = sessionStorage.getItem(`scrollRestoration.${url}`);
+    if (storedPos) {
+      const scrollPos = JSON.parse(storedPos);
+      if (scrollPos) {
+        window.scrollTo(scrollPos.x, scrollPos.y);
+      }
+    }
+  } catch (e) {}
 }
 
 /**
