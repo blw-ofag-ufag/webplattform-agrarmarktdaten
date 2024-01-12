@@ -6,24 +6,6 @@
       "/methods",
       "/methodes",
       "/metodi"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/methoden"
-      },
-      {
-        "locale": "en",
-        "path": "/methods"
-      },
-      {
-        "locale": "fr",
-        "path": "/methodes"
-      },
-      {
-        "locale": "it",
-        "path": "/metodi"
-      }
     ]
   },
   {
@@ -87,24 +69,6 @@
       "/market",
       "/marche",
       "/mercato"
-    ],
-    "locales": [
-      {
-        "locale": "de",
-        "path": "/markt"
-      },
-      {
-        "locale": "en",
-        "path": "/market"
-      },
-      {
-        "locale": "fr",
-        "path": "/marche"
-      },
-      {
-        "locale": "it",
-        "path": "/mercato"
-      }
     ]
   }
 ]
