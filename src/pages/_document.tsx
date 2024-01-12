@@ -45,6 +45,10 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         />
 
         <meta name="emotion-insertion-point" content="" />
+        <meta
+          name="google-site-verification"
+          content="LACcpzOpq8Rfq0i2E9S7QOtNqzuFzov21Q4u8rTTz2w"
+        />
         {emotionStyleTags}
       </Head>
       <body style={{ position: "relative" }}>
