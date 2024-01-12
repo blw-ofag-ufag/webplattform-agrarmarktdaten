@@ -72,6 +72,8 @@ Allow: /de/blog
 Allow: /it/blog
 Allow: /fr/blog
 
-## More specific rules for later
-# Disallow: /api/
-# Allow: /*/v/
+# General rules for all crawlers
+User-agent: *
+Disallow: /api
+Disallow: /docs
+Allow: *
