@@ -50,7 +50,7 @@ declare module "@mui/material" {
 }
 
 const isSafari15 =
-  typeof navigator !== "undefined" && navigator.vendor.indexOf("Apple") >= 0
+  typeof navigator !== "undefined" && navigator.vendor?.indexOf("Apple") >= 0
     ? navigator.userAgent.match(/Version[/\s]([\d]+)/g)?.[0]?.split("/")?.[1] === "15"
     : false;
 
