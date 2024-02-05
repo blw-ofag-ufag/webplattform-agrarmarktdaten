@@ -1,5 +1,6 @@
 import { Locale } from "@/locales/locales";
 import { amdpMeasure, amdpDimension } from "./namespace";
+import { mapKeys } from "remeda";
 
 const agDataBase = "https://lindas.admin.ch/foag/agricultural-market-data";
 
@@ -184,7 +185,80 @@ type QueryObservationsOptions = {
   dimensions: { iri: string; key: string }[];
   measure: { iri: string; key: string };
   timeFilter: TimeFilter;
+  /** If set, IRIs will be translated */
+  lang?: "fr" | "de" | "en" | "it";
 };
+
+const dimensionsSpec = mapKeys(
+  {
+    "cost-component": {
+      labelled: true,
+    },
+    currency: {
+      labelled: true,
+    },
+    "data-method": {
+      labelled: true,
+    },
+    date: {
+      interval: true,
+    },
+    "data-source": {
+      labelled: true,
+    },
+    "foreign-trade": {
+      labelled: true,
+    },
+    "key-indicator-type": {
+      labelled: true,
+    },
+    market: {
+      labelled: true,
+    },
+    product: {
+      labelled: true,
+    },
+    "product-group": {
+      labelled: true,
+    },
+    "product-subgroup": {
+      labelled: true,
+    },
+    "product-properties": {
+      labelled: true,
+    },
+    "production-system": {
+      labelled: true,
+    },
+    "product-origin": {
+      labelled: true,
+    },
+    "sales-region": {
+      labelled: true,
+    },
+    unit: {
+      labelled: true,
+    },
+    usage: {
+      labelled: true,
+    },
+    "value-chain": {
+      labelled: true,
+    },
+    "value-chain-detail": {
+      labelled: true,
+    },
+  } as Record<
+    string,
+    {
+      labelled?: boolean;
+      interval?: true;
+    }
+  >,
+  (x: string) => amdpDimension(x).value
+);
+
+const labelSuffix = "Label";
 
 export const queryObservations = ({
   cubeIri,
@@ -192,7 +266,15 @@ export const queryObservations = ({
   dimensions,
   measure,
   timeFilter,
+  lang,
 }: QueryObservationsOptions) => {
+  const labelledDimensions = new Set(
+    dimensions
+      .filter((x) => {
+        return dimensionsSpec[x.iri]?.labelled;
+      })
+      .map((x) => x.iri)
+  );
   return `
   PREFIX cube: <https://cube.link/>
   PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -201,10 +283,24 @@ export const queryObservations = ({
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   
   SELECT DISTINCT ?observation
-    ${dimensions.map((d) => `?${d.key}`).join(" ")} ?measure
+    ${dimensions
+      .map((d) => {
+        if (lang && labelledDimensions.has(d.iri)) {
+          return `?${d.key}${labelSuffix}`;
+        } else {
+          return `?${d.key}`;
+        }
+      })
+      .join(" ")} ?measure
     ?year ?month
   WHERE {
     GRAPH <${agDataBase}> {
+      ${
+        lang
+          ? `
+      VALUES(?lang) { ("${lang}") } `
+          : ""
+      }
       ${
         filters
           ? Object.entries(filters)
@@ -217,8 +313,19 @@ export const queryObservations = ({
       <${cubeIri}> cube:observationSet ?observationSet .
       ?observationSet cube:observation ?observation .
       ${dimensions
-        .map((dimension) => {
-          return `?observation <${dimension.iri}> ?${dimension.key} .`;
+        .map((dim) => {
+          const { key, iri } = dim;
+          const keyV = `?${key}`;
+          const labelV = `?${key}${labelSuffix}`;
+          return `        ?observation <${iri}> ${keyV} .${
+            lang && labelledDimensions.has(iri)
+              ? `
+            optional { 
+              ${keyV} schema:name ${labelV}
+              filter langMatches(lang(${labelV}), ?lang)
+            }`
+              : ""
+          }`;
         })
         .join("\n")}
       ?observation <${measure.iri}> ?measure .
@@ -227,21 +334,30 @@ export const queryObservations = ({
     ?date time:year ?year.
     OPTIONAL { ?date time:month ?month. }
 
-    ${
-      timeFilter.minDate && timeFilter.maxDate
-        ? `?fromInterval time:year "${timeFilter.minDate.year}"^^schema:Integer ; ${
-            timeFilter.mode === "Month"
-              ? `time:month "${timeFilter.minDate.month}"^^schema:Integer ;`
-              : ""
-          }
-    time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
+    ?fromInterval
+      schema:inDefinedTermSet <https://ld.admin.ch/time/${
+        timeFilter.mode === "Month" ? "month" : "year"
+      }> ;
+      ${
+        timeFilter.minDate && timeFilter.maxDate
+          ? `time:year "${timeFilter.minDate.year}"^^schema:Integer ; ${
+              timeFilter.mode === "Month"
+                ? `time:month "${timeFilter.minDate.month}"^^schema:Integer ;`
+                : ""
+            }
+      time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
       
-    ?toInterval time:year "${timeFilter.maxDate.year}"^^schema:Integer ; ${
-      timeFilter.mode === "Month"
-        ? `time:month "${timeFilter.maxDate.month}"^^schema:Integer ;`
-        : ""
-    }
-    time:hasEnd/time:inXSDDateTimeStamp ?toPeriod .
+    ?toInterval
+      schema:inDefinedTermSet <https://ld.admin.ch/time/${
+        timeFilter.mode === "Month" ? "month" : "year"
+      }> ;
+      time:year "${timeFilter.maxDate.year}"^^schema:Integer ;
+      ${
+        timeFilter.mode === "Month"
+          ? `time:month "${timeFilter.maxDate.month}"^^schema:Integer ;`
+          : ""
+      }
+      time:hasEnd/time:inXSDDateTimeStamp ?toPeriod .
 
     ?date time:hasBeginning/time:inXSDDateTimeStamp ?start .
     ?date time:hasEnd/time:inXSDDateTimeStamp ?end .
@@ -249,8 +365,8 @@ export const queryObservations = ({
   
     FILTER (?start >= ?fromPeriod)
     FILTER (?end <= ?toPeriod)`
-        : ""
-    }
+          : ""
+      }
     
     
   } ORDER BY ?year ?month

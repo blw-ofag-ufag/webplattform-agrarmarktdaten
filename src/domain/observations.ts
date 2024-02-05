@@ -12,6 +12,7 @@ import { mapToObj } from "remeda";
 import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
 import { RangeOptions, TimeView, dimensionsSelectionAtom, timeViewAtom } from "./filters";
+import { localeAtom } from "@/lib/use-locale";
 
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
@@ -160,6 +161,7 @@ export const filteredObservationsAtom = atom((get) => {
  * `filteredObservationsAtom`.
  */
 export const observationsSparqlQueryAtom = atom((get) => {
+  const locale = get(localeAtom);
   const dimensionsSelection = get(dimensionsSelectionAtom);
   const cubeIri = get(cubePathAtom);
 
@@ -205,6 +207,7 @@ export const observationsSparqlQueryAtom = atom((get) => {
       key: toCamelCase(v),
     })),
     timeFilter,
+    lang: locale,
   });
 
   return getSparqlEditorUrl(query, lindas.url);
