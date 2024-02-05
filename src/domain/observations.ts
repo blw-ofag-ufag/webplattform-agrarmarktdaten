@@ -77,20 +77,24 @@ export const parsedObservationsAtom = atom(async (get) => {
 
   if (!cubeDimensions.isSuccess) return observations.observations;
 
-  return observations.observations.map((obs) =>
-    Object.entries(obs).reduce((acc, [key, value]) => {
-      return {
-        ...acc,
-        [key]: tableFormatter({
-          value: value as string | number,
+  const formatters = Object.fromEntries(
+    Object.keys(observations.observations[0]).map((key) => {
+      return [
+        key,
+        tableFormatter({
           dimension: key,
           cubeDimensions: {
             ...cubeDimensions.data.properties,
             ...cubeDimensions.data.measures,
           },
         }),
-      };
-    }, {})
+      ];
+    })
+  );
+  return observations.observations.map((obs) =>
+    mapValues(obs, (value, key) => {
+      return formatters[key](value);
+    })
   );
 });
 

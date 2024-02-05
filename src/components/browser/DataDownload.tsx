@@ -175,20 +175,26 @@ const DownloadMenuItem = ({
       })
     );
 
+    const formatters = mapToObj(Object.keys(dataset[0]), (key) => {
+      const dimension = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
+      return [
+        key,
+        dimension?.dimension
+          ? tableFormatter({
+              dimension: dimension.dimension,
+              cubeDimensions: dimensions.properties,
+              timeView,
+            })
+          : (x: string | number | undefined) => x,
+      ];
+    });
     const parsedRows = dataset.map((observation) => {
       return mapToObj(Object.entries(observation), ([key, value]) => {
         const dimension = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
         if (dimension && value) {
           return [
             isMeasure(key) ? "measure" : dimension.dimension,
-            isMeasure(key)
-              ? value
-              : tableFormatter({
-                  value: value,
-                  dimension: dimension.dimension,
-                  cubeDimensions: dimensions.properties,
-                  timeView,
-                }),
+            isMeasure(key) ? value : formatters[key](value),
           ];
         } else {
           return [key, value];
