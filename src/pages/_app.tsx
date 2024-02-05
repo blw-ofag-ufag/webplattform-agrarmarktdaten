@@ -18,6 +18,7 @@ import { useHydrateAtoms } from "jotai/react/utils";
 import { PropsWithChildren } from "react";
 import { LicenseInfo } from "@mui/x-license-pro";
 import useScrollRestoration from "@/lib/useScrollRestoration";
+import { CookieBanner } from "@/components/CookieBanner";
 
 setupMatomo();
 
@@ -72,6 +73,7 @@ export default function App({
                 <ThemeProvider theme={blwTheme}>
                   <CssBaseline />
                   <Component {...pageProps} />
+                  <CookieBanner />
                 </ThemeProvider>
               </GraphqlProvider>
             </I18nProvider>

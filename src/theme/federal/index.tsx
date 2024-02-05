@@ -127,16 +127,16 @@ const theme = createTheme({
       light: "#ffe6e1",
     },
     warning: {
-      main: "#8a6d3b",
-      light: "#FCF0B4",
+      main: "#ffedd5",
+      light: "#9a3412",
     },
     info: {
-      main: "#31708f",
-      light: "#d9edf7",
+      main: "#1d4ed8",
+      light: "#eff6ff",
     },
     error: {
-      main: "#a82824",
-      light: "#f2dede",
+      main: "#99191e",
+      light: "#ffedee",
     },
     grey: {
       100: "#FFFFFF",

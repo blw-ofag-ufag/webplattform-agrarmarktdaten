@@ -420,6 +420,16 @@ query AllRedirects {
   }
 }
 
+query CookieBanner($locale: SiteLocale!) {
+  cookieBanner(locale: $locale) {
+    content {
+      value
+    }
+    accept
+    reject
+  }
+}
+
 # Fragments
 fragment SimpleMarketArticle on MarketArticleRecord {
   id
@@ -569,6 +579,7 @@ fragment BlogPost on BlogPostRecord {
       ...ExternalLinkButton
       ...AssetLinkButton
       ...ImageTeaserBlock
+      ...IframeBlock
     }
     links {
       __typename
@@ -614,6 +625,8 @@ fragment GalleryBlock on GalleryBlockRecord {
 
 fragment IframeBlock on IframeBlockRecord {
   id
+  caption
+  height
   url
 }
 
