@@ -82,7 +82,7 @@ const SidePanel = ({
             <Typography variant="h2">
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
-            <Stack direction="row" gap={0.5} alignItems="center">
+            <Stack direction="row" gap={1} alignItems="center">
               {cubeDimensionsStatus.isSuccess && filters.changed > 0 && <ResetFiltersButton />}
               <IconButton onClick={onClose}>
                 <IcChevronDoubleLeft />
