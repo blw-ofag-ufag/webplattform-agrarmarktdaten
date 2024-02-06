@@ -6,6 +6,7 @@ import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { cubeSelectionAtom, filterAtom, timeViewAtom } from "./filters";
+import { equals, omit } from "remeda";
 
 type EnvironmentDescription = {
   label: string;
@@ -78,45 +79,24 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
   const timeView = get(timeViewAtom);
   const filters = get(filterAtom);
 
-  /**
-   * This probably could be done in a more elegant way.
-   */
+  const cubeDimensionFilters = filters.cube.dimensions;
+  const cubesData = cubes.isSuccess ? cubes.data : [];
+  const sieve = {
+    measure: cubeDimensionFilters.measure.value,
+    valueChain: cubeDimensionFilters["value-chain"].value,
+    market: cubeDimensionFilters.market.value,
+    timeView: timeView,
+  };
+
   return {
     "value-chain": {
-      options: cubes.isSuccess
-        ? cubes.data
-            .filter(
-              (c) =>
-                c.measure === filters.cube.dimensions.measure.value &&
-                c.market === filters.cube.dimensions.market.value &&
-                c.timeView === timeView
-            )
-            .map((c) => c.valueChain)
-        : [],
+      options: cubesData.filter(equals(omit(sieve, ["valueChain"]))).map((c) => c.valueChain),
     },
     market: {
-      options: cubes.isSuccess
-        ? cubes.data
-            .filter(
-              (c) =>
-                c.measure === filters.cube.dimensions.measure.value &&
-                c.valueChain === filters.cube.dimensions["value-chain"].value &&
-                c.timeView === timeView
-            )
-            .map((c) => c.market)
-        : [],
+      options: cubesData.filter(equals(omit(sieve, ["market"]))).map((c) => c.market),
     },
     measure: {
-      options: cubes.isSuccess
-        ? cubes.data
-            .filter(
-              (c) =>
-                c.market === filters.cube.dimensions.market.value &&
-                c.valueChain === filters.cube.dimensions["value-chain"].value &&
-                c.timeView === timeView
-            )
-            .map((c) => c.measure)
-        : [],
+      options: cubesData.filter(equals(omit(sieve, ["measure"]))).map((c) => c.measure),
     },
   };
 });
