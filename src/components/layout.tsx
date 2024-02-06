@@ -54,6 +54,8 @@ interface Props {
   backButtonColor?: string;
 }
 
+const isMilkMarket = (market: GQL.SimpleMarketArticleFragment) => market.id === "3222895";
+
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
   const {
@@ -77,6 +79,7 @@ export const AppLayout = (props: Props) => {
         ?.map((market) => ({
           title: market.title!,
           href: `/${localeSlugs?.market}/${market.slug}`,
+          fadedOut: !isMilkMarket(market),
         }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const focusSections =
