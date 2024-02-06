@@ -260,6 +260,10 @@ const dimensionsSpec = mapKeys(
 
 const labelSuffix = "Label";
 
+const timeFilterModeToTermset: Record<TimeFilter["mode"], string> = {
+  Month: "https://ld.admin.ch/time/month" as const,
+  Year: "https://ld.admin.ch/time/year" as const,
+};
 export const queryObservations = ({
   cubeIri,
   filters,
@@ -335,9 +339,7 @@ export const queryObservations = ({
     OPTIONAL { ?date time:month ?month. }
 
     ?fromInterval
-      schema:inDefinedTermSet <https://ld.admin.ch/time/${
-        timeFilter.mode === "Month" ? "month" : "year"
-      }> ;
+      schema:inDefinedTermSet <${timeFilterModeToTermset[timeFilter.mode]}> ;
       ${
         timeFilter.minDate && timeFilter.maxDate
           ? `time:year "${timeFilter.minDate.year}"^^schema:Integer ; ${
@@ -348,9 +350,7 @@ export const queryObservations = ({
       time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
       
     ?toInterval
-      schema:inDefinedTermSet <https://ld.admin.ch/time/${
-        timeFilter.mode === "Month" ? "month" : "year"
-      }> ;
+      schema:inDefinedTermSet <${timeFilterModeToTermset[timeFilter.mode]}> ;
       time:year "${timeFilter.maxDate.year}"^^schema:Integer ;
       ${
         timeFilter.mode === "Month"
