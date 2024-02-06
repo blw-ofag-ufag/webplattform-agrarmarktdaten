@@ -159,6 +159,12 @@ export const Table = ({
           : dimensionsToShowSorted[a.dimension] - dimensionsToShowSorted[b.dimension]
       )
       .map((dimension) => {
+        const formatter = tableFormatter({
+          dimension: dimension.dimension,
+          cubeDimensions: dimensions,
+          timeView,
+          locale,
+        });
         return {
           field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
           headerName: dimension.label,
@@ -168,14 +174,7 @@ export const Table = ({
             isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
           sortingOrder: ["desc", "asc", null],
           minWidth: 100,
-          valueFormatter: (params) =>
-            tableFormatter({
-              value: params.value,
-              dimension: dimension.dimension,
-              cubeDimensions: dimensions,
-              timeView,
-              locale,
-            }),
+          valueFormatter: (params) => formatter(params.value),
         };
       });
   }, [dimensions, timeView, locale]);

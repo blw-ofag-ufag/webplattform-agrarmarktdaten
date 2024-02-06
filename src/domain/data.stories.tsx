@@ -117,6 +117,26 @@ export const Observations = () => {
       return [];
     }
 
+    const cubeDimensions = dimensions.data
+      ? {
+          ...dimensions.data.properties,
+          ...dimensions.data.measures,
+        }
+      : {};
+    const formatters = Object.fromEntries(
+      Object.keys(observations.data.observations[0]).map((key) => {
+        const formatter =
+          dimensions.data && showParsed
+            ? tableFormatter({
+                dimension: key,
+                cubeDimensions,
+              })
+            : (x: string | number | undefined) => x;
+
+        return [key, formatter];
+      })
+    );
+
     return Object.entries(observations.data.observations[0]).map(([key]) => {
       return {
         field: key,
@@ -124,14 +144,7 @@ export const Observations = () => {
         width: 200,
         valueFormatter: (params) => {
           if (dimensions.data && showParsed) {
-            return tableFormatter({
-              value: params.value,
-              dimension: key,
-              cubeDimensions: {
-                ...dimensions.data.properties,
-                ...dimensions.data.measures,
-              },
-            });
+            return formatters[key](params.value);
           }
           return params.value;
         },

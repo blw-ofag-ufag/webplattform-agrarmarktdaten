@@ -165,7 +165,9 @@
     "lint-staged": "^14.0.1",
     "playwright": "^1.39.0",
     "prettier": "^3.0.3",
+    "sparql-formatter": "^0.7.6",
     "storybook": "^7.5.3",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "vitest": "^1.2.2"
   }
 }

@@ -7,7 +7,7 @@ import { messages as catalogFr } from "@/locales/fr/messages.js";
 import { messages as catalogIt } from "@/locales/it/messages.js";
 
 // The order specified here will determine the fallback order when strings are not available in the preferred language
-export const locales = ["de", "fr", "it" /* "en" */];
+export const locales = ["de", "fr", "it" /* "en" */] as const;
 export type Locale = (typeof locales)[number];
 
 export const defaultLocale = "de" as Locale;

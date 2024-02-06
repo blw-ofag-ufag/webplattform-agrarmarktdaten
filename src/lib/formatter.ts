@@ -10,6 +10,7 @@ import localeDE from "d3-format/locale/de-CH";
 import localeFR from "d3-format/locale/fr-FR";
 // @ts-expect-error
 import localeIT from "d3-format/locale/it-IT";
+import { keyBy } from "lodash";
 
 // Decided not to use abbreviations for now, following https://blw-ofag-ufag.atlassian.net/browse/WAM-397?focusedCommentId=12148
 export const units: Record<Locale, string[]> = {
@@ -21,28 +22,28 @@ export const units: Record<Locale, string[]> = {
 };
 
 export const tableFormatter = ({
-  value,
   dimension,
   cubeDimensions,
   timeView,
   locale = defaultLocale,
 }: {
-  value?: string | number;
   dimension: string;
   cubeDimensions: Record<string, Property | Measure>;
   timeView?: TimeView;
   locale?: Locale;
-}) => {
+}): ((value?: string | number) => string | number | undefined) => {
   const dim = cubeDimensions[dimension];
   if (dim && dim.dimension === "date") {
     if (timeView === "Year") {
-      return timeFormat("%Y")(dayjs(value).toDate());
+      const formatter = timeFormat("%Y");
+      return (value?: string | number) => formatter(dayjs(value).toDate());
+    } else {
+      const formatter = timeFormat("%m-%Y");
+      return (value?: string | number) => formatter(dayjs(value).toDate());
     }
-    return timeFormat("%m-%Y")(dayjs(value).toDate());
   }
-  if (dim && dim.type === "measure") {
-    if (!isNumber(value)) return value;
 
+  if (dim && dim.type === "measure") {
     const formatLocaleDef = match(locale)
       .with("de", () => localeDE)
       .with("fr", () => localeFR)
@@ -54,12 +55,19 @@ export const tableFormatter = ({
       thousands: " ",
     } as FormatLocaleDefinition);
 
-    return dim.dimension === "quantity"
-      ? formatter.format(",.2r")(value)
-      : formatter.format(`.2f`)(value);
+    return (value?: string | number) =>
+      !isNumber(value)
+        ? value
+        : dim.dimension === "quantity"
+        ? formatter.format(",.2r")(value)
+        : formatter.format(`.2f`)(value);
   }
+
   if (dim && dim.type === "property") {
-    return dim.values.find((v) => v.value === value)?.label ?? value;
+    const byValue = keyBy(dim.values, (x) => x.value);
+    return (value?: string | number) =>
+      value !== undefined ? byValue[value]?.label ?? value : value;
   }
-  return value;
+
+  return (v) => v;
 };
