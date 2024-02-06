@@ -201,6 +201,9 @@ const useStructuredTextStyles = makeStyles<
 
       marginBottom: theme.spacing(5),
     }),
+    nonBreakable: {
+      whiteSpace: "nowrap",
+    },
   };
 });
 
