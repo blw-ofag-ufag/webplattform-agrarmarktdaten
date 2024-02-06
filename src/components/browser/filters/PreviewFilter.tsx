@@ -15,6 +15,8 @@ const PreviewFilter = ({
     <Grow in={show}>
       <Typography
         variant="body3"
+        component="div"
+        textAlign="right"
         color={tainted ? "monochrome.800" : "monochrome.400"}
         mr={1}
         {...props}
