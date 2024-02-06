@@ -421,32 +421,27 @@ const Header1 = (props: HeaderProps) => {
   const [ref] = useScrollIntoView(id);
 
   const [isTooltipOpen, setTooltipOpen] = React.useState(false);
-  const handleTooltipOpen = () => setTooltipOpen(true);
+  const handleTooltipOpen = async () => {
+    setTooltipOpen(true);
+    const newHashPath = asPath.includes("#")
+      ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
+      : `#${encodedContent}`;
+    await push(newHashPath);
+    await copyToClipboard(window.location.href);
+  };
   const handleTooltipClose = () => setTooltipOpen(false);
 
   return (
     <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
       <Tooltip
-        PopperProps={{
-          disablePortal: true,
-        }}
+        PopperProps={{ disablePortal: true }}
         onClose={handleTooltipClose}
         open={isTooltipOpen}
         leaveDelay={1000}
         title={t({ id: "action.copy", message: "Copied to Clipboard" })}
       >
         <IconButton className={classes.h1Icon} onClick={handleTooltipOpen}>
-          <IcLink
-            width={27}
-            height={27}
-            onClick={async () => {
-              const newHashPath = asPath.includes("#")
-                ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
-                : `#${encodedContent}`;
-              await push(newHashPath);
-              await copyToClipboard(window.location.href);
-            }}
-          />
+          <IcLink width={27} height={27} />
         </IconButton>
       </Tooltip>
       <Typography
