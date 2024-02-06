@@ -6,7 +6,7 @@ import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { cubeSelectionAtom, filterAtom, timeViewAtom } from "./filters";
-import { equals, omit } from "remeda";
+import { omit } from "remeda";
 
 type EnvironmentDescription = {
   label: string;
@@ -88,15 +88,23 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
     timeView: timeView,
   };
 
+  type CubeData = (typeof cubesData)[number];
+  const partialEqual = (partial: Partial<CubeData>) => (item: CubeData) => {
+    return Object.keys(partial).every((k_) => {
+      const k = k_ as keyof typeof partial;
+      return partial[k] === item[k];
+    });
+  };
+
   return {
     "value-chain": {
-      options: cubesData.filter(equals(omit(sieve, ["valueChain"]))).map((c) => c.valueChain),
+      options: cubesData.filter(partialEqual(omit(sieve, ["valueChain"]))).map((c) => c.valueChain),
     },
     market: {
-      options: cubesData.filter(equals(omit(sieve, ["market"]))).map((c) => c.market),
+      options: cubesData.filter(partialEqual(omit(sieve, ["market"]))).map((c) => c.market),
     },
     measure: {
-      options: cubesData.filter(equals(omit(sieve, ["measure"]))).map((c) => c.measure),
+      options: cubesData.filter(partialEqual(omit(sieve, ["measure"]))).map((c) => c.measure),
     },
   };
 });
