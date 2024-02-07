@@ -114,7 +114,7 @@ msgstr "Afficher tous les posts"
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.filename"
-msgstr "Donnes"
+msgstr "Donnees_PDMAA"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx

@@ -114,7 +114,7 @@ msgstr "Alle Beiträge anzeigen"
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.filename"
-msgstr "Daten"
+msgstr "Daten_DALM"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx

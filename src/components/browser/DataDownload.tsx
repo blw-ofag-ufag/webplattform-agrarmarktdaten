@@ -4,9 +4,9 @@ import { timeViewAtom } from "@/domain/filters";
 import { filteredObservationsAtom } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
 import { tableFormatter } from "@/lib/formatter";
-import { useLocale } from "@/lib/use-locale";
 import { Observation } from "@/pages/api/data";
 import { Trans, t } from "@lingui/macro";
+import { timeFormat } from "d3-time-format";
 import {
   Button,
   CircularProgress,
@@ -156,13 +156,12 @@ const DownloadMenuItem = ({
 } & MenuItemProps) => {
   const [state, dispatch] = useDataDownloadState();
   const timeView = useAtomValue(timeViewAtom);
-  const locale = useLocale();
 
   const download = useCallback(async () => {
     const fileName = `${t({
       id: "data.download.filename",
       message: "AMDP_data",
-    })}_${new Date().toLocaleString(locale)}.${format}`;
+    })}_${timeFormat("%Y_%m_%d")(new Date())}.${format}`;
 
     const workbook = new Workbook();
 
@@ -222,7 +221,7 @@ const DownloadMenuItem = ({
         saveAs(new Blob([JSON.stringify(parsedRows)], { type: "application/json" }), fileName);
         break;
     }
-  }, [format, dataset, dimensions, timeView, locale]);
+  }, [format, dataset, dimensions, timeView]);
 
   return (
     <MenuItem key={format} {...props}>
