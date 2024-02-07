@@ -74,17 +74,17 @@ export const sortHierarchy = (tree: HierarchyValue[]): HierarchyValue[] => {
 export const visitHierarchy = (
   tree: HierarchyValue[],
   /** Will be run over all children. Return false to abort early */
-  visitor: (node: HierarchyValue) => void | false
+  visitor: (node: HierarchyValue, parent: HierarchyValue | null) => void | false
 ) => {
-  let q = [...tree];
+  let q = tree.map((node) => [node, null as HierarchyValue | null] as const);
   while (q.length > 0) {
-    const node = q.pop()!;
-    const ret = visitor(node);
+    const [node, parent] = q.pop()!;
+    const ret = visitor(node, parent);
     if (ret === false) {
       break;
     }
     for (let c of node.children || []) {
-      q.push(c);
+      q.push([c, node]);
     }
   }
 };

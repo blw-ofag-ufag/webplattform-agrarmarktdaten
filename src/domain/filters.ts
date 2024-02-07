@@ -1,6 +1,6 @@
 import { localeAtom } from "@/lib/use-locale";
 import { HierarchyValue, Observation, fetchHierarchy } from "@/pages/api/data";
-import { findInHierarchy } from "@/utils/trees";
+import { visitHierarchy } from "@/utils/trees";
 import { t } from "@lingui/macro";
 import dayjs from "dayjs";
 import { atom } from "jotai";
@@ -348,19 +348,14 @@ export const getProductOptionsWithHierarchy = (
   hierarchy: HierarchyValue[],
   options: Option[]
 ): Option[] => {
+  const parentsByProduct = new Map<string, HierarchyValue | undefined>();
+  visitHierarchy(hierarchy, (node, parent) => {
+    parentsByProduct.set(node.value, parent ?? undefined);
+  });
   const productOptions = options.map((product) => {
-    const subgroup = findInHierarchy(
-      hierarchy,
-      (node) => !!node.children.find((c) => c.value === product.value)
-    );
-    const group = findInHierarchy(
-      hierarchy,
-      (node) => !!node.children.find((c) => c.value === subgroup?.value)
-    );
-    const market = findInHierarchy(
-      hierarchy,
-      (node) => !!node.children.find((c) => c.value === group?.value)
-    );
+    const subgroup = parentsByProduct.get(product.value);
+    const group = subgroup ? parentsByProduct.get(subgroup.value) : undefined;
+    const market = group ? parentsByProduct.get(group.value) : undefined;
 
     return {
       value: product.value,
