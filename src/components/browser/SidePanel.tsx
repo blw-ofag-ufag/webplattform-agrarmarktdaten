@@ -277,8 +277,6 @@ const FilterSelectAccordion = <T extends Option>({
     return options.filter((option) => values.includes(option.value));
   }, [values, options]);
 
-  console.log(title);
-
   return (
     <FilterAccordion {...slots.accordion}>
       <AccordionSummary className={isTainted ? "tainted" : ""}>
