@@ -204,6 +204,20 @@ const useStructuredTextStyles = makeStyles<
     nonBreakable: {
       whiteSpace: "nowrap",
     },
+    iframeContainer: {
+      marginBlock: "20px",
+      position: "relative",
+      paddingBottom: "50%",
+      height: 0,
+    },
+    iframe: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      border: 0,
+      width: "100%",
+      height: "100%",
+    },
   };
 });
 

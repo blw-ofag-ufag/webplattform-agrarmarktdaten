@@ -6758,6 +6758,8 @@ export const IframeBlockFragmentDoc = gql`
   caption
   height
   url
+  caption
+  height
 }
     `;
 export const BlogPostFragmentDoc = gql`
@@ -6797,6 +6799,7 @@ export const BlogPostFragmentDoc = gql`
     value
     blocks {
       __typename
+      ...IframeBlock
       ...DataButton
       ...InternalLinkButton
       ...ExternalLinkButton
@@ -7422,12 +7425,12 @@ export const BlogPostDocument = gql`
     ${SeoMetaTagsFragmentDoc}
 ${BlogPostFragmentDoc}
 ${InternalLinkFragmentDoc}
+${IframeBlockFragmentDoc}
 ${DataButtonFragmentDoc}
 ${InternalLinkButtonFragmentDoc}
 ${ExternalLinkButtonFragmentDoc}
 ${AssetLinkButtonFragmentDoc}
 ${ImageTeaserBlockFragmentDoc}
-${IframeBlockFragmentDoc}
 ${FileDownloadSectionFragmentDoc}
 ${HighlightSectionFragmentDoc}
 ${HighlightSectionFileRecordFragmentDoc}
