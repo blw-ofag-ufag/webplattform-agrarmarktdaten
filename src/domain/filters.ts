@@ -3,7 +3,7 @@ import { HierarchyValue, Observation, fetchHierarchy } from "@/pages/api/data";
 import { visitHierarchy } from "@/utils/trees";
 import { t } from "@lingui/macro";
 import dayjs from "dayjs";
-import { atom } from "jotai";
+import { ExtractAtomValue, Getter, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
@@ -183,6 +183,40 @@ const getDefaultTimeRange = (
   };
 };
 
+type DimensionResult = ExtractAtomValue<typeof cubeDimensionsStatusAtom>;
+
+const createFilterDimension = ({
+  dimensionsResult,
+  get,
+  dataKey,
+}: {
+  dimensionsResult: DimensionResult;
+  get: Getter;
+  dataKey: string;
+}) => {
+  const options =
+    dimensionsResult.isSuccess && !isEmpty(dimensionsResult.data)
+      ? dimensionsResult.data.properties[dataKey].values
+      : [];
+
+  const atom = filterMultiHashAtomFamily({
+    key: snakeCase(dataKey),
+    options: options.map((p) => p.value),
+  });
+
+  const atomValue = get(atom);
+
+  return {
+    name: dimensionsResult?.data?.properties[dataKey]?.label ?? dataKey,
+    options,
+    atom,
+    value: atomValue,
+    search: true,
+    isChanged: atomValue.length < options.length,
+    groups: undefined,
+  };
+};
+
 /**
  * Dimensions selection atom. This atoms contains the information on the filters on the cube dimensions.
  * This is then used to filter the observations of the cube we fetch.
@@ -198,15 +232,14 @@ export const dimensionsSelectionAtom = atom((get) => {
     options: productOptions.map((p) => p.value),
   });
 
-  const salesRegionOptions =
-    cubeDimensionsQuery.isSuccess && !isEmpty(cubeDimensionsQuery.data)
-      ? cubeDimensionsQuery.data.properties["sales-region"].values
-      : [];
+  const dimensions = {
 
-  const salesRegionAtom = filterMultiHashAtomFamily({
-    key: "salesRegion",
-    options: salesRegionOptions.map((p) => p.value),
-  });
+    "sales-region": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "sales-region",
+    }),
+  } as const;
 
   const defaultTimeRange = observationsQuery.isSuccess
     ? getDefaultTimeRange(observationsQuery.data.observations)
@@ -231,17 +264,12 @@ export const dimensionsSelectionAtom = atom((get) => {
           (d: Option) => d.hierarchy?.["market"],
           (d: Option) => d.hierarchy?.["product-group"],
           (d: Option) => d.hierarchy?.["product-subgroup"],
-        ],
+
+          // Need to have the type annotation, otherwise readonly is added and does not work
+          // with select options in SidePanel
+        ] as ((d: Option) => { value: string | undefined; label: string | undefined })[],
       },
-      "sales-region": {
-        name: cubeDimensionsQuery?.data?.properties["sales-region"]?.label ?? "sales-region",
-        options: salesRegionOptions,
-        atom: salesRegionAtom,
-        value: get(salesRegionAtom),
-        search: true,
-        isChanged: get(salesRegionAtom).length < salesRegionOptions.length,
-        groups: undefined,
-      },
+      ...dimensions,
     },
     time: {
       range: {
@@ -256,8 +284,12 @@ export const dimensionsSelectionAtom = atom((get) => {
     isLoading: cubeDimensionsQuery.isLoading || productHierarchyQuery.isLoading,
     isSuccess: cubeDimensionsQuery.isSuccess && productHierarchyQuery.isSuccess,
     isError: cubeDimensionsQuery.isError || productHierarchyQuery.isError,
-  };
+  } as const;
 });
+
+export type AvailableDimensionFilter = keyof ExtractAtomValue<
+  typeof dimensionsSelectionAtom
+>["dimensions"];
 
 /**
  * Filter atom. This atom contains the information on the filters that we apply, both to select the
