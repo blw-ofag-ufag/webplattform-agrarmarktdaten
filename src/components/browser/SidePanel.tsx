@@ -1,5 +1,11 @@
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { DEFAULT_TIME_VIEW, Option, TimeView, filterAtom } from "@/domain/filters";
+import {
+  AvailableDimensionFilter,
+  DEFAULT_TIME_VIEW,
+  Option,
+  TimeView,
+  filterAtom,
+} from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, t } from "@lingui/macro";
@@ -43,7 +49,20 @@ const useExclusiveAccordion = (defaultState: string) => {
 };
 
 const orderedCubeFilters = ["value-chain", /* "market", */ "measure"] as const;
-const orderedDimensionFilters = ["sales-region", "product"] as const;
+const orderedDimensionFilters: AvailableDimensionFilter[] = [
+  "sales-region",
+  "product",
+  "currency",
+  "foreign-trade",
+  "usage",
+  "data-source",
+  "product-origin",
+  "product-properties",
+  "cost-component",
+  "production-system",
+  "data-method",
+  "unit",
+];
 
 const SidePanel = ({
   open = true,
@@ -257,6 +276,8 @@ const FilterSelectAccordion = <T extends Option>({
   const valuesOptions = useMemo(() => {
     return options.filter((option) => values.includes(option.value));
   }, [values, options]);
+
+  console.log(title);
 
   return (
     <FilterAccordion {...slots.accordion}>

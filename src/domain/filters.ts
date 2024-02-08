@@ -7,7 +7,7 @@ import { ExtractAtomValue, Getter, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { atomFamily } from "jotai/vanilla/utils";
-import { isEmpty, isEqual, maxBy, minBy } from "lodash";
+import { isEmpty, isEqual, maxBy, minBy, snakeCase } from "lodash";
 import {
   baseDimensionsStatusAtom,
   cubeDimensionsStatusAtom,
@@ -233,11 +233,67 @@ export const dimensionsSelectionAtom = atom((get) => {
   });
 
   const dimensions = {
+    "cost-component": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "cost-component",
+    }),
+    currency: createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "currency",
+    }),
+    "foreign-trade": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "foreign-trade",
+    }),
+
+    "data-source": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "data-source",
+    }),
 
     "sales-region": createFilterDimension({
       dimensionsResult: cubeDimensionsQuery,
       get,
       dataKey: "sales-region",
+    }),
+    usage: createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "usage",
+    }),
+
+    "product-origin": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "product-origin",
+    }),
+
+    "product-properties": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "product-properties",
+    }),
+
+    "production-system": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "production-system",
+    }),
+
+    "data-method": createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "data-method",
+    }),
+
+    unit: createFilterDimension({
+      dimensionsResult: cubeDimensionsQuery,
+      get,
+      dataKey: "unit",
     }),
   } as const;
 
