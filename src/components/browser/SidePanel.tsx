@@ -19,6 +19,7 @@ import {
   IconButton,
   Stack,
   Typography,
+  accordionSummaryClasses,
 } from "@mui/material";
 import { WritableAtom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { xor } from "lodash";
@@ -242,6 +243,9 @@ const FilterRadioAccordion = <T extends Option>({
 
 const AccordionSummary = withStyles(AccordionSummaryMui, (theme) => ({
   root: {
+    [`& .${accordionSummaryClasses.content}`]: {
+      gap: "1rem",
+    },
     "&.tainted": {
       color: theme.palette.grey[500],
       backgroundColor: theme.palette.cobalt[100],
