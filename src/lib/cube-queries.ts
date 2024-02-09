@@ -309,7 +309,7 @@ export const queryObservations = ({
         filters
           ? Object.entries(filters)
               .map(([key, values]) => {
-                return `VALUES(?${key}) { ${values.map((v) => `(<${v}>)`).join("\n")} }`;
+                return `FILTER (?${key} in ( ${values.map((v) => `<${v}>`).join(",")} ) )`;
               })
               .join("\n")
           : ""
