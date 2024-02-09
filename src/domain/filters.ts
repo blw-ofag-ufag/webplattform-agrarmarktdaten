@@ -215,20 +215,26 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
   });
 };
 
-const createProductFilter = () => {
-  const atomKey = "products";
-  const dataKey = "product";
-  const hierarchyStatusAtom = productHierarchyStatusAtom;
-  const optionsAtom = productOptionsWithHierarchyAtom;
+const groups = [
+  (d: Option) => d.hierarchy?.["market"],
+  (d: Option) => d.hierarchy?.["product-group"],
+  (d: Option) => d.hierarchy?.["product-subgroup"],
 
-  const groups = [
-    (d: Option) => d.hierarchy?.["market"],
-    (d: Option) => d.hierarchy?.["product-group"],
-    (d: Option) => d.hierarchy?.["product-subgroup"],
+  // Need to have the type annotation, otherwise readonly is added and does not work
+  // with select options in SidePanel
+] as ((d: Option) => { value: string | undefined; label: string | undefined })[];
 
-    // Need to have the type annotation, otherwise readonly is added and does not work
-    // with select options in SidePanel
-  ] as ((d: Option) => { value: string | undefined; label: string | undefined })[];
+const createFilterDimensionAtomWithHierarchy = ({
+  dataKey,
+  atomKey,
+  hierarchyStatusAtom,
+  optionsAtom,
+}: {
+  atomKey: string;
+  dataKey: string;
+  hierarchyStatusAtom: typeof productHierarchyStatusAtom;
+  optionsAtom: typeof productOptionsWithHierarchyAtom;
+}) => {
   return atom((get) => {
     const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
     const options = get(optionsAtom);
@@ -263,7 +269,12 @@ export const dimensionsSelectionAtom = atom((get) => {
   const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
   const observationsQuery = get(observationsQueryAtom);
 
-  const productFilterAtom = createProductFilter();
+  const productFilterAtom = createFilterDimensionAtomWithHierarchy({
+    atomKey: "products",
+    dataKey: "product",
+    hierarchyStatusAtom: productHierarchyStatusAtom,
+    optionsAtom: productOptionsWithHierarchyAtom,
+  });
   const { hierarchyQuery: productHierarchyQuery, filter: productFilter } = get(productFilterAtom);
 
   const dimensionAtoms = {
