@@ -215,20 +215,49 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
   });
 };
 
+const createProductFilter = () => {
+  return atom((get) => {
+    const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
+    const productOptions = get(productOptionsWithHierarchyAtom);
+    const productsAtom = filterMultiHashAtomFamily({
+      key: "products",
+      options: productOptions.map((p) => p.value),
+    });
+
+    const productHierarchyQuery = get(productHierarchyStatusAtom);
+
+    return {
+      hierarchyQuery: productHierarchyQuery,
+      filter: {
+        name: cubeDimensionsQuery?.data?.properties["product"]?.label ?? "product",
+        options: productOptions,
+        atom: productsAtom,
+        value: get(productsAtom),
+        search: true,
+        isChanged: get(productsAtom).length < productOptions.length,
+        groups: [
+          (d: Option) => d.hierarchy?.["market"],
+          (d: Option) => d.hierarchy?.["product-group"],
+          (d: Option) => d.hierarchy?.["product-subgroup"],
+
+          // Need to have the type annotation, otherwise readonly is added and does not work
+          // with select options in SidePanel
+        ] as ((d: Option) => { value: string | undefined; label: string | undefined })[],
+      },
+    };
+  });
+};
+
 /**
  * Dimensions selection atom. This atoms contains the information on the filters on the cube dimensions.
  * This is then used to filter the observations of the cube we fetch.
  */
 export const dimensionsSelectionAtom = atom((get) => {
   const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
-  const productOptions = get(productOptionsWithHierarchyAtom);
   const observationsQuery = get(observationsQueryAtom);
-  const productHierarchyQuery = get(productHierarchyStatusAtom);
 
-  const productsAtom = filterMultiHashAtomFamily({
-    key: "products",
-    options: productOptions.map((p) => p.value),
-  });
+  const productFilterAtom = createProductFilter();
+  const { hierarchyQuery: productHierarchyQuery, filter: productFilter } = get(productFilterAtom);
 
   const dimensionAtoms = {
     "cost-component": createFilterDimensionAtom({
@@ -285,22 +314,7 @@ export const dimensionsSelectionAtom = atom((get) => {
 
   return {
     dimensions: {
-      product: {
-        name: cubeDimensionsQuery?.data?.properties["product"]?.label ?? "product",
-        options: productOptions,
-        atom: productsAtom,
-        value: get(productsAtom),
-        search: true,
-        isChanged: get(productsAtom).length < productOptions.length,
-        groups: [
-          (d: Option) => d.hierarchy?.["market"],
-          (d: Option) => d.hierarchy?.["product-group"],
-          (d: Option) => d.hierarchy?.["product-subgroup"],
-
-          // Need to have the type annotation, otherwise readonly is added and does not work
-          // with select options in SidePanel
-        ] as ((d: Option) => { value: string | undefined; label: string | undefined })[],
-      },
+      product: productFilter,
       ...mapValues(dimensionAtoms, (a) => get(a)),
     },
     time: {
