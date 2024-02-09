@@ -514,6 +514,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   [`&.${accordionSummaryClasses.root}`]: {
     paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
+    paddingLeft: 0,
     minHeight: 0,
     [`&.${accordionSummaryClasses.expanded}`]: {
       minHeight: 0,
