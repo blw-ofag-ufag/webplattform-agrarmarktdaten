@@ -22,25 +22,18 @@ import {
 } from "./atom-families";
 import { mapValues } from "remeda";
 
-export type Option = {
+export type Option<HierarchyLevel extends string | never = never> = {
   label: string;
   value: string;
   checked?: boolean;
   disabled?: boolean;
-  hierarchy?: {
-    ["product-subgroup"]: {
+  hierarchy?: Record<
+    HierarchyLevel,
+    {
       value?: string;
       label?: string;
-    };
-    ["product-group"]: {
-      value?: string;
-      label?: string;
-    };
-    market: {
-      value?: string;
-      label?: string;
-    };
-  };
+    }
+  >;
 };
 
 export type Filter = {
@@ -215,10 +208,13 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
   });
 };
 
+const productHierarchyLevels = ["market", "product-group", "product-subgroup"] as const;
+type ProductHierarchyLevel = (typeof productHierarchyLevels)[number];
+
 const groups = [
-  (d: Option) => d.hierarchy?.["market"],
-  (d: Option) => d.hierarchy?.["product-group"],
-  (d: Option) => d.hierarchy?.["product-subgroup"],
+  (d: Option<ProductHierarchyLevel>) => d.hierarchy?.["market"],
+  (d: Option<ProductHierarchyLevel>) => d.hierarchy?.["product-group"],
+  (d: Option<ProductHierarchyLevel>) => d.hierarchy?.["product-subgroup"],
 
   // Need to have the type annotation, otherwise readonly is added and does not work
   // with select options in SidePanel
@@ -440,50 +436,63 @@ export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery
   };
 });
 
-export const getProductOptionsWithHierarchy = (
+export const getOptionsWithHierarchy = <HierarchyLevel extends string>(
   hierarchy: HierarchyValue[],
-  options: Option[]
-): Option[] => {
-  const parentsByProduct = new Map<string, HierarchyValue | undefined>();
+  options: Option[],
+  levels: readonly HierarchyLevel[]
+): Option<HierarchyLevel>[] => {
+  const parents = new Map<string, HierarchyValue | undefined>();
   visitHierarchy(hierarchy, (node, parent) => {
-    parentsByProduct.set(node.value, parent ?? undefined);
+    parents.set(node.value, parent ?? undefined);
   });
   const productOptions = options.map((product) => {
-    const subgroup = parentsByProduct.get(product.value);
-    const group = subgroup ? parentsByProduct.get(subgroup.value) : undefined;
-    const market = group ? parentsByProduct.get(group.value) : undefined;
+    const hierarchy: Record<string, { value: string | undefined; label: string | undefined }> = {};
+    let cur: Option | undefined = product;
+
+    // Levels are from bigger to smaller, we need to go in the other direction
+    for (let i = levels.length - 1; i >= 0; i--) {
+      const level = levels[i];
+      const parent: HierarchyValue | undefined = cur?.value ? parents.get(cur.value) : undefined;
+      hierarchy[level] = {
+        value: parent?.value,
+        label: parent?.label,
+      };
+      cur = parent;
+    }
 
     return {
       value: product.value,
       label: product.label,
-      hierarchy: {
-        ["product-subgroup"]: {
-          value: subgroup?.value,
-          label: subgroup?.label,
-        },
-        ["product-group"]: {
-          value: group?.value,
-          label: group?.label,
-        },
-        market: {
-          value: market?.value,
-          label: market?.label,
-        },
-      },
+      hierarchy,
     };
   });
   return productOptions;
 };
 
-export const productOptionsWithHierarchyAtom = atom((get) => {
-  const hierarchy = get(productHierarchyStatusAtom);
-  const cubeDimensions = get(cubeDimensionsStatusAtom);
+export const createOptionsWithHierarchyAtom = ({
+  dataKey,
+  hierarchyLevels,
+  hierarchyStatusAtom,
+}: {
+  dataKey: string;
+  hierarchyLevels: readonly string[];
+  hierarchyStatusAtom: typeof productHierarchyStatusAtom;
+}) =>
+  atom((get) => {
+    const hierarchy = get(hierarchyStatusAtom);
+    const cubeDimensions = get(cubeDimensionsStatusAtom);
 
-  if (!cubeDimensions.isSuccess || !hierarchy.isSuccess) return [];
+    if (!cubeDimensions.isSuccess || !hierarchy.isSuccess) return [];
 
-  const cubeProducts = cubeDimensions.data.properties["product"]?.values;
+    const cubeProducts = cubeDimensions.data.properties[dataKey]?.values;
 
-  if (!cubeProducts) return [];
+    if (!cubeProducts) return [];
 
-  return getProductOptionsWithHierarchy(hierarchy.data, cubeProducts);
+    return getOptionsWithHierarchy(hierarchy.data, cubeProducts, hierarchyLevels);
+  });
+
+const productOptionsWithHierarchyAtom = createOptionsWithHierarchyAtom({
+  dataKey: "product",
+  hierarchyLevels: productHierarchyLevels,
+  hierarchyStatusAtom: productHierarchyStatusAtom,
 });
