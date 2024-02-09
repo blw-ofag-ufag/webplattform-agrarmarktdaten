@@ -216,33 +216,40 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
 };
 
 const createProductFilter = () => {
+  const atomKey = "products";
+  const dataKey = "product";
+  const hierarchyStatusAtom = productHierarchyStatusAtom;
+  const optionsAtom = productOptionsWithHierarchyAtom;
+
+  const groups = [
+    (d: Option) => d.hierarchy?.["market"],
+    (d: Option) => d.hierarchy?.["product-group"],
+    (d: Option) => d.hierarchy?.["product-subgroup"],
+
+    // Need to have the type annotation, otherwise readonly is added and does not work
+    // with select options in SidePanel
+  ] as ((d: Option) => { value: string | undefined; label: string | undefined })[];
   return atom((get) => {
     const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
-    const productOptions = get(productOptionsWithHierarchyAtom);
-    const productsAtom = filterMultiHashAtomFamily({
-      key: "products",
-      options: productOptions.map((p) => p.value),
+    const options = get(optionsAtom);
+    const hashAtom = filterMultiHashAtomFamily({
+      key: atomKey,
+      options: options.map((p) => p.value),
     });
 
-    const productHierarchyQuery = get(productHierarchyStatusAtom);
+    const hierarchyQuery = get(hierarchyStatusAtom);
+    const hashValue = get(hashAtom);
 
     return {
-      hierarchyQuery: productHierarchyQuery,
+      hierarchyQuery: hierarchyQuery,
       filter: {
-        name: cubeDimensionsQuery?.data?.properties["product"]?.label ?? "product",
-        options: productOptions,
-        atom: productsAtom,
-        value: get(productsAtom),
+        name: cubeDimensionsQuery?.data?.properties[dataKey]?.label ?? dataKey,
+        options: options,
+        atom: hashAtom,
+        value: hashValue,
         search: true,
-        isChanged: get(productsAtom).length < productOptions.length,
-        groups: [
-          (d: Option) => d.hierarchy?.["market"],
-          (d: Option) => d.hierarchy?.["product-group"],
-          (d: Option) => d.hierarchy?.["product-subgroup"],
-
-          // Need to have the type annotation, otherwise readonly is added and does not work
-          // with select options in SidePanel
-        ] as ((d: Option) => { value: string | undefined; label: string | undefined })[],
+        isChanged: hashValue.length < options.length,
+        groups,
       },
     };
   });
