@@ -436,14 +436,15 @@ export const getOptionsWithHierarchy = <HierarchyLevel extends string>(
   visitHierarchy(hierarchy, (node, parent) => {
     parents.set(node.value, parent ?? undefined);
   });
-  const productOptions = options.map((product) => {
-    const hierarchy: Record<string, { value: string | undefined; label: string | undefined }> = {};
+  const optionsWithHierarchy = options.map((product) => {
+    type HierarchyValue = { value: string | undefined; label: string | undefined };
+    const hierarchy: Record<string, HierarchyValue> = {};
     let cur: Option | undefined = product;
 
     // Levels are from bigger to smaller, we need to go in the other direction
     for (let i = levels.length - 1; i >= 0; i--) {
       const level = levels[i];
-      const parent: HierarchyValue | undefined = cur?.value ? parents.get(cur.value) : undefined;
+      const parent: Option | undefined = cur?.value ? parents.get(cur.value) : undefined;
       hierarchy[level] = {
         value: parent?.value,
         label: parent?.label,
@@ -454,10 +455,10 @@ export const getOptionsWithHierarchy = <HierarchyLevel extends string>(
     return {
       value: product.value,
       label: product.label,
-      hierarchy,
+      hierarchy: hierarchy as Record<HierarchyLevel, HierarchyValue>,
     };
   });
-  return productOptions;
+  return optionsWithHierarchy;
 };
 
 export const createFiltersWithHierarchyAtom = ({
