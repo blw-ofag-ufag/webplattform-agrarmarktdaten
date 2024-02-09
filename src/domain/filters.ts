@@ -222,11 +222,9 @@ const groups = [
 
 const createFilterDimensionAtomWithHierarchy = ({
   dataKey,
-  atomKey,
   hierarchyStatusAtom,
   optionsAtom,
 }: {
-  atomKey: string;
   dataKey: string;
   hierarchyStatusAtom: typeof productHierarchyStatusAtom;
   optionsAtom: typeof productOptionsWithHierarchyAtom;
@@ -235,7 +233,7 @@ const createFilterDimensionAtomWithHierarchy = ({
     const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
     const options = get(optionsAtom);
     const hashAtom = filterMultiHashAtomFamily({
-      key: atomKey,
+      key: snakeCase(dataKey),
       options: options.map((p) => p.value),
     });
 
@@ -266,7 +264,6 @@ export const dimensionsSelectionAtom = atom((get) => {
   const observationsQuery = get(observationsQueryAtom);
 
   const productFilterAtom = createFilterDimensionAtomWithHierarchy({
-    atomKey: "products",
     dataKey: "product",
     hierarchyStatusAtom: productHierarchyStatusAtom,
     optionsAtom: productOptionsWithHierarchyAtom,
