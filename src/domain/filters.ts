@@ -3,7 +3,7 @@ import { HierarchyValue, Observation, fetchHierarchy } from "@/pages/api/data";
 import { visitHierarchy } from "@/utils/trees";
 import { t } from "@lingui/macro";
 import dayjs from "dayjs";
-import { ExtractAtomValue, Getter, atom } from "jotai";
+import { ExtractAtomValue, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { isEmpty, maxBy, minBy, snakeCase } from "lodash";
@@ -20,6 +20,7 @@ import {
   filterMultiHashAtomFamily,
   filterTimeRangeHashAtomFamily,
 } from "./atom-families";
+import { mapValues } from "remeda";
 
 export type Option = {
   label: string;
@@ -187,38 +188,31 @@ const getDefaultTimeRange = (
   };
 };
 
-type DimensionResult = ExtractAtomValue<typeof cubeDimensionsStatusAtom>;
+const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
+  return atom((get) => {
+    const dimensionsResult = get(cubeDimensionsStatusAtom);
+    const options =
+      dimensionsResult.isSuccess && !isEmpty(dimensionsResult.data)
+        ? dimensionsResult.data.properties[dataKey].values
+        : [];
 
-const createFilterDimension = ({
-  dimensionsResult,
-  get,
-  dataKey,
-}: {
-  dimensionsResult: DimensionResult;
-  get: Getter;
-  dataKey: string;
-}) => {
-  const options =
-    dimensionsResult.isSuccess && !isEmpty(dimensionsResult.data)
-      ? dimensionsResult.data.properties[dataKey].values
-      : [];
+    const valuesAtom = filterMultiHashAtomFamily({
+      key: snakeCase(dataKey),
+      options: options.map((p) => p.value),
+    });
 
-  const atom = filterMultiHashAtomFamily({
-    key: snakeCase(dataKey),
-    options: options.map((p) => p.value),
+    const atomValue = get(valuesAtom);
+
+    return {
+      name: dimensionsResult?.data?.properties[dataKey]?.label ?? dataKey,
+      options,
+      atom: valuesAtom,
+      value: atomValue,
+      search: true,
+      isChanged: atomValue.length < options.length,
+      groups: undefined,
+    };
   });
-
-  const atomValue = get(atom);
-
-  return {
-    name: dimensionsResult?.data?.properties[dataKey]?.label ?? dataKey,
-    options,
-    atom,
-    value: atomValue,
-    search: true,
-    isChanged: atomValue.length < options.length,
-    groups: undefined,
-  };
 };
 
 /**
@@ -236,67 +230,45 @@ export const dimensionsSelectionAtom = atom((get) => {
     options: productOptions.map((p) => p.value),
   });
 
-  const dimensions = {
-    "cost-component": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+  const dimensionAtoms = {
+    "cost-component": createFilterDimensionAtom({
       dataKey: "cost-component",
     }),
-    currency: createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    currency: createFilterDimensionAtom({
       dataKey: "currency",
     }),
-    "foreign-trade": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    "foreign-trade": createFilterDimensionAtom({
       dataKey: "foreign-trade",
     }),
 
-    "data-source": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    "data-source": createFilterDimensionAtom({
       dataKey: "data-source",
     }),
 
-    "sales-region": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    "sales-region": createFilterDimensionAtom({
       dataKey: "sales-region",
     }),
-    usage: createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    usage: createFilterDimensionAtom({
       dataKey: "usage",
     }),
 
-    "product-origin": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    "product-origin": createFilterDimensionAtom({
       dataKey: "product-origin",
     }),
 
-    "product-properties": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    "product-properties": createFilterDimensionAtom({
       dataKey: "product-properties",
     }),
 
-    "production-system": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    "production-system": createFilterDimensionAtom({
       dataKey: "production-system",
     }),
 
-    "data-method": createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    "data-method": createFilterDimensionAtom({
       dataKey: "data-method",
     }),
 
-    unit: createFilterDimension({
-      dimensionsResult: cubeDimensionsQuery,
-      get,
+    unit: createFilterDimensionAtom({
       dataKey: "unit",
     }),
   } as const;
@@ -329,7 +301,7 @@ export const dimensionsSelectionAtom = atom((get) => {
           // with select options in SidePanel
         ] as ((d: Option) => { value: string | undefined; label: string | undefined })[],
       },
-      ...dimensions,
+      ...mapValues(dimensionAtoms, (a) => get(a)),
     },
     time: {
       range: {
