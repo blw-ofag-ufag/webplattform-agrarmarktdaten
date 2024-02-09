@@ -414,28 +414,6 @@ export const filterAtom = atom(
   }
 );
 
-export const [productHierarchyAtom, productHierarchyStatusAtom] = atomsWithQuery((get) => {
-  const locale = get(localeAtom);
-  const cubeIri = get(cubePathAtom);
-
-  return {
-    queryKey: ["productHierarchy", cubeIri, locale],
-    queryFn: () => {
-      if (!cubeIri) {
-        return Promise.reject(new Error("Cube not found"));
-      }
-      return fetchHierarchy({
-        locale,
-        cubeIri: cubeIri,
-        dimensionIri: dataDimensions.product.iri,
-        environment: get(lindasAtom).url,
-      });
-    },
-    placeholderData: (previousData) => previousData,
-    skip: !cubeIri,
-  };
-});
-
 export const getOptionsWithHierarchy = <HierarchyLevel extends string>(
   hierarchy: HierarchyValue[],
   options: Option[],
@@ -469,16 +447,36 @@ export const getOptionsWithHierarchy = <HierarchyLevel extends string>(
   return productOptions;
 };
 
-export const createOptionsWithHierarchyAtom = ({
+export const createFiltersWithHierarchyAtom = ({
   dataKey,
   hierarchyLevels,
-  hierarchyStatusAtom,
 }: {
-  dataKey: string;
+  dataKey: keyof typeof dataDimensions;
   hierarchyLevels: readonly string[];
-  hierarchyStatusAtom: typeof productHierarchyStatusAtom;
-}) =>
-  atom((get) => {
+}) => {
+  const [hierarchyAtom, hierarchyStatusAtom] = atomsWithQuery((get) => {
+    const locale = get(localeAtom);
+    const cubeIri = get(cubePathAtom);
+
+    return {
+      queryKey: [`${dataKey}Hierarchy`, cubeIri, locale],
+      queryFn: () => {
+        if (!cubeIri) {
+          return Promise.reject(new Error("Cube not found"));
+        }
+        return fetchHierarchy({
+          locale,
+          cubeIri: cubeIri,
+          dimensionIri: dataDimensions[dataKey].iri,
+          environment: get(lindasAtom).url,
+        });
+      },
+      placeholderData: (previousData) => previousData,
+      skip: !cubeIri,
+    };
+  });
+
+  const optionsAtom = atom((get) => {
     const hierarchy = get(hierarchyStatusAtom);
     const cubeDimensions = get(cubeDimensionsStatusAtom);
 
@@ -491,8 +489,13 @@ export const createOptionsWithHierarchyAtom = ({
     return getOptionsWithHierarchy(hierarchy.data, cubeProducts, hierarchyLevels);
   });
 
-const productOptionsWithHierarchyAtom = createOptionsWithHierarchyAtom({
+  return { hierarchyAtom, hierarchyStatusAtom, optionsAtom };
+};
+
+const {
+  optionsAtom: productOptionsWithHierarchyAtom,
+  hierarchyStatusAtom: productHierarchyStatusAtom,
+} = createFiltersWithHierarchyAtom({
   dataKey: "product",
   hierarchyLevels: productHierarchyLevels,
-  hierarchyStatusAtom: productHierarchyStatusAtom,
 });
