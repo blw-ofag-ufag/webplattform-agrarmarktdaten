@@ -155,12 +155,12 @@ msgstr "Bundesamt für Landwirtschaft BLW"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.aria.clear"
-msgstr "Filter zurücksetzen"
+msgstr "Alles abwählen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.clear"
-msgstr "Filter zurücksetzen"
+msgstr "Alles abwählen"
 
 #. js-lingui-explicit-id
 #: src/components/InPlaceDialog.tsx
