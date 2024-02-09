@@ -208,7 +208,7 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
   });
 };
 
-const productHierarchyLevels = ["market", "product-group", "product-subgroup"] as const;
+export const productHierarchyLevels = ["market", "product-group", "product-subgroup"] as const;
 const valueChainHierarchyLevels = ["market", "value-chain", "value-chain-detail"] as const;
 
 const createGrouping = <T extends string>(hierarchyLevels: readonly T[]) =>
