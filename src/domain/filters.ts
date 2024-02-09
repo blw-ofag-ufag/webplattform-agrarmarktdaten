@@ -459,6 +459,7 @@ export const createFiltersWithHierarchyAtom = ({
   const [hierarchyAtom, hierarchyStatusAtom] = atomsWithQuery((get) => {
     const locale = get(localeAtom);
     const cubeIri = get(cubePathAtom);
+    const environment = get(lindasAtom);
 
     return {
       queryKey: [`${dataKey}Hierarchy`, cubeIri, locale],
@@ -470,7 +471,7 @@ export const createFiltersWithHierarchyAtom = ({
           locale,
           cubeIri: cubeIri,
           dimensionIri: dataDimensions[dataKey].iri,
-          environment: get(lindasAtom).url,
+          environment: environment.url,
         });
       },
       placeholderData: (previousData) => previousData,
