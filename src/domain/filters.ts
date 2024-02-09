@@ -6,8 +6,7 @@ import dayjs from "dayjs";
 import { ExtractAtomValue, Getter, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { atomFamily } from "jotai/vanilla/utils";
-import { isEmpty, isEqual, maxBy, minBy, snakeCase } from "lodash";
+import { isEmpty, maxBy, minBy, snakeCase } from "lodash";
 import {
   baseDimensionsStatusAtom,
   cubeDimensionsStatusAtom,
@@ -16,7 +15,11 @@ import {
 } from "./cubes";
 import { dataDimensions } from "./dimensions";
 import { observationsQueryAtom } from "./observations";
-import { optionCodec, multiOptionsCodec, timeRangeCodec } from "./codecs";
+import {
+  filterSingleHashAtomFamily,
+  filterMultiHashAtomFamily,
+  filterTimeRangeHashAtomFamily,
+} from "./atom-families";
 
 export type Option = {
   label: string;
@@ -480,43 +483,3 @@ export const productOptionsWithHierarchyAtom = atom((get) => {
 
   return getProductOptionsWithHierarchy(hierarchy.data, cubeProducts);
 });
-
-export const filterSingleHashAtomFamily = atomFamily(
-  ({ key, options, defaultOption }: { key: string; defaultOption?: string; options: string[] }) => {
-    return atomWithHash(key, defaultOption, optionCodec(options));
-  },
-  (a, b) => a.key === b.key && isEqual(a.options, b.options)
-);
-
-export const filterMultiHashAtomFamily = atomFamily(
-  ({
-    key,
-    options,
-    defaultOptions,
-  }: {
-    key: string;
-    options: string[];
-    defaultOptions?: string[];
-  }) => {
-    return atomWithHash(key, defaultOptions ?? options, multiOptionsCodec(options));
-  },
-  (a, b) => a.key === b.key && isEqual(a.options, b.options)
-);
-
-export const filterTimeRangeHashAtomFamily = atomFamily(
-  ({
-    key,
-    value,
-    defaultRange,
-  }: {
-    key: string;
-    value: RangeOptions["value"];
-    defaultRange: RangeOptions["value"];
-  }) => {
-    return atomWithHash(key, value ?? defaultRange, timeRangeCodec(defaultRange));
-  },
-  (a, b) =>
-    a.key === b.key &&
-    a.defaultRange[0] === b.defaultRange[0] &&
-    a.defaultRange[1] === b.defaultRange[1]
-);
