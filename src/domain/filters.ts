@@ -209,26 +209,30 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
 };
 
 const productHierarchyLevels = ["market", "product-group", "product-subgroup"] as const;
-type ProductHierarchyLevel = (typeof productHierarchyLevels)[number];
+const valueChainHierarchyLevels = ["market", "value-chain", "value-chain-detail"] as const;
 
-const groups = [
-  (d: Option<ProductHierarchyLevel>) => d.hierarchy?.["market"],
-  (d: Option<ProductHierarchyLevel>) => d.hierarchy?.["product-group"],
-  (d: Option<ProductHierarchyLevel>) => d.hierarchy?.["product-subgroup"],
+const createGrouping = <T extends string>(hierarchyLevels: readonly T[]) =>
+  hierarchyLevels.map(
+    (level) => (d: Option<T>) => d.hierarchy?.[level]
+    // Need to have the type assertion, otherwise readonly is added and does not work
+    // with select options in SidePanel
+  ) as ((d: Option) => {
+    value: string | undefined;
+    label: string | undefined;
+  })[];
 
-  // Need to have the type annotation, otherwise readonly is added and does not work
-  // with select options in SidePanel
-] as ((d: Option) => { value: string | undefined; label: string | undefined })[];
-
-const createFilterDimensionAtomWithHierarchy = ({
+const createFilterDimensionAtomWithHierarchy = <THierarchyLevel extends string>({
   dataKey,
+  hierarchyLevels,
   hierarchyStatusAtom,
   optionsAtom,
 }: {
-  dataKey: string;
+  dataKey: keyof typeof dataDimensions;
+  hierarchyLevels: readonly THierarchyLevel[];
   hierarchyStatusAtom: typeof productHierarchyStatusAtom;
   optionsAtom: typeof productOptionsWithHierarchyAtom;
 }) => {
+  const groups = createGrouping(hierarchyLevels);
   return atom((get) => {
     const cubeDimensionsQuery = get(cubeDimensionsStatusAtom);
     const options = get(optionsAtom);
@@ -267,8 +271,17 @@ export const dimensionsSelectionAtom = atom((get) => {
     dataKey: "product",
     hierarchyStatusAtom: productHierarchyStatusAtom,
     optionsAtom: productOptionsWithHierarchyAtom,
+    hierarchyLevels: productHierarchyLevels,
+  });
+  const valueChainFilterAtom = createFilterDimensionAtomWithHierarchy({
+    dataKey: "value-chain-detail",
+    hierarchyStatusAtom: valueChainHierarchyStatusAtom,
+    optionsAtom: valueChainOptionsWithHierarchyAtom,
+    hierarchyLevels: valueChainHierarchyLevels,
   });
   const { hierarchyQuery: productHierarchyQuery, filter: productFilter } = get(productFilterAtom);
+  const { hierarchyQuery: valueChainHierarchyQuery, filter: valueChainFilter } =
+    get(valueChainFilterAtom);
 
   const dimensionAtoms = {
     "cost-component": createFilterDimensionAtom({
@@ -323,11 +336,12 @@ export const dimensionsSelectionAtom = atom((get) => {
     defaultRange: [defaultTimeRange.min, defaultTimeRange.max],
   });
 
-  const queries = [cubeDimensionsQuery, productHierarchyQuery];
+  const queries = [cubeDimensionsQuery, productHierarchyQuery, valueChainHierarchyQuery];
 
   return {
     dimensions: {
       product: productFilter,
+      "value-chain-detail": valueChainFilter,
       ...mapValues(dimensionAtoms, (a) => get(a)),
     },
     time: {
@@ -498,4 +512,12 @@ const {
 } = createFiltersWithHierarchyAtom({
   dataKey: "product",
   hierarchyLevels: productHierarchyLevels,
+});
+
+const {
+  optionsAtom: valueChainOptionsWithHierarchyAtom,
+  hierarchyStatusAtom: valueChainHierarchyStatusAtom,
+} = createFiltersWithHierarchyAtom({
+  dataKey: "value-chain-detail",
+  hierarchyLevels: valueChainHierarchyLevels,
 });
