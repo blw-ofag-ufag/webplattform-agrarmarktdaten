@@ -326,6 +326,8 @@ export const dimensionsSelectionAtom = atom((get) => {
     defaultRange: [defaultTimeRange.min, defaultTimeRange.max],
   });
 
+  const queries = [cubeDimensionsQuery, productHierarchyQuery];
+
   return {
     dimensions: {
       product: productFilter,
@@ -341,9 +343,9 @@ export const dimensionsSelectionAtom = atom((get) => {
           get(timeRangeAtom)[1] < defaultTimeRange.max,
       },
     },
-    isLoading: cubeDimensionsQuery.isLoading || productHierarchyQuery.isLoading,
-    isSuccess: cubeDimensionsQuery.isSuccess && productHierarchyQuery.isSuccess,
-    isError: cubeDimensionsQuery.isError || productHierarchyQuery.isError,
+    isLoading: queries.some((q) => q.isLoading),
+    isSuccess: queries.every((q) => q.isSuccess),
+    isError: queries.some((q) => q.isError),
   } as const;
 });
 
