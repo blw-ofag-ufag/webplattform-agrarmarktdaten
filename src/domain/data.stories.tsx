@@ -16,7 +16,7 @@ import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
 import { ObjectInspector } from "react-inspector";
 import { baseDimensionsAtom, cubesAtom, defaultCube } from "./cubes";
-import { getProductOptionsWithHierarchy } from "./filters";
+import { getOptionsWithHierarchy, productHierarchyLevels } from "./filters";
 import { tableFormatter } from "@/lib/formatter";
 
 export const AvailableCubes = () => {
@@ -213,7 +213,11 @@ export const Hierarchy = () => {
 
     const cubeProducts = dimensions.data.properties?.["product"]?.values;
 
-    const productList = getProductOptionsWithHierarchy(hierarchy.data, cubeProducts);
+    const productList = getOptionsWithHierarchy(
+      hierarchy.data,
+      cubeProducts,
+      productHierarchyLevels
+    );
 
     return productList;
   }, [hierarchy.data, dimensions.data]);

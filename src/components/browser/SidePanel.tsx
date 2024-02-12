@@ -63,6 +63,7 @@ const orderedDimensionFilters: AvailableDimensionFilter[] = [
   "production-system",
   "data-method",
   "unit",
+  "value-chain-detail",
 ];
 
 const SidePanel = ({
