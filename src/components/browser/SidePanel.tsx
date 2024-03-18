@@ -29,7 +29,7 @@ import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
-import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
+import SelectFilter, { PreviewSelect, SelectFilterProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
 import dayjs from "dayjs";
 
@@ -290,7 +290,7 @@ const FilterSelectAccordion = <T extends Option>({
   title: string;
   slots: {
     accordion: Omit<AccordionProps, "children">;
-    select: Omit<SelectProps<T>, "values" | "onChange" | "options">;
+    select: Omit<SelectFilterProps<T>, "values" | "onChange" | "options">;
   };
 }) => {
   const [values, setValues] = useAtom(filterAtom);
@@ -314,7 +314,7 @@ const FilterSelectAccordion = <T extends Option>({
         <PreviewSelect tainted={isTainted} values={valuesOptions} options={options} />
       </AccordionSummary>
       <AccordionDetails>
-        <Select
+        <SelectFilter
           values={valuesOptions}
           onChange={(options) => setValues(options.map((o) => o.value))}
           options={options}

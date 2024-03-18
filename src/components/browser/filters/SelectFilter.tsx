@@ -163,7 +163,7 @@ const propagateValueInTree = <T extends Option>(
   }) as Node<T & { checked: boolean }>[];
 };
 
-export type SelectProps<T extends Option> = {
+export type SelectFilterProps<T extends Option> = {
   options: T[];
   values: T[];
   groups?: Array<(item: T) => { value?: string; label?: string } | undefined>;
@@ -172,14 +172,8 @@ export type SelectProps<T extends Option> = {
   withSearch?: boolean;
 };
 
-export default function Select<T extends Option>({
-  options = [],
-  values = [],
-  groups,
-  onChange,
-  colorCheckbox,
-  withSearch = false,
-}: SelectProps<T>) {
+export default function SelectFilter<T extends Option>(props: SelectFilterProps<T>) {
+  const { options = [], values = [], groups, onChange, colorCheckbox, withSearch = false } = props;
   const [searchString, setSearchString] = useState("");
   const deferredSearch = useDeferredValue(searchString);
 
