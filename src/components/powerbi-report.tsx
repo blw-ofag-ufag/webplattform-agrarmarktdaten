@@ -25,6 +25,8 @@ import IcExpand from "@/icons/icons-jsx/control/IcExpand";
 import { t } from "@lingui/macro";
 import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 import { useInView } from "framer-motion";
+import { Locale } from "@/locales/locales";
+import { useLocale } from "@/lib/use-locale";
 
 const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.PowerBIEmbed), {
   ssr: false,
@@ -120,8 +122,13 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const getEmbedUrl = (reportId: string, reportWorkspaceId: string) => {
-  return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}`;
+const getEmbedUrl = (reportId: string, reportWorkspaceId: string, locale: Locale) => {
+  const formattedLocale = formatUrlLocale(locale);
+  return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}&language=${formattedLocale}&formatLocale=${formattedLocale}`;
+};
+
+const formatUrlLocale = (locale: Locale) => {
+  return `${locale}-${locale.toUpperCase()}`;
 };
 
 type PowerBIPage = {
@@ -200,6 +207,7 @@ export const PowerBIReport = (props: {
   host?: string;
 }) => {
   const { datasetId, reportId, reportWorkspaceId, pages, host, onChangeFullscreen } = props;
+  const locale = useLocale();
   const [report, setReport] = React.useState<Report | undefined>(undefined);
   const [activePage, setActivePage] = useState(() => pages[0]);
   const inViewRef = useRef<HTMLDivElement>(null);
@@ -211,6 +219,7 @@ export const PowerBIReport = (props: {
     reportWorkspaceId,
     activePage,
     host,
+    locale,
   });
   const { classes, cx } = useStyles();
   const [fullscreen, setFullscreenState] = useControlled({
@@ -280,10 +289,11 @@ type PowerBIConfigProps = {
   reportWorkspaceId: string;
   activePage?: PowerBIPage;
   host?: string;
+  locale: Locale;
 };
 
 const usePowerBIEmbedConfig = (props: PowerBIConfigProps & { enabled?: boolean }) => {
-  const { datasetId, reportId, reportWorkspaceId, activePage, host } = props;
+  const { datasetId, reportId, reportWorkspaceId, activePage, host, locale } = props;
   const { data: accessToken } = useQuery({
     queryKey: ["powerbi", "accessToken", reportId, datasetId],
     enabled: props.enabled ?? true,
@@ -318,10 +328,10 @@ const usePowerBIEmbedConfig = (props: PowerBIConfigProps & { enabled?: boolean }
     return {
       type: "report",
       id: reportId,
-      embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
+      embedUrl: getEmbedUrl(reportId, reportWorkspaceId, locale),
       tokenType: models.TokenType.Embed,
       accessToken,
       ...navigationProps,
     };
-  }, [accessToken, activePage, reportId, reportWorkspaceId]);
+  }, [accessToken, activePage, reportId, reportWorkspaceId, locale]);
 };
