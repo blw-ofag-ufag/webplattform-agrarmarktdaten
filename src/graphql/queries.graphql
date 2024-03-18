@@ -71,6 +71,7 @@ query LegalPage($locale: SiteLocale!) {
         ...ExternalLinkButton
         ...AssetLinkButton
         ...ImageTeaserBlock
+        ...IframeBlock
       }
       links {
         __typename
@@ -174,6 +175,7 @@ query MethodsPage($locale: SiteLocale!) {
         ...ExternalLinkButton
         ...AssetLinkButton
         ...ImageTeaserBlock
+        ...IframeBlock
       }
       links {
         __typename
@@ -214,6 +216,7 @@ query InfoPage($locale: SiteLocale!) {
         ...ExternalLinkButton
         ...AssetLinkButton
         ...ImageTeaserBlock
+        ...IframeBlock
       }
       links {
         __typename
@@ -463,6 +466,7 @@ fragment FullMarketArticle on MarketArticleRecord {
       ...ExternalLinkButton
       ...AssetLinkButton
       ...ImageTeaserBlock
+      ...IframeBlock
     }
     links {
       __typename
@@ -495,6 +499,7 @@ fragment FullFocusArticle on FocusArticleRecord {
       ...ExternalLinkButton
       ...AssetLinkButton
       ...ImageTeaserBlock
+      ...IframeBlock
     }
     links {
       __typename
@@ -580,7 +585,6 @@ fragment BlogPost on BlogPostRecord {
       ...ExternalLinkButton
       ...AssetLinkButton
       ...ImageTeaserBlock
-      ...IframeBlock
     }
     links {
       __typename
