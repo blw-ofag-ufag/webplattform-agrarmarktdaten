@@ -109,6 +109,7 @@ query TermsPage($locale: SiteLocale!) {
         ...ExternalLinkButton
         ...AssetLinkButton
         ...ImageTeaserBlock
+        ...IframeBlock
       }
       links {
         __typename
