@@ -209,9 +209,15 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
 };
 
 export const productHierarchyLevels = ["market", "product-group", "product-subgroup"] as const;
-const valueChainHierarchyLevels = ["market", "value-chain", "value-chain-detail"] as const;
 
-const createGrouping = <T extends string>(hierarchyLevels: readonly T[]) =>
+// The value-chain-detail is intentionally omitted since the value-chain is selected in another
+// filter
+export const valueChainHierarchyLevels = [
+  "market",
+  "value-chain" /* "value-chain-detail" */,
+] as const;
+
+export const createGrouping = <T extends string>(hierarchyLevels: readonly T[]) =>
   hierarchyLevels.map(
     (level) => (d: Option<T>) => d.hierarchy?.[level]
     // Need to have the type assertion, otherwise readonly is added and does not work
