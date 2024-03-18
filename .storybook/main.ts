@@ -10,7 +10,6 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
-    "@storybook/addon-mdx-gfm",
   ],
   previewHead: (head) => {
     // Need to be in sync with what's in _document
