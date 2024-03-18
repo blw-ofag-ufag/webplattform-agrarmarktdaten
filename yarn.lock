@@ -15203,7 +15203,7 @@ powerbi-client-react@^1.4.0:
     lodash.isequal "^4.5.0"
     powerbi-client "^2.21.1"
 
-powerbi-client@^2.21.1, powerbi-client@^2.22.3:
+powerbi-client@^2.21.1:
   version "2.22.3"
   resolved "https://registry.yarnpkg.com/powerbi-client/-/powerbi-client-2.22.3.tgz#9d40c2786a007123abb1420df5c754914818567b"
   integrity sha512-IUf0OCXBR7sX1zcId47L94/TD9ljWztEqMPyhtMFZ9zFsdY4G68B1+7AAE9+bYqAQrKznJTHvcLQAnWvYQh/9A==
@@ -15212,6 +15212,16 @@ powerbi-client@^2.21.1, powerbi-client@^2.22.3:
     powerbi-models "^1.12.3"
     powerbi-router "^0.1"
     window-post-message-proxy "^0.2"
+
+powerbi-client@^2.22.4:
+  version "2.22.4"
+  resolved "https://registry.yarnpkg.com/powerbi-client/-/powerbi-client-2.22.4.tgz#f993d4a8d10862ed00c01091f237fa56b7487aa7"
+  integrity sha512-1MuKp+F2W5aCfvCSPt/14UGWnJnxOVxO8PSFTgHOnMQYok6G3NyPNTCtfluudd18r/EkgLccNO2tLUtpKwRALA==
+  dependencies:
+    http-post-message "^0.2"
+    powerbi-models "^1.12.3"
+    powerbi-router "^0.1"
+    window-post-message-proxy "^0.2.7"
 
 powerbi-models@^1.12.3:
   version "1.13.0"
@@ -18681,6 +18691,13 @@ window-post-message-proxy@^0.2:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/window-post-message-proxy/-/window-post-message-proxy-0.2.6.tgz#8d9800d441629c8bff0a8cb2bf9e0119702940ca"
   integrity sha512-IwNWtUWVFarBa2F9vhmfv2yr0PfPm57QuOBCw3qSLaunhD3THcHUKQ4HrJQiCuYUT7LEjhUtaoA+hrV+wQzNmQ==
+  dependencies:
+    es6-promise "^3.1.2"
+
+window-post-message-proxy@^0.2.7:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/window-post-message-proxy/-/window-post-message-proxy-0.2.8.tgz#6d6a267909eb114d91d7c5bdc4e9e60427776b91"
+  integrity sha512-lAxMnXcKMR3UjFmeIWnl+1OdUBZI8l3RlCbr3TUALFpnWK6H6i6x+AHSp7Hs7PFGb08ct8BLT8CrCtESo+PyTQ==
   dependencies:
     es6-promise "^3.1.2"
 
