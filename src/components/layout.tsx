@@ -54,7 +54,9 @@ interface Props {
   backButtonColor?: string;
 }
 
-const isMilkMarket = (market: GQL.SimpleMarketArticleFragment) => market.id === "3222895";
+const isAvailableMarket = (market: GQL.SimpleMarketArticleFragment) =>
+  // Milk and eggs markets
+  ["3222895", "3222886"].includes(market.id);
 
 export const AppLayout = (props: Props) => {
   const { classes } = useStyles();
@@ -79,7 +81,7 @@ export const AppLayout = (props: Props) => {
         ?.map((market) => ({
           title: market.title!,
           href: `/${localeSlugs?.market}/${market.slug}`,
-          fadedOut: !isMilkMarket(market),
+          fadedOut: !isAvailableMarket(market),
         }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const focusSections =
