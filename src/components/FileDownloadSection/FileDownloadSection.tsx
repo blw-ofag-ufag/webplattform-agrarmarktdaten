@@ -71,7 +71,7 @@ const FileDownloadSection = (
           }
           return (
             file?.url && (
-              <Link href={file.url} key={id} legacyBehavior>
+              <Link href={`${file.url}?dl=${file.filename}`} key={id} legacyBehavior>
                 <Box className={classes.file}>
                   <div className={classes.fileIcon}>
                     <Download width={24} height={24} />
