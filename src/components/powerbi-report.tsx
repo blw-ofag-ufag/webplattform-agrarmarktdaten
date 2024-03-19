@@ -123,9 +123,8 @@ const useStyles = makeStyles()((theme) => ({
 }));
 
 const getEmbedUrl = (reportId: string, reportWorkspaceId: string, locale: Locale) => {
-  return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}&language=${locale}&formatLocale=${formatReportLocale(
-    locale
-  )}`;
+  const urlLocale = formatReportLocale(locale);
+  return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}&language=${urlLocale}&formatLocale=${urlLocale}`;
 };
 
 const formatReportLocale = (locale: Locale) => {
@@ -332,11 +331,6 @@ const usePowerBIEmbedConfig = (props: PowerBIConfigProps & { enabled?: boolean }
       embedUrl: getEmbedUrl(reportId, reportWorkspaceId, locale),
       tokenType: models.TokenType.Embed,
       accessToken,
-      settings: {
-        localeSettings: {
-          language: formatReportLocale(locale),
-        },
-      },
       ...navigationProps,
     };
   }, [accessToken, activePage, reportId, reportWorkspaceId, locale]);
