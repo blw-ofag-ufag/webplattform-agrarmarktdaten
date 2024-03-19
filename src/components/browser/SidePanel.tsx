@@ -29,7 +29,7 @@ import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 import PreviewFilter from "./filters/PreviewFilter";
 import RadioFilter from "./filters/RadioFilter";
-import Select, { PreviewSelect, SelectProps } from "./filters/SelectFilter";
+import SelectFilter, { PreviewSelect, SelectFilterProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
 import dayjs from "dayjs";
 
@@ -49,21 +49,44 @@ const useExclusiveAccordion = (defaultState: string) => {
   return { getAccordionProps };
 };
 
-const orderedCubeFilters = ["value-chain", /* "market", */ "measure"] as const;
-const orderedDimensionFilters: AvailableDimensionFilter[] = [
-  "sales-region",
-  "product",
-  "currency",
-  "foreign-trade",
-  "usage",
-  "data-source",
-  "product-origin",
-  "product-properties",
-  "cost-component",
-  "production-system",
-  "data-method",
-  "unit",
-  "value-chain-detail",
+const orderedFilters: (
+  | {
+      key: "value-chain" | "measure";
+      type: "cube";
+    }
+  | {
+      key: AvailableDimensionFilter;
+      type: "dimension";
+    }
+  | {
+      key: "time";
+      type: "time";
+    }
+)[] = [
+  { key: "time", type: "time" }, // Datum
+  { key: "product", type: "dimension" }, // Produkt
+
+  { key: "measure", type: "cube" }, // Kennzahl
+
+  { key: "unit", type: "dimension" }, // Einheit
+  { key: "currency", type: "dimension" }, // Währung
+  { key: "cost-component", type: "dimension" }, // Kostenkomponente
+  { key: "sales-region", type: "dimension" }, // Verkaufsregion
+  {
+    key: "value-chain",
+    type: "cube",
+  }, // Wertschöpfungsstufe
+  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe Detail
+
+  { key: "foreign-trade", type: "dimension" }, // Aussenhandel
+  // { key: "market", type: "dimension" },
+  { key: "product-origin", type: "dimension" }, // Produktherkunft
+  { key: "production-system", type: "dimension" }, // Produktionssystem
+  { key: "product-properties", type: "dimension" }, // Produkteigenschaften
+
+  { key: "usage", type: "dimension" }, // Verwendungsart
+  { key: "data-method", type: "dimension" }, // Datenart
+  { key: "data-source", type: "dimension" }, // Datenquelle
 ];
 
 const SidePanel = ({
@@ -111,81 +134,83 @@ const SidePanel = ({
             </Stack>
           </Box>
           {/* Cube path filters */}
-          {orderedCubeFilters.map((key) => {
-            if (filters.cube.isError) {
-              return null;
+          {orderedFilters.map((filterSpec) => {
+            const { key, type } = filterSpec;
+
+            if (type === "cube") {
+              if (filters.cube.isError) {
+                return null;
+              }
+              const config = filters.cube.dimensions[key];
+
+              const options = config.options.map((option) => {
+                return {
+                  ...option,
+                  disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
+                };
+              });
+
+              return (
+                <>
+                  {filters.cube.isLoading && (
+                    <FilterAccordion key={key} {...getAccordionProps(key)}>
+                      <AccordionSummary>
+                        <CircularProgress />
+                      </AccordionSummary>
+                    </FilterAccordion>
+                  )}
+                  {filters.cube.isSuccess && (
+                    <FilterRadioAccordion
+                      key={key}
+                      slots={{
+                        accordion: getAccordionProps(key),
+                      }}
+                      options={options}
+                      filterAtom={config.atom}
+                      title={config.name ?? key}
+                      defaultValue={config.default}
+                    />
+                  )}
+                </>
+              );
+            } else if (type === "dimension") {
+              const config = filters.dimensions.dimensions[key];
+
+              if (filters.cube.isError) {
+                return null;
+              }
+
+              return (
+                <>
+                  {filters.dimensions.isLoading && (
+                    <FilterAccordion key={key} {...getAccordionProps(key)}>
+                      <AccordionSummary>
+                        <CircularProgress />
+                      </AccordionSummary>
+                    </FilterAccordion>
+                  )}
+                  {filters.dimensions.isSuccess && (
+                    <FilterSelectAccordion
+                      key={key}
+                      slots={{
+                        accordion: getAccordionProps(key),
+                        select: {
+                          withSearch: config.search,
+                          groups: config?.groups,
+                        },
+                      }}
+                      options={config.options}
+                      filterAtom={config.atom}
+                      title={config.name}
+                    />
+                  )}
+                </>
+              );
+            } else if (type === "time") {
+              return <TimeAccordion key={key} {...getAccordionProps("time")} />;
+            } else {
+              throw new Error("not implemented");
             }
-            const config = filters.cube.dimensions[key];
-
-            const options = config.options.map((option) => {
-              return {
-                ...option,
-                disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
-              };
-            });
-
-            return (
-              <>
-                {filters.cube.isLoading && (
-                  <FilterAccordion key={key} {...getAccordionProps(key)}>
-                    <AccordionSummary>
-                      <CircularProgress />
-                    </AccordionSummary>
-                  </FilterAccordion>
-                )}
-                {filters.cube.isSuccess && (
-                  <FilterRadioAccordion
-                    key={key}
-                    slots={{
-                      accordion: getAccordionProps(key),
-                    }}
-                    options={options}
-                    filterAtom={config.atom}
-                    title={config.name ?? key}
-                    defaultValue={config.default}
-                  />
-                )}
-              </>
-            );
-          })}
-
-          <TimeAccordion {...getAccordionProps("time")} />
-
-          {/* Property filters */}
-
-          {orderedDimensionFilters.map((key) => {
-            const config = filters.dimensions.dimensions[key];
-
-            if (filters.cube.isError) {
-              return null;
-            }
-
-            return (
-              <>
-                {filters.dimensions.isLoading && (
-                  <FilterAccordion key={key} {...getAccordionProps(key)}>
-                    <AccordionSummary>
-                      <CircularProgress />
-                    </AccordionSummary>
-                  </FilterAccordion>
-                )}
-                {filters.dimensions.isSuccess && (
-                  <FilterSelectAccordion
-                    key={key}
-                    slots={{
-                      accordion: getAccordionProps(key),
-                      select: {
-                        withSearch: config.search,
-                        groups: config?.groups,
-                      },
-                    }}
-                    options={config.options}
-                    filterAtom={config.atom}
-                    title={config.name}
-                  />
-                )}
-              </>
-            );
           })}
         </Box>
       </Stack>
@@ -265,7 +290,7 @@ const FilterSelectAccordion = <T extends Option>({
   title: string;
   slots: {
     accordion: Omit<AccordionProps, "children">;
-    select: Omit<SelectProps<T>, "values" | "onChange" | "options">;
+    select: Omit<SelectFilterProps<T>, "values" | "onChange" | "options">;
   };
 }) => {
   const [values, setValues] = useAtom(filterAtom);
@@ -289,7 +314,7 @@ const FilterSelectAccordion = <T extends Option>({
         <PreviewSelect tainted={isTainted} values={valuesOptions} options={options} />
       </AccordionSummary>
       <AccordionDetails>
-        <Select
+        <SelectFilter
           values={valuesOptions}
           onChange={(options) => setValues(options.map((o) => o.value))}
           options={options}
