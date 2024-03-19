@@ -32,13 +32,19 @@ const PowerBIEmbed = dynamic(() => import("powerbi-client-react").then((d) => d.
   ssr: false,
 });
 
-const CONFIG: models.IReportEmbedConfiguration = {
+const getDefaultConfig = (locale: Locale): models.IReportEmbedConfiguration => ({
   type: "report",
   id: undefined,
   embedUrl: undefined,
   accessToken: undefined,
   tokenType: models.TokenType.Embed,
-};
+  settings: {
+    localeSettings: {
+      language: locale,
+      formatLocale: formatReportLocale(locale),
+    },
+  },
+});
 
 const useStyles = makeStyles()((theme) => ({
   reportContainer: {
@@ -122,9 +128,8 @@ const useStyles = makeStyles()((theme) => ({
   },
 }));
 
-const getEmbedUrl = (reportId: string, reportWorkspaceId: string, locale: Locale) => {
-  const urlLocale = formatReportLocale(locale);
-  return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}&language=${urlLocale}&formatLocale=${urlLocale}`;
+const getEmbedUrl = (reportId: string, reportWorkspaceId: string) => {
+  return `https://embedded.powerbi.com/reportEmbed?reportId=${reportId}&groupId=${reportWorkspaceId}`;
 };
 
 const formatReportLocale = (locale: Locale) => {
@@ -312,7 +317,7 @@ const usePowerBIEmbedConfig = (props: PowerBIConfigProps & { enabled?: boolean }
 
   return React.useMemo(() => {
     if (!accessToken) {
-      return CONFIG;
+      return getDefaultConfig(locale);
     }
 
     const navigationProps = activePage
@@ -328,8 +333,14 @@ const usePowerBIEmbedConfig = (props: PowerBIConfigProps & { enabled?: boolean }
     return {
       type: "report",
       id: reportId,
-      embedUrl: getEmbedUrl(reportId, reportWorkspaceId, locale),
+      embedUrl: getEmbedUrl(reportId, reportWorkspaceId),
       tokenType: models.TokenType.Embed,
+      settings: {
+        localeSettings: {
+          language: locale,
+          formatLocale: formatReportLocale(locale),
+        },
+      },
       accessToken,
       ...navigationProps,
     };
