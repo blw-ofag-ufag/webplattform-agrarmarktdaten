@@ -129,32 +129,15 @@ const StructuredText = (props: Props) => {
                   </NextLink>
                 );
               }),
-              renderNodeRule(isHeading, ({ node, children, key }) => {
+              renderNodeRule(isHeading, ({ node, children }) => {
                 //We don't allow h6 headers to be able to save those for the table of contents menu
                 if (node.level === 6) {
                   return null;
                 }
-                //We save the ids of h1s in order to then easily scroll to them
-                let id = "";
-                if (node.level === 1) {
-                  i += 1;
-                  id = `heading${i}`;
-                  return (
-                    <Header1 key={id} id={i} className={classes.h1}>
-                      {children}
-                    </Header1>
-                  );
-                }
                 return (
-                  <Typography
-                    key={key}
-                    id={id}
-                    variant={`h${node.level}`}
-                    component={`h${node.level}`}
-                    className={classes[`h${node.level}` as `h${typeof node.level}`]}
-                  >
+                  <AnchorHeader key={i} id={i} level={node.level} className={classes.h1}>
                     {children}
-                  </Typography>
+                  </AnchorHeader>
                 );
               }),
 
@@ -430,12 +413,13 @@ const getUrl = (record: InternalLink, router: NextRouter) => {
 
 interface HeaderProps {
   id: number;
+  level: 1 | 2 | 3 | 4 | 5;
   children: React.ReactNode;
   className?: string;
 }
 
-const Header1 = (props: HeaderProps) => {
-  const { id, children } = props;
+const AnchorHeader = (props: HeaderProps) => {
+  const { id, level, children } = props;
   const { asPath, push } = useRouter();
   const textContent = extractTextContent(children as JSX.Element);
   const encodedContent = slugify(textContent);
@@ -470,8 +454,8 @@ const Header1 = (props: HeaderProps) => {
       <Typography
         ref={ref}
         id={`heading${id}`}
-        variant="h1"
-        component="h1"
+        variant={`h${level}`}
+        component={`h${level}`}
         className={props.className}
       >
         {children}
