@@ -45,9 +45,15 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
         />
 
         <meta name="emotion-insertion-point" content="" />
+        {/* GERMAN */}
         <meta
           name="google-site-verification"
           content="LACcpzOpq8Rfq0i2E9S7QOtNqzuFzov21Q4u8rTTz2w"
+        />
+        {/* ITALIAN */}
+        <meta
+          name="google-site-verification"
+          content="jDyW4_ny-wJO9XzdpPp7Fy0DYG6sDWQtRUy3FFew3BQ"
         />
         {emotionStyleTags}
       </Head>
