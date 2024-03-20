@@ -194,9 +194,10 @@ const useStructuredTextStyles = makeStyles<
       [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
       "& > button": { opacity: 0, transition: "opacity 0.15s ease-out" },
       "&:hover > button": { opacity: 1 },
-
-      marginBottom: theme.spacing(5),
     }),
+    anchorHeader1: {
+      marginBottom: theme.spacing(5),
+    },
     header: {
       display: "flex",
       alignItems: "center",
