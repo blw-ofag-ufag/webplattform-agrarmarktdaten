@@ -719,6 +719,7 @@ fragment FileDownloadSection on FileDownloadSectionRecord {
     file {
       url
       format
+      filename
     }
   }
 }
