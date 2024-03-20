@@ -33,6 +33,10 @@ const run = async () => {
       alternates: result.data.termsPage?._allSlugLocales?.map(({ value }) => `/${value}`),
     },
     {
+      url: "/about-us",
+      alternates: result.data.aboutUsPage?._allSlugLocales?.map(({ value }) => `/${value}`),
+    },
+    {
       url: "/info",
       alternates: result.data.infoPage?._allSlugLocales?.map(({ value }) => `/${value}`),
     },
@@ -58,6 +62,8 @@ const run = async () => {
       data: result.data?.dataPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       legal: result.data?.legalPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       terms: result.data?.termsPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
+      aboutUs: result.data?.aboutUsPage?._allSlugLocales?.find((slug) => slug.locale === locale)
+        ?.value,
       info: result.data?.infoPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       analysis: result.data?.analysisPage?._allSlugLocales?.find((slug) => slug.locale === locale)
         ?.value,
