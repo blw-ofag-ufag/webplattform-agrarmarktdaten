@@ -159,7 +159,7 @@ msgstr "Alles abwählen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.select.clear"
+msgid "filters.select.none"
 msgstr "Alles abwählen"
 
 #. js-lingui-explicit-id

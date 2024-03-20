@@ -274,7 +274,7 @@ export default function SelectFilter<T extends Option>(props: SelectFilterProps<
           disabled={values.length === 0}
         >
           <Typography variant="body2">
-            <Trans id="filters.select.clear">Clear</Trans>
+            <Trans id="filters.select.none">Deselect all</Trans>
           </Typography>
         </Button>
       </Stack>

@@ -154,8 +154,8 @@ msgstr "Ripristina i filtri"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.select.clear"
-msgstr "Azzera i filtri"
+msgid "filters.select.none"
+msgstr "Deseleziona tutto"
 
 #. js-lingui-explicit-id
 #: src/components/InPlaceDialog.tsx
