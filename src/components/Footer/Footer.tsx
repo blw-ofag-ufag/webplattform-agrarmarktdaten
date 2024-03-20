@@ -34,17 +34,14 @@ const FooterBLW = () => {
       ContentWrapperProps={{ sx: makeContentWrapperSx(theme) }}
       bottomLinks={[
         {
-          title: t({ id: "footer.impressum", message: "Impressum" }),
-          href: `https://www.blw.admin.ch/blw/${locale}/home/markt/marktbeobachtung.html`,
-        },
-        {
           title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
           external: false,
           href: `/${localeSlugs?.legal}`,
         },
         {
           title: t({ id: "footer.about_us.label", message: "About Us" }),
-          href: `https://www.blw.admin.ch/blw/${locale}/home.html`,
+          external: false,
+          href: `/${localeSlugs?.aboutUs}`,
         },
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
