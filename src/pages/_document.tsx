@@ -50,6 +50,11 @@ export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
           name="google-site-verification"
           content="LACcpzOpq8Rfq0i2E9S7QOtNqzuFzov21Q4u8rTTz2w"
         />
+        {/* FRENCH */}
+        <meta
+          name="google-site-verification"
+          content="r6n9IylKAkf_kSzAZMhSrskKK4d7DyQ2kdCrcTR4g1s"
+        />
         {/* ITALIAN */}
         <meta
           name="google-site-verification"
