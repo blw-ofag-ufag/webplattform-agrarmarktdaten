@@ -13,7 +13,7 @@ import { giveConsent } from "@/utils/matomo";
 
 const useStyles = makeStyles()(({ spacing: s, breakpoints: b, palette: c }) => ({
   wrapper: {
-    position: "sticky",
+    position: "fixed",
     bottom: 0,
     width: "100%",
     paddingBlock: "40px",
