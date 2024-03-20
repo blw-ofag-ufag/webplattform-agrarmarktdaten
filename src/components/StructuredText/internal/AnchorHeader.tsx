@@ -20,7 +20,7 @@ const AnchorHeader = (props: HeaderProps) => {
   const { asPath, push } = useRouter();
   const textContent = extractTextContent(children as JSX.Element);
   const encodedContent = slugify(textContent);
-  const { classes } = useStructuredTextStyles({});
+  const { classes, cx } = useStructuredTextStyles({});
 
   const [ref] = useScrollIntoView(id);
 
@@ -36,7 +36,7 @@ const AnchorHeader = (props: HeaderProps) => {
   const handleTooltipClose = () => setTooltipOpen(false);
 
   return (
-    <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
+    <Box position="relative" className={classes.anchorHeaderWrapper} id={encodedContent}>
       <Tooltip
         PopperProps={{ disablePortal: true }}
         onClose={handleTooltipClose}
@@ -44,7 +44,7 @@ const AnchorHeader = (props: HeaderProps) => {
         leaveDelay={1000}
         title={t({ id: "action.copy", message: "Copied to Clipboard" })}
       >
-        <IconButton className={classes.h1Icon} onClick={handleTooltipOpen}>
+        <IconButton className={classes.anchorIcon} onClick={handleTooltipOpen}>
           <IcLink width={27} height={27} />
         </IconButton>
       </Tooltip>
@@ -53,7 +53,7 @@ const AnchorHeader = (props: HeaderProps) => {
         id={`heading${id}`}
         variant={`h${level}`}
         component={`h${level}`}
-        className={props.className}
+        className={cx(classes.header, props.className)}
       >
         {children}
       </Typography>

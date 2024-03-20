@@ -184,16 +184,12 @@ const useStructuredTextStyles = makeStyles<
       marginTop: 64,
       marginBottom: 64,
     },
-    h1Icon: debugStyle("h1Icon", {
+    anchorIcon: debugStyle("anchorIcon", {
       marginLeft: "-44px",
       minWidth: "27px",
       maxHeight: "44px",
-      [theme.breakpoints.up("xxl")]: { marginTop: "5px" },
-      [theme.breakpoints.down("xxl")]: {
-        marginTop: "-3px",
-      },
     }),
-    h1Wrapper: debugStyle("h1Wrapper", {
+    anchorHeaderWrapper: debugStyle("anchorHeaderWrapper", {
       display: "flex",
       [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
       "& > button": { opacity: 0, transition: "opacity 0.15s ease-out" },
@@ -201,6 +197,10 @@ const useStructuredTextStyles = makeStyles<
 
       marginBottom: theme.spacing(5),
     }),
+    header: {
+      display: "flex",
+      alignItems: "center",
+    },
     nonBreakable: {
       whiteSpace: "nowrap",
     },
