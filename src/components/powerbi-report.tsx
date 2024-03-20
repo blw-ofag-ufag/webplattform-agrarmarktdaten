@@ -64,10 +64,10 @@ const useStyles = makeStyles()((theme) => ({
     },
   },
   reportContainerFullscreen: {
-    padding: "8rem",
+    padding: "2.5rem 4rem",
 
     [theme.breakpoints.down("xxxl")]: {
-      padding: "4rem",
+      padding: "2.5rem 2rem",
     },
 
     // Not to have any overlap between close button and navigation
@@ -110,10 +110,12 @@ const useStyles = makeStyles()((theme) => ({
     display: "flex",
     gap: theme.spacing(2),
     width: "fit-content",
-    padding: theme.spacing(4),
+    paddingInline: theme.spacing(4),
+    paddingBlock: theme.spacing(1),
   },
   navigationButton: {
     whiteSpace: "nowrap",
+    paddingBlock: theme.spacing(1),
   },
   navigationTabs: {
     width: "100%",

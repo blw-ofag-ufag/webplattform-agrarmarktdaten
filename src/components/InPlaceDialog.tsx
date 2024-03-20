@@ -18,7 +18,7 @@ export const useInPlaceDialogStyles = makeStyles({ name: "InPlaceDialog" })(() =
 const useStyles = makeStyles<void, "modalOpened">()((_theme, _params, classes) => ({
   paper: {
     [`.${classes.modalOpened} &`]: {
-      margin: "4rem",
+      margin: "2rem",
     },
     flexGrow: 1,
     padding: 0,
