@@ -35,6 +35,7 @@ const AnchorHeader = (props: HeaderProps) => {
   };
   const handleTooltipClose = () => setTooltipOpen(false);
 
+  const levelClass = getLevelClass(level);
   return (
     <Box position="relative" className={classes.anchorHeaderWrapper} id={encodedContent}>
       <Tooltip
@@ -53,13 +54,18 @@ const AnchorHeader = (props: HeaderProps) => {
         id={`heading${id}`}
         variant={`h${level}`}
         component={`h${level}`}
-        className={cx(classes.header, props.className, { [classes.anchorHeader1]: level === 1 })}
+        className={cx(classes.header, props.className, {
+          [classes.anchorHeader1]: level === 1,
+          [classes[levelClass]]: level !== 1,
+        })}
       >
         {children}
       </Typography>
     </Box>
   );
 };
+
+const getLevelClass = (level: 1 | 2 | 3 | 4 | 5) => `h${level}` as `h${typeof level}`;
 
 const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
   if (Array.isArray(node)) {
