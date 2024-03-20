@@ -144,6 +144,7 @@ const baseMeasures = [
   amdpMeasure("price").value,
   amdpMeasure("quantity").value,
   amdpMeasure("index").value,
+  amdpMeasure("contribution").value,
 ];
 const baseProperties = [amdpDimension("market").value, amdpDimension("value-chain").value];
 
