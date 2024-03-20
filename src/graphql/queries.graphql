@@ -123,6 +123,44 @@ query TermsPage($locale: SiteLocale!) {
   ...MenuItems
 }
 
+query AboutUsPage($locale: SiteLocale!) {
+  aboutUsPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    title
+    ...SEOMetaTags
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    content {
+      value
+      blocks {
+        __typename
+        ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
+        ...ImageTeaserBlock
+        ...IframeBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
 query MarketPage($locale: SiteLocale!, $slug: String!) {
   marketArticle(locale: $locale, filter: { slug: { eq: $slug } }) {
     _allSlugLocales {
@@ -381,6 +419,12 @@ query AllRedirects {
     }
   }
   termsPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  aboutUsPage {
     _allSlugLocales {
       locale
       value

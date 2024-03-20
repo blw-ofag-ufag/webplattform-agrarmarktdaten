@@ -3,7 +3,6 @@
     "url": "/methods",
     "alternates": [
       "/methoden",
-      "/methods",
       "/methodes",
       "/metodi"
     ]
@@ -12,7 +11,6 @@
     "url": "/data",
     "alternates": [
       "/daten",
-      "/data",
       "/donnees",
       "/dati"
     ]
@@ -21,7 +19,6 @@
     "url": "/legal",
     "alternates": [
       "/auftrag-und-rechtliche-grundlage",
-      "/mandate-and-legal-basis",
       "/mission-et-bases-legales",
       "/compiti-e-basi-legali"
     ]
@@ -30,16 +27,22 @@
     "url": "/terms-and-conditions",
     "alternates": [
       "/nutzungsbedingungen",
-      "/terms-use",
       "/conditions-utilisations",
       "/condizioni-uso"
+    ]
+  },
+  {
+    "url": "/about-us",
+    "alternates": [
+      "/uber-uns",
+      "/a-propos-de-nous",
+      "/chi-siamo"
     ]
   },
   {
     "url": "/info",
     "alternates": [
       "/informationen",
-      "/information",
       "/informations",
       "/informazioni"
     ]
@@ -48,7 +51,6 @@
     "url": "/analysis",
     "alternates": [
       "/analysen",
-      "/analisys",
       "/analyses",
       "/analisi"
     ]
@@ -58,7 +60,6 @@
     "alternates": [
       "/fokus",
       "/focus",
-      "/focus",
       "/focus"
     ]
   },
@@ -66,7 +67,6 @@
     "url": "/market/[slug]",
     "alternates": [
       "/markt",
-      "/market",
       "/marche",
       "/mercato"
     ]
