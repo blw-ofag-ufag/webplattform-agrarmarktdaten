@@ -61,13 +61,7 @@ export const queryBasePropertyDimensions = ({
 `;
 };
 
-export const queryBaseMeasureDimensions = ({
-  locale,
-  measuresIri,
-}: {
-  locale: Locale;
-  measuresIri: string[];
-}) => {
+export const queryBaseMeasureDimensions = ({ locale }: { locale: Locale }) => {
   return `
   PREFIX cube: <https://cube.link/>
   PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -76,14 +70,16 @@ export const queryBaseMeasureDimensions = ({
   SELECT DISTINCT ?dimension ?label 
   FROM <${agDataBase}>
   WHERE {
-    VALUES (?dimension) {
-      ${measuresIri.map((iri) => `(<${iri}>)`).join("\n")} 
-  }
   ?cube
   a cube:Cube ; 
   cube:observationConstraint ?shape .
   ?shape ?p ?blankNode .
   ?blankNode sh:path ?dimension .
+    
+  FILTER (
+    contains(str(?dimension), "${amdpMeasure().value}")
+  )
+
   OPTIONAL { ?blankNode schema:name ?label. FILTER(lang(?label) = "${locale}") } 
 }`;
 };
