@@ -110,8 +110,7 @@ const useStyles = makeStyles()((theme) => ({
     display: "flex",
     gap: theme.spacing(2),
     width: "fit-content",
-    paddingInline: theme.spacing(4),
-    paddingBlock: theme.spacing(1),
+    padding: theme.spacing(1, 4),
   },
   navigationButton: {
     whiteSpace: "nowrap",
