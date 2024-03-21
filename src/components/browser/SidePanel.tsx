@@ -18,7 +18,7 @@ import {
 import { WritableAtom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { xor } from "lodash";
 import { SyntheticEvent, useMemo, useState } from "react";
-import FilterAccordion from "../filter-accordion";
+import FilterAccordion from "../FilterAccordion";
 import { withStyles } from "../style-utils";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
 import PreviewFilter from "./filters/PreviewFilter";
