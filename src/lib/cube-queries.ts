@@ -1,6 +1,6 @@
 import { Locale } from "@/locales/locales";
 import { amdpMeasure, amdpDimension } from "./namespace";
-import { mapKeys } from "remeda";
+import { isTruthy, mapKeys } from "remeda";
 
 const agDataBase = "https://lindas.admin.ch/foag/agricultural-market-data";
 
@@ -285,12 +285,16 @@ export const queryObservations = ({
   SELECT DISTINCT ?observation
     ${dimensions
       .map((d) => {
+        if (d.key === "date") {
+          return null;
+        }
         if (lang && labelledDimensions.has(d.iri)) {
           return `?${d.key}${labelSuffix}`;
         } else {
           return `?${d.key}`;
         }
       })
+      .filter(isTruthy)
       .join(" ")} ?measure
     ?year ?month
   WHERE {

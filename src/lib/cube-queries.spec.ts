@@ -73,7 +73,7 @@ describe("cube queries", () => {
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         
         SELECT DISTINCT ?observation
-          ?costComponent ?currency ?dataMethod ?dataSource ?date ?foreignTrade ?keyIndicatorType ?market ?product ?productGroup ?productSubgroup ?productProperties ?productionSystem ?productOrigin ?salesRegion ?unit ?usage ?valueChainDetail ?valueChain ?measure
+          ?costComponent ?currency ?dataMethod ?dataSource ?foreignTrade ?keyIndicatorType ?market ?product ?productGroup ?productSubgroup ?productProperties ?productionSystem ?productOrigin ?salesRegion ?unit ?usage ?valueChainDetail ?valueChain ?measure
           ?year ?month
         WHERE {
           GRAPH <https://lindas.admin.ch/foag/agricultural-market-data> {
@@ -183,7 +183,7 @@ describe("cube queries", () => {
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
       SELECT DISTINCT ?observation ?costComponentLabel ?currencyLabel ?dataMethodLabel ?dataSourceLabel
-        ?date ?foreignTradeLabel ?keyIndicatorTypeLabel ?marketLabel ?productLabel ?productGroupLabel
+        ?foreignTradeLabel ?keyIndicatorTypeLabel ?marketLabel ?productLabel ?productGroupLabel
         ?productSubgroupLabel ?productPropertiesLabel ?productionSystemLabel ?productOriginLabel
         ?salesRegionLabel ?unitLabel ?usageLabel ?valueChainDetailLabel ?valueChainLabel
         ?measure ?year ?month

@@ -319,7 +319,7 @@ const observationSchema = z
       .transform((v) => +v)
       .optional(),
     ...(Object.fromEntries(
-      DIMENSIONS.map((d) => {
+      DIMENSIONS.filter((d) => d !== "date").map((d) => {
         return [toCamelCase(d), z.string().transform((v) => ns.removeNamespace(v, amdp))];
       })
     ) as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>),
