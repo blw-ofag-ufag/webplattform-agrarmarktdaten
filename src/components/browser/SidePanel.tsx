@@ -1,4 +1,4 @@
-import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
+import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
 import { DEFAULT_MEASURE, DEFAULT_TIME_VIEW, Option, TimeView, filterAtom } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
@@ -58,7 +58,6 @@ const SidePanel = ({
 }) => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
-  const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
   const filters = useAtomValue(filterAtom);
   const isMobile = useIsMobile();
 
@@ -87,7 +86,6 @@ const SidePanel = ({
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
             <Stack direction="row" gap={1} alignItems="center">
-              {cubeDimensionsStatus.isSuccess && filters.changed > 0 && <ResetFiltersButton />}
               {isMobile ? (
                 <IconButton onClick={onClose}>
                   <IcChevronDoubleLeft />
