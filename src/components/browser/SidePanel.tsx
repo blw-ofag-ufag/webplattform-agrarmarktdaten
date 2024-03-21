@@ -103,9 +103,10 @@ const SidePanel = ({
               const config = filters.cube.dimensions[key];
 
               const options = config.options.map((option) => {
+                const disabled = !availableBaseDimensionsValues[key].options.includes(option.value);
                 return {
                   ...option,
-                  disabled: !availableBaseDimensionsValues[key].options.includes(option.value),
+                  disabled,
                 };
               });
 
