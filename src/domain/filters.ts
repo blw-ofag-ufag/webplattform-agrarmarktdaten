@@ -219,14 +219,11 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
   });
 };
 
-export const productHierarchyLevels = ["market", "product-group", "product-subgroup"] as const;
+export const productHierarchyLevels = ["product-group", "product-subgroup"] as const;
 
-// The value-chain-detail is intentionally omitted since the value-chain is selected in another
+// The value-chain is intentionally omitted since the value-chain is selected in another
 // filter
-export const valueChainHierarchyLevels = [
-  "market",
-  "value-chain" /* "value-chain-detail" */,
-] as const;
+export const valueChainHierarchyLevels = [] as const;
 
 export const createGrouping = <T extends string>(hierarchyLevels: readonly T[]) =>
   hierarchyLevels.map(
