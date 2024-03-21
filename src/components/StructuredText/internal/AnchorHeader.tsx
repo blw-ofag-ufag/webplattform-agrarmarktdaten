@@ -27,9 +27,7 @@ const AnchorHeader = (props: HeaderProps) => {
   const [isTooltipOpen, setTooltipOpen] = React.useState(false);
   const handleTooltipOpen = async () => {
     setTooltipOpen(true);
-    const newHashPath = asPath.includes("#")
-      ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
-      : `#${encodedContent}`;
+    const newHashPath = getHashPath(asPath, encodedContent);
     await push(newHashPath);
     await copyToClipboard(window.location.href);
   };
@@ -76,5 +74,8 @@ const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
   }
   return "";
 };
+
+const getHashPath = (path: string, content: string) =>
+  path.includes("#") ? path.replace(/#(.*)$/, `#${content}`) : `#${content}`;
 
 export default AnchorHeader;
