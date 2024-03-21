@@ -155,7 +155,7 @@ const DataBrowser = () => {
           }}
         />
       </Box>
-      <Stack px={s(8)} pt={s(8)} gap={4} flexGrow={1} minHeight={0}>
+      <Stack px={s(8)} pt={s(8)} pb={s(7)} gap={4} flexGrow={1} minHeight={0}>
         <Stack
           direction="row"
           justifyContent="space-between"

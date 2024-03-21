@@ -1,5 +1,5 @@
 import { DIMENSIONS, dataDimensions } from "@/domain/dimensions";
-import { queryObservations } from "@/lib/cube-queries";
+import { queryBaseMeasureDimensions, queryObservations } from "@/lib/cube-queries";
 import { toCamelCase } from "@/utils/stringCase";
 import { describe, test, expect } from "vitest";
 import spfmt from "sparql-formatter";
@@ -128,6 +128,31 @@ describe("cube queries", () => {
           
         } ORDER BY ?year ?month
         "
+    `);
+  });
+
+  test("it should return a query that returns measure dimensions", () => {
+    const query = queryBaseMeasureDimensions({
+      locale: "de",
+    });
+    expect(spfmt(query)).toMatchInlineSnapshot(`
+      "PREFIX cube: <https://cube.link/>
+      PREFIX sh: <http://www.w3.org/ns/shacl#>
+      PREFIX schema: <http://schema.org/>
+
+      SELECT DISTINCT ?dimension ?label
+      FROM <https://lindas.admin.ch/foag/agricultural-market-data>
+      WHERE {
+        ?cube a cube:Cube ;
+              cube:observationConstraint ?shape .
+        ?shape ?p ?blankNode .
+        ?blankNode sh:path ?dimension .
+        FILTER (CONTAINS(str(?dimension), "https://agriculture.ld.admin.ch/foag/measure/"))
+        OPTIONAL {
+          ?blankNode schema:name ?label .
+          FILTER (lang(?label) = "de")
+        }
+      }"
     `);
   });
 

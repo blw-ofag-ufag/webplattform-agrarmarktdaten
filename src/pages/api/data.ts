@@ -140,11 +140,6 @@ const propertySchema = z
 export type Measure = z.infer<typeof measureSchema>;
 export type Property = z.infer<typeof propertySchema>;
 
-const baseMeasures = [
-  amdpMeasure("price").value,
-  amdpMeasure("quantity").value,
-  amdpMeasure("index").value,
-];
 const baseProperties = [amdpDimension("market").value, amdpDimension("value-chain").value];
 
 const basePropertiesSchema = z.object({
@@ -173,7 +168,6 @@ export const fetchBaseDimensions = async ({
   });
   const queryMeasures = queryBaseMeasureDimensions({
     locale,
-    measuresIri: baseMeasures,
   });
 
   const [propertiesRaw, measuresRaw] = await Promise.all([

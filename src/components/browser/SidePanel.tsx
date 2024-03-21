@@ -32,6 +32,7 @@ import RadioFilter from "./filters/RadioFilter";
 import SelectFilter, { PreviewSelect, SelectFilterProps } from "./filters/SelectFilter";
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
 import dayjs from "dayjs";
+import { useIsMobile } from "@/components/Grid/Grid";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -104,6 +105,7 @@ const SidePanel = ({
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
   const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
   const filters = useAtomValue(filterAtom);
+  const isMobile = useIsMobile();
 
   return (
     <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
@@ -128,9 +130,11 @@ const SidePanel = ({
             </Typography>
             <Stack direction="row" gap={1} alignItems="center">
               {cubeDimensionsStatus.isSuccess && filters.changed > 0 && <ResetFiltersButton />}
-              <IconButton onClick={onClose}>
-                <IcChevronDoubleLeft />
-              </IconButton>
+              {isMobile ? (
+                <IconButton onClick={onClose}>
+                  <IcChevronDoubleLeft />
+                </IconButton>
+              ) : null}
             </Stack>
           </Box>
           {/* Cube path filters */}

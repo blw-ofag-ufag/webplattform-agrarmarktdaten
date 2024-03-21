@@ -129,8 +129,8 @@ msgstr "Reset filters"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.select.clear"
-msgstr "Reset filters"
+msgid "filters.select.none"
+msgstr "De-select all"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
