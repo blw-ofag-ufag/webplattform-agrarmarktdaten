@@ -130,7 +130,7 @@ const StructuredText = (props: Props) => {
                   return null;
                 }
                 return (
-                  <AnchorHeader key={i} id={i} level={node.level} className={classes.h1}>
+                  <AnchorHeader key={i} id={i} level={node.level}>
                     {children}
                   </AnchorHeader>
                 );

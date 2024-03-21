@@ -54,10 +54,7 @@ const AnchorHeader = (props: HeaderProps) => {
         id={`heading${id}`}
         variant={`h${level}`}
         component={`h${level}`}
-        className={cx(classes.header, props.className, {
-          [classes.anchorHeader1]: level === 1,
-          [classes[levelClass]]: level !== 1,
-        })}
+        className={cx(classes.header, classes[levelClass], props.className)}
       >
         {children}
       </Typography>

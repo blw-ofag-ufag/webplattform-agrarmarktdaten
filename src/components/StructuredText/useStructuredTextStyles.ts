@@ -14,7 +14,16 @@ const debugStyles = {
  */
 const useStructuredTextStyles = makeStyles<
   { debug?: boolean },
-  "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "ul" | "powerbiReportContainer"
+  | "p"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "ul"
+  | "powerbiReportContainer"
+  | "anchorHeaderWrapper"
 >()((theme, { debug }, classes) => {
   const debugStyle = (name: string, rules: Record<string, CSSInterpolation>) => {
     return {
@@ -142,7 +151,7 @@ const useStructuredTextStyles = makeStyles<
         marginBottom: 0,
       },
 
-      [`.${classes.h1} + &, .${classes.h2} + &`]: margins.lg,
+      [`.${classes.h1} + &, .${classes.h2} + &, .${classes.anchorHeaderWrapper} + &`]: margins.lg,
     }),
     h1: debugStyle("h1", {
       fontWeight: 700,
@@ -191,13 +200,10 @@ const useStructuredTextStyles = makeStyles<
     }),
     anchorHeaderWrapper: debugStyle("anchorHeaderWrapper", {
       display: "flex",
-      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
+      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xl,
       "& > button": { opacity: 0, transition: "opacity 0.15s ease-out" },
       "&:hover > button": { opacity: 1 },
     }),
-    anchorHeader1: {
-      marginBottom: theme.spacing(5),
-    },
     header: {
       display: "flex",
       alignItems: "center",
