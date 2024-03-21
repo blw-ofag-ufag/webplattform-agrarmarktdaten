@@ -115,7 +115,7 @@ const StructuredText = (props: Props) => {
                   </NextLink>
                 );
               }),
-              renderNodeRule(isHeading, ({ node, children }) => {
+              renderNodeRule(isHeading, ({ node, children, key }) => {
                 //We don't allow h6 headers to be able to save those for the table of contents menu
                 if (node.level === 6) {
                   return null;
@@ -124,7 +124,7 @@ const StructuredText = (props: Props) => {
                   i += 1;
                 }
                 return (
-                  <AnchorHeader key={i} id={i} level={node.level}>
+                  <AnchorHeader key={key} id={i} level={node.level}>
                     {children}
                   </AnchorHeader>
                 );
