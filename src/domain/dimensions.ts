@@ -3,8 +3,7 @@ import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { DimensionType } from "@/pages/api/data";
 
 /* Data Dimensions */
-
-export const MEASURES = ["price", "quantity", "index"] as const;
+export const MEASURES = ["price", "quantity", "index", "contribution"] as const;
 
 export const DIMENSIONS = [
   "cost-component",
@@ -140,6 +139,11 @@ export const dataDimensions: {
     type: "measure",
     id: "index",
     iri: amdpMeasure("index").value,
+  },
+  contribution: {
+    type: "measure",
+    id: "contribution",
+    iri: amdpMeasure("contribution").value,
   },
   ["cost-component"]: {
     type: "property",
