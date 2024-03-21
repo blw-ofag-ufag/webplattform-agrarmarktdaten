@@ -64,6 +64,11 @@ msgstr ""
 #~ msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#~ msgid "footer.impressum"
+#~ msgstr "Contatto"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} di {1})"
@@ -117,6 +122,11 @@ msgid "data.download.filename"
 msgstr "Dati_PDMAA"
 
 #. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-title"
+msgstr "Si è verificato un errore durante il caricamento dei dati"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analisi"
@@ -153,11 +163,6 @@ msgid "filters.aria.clear"
 msgstr "Ripristina i filtri"
 
 #. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.select.none"
-msgstr "Deseleziona tutto"
-
-#. js-lingui-explicit-id
 #: src/components/InPlaceDialog.tsx
 #: src/components/layout.tsx
 #: src/components/layout.tsx
@@ -170,7 +175,7 @@ msgid "data.mobile.button"
 msgstr "Continua a scaricare i dati"
 
 #. js-lingui-explicit-id
-#: src/components/StructuredText/StructuredText.tsx
+#: src/components/StructuredText/internal/AnchorHeader.tsx
 msgid "action.copy"
 msgstr "Copiato negli Appunti"
 
@@ -188,6 +193,11 @@ msgstr "Scarica i dati"
 #: src/components/browser/DataDownload.tsx
 msgid "data.actions.download"
 msgstr "Scarica i dati"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.none"
+msgstr "Deseleziona tutto"
 
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
@@ -258,11 +268,6 @@ msgstr "Indietro"
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
 msgstr "Nascondere i filtri"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-msgid "footer.impressum"
-msgstr "Contatto"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -356,6 +361,11 @@ msgstr "Nessuna opzione"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
 msgstr "Nessuno"
+
+#. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-description"
+msgstr "Per favore riprova più tardi."
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx

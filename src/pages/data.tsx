@@ -43,6 +43,8 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 import DebugDataPage from "../components/DebugDataPage";
 import { SafeHydrate } from "@/components/SafeHydrate";
+import { ErrorAlert } from "../components/ErrorAlert";
+import { errorAsString } from "../utils/errorAsString";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -251,6 +253,22 @@ const DataBrowser = () => {
                 </Typography>
               </Stack>
             )}
+
+            {observationsQueryStatus.error || cubeDimensions.error ? (
+              <ErrorAlert
+                details={
+                  <Box component="pre" fontSize="small">
+                    {observationsQueryStatus.error ? (
+                      <>Observations: {errorAsString(observationsQueryStatus.error)}</>
+                    ) : null}
+                    {"\n"}
+                    {cubeDimensions.error ? (
+                      <>Dimensions: {errorAsString(cubeDimensions.error)}</>
+                    ) : null}
+                  </Box>
+                }
+              />
+            ) : null}
           </>
         </Paper>
       </Stack>

@@ -122,7 +122,7 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((ge
     queryKey: ["cubeDimensions", cubePath, locale, lindas.value],
     queryFn: () => {
       if (!cubePath) {
-        return Promise.reject(new Error("Cube not found"));
+        return Promise.reject(new Error(`Cube not found: ${cubePath}`));
       }
       return fetchCubeDimensions(locale, lindas.url, cubePath);
     },

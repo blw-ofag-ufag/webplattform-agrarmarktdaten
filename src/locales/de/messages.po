@@ -64,6 +64,11 @@ msgstr ""
 #~ msgstr "Daten herunterladen"
 
 #. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#~ msgid "footer.impressum"
+#~ msgstr "Kontakt"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} von {1})"
@@ -117,6 +122,11 @@ msgid "data.download.filename"
 msgstr "Daten_DALM"
 
 #. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-title"
+msgstr "Beim Laden der Daten ist ein Fehler aufgetreten"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analysen"
@@ -130,11 +140,6 @@ msgstr "Anwenden"
 #: src/components/browser/MetadataPanel.tsx
 msgid "controls.metadata-panel.available-values"
 msgstr "Verfügbare Werte"
-
-#. js-lingui-explicit-id
-#: src/components/browser/MobileIntercept.tsx
-msgid "data.mobile.button"
-msgstr "Weiter zum Daten Herunterladen"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -158,11 +163,6 @@ msgid "filters.aria.clear"
 msgstr "Alles abwählen"
 
 #. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.select.none"
-msgstr "Alles abwählen"
-
-#. js-lingui-explicit-id
 #: src/components/InPlaceDialog.tsx
 #: src/components/layout.tsx
 #: src/components/layout.tsx
@@ -175,7 +175,7 @@ msgid "data.mobile.button"
 msgstr "Weiter zum Data Herunterladen"
 
 #. js-lingui-explicit-id
-#: src/components/StructuredText/StructuredText.tsx
+#: src/components/StructuredText/internal/AnchorHeader.tsx
 msgid "action.copy"
 msgstr "In die Zwischenablage kopiert"
 
@@ -193,6 +193,11 @@ msgstr "Daten herunterladen"
 #: src/components/browser/DataDownload.tsx
 msgid "data.actions.download"
 msgstr "Daten herunterladen"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.none"
+msgstr "Alles abwählen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
@@ -263,11 +268,6 @@ msgstr "Zurück"
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
 msgstr "Filter ausblenden"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-msgid "footer.impressum"
-msgstr "Kontakt"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -360,7 +360,12 @@ msgstr "Keine Optionen"
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
-msgstr "None"
+msgstr "Keiner"
+
+#. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-description"
+msgstr "Bitte versuchen Sie es später noch einmal."
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx

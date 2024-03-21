@@ -483,7 +483,7 @@ export const createFiltersWithHierarchyAtom = ({
       queryKey: [`${dataKey}Hierarchy`, cubeIri, locale],
       queryFn: () => {
         if (!cubeIri) {
-          return Promise.reject(new Error("Cube not found"));
+          return Promise.reject(new Error("No cube IRI available"));
         }
         return fetchHierarchy({
           locale,
