@@ -72,7 +72,7 @@ describe("cube queries", () => {
         PREFIX time: <http://www.w3.org/2006/time#>
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         
-        SELECT DISTINCT ?observation
+        SELECT ?observation
           ?costComponent ?currency ?dataMethod ?dataSource ?foreignTrade ?keyIndicatorType ?market ?product ?productGroup ?productSubgroup ?productProperties ?productionSystem ?productOrigin ?salesRegion ?unit ?usage ?valueChainDetail ?valueChain ?measure
           ?year ?month
         WHERE {
@@ -182,7 +182,7 @@ describe("cube queries", () => {
       PREFIX time: <http://www.w3.org/2006/time#>
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-      SELECT DISTINCT ?observation ?costComponentLabel ?currencyLabel ?dataMethodLabel ?dataSourceLabel
+      SELECT ?observation ?costComponentLabel ?currencyLabel ?dataMethodLabel ?dataSourceLabel
         ?foreignTradeLabel ?keyIndicatorTypeLabel ?marketLabel ?productLabel ?productGroupLabel
         ?productSubgroupLabel ?productPropertiesLabel ?productionSystemLabel ?productOriginLabel
         ?salesRegionLabel ?unitLabel ?usageLabel ?valueChainDetailLabel ?valueChainLabel

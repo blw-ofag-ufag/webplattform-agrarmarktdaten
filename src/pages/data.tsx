@@ -21,7 +21,7 @@ import DataDownload from "@/components/browser/DataDownload";
 import EnvSwitch from "@/components/browser/EnvSwitch";
 import { MetadataPanel } from "@/components/browser/MetadataPanel";
 import MobileIntercept from "@/components/browser/MobileIntercept";
-import SidePanel, { ResetFiltersButton } from "@/components/browser/SidePanel";
+import SidePanel from "@/components/browser/SidePanel";
 import { Table } from "@/components/browser/Table";
 import { makeStyles } from "@/components/style-utils";
 import { cubeDimensionsStatusAtom } from "@/domain/cubes";
@@ -208,8 +208,6 @@ const DataBrowser = () => {
                 })}`}
               </Typography>
             )}
-
-            {filteredChangedCount > 0 && queriesCompleted && <ResetFiltersButton />}
           </Stack>
 
           <Stack direction="row" gap={3} flexWrap="wrap">

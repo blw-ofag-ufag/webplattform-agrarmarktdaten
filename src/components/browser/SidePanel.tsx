@@ -1,5 +1,5 @@
-import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { DEFAULT_TIME_VIEW, Option, TimeView, filterAtom } from "@/domain/filters";
+import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
+import { DEFAULT_MEASURE, DEFAULT_TIME_VIEW, Option, TimeView, filterAtom } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, t } from "@lingui/macro";
@@ -58,9 +58,11 @@ const SidePanel = ({
 }) => {
   const { getAccordionProps } = useExclusiveAccordion("accordion");
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
-  const cubeDimensionsStatus = useAtomValue(cubeDimensionsStatusAtom);
   const filters = useAtomValue(filterAtom);
   const isMobile = useIsMobile();
+
+  const measureAtom = filters.cube.dimensions.measure.atom;
+  const [_, setMeasure] = useAtom(measureAtom);
 
   return (
     <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
@@ -84,7 +86,6 @@ const SidePanel = ({
               <Trans id="data.filters.heading">Filters</Trans>
             </Typography>
             <Stack direction="row" gap={1} alignItems="center">
-              {cubeDimensionsStatus.isSuccess && filters.changed > 0 && <ResetFiltersButton />}
               {isMobile ? (
                 <IconButton onClick={onClose}>
                   <IcChevronDoubleLeft />
@@ -103,12 +104,19 @@ const SidePanel = ({
               const config = filters.cube.dimensions[key];
 
               const options = config.options.map((option) => {
-                const disabled = !availableBaseDimensionsValues[key].options.includes(option.value);
+                const disabled =
+                  key === "market"
+                    ? false
+                    : !availableBaseDimensionsValues[key].options.includes(option.value);
                 return {
                   ...option,
                   disabled,
                 };
               });
+
+              const handleMarketChange = () => {
+                setMeasure(DEFAULT_MEASURE);
+              };
 
               return (
                 <>
@@ -127,6 +135,7 @@ const SidePanel = ({
                       }}
                       options={options}
                       filterAtom={config.atom}
+                      onChange={key === "market" ? handleMarketChange : undefined}
                       title={config.name ?? key}
                       defaultValue={config.default}
                     />
@@ -192,6 +201,7 @@ const FilterRadioAccordion = <T extends Option>({
   slots,
   options,
   defaultValue,
+  onChange,
 }: {
   filterAtom: WritableAtom<string | undefined, any, void>;
   options: T[];
@@ -200,6 +210,7 @@ const FilterRadioAccordion = <T extends Option>({
     accordion: Omit<AccordionProps, "children">;
   };
   defaultValue: string;
+  onChange?: () => void;
 }) => {
   const [value, setValue] = useAtom(filterAtom);
   const isTainted = value !== defaultValue;
@@ -219,7 +230,10 @@ const FilterRadioAccordion = <T extends Option>({
       <AccordionDetails>
         <RadioFilter
           value={optionValue}
-          onChange={(option) => setValue(option.value)}
+          onChange={(option) => {
+            setValue(option.value);
+            onChange?.();
+          }}
           options={options}
         />
       </AccordionDetails>

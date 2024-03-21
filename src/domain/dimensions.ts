@@ -3,8 +3,7 @@ import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { DimensionType } from "@/pages/api/data";
 
 /* Data Dimensions */
-
-export const MEASURES = ["price", "quantity", "index"] as const;
+export const MEASURES = ["price", "quantity", "index", "contribution"] as const;
 
 export const DIMENSIONS = [
   "cost-component",
@@ -41,6 +40,11 @@ export const tableDimensionsOrder = Object.fromEntries(
     "product-group",
     "product-subgroup",
 
+    "price",
+    "quantity",
+    "index",
+    "contribution",
+
     "unit",
     "currency",
     "cost-component",
@@ -57,18 +61,14 @@ export const tableDimensionsOrder = Object.fromEntries(
 
     "usage",
 
-    "price",
-    "quantity",
-    "index",
     "key-indicator-type",
-    "contribution",
   ].map((x, i) => [x, i])
 );
 
 // See tableDimensionsOrder comment, and keep the same order
 export const sidePanelFiltersOrder: (
   | {
-      key: "value-chain" | "measure";
+      key: "value-chain" | "measure" | "market";
       type: "cube";
     }
   | {
@@ -81,6 +81,8 @@ export const sidePanelFiltersOrder: (
     }
 )[] = [
   { key: "time", type: "time" }, // Datum
+  { key: "market", type: "cube" }, // Kennzahl
+
   { key: "product", type: "dimension" }, // Produkt
 
   { key: "measure", type: "cube" }, // Kennzahl
@@ -137,6 +139,11 @@ export const dataDimensions: {
     type: "measure",
     id: "index",
     iri: amdpMeasure("index").value,
+  },
+  contribution: {
+    type: "measure",
+    id: "contribution",
+    iri: amdpMeasure("contribution").value,
   },
   ["cost-component"]: {
     type: "property",

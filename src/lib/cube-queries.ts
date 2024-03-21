@@ -282,7 +282,7 @@ export const queryObservations = ({
   PREFIX time: <http://www.w3.org/2006/time#>
   PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   
-  SELECT DISTINCT ?observation
+  SELECT ?observation
     ${dimensions
       .map((d) => {
         if (d.key === "date") {

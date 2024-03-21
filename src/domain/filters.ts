@@ -81,7 +81,7 @@ export const timeViewAtom = atomWithHash<TimeView>("timeView", DEFAULT_TIME_VIEW
  */
 const DEFAULT_MARKET = "market/1";
 const DEFAULT_VALUE_CHAIN = "value-chain/1";
-const DEFAULT_MEASURE = "price";
+export const DEFAULT_MEASURE = "price";
 
 /**
  * Cube selection atom. This atoms contains the information on the filters that we apply to select
@@ -219,14 +219,11 @@ const createFilterDimensionAtom = ({ dataKey }: { dataKey: string }) => {
   });
 };
 
-export const productHierarchyLevels = ["market", "product-group", "product-subgroup"] as const;
+export const productHierarchyLevels = ["product-group", "product-subgroup"] as const;
 
-// The value-chain-detail is intentionally omitted since the value-chain is selected in another
+// The value-chain is intentionally omitted since the value-chain is selected in another
 // filter
-export const valueChainHierarchyLevels = [
-  "market",
-  "value-chain" /* "value-chain-detail" */,
-] as const;
+export const valueChainHierarchyLevels = [] as const;
 
 export const createGrouping = <T extends string>(hierarchyLevels: readonly T[]) =>
   hierarchyLevels.map(
