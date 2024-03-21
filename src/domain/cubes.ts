@@ -96,25 +96,34 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
   };
 
   type CubeData = (typeof cubesData)[number];
-  const partialEqual = (partial: Partial<CubeData>) => (item: CubeData) => {
+
+  return {
+    "value-chain": {
+      options: cubesData
+        .filter(partialEqual<CubeData>(omit(sieve, ["valueChain"])))
+        .map((c) => c.valueChain),
+    },
+    market: {
+      options: cubesData
+        .filter(partialEqual<CubeData>(omit(sieve, ["market"])))
+        .map((c) => c.market),
+    },
+    measure: {
+      options: cubesData
+        .filter(partialEqual<CubeData>(omit(sieve, ["measure"])))
+        .map((c) => c.measure),
+    },
+  };
+});
+
+const partialEqual =
+  <T>(partial: Partial<T>) =>
+  (item: T) => {
     return Object.keys(partial).every((k_) => {
       const k = k_ as keyof typeof partial;
       return partial[k] === item[k];
     });
   };
-
-  return {
-    "value-chain": {
-      options: cubesData.filter(partialEqual(omit(sieve, ["valueChain"]))).map((c) => c.valueChain),
-    },
-    market: {
-      options: cubesData.filter(partialEqual(omit(sieve, ["market"]))).map((c) => c.market),
-    },
-    measure: {
-      options: cubesData.filter(partialEqual(omit(sieve, ["measure"]))).map((c) => c.measure),
-    },
-  };
-});
 
 /**
  * Cube dimensions.
