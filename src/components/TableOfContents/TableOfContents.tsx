@@ -62,7 +62,7 @@ const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
                   onClick={() => {
                     const elem = document.getElementById(`heading${i}`);
                     const elementPosition = elem?.getBoundingClientRect().top;
-                    const offsetPosition = (elementPosition ?? 0) + window.scrollY - 110;
+                    const offsetPosition = (elementPosition ?? 0) + window.scrollY - 95;
                     window?.scrollTo({ behavior: "smooth", top: offsetPosition });
                   }}
                 >
