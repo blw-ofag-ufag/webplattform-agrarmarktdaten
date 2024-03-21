@@ -81,7 +81,7 @@ export const timeViewAtom = atomWithHash<TimeView>("timeView", DEFAULT_TIME_VIEW
  */
 const DEFAULT_MARKET = "market/1";
 const DEFAULT_VALUE_CHAIN = "value-chain/1";
-const DEFAULT_MEASURE = "price";
+export const DEFAULT_MEASURE = "price";
 
 /**
  * Cube selection atom. This atoms contains the information on the filters that we apply to select
