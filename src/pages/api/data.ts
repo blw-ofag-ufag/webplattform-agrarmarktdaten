@@ -395,6 +395,10 @@ export const fetchHierarchy = async ({
   environment: EnvironmentUrl;
   asTree?: boolean;
 }) => {
+  if (!cubeIri) {
+    throw new Error(`Error while fetching hierarchy: No iri passed: ${cubeIri}`);
+  }
+
   console.log("> fetchHierarchy");
 
   const amdpSource = new Source({
@@ -407,11 +411,7 @@ export const fetchHierarchy = async ({
   });
 
   const start = performance.now();
-  const cube = cubeIri ? await amdpSource.cube(amdp(cubeIri).value) : null;
-
-  if (!cubeIri) {
-    throw new Error(`Error while fetching hierarchy: No iri passed: ${cubeIri}`);
-  }
+  const cube = await amdpSource.cube(amdp(cubeIri).value);
 
   if (!cube) {
     throw new Error(`Error while fetching hierarchy: Cube not found: ${cubeIri}`);

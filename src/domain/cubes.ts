@@ -61,7 +61,6 @@ export const cubePathAtom = atom((get) => {
   );
 
   if (!cubePath?.cube) {
-    console.log(allCubes, cubeSelection);
     console.warn("Could not find cube, see allCubes, and cubeSelection", allCubes, cubeSelection);
     return;
   }
