@@ -29,7 +29,6 @@ import NextImage from "next/image";
 import { NextRouter, useRouter } from "next/router";
 import slugs from "@/generated/slugs.json";
 import { useInitSections } from "@/lib/useScrollIntoView";
-import { render } from "datocms-structured-text-to-html-string";
 import AnchorHeader from "./internal/AnchorHeader";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
@@ -82,8 +81,7 @@ const StructuredText = (props: Props) => {
   const [isClient, setIsClient] = React.useState(false);
   let i = 0;
 
-  const h1Count = countH1s(data);
-  useInitSections(h1Count);
+  useInitSections(data);
 
   React.useEffect(() => {
     setIsClient(true);
@@ -404,25 +402,6 @@ const getUrl = (record: InternalLink, router: NextRouter) => {
       const _check: never = record;
       return null;
   }
-};
-
-const countH1s = (data?: StructuredTextGraphQlResponse) => {
-  let count = 0;
-  render(data, {
-    renderBlock: () => null,
-    renderInlineRecord: () => null,
-    metaTransformer: () => null,
-    renderLinkToRecord: () => null,
-    customNodeRules: [
-      renderNodeRule(isHeading, ({ node }) => {
-        if (node.level === 1) {
-          count += 1;
-        }
-        return null;
-      }),
-    ],
-  });
-  return count;
 };
 
 export default StructuredText;
