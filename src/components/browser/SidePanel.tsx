@@ -1,11 +1,5 @@
 import { availableBaseDimensionsValuesAtom, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import {
-  AvailableDimensionFilter,
-  DEFAULT_TIME_VIEW,
-  Option,
-  TimeView,
-  filterAtom,
-} from "@/domain/filters";
+import { DEFAULT_TIME_VIEW, Option, TimeView, filterAtom } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
 import { Trans, t } from "@lingui/macro";
@@ -33,6 +27,7 @@ import SelectFilter, { PreviewSelect, SelectFilterProps } from "./filters/Select
 import TimeFilter, { previewTime } from "./filters/TimeFilter";
 import dayjs from "dayjs";
 import { useIsMobile } from "@/components/Grid/Grid";
+import { sidePanelFiltersOrder } from "@/domain/dimensions";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -49,46 +44,6 @@ const useExclusiveAccordion = (defaultState: string) => {
   };
   return { getAccordionProps };
 };
-
-const orderedFilters: (
-  | {
-      key: "value-chain" | "measure";
-      type: "cube";
-    }
-  | {
-      key: AvailableDimensionFilter;
-      type: "dimension";
-    }
-  | {
-      key: "time";
-      type: "time";
-    }
-)[] = [
-  { key: "time", type: "time" }, // Datum
-  { key: "product", type: "dimension" }, // Produkt
-
-  { key: "measure", type: "cube" }, // Kennzahl
-
-  { key: "unit", type: "dimension" }, // Einheit
-  { key: "currency", type: "dimension" }, // Währung
-  { key: "cost-component", type: "dimension" }, // Kostenkomponente
-  { key: "sales-region", type: "dimension" }, // Verkaufsregion
-  {
-    key: "value-chain",
-    type: "cube",
-  }, // Wertschöpfungsstufe
-  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe Detail
-
-  { key: "foreign-trade", type: "dimension" }, // Aussenhandel
-  // { key: "market", type: "dimension" },
-  { key: "product-origin", type: "dimension" }, // Produktherkunft
-  { key: "production-system", type: "dimension" }, // Produktionssystem
-  { key: "product-properties", type: "dimension" }, // Produkteigenschaften
-
-  { key: "usage", type: "dimension" }, // Verwendungsart
-  { key: "data-method", type: "dimension" }, // Datenart
-  { key: "data-source", type: "dimension" }, // Datenquelle
-];
 
 const SidePanel = ({
   open = true,
@@ -138,7 +93,7 @@ const SidePanel = ({
             </Stack>
           </Box>
           {/* Cube path filters */}
-          {orderedFilters.map((filterSpec) => {
+          {sidePanelFiltersOrder.map((filterSpec) => {
             const { key, type } = filterSpec;
 
             if (type === "cube") {

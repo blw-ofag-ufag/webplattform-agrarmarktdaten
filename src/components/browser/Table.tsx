@@ -1,4 +1,4 @@
-import { dimensionsToShowSorted, isMeasure } from "@/domain/dimensions";
+import { tableDimensionsOrder, isMeasure } from "@/domain/dimensions";
 import { timeViewAtom } from "@/domain/filters";
 import { tableFormatter } from "@/lib/formatter";
 import { useLocale } from "@/lib/use-locale";
@@ -152,11 +152,11 @@ export const Table = ({
     return Object.values(dimensions)
       .flat()
       .sort((a, b) =>
-        !dimensionsToShowSorted.hasOwnProperty(a.dimension)
+        !tableDimensionsOrder.hasOwnProperty(a.dimension)
           ? 1
-          : !dimensionsToShowSorted.hasOwnProperty(b.dimension)
+          : !tableDimensionsOrder.hasOwnProperty(b.dimension)
           ? -1
-          : dimensionsToShowSorted[a.dimension] - dimensionsToShowSorted[b.dimension]
+          : tableDimensionsOrder[a.dimension] - tableDimensionsOrder[b.dimension]
       )
       .map((dimension) => {
         const formatter = tableFormatter({
