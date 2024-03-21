@@ -68,7 +68,7 @@ export const tableDimensionsOrder = Object.fromEntries(
 // See tableDimensionsOrder comment, and keep the same order
 export const sidePanelFiltersOrder: (
   | {
-      key: "value-chain" | "measure";
+      key: "value-chain" | "measure" | "market";
       type: "cube";
     }
   | {
@@ -81,6 +81,8 @@ export const sidePanelFiltersOrder: (
     }
 )[] = [
   { key: "time", type: "time" }, // Datum
+  { key: "market", type: "cube" }, // Kennzahl
+
   { key: "product", type: "dimension" }, // Produkt
 
   { key: "measure", type: "cube" }, // Kennzahl
