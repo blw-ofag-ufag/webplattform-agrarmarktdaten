@@ -35,12 +35,19 @@ const countH1s = (data?: StructuredTextGraphQlResponse) => {
   return count;
 };
 
+/**
+ * Initialize the maxSectionsAtom with the number of H1s in the document
+ * and the focusSectionAtom with the currently focused H1.
+ * This should only be done once per document
+ */
 export const useInitSections = (data?: StructuredTextGraphQlResponse) => {
-  const max = countH1s(data);
   const setMaxSections = useSetAtom(maxSectionsAtom);
   const setFocusSection = useSetAtom(focusSectionAtom);
-  setMaxSections(max);
-  setFocusSection(max >= 1 ? 1 : 0);
+  React.useEffect(() => {
+    const max = countH1s(data);
+    setMaxSections(max);
+    setFocusSection(max >= 1 ? 1 : 0);
+  }, [data, setMaxSections, setFocusSection]);
 };
 
 /**
