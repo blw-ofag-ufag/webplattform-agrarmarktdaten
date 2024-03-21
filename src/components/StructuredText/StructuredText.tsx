@@ -78,7 +78,6 @@ const StructuredText = (props: Props) => {
   const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
 
   let i = 0;
-
   useInitSections(data);
 
   return (
@@ -121,6 +120,7 @@ const StructuredText = (props: Props) => {
                 if (node.level === 6) {
                   return null;
                 }
+                i += 1;
                 return (
                   <AnchorHeader key={i} id={i} level={node.level}>
                     {children}
