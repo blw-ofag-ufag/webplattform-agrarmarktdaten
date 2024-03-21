@@ -41,6 +41,11 @@ export const tableDimensionsOrder = Object.fromEntries(
     "product-group",
     "product-subgroup",
 
+    "price",
+    "quantity",
+    "index",
+    "contribution",
+
     "unit",
     "currency",
     "cost-component",
@@ -57,11 +62,7 @@ export const tableDimensionsOrder = Object.fromEntries(
 
     "usage",
 
-    "price",
-    "quantity",
-    "index",
     "key-indicator-type",
-    "contribution",
   ].map((x, i) => [x, i])
 );
 
