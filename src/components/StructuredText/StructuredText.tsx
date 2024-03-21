@@ -30,6 +30,7 @@ import { NextRouter, useRouter } from "next/router";
 import slugs from "@/generated/slugs.json";
 import { useInitSections } from "@/lib/useScrollIntoView";
 import AnchorHeader from "./internal/AnchorHeader";
+import { SafeHydrate } from "@/components/SafeHydrate";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -76,19 +77,12 @@ const StructuredText = (props: Props) => {
   const router = useRouter();
   const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
 
-  //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
-  // I'll take another look at this at a later point
-  const [isClient, setIsClient] = React.useState(false);
   let i = 0;
 
   useInitSections(data);
 
-  React.useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   return (
-    isClient && (
+    <SafeHydrate>
       <DebugStructuredText.Provider value={{ debug: props.debug }}>
         <Box className={classes.content} sx={props.sx}>
           <ST
@@ -358,7 +352,7 @@ const StructuredText = (props: Props) => {
           />
         </Box>
       </DebugStructuredText.Provider>
-    )
+    </SafeHydrate>
   );
 };
 
