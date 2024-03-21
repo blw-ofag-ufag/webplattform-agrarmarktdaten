@@ -59,6 +59,13 @@ export const cubePathAtom = atom((get) => {
       cube.valueChain === cubeSelection.dimensions["value-chain"].value &&
       cube.timeView === get(timeViewAtom)
   );
+
+  if (!cubePath?.cube) {
+    console.log(allCubes, cubeSelection);
+    console.warn("Could not find cube, see allCubes, and cubeSelection", allCubes, cubeSelection);
+    return;
+  }
+
   return cubePath?.cube;
 });
 
@@ -122,7 +129,7 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((ge
     queryKey: ["cubeDimensions", cubePath, locale, lindas.value],
     queryFn: () => {
       if (!cubePath) {
-        return Promise.reject(new Error(`Cube not found: ${cubePath}`));
+        throw new Error(`No cube path`);
       }
       return fetchCubeDimensions(locale, lindas.url, cubePath);
     },
