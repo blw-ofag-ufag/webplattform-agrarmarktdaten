@@ -14,7 +14,16 @@ const debugStyles = {
  */
 const useStructuredTextStyles = makeStyles<
   { debug?: boolean },
-  "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "ul" | "powerbiReportContainer"
+  | "p"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | "ul"
+  | "powerbiReportContainer"
+  | "anchorHeaderWrapper"
 >()((theme, { debug }, classes) => {
   const debugStyle = (name: string, rules: Record<string, CSSInterpolation>) => {
     return {
@@ -142,7 +151,7 @@ const useStructuredTextStyles = makeStyles<
         marginBottom: 0,
       },
 
-      [`.${classes.h1} + &, .${classes.h2} + &`]: margins.lg,
+      [`.${classes.h1} + &, .${classes.h2} + &, .${classes.anchorHeaderWrapper} + &`]: margins.lg,
     }),
     h1: debugStyle("h1", {
       fontWeight: 700,
@@ -184,23 +193,21 @@ const useStructuredTextStyles = makeStyles<
       marginTop: 64,
       marginBottom: 64,
     },
-    h1Icon: debugStyle("h1Icon", {
+    anchorIcon: debugStyle("anchorIcon", {
       marginLeft: "-44px",
       minWidth: "27px",
       maxHeight: "44px",
-      [theme.breakpoints.up("xxl")]: { marginTop: "5px" },
-      [theme.breakpoints.down("xxl")]: {
-        marginTop: "-3px",
-      },
     }),
-    h1Wrapper: debugStyle("h1Wrapper", {
+    anchorHeaderWrapper: debugStyle("anchorHeaderWrapper", {
       display: "flex",
-      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xxl,
+      [`.${classes.p} + &, .${classes.ul} + &`]: margins.xl,
       "& > button": { opacity: 0, transition: "opacity 0.15s ease-out" },
       "&:hover > button": { opacity: 1 },
-
-      marginBottom: theme.spacing(5),
     }),
+    header: {
+      display: "flex",
+      alignItems: "center",
+    },
     nonBreakable: {
       whiteSpace: "nowrap",
     },

@@ -14,8 +14,6 @@ import {
   Typography,
   TypographyOwnProps,
   TypographyProps,
-  IconButton,
-  Tooltip,
 } from "@mui/material";
 import { isHeading, isLink, isList, isParagraph } from "datocms-structured-text-utils";
 import NextLink from "next/link";
@@ -29,13 +27,10 @@ import {
 } from "react-datocms";
 import NextImage from "next/image";
 import { NextRouter, useRouter } from "next/router";
-import IcLink from "@/icons/icons-jsx/control/IcLink";
 import slugs from "@/generated/slugs.json";
-import { copyToClipboard } from "@/lib/clipboard";
-import { t } from "@lingui/macro";
-import { useScrollIntoView, useInitSections } from "@/lib/useScrollIntoView";
+import { useInitSections } from "@/lib/useScrollIntoView";
 import { render } from "datocms-structured-text-to-html-string";
-import { slugify } from "@/domain/string";
+import AnchorHeader from "./internal/AnchorHeader";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -129,32 +124,15 @@ const StructuredText = (props: Props) => {
                   </NextLink>
                 );
               }),
-              renderNodeRule(isHeading, ({ node, children, key }) => {
+              renderNodeRule(isHeading, ({ node, children }) => {
                 //We don't allow h6 headers to be able to save those for the table of contents menu
                 if (node.level === 6) {
                   return null;
                 }
-                //We save the ids of h1s in order to then easily scroll to them
-                let id = "";
-                if (node.level === 1) {
-                  i += 1;
-                  id = `heading${i}`;
-                  return (
-                    <Header1 key={id} id={i} className={classes.h1}>
-                      {children}
-                    </Header1>
-                  );
-                }
                 return (
-                  <Typography
-                    key={key}
-                    id={id}
-                    variant={`h${node.level}`}
-                    component={`h${node.level}`}
-                    className={classes[`h${node.level}` as `h${typeof node.level}`]}
-                  >
+                  <AnchorHeader key={i} id={i} level={node.level}>
                     {children}
-                  </Typography>
+                  </AnchorHeader>
                 );
               }),
 
@@ -426,71 +404,6 @@ const getUrl = (record: InternalLink, router: NextRouter) => {
       const _check: never = record;
       return null;
   }
-};
-
-interface HeaderProps {
-  id: number;
-  children: React.ReactNode;
-  className?: string;
-}
-
-const Header1 = (props: HeaderProps) => {
-  const { id, children } = props;
-  const { asPath, push } = useRouter();
-  const textContent = extractTextContent(children as JSX.Element);
-  const encodedContent = slugify(textContent);
-  const { classes } = useStructuredTextStyles({});
-
-  const [ref] = useScrollIntoView(id);
-
-  const [isTooltipOpen, setTooltipOpen] = React.useState(false);
-  const handleTooltipOpen = async () => {
-    setTooltipOpen(true);
-    const newHashPath = asPath.includes("#")
-      ? asPath.replace(/#(.*)$/, `#${encodedContent}`)
-      : `#${encodedContent}`;
-    await push(newHashPath);
-    await copyToClipboard(window.location.href);
-  };
-  const handleTooltipClose = () => setTooltipOpen(false);
-
-  return (
-    <Box position="relative" className={classes.h1Wrapper} id={encodedContent}>
-      <Tooltip
-        PopperProps={{ disablePortal: true }}
-        onClose={handleTooltipClose}
-        open={isTooltipOpen}
-        leaveDelay={1000}
-        title={t({ id: "action.copy", message: "Copied to Clipboard" })}
-      >
-        <IconButton className={classes.h1Icon} onClick={handleTooltipOpen}>
-          <IcLink width={27} height={27} />
-        </IconButton>
-      </Tooltip>
-      <Typography
-        ref={ref}
-        id={`heading${id}`}
-        variant="h1"
-        component="h1"
-        className={props.className}
-      >
-        {children}
-      </Typography>
-    </Box>
-  );
-};
-
-const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
-  if (Array.isArray(node)) {
-    return node.map(extractTextContent).join("");
-  }
-  if (typeof node === "string") {
-    return node;
-  }
-  if (typeof node === "object") {
-    return extractTextContent(node?.props.children);
-  }
-  return "";
 };
 
 const countH1s = (data?: StructuredTextGraphQlResponse) => {
