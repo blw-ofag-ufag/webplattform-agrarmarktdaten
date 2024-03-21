@@ -59,6 +59,12 @@ export const cubePathAtom = atom((get) => {
       cube.valueChain === cubeSelection.dimensions["value-chain"].value &&
       cube.timeView === get(timeViewAtom)
   );
+
+  if (!cubePath?.cube) {
+    console.warn("Could not find cube, see allCubes, and cubeSelection", allCubes, cubeSelection);
+    return;
+  }
+
   return cubePath?.cube;
 });
 
@@ -89,25 +95,34 @@ export const availableBaseDimensionsValuesAtom = atom((get) => {
   };
 
   type CubeData = (typeof cubesData)[number];
-  const partialEqual = (partial: Partial<CubeData>) => (item: CubeData) => {
+
+  return {
+    "value-chain": {
+      options: cubesData
+        .filter(partialEqual<CubeData>(omit(sieve, ["valueChain"])))
+        .map((c) => c.valueChain),
+    },
+    market: {
+      options: cubesData
+        .filter(partialEqual<CubeData>(omit(sieve, ["market"])))
+        .map((c) => c.market),
+    },
+    measure: {
+      options: cubesData
+        .filter(partialEqual<CubeData>(omit(sieve, ["measure"])))
+        .map((c) => c.measure),
+    },
+  };
+});
+
+const partialEqual =
+  <T>(partial: Partial<T>) =>
+  (item: T) => {
     return Object.keys(partial).every((k_) => {
       const k = k_ as keyof typeof partial;
       return partial[k] === item[k];
     });
   };
-
-  return {
-    "value-chain": {
-      options: cubesData.filter(partialEqual(omit(sieve, ["valueChain"]))).map((c) => c.valueChain),
-    },
-    market: {
-      options: cubesData.filter(partialEqual(omit(sieve, ["market"]))).map((c) => c.market),
-    },
-    measure: {
-      options: cubesData.filter(partialEqual(omit(sieve, ["measure"]))).map((c) => c.measure),
-    },
-  };
-});
 
 /**
  * Cube dimensions.
@@ -122,7 +137,7 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((ge
     queryKey: ["cubeDimensions", cubePath, locale, lindas.value],
     queryFn: () => {
       if (!cubePath) {
-        return Promise.reject(new Error("Cube not found"));
+        throw new Error(`No cube path`);
       }
       return fetchCubeDimensions(locale, lindas.url, cubePath);
     },

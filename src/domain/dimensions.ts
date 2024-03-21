@@ -1,3 +1,4 @@
+import { AvailableDimensionFilter } from "@/domain/filters";
 import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { DimensionType } from "@/pages/api/data";
 
@@ -27,29 +28,84 @@ export const DIMENSIONS = [
   "value-chain",
 ] as const;
 
-export const dimensionsToShowSorted = Object.fromEntries(
+// Table dimensions order and side panel filter order should
+// be similar. We cannot use the same variable as filters can be
+// hierarchical and thus contain multiple table dimensions
+export const tableDimensionsOrder = Object.fromEntries(
   [
     "date",
+
     "market",
+
+    "product",
+    "product-group",
+    "product-subgroup",
+
+    "unit",
+    "currency",
+    "cost-component",
+    "sales-region",
+
     "value-chain",
+    "value-chain-detail",
+
+    "foreign-trade",
+
+    "product-origin",
+    "production-system",
+    "product-properties",
+
+    "usage",
+
     "price",
     "quantity",
     "index",
-    "currency",
-    "product",
-    "unit",
-    "product-subgroup",
-    "product-group",
-    "product-properties",
-    "production-system",
-    "product-origin",
-    "sales-region",
-    "foreign-trade",
     "key-indicator-type",
-    "usage",
-    "value-chain-detail",
+    "contribution",
   ].map((x, i) => [x, i])
 );
+
+// See tableDimensionsOrder comment, and keep the same order
+export const sidePanelFiltersOrder: (
+  | {
+      key: "value-chain" | "measure";
+      type: "cube";
+    }
+  | {
+      key: AvailableDimensionFilter;
+      type: "dimension";
+    }
+  | {
+      key: "time";
+      type: "time";
+    }
+)[] = [
+  { key: "time", type: "time" }, // Datum
+  { key: "product", type: "dimension" }, // Produkt
+
+  { key: "measure", type: "cube" }, // Kennzahl
+
+  { key: "unit", type: "dimension" }, // Einheit
+  { key: "currency", type: "dimension" }, // Währung
+  { key: "cost-component", type: "dimension" }, // Kostenkomponente
+  { key: "sales-region", type: "dimension" }, // Verkaufsregion
+  {
+    key: "value-chain",
+    type: "cube",
+  }, // Wertschöpfungsstufe
+  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe Detail
+
+  { key: "foreign-trade", type: "dimension" }, // Aussenhandel
+
+  // { key: "market", type: "dimension" },
+  { key: "product-origin", type: "dimension" }, // Produktherkunft
+  { key: "production-system", type: "dimension" }, // Produktionssystem
+  { key: "product-properties", type: "dimension" }, // Produkteigenschaften
+
+  { key: "usage", type: "dimension" }, // Verwendungsart
+  { key: "data-method", type: "dimension" }, // Datenart
+  { key: "data-source", type: "dimension" }, // Datenquelle
+];
 
 const CUBE_DEFINITION_DIMENSIONS = ["value-chain", "market", "measure"] as const;
 export type CubeDimension = (typeof CUBE_DEFINITION_DIMENSIONS)[number];

@@ -100,7 +100,9 @@ export const cubeSelectionAtom = atom((get) => {
   const measureAtom = filterSingleHashAtomFamily({
     key: "measure",
     options: measureOptions.map((m) => m.value),
-    defaultOption: measureOptions.find((option) => option.value === DEFAULT_MEASURE)?.value,
+    defaultOption:
+      measureOptions.find((option) => option.value === DEFAULT_MEASURE)?.value ??
+      measureOptions[0]?.value,
   });
 
   const marketOptions = baseDimensionsQuery.isSuccess
@@ -110,7 +112,9 @@ export const cubeSelectionAtom = atom((get) => {
   const marketAtom = filterSingleHashAtomFamily({
     key: "market",
     options: marketOptions.map((m) => m.value),
-    defaultOption: marketOptions.find((option) => option.value === DEFAULT_MARKET)?.value,
+    defaultOption:
+      marketOptions.find((option) => option.value === DEFAULT_MARKET)?.value ??
+      marketOptions[0]?.value,
   });
 
   const valueChainOptions = baseDimensionsQuery.isSuccess
@@ -120,42 +124,49 @@ export const cubeSelectionAtom = atom((get) => {
   const valueChainAtom = filterSingleHashAtomFamily({
     key: "value-chain",
     options: valueChainOptions.map((m) => m.value),
-    defaultOption: valueChainOptions.find((option) => option.value === DEFAULT_VALUE_CHAIN)?.value,
+    defaultOption:
+      valueChainOptions.find((option) => option.value === DEFAULT_VALUE_CHAIN)?.value ??
+      valueChainOptions[0]?.value,
   });
+
+  const measureValue = get(measureAtom);
+  const marketValue = get(marketAtom);
+  const valueChainValue = get(valueChainAtom);
+  const timeViewValue = get(timeViewAtom);
 
   return {
     dimensions: {
       measure: {
         name: t({ id: "data.filters.measure", message: "Measure" }),
-        value: get(measureAtom),
+        value: measureValue,
         options: measureOptions,
         atom: measureAtom,
         default: DEFAULT_MEASURE,
-        isChanged: get(measureAtom) !== DEFAULT_MEASURE,
+        isChanged: measureValue !== DEFAULT_MEASURE,
       },
       market: {
         name: baseDimensionsQuery?.data?.properties.market?.label,
         atom: marketAtom,
-        value: get(marketAtom),
+        value: marketValue,
         options: marketOptions,
         default: DEFAULT_MARKET,
-        isChanged: get(marketAtom) !== DEFAULT_MARKET,
+        isChanged: marketValue !== DEFAULT_MARKET,
       },
       "value-chain": {
         name: baseDimensionsQuery?.data?.properties["value-chain"]?.label,
         atom: valueChainAtom,
-        value: get(valueChainAtom),
+        value: valueChainValue,
         options: valueChainOptions,
         default: DEFAULT_VALUE_CHAIN,
-        isChanged: get(valueChainAtom) !== DEFAULT_VALUE_CHAIN,
+        isChanged: valueChainValue !== DEFAULT_VALUE_CHAIN,
       },
     },
     time: {
       view: {
         atom: timeViewAtom,
-        value: get(timeViewAtom),
+        value: timeViewValue,
         default: "Year",
-        isChanged: get(timeViewAtom) !== DEFAULT_TIME_VIEW,
+        isChanged: timeViewValue !== DEFAULT_TIME_VIEW,
       },
     },
     isLoading: baseDimensionsQuery.isLoading,
@@ -483,7 +494,7 @@ export const createFiltersWithHierarchyAtom = ({
       queryKey: [`${dataKey}Hierarchy`, cubeIri, locale],
       queryFn: () => {
         if (!cubeIri) {
-          return Promise.reject(new Error("Cube not found"));
+          return Promise.reject(new Error("No cube IRI available"));
         }
         return fetchHierarchy({
           locale,

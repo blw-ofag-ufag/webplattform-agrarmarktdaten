@@ -64,6 +64,11 @@ msgstr ""
 #~ msgstr "Télécharger des données"
 
 #. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#~ msgid "footer.impressum"
+#~ msgstr "Contact"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} de {1})"
@@ -117,6 +122,11 @@ msgid "data.download.filename"
 msgstr "Donnees_PDMAA"
 
 #. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-title"
+msgstr "Une erreur s'est produite lors du chargement des données"
+
+#. js-lingui-explicit-id
 #: src/components/layout.tsx
 msgid "menu.analysis"
 msgstr "Analyses"
@@ -153,11 +163,6 @@ msgid "filters.aria.clear"
 msgstr "Réinitialiser les filtres"
 
 #. js-lingui-explicit-id
-#: src/components/browser/filters/SelectFilter.tsx
-msgid "filters.select.none"
-msgstr "Déselectionner tout"
-
-#. js-lingui-explicit-id
 #: src/components/InPlaceDialog.tsx
 #: src/components/layout.tsx
 #: src/components/layout.tsx
@@ -170,7 +175,7 @@ msgid "data.mobile.button"
 msgstr "Continuer à télécharger les données"
 
 #. js-lingui-explicit-id
-#: src/components/StructuredText/StructuredText.tsx
+#: src/components/StructuredText/internal/AnchorHeader.tsx
 msgid "action.copy"
 msgstr "Copié dans le presse-papiers"
 
@@ -188,6 +193,11 @@ msgstr "Télécharger des données"
 #: src/components/browser/DataDownload.tsx
 msgid "data.actions.download"
 msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.none"
+msgstr "Déselectionner tout"
 
 #. js-lingui-explicit-id
 #: src/components/browser/DataDownload.tsx
@@ -258,11 +268,6 @@ msgstr "Retour"
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
 msgstr "Cacher les filtres"
-
-#. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-msgid "footer.impressum"
-msgstr "Contact"
 
 #. js-lingui-explicit-id
 #: src/components/layout.tsx
@@ -356,6 +361,11 @@ msgstr "Pas d'options"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
 msgstr "Aucun"
+
+#. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-description"
+msgstr "Veuillez réessayer plus tard."
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx

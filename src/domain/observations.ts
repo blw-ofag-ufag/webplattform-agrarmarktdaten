@@ -49,7 +49,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
     queryKey: ["observations", cubePath, lindas.value, queryTimeFilter],
     queryFn: () => {
       if (!cubeDefinition) {
-        return Promise.reject(new Error("Cube not found"));
+        return Promise.reject(new Error("No cube definition"));
       }
       return fetchObservations({
         cubeIri: cubeDefinition?.cube,

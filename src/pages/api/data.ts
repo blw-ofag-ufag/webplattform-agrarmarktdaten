@@ -389,12 +389,16 @@ export const fetchHierarchy = async ({
   locale,
   environment,
 }: {
-  cubeIri: string;
+  cubeIri: string | undefined;
   dimensionIri: string;
   locale: Locale;
   environment: EnvironmentUrl;
   asTree?: boolean;
 }) => {
+  if (!cubeIri) {
+    throw new Error(`Error while fetching hierarchy: No iri passed: ${cubeIri}`);
+  }
+
   console.log("> fetchHierarchy");
 
   const amdpSource = new Source({
@@ -410,7 +414,7 @@ export const fetchHierarchy = async ({
   const cube = await amdpSource.cube(amdp(cubeIri).value);
 
   if (!cube) {
-    throw new Error(`Cube not found: ${cubeIri}`);
+    throw new Error(`Error while fetching hierarchy: Cube not found: ${cubeIri}`);
   }
 
   const hierarchiesPointers = uniqBy(
