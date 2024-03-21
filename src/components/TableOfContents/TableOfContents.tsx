@@ -34,26 +34,6 @@ const extractH6s = (data?: StructuredTextGraphQlResponse) => {
   return { value: { schema: "dast", document: { type: "root", children: h6s } } } as const;
 };
 
-const useStyles = makeStyles<{
-  activeColor: string;
-}>()(({ spacing: s, palette: c }, { activeColor }) => ({
-  tocEntry: {
-    boxSizing: "border-box",
-    padding: s(4),
-    width: "100%",
-    borderBottom: `1px solid ${c.cobalt[100]}`,
-    cursor: "pointer",
-    "&:hover": { backgroundColor: c.cobalt[50] },
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-  },
-  tocEntryActive: {
-    borderLeft: `solid ${activeColor} 2px`,
-    marginLeft: "-2px",
-  },
-}));
-
 const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
   const { data, activeColor = "#ACB4BD", sx } = props;
   const toc = React.useMemo(() => extractH6s(data), [data]);
@@ -82,7 +62,7 @@ const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
                   onClick={() => {
                     const elem = document.getElementById(`heading${i}`);
                     const elementPosition = elem?.getBoundingClientRect().top;
-                    const offsetPosition = (elementPosition ?? 0) + window.scrollY - 110;
+                    const offsetPosition = (elementPosition ?? 0) + window.scrollY - 95;
                     window?.scrollTo({ behavior: "smooth", top: offsetPosition });
                   }}
                 >
@@ -98,5 +78,25 @@ const TableOfContents = React.forwardRef<typeof Box, Props>((props, ref) => {
     );
   }
 });
+
+const useStyles = makeStyles<{
+  activeColor: string;
+}>()(({ spacing: s, palette: c }, { activeColor }) => ({
+  tocEntry: {
+    boxSizing: "border-box",
+    padding: s(4),
+    width: "100%",
+    borderBottom: `1px solid ${c.cobalt[100]}`,
+    cursor: "pointer",
+    "&:hover": { backgroundColor: c.cobalt[50] },
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+  },
+  tocEntryActive: {
+    borderLeft: `solid ${activeColor} 2px`,
+    marginLeft: "-2px",
+  },
+}));
 
 export default TableOfContents;

@@ -29,8 +29,8 @@ import NextImage from "next/image";
 import { NextRouter, useRouter } from "next/router";
 import slugs from "@/generated/slugs.json";
 import { useInitSections } from "@/lib/useScrollIntoView";
-import { render } from "datocms-structured-text-to-html-string";
 import AnchorHeader from "./internal/AnchorHeader";
+import { SafeHydrate } from "@/components/SafeHydrate";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -77,20 +77,11 @@ const StructuredText = (props: Props) => {
   const router = useRouter();
   const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
 
-  //FIXME: we have to temporarily disable SSR here due to a hydration problem with the FileDownloadSectionRecord bit.
-  // I'll take another look at this at a later point
-  const [isClient, setIsClient] = React.useState(false);
   let i = 0;
-
-  const h1Count = countH1s(data);
-  useInitSections(h1Count);
-
-  React.useEffect(() => {
-    setIsClient(true);
-  }, []);
+  useInitSections(data);
 
   return (
-    isClient && (
+    <SafeHydrate>
       <DebugStructuredText.Provider value={{ debug: props.debug }}>
         <Box className={classes.content} sx={props.sx}>
           <ST
@@ -124,13 +115,16 @@ const StructuredText = (props: Props) => {
                   </NextLink>
                 );
               }),
-              renderNodeRule(isHeading, ({ node, children }) => {
+              renderNodeRule(isHeading, ({ node, children, key }) => {
                 //We don't allow h6 headers to be able to save those for the table of contents menu
                 if (node.level === 6) {
                   return null;
                 }
+                if (node.level === 1) {
+                  i += 1;
+                }
                 return (
-                  <AnchorHeader key={i} id={i} level={node.level}>
+                  <AnchorHeader key={key} id={i} level={node.level}>
                     {children}
                   </AnchorHeader>
                 );
@@ -360,7 +354,7 @@ const StructuredText = (props: Props) => {
           />
         </Box>
       </DebugStructuredText.Provider>
-    )
+    </SafeHydrate>
   );
 };
 
@@ -404,25 +398,6 @@ const getUrl = (record: InternalLink, router: NextRouter) => {
       const _check: never = record;
       return null;
   }
-};
-
-const countH1s = (data?: StructuredTextGraphQlResponse) => {
-  let count = 0;
-  render(data, {
-    renderBlock: () => null,
-    renderInlineRecord: () => null,
-    metaTransformer: () => null,
-    renderLinkToRecord: () => null,
-    customNodeRules: [
-      renderNodeRule(isHeading, ({ node }) => {
-        if (node.level === 1) {
-          count += 1;
-        }
-        return null;
-      }),
-    ],
-  });
-  return count;
 };
 
 export default StructuredText;
