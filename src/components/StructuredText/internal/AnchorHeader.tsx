@@ -52,10 +52,11 @@ const AnchorHeader = (props: HeaderProps) => {
       </Tooltip>
       <Typography
         ref={ref}
-        id={`heading${id}`}
         variant={`h${level}`}
         component={`h${level}`}
         className={cx(classes.header, classes[levelClass], props.className)}
+        // only h1 should have an id so that they're scrollable from the TOC
+        {...(level === 1 ? { id: `heading${id}` } : {})}
       >
         {children}
       </Typography>

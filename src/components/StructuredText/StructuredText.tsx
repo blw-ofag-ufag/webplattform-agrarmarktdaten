@@ -120,7 +120,9 @@ const StructuredText = (props: Props) => {
                 if (node.level === 6) {
                   return null;
                 }
-                i += 1;
+                if (node.level === 1) {
+                  i += 1;
+                }
                 return (
                   <AnchorHeader key={i} id={i} level={node.level}>
                     {children}
