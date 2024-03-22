@@ -19,6 +19,7 @@ export async function fetchCMS<T>(document: DocumentNode, options: Options = {})
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
+        "X-Environment": "latex",
       },
       body: JSON.stringify({
         query,

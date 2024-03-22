@@ -65,6 +65,7 @@
     "@zazuko/rdf-vocabularies": "^2023.1.19",
     "@zazuko/vocabulary-extras-builders": "^1.0.3",
     "anysort": "^2.0.0",
+    "better-react-mathjax": "^2.0.3",
     "catalog": "^4.0.1-canary.2",
     "core-js": "^3.6.5",
     "d3": "^7.8.5",

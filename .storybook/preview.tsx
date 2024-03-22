@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { I18nProvider, useLingui } from "@lingui/react";
 import { i18n } from "../src/locales/locales";
+import { MathJaxContext } from "better-react-mathjax";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -65,7 +66,9 @@ const preview: Preview = {
         <I18nProvider i18n={i18n}>
           <ThemeProvider theme={theme}>
             <QueryClientProvider client={queryClient}>
-              <Story />
+              <MathJaxContext version={3}>
+                <Story />
+              </MathJaxContext>
               <ReactQueryDevtools />
               <I18nDevtools />
             </QueryClientProvider>

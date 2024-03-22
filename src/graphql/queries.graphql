@@ -215,6 +215,7 @@ query MethodsPage($locale: SiteLocale!) {
         ...AssetLinkButton
         ...ImageTeaserBlock
         ...IframeBlock
+        ...LatexBlock
       }
       links {
         __typename
@@ -724,6 +725,12 @@ fragment ImageTeaserBlock on ImageTeaserBlockRecord {
       base64
     }
   }
+}
+
+fragment LatexBlock on LatexRecord {
+  id
+  formula
+  alignment
 }
 
 fragment PowerBI on PowerBiReportRecord {

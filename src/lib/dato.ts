@@ -1,7 +1,7 @@
 import { buildClient } from "@datocms/cma-client-browser";
 import { DATOCMS_API_TOKEN } from "@/domain/env";
 
-export const client = buildClient({ apiToken: DATOCMS_API_TOKEN ?? "" });
+export const client = buildClient({ apiToken: DATOCMS_API_TOKEN ?? "", environment: "latex" });
 
 export interface DatoSearch {
   type: "search_result";
