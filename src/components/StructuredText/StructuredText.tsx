@@ -29,10 +29,10 @@ import NextImage from "next/image";
 import { NextRouter, useRouter } from "next/router";
 import slugs from "@/generated/slugs.json";
 import { useInitSections } from "@/lib/useScrollIntoView";
-import AnchorHeader, { extractTextContent } from "./internal/AnchorHeader";
+import AnchorHeader from "./internal/AnchorHeader";
 import { SafeHydrate } from "@/components/SafeHydrate";
 import MathJax from "./internal/MathJax";
-import { isNonBreakingMark, isLatexMark } from "./utils";
+import { isNonBreakingMark, isLatexMark, extractTextContent } from "./utils";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
