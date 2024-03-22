@@ -19,6 +19,7 @@ import { PropsWithChildren } from "react";
 import { LicenseInfo } from "@mui/x-license-pro";
 import useScrollRestoration from "@/lib/useScrollRestoration";
 import { CookieBanner } from "@/components/CookieBanner";
+import { MathJaxContext } from "better-react-mathjax";
 
 setupMatomo();
 
@@ -47,6 +48,24 @@ const HydrateAtoms = ({ children }: PropsWithChildren) => {
   return children;
 };
 
+const latexConf = {
+  loader: { load: ["[tex]/html"] },
+  tex: {
+    packages: { "[+]": ["html"] },
+    inlineMath: [
+      ["$", "$"],
+      ["\\(", "\\)"],
+    ],
+    displayMath: [
+      ["$$", "$$"],
+      ["\\[", "\\]"],
+    ],
+  },
+  options: {
+    enableMenu: false,
+  },
+};
+
 export default function App({
   Component,
   pageProps,
@@ -72,7 +91,9 @@ export default function App({
               <GraphqlProvider>
                 <ThemeProvider theme={blwTheme}>
                   <CssBaseline />
-                  <Component {...pageProps} />
+                  <MathJaxContext version={3} config={latexConf}>
+                    <Component {...pageProps} />
+                  </MathJaxContext>
                   <CookieBanner />
                 </ThemeProvider>
               </GraphqlProvider>

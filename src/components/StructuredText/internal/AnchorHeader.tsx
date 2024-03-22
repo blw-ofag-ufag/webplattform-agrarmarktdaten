@@ -7,6 +7,7 @@ import { useScrollIntoView } from "@/lib/useScrollIntoView";
 import { slugify } from "@/domain/string";
 import { useRouter } from "next/router";
 import useStructuredTextStyles from "../useStructuredTextStyles";
+import { extractTextContent } from "../utils";
 
 type AllowedLevels = 1 | 2 | 3 | 4 | 5;
 
@@ -65,19 +66,6 @@ const AnchorHeader = (props: HeaderProps) => {
 };
 
 const getLevelClass = (level: 1 | 2 | 3 | 4 | 5) => `h${level}` as `h${typeof level}`;
-
-const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
-  if (Array.isArray(node)) {
-    return node.map(extractTextContent).join("");
-  }
-  if (typeof node === "string") {
-    return node;
-  }
-  if (typeof node === "object") {
-    return extractTextContent(node?.props.children);
-  }
-  return "";
-};
 
 const getHashPath = (path: string, id: string, section: number, level: AllowedLevels) => {
   const headerHash = mkHeaderHash(id, section, level);
