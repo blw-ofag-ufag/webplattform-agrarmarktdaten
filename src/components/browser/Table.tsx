@@ -149,34 +149,28 @@ export const Table = ({
   );
 
   const columns: GridColDef[] = useMemo(() => {
-    return Object.values(dimensions)
-      .flat()
-      .sort((a, b) =>
-        !tableDimensionsOrder.hasOwnProperty(a.dimension)
-          ? 1
-          : !tableDimensionsOrder.hasOwnProperty(b.dimension)
-          ? -1
-          : tableDimensionsOrder[a.dimension] - tableDimensionsOrder[b.dimension]
-      )
-      .map((dimension) => {
-        const formatter = tableFormatter({
-          dimension: dimension.dimension,
-          cubeDimensions: dimensions,
-          timeView,
-          locale,
-        });
-        return {
-          field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
-          headerName: dimension.label,
-          headerAlign:
-            isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
-          align:
-            isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
-          sortingOrder: ["desc", "asc", null],
-          minWidth: 100,
-          valueFormatter: (params) => formatter(params.value),
-        };
+    const sorted = sortBy(
+      Object.values(dimensions),
+      (x) => tableDimensionsOrder[x.dimension] ?? 1000
+    );
+    return sorted.map((dimension) => {
+      const formatter = tableFormatter({
+        dimension: dimension.dimension,
+        cubeDimensions: dimensions,
+        timeView,
+        locale,
       });
+      return {
+        field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
+        headerName: dimension.label,
+        headerAlign:
+          isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
+        align: isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",
+        sortingOrder: ["desc", "asc", null],
+        minWidth: 100,
+        valueFormatter: (params) => formatter(params.value),
+      };
+    });
   }, [dimensions, timeView, locale]);
 
   return (
