@@ -14,9 +14,9 @@ export const DIMENSIONS = [
   "foreign-trade",
   "key-indicator-type",
   "market",
-  "product",
   "product-group",
   "product-subgroup",
+  "product",
   "product-properties",
   "production-system",
   "product-origin",
@@ -40,6 +40,8 @@ export const tableDimensionsOrder = Object.fromEntries(
     "product-group",
     "product-subgroup",
 
+    "key-indicator-type",
+
     "price",
     "quantity",
     "index",
@@ -61,7 +63,8 @@ export const tableDimensionsOrder = Object.fromEntries(
 
     "usage",
 
-    "key-indicator-type",
+    "data-method",
+    "data-source",
   ].map((x, i) => [x, i])
 );
 
@@ -81,11 +84,12 @@ export const sidePanelFiltersOrder: (
     }
 )[] = [
   { key: "time", type: "time" }, // Datum
-  { key: "market", type: "cube" }, // Kennzahl
+  { key: "market", type: "cube" }, // Market
 
   { key: "product", type: "dimension" }, // Produkt
 
-  { key: "measure", type: "cube" }, // Kennzahl
+  { key: "measure", type: "cube" }, // Indicator
+  { key: "usage", type: "dimension" }, // Verwendungsart
 
   { key: "unit", type: "dimension" }, // Einheit
   { key: "currency", type: "dimension" }, // Währung
@@ -104,7 +108,6 @@ export const sidePanelFiltersOrder: (
   { key: "production-system", type: "dimension" }, // Produktionssystem
   { key: "product-properties", type: "dimension" }, // Produkteigenschaften
 
-  { key: "usage", type: "dimension" }, // Verwendungsart
   { key: "data-method", type: "dimension" }, // Datenart
   { key: "data-source", type: "dimension" }, // Datenquelle
 ];

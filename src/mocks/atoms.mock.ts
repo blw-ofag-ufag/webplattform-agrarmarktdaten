@@ -1,6 +1,9 @@
 // Mock for atoms
 // Got the values with console.log(JSON.stringify(atomValue))
 
+import { fetchCubeDimensions } from "@/pages/api/data";
+import { QueryObserverResult } from "@tanstack/react-query";
+
 export const cubes = {
   status: "success",
   fetchStatus: "idle",
@@ -114,7 +117,10 @@ export const cubes = {
 
 export const timeView = "Month";
 
-export const cubeDimensionsStatus = {
+export const cubeDimensionsStatus: Exclude<
+  Omit<QueryObserverResult<Awaited<ReturnType<typeof fetchCubeDimensions>>>, "refetch">,
+  { data: undefined }
+> = {
   status: "success",
   fetchStatus: "idle",
   isPending: false,

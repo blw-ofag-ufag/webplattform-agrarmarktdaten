@@ -18,6 +18,8 @@ import { useAtomValue } from "jotai";
 import { isNumber, isString, isUndefined } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
+import React from "react";
+import { sortBy } from "remeda";
 
 const useStyles = makeStyles()(({ palette: c, shadows: e, typography }) => ({
   dataGrid: {
@@ -229,3 +231,5 @@ export const Table = ({
     />
   );
 };
+
+export type TableProps = React.ComponentProps<typeof Table>;
