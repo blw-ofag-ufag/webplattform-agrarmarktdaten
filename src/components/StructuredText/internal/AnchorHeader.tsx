@@ -66,7 +66,13 @@ const AnchorHeader = (props: HeaderProps) => {
 
 const getLevelClass = (level: 1 | 2 | 3 | 4 | 5) => `h${level}` as `h${typeof level}`;
 
-const extractTextContent = (node: JSX.Element | JSX.Element[]): string => {
+export const extractTextContent = (
+  node:
+    | JSX.Element
+    | JSX.Element[]
+    | string
+    | (string | React.ReactElement<any, string | React.JSXElementConstructor<any>>)[]
+): string => {
   if (Array.isArray(node)) {
     return node.map(extractTextContent).join("");
   }

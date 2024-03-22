@@ -29,9 +29,10 @@ import NextImage from "next/image";
 import { NextRouter, useRouter } from "next/router";
 import slugs from "@/generated/slugs.json";
 import { useInitSections } from "@/lib/useScrollIntoView";
-import AnchorHeader from "./internal/AnchorHeader";
+import AnchorHeader, { extractTextContent } from "./internal/AnchorHeader";
 import { SafeHydrate } from "@/components/SafeHydrate";
 import MathJax from "./internal/MathJax";
+import { isNonBreakingMark, isLatexMark } from "./utils";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -88,10 +89,12 @@ const StructuredText = (props: Props) => {
           <ST
             data={data}
             customMarkRules={[
-              renderMarkRule(
-                (mark) => mark === "non-breaking",
-                ({ children }) => <span className={classes.nonBreakable}>{children}</span>
-              ),
+              renderMarkRule(isNonBreakingMark, ({ children }) => (
+                <span className={classes.nonBreakable}>{children}</span>
+              )),
+              renderMarkRule(isLatexMark, ({ children }) => {
+                return children && <MathJax inline>{extractTextContent(children)}</MathJax>;
+              }),
             ]}
             customNodeRules={[
               renderNodeRule(isLink, ({ node, children, key }) => {
