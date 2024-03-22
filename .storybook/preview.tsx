@@ -8,6 +8,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { I18nProvider, useLingui } from "@lingui/react";
 import { i18n } from "../src/locales/locales";
 import { MathJaxContext } from "better-react-mathjax";
+import { LicenseInfo } from "@mui/x-license-pro";
+
+LicenseInfo.setLicenseKey(
+  "849fcc78978d14fbb154f3821cb4e283Tz03NjgxMCxFPTE3MjkyNTY4NjkwMDAsUz1wcm8sTE09cGVycGV0dWFsLEtWPTI="
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
