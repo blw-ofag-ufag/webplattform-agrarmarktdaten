@@ -61,6 +61,9 @@ const latexConf = {
       ["\\[", "\\]"],
     ],
   },
+  options: {
+    enableMenu: false,
+  },
 };
 
 export default function App({
