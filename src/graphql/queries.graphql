@@ -297,6 +297,17 @@ query AnalysisPage($locale: SiteLocale!) {
   ...MenuItems
 }
 
+query TopMarketBlogPosts($locale: SiteLocale!, $marketId: ItemId!) {
+  topMarketBlogPosts: allBlogPosts(
+    locale: $locale
+    first: 3
+    orderBy: [publishedDate_DESC]
+    filter: { markets: { eq: [$marketId] } }
+  ) {
+    ...SimpleBlogPost
+  }
+}
+
 query paginatedFilteredBlogposts(
   $locale: SiteLocale!
   $first: IntType!

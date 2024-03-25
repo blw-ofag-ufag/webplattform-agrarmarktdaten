@@ -6371,6 +6371,14 @@ export type AnalysisPageQueryVariables = Exact<{
 
 export type AnalysisPageQuery = { __typename: 'Query', analysisPage?: { __typename: 'AnalysisPageRecord', id: any, title?: string | null, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null, lead?: { __typename: 'AnalysisPageModelLeadField', value: any, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, seo: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> } | null, site: { __typename: 'Site', favicon: Array<{ __typename: 'Tag', attributes?: any | null, content?: string | null, tag: string }> }, allMarketArticles: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> };
 
+export type TopMarketBlogPostsQueryVariables = Exact<{
+  locale: SiteLocale;
+  marketId: Scalars['ItemId']['input'];
+}>;
+
+
+export type TopMarketBlogPostsQuery = { __typename: 'Query', topMarketBlogPosts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, leadCard?: string | null, publishedDate?: string | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }> };
+
 export type PaginatedFilteredBlogpostsQueryVariables = Exact<{
   locale: SiteLocale;
   first: Scalars['IntType']['input'];
@@ -7711,6 +7719,22 @@ ${SimpleFocusArticleFragmentDoc}`;
 
 export function useAnalysisPageQuery(options: Omit<Urql.UseQueryArgs<AnalysisPageQueryVariables>, 'query'>) {
   return Urql.useQuery<AnalysisPageQuery, AnalysisPageQueryVariables>({ query: AnalysisPageDocument, ...options });
+};
+export const TopMarketBlogPostsDocument = gql`
+    query TopMarketBlogPosts($locale: SiteLocale!, $marketId: ItemId!) {
+  topMarketBlogPosts: allBlogPosts(
+    locale: $locale
+    first: 3
+    orderBy: [publishedDate_DESC]
+    filter: {markets: {eq: [$marketId]}}
+  ) {
+    ...SimpleBlogPost
+  }
+}
+    ${SimpleBlogPostFragmentDoc}`;
+
+export function useTopMarketBlogPostsQuery(options: Omit<Urql.UseQueryArgs<TopMarketBlogPostsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TopMarketBlogPostsQuery, TopMarketBlogPostsQueryVariables>({ query: TopMarketBlogPostsDocument, ...options });
 };
 export const PaginatedFilteredBlogpostsDocument = gql`
     query paginatedFilteredBlogposts($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $marketFilter: [ItemId], $focusFilter: [ItemId], $orderBy: [BlogPostModelOrderBy]) {
