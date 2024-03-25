@@ -638,6 +638,7 @@ fragment BlogPost on BlogPostRecord {
       ...AssetLinkButton
       ...ImageTeaserBlock
       ...LatexBlock
+      ...TableBlock
     }
     links {
       __typename
@@ -944,4 +945,10 @@ fragment SiteFavIcon on Query {
       tag
     }
   }
+}
+
+fragment TableBlock on TableRecord {
+  __typename
+  id
+  content
 }
