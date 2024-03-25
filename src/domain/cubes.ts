@@ -50,7 +50,7 @@ export const cubePathAtom = atom((get) => {
   const { status, data: allCubes } = get(cubesStatusAtom);
   const cubeSelection = get(cubeSelectionAtom);
 
-  if (status !== "success") return;
+  if (status !== "success") return defaultCube;
 
   const cubePath = allCubes.find(
     (cube) =>
