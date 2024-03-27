@@ -32,6 +32,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false, // Set to false as the behavior in the data page is surprising right now
     },
   },
 });
