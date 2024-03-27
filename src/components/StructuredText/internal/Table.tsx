@@ -9,10 +9,21 @@ import { makeStyles } from "@/components/style-utils";
 import { Typography } from "@mui/material";
 
 const useStyles = makeStyles()(({ palette: c, spacing: s }, _params) => ({
+  table: {
+    width: "100%",
+    display: "block",
+  },
   header: {
+    display: "inline-table",
+    width: "100%",
     backgroundColor: c.cobalt[50],
     border: "none",
     borderBottom: `1px solid ${c.monochrome[300]}`,
+  },
+
+  body: {
+    display: "block",
+    width: "100%",
   },
 
   headerCell: {
@@ -24,6 +35,7 @@ const useStyles = makeStyles()(({ palette: c, spacing: s }, _params) => ({
   },
 
   row: {
+    display: "flex",
     borderBottom: `1px solid ${c.monochrome[300]}`,
     "&:last-child": {
       borderBottom: "none",
@@ -33,6 +45,7 @@ const useStyles = makeStyles()(({ palette: c, spacing: s }, _params) => ({
   bodyCell: {
     padding: s(4, 5),
     border: "none",
+    wordWrap: "break-word",
   },
 }));
 
@@ -46,7 +59,7 @@ const JsonTable = (props: Props) => {
   const { classes } = useStyles();
   return (
     <Paper elevation={4}>
-      <Table aria-label="simple table">
+      <Table className={classes.table} aria-label="simple table">
         <TableHead className={classes.header}>
           <TableRow className={classes.row}>
             {columns.length > 0 &&
@@ -61,7 +74,7 @@ const JsonTable = (props: Props) => {
               })}
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody className={classes.body}>
           {data.length > 0 &&
             data.map((row: Record<string, any>, i: number) => {
               const cells = Object.values(row);
