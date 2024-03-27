@@ -1,4 +1,5 @@
 import { TopBlogpostsTeaser } from "./TopBlogpostsTeaser";
+import * as GQL from "@/graphql";
 
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -21,8 +22,27 @@ export const Primary: Story = {
         id: "121805521",
         title: "Milk Post",
         slug: "milk-post-en",
-        leadCard:
-          "Milk is a nutrient-rich liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals (including breastfed human infants) before they are able to digest solid food. Early-lactation milk, which is called colostrum, contains antibodies that strengthen the immune system, and thus reduces the risk of many diseases. Milk contains many other nutrients, including protein and lactose.",
+        cardSummary: {
+          __typename: "BlogPostModelCardSummaryField",
+          value: {
+            schema: "dast",
+            document: {
+              type: "root",
+              children: [
+                {
+                  type: "paragraph",
+                  children: [
+                    {
+                      type: "span",
+                      value:
+                        "Im Jahr 2023 stieg die Nachfrage nach Eiern aller Kategorien in der Schweiz im Vergleich zum Vorjahr um 2,8 %. Sie erreichte damit 1 701 Mio. Eier, was nach der Nachfragespitze während der COVID-19-Pandemie einem neuen Höchststand entspricht. Gleichzeitig ging die Schweizer Eierproduktion um 3,7 % zurück. Dies ist der stärkste Rückgang seit 2014. Um den inländischen Verbrauch zu decken, wurden 608 Mio. Eier importiert, 17 % mehr als 2022. Das bedeutet einen Rückgang des Anteils der in der Schweiz produzierten Schaleneier um 5 Prozentpunkte. Im Detailhandel sank der Absatz indessen um 5 %, während die Preise stiegen. ",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        } as GQL.SimpleBlogPostFragment["cardSummary"],
         image: {
           __typename: "FileField",
           id: "46793926",
@@ -43,8 +63,27 @@ export const Primary: Story = {
         id: "121948050",
         title: "Potatoes Post",
         slug: "potatoes-post-en",
-        leadCard:
-          "The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae.The potato is a starchy tuber of the plant Solanum tuberosum and is a root vegetable native to the Americas. The plant is a perennial in the nightshade family Solanaceae.",
+        cardSummary: {
+          __typename: "BlogPostModelCardSummaryField",
+          value: {
+            schema: "dast",
+            document: {
+              type: "root",
+              children: [
+                {
+                  type: "paragraph",
+                  children: [
+                    {
+                      type: "span",
+                      value:
+                        "Im Jahr 2023 stieg die Nachfrage nach Eiern aller Kategorien in der Schweiz im Vergleich zum Vorjahr um 2,8 %. Sie erreichte damit 1 701 Mio. Eier, was nach der Nachfragespitze während der COVID-19-Pandemie einem neuen Höchststand entspricht. Gleichzeitig ging die Schweizer Eierproduktion um 3,7 % zurück. Dies ist der stärkste Rückgang seit 2014. Um den inländischen Verbrauch zu decken, wurden 608 Mio. Eier importiert, 17 % mehr als 2022. Das bedeutet einen Rückgang des Anteils der in der Schweiz produzierten Schaleneier um 5 Prozentpunkte. Im Detailhandel sank der Absatz indessen um 5 %, während die Preise stiegen. ",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        } as GQL.SimpleBlogPostFragment["cardSummary"],
         image: {
           __typename: "FileField",
           id: "46793968",
@@ -60,8 +99,27 @@ export const Primary: Story = {
         id: "121805523",
         title: "Milk Post",
         slug: "milk-post-en",
-        leadCard:
-          "Milk is a nutrient-rich liquid food produced by the mammary glands of mammals. It is the primary source of nutrition for young mammals (including breastfed human infants) before they are able to digest solid food. Early-lactation milk, which is called colostrum, contains antibodies that strengthen the immune system, and thus reduces the risk of many diseases. Milk contains many other nutrients, including protein and lactose.",
+        cardSummary: {
+          __typename: "BlogPostModelCardSummaryField",
+          value: {
+            schema: "dast",
+            document: {
+              type: "root",
+              children: [
+                {
+                  type: "paragraph",
+                  children: [
+                    {
+                      type: "span",
+                      value:
+                        "Im Jahr 2023 stieg die Nachfrage nach Eiern aller Kategorien in der Schweiz im Vergleich zum Vorjahr um 2,8 %. Sie erreichte damit 1 701 Mio. Eier, was nach der Nachfragespitze während der COVID-19-Pandemie einem neuen Höchststand entspricht. Gleichzeitig ging die Schweizer Eierproduktion um 3,7 % zurück. Dies ist der stärkste Rückgang seit 2014. Um den inländischen Verbrauch zu decken, wurden 608 Mio. Eier importiert, 17 % mehr als 2022. Das bedeutet einen Rückgang des Anteils der in der Schweiz produzierten Schaleneier um 5 Prozentpunkte. Im Detailhandel sank der Absatz indessen um 5 %, während die Preise stiegen. ",
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        } as GQL.SimpleBlogPostFragment["cardSummary"],
         image: {
           __typename: "FileField",
           id: "46793926",
