@@ -58,7 +58,7 @@ const JsonTable = (props: Props) => {
   const { columns, data } = content;
   const { classes } = useStyles();
   return (
-    <Table className={classes.table} aria-label="simple table">
+    <Table className={classes.table}>
       <TableHead className={classes.header}>
         <TableRow className={classes.row}>
           {columns.length > 0 &&
