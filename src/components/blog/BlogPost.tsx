@@ -2,6 +2,7 @@ import { Box, Chip, Link, Typography } from "@mui/material";
 import { head } from "lodash";
 import Image from "next/image";
 import NextLink from "next/link";
+import { StructuredText } from "@/components/StructuredText";
 
 import * as GQL from "@/graphql";
 import { useLocale } from "@/lib/use-locale";
@@ -33,7 +34,7 @@ export const BlogPostsGrid = (props: Props) => {
 };
 
 export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
-  const { title, leadCard, image, markets, slug, publishedDate } = props;
+  const { title, cardSummary, image, markets, slug, publishedDate } = props;
   const mainMarket = head(markets);
   const locale = useLocale();
 
@@ -63,7 +64,7 @@ export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
           </Flex>
           <Typography variant="h5">{title}</Typography>
           <Typography variant="body2" mt={2}>
-            {leadCard}
+            {cardSummary && <StructuredText data={cardSummary} />}
           </Typography>
         </Box>
       </Link>
