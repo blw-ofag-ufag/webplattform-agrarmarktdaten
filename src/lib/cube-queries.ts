@@ -338,17 +338,19 @@ export const queryObservations = ({
     ?date time:year ?year.
     OPTIONAL { ?date time:month ?month. }
 
-    ?fromInterval
-      schema:inDefinedTermSet <${timeFilterModeToTermset[timeFilter.mode]}> ;
-      ${
-        timeFilter.minDate && timeFilter.maxDate
-          ? `time:year "${timeFilter.minDate.year}"^^schema:Integer ; ${
-              timeFilter.mode === "Month"
-                ? `time:month "${timeFilter.minDate.month}"^^schema:Integer ;`
-                : ""
-            }
-      time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
-      
+
+    ${
+      timeFilter.minDate && timeFilter.maxDate
+        ? `
+      ?fromInterval
+        schema:inDefinedTermSet <${timeFilterModeToTermset[timeFilter.mode]}> ;
+        time:year "${timeFilter.minDate.year}"^^schema:Integer ; ${
+          timeFilter.mode === "Month"
+            ? `time:month "${timeFilter.minDate.month}"^^schema:Integer ;`
+            : ""
+        }
+        time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
+
     ?toInterval
       schema:inDefinedTermSet <${timeFilterModeToTermset[timeFilter.mode]}> ;
       time:year "${timeFilter.maxDate.year}"^^schema:Integer ;
@@ -361,12 +363,11 @@ export const queryObservations = ({
 
     ?date time:hasBeginning/time:inXSDDateTimeStamp ?start .
     ?date time:hasEnd/time:inXSDDateTimeStamp ?end .
-
   
     FILTER (?start >= ?fromPeriod)
     FILTER (?end <= ?toPeriod)`
-          : ""
-      }
+        : ""
+    }
     
     
   } ORDER BY ?year ?month

@@ -73,7 +73,7 @@ describe("cube queries", () => {
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         
         SELECT ?observation
-          ?costComponent ?currency ?dataMethod ?dataSource ?foreignTrade ?keyIndicatorType ?market ?product ?productGroup ?productSubgroup ?productProperties ?productionSystem ?productOrigin ?salesRegion ?unit ?usage ?valueChainDetail ?valueChain ?measure
+          ?costComponent ?currency ?dataMethod ?dataSource ?foreignTrade ?keyIndicatorType ?market ?productGroup ?productSubgroup ?product ?productProperties ?productionSystem ?productOrigin ?salesRegion ?unit ?usage ?valueChainDetail ?valueChain ?measure
           ?year ?month
         WHERE {
           GRAPH <https://lindas.admin.ch/foag/agricultural-market-data> {
@@ -90,9 +90,9 @@ describe("cube queries", () => {
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/foreign-trade> ?foreignTrade .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/key-indicator-type> ?keyIndicatorType .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/market> ?market .
-              ?observation <https://agriculture.ld.admin.ch/foag/dimension/product> ?product .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/product-group> ?productGroup .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/product-subgroup> ?productSubgroup .
+              ?observation <https://agriculture.ld.admin.ch/foag/dimension/product> ?product .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/product-properties> ?productProperties .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/production-system> ?productionSystem .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/product-origin> ?productOrigin .
@@ -107,11 +107,13 @@ describe("cube queries", () => {
           ?date time:year ?year.
           OPTIONAL { ?date time:month ?month. }
 
-          ?fromInterval
-            schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
-            time:year "2020"^^schema:Integer ; 
-            time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
-            
+
+          
+            ?fromInterval
+              schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
+              time:year "2020"^^schema:Integer ; 
+              time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
+
           ?toInterval
             schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
             time:year "2023"^^schema:Integer ;
@@ -120,7 +122,6 @@ describe("cube queries", () => {
 
           ?date time:hasBeginning/time:inXSDDateTimeStamp ?start .
           ?date time:hasEnd/time:inXSDDateTimeStamp ?end .
-
         
           FILTER (?start >= ?fromPeriod)
           FILTER (?end <= ?toPeriod)
@@ -183,8 +184,8 @@ describe("cube queries", () => {
       PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
       SELECT ?observation ?costComponentLabel ?currencyLabel ?dataMethodLabel ?dataSourceLabel
-        ?foreignTradeLabel ?keyIndicatorTypeLabel ?marketLabel ?productLabel ?productGroupLabel
-        ?productSubgroupLabel ?productPropertiesLabel ?productionSystemLabel ?productOriginLabel
+        ?foreignTradeLabel ?keyIndicatorTypeLabel ?marketLabel ?productGroupLabel ?productSubgroupLabel
+        ?productLabel ?productPropertiesLabel ?productionSystemLabel ?productOriginLabel
         ?salesRegionLabel ?unitLabel ?usageLabel ?valueChainDetailLabel ?valueChainLabel
         ?measure ?year ?month
       WHERE {
@@ -228,11 +229,6 @@ describe("cube queries", () => {
             ?market schema:name ?marketLabel .
             FILTER langMatches(lang(?marketLabel), ?lang)
           }
-          ?observation <https://agriculture.ld.admin.ch/foag/dimension/product> ?product .
-          OPTIONAL {
-            ?product schema:name ?productLabel .
-            FILTER langMatches(lang(?productLabel), ?lang)
-          }
           ?observation <https://agriculture.ld.admin.ch/foag/dimension/product-group> ?productGroup .
           OPTIONAL {
             ?productGroup schema:name ?productGroupLabel .
@@ -242,6 +238,11 @@ describe("cube queries", () => {
           OPTIONAL {
             ?productSubgroup schema:name ?productSubgroupLabel .
             FILTER langMatches(lang(?productSubgroupLabel), ?lang)
+          }
+          ?observation <https://agriculture.ld.admin.ch/foag/dimension/product> ?product .
+          OPTIONAL {
+            ?product schema:name ?productLabel .
+            FILTER langMatches(lang(?productLabel), ?lang)
           }
           ?observation <https://agriculture.ld.admin.ch/foag/dimension/product-properties> ?productProperties .
           OPTIONAL {
@@ -289,7 +290,6 @@ describe("cube queries", () => {
         OPTIONAL {
           ?date time:month ?month .
         }
-        ?fromInterval schema:inDefinedTermSet <https://ld.admin.ch/time/year> .
       }
       ORDER BY ?year ?month"
     `);
