@@ -27,6 +27,7 @@ const useStyles = makeStyles()(({ palette: c, spacing: s, shadows }, _params) =>
   },
 
   headerCell: {
+    flex: 1,
     border: "none",
     padding: s(4, 5),
     textTransform: "uppercase",
@@ -43,9 +44,12 @@ const useStyles = makeStyles()(({ palette: c, spacing: s, shadows }, _params) =>
   },
 
   bodyCell: {
+    flex: 1,
     padding: s(4, 5),
     border: "none",
     wordWrap: "break-word",
+    wordBreak: "break-word",
+    minWidth: "auto",
   },
 }));
 
