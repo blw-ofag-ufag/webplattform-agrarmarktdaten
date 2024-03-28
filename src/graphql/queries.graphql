@@ -578,7 +578,13 @@ fragment SimpleBlogPost on BlogPostRecord {
   id
   title
   slug
-  leadCard
+  cardSummary {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
   image {
     id
     alt
