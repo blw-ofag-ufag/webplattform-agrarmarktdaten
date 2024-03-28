@@ -75,14 +75,19 @@ export const Primary: Story = {
                   children: [
                     {
                       type: "span",
-                      value:
-                        "Im Jahr 2023 stieg die Nachfrage nach Eiern aller Kategorien in der Schweiz im Vergleich zum Vorjahr um 2,8 %. Sie erreichte damit 1 701 Mio. Eier, was nach der Nachfragespitze während der COVID-19-Pandemie einem neuen Höchststand entspricht. Gleichzeitig ging die Schweizer Eierproduktion um 3,7 % zurück. Dies ist der stärkste Rückgang seit 2014. Um den inländischen Verbrauch zu decken, wurden 608 Mio. Eier importiert, 17 % mehr als 2022. Das bedeutet einen Rückgang des Anteils der in der Schweiz produzierten Schaleneier um 5 Prozentpunkte. Im Detailhandel sank der Absatz indessen um 5 %, während die Preise stiegen. ",
+                      value: "test ",
+                    },
+                    {
+                      type: "span",
+                      marks: ["non-breaking"],
+                      value: "non breaking",
                     },
                   ],
                 },
               ],
             },
           },
+          links: [],
         } as GQL.SimpleBlogPostFragment["cardSummary"],
         image: {
           __typename: "FileField",
