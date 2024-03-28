@@ -107,11 +107,13 @@ describe("cube queries", () => {
           ?date time:year ?year.
           OPTIONAL { ?date time:month ?month. }
 
-          ?fromInterval
-            schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
-            time:year "2020"^^schema:Integer ; 
-            time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
-            
+
+          
+            ?fromInterval
+              schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
+              time:year "2020"^^schema:Integer ; 
+              time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
+
           ?toInterval
             schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
             time:year "2023"^^schema:Integer ;
@@ -120,7 +122,6 @@ describe("cube queries", () => {
 
           ?date time:hasBeginning/time:inXSDDateTimeStamp ?start .
           ?date time:hasEnd/time:inXSDDateTimeStamp ?end .
-
         
           FILTER (?start >= ?fromPeriod)
           FILTER (?end <= ?toPeriod)
@@ -289,7 +290,6 @@ describe("cube queries", () => {
         OPTIONAL {
           ?date time:month ?month .
         }
-        ?fromInterval schema:inDefinedTermSet <https://ld.admin.ch/time/year> .
       }
       ORDER BY ?year ?month"
     `);
