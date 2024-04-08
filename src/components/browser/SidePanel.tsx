@@ -127,7 +127,7 @@ const SidePanel = ({
                       </AccordionSummary>
                     </FilterAccordion>
                   )}
-                  {filters.cube.isSuccess && (
+                  {filters.cube.isSuccess && options.length > 1 && (
                     <FilterRadioAccordion
                       key={key}
                       slots={{
@@ -158,7 +158,7 @@ const SidePanel = ({
                       </AccordionSummary>
                     </FilterAccordion>
                   )}
-                  {filters.dimensions.isSuccess && (
+                  {filters.dimensions.isSuccess && config.options.length > 1 && (
                     <FilterSelectAccordion
                       key={key}
                       slots={{
