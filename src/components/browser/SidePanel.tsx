@@ -114,6 +114,8 @@ const SidePanel = ({
                 };
               });
 
+              const sortedOptions = orderNA(options);
+
               const handleMarketChange = () => {
                 setMeasure(DEFAULT_MEASURE);
               };
@@ -133,7 +135,7 @@ const SidePanel = ({
                       slots={{
                         accordion: getAccordionProps(key),
                       }}
-                      options={options}
+                      options={sortedOptions}
                       filterAtom={config.atom}
                       onChange={key === "market" ? handleMarketChange : undefined}
                       title={config.name ?? key}
@@ -148,6 +150,8 @@ const SidePanel = ({
               if (filters.cube.isError) {
                 return null;
               }
+
+              const sortedOptions = orderNA(config.options);
 
               return (
                 <>
@@ -168,7 +172,7 @@ const SidePanel = ({
                           groups: config?.groups,
                         },
                       }}
-                      options={config.options}
+                      options={sortedOptions}
                       filterAtom={config.atom}
                       title={config.name}
                     />
@@ -400,3 +404,14 @@ export const ResetFiltersButton = () => {
     />
   );
 };
+function orderNA(
+  items:
+    | {
+        label: string;
+        value: string;
+      }[]
+    | Option<string>[]
+) {
+  const nonNA = items.filter((i) => i.label !== "NA");
+  return [...nonNA, ...items.filter((i) => i.label === "NA")];
+}

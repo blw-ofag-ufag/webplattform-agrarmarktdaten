@@ -201,7 +201,10 @@ export default function SelectFilter<T extends Option>(props: SelectFilterProps<
 
     const tree = stratify(optionsWithChecked, groups || []);
 
-    return propagateValueInTree(allItemsTree, tree, ["total", "selectedCount"]).sort(nodeSorter);
+    const sorted = propagateValueInTree(allItemsTree, tree, ["total", "selectedCount"]).sort(
+      nodeSorter
+    );
+    return sortNA(sorted);
   }, [searchOptions, values, groups, allItemsTree]);
 
   const onChangeItem = (node: Node<T>, checked: boolean) => {
@@ -324,6 +327,11 @@ const nodeSorter = <T extends Option>(a: Node<T>, b: Node<T>) => {
   return aLabel.localeCompare(bLabel);
 };
 
+function sortNA<T extends Option>(items: Array<Node<T>>) {
+  const nonNA = items.filter((i) => i.label !== "NA");
+  return [...nonNA, ...items.filter((i) => i.label === "NA")];
+}
+
 const SelectItem = <T extends ScoredOption>({
   node,
   onChangeItem,
@@ -348,7 +356,8 @@ const SelectItem = <T extends ScoredOption>({
   }, [node.level, hasResults]);
 
   const sortedChildren = useMemo(() => {
-    return node.children.sort(nodeSorter);
+    const sorted = node.children.sort(nodeSorter);
+    return sortNA(sorted);
   }, [node.children]);
 
   if (node.children.length === 0) {
