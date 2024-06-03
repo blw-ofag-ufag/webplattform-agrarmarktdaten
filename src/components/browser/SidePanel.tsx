@@ -14,6 +14,7 @@ import {
   Stack,
   Typography,
   accordionSummaryClasses,
+  Button,
 } from "@mui/material";
 import { WritableAtom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { xor } from "lodash";
@@ -28,6 +29,9 @@ import TimeFilter, { previewTime } from "./filters/TimeFilter";
 import dayjs from "dayjs";
 import { useIsMobile } from "@/components/Grid/Grid";
 import { sidePanelFiltersOrder } from "@/domain/dimensions";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { makeStyles } from "../style-utils";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -60,9 +64,15 @@ const SidePanel = ({
   const availableBaseDimensionsValues = useAtomValue(availableBaseDimensionsValuesAtom);
   const filters = useAtomValue(filterAtom);
   const isMobile = useIsMobile();
+  const [showMore, setShowMore] = useState(true);
+  const { classes } = useStyles();
 
   const measureAtom = filters.cube.dimensions.measure.atom;
   const [_, setMeasure] = useAtom(measureAtom);
+
+  const filtersToDisplay = useMemo(() => {
+    return showMore ? sidePanelFiltersOrder.slice(0, 6) : sidePanelFiltersOrder;
+  }, [showMore]);
 
   return (
     <ContentDrawer anchor="left" open={open} onClose={onClose} {...slots?.drawer}>
@@ -94,9 +104,8 @@ const SidePanel = ({
             </Stack>
           </Box>
           {/* Cube path filters */}
-          {sidePanelFiltersOrder.map((filterSpec) => {
+          {filtersToDisplay.map((filterSpec) => {
             const { key, type } = filterSpec;
-
             if (type === "cube") {
               if (filters.cube.isError) {
                 return null;
@@ -185,6 +194,22 @@ const SidePanel = ({
               throw new Error("not implemented");
             }
           })}
+
+          <Box className={classes.toggleArea}>
+            <Button
+              variant="aside"
+              className={classes.toggleBtn}
+              color="info"
+              startIcon={showMore ? <AddIcon /> : <RemoveIcon />}
+              onClick={() => setShowMore((x) => !x)}
+            >
+              {showMore ? (
+                <Trans id="data.filters.more">More Filters</Trans>
+              ) : (
+                <Trans id="data.filters.less">Less Filters</Trans>
+              )}
+            </Button>
+          </Box>
         </Box>
       </Stack>
     </ContentDrawer>
@@ -404,6 +429,19 @@ export const ResetFiltersButton = () => {
     />
   );
 };
+
+const useStyles = makeStyles()(({ spacing: s }) => ({
+  toggleArea: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: s(5),
+  },
+  toggleBtn: {
+    width: "fit-content",
+  },
+}));
+
 function orderNA(
   items:
     | {
