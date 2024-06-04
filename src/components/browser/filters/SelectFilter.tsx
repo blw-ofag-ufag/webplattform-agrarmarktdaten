@@ -27,6 +27,7 @@ import { uniqBy } from "lodash";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
 import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 import PreviewFilter from "./PreviewFilter";
+import { sortBy } from "remeda";
 
 type Node<T extends Option> = {
   id: string;
@@ -328,8 +329,7 @@ const nodeSorter = <T extends Option>(a: Node<T>, b: Node<T>) => {
 };
 
 function sortNA<T extends Option>(items: Array<Node<T>>) {
-  const nonNA = items.filter((i) => i.label !== "NA");
-  return [...nonNA, ...items.filter((i) => i.label === "NA")];
+  return sortBy(items, (x) => (x.label === "NA" ? Infinity : 0));
 }
 
 const SelectItem = <T extends ScoredOption>({
