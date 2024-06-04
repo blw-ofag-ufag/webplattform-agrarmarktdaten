@@ -19,5 +19,14 @@ if (process.env.NODE_ENV !== "development") {
     // This sets the sample rate to be 1%. You may want this to be 100% while
     // in development and sample at a lower rate in production
     replaysSessionSampleRate: 0.01,
+
+    ignoreErrors: [
+      // The ResizeObserver error is actually not problematic
+      // @see https://forum.sentry.io/t/resizeobserver-loop-limit-exceeded/8402
+      "ResizeObserver loop",
+      // Coming apparently from Outlook
+      // @see https://www.notion.so/interactivethings/Common-Sentry-Ignore-Rules-f0b1e94a6ac34ffd8d39b53498c48a45?pvs=4
+      "Non-Error promise rejection captured",
+    ]
   });
 }
