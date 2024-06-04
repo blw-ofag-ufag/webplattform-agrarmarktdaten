@@ -6,7 +6,7 @@ import * as GQL from "@/graphql";
 import { useRouter } from "next/router";
 import { Image } from "react-datocms";
 import { MarketChip } from "@/components/MarketChip";
-import { replaceNumberSeparators } from "@/domain/string";
+import { StructuredText } from "@/components/StructuredText";
 
 import { makeStyles } from "@/components/style-utils";
 import { isHTMLElement, useLineClamping } from "@/utils/clamp";
@@ -196,7 +196,7 @@ export const BlogpostCard = (
 ) => {
   const {
     title,
-    leadCard,
+    cardSummary,
     image,
     markets,
     focusArticles,
@@ -253,7 +253,7 @@ export const BlogpostCard = (
             ))}
           </div>
           <Typography variant="body1" className={cx(classes.lead, clampedClassName)}>
-            {leadCard ? replaceNumberSeparators(leadCard) : leadCard}
+            {cardSummary && <StructuredText data={cardSummary} />}
           </Typography>
         </div>
       </div>

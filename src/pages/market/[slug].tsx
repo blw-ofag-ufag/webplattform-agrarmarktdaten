@@ -14,11 +14,31 @@ import { isValidLocale } from "@/locales/locales";
 import slugs from "@/generated/slugs.json";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
+import _ from "lodash";
 
-export default function MarketPage(props: GQL.MarketPageQuery) {
-  const { marketArticle, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
+function selectTopBlogposts(
+  marketBlogPosts: GQL.BlogPostRecord[],
+  topBlogPosts: GQL.BlogPostRecord[]
+) {
+  return _.uniqBy([...marketBlogPosts, ...topBlogPosts], (d) => d.id).slice(0, 3);
+}
+
+export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlogPostsQuery) {
+  const {
+    marketArticle,
+    allMarketArticles,
+    allFocusArticles,
+    topBlogPosts,
+    site,
+    topMarketBlogPosts,
+  } = props;
 
   const stickyRef = useTableOfContentsSticky();
+
+  const highlightedBlogposts = selectTopBlogposts(
+    topMarketBlogPosts as GQL.BlogPostRecord[],
+    topBlogPosts as GQL.BlogPostRecord[]
+  );
 
   const alternates = marketArticle?._allSlugLocales?.map((loc) => ({
     href: `/market/[slug]`,
@@ -64,7 +84,7 @@ export default function MarketPage(props: GQL.MarketPageQuery) {
           </div>
         </GridContainer>
         <LayoutSections>
-          <TopBlogpostsTeaser blogposts={topBlogPosts} />
+          <TopBlogpostsTeaser blogposts={highlightedBlogposts} />
         </LayoutSections>
       </AppLayout>
     </>
@@ -88,7 +108,23 @@ export const getStaticProps: GetStaticProps = async (context: $FixMe) => {
     throw new Error("Failed to fetch API");
   }
 
-  return { props: result.data, revalidate: 10 };
+  const topMarketBlogposts = await client
+    .query<GQL.TopMarketBlogPostsQuery>(
+      GQL.TopMarketBlogPostsDocument,
+      {
+        locale: context.locale,
+        marketId: result.data?.marketArticle?.id,
+      },
+      { requestPolicy: "network-only" }
+    )
+    .toPromise();
+
+  if (!topMarketBlogposts.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  return { props: { ...result.data, ...topMarketBlogposts.data }, revalidate: 10 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

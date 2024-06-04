@@ -36,9 +36,9 @@ export const tableDimensionsOrder = Object.fromEntries(
 
     "market",
 
-    "product",
     "product-group",
     "product-subgroup",
+    "product",
 
     "key-indicator-type",
 

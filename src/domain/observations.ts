@@ -13,6 +13,8 @@ import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } f
 import { DIMENSIONS, dataDimensions } from "./dimensions";
 import { RangeOptions, TimeView, dimensionsSelectionAtom, timeViewAtom } from "./filters";
 import { localeAtom } from "@/lib/use-locale";
+import { mkTimeFilter } from "./time-filter";
+import { timeView } from "@/mocks/atoms.mock";
 
 const getTimeFilter = (timeRange: RangeOptions, timeView: TimeView): TimeFilter => {
   const [minUnix, maxUnix] = timeRange.value;
@@ -136,15 +138,11 @@ export const filteredObservationsAtom = atom((get) => {
     [] as Array<(obs: Observation) => boolean>
   );
 
-  const [minDate, maxDate] = [
-    dayjs.unix(dimensionsSelection.time.range.value[0]),
-    dayjs.unix(dimensionsSelection.time.range.value[1]),
-  ];
-
-  const timeFilterFn = (obs: Observation) => {
-    const observationDate = dayjs(obs.date);
-    return observationDate && observationDate >= minDate && observationDate <= maxDate;
-  };
+  const timeFilterFn = mkTimeFilter(
+    dimensionsSelection.time.range.value[0],
+    dimensionsSelection.time.range.value[1],
+    timeView === "Month" ? "month" : "year"
+  );
 
   const filteredObservations = observationsQuery.data.observations
     .filter(timeFilterFn)
