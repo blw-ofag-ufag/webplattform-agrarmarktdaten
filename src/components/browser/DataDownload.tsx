@@ -1,5 +1,5 @@
 import { CubeDimensions, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { isMeasure } from "@/domain/dimensions";
+import { isMeasure, tableDimensionsOrder } from "@/domain/dimensions";
 import { timeViewAtom } from "@/domain/filters";
 import { filteredObservationsAtom } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
@@ -32,7 +32,7 @@ import {
 } from "react";
 import { mapToObj } from "remeda";
 import ActionButton from "./ActionButton";
-import { isUndefined } from "lodash";
+import { isUndefined, sortBy } from "lodash";
 
 const FILE_FORMATS = ["csv", "xlsx", "json"] as const;
 export type FileFormat = (typeof FILE_FORMATS)[number];
@@ -167,12 +167,13 @@ const DownloadMenuItem = ({
 
     const worksheet = workbook.addWorksheet("data");
 
-    worksheet.columns = Object.entries({ ...dimensions.properties, ...dimensions.measures }).map(
-      ([key, value]) => ({
-        header: value.label ?? key,
-        key: isMeasure(value.dimension) ? "measure" : value.dimension,
-      })
-    );
+    const entries = Object.values({ ...dimensions.properties, ...dimensions.measures });
+    const sorted = sortBy(entries, (x) => tableDimensionsOrder[x.dimension] ?? 1000);
+
+    worksheet.columns = sorted.map(({ label, dimension }) => ({
+      header: label,
+      key: isMeasure(dimension) ? "measure" : dimension,
+    }));
 
     const formatters = mapToObj(Object.keys(dataset[0]), (key) => {
       const dimension = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
