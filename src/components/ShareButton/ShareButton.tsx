@@ -19,6 +19,7 @@ const useStyles = makeStyles<{ isUrlUnlocked: boolean }>()(
       height: "44px",
       minWidth: "44px",
       padding: "4px",
+      justifyContent: "center",
     },
     shareIcon: {
       width: "32px!important",
