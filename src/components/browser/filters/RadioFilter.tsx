@@ -16,6 +16,12 @@ const useStyles = makeStyles()(({ palette: c }) => ({
   },
 }));
 
+const nodeSorter = <T extends Option>(a: T, b: T) => {
+  const aLabel = a.label;
+  const bLabel = b.label;
+  return aLabel === "NA" ? Infinity : aLabel.localeCompare(bLabel);
+};
+
 export default function RadioFilter<T extends Option>({
   options,
   value,
@@ -28,7 +34,7 @@ export default function RadioFilter<T extends Option>({
   const { classes } = useStyles();
   return (
     <Stack>
-      {options.map((option) => (
+      {options.sort(nodeSorter).map((option) => (
         <FormControlLabel
           className={classes.radio}
           checked={value && option.value === value.value}
