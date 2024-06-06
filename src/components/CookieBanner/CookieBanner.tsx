@@ -31,14 +31,19 @@ const useStyles = makeStyles()(({ spacing: s, breakpoints: b, palette: c }) => (
   buttonsContainer: {
     display: "flex",
     gap: s(4),
+    [b.down("xs")]: {
+      flexDirection: "column",
+    },
   },
   acceptButton: {
+    width: "fit-content",
     height: "fit-content",
     whiteSpace: "nowrap",
     borderColor: c.info.main,
     color: c.info.main,
   },
   rejectButton: {
+    width: "fit-content",
     height: "fit-content",
     whiteSpace: "nowrap",
   },
