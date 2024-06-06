@@ -32,6 +32,7 @@ import { useInitSections } from "@/lib/useScrollIntoView";
 import AnchorHeader from "./internal/AnchorHeader";
 import { SafeHydrate } from "@/components/SafeHydrate";
 import MathJax from "./internal/MathJax";
+import Table from "./internal/Table";
 import { isNonBreakingMark, isLatexMark, extractTextContent } from "./utils";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
@@ -231,6 +232,10 @@ const StructuredText = (props: Props) => {
                 case "LatexRecord": {
                   const { formula, alignment } = record as GQL.LatexRecord;
                   return <MathJax align={alignment ?? "left"}>{formula}</MathJax>;
+                }
+                case "TableRecord": {
+                  const { content } = record as GQL.TableRecord;
+                  return <Table content={content} />;
                 }
                 case "IframeBlockRecord": {
                   const { caption, url, height } = record as GQL.IframeBlockRecord;
