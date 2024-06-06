@@ -45,6 +45,7 @@ import DebugDataPage from "../components/DebugDataPage";
 import { SafeHydrate } from "@/components/SafeHydrate";
 import { ErrorAlert } from "../components/ErrorAlert";
 import { errorAsString } from "../utils/errorAsString";
+import { ShareButton } from "@/components/ShareButton";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -225,6 +226,9 @@ const DataBrowser = () => {
             <ActionButton onClick={() => setShowMetadataPanel(true)}>
               <Trans id="data.actions.metadata">Metadata</Trans>
             </ActionButton>
+            <Box sx={{ position: "relative" }}>
+              <ShareButton />
+            </Box>
           </Stack>
         </Stack>
 

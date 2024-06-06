@@ -27,7 +27,7 @@ import slugs from "@/generated/slugs.json";
 import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 import { ShareButton } from "@/components/ShareButton";
 
-const useStyles = makeStyles()({
+const useStyles = makeStyles()(({ breakpoints: b }) => ({
   headerContainer: {
     zIndex: 10,
   },
@@ -39,7 +39,18 @@ const useStyles = makeStyles()({
     display: "flex",
     justifyContent: "center",
   },
-});
+  shareButton: {
+    position: "absolute",
+    top: 16,
+    right: 0,
+    [b.only("xl")]: { right: 64 },
+    [b.only("lg")]: { right: 49 },
+    [b.only("md")]: { right: 36 },
+    [b.only("sm")]: { right: 35 },
+    [b.only("xs")]: { right: 28 },
+    [b.only("xxs")]: { right: 20 },
+  },
+}));
 
 // Forbid English for the moment
 export const isAuthorizedLocale = (locale: string) => locale !== "en";
@@ -211,7 +222,11 @@ export const AppLayout = (props: Props) => {
         <div className={classes.overlay} data-datocms-noindex>
           <GridContainer sx={{ width: "100%", height: "50px" }}>
             {showBackButton && <BackButton color={backButtonColor} />}
-            {showShareButton && <ShareButton />}
+            {showShareButton && (
+              <Box className={classes.shareButton}>
+                <ShareButton />
+              </Box>
+            )}
           </GridContainer>
         </div>
         {children}
