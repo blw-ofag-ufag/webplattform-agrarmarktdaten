@@ -12,7 +12,7 @@ import {
   Typography,
   createTheme,
 } from "@mui/material";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import React, { useState } from "react";
 
 import { useIsDesktop, useIsTablet } from "@/components/Grid/Grid";
@@ -46,6 +46,7 @@ import { SafeHydrate } from "@/components/SafeHydrate";
 import { ErrorAlert } from "../components/ErrorAlert";
 import { errorAsString } from "../utils/errorAsString";
 import { ShareButton } from "@/components/ShareButton";
+import RepeatIcon from "@/icons/icons-jsx/control/IcRepeat";
 
 const blackAndWhiteTheme = createTheme(blwTheme, {
   palette: {
@@ -114,6 +115,19 @@ const useStyles = makeStyles()((theme) => ({
     padding: theme.spacing(2, 1),
     ...(theme.typography.body2 as CSSObject),
   },
+  resetButton: {
+    borderRadius: theme.spacing(4),
+    backgroundColor: theme.palette.monochrome[200],
+    color: theme.palette.monochrome[800],
+    maxHeight: "26px",
+    minHeight: "auto",
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(1),
+    "&:hover": {
+      backgroundColor: theme.palette.monochrome[300],
+    },
+    ...(theme.typography.body3 as CSSObject),
+  },
 }));
 
 const DataBrowser = () => {
@@ -127,6 +141,7 @@ const DataBrowser = () => {
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const cubeDimensions = useAtomValue(cubeDimensionsStatusAtom);
   const query = useAtomValue(observationsSparqlQueryAtom);
+  const setFilters = useSetAtom(filterAtom);
 
   // const visualizeUrl = useAtomValue(visualizeUrlAtom);
   const { changed: filteredChangedCount } = useAtomValue(filterAtom);
@@ -208,6 +223,15 @@ const DataBrowser = () => {
                   }),
                 })}`}
               </Typography>
+            )}
+            {filteredChangedCount > 1 && (
+              <Button
+                className={classes.resetButton}
+                onClick={() => setFilters({ action: "reset" })}
+              >
+                <Trans id="data.actions.reset">Reset Filters</Trans>
+                <RepeatIcon width={16} height={16} />
+              </Button>
             )}
           </Stack>
 
