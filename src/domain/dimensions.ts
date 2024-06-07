@@ -83,31 +83,23 @@ export const sidePanelFiltersOrder: (
       type: "time";
     }
 )[] = [
-  { key: "time", type: "time" }, // Datum
   { key: "market", type: "cube" }, // Market
-
-  { key: "product", type: "dimension" }, // Produkt
-
   { key: "measure", type: "cube" }, // Indicator
-  { key: "usage", type: "dimension" }, // Verwendungsart
+  { key: "product", type: "dimension" }, // Produkt
+  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe Detail
+  { key: "time", type: "time" }, // Datum
+  { key: "production-system", type: "dimension" }, // Produktionssystem
 
+  { key: "usage", type: "dimension" }, // Verwendungsart
   { key: "unit", type: "dimension" }, // Einheit
   { key: "currency", type: "dimension" }, // Währung
   { key: "cost-component", type: "dimension" }, // Kostenkomponente
   { key: "sales-region", type: "dimension" }, // Verkaufsregion
-  {
-    key: "value-chain",
-    type: "cube",
-  }, // Wertschöpfungsstufe
-  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe Detail
-
+  { key: "value-chain", type: "cube" }, // Wertschöpfungsstufe
   { key: "foreign-trade", type: "dimension" }, // Aussenhandel
-
   // { key: "market", type: "dimension" },
   { key: "product-origin", type: "dimension" }, // Produktherkunft
-  { key: "production-system", type: "dimension" }, // Produktionssystem
   { key: "product-properties", type: "dimension" }, // Produkteigenschaften
-
   { key: "data-method", type: "dimension" }, // Datenart
   { key: "data-source", type: "dimension" }, // Datenquelle
 ];
