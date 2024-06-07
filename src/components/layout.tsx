@@ -99,13 +99,19 @@ export const AppLayout = (props: Props) => {
       allFocusArticles
         ?.map((focus) => ({ title: focus.title!, href: `/${localeSlugs?.focus}/${focus.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
+    const methodsSections = [
+      {
+        title: t({ id: "menu.overview", message: "Overview" }),
+        href: `/${localeSlugs?.methods}`,
+      },
+    ];
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: t({ id: "menu.home", message: "Startseite" }), href: "/" },
       { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
       { title: t({ id: "menu.focus", message: "Fokus" }), sections: focusSections },
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: `/${localeSlugs?.analysis}` },
       { title: t({ id: "menu.data", message: "Data" }), href: `/${localeSlugs?.data}` },
-      { title: t({ id: "menu.methods", message: "Methods" }), href: `/${localeSlugs?.methods}` },
+      { title: t({ id: "menu.methods", message: "Methods" }), sections: methodsSections },
       {
         title: t({ id: "menu.info", message: "Info" }),
         href: `/${localeSlugs?.info}`,
