@@ -32,7 +32,7 @@ const main = async () => {
     for (const [name, width] of Object.entries(b)) {
       // Set viewport size for the current breakpoint
       await page.setViewportSize({
-        width: width + (name === "xl" || name === "xxl" || name === "xxxl" ? 2 * 16 : 0),
+        width: parseInt(width) + (name === "xl" || name === "xxl" || name === "xxxl" ? 2 * 16 : 0),
         height: 1080,
       });
 
