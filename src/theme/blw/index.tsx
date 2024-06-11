@@ -1,6 +1,6 @@
 import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 import federalTheme from "@/theme/federal";
-import { breakpoints } from "@interactivethings/swiss-federal-ci";
+import { b } from "@interactivethings/swiss-federal-ci";
 import { createTheme } from "@mui/material/styles";
 
 import colors from "@/assets/mui-color-tokens.json";
@@ -42,7 +42,7 @@ const theme = createTheme(federalTheme, {
 
   breakpoints: {
     //TODO: we made the xxs quick fix for the release but should be properly handled at some point
-    values: { ...breakpoints, xxs: 374 },
+    values: { ...b, xxs: 374 },
   },
 
   components: {
