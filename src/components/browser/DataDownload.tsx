@@ -16,6 +16,7 @@ import {
   MenuItemProps,
   Typography,
 } from "@mui/material";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import { Workbook } from "exceljs";
 import { saveAs } from "file-saver";
 import { useAtomValue } from "jotai";
@@ -102,40 +103,39 @@ export default function DataDownload() {
                 },
               }}
             >
-              <ListItem
-                sx={{
-                  backgroundColor: "cobalt.50",
-                  py: 3,
-                }}
-              >
-                <Typography variant="h5">
-                  <Trans id="data.download.title">Download dataset</Trans>
-                </Typography>
-              </ListItem>
-
-              {dimensions.isSuccess && filteredObservations ? (
+              <ClickAwayListener onClickAway={popupState.close}>
                 <div>
-                  {FILE_FORMATS.map((format, i) => (
-                    <DownloadMenuItem
-                      key={format}
-                      format={format}
-                      dataset={filteredObservations}
-                      dimensions={dimensions.data}
-                      disableRipple
-                      sx={{
-                        borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
-                        borderColor: "grey.300",
-                        p: 0,
-                      }}
-                    >
-                      <Typography variant="body1">{format.toUpperCase()}</Typography>
-                      <IcControlDownload width={20} height={20} />
-                    </DownloadMenuItem>
-                  ))}
+                  <ListItem sx={{ backgroundColor: "cobalt.50", py: 3 }}>
+                    <Typography variant="h5">
+                      <Trans id="data.download.title">Download dataset</Trans>
+                    </Typography>
+                  </ListItem>
+
+                  {dimensions.isSuccess && filteredObservations ? (
+                    <div>
+                      {FILE_FORMATS.map((format, i) => (
+                        <DownloadMenuItem
+                          key={format}
+                          format={format}
+                          dataset={filteredObservations}
+                          dimensions={dimensions.data}
+                          disableRipple
+                          sx={{
+                            borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
+                            borderColor: "grey.300",
+                            p: 0,
+                          }}
+                        >
+                          <Typography variant="body1">{format.toUpperCase()}</Typography>
+                          <IcControlDownload width={20} height={20} />
+                        </DownloadMenuItem>
+                      ))}
+                    </div>
+                  ) : (
+                    <CircularProgress />
+                  )}
                 </div>
-              ) : (
-                <CircularProgress />
-              )}
+              </ClickAwayListener>
             </HoverMenu>
           </>
         )}
