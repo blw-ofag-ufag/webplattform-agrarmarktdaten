@@ -11,7 +11,8 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
+  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
+    props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
@@ -29,6 +30,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        allMethodsPages={allMethodsPages}
         showBackButton
       >
         <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />

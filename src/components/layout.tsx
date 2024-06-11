@@ -59,6 +59,7 @@ interface Props {
   children: React.ReactNode;
   allMarkets?: GQL.SimpleMarketArticleFragment[];
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
+  allMethodsPages?: GQL.SimpleMethodsPageFragment[];
   alternates?: { href: string; as: string; locale: string }[];
   showBackButton?: boolean;
   showShareButton?: boolean;
@@ -75,6 +76,7 @@ export const AppLayout = (props: Props) => {
     children,
     allMarkets,
     allFocusArticles,
+    allMethodsPages,
     alternates,
     showBackButton = false,
     showShareButton = false,
@@ -99,12 +101,13 @@ export const AppLayout = (props: Props) => {
       allFocusArticles
         ?.map((focus) => ({ title: focus.title!, href: `/${localeSlugs?.focus}/${focus.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
-    const methodsSections = [
-      {
-        title: t({ id: "menu.overview", message: "Overview" }),
-        href: `/${localeSlugs?.methods}`,
-      },
-    ];
+    const methodsSections =
+      allMethodsPages
+        ?.map((methodsPage) => ({
+          title: methodsPage.title!,
+          href: `/${localeSlugs?.methods}/${methodsPage.slug}`,
+        }))
+        .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: t({ id: "menu.home", message: "Startseite" }), href: "/" },
       { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
