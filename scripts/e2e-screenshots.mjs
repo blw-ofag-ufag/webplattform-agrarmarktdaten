@@ -29,10 +29,12 @@ const main = async () => {
     const page = await pageContext.newPage();
     await page.goto(`${baseURL}${route}`);
 
-    for (const [name, width] of Object.entries(b)) {
+    //xxs starts at 0 so we need to exclude it
+    delete b.values.xxs;
+    for (const [name, width] of Object.entries(b.values)) {
       // Set viewport size for the current breakpoint
       await page.setViewportSize({
-        width: parseInt(width) + (name === "xl" || name === "xxl" || name === "xxxl" ? 2 * 16 : 0),
+        width: width + (name === "xl" || name === "xxl" || name === "xxxl" ? 2 * 16 : 0),
         height: 1080,
       });
 
