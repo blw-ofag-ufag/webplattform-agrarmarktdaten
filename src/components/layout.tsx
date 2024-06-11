@@ -110,15 +110,25 @@ export const AppLayout = (props: Props) => {
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: t({ id: "menu.home", message: "Startseite" }), href: "/" },
-      { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
-      { title: t({ id: "menu.focus", message: "Fokus" }), sections: focusSections },
-      { title: t({ id: "menu.analysis", message: "Analysis" }), href: `/${localeSlugs?.analysis}` },
-      { title: t({ id: "menu.data", message: "Data" }), href: `/${localeSlugs?.data}` },
-      { title: t({ id: "menu.methods", message: "Methods" }), sections: methodsSections },
       {
-        title: t({ id: "menu.info", message: "Info" }),
-        href: `/${localeSlugs?.info}`,
-        desktop: false,
+        title: t({ id: "menu.markets", message: "Märkte" }),
+        sections: marketSections,
+      },
+      {
+        title: t({ id: "menu.focus", message: "Fokus" }),
+        sections: focusSections,
+      },
+      {
+        title: t({ id: "menu.analysis", message: "Analysis" }),
+        href: `/${localeSlugs?.analysis}`,
+      },
+      {
+        title: t({ id: "menu.data", message: "Data" }),
+        href: `/${localeSlugs?.data}`,
+      },
+      {
+        title: t({ id: "menu.methods", message: "Methods" }),
+        sections: methodsSections,
       },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
@@ -126,8 +136,26 @@ export const AppLayout = (props: Props) => {
       mobileOnly: true,
     }));
 
-    return { headerSections, menuSections };
-  }, [allMarkets, allFocusArticles, localeSlugs]);
+    const highlightedSections = [
+      {
+        title: t({ id: "menu.info", message: "Info" }),
+        href: `/${localeSlugs?.info}`,
+        desktop: false,
+        isHighlighted: true,
+      },
+      {
+        title: t({ id: "footer.about_us.label", message: "About Us" }),
+        href: `/${localeSlugs?.aboutUs}`,
+        desktop: false,
+        isHighlighted: true,
+      },
+    ];
+
+    return {
+      headerSections: [...headerSections, ...highlightedSections],
+      menuSections,
+    };
+  }, [allMarkets, allFocusArticles, allMethodsPages, localeSlugs]);
 
   const dynamicLocaleSwitcherProps: LocaleSwitcherProps = alternates
     ? {

@@ -40,11 +40,6 @@ const FooterBLW = () => {
           href: `/${localeSlugs?.legal}`,
         },
         {
-          title: t({ id: "footer.about_us.label", message: "About Us" }),
-          external: false,
-          href: `/${localeSlugs?.aboutUs}`,
-        },
-        {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
           external: false,
           href: `/${localeSlugs?.terms}`,
