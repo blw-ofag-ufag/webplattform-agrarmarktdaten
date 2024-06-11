@@ -40,7 +40,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.8.1",
-    "@interactivethings/swiss-federal-ci": "^2.4.1",
+    "@interactivethings/swiss-federal-ci": "^2.10.0",
     "@juggle/resize-observer": "^3.0.2",
     "@lingui/core": "^4.2.0",
     "@lingui/format-po": "^4.5.0",

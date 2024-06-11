@@ -1,13 +1,13 @@
+import { c } from "@interactivethings/swiss-federal-ci";
 import {
   Header,
   HeaderProps,
   LocaleSwitcher,
-  MenuProps,
-  c,
-  MenuContainer,
-  MenuButton,
   LocaleSwitcherProps,
-} from "@interactivethings/swiss-federal-ci";
+  MenuButton,
+  MenuContainer,
+  MenuProps,
+} from "@interactivethings/swiss-federal-ci/dist/components/pages-router";
 import { useTheme } from "@mui/material/styles";
 import { t } from "@lingui/macro";
 import { Box, BoxProps } from "@mui/material";
