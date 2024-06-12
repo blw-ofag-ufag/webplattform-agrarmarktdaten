@@ -2,7 +2,7 @@ schema:
   - https://graphql.datocms.com:
       headers:
         Authorization: ${DATOCMS_API_TOKEN}
-        X-Environment: methods-pages
+        # X-Environment: methods-pages
 documents: "src/**/*.graphql"
 generates:
   src/graphql/generated.tsx:
