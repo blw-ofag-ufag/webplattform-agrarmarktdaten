@@ -22,7 +22,6 @@ import { BackButton } from "./back-button";
 import { makeContentWrapperSx } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
 import { Footer } from "@/components/Footer";
-import { IcInfoCircle } from "@/icons/icons-jsx/control";
 import slugs from "@/generated/slugs.json";
 import { useInPlaceDialogStyles } from "@/components/InPlaceDialog";
 import { ShareButton } from "@/components/ShareButton";
