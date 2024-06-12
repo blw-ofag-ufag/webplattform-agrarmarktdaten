@@ -1,4 +1,6 @@
 import * as React from "react";
+import { c, s } from "@interactivethings/swiss-federal-ci";
+
 import {
   Footer,
   FooterSection,
@@ -7,9 +9,8 @@ import {
   FooterSectionText,
   FooterSectionTitle,
   FooterSectionButton,
-  c,
-  s,
-} from "@interactivethings/swiss-federal-ci";
+} from "@interactivethings/swiss-federal-ci/dist/components";
+
 import { Box, Link, useMediaQuery, Typography } from "@mui/material";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { useTheme } from "@mui/material/styles";

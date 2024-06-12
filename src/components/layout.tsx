@@ -1,13 +1,13 @@
+import { c } from "@interactivethings/swiss-federal-ci";
 import {
   Header,
   HeaderProps,
   LocaleSwitcher,
-  MenuProps,
-  c,
-  MenuContainer,
-  MenuButton,
   LocaleSwitcherProps,
-} from "@interactivethings/swiss-federal-ci";
+  MenuButton,
+  MenuContainer,
+  MenuProps,
+} from "@interactivethings/swiss-federal-ci/dist/components/pages-router";
 import { useTheme } from "@mui/material/styles";
 import { t } from "@lingui/macro";
 import { Box, BoxProps } from "@mui/material";
@@ -59,6 +59,7 @@ interface Props {
   children: React.ReactNode;
   allMarkets?: GQL.SimpleMarketArticleFragment[];
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
+  allMethodsPages?: GQL.SimpleMethodsPageFragment[];
   alternates?: { href: string; as: string; locale: string }[];
   showBackButton?: boolean;
   showShareButton?: boolean;
@@ -75,6 +76,7 @@ export const AppLayout = (props: Props) => {
     children,
     allMarkets,
     allFocusArticles,
+    allMethodsPages,
     alternates,
     showBackButton = false,
     showShareButton = false,
@@ -99,13 +101,20 @@ export const AppLayout = (props: Props) => {
       allFocusArticles
         ?.map((focus) => ({ title: focus.title!, href: `/${localeSlugs?.focus}/${focus.slug}` }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
+    const methodsSections =
+      allMethodsPages
+        ?.map((methodsPage) => ({
+          title: methodsPage.title!,
+          href: `/${localeSlugs?.methods}/${methodsPage.slug}`,
+        }))
+        .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: t({ id: "menu.home", message: "Startseite" }), href: "/" },
       { title: t({ id: "menu.markets", message: "Märkte" }), sections: marketSections },
       { title: t({ id: "menu.focus", message: "Fokus" }), sections: focusSections },
       { title: t({ id: "menu.analysis", message: "Analysis" }), href: `/${localeSlugs?.analysis}` },
       { title: t({ id: "menu.data", message: "Data" }), href: `/${localeSlugs?.data}` },
-      { title: t({ id: "menu.methods", message: "Methods" }), href: `/${localeSlugs?.methods}` },
+      { title: t({ id: "menu.methods", message: "Methods" }), sections: methodsSections },
       {
         title: t({ id: "menu.info", message: "Info" }),
         href: `/${localeSlugs?.info}`,
@@ -118,7 +127,7 @@ export const AppLayout = (props: Props) => {
     }));
 
     return { headerSections, menuSections };
-  }, [allMarkets, allFocusArticles, localeSlugs]);
+  }, [allMarkets, allFocusArticles, allMethodsPages, localeSlugs]);
 
   const dynamicLocaleSwitcherProps: LocaleSwitcherProps = alternates
     ? {

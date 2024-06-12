@@ -13,7 +13,8 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function HomePage(props: GQL.HomePageQuery) {
-  const { homePage, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
+  const { homePage, allMarketArticles, allFocusArticles, allMethodsPages, topBlogPosts, site } =
+    props;
   const theme = useTheme();
   if (!homePage?.title || !homePage.lead) {
     return null;
@@ -23,7 +24,11 @@ export default function HomePage(props: GQL.HomePageQuery) {
       <Head>{renderMetaTags([...homePage.seo, ...site?.favicon])}</Head>
 
       <div data-datocms-noindex>
-        <AppLayout allMarkets={allMarketArticles} allFocusArticles={allFocusArticles}>
+        <AppLayout
+          allMarkets={allMarketArticles}
+          allFocusArticles={allFocusArticles}
+          allMethodsPages={allMethodsPages}
+        >
           <Hero
             title={homePage.title}
             lead={homePage.lead}

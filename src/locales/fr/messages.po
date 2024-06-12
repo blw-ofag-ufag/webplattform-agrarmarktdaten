@@ -373,6 +373,11 @@ msgid "data.filters.none"
 msgstr "Aucun"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.overview"
+msgstr "Vue d'ensemble"
+
+#. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx
 msgid "data.loading.error-description"
 msgstr "Veuillez réessayer plus tard."

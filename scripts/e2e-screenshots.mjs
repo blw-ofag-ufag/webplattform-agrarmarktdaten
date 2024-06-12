@@ -1,5 +1,5 @@
 import { chromium, devices } from "playwright";
-import { breakpoints } from "@interactivethings/swiss-federal-ci";
+import { b } from "@interactivethings/swiss-federal-ci";
 
 const sleep = (duration) => new Promise((resolve) => setTimeout(resolve, duration));
 
@@ -29,7 +29,9 @@ const main = async () => {
     const page = await pageContext.newPage();
     await page.goto(`${baseURL}${route}`);
 
-    for (const [name, width] of Object.entries(breakpoints)) {
+    //xxs starts at 0 so we need to exclude it
+    delete b.values.xxs;
+    for (const [name, width] of Object.entries(b.values)) {
       // Set viewport size for the current breakpoint
       await page.setViewportSize({
         width: width + (name === "xl" || name === "xxl" || name === "xxxl" ? 2 * 16 : 0),
