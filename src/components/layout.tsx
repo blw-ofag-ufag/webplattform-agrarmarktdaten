@@ -236,15 +236,6 @@ export const AppLayout = (props: Props) => {
               <MenuButton key={i} {...section} />
             ))}
           <Box display="flex" flexGrow={1} />
-          <MenuButton
-            title={t({ id: "menu.info", message: "Info" })}
-            href={`/${localeSlugs?.info}`}
-            endIcon={
-              <Box sx={{ ml: 1 }}>
-                <IcInfoCircle fontSize={16} />
-              </Box>
-            }
-          />
         </MenuContainer>
       </Box>
       <Box
