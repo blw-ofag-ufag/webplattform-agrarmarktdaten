@@ -127,7 +127,7 @@ export const AppLayout = (props: Props) => {
     }));
 
     return { headerSections, menuSections };
-  }, [allMarkets, allFocusArticles, localeSlugs]);
+  }, [allMarkets, allFocusArticles, allMethodsPages, localeSlugs]);
 
   const dynamicLocaleSwitcherProps: LocaleSwitcherProps = alternates
     ? {
