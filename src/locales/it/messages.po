@@ -287,6 +287,11 @@ msgid "homepage.section.data.button"
 msgstr "Per saperne di più"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.less"
+msgstr "Meno filtri"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.filters.loading"
 msgstr "Caricamento"
@@ -336,6 +341,11 @@ msgstr "Metodi"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.month"
 msgstr "Mese"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.more"
+msgstr "Altri filtri"
 
 #. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx

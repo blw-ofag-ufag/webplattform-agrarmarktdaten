@@ -41,8 +41,7 @@ const theme = createTheme(federalTheme, {
   },
 
   breakpoints: {
-    //TODO: we made the xxs quick fix for the release but should be properly handled at some point
-    values: { ...b, xxs: 374 },
+    values: b,
   },
 
   components: {

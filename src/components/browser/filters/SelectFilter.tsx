@@ -321,7 +321,7 @@ const MatchedString = <T extends Option>({
 const nodeSorter = <T extends Option>(a: Node<T>, b: Node<T>) => {
   const aLabel = a.value?.label || a.label;
   const bLabel = b.value?.label || b.label;
-  return aLabel.localeCompare(bLabel);
+  return aLabel === "NA" ? Infinity : aLabel.localeCompare(bLabel);
 };
 
 const SelectItem = <T extends ScoredOption>({
@@ -347,9 +347,7 @@ const SelectItem = <T extends ScoredOption>({
     setExpanded(node.level === 0 || hasResults);
   }, [node.level, hasResults]);
 
-  const sortedChildren = useMemo(() => {
-    return node.children.sort(nodeSorter);
-  }, [node.children]);
+  const sortedChildren = useMemo(() => node.children.sort(nodeSorter), [node.children]);
 
   if (node.children.length === 0) {
     if (node.id === "ungrouped") {
