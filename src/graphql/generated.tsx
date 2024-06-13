@@ -6755,6 +6755,7 @@ export type FocusArticlePageQuery = { __typename: 'Query', focusArticle?: { __ty
 
 export type MethodsPageQueryVariables = Exact<{
   locale: SiteLocale;
+  slug: Scalars['String']['input'];
 }>;
 
 
@@ -6825,6 +6826,11 @@ export type AllFocusArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: n
 
 
 export type AllFocusArticlesSlugLocalesQuery = { __typename: 'Query', allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null }> };
+
+export type AllMethodsPagesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllMethodsPagesSlugLocalesQuery = { __typename: 'Query', allMethodsPages: Array<{ __typename: 'MethodsPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null }> };
 
 export type SiteMapQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -8018,8 +8024,8 @@ export function useFocusArticlePageQuery(options: Omit<Urql.UseQueryArgs<FocusAr
   return Urql.useQuery<FocusArticlePageQuery, FocusArticlePageQueryVariables>({ query: FocusArticlePageDocument, ...options });
 };
 export const MethodsPageDocument = gql`
-    query MethodsPage($locale: SiteLocale!) {
-  methodsPage(locale: $locale) {
+    query MethodsPage($locale: SiteLocale!, $slug: String!) {
+  methodsPage(locale: $locale, filter: {slug: {eq: $slug}}) {
     _allSlugLocales {
       locale
       value
@@ -8333,6 +8339,21 @@ export const AllFocusArticlesSlugLocalesDocument = gql`
 
 export function useAllFocusArticlesSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllFocusArticlesSlugLocalesQueryVariables>, 'query'>) {
   return Urql.useQuery<AllFocusArticlesSlugLocalesQuery, AllFocusArticlesSlugLocalesQueryVariables>({ query: AllFocusArticlesSlugLocalesDocument, ...options });
+};
+export const AllMethodsPagesSlugLocalesDocument = gql`
+    query AllMethodsPagesSlugLocales {
+  allMethodsPages {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+    `;
+
+export function useAllMethodsPagesSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllMethodsPagesSlugLocalesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllMethodsPagesSlugLocalesQuery, AllMethodsPagesSlugLocalesQueryVariables>({ query: AllMethodsPagesSlugLocalesDocument, ...options });
 };
 export const SiteMapDocument = gql`
     query SiteMap {

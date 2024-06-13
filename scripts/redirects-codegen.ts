@@ -17,7 +17,7 @@ const run = async () => {
 
   const redirects = [
     {
-      url: "/methods",
+      url: "/methods/[slug]",
       alternates: result.data.method?._allSlugLocales?.map(({ value }) => `/${value}`),
     },
     {
