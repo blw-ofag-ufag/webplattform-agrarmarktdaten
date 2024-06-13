@@ -433,7 +433,7 @@ query AllBlogPostsSlugLocales {
 }
 
 query AllRedirects {
-  methodsPage {
+  method {
     _allSlugLocales {
       locale
       value
