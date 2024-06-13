@@ -224,7 +224,7 @@ const DataBrowser = () => {
             {/* <ActionButton href={visualizeUrl ?? ""} target="_blank">
               <Trans id="data.actions.visualize">Visualize</Trans>
             </ActionButton> */}
-            <ActionButton onClick={() => setShowMetadataPanel(true)}>
+            <ActionButton variant="outlined" onClick={() => setShowMetadataPanel(true)}>
               <Trans id="data.actions.metadata">Metadata</Trans>
             </ActionButton>
             <Box sx={{ position: "relative" }}>
