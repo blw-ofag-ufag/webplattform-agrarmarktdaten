@@ -80,6 +80,7 @@ const FooterBLW = () => {
             width: "fit-content",
             px: s(5),
             py: s(2.5),
+            borderRadius: "2px",
           }}
         >
           <Link

@@ -18,6 +18,7 @@ const useStyles = makeStyles()(({ palette: c }) => ({
     padding: s(2, 3),
     lineHeight: "18px",
     minHeight: "auto",
+    borderRadius: "2px",
   },
 }));
 

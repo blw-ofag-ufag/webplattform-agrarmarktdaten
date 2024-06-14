@@ -12,6 +12,7 @@ const useStyles = makeStyles()(({ palette: c, spacing: s, shadows: e, breakpoint
     fontWeight: 700,
     width: "fit-content",
     gridArea: "button",
+    borderRadius: "2px",
   },
 
   card: {
