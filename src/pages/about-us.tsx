@@ -30,7 +30,7 @@ export default function AboutUsPage(props: GQL.AboutUsPageQuery) {
         allMethodsPages={allMethodsPages}
         showBackButton
       >
-        <Hero title={aboutUsPage.title} lead={aboutUsPage.lead} showTitleLine={false} shiftedLeft />
+        <Hero title={aboutUsPage.title} lead={aboutUsPage.lead} shiftedLeft />
         <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
           <div className={classes.aside} />
           <div className={classes.content}>

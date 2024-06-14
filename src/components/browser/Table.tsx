@@ -219,13 +219,9 @@ export const Table = ({
           const index = props.index;
           const lastItemIndex = loadedRows.length - 2;
           if (lastItemIndex === index) {
-            return (
-              <div ref={lastOptionElementRef}>
-                <GridRow {...props} className="cursor-pointer"></GridRow>
-              </div>
-            );
+            return <GridRow {...props} ref={lastOptionElementRef} className="cursor-pointer" />;
           }
-          return <GridRow {...props} className="cursor-pointer"></GridRow>;
+          return <GridRow {...props} className="cursor-pointer" />;
         },
       }}
     />
