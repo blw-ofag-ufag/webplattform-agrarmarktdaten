@@ -35,11 +35,6 @@ const FooterBLW = () => {
       ContentWrapperProps={{ sx: makeContentWrapperSx(theme) }}
       bottomLinks={[
         {
-          title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
-          external: false,
-          href: `/${localeSlugs?.legal}`,
-        },
-        {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
           external: false,
           href: `/${localeSlugs?.terms}`,
