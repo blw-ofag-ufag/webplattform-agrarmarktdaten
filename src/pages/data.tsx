@@ -115,6 +115,9 @@ const useStyles = makeStyles()((theme) => ({
     padding: theme.spacing(2, 1),
     ...(theme.typography.body2 as CSSObject),
   },
+  button: {
+    borderRadius: "2px",
+  },
 }));
 
 const DataBrowser = () => {
@@ -214,7 +217,12 @@ const DataBrowser = () => {
 
           <Stack direction="row" gap={3} flexWrap="wrap">
             <DataDownload />
-            <ActionButton disabled={!query} href={query ?? ""} target="_blank">
+            <ActionButton
+              className={classes.button}
+              disabled={!query}
+              href={query ?? ""}
+              target="_blank"
+            >
               <Trans id="data.actions.query">SPARQL query</Trans>
             </ActionButton>
             {/**
@@ -224,7 +232,11 @@ const DataBrowser = () => {
             {/* <ActionButton href={visualizeUrl ?? ""} target="_blank">
               <Trans id="data.actions.visualize">Visualize</Trans>
             </ActionButton> */}
-            <ActionButton onClick={() => setShowMetadataPanel(true)}>
+            <ActionButton
+              className={classes.button}
+              variant="outlined"
+              onClick={() => setShowMetadataPanel(true)}
+            >
               <Trans id="data.actions.metadata">Metadata</Trans>
             </ActionButton>
             <Box sx={{ position: "relative" }}>

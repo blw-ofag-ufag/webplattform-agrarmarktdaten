@@ -84,6 +84,7 @@ export default function DataDownload() {
           <>
             <ActionButton
               ref={anchorRef}
+              sx={{ borderRadius: "2px" }}
               startIcon={<IcControlDownload />}
               disabled={isUndefined(filteredObservations) || filteredObservations.length === 0}
               {...bindToggle(popupState)}

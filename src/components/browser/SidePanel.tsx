@@ -439,6 +439,7 @@ const useStyles = makeStyles()(({ spacing: s }) => ({
   },
   toggleBtn: {
     width: "fit-content",
+    borderRadius: 2,
   },
 }));
 
