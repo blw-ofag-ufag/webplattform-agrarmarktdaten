@@ -231,7 +231,7 @@ msgstr "Contact"
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
-msgstr "Info"
+msgstr "About the portal"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
