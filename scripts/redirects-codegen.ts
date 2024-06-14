@@ -17,8 +17,8 @@ const run = async () => {
 
   const redirects = [
     {
-      url: "/methods",
-      alternates: result.data.methodsPage?._allSlugLocales?.map(({ value }) => `/${value}`),
+      url: "/methods/[slug]",
+      alternates: result.data.method?._allSlugLocales?.map(({ value }) => `/${value}`),
     },
     {
       url: "/data",
@@ -57,8 +57,7 @@ const run = async () => {
   const slugs = locales.map((locale) => ({
     locale,
     slugs: {
-      methods: result.data?.methodsPage?._allSlugLocales?.find((slug) => slug.locale === locale)
-        ?.value,
+      methods: result.data?.method?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       data: result.data?.dataPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       legal: result.data?.legalPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       terms: result.data?.termsPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,

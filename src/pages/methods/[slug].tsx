@@ -1,5 +1,6 @@
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
+import { GetStaticPaths } from "next";
 import { AppLayout, LayoutSections } from "@/components/layout";
 import { Hero } from "@/components/hero";
 import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
@@ -9,6 +10,7 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { useLayoutStyles, useTableOfContentsSticky } from "@/components/useLayoutStyles";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
+import { isValidLocale } from "@/locales/locales";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
   const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
@@ -56,10 +58,11 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
 }
 
 export const getStaticProps = async (context: $FixMe) => {
+  console.log("yo!");
   const result = await client
     .query<GQL.MethodsPageQuery>(
       GQL.MethodsPageDocument,
-      { locale: context.locale },
+      { locale: context.locale, slug: context.params.slug },
       { requestPolicy: "network-only" }
     )
     .toPromise();
@@ -70,4 +73,28 @@ export const getStaticProps = async (context: $FixMe) => {
   }
 
   return { props: result.data, revalidate: 10 };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const result = await client
+    .query<GQL.AllMethodsPagesSlugLocalesQuery>(GQL.AllMethodsPagesSlugLocalesDocument, {})
+    .toPromise();
+
+  if (!result.data) {
+    console.error(result.error?.toString());
+    throw new Error("Failed to fetch API");
+  }
+
+  const paths = result.data.allMethodsPages.flatMap((page) => {
+    return page._allSlugLocales
+      ? page._allSlugLocales
+          .filter((x) => isValidLocale(x.locale))
+          ?.map((loc) => ({
+            locale: loc.locale ?? undefined,
+            params: { slug: loc.value ?? undefined },
+          }))
+      : [];
+  });
+
+  return { fallback: false, paths };
 };

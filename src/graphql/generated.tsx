@@ -4456,7 +4456,7 @@ export type MarketRecordSlugArgs = {
 /** Record of type 🥼 Methods (method) */
 export type MethodRecord = RecordInterface & {
   __typename: 'MethodRecord';
-  _allMethodsLocales?: Maybe<Array<StringMultiLocaleField>>;
+  _allSlugLocales?: Maybe<Array<StringMultiLocaleField>>;
   _createdAt: Scalars['DateTime']['output'];
   /** Editing URL */
   _editingUrl?: Maybe<Scalars['String']['output']>;
@@ -4472,13 +4472,13 @@ export type MethodRecord = RecordInterface & {
   _updatedAt: Scalars['DateTime']['output'];
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ItemId']['output'];
-  methods?: Maybe<Scalars['String']['output']>;
+  slug?: Maybe<Scalars['String']['output']>;
   updatedAt: Scalars['DateTime']['output'];
 };
 
 
 /** Record of type 🥼 Methods (method) */
-export type MethodRecordAllMethodsLocalesArgs = {
+export type MethodRecordAllSlugLocalesArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -4491,7 +4491,7 @@ export type MethodRecordSeoMetaTagsArgs = {
 
 
 /** Record of type 🥼 Methods (method) */
-export type MethodRecordMethodsArgs = {
+export type MethodRecordSlugArgs = {
   fallbackLocales?: InputMaybe<Array<SiteLocale>>;
   locale?: InputMaybe<SiteLocale>;
 };
@@ -6755,6 +6755,7 @@ export type FocusArticlePageQuery = { __typename: 'Query', focusArticle?: { __ty
 
 export type MethodsPageQueryVariables = Exact<{
   locale: SiteLocale;
+  slug: Scalars['String']['input'];
 }>;
 
 
@@ -6826,6 +6827,11 @@ export type AllFocusArticlesSlugLocalesQueryVariables = Exact<{ [key: string]: n
 
 export type AllFocusArticlesSlugLocalesQuery = { __typename: 'Query', allFocusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null }> };
 
+export type AllMethodsPagesSlugLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllMethodsPagesSlugLocalesQuery = { __typename: 'Query', allMethodsPages: Array<{ __typename: 'MethodsPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null }> };
+
 export type SiteMapQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6839,7 +6845,7 @@ export type AllBlogPostsSlugLocalesQuery = { __typename: 'Query', allBlogPosts: 
 export type AllRedirectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllRedirectsQuery = { __typename: 'Query', methodsPage?: { __typename: 'MethodsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, termsPage?: { __typename: 'TermsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, aboutUsPage?: { __typename: 'AboutUsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, legalPage?: { __typename: 'LegalPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, infoPage?: { __typename: 'InfoPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, dataPage?: { __typename: 'DataPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, analysisPage?: { __typename: 'AnalysisPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, focusModel?: { __typename: 'FocusModelRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, market?: { __typename: 'MarketRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null };
+export type AllRedirectsQuery = { __typename: 'Query', method?: { __typename: 'MethodRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, termsPage?: { __typename: 'TermsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, aboutUsPage?: { __typename: 'AboutUsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, legalPage?: { __typename: 'LegalPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, infoPage?: { __typename: 'InfoPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, dataPage?: { __typename: 'DataPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, analysisPage?: { __typename: 'AnalysisPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, focusModel?: { __typename: 'FocusModelRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, market?: { __typename: 'MarketRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null };
 
 export type CookieBannerQueryVariables = Exact<{
   locale: SiteLocale;
@@ -8018,8 +8024,8 @@ export function useFocusArticlePageQuery(options: Omit<Urql.UseQueryArgs<FocusAr
   return Urql.useQuery<FocusArticlePageQuery, FocusArticlePageQueryVariables>({ query: FocusArticlePageDocument, ...options });
 };
 export const MethodsPageDocument = gql`
-    query MethodsPage($locale: SiteLocale!) {
-  methodsPage(locale: $locale) {
+    query MethodsPage($locale: SiteLocale!, $slug: String!) {
+  methodsPage(locale: $locale, filter: {slug: {eq: $slug}}) {
     _allSlugLocales {
       locale
       value
@@ -8334,6 +8340,21 @@ export const AllFocusArticlesSlugLocalesDocument = gql`
 export function useAllFocusArticlesSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllFocusArticlesSlugLocalesQueryVariables>, 'query'>) {
   return Urql.useQuery<AllFocusArticlesSlugLocalesQuery, AllFocusArticlesSlugLocalesQueryVariables>({ query: AllFocusArticlesSlugLocalesDocument, ...options });
 };
+export const AllMethodsPagesSlugLocalesDocument = gql`
+    query AllMethodsPagesSlugLocales {
+  allMethodsPages {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+    `;
+
+export function useAllMethodsPagesSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs<AllMethodsPagesSlugLocalesQueryVariables>, 'query'>) {
+  return Urql.useQuery<AllMethodsPagesSlugLocalesQuery, AllMethodsPagesSlugLocalesQueryVariables>({ query: AllMethodsPagesSlugLocalesDocument, ...options });
+};
 export const SiteMapDocument = gql`
     query SiteMap {
   allBlogPosts {
@@ -8379,7 +8400,7 @@ export function useAllBlogPostsSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs
 };
 export const AllRedirectsDocument = gql`
     query AllRedirects {
-  methodsPage {
+  method {
     _allSlugLocales {
       locale
       value

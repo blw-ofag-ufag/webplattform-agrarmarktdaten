@@ -1,6 +1,6 @@
 [
   {
-    "url": "/methods",
+    "url": "/methods/[slug]",
     "alternates": [
       "/methoden",
       "/methodes",
