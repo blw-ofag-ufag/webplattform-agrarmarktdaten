@@ -13,7 +13,7 @@ const main = async () => {
   // List of pages to visit
   const routes = [
     { route: "/analysis", fullPage: false },
-    { route: "/methods", fullPage: false },
+    { route: "/methods/milch-und-milchprodukte", fullPage: false },
     { route: "/legal", fullPage: false },
     { route: "/markt/milch-und-milchprodukte", fullPage: true },
     { route: "/", fullPage: true },
