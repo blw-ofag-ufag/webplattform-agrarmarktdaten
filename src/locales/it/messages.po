@@ -273,7 +273,7 @@ msgstr "Nascondere i filtri"
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
-msgstr "Informazioni"
+msgstr "A proposito del portale"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
