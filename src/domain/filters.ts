@@ -79,7 +79,7 @@ export const timeViewAtom = atomWithHash<TimeView>("timeView", DEFAULT_TIME_VIEW
 /**
  * Make sure this combination of filters is a valid cube.
  */
-const DEFAULT_MARKET = "market/1";
+const DEFAULT_MARKET = "market/2";
 const DEFAULT_VALUE_CHAIN = "value-chain/1";
 export const DEFAULT_MEASURE = "price";
 

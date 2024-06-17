@@ -224,7 +224,7 @@ const DataBrowser = () => {
                 })}`}
               </Typography>
             )}
-            {filteredChangedCount > 1 && (
+            {filteredChangedCount > 0 && (
               <Button
                 className={classes.resetButton}
                 onClick={() => setFilters({ action: "reset" })}
