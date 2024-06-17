@@ -117,6 +117,7 @@ const useStyles = makeStyles()((theme) => ({
   },
   button: {
     borderRadius: "2px",
+    borderColor: theme.palette.cobalt[500],
   },
 }));
 
