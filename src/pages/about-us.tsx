@@ -9,7 +9,7 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function AboutUsPage(props: GQL.AboutUsPageQuery) {
-  const { aboutUsPage, allMarketArticles, allFocusArticles, site } = props;
+  const { aboutUsPage, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
   const { classes } = useLayoutStyles();
 
   if (!aboutUsPage?.title || !aboutUsPage.lead) {
@@ -27,9 +27,10 @@ export default function AboutUsPage(props: GQL.AboutUsPageQuery) {
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        allMethodsPages={allMethodsPages}
         showBackButton
       >
-        <Hero title={aboutUsPage.title} lead={aboutUsPage.lead} showTitleLine={false} shiftedLeft />
+        <Hero title={aboutUsPage.title} lead={aboutUsPage.lead} shiftedLeft />
         <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
           <div className={classes.aside} />
           <div className={classes.content}>

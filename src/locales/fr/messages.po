@@ -273,7 +273,7 @@ msgstr "Cacher les filtres"
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
-msgstr "Informations"
+msgstr "À propos du portail"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -285,6 +285,11 @@ msgstr "Indice suisse des prix à la consommation"
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.button"
 msgstr "En savoir plus"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.less"
+msgstr "Moins de filtres"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -338,6 +343,11 @@ msgid "data.filters.month"
 msgstr "Mois"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.more"
+msgstr "Plus de filtres"
+
+#. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr "Analyses"
@@ -361,6 +371,11 @@ msgstr "Pas d'options"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
 msgstr "Aucun"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.overview"
+msgstr "Vue d'ensemble"
 
 #. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx

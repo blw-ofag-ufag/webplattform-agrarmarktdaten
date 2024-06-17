@@ -195,8 +195,8 @@ query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
   ...TopBlogPosts
 }
 
-query MethodsPage($locale: SiteLocale!) {
-  methodsPage(locale: $locale) {
+query MethodsPage($locale: SiteLocale!, $slug: String!) {
+  methodsPage(locale: $locale, filter: { slug: { eq: $slug } }) {
     _allSlugLocales {
       locale
       value
@@ -399,6 +399,16 @@ query AllFocusArticlesSlugLocales {
   }
 }
 
+query AllMethodsPagesSlugLocales {
+  allMethodsPages {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
 query SiteMap {
   allBlogPosts {
     id
@@ -433,7 +443,7 @@ query AllBlogPostsSlugLocales {
 }
 
 query AllRedirects {
-  methodsPage {
+  method {
     _allSlugLocales {
       locale
       value
@@ -507,6 +517,12 @@ fragment SimpleMarketArticle on MarketArticleRecord {
 }
 
 fragment SimpleFocusArticle on FocusArticleRecord {
+  id
+  title
+  slug
+}
+
+fragment SimpleMethodsPage on MethodsPageRecord {
   id
   title
   slug
@@ -944,6 +960,9 @@ fragment MenuItems on Query {
   }
   allFocusArticles(locale: $locale) {
     ...SimpleFocusArticle
+  }
+  allMethodsPages(locale: $locale) {
+    ...SimpleMethodsPage
   }
 }
 

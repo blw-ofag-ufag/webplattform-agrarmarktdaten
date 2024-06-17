@@ -1,5 +1,5 @@
 import { CubeDimensions, cubeDimensionsStatusAtom } from "@/domain/cubes";
-import { isMeasure } from "@/domain/dimensions";
+import { isMeasure, tableDimensionsOrder } from "@/domain/dimensions";
 import { timeViewAtom } from "@/domain/filters";
 import { filteredObservationsAtom } from "@/domain/observations";
 import { IcControlDownload } from "@/icons/icons-jsx/control";
@@ -16,6 +16,7 @@ import {
   MenuItemProps,
   Typography,
 } from "@mui/material";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
 import { Workbook } from "exceljs";
 import { saveAs } from "file-saver";
 import { useAtomValue } from "jotai";
@@ -32,7 +33,7 @@ import {
 } from "react";
 import { mapToObj } from "remeda";
 import ActionButton from "./ActionButton";
-import { isUndefined } from "lodash";
+import { isUndefined, sortBy } from "lodash";
 
 const FILE_FORMATS = ["csv", "xlsx", "json"] as const;
 export type FileFormat = (typeof FILE_FORMATS)[number];
@@ -83,6 +84,7 @@ export default function DataDownload() {
           <>
             <ActionButton
               ref={anchorRef}
+              sx={{ borderRadius: "2px" }}
               startIcon={<IcControlDownload />}
               disabled={isUndefined(filteredObservations) || filteredObservations.length === 0}
               {...bindToggle(popupState)}
@@ -102,40 +104,39 @@ export default function DataDownload() {
                 },
               }}
             >
-              <ListItem
-                sx={{
-                  backgroundColor: "cobalt.50",
-                  py: 3,
-                }}
-              >
-                <Typography variant="h5">
-                  <Trans id="data.download.title">Download dataset</Trans>
-                </Typography>
-              </ListItem>
-
-              {dimensions.isSuccess && filteredObservations ? (
+              <ClickAwayListener onClickAway={popupState.close}>
                 <div>
-                  {FILE_FORMATS.map((format, i) => (
-                    <DownloadMenuItem
-                      key={format}
-                      format={format}
-                      dataset={filteredObservations}
-                      dimensions={dimensions.data}
-                      disableRipple
-                      sx={{
-                        borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
-                        borderColor: "grey.300",
-                        p: 0,
-                      }}
-                    >
-                      <Typography variant="body1">{format.toUpperCase()}</Typography>
-                      <IcControlDownload width={20} height={20} />
-                    </DownloadMenuItem>
-                  ))}
+                  <ListItem sx={{ backgroundColor: "cobalt.50", py: 3 }}>
+                    <Typography variant="h5">
+                      <Trans id="data.download.title">Download dataset</Trans>
+                    </Typography>
+                  </ListItem>
+
+                  {dimensions.isSuccess && filteredObservations ? (
+                    <div>
+                      {FILE_FORMATS.map((format, i) => (
+                        <DownloadMenuItem
+                          key={format}
+                          format={format}
+                          dataset={filteredObservations}
+                          dimensions={dimensions.data}
+                          disableRipple
+                          sx={{
+                            borderBottom: i === FILE_FORMATS.length - 1 ? "none" : "1px solid",
+                            borderColor: "grey.300",
+                            p: 0,
+                          }}
+                        >
+                          <Typography variant="body1">{format.toUpperCase()}</Typography>
+                          <IcControlDownload width={20} height={20} />
+                        </DownloadMenuItem>
+                      ))}
+                    </div>
+                  ) : (
+                    <CircularProgress />
+                  )}
                 </div>
-              ) : (
-                <CircularProgress />
-              )}
+              </ClickAwayListener>
             </HoverMenu>
           </>
         )}
@@ -167,12 +168,13 @@ const DownloadMenuItem = ({
 
     const worksheet = workbook.addWorksheet("data");
 
-    worksheet.columns = Object.entries({ ...dimensions.properties, ...dimensions.measures }).map(
-      ([key, value]) => ({
-        header: value.label ?? key,
-        key: isMeasure(value.dimension) ? "measure" : value.dimension,
-      })
-    );
+    const entries = Object.values({ ...dimensions.properties, ...dimensions.measures });
+    const sorted = sortBy(entries, (x) => tableDimensionsOrder[x.dimension] ?? 1000);
+
+    worksheet.columns = sorted.map(({ label, dimension }) => ({
+      header: label,
+      key: isMeasure(dimension) ? "measure" : dimension,
+    }));
 
     const formatters = mapToObj(Object.keys(dataset[0]), (key) => {
       const dimension = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];

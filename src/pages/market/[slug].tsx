@@ -29,6 +29,7 @@ export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlo
     allMarketArticles,
     allFocusArticles,
     topBlogPosts,
+    allMethodsPages,
     site,
     topMarketBlogPosts,
   } = props;
@@ -59,6 +60,7 @@ export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlo
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        allMethodsPages={allMethodsPages}
         backButtonColor={color}
         showBackButton
       >

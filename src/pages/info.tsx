@@ -11,7 +11,8 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function InfoPage(props: GQL.InfoPageQuery) {
-  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
+  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
+    props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!infoPage?.title || !infoPage.lead) {
@@ -29,6 +30,7 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        allMethodsPages={allMethodsPages}
         showBackButton
       >
         <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />

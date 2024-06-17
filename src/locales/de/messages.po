@@ -273,7 +273,7 @@ msgstr "Filter ausblenden"
 #: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
-msgstr "Informationen"
+msgstr "Über dieses Portal"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -285,6 +285,11 @@ msgstr "Landesindex der Konsumentenpreise"
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.button"
 msgstr "Mehr erfahren"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.less"
+msgstr "Weniger Filter"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -338,6 +343,11 @@ msgid "data.filters.month"
 msgstr "Monat"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.more"
+msgstr "Weitere Filter"
+
+#. js-lingui-explicit-id
 #: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
 msgid "homepage.section.latestBlogPosts"
 msgstr "Analysen"
@@ -361,6 +371,11 @@ msgstr "Keine Optionen"
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "data.filters.none"
 msgstr "Keiner"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.overview"
+msgstr "Übersicht"
 
 #. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx

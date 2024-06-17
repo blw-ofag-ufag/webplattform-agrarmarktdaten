@@ -60,7 +60,7 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
 });
 
 export default function DataPage(props: GQL.DataPageQuery) {
-  const { dataPage, allMarketArticles, allFocusArticles, site } = props;
+  const { dataPage, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
   const [acceptedWarning, setAcceptedWarning] = useState(false);
 
   const showEnvironments = useFlag("environments");
@@ -82,6 +82,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
           alternates={alternates}
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
+          allMethodsPages={allMethodsPages}
         >
           {isTablet || isDesktop || acceptedWarning ? (
             <>
@@ -127,6 +128,9 @@ const useStyles = makeStyles()((theme) => ({
       backgroundColor: theme.palette.monochrome[300],
     },
     ...(theme.typography.body3 as CSSObject),
+  },
+  button: {
+    borderRadius: "2px",
   },
 }));
 
@@ -224,7 +228,7 @@ const DataBrowser = () => {
                 })}`}
               </Typography>
             )}
-            {filteredChangedCount > 0 && (
+            {filteredChangedCount > 0 && queriesCompleted && (
               <Button
                 className={classes.resetButton}
                 onClick={() => setFilters({ action: "reset" })}
@@ -237,7 +241,12 @@ const DataBrowser = () => {
 
           <Stack direction="row" gap={3} flexWrap="wrap">
             <DataDownload />
-            <ActionButton disabled={!query} href={query ?? ""} target="_blank">
+            <ActionButton
+              className={classes.button}
+              disabled={!query}
+              href={query ?? ""}
+              target="_blank"
+            >
               <Trans id="data.actions.query">SPARQL query</Trans>
             </ActionButton>
             {/**
@@ -247,7 +256,11 @@ const DataBrowser = () => {
             {/* <ActionButton href={visualizeUrl ?? ""} target="_blank">
               <Trans id="data.actions.visualize">Visualize</Trans>
             </ActionButton> */}
-            <ActionButton onClick={() => setShowMetadataPanel(true)}>
+            <ActionButton
+              className={classes.button}
+              variant="outlined"
+              onClick={() => setShowMetadataPanel(true)}
+            >
               <Trans id="data.actions.metadata">Metadata</Trans>
             </ActionButton>
             <Box sx={{ position: "relative" }}>

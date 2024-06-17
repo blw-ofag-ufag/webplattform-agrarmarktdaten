@@ -15,7 +15,8 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function MarketPage(props: GQL.FocusArticlePageQuery) {
-  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts, site } = props;
+  const { focusArticle, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
+    props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
 
@@ -36,6 +37,7 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        allMethodsPages={allMethodsPages}
         showBackButton
       >
         <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shiftedLeft />

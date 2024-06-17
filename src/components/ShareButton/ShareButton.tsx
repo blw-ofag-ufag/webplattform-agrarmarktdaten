@@ -80,10 +80,19 @@ const ShareButton = () => {
   const handleCopy = async () => {
     await copyToClipboard(window.location.href);
     setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   React.useEffect(() => {
     setUrl(window.location.href);
+  }, []);
+
+  React.useEffect(() => {
+    const handleHashChanged = () => setUrl(window.location.href);
+    window.addEventListener("hashchange", handleHashChanged);
+    return () => {
+      window.removeEventListener("hashchange", handleHashChanged);
+    };
   }, []);
 
   return (

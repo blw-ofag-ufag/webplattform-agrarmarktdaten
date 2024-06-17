@@ -8,7 +8,7 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function Analysis(props: GQL.AnalysisPageQuery) {
-  const { analysisPage, allFocusArticles, allMarketArticles, site } = props;
+  const { analysisPage, allFocusArticles, allMarketArticles, allMethodsPages, site } = props;
   const theme = useTheme();
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
@@ -26,6 +26,7 @@ export default function Analysis(props: GQL.AnalysisPageQuery) {
         alternates={alternates}
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
+        allMethodsPages={allMethodsPages}
       >
         <Hero
           title={analysisPage?.title}

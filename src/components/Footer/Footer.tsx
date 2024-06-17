@@ -1,4 +1,6 @@
 import * as React from "react";
+import { c, s } from "@interactivethings/swiss-federal-ci";
+
 import {
   Footer,
   FooterSection,
@@ -7,9 +9,8 @@ import {
   FooterSectionText,
   FooterSectionTitle,
   FooterSectionButton,
-  c,
-  s,
-} from "@interactivethings/swiss-federal-ci";
+} from "@interactivethings/swiss-federal-ci/dist/components";
+
 import { Box, Link, useMediaQuery, Typography } from "@mui/material";
 import SvgIcControlArrowRight from "@/icons/icons-jsx/control/IcControlArrowRight";
 import { useTheme } from "@mui/material/styles";
@@ -33,16 +34,6 @@ const FooterBLW = () => {
     <Footer
       ContentWrapperProps={{ sx: makeContentWrapperSx(theme) }}
       bottomLinks={[
-        {
-          title: t({ id: "footer.legal", message: "Rechtliche Grundlagen" }),
-          external: false,
-          href: `/${localeSlugs?.legal}`,
-        },
-        {
-          title: t({ id: "footer.about_us.label", message: "About Us" }),
-          external: false,
-          href: `/${localeSlugs?.aboutUs}`,
-        },
         {
           title: t({ id: "footer.terms", message: "Terms and Conditions" }),
           external: false,
@@ -89,6 +80,7 @@ const FooterBLW = () => {
             width: "fit-content",
             px: s(5),
             py: s(2.5),
+            borderRadius: "2px",
           }}
         >
           <Link
