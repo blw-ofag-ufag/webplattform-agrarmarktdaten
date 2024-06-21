@@ -1,5 +1,13 @@
 [
   {
+    "url": "/methods/glossary",
+    "alternates": [
+      "/methoden/glossar",
+      "/methodes/glossaire",
+      "/metodi/glossario"
+    ]
+  },
+  {
     "url": "/methods/[slug]",
     "alternates": [
       "/methoden",

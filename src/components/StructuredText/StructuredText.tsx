@@ -34,6 +34,7 @@ import { SafeHydrate } from "@/components/SafeHydrate";
 import MathJax from "./internal/MathJax";
 import Table from "./internal/Table";
 import { isNonBreakingMark, isLatexMark, extractTextContent } from "./utils";
+import flexibleStringReplace from "@rpearce/flexible-string-replace";
 
 type ParagraphTypographyProps = Omit<TypographyOwnProps, "variant"> & {
   variant?: string;
@@ -50,6 +51,7 @@ interface Props {
   paragraphTypographyProps?: ParagraphTypographyProps;
   debug?: boolean;
   sx?: BoxProps["sx"];
+  highlightMatch?: { regex: RegExp; replaceWith: (match: any, key: number) => React.ReactNode };
 }
 
 const DebugStructuredText = React.createContext({
@@ -76,7 +78,11 @@ const hasReactChildClassName = (child: React.ReactNode, className: string) => {
 export const useStructuredTextDebug = () => React.useContext(DebugStructuredText);
 
 const StructuredText = (props: Props) => {
-  const { data, paragraphTypographyProps = defaultParagraphTypographyProps } = props;
+  const {
+    data,
+    paragraphTypographyProps = defaultParagraphTypographyProps,
+    highlightMatch,
+  } = props;
   const router = useRouter();
   const { classes, cx } = useStructuredTextStyles({ debug: props.debug });
 
@@ -363,6 +369,17 @@ const StructuredText = (props: Props) => {
                 default:
                   return null;
               }
+            }}
+            renderText={(text) => {
+              if (!highlightMatch) {
+                return text;
+              }
+              const newContent = flexibleStringReplace(
+                highlightMatch.regex,
+                highlightMatch.replaceWith,
+                text
+              );
+              return <>{newContent}</>;
             }}
           />
         </Box>
