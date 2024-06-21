@@ -10,6 +10,7 @@ import { GlossaryItem } from "@/components/GlossaryItem";
 import { TextField, InputAdornment, Typography, CircularProgress, Stack } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
 import SearchIcon from "@/icons/icons-jsx/control/IcSearch";
+import CloseIcon from "@/icons/icons-jsx/control/IcControlClose";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -92,7 +93,21 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon width={24} height={24} color={"#596978"} />
+                    {isFetching && <CircularProgress size={24} />}
+                    {searchString.length > 0 ? (
+                      <CloseIcon
+                        className={styles.closeIcon}
+                        onClick={() => {
+                          setSearchString("");
+                          setPage(1);
+                        }}
+                        width={20}
+                        height={20}
+                        color={"#596978"}
+                      />
+                    ) : (
+                      <SearchIcon width={24} height={24} color={"#596978"} />
+                    )}
                   </InputAdornment>
                 ),
               }}
@@ -112,12 +127,10 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
             )}
             <div className={styles.items}>
               {data?.glossaryItems.length === 0 && <EmptyGlossary searchString={searchString} />}
-              {!isFetching &&
-                data?.glossaryItems?.map((item) => (
-                  <GlossaryItem key={item.title} {...item} highlight={debouncedSearchString} />
-                ))}
+              {data?.glossaryItems?.map((item) => (
+                <GlossaryItem key={item.title} {...item} highlight={debouncedSearchString} />
+              ))}
             </div>
-            {isFetching && <CircularProgress size={24} />}
             {data?.glossaryItems && data?.count.count / PAGE_SIZE > 1 && (
               <div className={styles.paginationWrapper}>
                 <Pagination
@@ -194,18 +207,21 @@ export const getStaticProps = async (context: $FixMe) => {
   return { props: result.data, revalidate: 10 };
 };
 
-const useStyles = makeStyles()(({ palette }) => ({
+const useStyles = makeStyles()(({ palette, spacing }) => ({
   resultCount: {
     height: "60px",
     display: "flex",
     alignItems: "center",
     fontWeight: 400,
     borderBottom: `1px solid ${palette.monochrome[300]}`,
+    marginBottom: "40px",
+  },
+  closeIcon: {
+    cursor: "pointer",
   },
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: 40,
     marginBottom: 124,
   },
   items: {
@@ -216,6 +232,10 @@ const useStyles = makeStyles()(({ palette }) => ({
   searchInput: {
     maxHeight: "44px",
     marginBottom: 80,
+    input: {
+      height: "28px",
+      paddingBlock: spacing(2),
+    },
   },
   paginationWrapper: {
     display: "flex",
