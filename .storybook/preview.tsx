@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Preview } from "@storybook/react";
 import theme from "../src/theme/blw/index";
-import { MenuButton, breakpoints } from "@interactivethings/swiss-federal-ci";
+import { b } from "@interactivethings/swiss-federal-ci";
 import { IconButton, Menu, MenuItem, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const viewports = Object.entries(breakpoints).map(([key, value]) => {
+const viewports = Object.entries(b).map(([key, value]) => {
   return {
     name: key,
     styles: {
