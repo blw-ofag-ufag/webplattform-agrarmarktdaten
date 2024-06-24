@@ -320,7 +320,7 @@ msgstr "Märkte"
 #. js-lingui-explicit-id
 #: src/domain/filters.ts
 msgid "data.filters.measure"
-msgstr "Indikator"
+msgstr "Kennzahl"
 
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
