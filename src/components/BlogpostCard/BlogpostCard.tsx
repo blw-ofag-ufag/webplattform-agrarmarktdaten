@@ -251,7 +251,7 @@ export const BlogpostCard = (
             ))}
           </div>
           <Typography
-            component="span"
+            component="div"
             variant="body1"
             className={cx(classes.lead, clampedClassName)}
           >

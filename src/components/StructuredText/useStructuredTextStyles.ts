@@ -141,7 +141,6 @@ const useStructuredTextStyles = makeStyles<
 
     p: debugStyle("p", {
       wordBreak: "break-word",
-      display: "block",
       "& + & ": margins.lg,
 
       "& ul": {

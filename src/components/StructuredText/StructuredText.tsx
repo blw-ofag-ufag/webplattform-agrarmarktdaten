@@ -170,7 +170,7 @@ const StructuredText = (props: Props) => {
                     key={key}
                     /** @ts-ignore */
                     variant="body1"
-                    component="span"
+                    component="div"
                     {...paragraphTypographyProps}
                     className={cx(classes.p, paragraphTypographyProps.className)}
                   >
