@@ -84,38 +84,43 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
         <GridContainer sx={{ mt: 4, position: "relative" }}>
           <div className={classes.aside}></div>
           <div className={cx(classes.content, styles.content)}>
-            <TextField
-              placeholder={t({ id: "search.glossary.placeholder", message: "Search in glossary" })}
-              className={styles.searchInput}
-              variant="outlined"
-              value={searchString}
-              InputLabelProps={{ shrink: false }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="start">
-                    {isFetching && <CircularProgress size={24} />}
-                    {searchString.length > 0 ? (
-                      <CloseIcon
-                        className={styles.closeIcon}
-                        onClick={() => {
-                          setSearchString("");
-                          setPage(1);
-                        }}
-                        width={20}
-                        height={20}
-                        color={"#596978"}
-                      />
-                    ) : (
-                      <SearchIcon width={24} height={24} color={"#596978"} />
-                    )}
-                  </InputAdornment>
-                ),
-              }}
-              onChange={(e) => {
-                setSearchString(e.target.value);
-                setPage(1);
-              }}
-            />
+            <GridContainer className={styles.searchContainer}>
+              <TextField
+                placeholder={t({
+                  id: "search.glossary.placeholder",
+                  message: "Search in glossary",
+                })}
+                className={styles.searchInput}
+                variant="outlined"
+                value={searchString}
+                InputLabelProps={{ shrink: false }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      {isFetching && <CircularProgress size={24} />}
+                      {searchString.length > 0 ? (
+                        <CloseIcon
+                          className={styles.closeIcon}
+                          onClick={() => {
+                            setSearchString("");
+                            setPage(1);
+                          }}
+                          width={20}
+                          height={20}
+                          color={"#596978"}
+                        />
+                      ) : (
+                        <SearchIcon width={24} height={24} color={"#596978"} />
+                      )}
+                    </InputAdornment>
+                  ),
+                }}
+                onChange={(e) => {
+                  setSearchString(e.target.value);
+                  setPage(1);
+                }}
+              />
+            </GridContainer>
             {!!data?.count?.count && data?.count?.count > 0 && (
               <Typography variant="h4" className={styles.resultCount}>
                 {data?.count?.count}&nbsp;
@@ -207,7 +212,7 @@ export const getStaticProps = async (context: $FixMe) => {
   return { props: result.data, revalidate: 10 };
 };
 
-const useStyles = makeStyles()(({ palette, spacing }) => ({
+const useStyles = makeStyles()(({ palette, spacing, breakpoints }) => ({
   resultCount: {
     height: "60px",
     display: "flex",
@@ -231,6 +236,7 @@ const useStyles = makeStyles()(({ palette, spacing }) => ({
   },
   searchInput: {
     maxHeight: "44px",
+    width: "100%",
     marginBottom: 80,
     input: {
       height: "28px",
@@ -243,5 +249,12 @@ const useStyles = makeStyles()(({ palette, spacing }) => ({
   },
   emptyTitle: {
     fontWeight: 400,
+  },
+  searchContainer: {
+    padding: 0,
+    marginLeft: 0,
+    [breakpoints.up("xl")]: {
+      width: `calc(var(--BLWGrid-columnWidth) * 6 + var(--BLWGrid-columnGutterWidth) * 5)`,
+    },
   },
 }));
