@@ -442,6 +442,7 @@ const useStyles = makeStyles()(({ spacing: s, palette }) => ({
     borderRadius: 2,
     color: palette.cobalt[500],
     borderColor: palette.cobalt[500],
+    paddingInline: s(4),
   },
 }));
 
