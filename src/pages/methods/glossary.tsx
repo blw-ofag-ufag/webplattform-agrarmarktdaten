@@ -161,7 +161,9 @@ const EmptyGlossary = ({ searchString }: EmptyGlossaryProps) => {
   return (
     <Stack gap={6}>
       <Typography variant="h2" className={classes.emptyTitle}>
-        No matches for «{searchString}» on the Glossary page
+        <Trans id="search.results.message">
+          No matches for «{searchString}» on the Glossary page
+        </Trans>
       </Typography>
       <Stack>
         <Typography variant="h3">

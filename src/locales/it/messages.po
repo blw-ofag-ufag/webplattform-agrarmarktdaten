@@ -378,6 +378,11 @@ msgid "data.table.empty"
 msgstr "Nessun risultato"
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.message"
+msgstr "Nessun risultato per «{searchString}» nella pagina del glossario"
+
+#. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "data.metadata.nodata"
 msgstr "Nessun risultato di metadati"

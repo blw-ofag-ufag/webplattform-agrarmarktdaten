@@ -378,6 +378,11 @@ msgid "data.table.empty"
 msgstr "Keine Ergebnisse"
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.message"
+msgstr "Die Suche nach «{searchString}» ergab keine Treffer auf der Glossarseite"
+
+#. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "data.metadata.nodata"
 msgstr "No metadata available"
