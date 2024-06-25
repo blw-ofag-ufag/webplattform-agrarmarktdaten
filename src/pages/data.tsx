@@ -190,7 +190,7 @@ const DataBrowser = () => {
             alignItems="center"
             divider={<Circle sx={{ width: "4px", height: "4px", color: "grey.700" }} />}
             gap={2}
-            flexWrap="wrap-reverse"
+            flexWrap="wrap"
           >
             <Button
               variant="inline"
