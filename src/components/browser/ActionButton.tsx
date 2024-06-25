@@ -13,7 +13,6 @@ const ActionButton = withStyles(
   ),
   () => ({
     root: {
-      fontWeight: "bold",
       minHeight: "40px",
     },
   })

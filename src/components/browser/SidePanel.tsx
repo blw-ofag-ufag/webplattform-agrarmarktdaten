@@ -197,7 +197,7 @@ const SidePanel = ({
 
           <Box className={classes.toggleArea}>
             <Button
-              variant="aside"
+              variant="outlined"
               className={classes.toggleBtn}
               color="info"
               startIcon={showMore ? <AddIcon /> : <RemoveIcon />}
@@ -430,7 +430,7 @@ export const ResetFiltersButton = () => {
   );
 };
 
-const useStyles = makeStyles()(({ spacing: s }) => ({
+const useStyles = makeStyles()(({ spacing: s, palette }) => ({
   toggleArea: {
     display: "flex",
     flexDirection: "column",
@@ -440,6 +440,9 @@ const useStyles = makeStyles()(({ spacing: s }) => ({
   toggleBtn: {
     width: "fit-content",
     borderRadius: 2,
+    color: palette.cobalt[500],
+    borderColor: palette.cobalt[500],
+    paddingInline: s(4),
   },
 }));
 
