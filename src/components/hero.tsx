@@ -6,6 +6,7 @@ import { GridContainer } from "@/components/Grid/Grid";
 import { useHeroStyles } from "@/components/useLayoutStyles";
 
 const useStyles = makeStyles<{
+  variant?: "regular" | "market";
   hero: string | undefined;
   bgColor: string | undefined;
   color: string | undefined;
@@ -16,13 +17,12 @@ const useStyles = makeStyles<{
   root: {
     flexDirection: "column",
     justifyContent: "end",
-    paddingTop: "120px",
     width: "100%",
-    backgroundColor: params.bgColor,
     backgroundImage: `url(${params.hero})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
+    paddingTop: params.variant === "regular" ? "120px" : 0,
   },
 
   gridElement: {
@@ -40,12 +40,14 @@ const useStyles = makeStyles<{
   },
 
   market: {
-    borderTopRightRadius: "110px",
-    borderBottomLeftRadius: "110px",
     marginTop: theme.spacing(9),
+    backgroundColor: params.bgColor,
+    borderRadius: "8px",
+    paddingBlock: "56px",
+    paddingInline: "32px",
   },
   line: {
-    width: "55px",
+    width: "112px",
     height: "1px",
     backgroundColor: params.color,
     border: `3px solid ${params.color}`,
@@ -80,10 +82,9 @@ export const Hero = (props: Props) => {
     shiftedLeft = false,
     titleTypographyProps,
     leadStructuredTextProps,
-    showTitleLine = true,
     sx,
   } = props;
-  const { classes, cx } = useStyles({ hero, bgColor, color });
+  const { classes, cx } = useStyles({ hero, bgColor, color, variant });
   const { classes: herolayoutClasses } = useHeroStyles({
     shiftedLeft,
   });
@@ -91,11 +92,17 @@ export const Hero = (props: Props) => {
 
   return (
     <Box className={classes.wrapper}>
-      <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)} sx={sx}>
+      <Box className={classes.root} sx={sx}>
         <GridContainer sx={{ height: "100%" }}>
           {shiftedLeft ? shifter : null}
-          <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>
-            {showTitleLine && <Box className={classes.line} />}
+          <div
+            className={cx(
+              classes.gridElement,
+              herolayoutClasses.heroContent,
+              variant === "market" ? classes.market : undefined
+            )}
+          >
+            <Box className={classes.line} />
             <Typography
               variant="display2"
               component="h1"
