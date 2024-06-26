@@ -9,16 +9,15 @@ import { useHeroStyles } from "@/components/useLayoutStyles";
 const useStyles = makeStyles<{
   hero: string | undefined;
   bgColor: string | undefined;
+  color: string | undefined;
 }>()((theme, params) => ({
+  wrapper: {
+    paddingBottom: "80px",
+  },
   root: {
     flexDirection: "column",
     justifyContent: "end",
-    [theme.breakpoints.up("xxl")]: {
-      height: params.hero ? "400px" : "250px",
-      paddingBottom: s(18),
-    },
-    [theme.breakpoints.down("xxl")]: { height: "280px", paddingBottom: s(13) },
-
+    paddingTop: "120px",
     width: "100%",
     backgroundColor: params.bgColor,
     backgroundImage: `url(${params.hero})`,
@@ -31,20 +30,26 @@ const useStyles = makeStyles<{
     display: "flex",
     flexDirection: "column",
     justifyContent: "end",
+    gap: theme.spacing(5),
   },
 
   lead: {
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    paddingTop: "64px",
-    paddingBottom: "96px",
+    paddingTop: theme.spacing(5),
   },
 
   market: {
     borderTopRightRadius: "110px",
     borderBottomLeftRadius: "110px",
     marginTop: theme.spacing(9),
+  },
+  line: {
+    width: "55px",
+    height: "1px",
+    backgroundColor: params.color,
+    border: `3px solid ${params.color}`,
   },
 }));
 
@@ -79,19 +84,19 @@ export const Hero = (props: Props) => {
     showTitleLine = true,
     sx,
   } = props;
-  const { classes, cx } = useStyles({ hero, bgColor });
+  const { classes, cx } = useStyles({ hero, bgColor, color });
   const { classes: herolayoutClasses } = useHeroStyles({
     shiftedLeft,
   });
   const shifter = <div className={herolayoutClasses.shifter} />;
 
   return (
-    <>
+    <Box className={classes.wrapper}>
       <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)} sx={sx}>
         <GridContainer sx={{ height: "100%" }}>
           {shiftedLeft ? shifter : null}
           <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>
-            {showTitleLine && <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />}
+            {showTitleLine && <Box className={classes.line} />}
             <Typography
               variant="display2"
               component="h1"
@@ -119,6 +124,6 @@ export const Hero = (props: Props) => {
           </GridContainer>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
