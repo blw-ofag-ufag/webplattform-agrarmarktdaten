@@ -1,5 +1,4 @@
 import { Box, BoxProps, Typography, TypographyProps } from "@mui/material";
-import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
 import { StructuredTextGraphQlResponse } from "react-datocms";
 import { StructuredText } from "@/components/StructuredText";
