@@ -6,7 +6,7 @@ import { GridContainer } from "@/components/Grid/Grid";
 import { useHeroStyles } from "@/components/useLayoutStyles";
 
 const useStyles = makeStyles<{
-  variant?: "regular" | "market";
+  variant?: "regular" | "market" | "homepage";
   hero: string | undefined;
   bgColor: string | undefined;
   color: string | undefined;
@@ -46,6 +46,10 @@ const useStyles = makeStyles<{
     paddingBlock: "56px",
     paddingInline: "32px",
   },
+  homepage: {
+    marginTop: theme.spacing(9),
+    paddingBlock: "56px",
+  },
   line: {
     width: "112px",
     height: "1px",
@@ -55,7 +59,7 @@ const useStyles = makeStyles<{
 }));
 
 type Props = {
-  variant?: "regular" | "market";
+  variant?: "regular" | "market" | "homepage";
   title: string;
   lead?: StructuredTextGraphQlResponse;
   hero?: string;
@@ -99,7 +103,11 @@ export const Hero = (props: Props) => {
             className={cx(
               classes.gridElement,
               herolayoutClasses.heroContent,
-              variant === "market" ? classes.market : undefined
+              variant === "market"
+                ? classes.market
+                : variant === "homepage"
+                ? classes.homepage
+                : undefined
             )}
           >
             <Box className={classes.line} />
