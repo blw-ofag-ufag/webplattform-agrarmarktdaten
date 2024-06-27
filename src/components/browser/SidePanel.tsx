@@ -443,6 +443,9 @@ const useStyles = makeStyles()(({ spacing: s, palette }) => ({
     color: palette.cobalt[500],
     borderColor: palette.cobalt[500],
     paddingInline: s(4),
+    "&:hover": {
+      backgroundColor: "rgba(70, 89, 107, 0.04)",
+    },
   },
 }));
 
