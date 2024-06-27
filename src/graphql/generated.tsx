@@ -7072,6 +7072,13 @@ export type PaginatedFilteredBlogpostsQueryVariables = Exact<{
 
 export type PaginatedFilteredBlogpostsQuery = { __typename: 'Query', blogposts: Array<{ __typename: 'BlogPostRecord', id: any, title?: string | null, slug?: string | null, publishedDate?: string | null, cardSummary?: { __typename: 'BlogPostModelCardSummaryField', value: any, links: Array<{ __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'PowerBiPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null, image?: { __typename: 'FileField', id: any, alt?: string | null, url: string, responsiveImage?: { __typename: 'ResponsiveImage', sizes: string, src: string, width: number, height: number, alt?: string | null, title?: string | null, base64?: string | null } | null } | null, markets: Array<{ __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null }>, focusArticles: Array<{ __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null }> }>, blogpostCount: { __typename: 'CollectionMetadata', count: number } };
 
+export type GlossaryItemQueryVariables = Exact<{
+  id: Scalars['ItemId']['input'];
+}>;
+
+
+export type GlossaryItemQuery = { __typename: 'Query', glossaryItem?: { __typename: 'GlossaryItemRecord', id: any, title?: string | null, label?: { __typename: 'FocusArticleRecord', id: any, title?: string | null, slug?: string | null } | { __typename: 'MarketArticleRecord', id: any, title?: string | null, slug?: string | null } | null, description?: { __typename: 'GlossaryItemModelDescriptionField', value: any, blocks: Array<{ __typename: 'ExternalLinkButtonRecord', id: any, url?: string | null, label?: string | null } | { __typename: 'InternalLinkButtonRecord', id: any, label?: string | null, anchor?: string | null, page?: { __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any } | null }>, links: Array<{ __typename: 'AboutUsPageRecord', id: any } | { __typename: 'AnalysisPageRecord', id: any } | { __typename: 'BlogPostRecord', id: any, slug?: string | null } | { __typename: 'DataPageRecord', id: any } | { __typename: 'FocusArticleRecord', id: any, slug?: string | null } | { __typename: 'HomePageRecord', id: any } | { __typename: 'InfoPageRecord', id: any } | { __typename: 'LegalPageRecord', id: any } | { __typename: 'MarketArticleRecord', id: any, slug?: string | null } | { __typename: 'MethodsPageRecord', id: any } | { __typename: 'TermsPageRecord', id: any }> } | null } | null };
+
 export type PaginatedGlossaryItemsQueryVariables = Exact<{
   locale: SiteLocale;
   first: Scalars['IntType']['input'];
@@ -8627,6 +8634,20 @@ ${InternalLinkFragmentDoc}`;
 
 export function usePaginatedFilteredBlogpostsQuery(options: Omit<Urql.UseQueryArgs<PaginatedFilteredBlogpostsQueryVariables>, 'query'>) {
   return Urql.useQuery<PaginatedFilteredBlogpostsQuery, PaginatedFilteredBlogpostsQueryVariables>({ query: PaginatedFilteredBlogpostsDocument, ...options });
+};
+export const GlossaryItemDocument = gql`
+    query glossaryItem($id: ItemId!) {
+  glossaryItem(filter: {id: {eq: $id}}) {
+    ...GlossaryItem
+  }
+}
+    ${GlossaryItemFragmentDoc}
+${InternalLinkButtonFragmentDoc}
+${InternalLinkFragmentDoc}
+${ExternalLinkButtonFragmentDoc}`;
+
+export function useGlossaryItemQuery(options: Omit<Urql.UseQueryArgs<GlossaryItemQueryVariables>, 'query'>) {
+  return Urql.useQuery<GlossaryItemQuery, GlossaryItemQueryVariables>({ query: GlossaryItemDocument, ...options });
 };
 export const PaginatedGlossaryItemsDocument = gql`
     query paginatedGlossaryItems($locale: SiteLocale!, $first: IntType!, $skip: IntType!, $matches: String!) {

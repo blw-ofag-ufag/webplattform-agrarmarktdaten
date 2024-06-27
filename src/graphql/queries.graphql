@@ -365,6 +365,12 @@ query paginatedFilteredBlogposts(
   }
 }
 
+query glossaryItem($id: ItemId!) {
+  glossaryItem(filter: { id: { eq: $id } }) {
+    ...GlossaryItem
+  }
+}
+
 query paginatedGlossaryItems(
   $locale: SiteLocale!
   $first: IntType!

@@ -4,9 +4,10 @@ import { t } from "@lingui/macro";
 import { makeStyles } from "@/components/style-utils";
 import { Typography } from "@mui/material";
 import flexibleStringReplace from "@rpearce/flexible-string-replace";
+import Anchor from "./Anchor";
 
-const GlossaryItem = (props: GQL.GlossaryItemFragment & { highlight: string }) => {
-  const { title, description } = props;
+const GlossaryItem = (props: GQL.GlossaryItemFragment & { highlight?: string }) => {
+  const { id, title, description } = props;
   const { classes } = useStyles();
 
   const regex = new RegExp(`${props.highlight}`, "gi");
@@ -25,7 +26,9 @@ const GlossaryItem = (props: GQL.GlossaryItemFragment & { highlight: string }) =
         {props?.label?.title ?? t({ id: "glossaryItem.generic", message: "Generic" })}
       </Typography>
       <div className={classes.content}>
-        <Typography variant="h4">{matchedTitle}</Typography>
+        <Anchor id={id}>
+          <Typography variant="h4">{matchedTitle}</Typography>
+        </Anchor>
         {description && (
           <StructuredText
             data={description}

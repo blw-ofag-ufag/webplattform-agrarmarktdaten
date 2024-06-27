@@ -40,6 +40,7 @@ const defaultExchanges = [
       TermsPageModelLeadField: () => null,
       TermsPageModelLeadFieldMultiLocaleField: () => null,
       ResponsiveImage: () => null,
+      GlossaryItemModelDescriptionField: () => null,
     },
     resolvers: {
       BlogPostRecord: {

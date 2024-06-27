@@ -7,17 +7,18 @@ import { useLayoutStyles } from "@/components/useLayoutStyles";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 import { GlossaryItem } from "@/components/GlossaryItem";
-import { TextField, InputAdornment, Typography, CircularProgress, Stack } from "@mui/material";
+import { TextField, InputAdornment, Typography, CircularProgress, Stack, Box } from "@mui/material";
 import { makeStyles } from "@/components/style-utils";
 import SearchIcon from "@/icons/icons-jsx/control/IcSearch";
 import CloseIcon from "@/icons/icons-jsx/control/IcControlClose";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { useQueryState, parseAsInteger } from "next-usequerystate";
+import { useQueryState, parseAsInteger, parseAsString } from "next-usequerystate";
 import { Pagination } from "@/components/Pagination";
 import { Trans, plural, t } from "@lingui/macro";
 import { useDebounceQueryStateString } from "@/lib/useDebounce";
+import { SafeHydrate } from "@/components/SafeHydrate";
 
 const PAGE_SIZE = 100;
 
@@ -32,9 +33,11 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
     300
   );
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  const [id, setId] = useQueryState("id", parseAsString.withDefault(""));
+
   const { locale } = useRouter();
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching: isFetchingGlossary } = useQuery({
     queryKey: ["glossary", debouncedSearchString, page],
     queryFn: async () => {
       const result = await client
@@ -54,7 +57,27 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
       return result.data;
     },
     placeholderData: keepPreviousData,
+    enabled: id === "",
   });
+
+  const { data: glossaryItem, isFetching: isFetchingGlossaryItem } =
+    useQuery<GQL.GlossaryItemQuery>({
+      queryKey: ["glossary", id],
+      queryFn: async () => {
+        const result = await client
+          .query<GQL.GlossaryItemQuery>(GQL.GlossaryItemDocument, { id })
+          .toPromise();
+
+        if (!result.data) {
+          console.error(result.error?.toString());
+          throw new Error("Failed to fetch API");
+        }
+
+        return result.data;
+      },
+      placeholderData: keepPreviousData,
+      enabled: id !== "",
+    });
 
   if (!glossaryPage?.title || !method?._allSlugLocales) {
     return null;
@@ -69,8 +92,16 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
     };
   });
 
+  const isFetching = isFetchingGlossaryItem || isFetchingGlossary;
+  const showEmptyGlossary =
+    (!data?.glossaryItems || data?.glossaryItems.length === 0) &&
+    !glossaryItem?.glossaryItem?.id &&
+    !isFetching;
+  const showSingleItem = !!glossaryItem?.glossaryItem;
+  const showMultipleItems = !!data?.glossaryItems && data?.glossaryItems.length > 0;
+
   return (
-    <>
+    <SafeHydrate>
       <Head>{renderMetaTags([...glossaryPage.seo, ...site?.favicon])}</Head>
       <AppLayout
         alternates={alternates}
@@ -97,12 +128,12 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="start">
-                      {isFetching && <CircularProgress size={24} />}
                       {searchString.length > 0 ? (
                         <CloseIcon
                           className={styles.closeIcon}
                           onClick={() => {
                             setSearchString("");
+                            setId("");
                             setPage(1);
                           }}
                           width={20}
@@ -117,6 +148,7 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
                 }}
                 onChange={(e) => {
                   setSearchString(e.target.value);
+                  setId("");
                   setPage(1);
                 }}
               />
@@ -131,10 +163,19 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
               </Typography>
             )}
             <div className={styles.items}>
-              {data?.glossaryItems.length === 0 && <EmptyGlossary searchString={searchString} />}
-              {data?.glossaryItems?.map((item) => (
-                <GlossaryItem key={item.title} {...item} highlight={debouncedSearchString} />
-              ))}
+              {isFetching && (
+                <Box className={styles.loading}>
+                  <CircularProgress size={24} />
+                </Box>
+              )}
+              {showEmptyGlossary && <EmptyGlossary searchString={searchString} />}
+              {showSingleItem && (
+                <GlossaryItem key={glossaryItem.glossaryItem!.id} {...glossaryItem.glossaryItem!} />
+              )}
+              {showMultipleItems &&
+                data?.glossaryItems?.map((item) => (
+                  <GlossaryItem key={item.title} {...item} highlight={debouncedSearchString} />
+                ))}
             </div>
             {data?.glossaryItems && data?.count.count / PAGE_SIZE > 1 && (
               <div className={styles.paginationWrapper}>
@@ -148,7 +189,7 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
           </div>
         </GridContainer>
       </AppLayout>
-    </>
+    </SafeHydrate>
   );
 }
 
@@ -225,6 +266,11 @@ const useStyles = makeStyles()(({ palette, spacing, breakpoints }) => ({
   },
   closeIcon: {
     cursor: "pointer",
+  },
+  loading: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   content: {
     display: "flex",
