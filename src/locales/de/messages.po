@@ -404,6 +404,11 @@ msgid "data.control.reset"
 msgstr "Zurücksetzen"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.reset"
+msgstr "Filter zurücksetzen"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "cta.reset-filters"
 msgstr "Alles Abwählen"

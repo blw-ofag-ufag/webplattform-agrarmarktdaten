@@ -404,6 +404,11 @@ msgid "data.control.reset"
 msgstr "Remise à zéro"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.reset"
+msgstr "Réinitialiser les filtres"
+
+#. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx
 msgid "cta.reset-filters"
 msgstr "Réinitialiser des filtres"
