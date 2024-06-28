@@ -301,7 +301,6 @@ query InfoPage($locale: SiteLocale!) {
   }
   ...SiteFavIcon
   ...MenuItems
-  ...TopBlogPosts
 }
 
 query AnalysisPage($locale: SiteLocale!) {

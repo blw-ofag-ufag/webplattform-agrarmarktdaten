@@ -32,7 +32,7 @@ export default function LegalPage(props: GQL.TermsPageQuery) {
         glossaryPage={glossaryPage}
         showBackButton
       >
-        <Hero title={termsPage.title} lead={termsPage.lead} showTitleLine={false} shiftedLeft />
+        <Hero title={termsPage.title} lead={termsPage.lead} shiftedLeft />
         <GridContainer sx={{ mt: 4, mb: 8, position: "relative" }}>
           <div className={classes.aside} />
           <div className={classes.content}>

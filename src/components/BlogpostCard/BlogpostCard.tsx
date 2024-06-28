@@ -55,8 +55,6 @@ const useStyles = makeStyles<void, "full" | "third" | "card">()((
 
     publishedDate: {
       [`.${classes.full} &`]: {
-        paddingRight: s(20),
-        paddingLeft: s(16),
         paddingTop: s(2),
         marginBottom: s(4),
         width: "100%",
@@ -252,7 +250,11 @@ export const BlogpostCard = (
               <MarketChip key={slug} slug={slug} label={title} />
             ))}
           </div>
-          <Typography variant="body1" className={cx(classes.lead, clampedClassName)}>
+          <Typography
+            component="div"
+            variant="body1"
+            className={cx(classes.lead, clampedClassName)}
+          >
             {cardSummary && <StructuredText data={cardSummary} />}
           </Typography>
         </div>

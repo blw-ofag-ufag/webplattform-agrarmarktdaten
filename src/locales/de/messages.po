@@ -340,7 +340,7 @@ msgstr "Märkte"
 #. js-lingui-explicit-id
 #: src/domain/filters.ts
 msgid "data.filters.measure"
-msgstr "Indikator"
+msgstr "Kennzahl"
 
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
@@ -422,6 +422,11 @@ msgstr "Veröffentlicht am"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.control.reset"
 msgstr "Zurücksetzen"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.reset"
+msgstr "Filter zurücksetzen"
 
 #. js-lingui-explicit-id
 #: src/components/browser/SidePanel.tsx

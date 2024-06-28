@@ -34,6 +34,7 @@ import {
 import { mapToObj } from "remeda";
 import ActionButton from "./ActionButton";
 import { isUndefined, sortBy } from "lodash";
+import { useTheme } from "@mui/material/styles";
 
 const FILE_FORMATS = ["csv", "xlsx", "json"] as const;
 export type FileFormat = (typeof FILE_FORMATS)[number];
@@ -76,6 +77,7 @@ export default function DataDownload() {
   const anchorRef = useRef<HTMLButtonElement>(null);
   const filteredObservations = useAtomValue(filteredObservationsAtom);
   const dimensions = useAtomValue(cubeDimensionsStatusAtom);
+  const theme = useTheme();
 
   return (
     <DataDownloadStateProvider>
@@ -84,7 +86,11 @@ export default function DataDownload() {
           <>
             <ActionButton
               ref={anchorRef}
-              sx={{ borderRadius: "2px" }}
+              sx={{
+                borderRadius: "2px",
+                fontSize: theme.typography.body2.fontSize,
+                paddingInline: theme.spacing(4),
+              }}
               startIcon={<IcControlDownload />}
               disabled={isUndefined(filteredObservations) || filteredObservations.length === 0}
               {...bindToggle(popupState)}

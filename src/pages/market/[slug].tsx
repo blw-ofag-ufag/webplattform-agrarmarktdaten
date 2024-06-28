@@ -72,6 +72,7 @@ export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlo
           bgColor={marketColor}
           color={color}
           shiftedLeft
+          variant="market"
         />
         <GridContainer sx={{ mt: 4, position: "relative" }}>
           <div className={classes.aside} ref={stickyRef}>

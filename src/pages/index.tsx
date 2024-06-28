@@ -42,6 +42,7 @@ export default function HomePage(props: GQL.HomePageQuery) {
             lead={homePage.lead}
             hero={homePage.hero?.url}
             color="#ffffff"
+            variant="homepage"
             titleTypographyProps={{
               variant: "display1",
               sx: {

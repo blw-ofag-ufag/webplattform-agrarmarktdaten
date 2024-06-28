@@ -30,7 +30,6 @@ import { NextRouter, useRouter } from "next/router";
 import slugs from "@/generated/slugs.json";
 import { useInitSections } from "@/lib/useScrollIntoView";
 import AnchorHeader from "./internal/AnchorHeader";
-import { SafeHydrate } from "@/components/SafeHydrate";
 import MathJax from "./internal/MathJax";
 import Table from "./internal/Table";
 import { isNonBreakingMark, isLatexMark, extractTextContent } from "./utils";
@@ -90,17 +89,25 @@ const StructuredText = (props: Props) => {
   useInitSections(data);
 
   return (
-    <SafeHydrate>
+    <>
       <DebugStructuredText.Provider value={{ debug: props.debug }}>
         <Box className={classes.content} sx={props.sx}>
           <ST
             data={data}
             customMarkRules={[
-              renderMarkRule(isNonBreakingMark, ({ children }) => (
-                <span className={classes.nonBreakable}>{children}</span>
+              renderMarkRule(isNonBreakingMark, ({ children, key }) => (
+                <span key={key} className={classes.nonBreakable}>
+                  {children}
+                </span>
               )),
-              renderMarkRule(isLatexMark, ({ children }) => {
-                return children && <MathJax inline>{extractTextContent(children)}</MathJax>;
+              renderMarkRule(isLatexMark, ({ children, key }) => {
+                return (
+                  children && (
+                    <MathJax key={key} inline>
+                      {extractTextContent(children)}
+                    </MathJax>
+                  )
+                );
               }),
             ]}
             customNodeRules={[
@@ -141,8 +148,12 @@ const StructuredText = (props: Props) => {
                 );
               }),
 
-              renderNodeRule(isList, ({ children }) => {
-                return <List className={classes.ul}>{children}</List>;
+              renderNodeRule(isList, ({ children, key }) => {
+                return (
+                  <List key={key} className={classes.ul}>
+                    {children}
+                  </List>
+                );
               }),
               renderNodeRule(isParagraph, ({ children, key }) => {
                 /**
@@ -157,7 +168,7 @@ const StructuredText = (props: Props) => {
                 if (children?.length === 1) {
                   const child = children[0];
                   if (hasReactChildClassName(child, classes.powerbiReportContainer)) {
-                    return <>{child}</>;
+                    return <React.Fragment key={key}>{child}</React.Fragment>;
                   }
                 }
                 return (
@@ -165,7 +176,7 @@ const StructuredText = (props: Props) => {
                     key={key}
                     /** @ts-ignore */
                     variant="body1"
-                    component="p"
+                    component="div"
                     {...paragraphTypographyProps}
                     className={cx(classes.p, paragraphTypographyProps.className)}
                   >
@@ -182,7 +193,7 @@ const StructuredText = (props: Props) => {
                   const pages =
                     powerBiReport.pages?.map((d) => ({ name: d.name!, id: d.pageId! })) ?? [];
                   return (
-                    <div className={classes.powerbiReportContainer}>
+                    <section className={classes.powerbiReportContainer}>
                       <PowerBIReport
                         key={record.id}
                         datasetId={powerBiReport.dataset?.datasetId ?? ""}
@@ -190,7 +201,7 @@ const StructuredText = (props: Props) => {
                         reportWorkspaceId={powerBiReport.workspace?.workspaceId ?? ""}
                         pages={pages}
                       />
-                    </div>
+                    </section>
                   );
                 case "FileDownloadSectionRecord":
                   const fileDownloadSection = record as Partial<GQL.FileDownloadSectionRecord>;
@@ -220,14 +231,8 @@ const StructuredText = (props: Props) => {
               const record = _record as InternalLink;
               const url = getUrl(record, router) ?? "";
               return (
-                <NextLink {...transformedMeta} legacyBehavior href={url}>
-                  <Typography
-                    variant="inherit"
-                    component="a"
-                    className={classes.link}
-                    key={record.id}
-                    href={url}
-                  >
+                <NextLink {...transformedMeta} legacyBehavior href={url} key={record.id}>
+                  <Typography variant="inherit" component="a" className={classes.link} href={url}>
                     {children}
                   </Typography>
                 </NextLink>
@@ -236,17 +241,21 @@ const StructuredText = (props: Props) => {
             renderBlock={({ record }) => {
               switch (record.__typename) {
                 case "LatexRecord": {
-                  const { formula, alignment } = record as GQL.LatexRecord;
-                  return <MathJax align={alignment ?? "left"}>{formula}</MathJax>;
+                  const { formula, alignment, id } = record as GQL.LatexRecord;
+                  return (
+                    <MathJax key={id} align={alignment ?? "left"}>
+                      {formula}
+                    </MathJax>
+                  );
                 }
                 case "TableRecord": {
-                  const { content } = record as GQL.TableRecord;
-                  return <Table content={content} />;
+                  const { content, id } = record as GQL.TableRecord;
+                  return <Table key={id} content={content} />;
                 }
                 case "IframeBlockRecord": {
                   const { caption, url, height } = record as GQL.IframeBlockRecord;
                   return url ? (
-                    <>
+                    <React.Fragment key={record.id}>
                       <Box
                         className={classes.iframeContainer}
                         sx={{ height: height ? `${height}px!important` : "auto" }}
@@ -258,15 +267,15 @@ const StructuredText = (props: Props) => {
                           {caption}
                         </Typography>
                       )}
-                    </>
+                    </React.Fragment>
                   ) : null;
                 }
                 case "InternalLinkButtonRecord": {
-                  const { label, page, anchor } = record as GQL.InternalLinkButtonRecord;
+                  const { label, page, anchor, id } = record as GQL.InternalLinkButtonRecord;
                   const url = getUrl(page as InternalLink, router);
                   const fullUrl = anchor ? `${url}#${anchor}` : url;
                   return fullUrl ? (
-                    <p className={cx(classes.p, classes.internalLinkParagraph)}>
+                    <p key={id} className={cx(classes.p, classes.internalLinkParagraph)}>
                       <NextLink legacyBehavior href={fullUrl} passHref>
                         <Button variant="inline" className={classes.linkButton}>
                           {label}
@@ -277,10 +286,10 @@ const StructuredText = (props: Props) => {
                 }
 
                 case "ExternalLinkButtonRecord": {
-                  const { label, url } = record as GQL.ExternalLinkButtonRecord;
+                  const { label, url, id } = record as GQL.ExternalLinkButtonRecord;
                   //We add target blank automatically to keep consistency with the rest of the site
                   return url ? (
-                    <Button variant="inline" className={classes.linkButton}>
+                    <Button key={id} variant="inline" className={classes.linkButton}>
                       <a
                         href={url}
                         target="_blank"
@@ -294,9 +303,9 @@ const StructuredText = (props: Props) => {
                 }
 
                 case "AssetLinkButtonRecord": {
-                  const { label, asset } = record as GQL.AssetLinkButtonRecord;
+                  const { label, asset, id } = record as GQL.AssetLinkButtonRecord;
                   return asset?.url ? (
-                    <NextLink legacyBehavior href={asset?.url} passHref>
+                    <NextLink key={id} legacyBehavior href={asset?.url} passHref>
                       <Button variant="inline" className={classes.linkButton}>
                         {label}
                       </Button>
@@ -305,9 +314,9 @@ const StructuredText = (props: Props) => {
                 }
 
                 case "DataButtonRecord": {
-                  const { url, label } = record as GQL.DataButtonRecord;
+                  const { url, label, id } = record as GQL.DataButtonRecord;
                   return (
-                    <NextLink legacyBehavior href={url ?? ""}>
+                    <NextLink key={id} legacyBehavior href={url ?? ""}>
                       <Typography
                         sx={{
                           px: 3,
@@ -331,7 +340,7 @@ const StructuredText = (props: Props) => {
                   //For normal images
                   if (image?.responsiveImage) {
                     return (
-                      <Box className={classes.imageWrapper}>
+                      <Box key={image.id} className={classes.imageWrapper}>
                         {/*eslint-disable-next-line jsx-a11y/alt-text*/}
                         <Image
                           data={image?.responsiveImage}
@@ -349,7 +358,7 @@ const StructuredText = (props: Props) => {
                   //SVGs apparently don't have the responsiveImage prop set so we use the nextimage component here
                   if (image?.url) {
                     return (
-                      <Box className={classes.svgWrapper}>
+                      <Box key={image.id} className={classes.svgWrapper}>
                         <NextImage
                           src={image?.url}
                           alt={image?.alt ?? ""}
@@ -384,7 +393,7 @@ const StructuredText = (props: Props) => {
           />
         </Box>
       </DebugStructuredText.Provider>
-    </SafeHydrate>
+    </>
   );
 };
 
