@@ -60,7 +60,8 @@ const blackAndWhiteTheme = createTheme(blwTheme, {
 });
 
 export default function DataPage(props: GQL.DataPageQuery) {
-  const { dataPage, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
+  const { dataPage, allMarketArticles, allFocusArticles, allMethodsPages, glossaryPage, site } =
+    props;
   const [acceptedWarning, setAcceptedWarning] = useState(false);
 
   const showEnvironments = useFlag("environments");
@@ -83,6 +84,7 @@ export default function DataPage(props: GQL.DataPageQuery) {
           allMarkets={allMarketArticles}
           allFocusArticles={allFocusArticles}
           allMethodsPages={allMethodsPages}
+          glossaryPage={glossaryPage}
         >
           {isTablet || isDesktop || acceptedWarning ? (
             <>

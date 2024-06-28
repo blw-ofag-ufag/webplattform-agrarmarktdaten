@@ -1,8 +1,7 @@
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
-import { AppLayout, LayoutSections } from "@/components/layout";
+import { AppLayout } from "@/components/layout";
 import { Hero } from "@/components/hero";
-import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -11,7 +10,7 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function InfoPage(props: GQL.InfoPageQuery) {
-  const { infoPage, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
+  const { infoPage, allMarketArticles, allFocusArticles, allMethodsPages, glossaryPage, site } =
     props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
@@ -31,9 +30,10 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
         allMethodsPages={allMethodsPages}
+        glossaryPage={glossaryPage}
         showBackButton
       >
-        <Hero title={infoPage.title} lead={infoPage.lead} bgColor="#DFE4E9" shiftedLeft />
+        <Hero title={infoPage.title} lead={infoPage.lead} shiftedLeft />
         <GridContainer sx={{ mt: 4, position: "relative" }}>
           <div ref={stickyRef} className={classes.aside}>
             {infoPage.content && (
@@ -47,9 +47,6 @@ export default function InfoPage(props: GQL.InfoPageQuery) {
             {infoPage.content && <StructuredText data={infoPage.content} />}
           </div>
         </GridContainer>
-        <LayoutSections>
-          <TopBlogpostsTeaser blogposts={topBlogPosts} />
-        </LayoutSections>
       </AppLayout>
     </>
   );

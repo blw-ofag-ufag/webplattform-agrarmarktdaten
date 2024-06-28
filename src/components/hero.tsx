@@ -1,5 +1,4 @@
 import { Box, BoxProps, Typography, TypographyProps } from "@mui/material";
-import { s } from "@interactivethings/swiss-federal-ci";
 import { makeStyles } from "./style-utils";
 import { StructuredTextGraphQlResponse } from "react-datocms";
 import { StructuredText } from "@/components/StructuredText";
@@ -7,49 +6,60 @@ import { GridContainer } from "@/components/Grid/Grid";
 import { useHeroStyles } from "@/components/useLayoutStyles";
 
 const useStyles = makeStyles<{
+  variant?: "regular" | "market" | "homepage";
   hero: string | undefined;
   bgColor: string | undefined;
+  color: string | undefined;
 }>()((theme, params) => ({
+  wrapper: {
+    paddingBottom: "80px",
+  },
   root: {
     flexDirection: "column",
     justifyContent: "end",
-    [theme.breakpoints.up("xxl")]: {
-      height: params.hero ? "400px" : "250px",
-      paddingBottom: s(18),
-    },
-    [theme.breakpoints.down("xxl")]: { height: "280px", paddingBottom: s(13) },
-
     width: "100%",
-    backgroundColor: params.bgColor,
     backgroundImage: `url(${params.hero})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
+    paddingTop: params.variant === "regular" ? "120px" : 0,
   },
 
   gridElement: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "end",
+    gap: theme.spacing(5),
   },
 
   lead: {
     width: "100%",
     display: "flex",
     justifyContent: "center",
-    paddingTop: "64px",
-    paddingBottom: "96px",
+    paddingTop: theme.spacing(5),
   },
 
   market: {
-    borderTopRightRadius: "110px",
-    borderBottomLeftRadius: "110px",
     marginTop: theme.spacing(9),
+    backgroundColor: params.bgColor,
+    borderRadius: "8px",
+    paddingBlock: "56px",
+    paddingInline: "32px",
+  },
+  homepage: {
+    marginTop: theme.spacing(9),
+    paddingBlock: "56px",
+  },
+  line: {
+    width: "112px",
+    height: "1px",
+    backgroundColor: params.color,
+    border: `3px solid ${params.color}`,
   },
 }));
 
 type Props = {
-  variant?: "regular" | "market";
+  variant?: "regular" | "market" | "homepage";
   title: string;
   lead?: StructuredTextGraphQlResponse;
   hero?: string;
@@ -76,22 +86,31 @@ export const Hero = (props: Props) => {
     shiftedLeft = false,
     titleTypographyProps,
     leadStructuredTextProps,
-    showTitleLine = true,
     sx,
   } = props;
-  const { classes, cx } = useStyles({ hero, bgColor });
+  const { classes, cx } = useStyles({ hero, bgColor, color, variant });
   const { classes: herolayoutClasses } = useHeroStyles({
     shiftedLeft,
   });
   const shifter = <div className={herolayoutClasses.shifter} />;
 
   return (
-    <>
-      <Box className={cx(classes.root, variant === "market" ? classes.market : undefined)} sx={sx}>
+    <Box className={classes.wrapper}>
+      <Box className={classes.root} sx={sx}>
         <GridContainer sx={{ height: "100%" }}>
           {shiftedLeft ? shifter : null}
-          <div className={cx(classes.gridElement, herolayoutClasses.heroContent)}>
-            {showTitleLine && <Box sx={{ width: "55px", height: "3px", backgroundColor: color }} />}
+          <div
+            className={cx(
+              classes.gridElement,
+              herolayoutClasses.heroContent,
+              variant === "market"
+                ? classes.market
+                : variant === "homepage"
+                ? classes.homepage
+                : undefined
+            )}
+          >
+            <Box className={classes.line} />
             <Typography
               variant="display2"
               component="h1"
@@ -119,6 +138,6 @@ export const Hero = (props: Props) => {
           </GridContainer>
         </Box>
       )}
-    </>
+    </Box>
   );
 };

@@ -61,8 +61,15 @@ const useStyles = makeStyles()(({ palette: c }) => ({
 }));
 
 export default function BlogPostPage(props: GQL.BlogPostQuery) {
-  const { blogPost, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
-    props;
+  const {
+    blogPost,
+    allMarketArticles,
+    allFocusArticles,
+    topBlogPosts,
+    allMethodsPages,
+    glossaryPage,
+    site,
+  } = props;
   const { classes: layoutClasses } = useLayoutStyles();
   const { classes } = useStyles();
 
@@ -90,6 +97,7 @@ export default function BlogPostPage(props: GQL.BlogPostQuery) {
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
         allMethodsPages={allMethodsPages}
+        glossaryPage={glossaryPage}
         showBackButton
         showShareButton
       >
