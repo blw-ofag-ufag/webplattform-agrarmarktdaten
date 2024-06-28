@@ -69,6 +69,16 @@ msgstr ""
 #~ msgstr "Contatto"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "menu.overview"
+#~ msgstr "Panoramica"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#~ msgid "footer.legal"
+#~ msgstr "Compiti e basi legali"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} di {1})"
@@ -90,7 +100,7 @@ msgstr "{filteredChangedCount, plural, one {filtro applicato} other {filtri appl
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
-#: src/components/Footer/Footer.tsx
+#: src/components/layout.tsx
 msgid "footer.about_us.label"
 msgstr "Chi siamo"
 
@@ -205,6 +215,11 @@ msgid "data.download.title"
 msgstr "Scarica i dati"
 
 #. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.subtitle"
+msgstr "Errore 404"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.feedback"
@@ -270,7 +285,6 @@ msgid "data.actions.hideFilter"
 msgstr "Nascondere i filtri"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
 msgstr "A proposito del portale"
@@ -373,9 +387,9 @@ msgid "data.filters.none"
 msgstr "Nessuno"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.overview"
-msgstr "Panoramica"
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.title"
+msgstr "Pagina non trovata"
 
 #. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx
@@ -394,14 +408,14 @@ msgid "blogpost.publishedDate"
 msgstr "Pubblicato il"
 
 #. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-msgid "footer.legal"
-msgstr "Compiti e basi legali"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.control.reset"
 msgstr "Reset"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "cta.reset-filters"
+msgstr "Ripristino dei filtri"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
@@ -409,9 +423,14 @@ msgid "data.actions.reset"
 msgstr "Azzeramento dei filtri"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "cta.reset-filters"
-msgstr "Ripristino dei filtri"
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.link"
+msgstr "Torna alla pagina principale"
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.link"
+msgstr "Torna alla pagina principale"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -464,6 +483,11 @@ msgid "social.share"
 msgstr "Condividi"
 
 #. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.title"
+msgstr "Temporaneamente non disponibile"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.terms"
 msgstr "Condizioni d’uso"
@@ -472,6 +496,11 @@ msgstr "Condizioni d’uso"
 #: src/components/browser/MobileIntercept.tsx
 msgid "data.mobile.message"
 msgstr "La piattaforma di dati sui mercati agricoli e alimentari <0>non è ancora completamente ottimizzata per gli schermi di piccole dimensioni</0>. Per una visualizzazione ottimale, utilizzare un computer desktop o ridimensionare la finestra del browser."
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.message"
+msgstr "La pagina o la funzione desiderata non è purtroppo attualmente disponibile. Vogliate riprovare più tardi."
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -502,3 +531,8 @@ msgstr "Cliccando su <0>Scarica i dati</0> è possibile selezionare e scaricar
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Anno"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.message"
+msgstr "La pagina richiesta non è stata trovata. Probabilmente avete inserito un indirizzo sbagliato (URL), la pagina o il documento non esiste più o il nome è stato cambiato."

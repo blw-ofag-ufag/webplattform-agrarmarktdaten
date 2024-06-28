@@ -1,9 +1,9 @@
 import { client } from "@/graphql/api";
 import * as GQL from "@/graphql";
-import { ErrorPage } from "@/components/ErrorPage";
+import { NotFoundError } from "@/components/NotFoundError";
 
 export default function Custom404(props: GQL.ErrorPageQuery) {
-  return <ErrorPage {...props} />;
+  return <NotFoundError {...props} />;
 }
 
 export const getStaticProps = async (context: $FixMe) => {
