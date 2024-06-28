@@ -3,7 +3,7 @@ import { DATOCMS_API_TOKEN } from "@/domain/env";
 
 export const client = buildClient({
   apiToken: DATOCMS_API_TOKEN ?? "",
-  environment: "glossary",
+  // environment: "glossary",
 });
 
 export interface DatoSearch {
