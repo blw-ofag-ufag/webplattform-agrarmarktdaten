@@ -40,7 +40,13 @@ export default function MarketPage(props: GQL.FocusArticlePageQuery) {
         allMethodsPages={allMethodsPages}
         showBackButton
       >
-        <Hero title={focusArticle.title} lead={focusArticle.lead} bgColor="#ACB4BD" shiftedLeft />
+        <Hero
+          title={focusArticle.title}
+          lead={focusArticle.lead}
+          bgColor="#ACB4BD"
+          shiftedLeft
+          variant="market"
+        />
         <GridContainer sx={{ mt: 4, position: "relative" }}>
           <div className={classes.aside} ref={stickyRef}>
             {focusArticle.content && (

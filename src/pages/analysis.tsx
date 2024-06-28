@@ -3,13 +3,11 @@ import { Hero } from "@/components/hero";
 import { AppLayout } from "@/components/layout";
 import * as GQL from "@/graphql";
 import { client } from "@/graphql";
-import { useTheme } from "@mui/material";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function Analysis(props: GQL.AnalysisPageQuery) {
   const { analysisPage, allFocusArticles, allMarketArticles, allMethodsPages, site } = props;
-  const theme = useTheme();
   if (!analysisPage?.title || !analysisPage?.lead) {
     return null;
   }
@@ -28,11 +26,7 @@ export default function Analysis(props: GQL.AnalysisPageQuery) {
         allFocusArticles={allFocusArticles}
         allMethodsPages={allMethodsPages}
       >
-        <Hero
-          title={analysisPage?.title}
-          lead={analysisPage?.lead}
-          bgColor={theme.palette.cobalt[100]}
-        />
+        <Hero title={analysisPage?.title} lead={analysisPage?.lead} />
         <BlogpostGrid markets={allMarketArticles} focusArticles={allFocusArticles} />
       </AppLayout>
     </>
