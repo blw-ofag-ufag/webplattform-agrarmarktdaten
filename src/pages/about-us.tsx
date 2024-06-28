@@ -9,7 +9,8 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function AboutUsPage(props: GQL.AboutUsPageQuery) {
-  const { aboutUsPage, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
+  const { aboutUsPage, allMarketArticles, allFocusArticles, allMethodsPages, glossaryPage, site } =
+    props;
   const { classes } = useLayoutStyles();
 
   if (!aboutUsPage?.title || !aboutUsPage.lead) {
@@ -28,6 +29,7 @@ export default function AboutUsPage(props: GQL.AboutUsPageQuery) {
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
         allMethodsPages={allMethodsPages}
+        glossaryPage={glossaryPage}
         showBackButton
       >
         <Hero title={aboutUsPage.title} lead={aboutUsPage.lead} shiftedLeft />

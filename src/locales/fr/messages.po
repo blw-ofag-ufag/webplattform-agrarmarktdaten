@@ -85,6 +85,7 @@ msgstr "({0} de {1})"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
+#: src/pages/methods/glossary.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {résultat} other {résultats}}"
 
@@ -166,6 +167,11 @@ msgstr "L’Office fédéral de l’agriculture"
 #: src/components/layout.tsx
 msgid "header.longTitle"
 msgstr "Office fédéral de l'agriculture OFAG"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.one"
+msgstr "Vérifiez l'orthographe de votre terme de recherche"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -280,6 +286,11 @@ msgid "cta.back"
 msgstr "Retour"
 
 #. js-lingui-explicit-id
+#: src/components/GlossaryItem/GlossaryItem.tsx
+msgid "glossaryItem.generic"
+msgstr "Générique"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
 msgstr "Cacher les filtres"
@@ -372,6 +383,11 @@ msgid "data.table.empty"
 msgstr "Pas de résultats"
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.message"
+msgstr "La recherche de «{searchString}» n'a donné aucun résultat sur le page de glossaire"
+
+#. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "data.metadata.nodata"
 msgstr "Pas de résultats pour les métadonnées"
@@ -390,6 +406,9 @@ msgstr "Aucun"
 #: src/components/NotFoundError/NotFoundError.tsx
 msgid "error.404.title"
 msgstr "Page non trouvée"
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.header"
+msgstr "Attention"
 
 #. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx
@@ -441,6 +460,16 @@ msgstr "Recherche"
 #: src/components/BlogpostGrid/internal/Search.tsx
 msgid "search.placeholder"
 msgstr "Recherche d'analyses"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.glossary.placeholder"
+msgstr "recherche dans le glossaire"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips"
+msgstr "Conseils"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -508,6 +537,11 @@ msgid "footer.id"
 msgstr "L’Office fédéral de l’agriculture OFAG est le centre de compétences pour la politique agricole suisse. L'une des tâches de l'OFAG, est d'assurer l'observervation indépendante du marché (art. 27 de la loi sur l’agriculture, LAgr). Ceci consiste à recenser et publier des indicateurs de marché tels que les prix et les quantités tout au long de la chaîne de création de valeur ajoutée des principaux marchés agricoles et alimentaires de Suisse. L’objectif est d’accroître la transparence du marché et de mettre en évidence les évolutions à long terme."
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.message"
+msgstr "La recherche est actuellement limitée sur le page de glossaire au site"
+
+#. js-lingui-explicit-id
 #: src/components/BlogpostGrid/BlogpostGrid.tsx
 msgid "analysis.noResults"
 msgstr "Il n'y a pas de résultat pour cette sélection"
@@ -526,6 +560,16 @@ msgstr "Pour"
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
 msgstr "Sous <0>Télécharger des données</0>, il est possible de sélectionner et de télécharger différentes données, notamment des séries de prix, mais aussi, dans certains cas, des données relatives aux quantités et aux surfaces."
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.two"
+msgstr "Utilisez un terme différent ou plus général"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.three"
+msgstr "Utilisez éventuellement moins de termes de recherche"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

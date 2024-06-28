@@ -85,6 +85,7 @@ msgstr "({0} von {1})"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
+#: src/pages/methods/glossary.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {Ergebnis} other {Ergebnisse}}"
 
@@ -166,6 +167,11 @@ msgstr "Bundesamt für Landwirtschaft"
 #: src/components/layout.tsx
 msgid "header.longTitle"
 msgstr "Bundesamt für Landwirtschaft BLW"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.one"
+msgstr "Überprüfen Sie die Schreibweise Ihres Suchbegriffes"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -280,6 +286,11 @@ msgid "cta.back"
 msgstr "Zurück"
 
 #. js-lingui-explicit-id
+#: src/components/GlossaryItem/GlossaryItem.tsx
+msgid "glossaryItem.generic"
+msgstr "Allgemein"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
 msgstr "Filter ausblenden"
@@ -372,6 +383,11 @@ msgid "data.table.empty"
 msgstr "Keine Ergebnisse"
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.message"
+msgstr "Die Suche nach «{searchString}» ergab keine Treffer auf der Glossarseite"
+
+#. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "data.metadata.nodata"
 msgstr "No metadata available"
@@ -390,6 +406,9 @@ msgstr "Keiner"
 #: src/components/NotFoundError/NotFoundError.tsx
 msgid "error.404.title"
 msgstr "Seite nicht gefunden"
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.header"
+msgstr "Hinweis"
 
 #. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx
@@ -441,6 +460,16 @@ msgstr "Suche"
 #: src/components/BlogpostGrid/internal/Search.tsx
 msgid "search.placeholder"
 msgstr "Suche nach Analysen"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.glossary.placeholder"
+msgstr "Suche im Glossar"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips"
+msgstr "Tipps zur Suche"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -508,6 +537,11 @@ msgid "footer.id"
 msgstr "Das Bundesamt für Landwirtschaft BLW ist das nationale Kompetenzzentrum für die Schweizer Agrarpolitik. Zu den Aufgaben des BLW gehört auch, eine unabhängige Marktbeobachtungsstelle zu führen (Artikel 27 Landwirtschaftsgesetz LwG). Diese erhebt und publiziert Marktindikatoren wie Preise und Mengen entlang der gesamten Wertschöpfungskette der wichtigsten Agrar- und Lebensmittelmärkte der Schweiz. Ziel ist es, die Markttransparenz zu erhöhen und langfristige Entwicklungen aufzuzeigen."
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.message"
+msgstr "Die Suche ist momentan auf die Glossarseite von"
+
+#. js-lingui-explicit-id
 #: src/components/BlogpostGrid/BlogpostGrid.tsx
 msgid "analysis.noResults"
 msgstr "Für diese Auswahl gibt es keine Ergebnisse"
@@ -526,6 +560,16 @@ msgstr "Bis"
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
 msgstr "Unter <0>Daten herunterladen</0> können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten."
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.two"
+msgstr "Verwenden Sie einen anderen bzw. allgemeineren Begriff"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.three"
+msgstr "Verwenden Sie ggf. weniger Suchbegriffe"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

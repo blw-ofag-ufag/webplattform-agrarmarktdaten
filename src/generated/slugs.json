@@ -2,6 +2,10 @@
   {
     "locale": "de",
     "slugs": {
+      "glossary": {
+        "locale": "de",
+        "value": "glossar"
+      },
       "methods": "methoden",
       "data": "daten",
       "legal": "auftrag-und-rechtliche-grundlage",
@@ -16,6 +20,10 @@
   {
     "locale": "fr",
     "slugs": {
+      "glossary": {
+        "locale": "fr",
+        "value": "glossaire"
+      },
       "methods": "methodes",
       "data": "donnees",
       "legal": "mission-et-bases-legales",
@@ -30,6 +38,10 @@
   {
     "locale": "it",
     "slugs": {
+      "glossary": {
+        "locale": "it",
+        "value": "glossario"
+      },
       "methods": "metodi",
       "data": "dati",
       "legal": "compiti-e-basi-legali",

@@ -85,6 +85,7 @@ msgstr "({0} di {1})"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
+#: src/pages/methods/glossary.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {risultato} other {risultati}}"
 
@@ -166,6 +167,11 @@ msgstr "L'Ufficio federale dell'agricoltura"
 #: src/components/layout.tsx
 msgid "header.longTitle"
 msgstr "Ufficio federale dell'agricoltura UFAG"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.one"
+msgstr "Controlla l'ortografia del termine di ricerca"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -280,6 +286,11 @@ msgid "cta.back"
 msgstr "Indietro"
 
 #. js-lingui-explicit-id
+#: src/components/GlossaryItem/GlossaryItem.tsx
+msgid "glossaryItem.generic"
+msgstr "Generico"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
 msgstr "Nascondere i filtri"
@@ -372,6 +383,11 @@ msgid "data.table.empty"
 msgstr "Nessun risultato"
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.message"
+msgstr "Nessun risultato per «{searchString}» nella pagina del glossario"
+
+#. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "data.metadata.nodata"
 msgstr "Nessun risultato di metadati"
@@ -390,6 +406,9 @@ msgstr "Nessuno"
 #: src/components/NotFoundError/NotFoundError.tsx
 msgid "error.404.title"
 msgstr "Pagina non trovata"
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.header"
+msgstr "Avviso"
 
 #. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx
@@ -441,6 +460,16 @@ msgstr "Ricerca"
 #: src/components/BlogpostGrid/internal/Search.tsx
 msgid "search.placeholder"
 msgstr "Ricerca di analisi"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.glossary.placeholder"
+msgstr "Ricerca nel glossario"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips"
+msgstr "Suggerimenti per la ricerca"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -508,6 +537,11 @@ msgid "footer.id"
 msgstr "L'Ufficio federale dell'agricoltura UFAG è il centro di competenza nazionale per la politica agricola svizzera. Tra i suoi compiti rientra il monitoraggio indipendente del mercato (art. 27 della legge sull'agricoltura, LAgr). L'UFAG rileva e pubblica indicatori di mercato, come prezzi e quantità, lungo l'intera catena del valore dei principali mercati agricoli e alimentari della Svizzera. L'obiettivo è aumentare la trasparenza del mercato e mostrare l’evoluzione a lungo termine."
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.message"
+msgstr "La ricerca è attualmente limitata alla pagina glossario del sito"
+
+#. js-lingui-explicit-id
 #: src/components/BlogpostGrid/BlogpostGrid.tsx
 msgid "analysis.noResults"
 msgstr "Non ci sono risultati per questa selezione"
@@ -526,6 +560,16 @@ msgstr "A"
 #: src/components/DataPageCard.tsx
 msgid "homepage.section.data.content"
 msgstr "Cliccando su <0>Scarica i dati</0> è possibile selezionare e scaricare diversi dati, tra cui le serie di prezzi e, in alcuni casi, i dati relativi alle quantità e alle superfici."
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.two"
+msgstr "Utilizza un termine diverso o più generico"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.three"
+msgstr "Eventualmente utilizza meno termini di ricerca"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx

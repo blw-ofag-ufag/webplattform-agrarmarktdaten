@@ -50,6 +50,11 @@ declare module "@mui/material" {
       yellow: FederalColor;
     };
     active: string;
+    functional: {
+      info: {
+        text: string;
+      };
+    };
   }
 }
 
