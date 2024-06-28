@@ -17,6 +17,15 @@ const run = async () => {
 
   const redirects = [
     {
+      url: "/methods/glossary",
+      alternates: result.data.method?._allSlugLocales?.map(({ value, locale }) => {
+        const glossaryLocale = result.data?.glossaryPage?._allSlugLocales?.find(
+          (slug) => slug.locale === locale
+        )?.value;
+        return `/${value}/${glossaryLocale}`;
+      }),
+    },
+    {
       url: "/methods/[slug]",
       alternates: result.data.method?._allSlugLocales?.map(({ value }) => `/${value}`),
     },
@@ -57,6 +66,7 @@ const run = async () => {
   const slugs = locales.map((locale) => ({
     locale,
     slugs: {
+      glossary: result.data?.glossaryPage?._allSlugLocales?.find((slug) => slug.locale === locale),
       methods: result.data?.method?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       data: result.data?.dataPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,
       legal: result.data?.legalPage?._allSlugLocales?.find((slug) => slug.locale === locale)?.value,

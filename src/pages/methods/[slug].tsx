@@ -58,7 +58,6 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  console.log("yo!");
   const result = await client
     .query<GQL.MethodsPageQuery>(
       GQL.MethodsPageDocument,

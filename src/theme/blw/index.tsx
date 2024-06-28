@@ -24,6 +24,11 @@ const theme = createTheme(federalTheme, {
       red: colors.red,
       yellow: colors.yellow,
     },
+    functional: {
+      info: {
+        text: "rgba(29, 78, 216, 0.35)",
+      },
+    },
     active: "#F0F4F7",
   },
 

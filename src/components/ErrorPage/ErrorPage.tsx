@@ -47,13 +47,14 @@ const useStyles = makeStyles()(({ spacing }) => ({
 }));
 
 export default function Custom404(props: GQL.ErrorPageQuery) {
-  const { allMarketArticles, allFocusArticles, allMethodsPages } = props;
+  const { allMarketArticles, allFocusArticles, allMethodsPages, glossaryPage } = props;
   const { classes } = useStyles();
   return (
     <AppLayout
       allMarkets={allMarketArticles}
       allFocusArticles={allFocusArticles}
       allMethodsPages={allMethodsPages}
+      glossaryPage={glossaryPage}
     >
       <Box className={classes.wrapper}>
         {messages.map(({ title, locale, link }) => {

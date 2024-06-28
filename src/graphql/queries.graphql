@@ -238,6 +238,29 @@ query MethodsPage($locale: SiteLocale!, $slug: String!) {
   ...TopBlogPosts
 }
 
+query GlossaryPage($locale: SiteLocale!) {
+  glossaryPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    ...SEOMetaTags
+    items {
+      ...GlossaryItem
+    }
+  }
+  method(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
 query InfoPage($locale: SiteLocale!) {
   infoPage(locale: $locale) {
     _allSlugLocales {
@@ -335,6 +358,44 @@ query paginatedFilteredBlogposts(
     locale: $locale
     filter: {
       OR: [{ markets: { anyIn: $marketFilter } }, { focusArticles: { anyIn: $focusFilter } }]
+    }
+  ) {
+    count
+  }
+}
+
+query glossaryItem($id: ItemId!) {
+  glossaryItem(filter: { id: { eq: $id } }) {
+    ...GlossaryItem
+  }
+}
+
+query paginatedGlossaryItems(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $matches: String!
+) {
+  glossaryItems: allGlossaryItems(
+    locale: $locale
+    first: $first
+    skip: $skip
+    filter: {
+      OR: [
+        { description: { matches: { pattern: $matches, caseSensitive: false } } }
+        { title: { matches: { pattern: $matches, caseSensitive: false } } }
+      ]
+    }
+  ) {
+    ...GlossaryItem
+  }
+  count: _allGlossaryItemsMeta(
+    locale: $locale
+    filter: {
+      OR: [
+        { description: { matches: { pattern: $matches, caseSensitive: false } } }
+        { title: { matches: { pattern: $matches, caseSensitive: false } } }
+      ]
     }
   ) {
     count
@@ -442,6 +503,12 @@ query AllBlogPostsSlugLocales {
 }
 
 query AllRedirects {
+  glossaryPage {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
   method {
     _allSlugLocales {
       locale
@@ -525,6 +592,41 @@ fragment SimpleMethodsPage on MethodsPageRecord {
   id
   title
   slug
+}
+
+fragment SimpleGlossaryPage on GlossaryPageRecord {
+  id
+  title
+  slug
+}
+
+fragment GlossaryItem on GlossaryItemRecord {
+  id
+  title
+  label {
+    ... on MarketArticleRecord {
+      id
+      title
+      slug
+    }
+    ... on FocusArticleRecord {
+      id
+      title
+      slug
+    }
+  }
+  description {
+    value
+    blocks {
+      __typename
+      ...InternalLinkButton
+      ...ExternalLinkButton
+    }
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
 }
 
 fragment FullMarketArticle on MarketArticleRecord {
@@ -898,6 +1000,9 @@ fragment AssetLinkButton on AssetLinkButtonRecord {
 }
 
 fragment InternalLink on RecordInterface {
+  ... on AboutUsPageRecord {
+    id
+  }
   ... on HomePageRecord {
     id
   }
@@ -962,6 +1067,9 @@ fragment MenuItems on Query {
   }
   allMethodsPages(locale: $locale) {
     ...SimpleMethodsPage
+  }
+  glossaryPage(locale: $locale) {
+    ...SimpleGlossaryPage
   }
 }
 
