@@ -19,6 +19,7 @@ import { Pagination } from "@/components/Pagination";
 import { Trans, plural, t } from "@lingui/macro";
 import { useDebounceQueryStateString } from "@/lib/useDebounce";
 import { SafeHydrate } from "@/components/SafeHydrate";
+import { useTheme } from "@mui/material/styles";
 
 const PAGE_SIZE = 100;
 
@@ -35,6 +36,7 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
   const [id, setId] = useQueryState("id", parseAsString.withDefault(""));
 
+  const theme = useTheme();
   const { locale } = useRouter();
 
   const { data, isFetching: isFetchingGlossary } = useQuery({
@@ -138,10 +140,10 @@ export default function GlossaryPage(props: GQL.GlossaryPageQuery) {
                           }}
                           width={20}
                           height={20}
-                          color={"#596978"}
+                          color={theme.palette.cobalt[400]}
                         />
                       ) : (
-                        <SearchIcon width={24} height={24} color={"#596978"} />
+                        <SearchIcon width={24} height={24} color={theme.palette.cobalt[400]} />
                       )}
                     </InputAdornment>
                   ),
