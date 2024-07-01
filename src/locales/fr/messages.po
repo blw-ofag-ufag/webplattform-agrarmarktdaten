@@ -221,6 +221,11 @@ msgid "data.download.title"
 msgstr "Télécharger des données"
 
 #. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.subtitle"
+msgstr "Erreur 404"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 #: src/components/Footer/Footer.tsx
 msgid "footer.feedback"
@@ -398,6 +403,9 @@ msgid "data.filters.none"
 msgstr "Aucun"
 
 #. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.title"
+msgstr "Page non trouvée"
 #: src/pages/methods/glossary.tsx
 msgid "search.results.warning.header"
 msgstr "Attention"
@@ -424,14 +432,24 @@ msgid "data.control.reset"
 msgstr "Remise à zéro"
 
 #. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "cta.reset-filters"
+msgstr "Réinitialiser des filtres"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.reset"
 msgstr "Réinitialiser les filtres"
 
 #. js-lingui-explicit-id
-#: src/components/browser/SidePanel.tsx
-msgid "cta.reset-filters"
-msgstr "Réinitialiser des filtres"
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.link"
+msgstr "Retour à la page d'accueil"
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.link"
+msgstr "Retour à la page d'accueil"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -494,6 +512,11 @@ msgid "social.share"
 msgstr "Partager"
 
 #. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.title"
+msgstr "Temporairement indisponible"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.terms"
 msgstr "Conditions d’utilisation"
@@ -502,6 +525,11 @@ msgstr "Conditions d’utilisation"
 #: src/components/browser/MobileIntercept.tsx
 msgid "data.mobile.message"
 msgstr "Le portail de données sur les marchés agricoles et alimentaires <0>n'est pas encore totalement optimisé pour les petits écrans</0>. Veuillez utiliser un ordinateur de bureau ou modifier la taille de la fenêtre de votre navigateur pour garantir un affichage optimal."
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.message"
+msgstr "La page ou la fonction souhaitée n'est actuellement pas disponible. Veuillez essayer à nouveau un peu plus tard."
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -547,3 +575,8 @@ msgstr "Utilisez éventuellement moins de termes de recherche"
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Année"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.message"
+msgstr "La page recherchée est introuvable. Il y a peut-être une erreur d'adresse (URL), la page ou le document n'existe plus ou le nom a changé."

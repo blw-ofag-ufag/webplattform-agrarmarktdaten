@@ -235,7 +235,6 @@ query MethodsPage($locale: SiteLocale!, $slug: String!) {
   }
   ...SiteFavIcon
   ...MenuItems
-  ...TopBlogPosts
 }
 
 query GlossaryPage($locale: SiteLocale!) {

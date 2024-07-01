@@ -1,9 +1,8 @@
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { GetStaticPaths } from "next";
-import { AppLayout, LayoutSections } from "@/components/layout";
+import { AppLayout } from "@/components/layout";
 import { Hero } from "@/components/hero";
-import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -13,8 +12,7 @@ import { renderMetaTags } from "react-datocms";
 import { isValidLocale } from "@/locales/locales";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
-    props;
+  const { methodsPage, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
@@ -49,9 +47,6 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
             {methodsPage.content && <StructuredText data={methodsPage.content} />}
           </div>
         </GridContainer>
-        <LayoutSections>
-          <TopBlogpostsTeaser blogposts={topBlogPosts} />
-        </LayoutSections>
       </AppLayout>
     </>
   );
