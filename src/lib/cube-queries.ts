@@ -118,7 +118,6 @@ export const queryPropertyDimensionAndValues = ({
   PREFIX schema: <http://schema.org/>
 
   SELECT DISTINCT ?dimension ?value ?label  
-  FROM <${agDataBase}>
   WHERE {
     ${dimensionsIris
       .map(
