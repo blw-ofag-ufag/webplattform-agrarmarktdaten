@@ -233,6 +233,12 @@ query MethodsPage($locale: SiteLocale!, $slug: String!) {
       }
     }
   }
+  method(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
   ...SiteFavIcon
   ...MenuItems
 }
