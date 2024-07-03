@@ -614,6 +614,7 @@ fragment GlossaryItem on GlossaryItemRecord {
       slug
     }
   }
+  freeStyleLabel
   description {
     value
     blocks {
