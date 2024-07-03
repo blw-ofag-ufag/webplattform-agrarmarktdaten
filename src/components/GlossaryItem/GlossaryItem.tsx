@@ -1,6 +1,5 @@
 import { StructuredText } from "@/components/StructuredText";
 import * as GQL from "@/graphql";
-import { t } from "@lingui/macro";
 import { makeStyles } from "@/components/style-utils";
 import { Typography } from "@mui/material";
 import flexibleStringReplace from "@rpearce/flexible-string-replace";
