@@ -12,7 +12,15 @@ import { renderMetaTags } from "react-datocms";
 import { isValidLocale } from "@/locales/locales";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, method, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
+  const {
+    methodsPage,
+    method,
+    allMarketArticles,
+    allFocusArticles,
+    allMethodsPages,
+    glossaryPage,
+    site,
+  } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
@@ -36,6 +44,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
         allMethodsPages={allMethodsPages}
+        glossaryPage={glossaryPage}
         showBackButton
       >
         <Hero title={methodsPage.title} lead={methodsPage.lead} shiftedLeft />
