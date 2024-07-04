@@ -133,7 +133,7 @@ export const AppLayout = (props: Props) => {
       },
       {
         title: t({ id: "menu.methods", message: "Methods" }),
-        sections: [glossarySection, ...methodsSections],
+        sections: [...methodsSections, glossarySection],
       },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({

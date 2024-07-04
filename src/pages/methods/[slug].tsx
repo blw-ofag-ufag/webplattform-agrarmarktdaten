@@ -12,17 +12,22 @@ import { renderMetaTags } from "react-datocms";
 import { isValidLocale } from "@/locales/locales";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
+  const { methodsPage, method, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
-  const alternates = methodsPage?._allSlugLocales?.map((loc) => ({
-    href: "/methods",
-    as: `/${loc.value}`,
-    locale: loc.locale as string,
-  }));
+
+  const alternates = methodsPage?._allSlugLocales?.map((loc) => {
+    const methodLocale = method?._allSlugLocales?.find((l) => l.locale === loc.locale);
+    return {
+      href: "/methods/[slug]",
+      as: `/${methodLocale?.value}/${loc.value}`,
+      locale: loc.locale as string,
+    };
+  });
+
   return (
     <>
       <Head>{renderMetaTags([...methodsPage.seo, ...site?.favicon])}</Head>

@@ -1,13 +1,12 @@
 import { StructuredText } from "@/components/StructuredText";
 import * as GQL from "@/graphql";
-import { t } from "@lingui/macro";
 import { makeStyles } from "@/components/style-utils";
 import { Typography } from "@mui/material";
 import flexibleStringReplace from "@rpearce/flexible-string-replace";
 import Anchor from "./Anchor";
 
 const GlossaryItem = (props: GQL.GlossaryItemFragment & { highlight?: string }) => {
-  const { id, title, description } = props;
+  const { id, title, description, freeStyleLabel } = props;
   const { classes } = useStyles();
 
   const regex = new RegExp(`${props.highlight}`, "gi");
@@ -22,9 +21,7 @@ const GlossaryItem = (props: GQL.GlossaryItemFragment & { highlight?: string }) 
 
   return (
     <div className={classes.root}>
-      <Typography variant="body3">
-        {props?.label?.title ?? t({ id: "glossaryItem.generic", message: "Generic" })}
-      </Typography>
+      <Typography variant="body3">{props?.label?.title ?? freeStyleLabel}</Typography>
       <div className={classes.content}>
         <Anchor id={id}>
           <Typography variant="h4">{matchedTitle}</Typography>
