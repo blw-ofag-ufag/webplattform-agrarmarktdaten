@@ -69,12 +69,23 @@ msgstr ""
 #~ msgstr "Kontakt"
 
 #. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "menu.overview"
+#~ msgstr "Übersicht"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#~ msgid "footer.legal"
+#~ msgstr "Auftrag und rechtliche Grundlage"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.total"
 msgstr "({0} von {1})"
 
 #. js-lingui-explicit-id
 #: src/pages/data.tsx
+#: src/pages/methods/glossary.tsx
 msgid "data.filters.results"
 msgstr "{resultCount, plural, one {Ergebnis} other {Ergebnisse}}"
 
@@ -90,7 +101,7 @@ msgstr "{filteredChangedCount, plural, one {angewandter Filter} other {angewandt
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
-#: src/components/Footer/Footer.tsx
+#: src/components/layout.tsx
 msgid "footer.about_us.label"
 msgstr "Über uns"
 
@@ -158,6 +169,11 @@ msgid "header.longTitle"
 msgstr "Bundesamt für Landwirtschaft BLW"
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.one"
+msgstr "Überprüfen Sie die Schreibweise Ihres Suchbegriffes"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.aria.clear"
 msgstr "Alles abwählen"
@@ -203,6 +219,11 @@ msgstr "Alles abwählen"
 #: src/components/browser/DataDownload.tsx
 msgid "data.download.title"
 msgstr "Daten herunterladen"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.subtitle"
+msgstr "Fehler 404"
 
 #. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
@@ -265,12 +286,16 @@ msgid "cta.back"
 msgstr "Zurück"
 
 #. js-lingui-explicit-id
+#: src/components/GlossaryItem/GlossaryItem.tsx
+msgid "glossaryItem.generic"
+msgstr "Allgemein"
+
+#. js-lingui-explicit-id
 #: src/pages/data.tsx
 msgid "data.actions.hideFilter"
 msgstr "Filter ausblenden"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
 #: src/components/layout.tsx
 msgid "menu.info"
 msgstr "Über dieses Portal"
@@ -320,7 +345,7 @@ msgstr "Märkte"
 #. js-lingui-explicit-id
 #: src/domain/filters.ts
 msgid "data.filters.measure"
-msgstr "Indikator"
+msgstr "Kennzahl"
 
 #. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
@@ -358,6 +383,11 @@ msgid "data.table.empty"
 msgstr "Keine Ergebnisse"
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.message"
+msgstr "Die Suche nach «{searchString}» ergab keine Treffer auf der Glossarseite"
+
+#. js-lingui-explicit-id
 #: src/components/browser/MetadataPanel.tsx
 msgid "data.metadata.nodata"
 msgstr "No metadata available"
@@ -373,9 +403,12 @@ msgid "data.filters.none"
 msgstr "Keiner"
 
 #. js-lingui-explicit-id
-#: src/components/layout.tsx
-msgid "menu.overview"
-msgstr "Übersicht"
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.title"
+msgstr "Seite nicht gefunden"
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.header"
+msgstr "Hinweis"
 
 #. js-lingui-explicit-id
 #: src/components/ErrorAlert.tsx
@@ -394,11 +427,6 @@ msgid "blogpost.publishedDate"
 msgstr "Veröffentlicht am"
 
 #. js-lingui-explicit-id
-#: src/components/Footer/Footer.tsx
-msgid "footer.legal"
-msgstr "Auftrag und rechtliche Grundlage"
-
-#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.control.reset"
 msgstr "Zurücksetzen"
@@ -409,6 +437,21 @@ msgid "cta.reset-filters"
 msgstr "Alles Abwählen"
 
 #. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.reset"
+msgstr "Filter zurücksetzen"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.link"
+msgstr "Zurück zur Startseite"
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.link"
+msgstr "Zurück zur Startseite"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
 msgid "filters.select.search"
 msgstr "Suche"
@@ -417,6 +460,16 @@ msgstr "Suche"
 #: src/components/BlogpostGrid/internal/Search.tsx
 msgid "search.placeholder"
 msgstr "Suche nach Analysen"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.glossary.placeholder"
+msgstr "Suche im Glossar"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips"
+msgstr "Tipps zur Suche"
 
 #. js-lingui-explicit-id
 #: src/components/browser/filters/SelectFilter.tsx
@@ -459,6 +512,11 @@ msgid "social.share"
 msgstr "Teilen"
 
 #. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.title"
+msgstr "Vorübergehend nicht verfügbar"
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.terms"
 msgstr "Nutzungsbedingungen"
@@ -469,9 +527,19 @@ msgid "data.mobile.message"
 msgstr "Das Datenportal Agrar- und Lebensmittelmärkte <0>ist noch nicht vollständig für kleinere Bildschirme optimiert</0>. Bitte verwenden Sie einen Desktop-Computer oder ändern Sie die Grösse Ihres Browser-Fensters, um eine optimale Darstellung zu gewährleisten."
 
 #. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.message"
+msgstr "Die von Ihnen gewünschte Seite oder Funktion steht im Moment leider nicht zur Verfügung. Bitte versuchen Sie es später nochmals."
+
+#. js-lingui-explicit-id
 #: src/components/Footer/Footer.tsx
 msgid "footer.id"
 msgstr "Das Bundesamt für Landwirtschaft BLW ist das nationale Kompetenzzentrum für die Schweizer Agrarpolitik. Zu den Aufgaben des BLW gehört auch, eine unabhängige Marktbeobachtungsstelle zu führen (Artikel 27 Landwirtschaftsgesetz LwG). Diese erhebt und publiziert Marktindikatoren wie Preise und Mengen entlang der gesamten Wertschöpfungskette der wichtigsten Agrar- und Lebensmittelmärkte der Schweiz. Ziel ist es, die Markttransparenz zu erhöhen und langfristige Entwicklungen aufzuzeigen."
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.message"
+msgstr "Die Suche ist momentan auf die Glossarseite von"
 
 #. js-lingui-explicit-id
 #: src/components/BlogpostGrid/BlogpostGrid.tsx
@@ -494,6 +562,21 @@ msgid "homepage.section.data.content"
 msgstr "Unter <0>Daten herunterladen</0> können verschiedene Daten ausgewählt und heruntergeladen werden, insbesondere Preisreihen, in einigen Fällen auch Mengen- und Flächendaten."
 
 #. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.two"
+msgstr "Verwenden Sie einen anderen bzw. allgemeineren Begriff"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.three"
+msgstr "Verwenden Sie ggf. weniger Suchbegriffe"
+
+#. js-lingui-explicit-id
 #: src/components/browser/filters/TimeFilter.tsx
 msgid "data.filters.year"
 msgstr "Jahr"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.message"
+msgstr "Die aufgerufene Seite wurde nicht gefunden. Möglicherweise haben Sie eine falsche Adresse (URL) eingegeben, die Seite oder das Dokument existiert nicht mehr oder der Name wurde geändert."

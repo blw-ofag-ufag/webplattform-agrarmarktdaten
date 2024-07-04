@@ -1,0 +1,7 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "dependencyDashboardApproval": true,
+  "prHourlyLimit": 0,
+  "postUpdateOptions": ["yarnDedupeFewer"],
+  "extends": ["config:recommended"]
+}

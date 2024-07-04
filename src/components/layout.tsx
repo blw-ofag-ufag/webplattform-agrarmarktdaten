@@ -59,6 +59,7 @@ interface Props {
   allMarkets?: GQL.SimpleMarketArticleFragment[];
   allFocusArticles?: GQL.SimpleFocusArticleFragment[];
   allMethodsPages?: GQL.SimpleMethodsPageFragment[];
+  glossaryPage?: GQL.SimpleGlossaryPageFragment | null;
   alternates?: { href: string; as: string; locale: string }[];
   showBackButton?: boolean;
   showShareButton?: boolean;
@@ -76,6 +77,7 @@ export const AppLayout = (props: Props) => {
     allMarkets,
     allFocusArticles,
     allMethodsPages,
+    glossaryPage,
     alternates,
     showBackButton = false,
     showShareButton = false,
@@ -107,6 +109,10 @@ export const AppLayout = (props: Props) => {
           href: `/${localeSlugs?.methods}/${methodsPage.slug}`,
         }))
         .sort((a, b) => a.title.localeCompare(b.title)) ?? [];
+    const glossarySection = {
+      title: glossaryPage?.title!,
+      href: `/${localeSlugs?.methods}/${glossaryPage?.slug}`,
+    };
     const menuSections: (MenuProps["sections"][number] & { desktop?: false })[] = [
       { title: t({ id: "menu.home", message: "Startseite" }), href: "/" },
       {
@@ -127,7 +133,7 @@ export const AppLayout = (props: Props) => {
       },
       {
         title: t({ id: "menu.methods", message: "Methods" }),
-        sections: methodsSections,
+        sections: [...methodsSections, glossarySection],
       },
     ];
     const headerSections: HeaderProps["sections"] = menuSections.map((d) => ({
@@ -154,7 +160,7 @@ export const AppLayout = (props: Props) => {
       headerSections: [...headerSections, ...highlightedSections],
       menuSections,
     };
-  }, [allMarkets, allFocusArticles, allMethodsPages, localeSlugs]);
+  }, [allMarkets, allFocusArticles, allMethodsPages, glossaryPage, localeSlugs]);
 
   const dynamicLocaleSwitcherProps: LocaleSwitcherProps = alternates
     ? {

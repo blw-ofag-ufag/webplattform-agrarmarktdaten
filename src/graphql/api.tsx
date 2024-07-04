@@ -40,6 +40,7 @@ const defaultExchanges = [
       TermsPageModelLeadField: () => null,
       TermsPageModelLeadFieldMultiLocaleField: () => null,
       ResponsiveImage: () => null,
+      GlossaryItemModelDescriptionField: () => null,
     },
     resolvers: {
       BlogPostRecord: {
@@ -58,7 +59,7 @@ export const client = createClient({
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${DATOCMS_API_TOKEN}`,
-      // "X-Environment": "methods-pages",
+      // "X-Environment": "glossary",
       ...(DATO_CMS_INCLUDE_DRAFTS === "true" && { "X-Include-Drafts": "true" }),
     },
   },

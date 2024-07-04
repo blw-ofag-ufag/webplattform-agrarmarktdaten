@@ -9,7 +9,8 @@ import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 
 export default function LegalPage(props: GQL.LegalPageQuery) {
-  const { legalPage, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
+  const { legalPage, allMarketArticles, allFocusArticles, allMethodsPages, glossaryPage, site } =
+    props;
   const { classes } = useLayoutStyles();
   if (!legalPage?.title || !legalPage.lead) {
     return null;
@@ -27,6 +28,7 @@ export default function LegalPage(props: GQL.LegalPageQuery) {
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
         allMethodsPages={allMethodsPages}
+        glossaryPage={glossaryPage}
         showBackButton
       >
         <Hero title={legalPage.title} lead={legalPage.lead} showTitleLine={false} shiftedLeft />

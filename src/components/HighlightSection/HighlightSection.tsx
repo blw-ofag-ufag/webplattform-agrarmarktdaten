@@ -56,7 +56,7 @@ const HighlightSection = (
               <Typography
                 key={key}
                 variant="body1"
-                component="p"
+                component="div"
                 className={structuredTextClasses.p}
               >
                 {children}

@@ -1,9 +1,8 @@
 import * as GQL from "@/graphql";
 import { client } from "@/graphql/api";
 import { GetStaticPaths } from "next";
-import { AppLayout, LayoutSections } from "@/components/layout";
+import { AppLayout } from "@/components/layout";
 import { Hero } from "@/components/hero";
-import { TopBlogpostsTeaser } from "@/components/TopBlogpostsTeaser";
 import { StructuredText } from "@/components/StructuredText";
 import { GridContainer } from "@/components/Grid";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -13,18 +12,22 @@ import { renderMetaTags } from "react-datocms";
 import { isValidLocale } from "@/locales/locales";
 
 export default function MethodsPage(props: GQL.MethodsPageQuery) {
-  const { methodsPage, allMarketArticles, allFocusArticles, topBlogPosts, allMethodsPages, site } =
-    props;
+  const { methodsPage, method, allMarketArticles, allFocusArticles, allMethodsPages, site } = props;
   const stickyRef = useTableOfContentsSticky();
   const { classes } = useLayoutStyles();
   if (!methodsPage?.title || !methodsPage.lead) {
     return null;
   }
-  const alternates = methodsPage?._allSlugLocales?.map((loc) => ({
-    href: "/methods",
-    as: `/${loc.value}`,
-    locale: loc.locale as string,
-  }));
+
+  const alternates = methodsPage?._allSlugLocales?.map((loc) => {
+    const methodLocale = method?._allSlugLocales?.find((l) => l.locale === loc.locale);
+    return {
+      href: "/methods/[slug]",
+      as: `/${methodLocale?.value}/${loc.value}`,
+      locale: loc.locale as string,
+    };
+  });
+
   return (
     <>
       <Head>{renderMetaTags([...methodsPage.seo, ...site?.favicon])}</Head>
@@ -35,7 +38,7 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
         allMethodsPages={allMethodsPages}
         showBackButton
       >
-        <Hero title={methodsPage.title} lead={methodsPage.lead} bgColor="#DFE4E9" shiftedLeft />
+        <Hero title={methodsPage.title} lead={methodsPage.lead} shiftedLeft />
         <GridContainer sx={{ mt: 4, position: "relative" }}>
           <div ref={stickyRef} className={classes.aside}>
             {methodsPage.content && (
@@ -49,16 +52,12 @@ export default function MethodsPage(props: GQL.MethodsPageQuery) {
             {methodsPage.content && <StructuredText data={methodsPage.content} />}
           </div>
         </GridContainer>
-        <LayoutSections>
-          <TopBlogpostsTeaser blogposts={topBlogPosts} />
-        </LayoutSections>
       </AppLayout>
     </>
   );
 }
 
 export const getStaticProps = async (context: $FixMe) => {
-  console.log("yo!");
   const result = await client
     .query<GQL.MethodsPageQuery>(
       GQL.MethodsPageDocument,

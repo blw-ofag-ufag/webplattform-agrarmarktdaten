@@ -1,9 +1,9 @@
 import { client } from "@/graphql/api";
 import * as GQL from "@/graphql";
-import { ErrorPage } from "@/components/ErrorPage";
+import { ServerSideError } from "@/components/ServerSideError";
 
 export default function Custom500(props: GQL.ErrorPageQuery) {
-  return <ErrorPage {...props} />;
+  return <ServerSideError {...props} />;
 }
 
 export const getStaticProps = async (context: $FixMe) => {

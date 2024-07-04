@@ -30,6 +30,7 @@ export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlo
     allFocusArticles,
     topBlogPosts,
     allMethodsPages,
+    glossaryPage,
     site,
     topMarketBlogPosts,
   } = props;
@@ -61,6 +62,7 @@ export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlo
         allMarkets={allMarketArticles}
         allFocusArticles={allFocusArticles}
         allMethodsPages={allMethodsPages}
+        glossaryPage={glossaryPage}
         backButtonColor={color}
         showBackButton
       >
@@ -70,6 +72,7 @@ export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlo
           bgColor={marketColor}
           color={color}
           shiftedLeft
+          variant="market"
         />
         <GridContainer sx={{ mt: 4, position: "relative" }}>
           <div className={classes.aside} ref={stickyRef}>
