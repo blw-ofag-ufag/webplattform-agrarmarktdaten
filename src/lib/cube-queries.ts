@@ -343,20 +343,18 @@ export const queryObservations = ({
         ? `
       ?fromInterval
         schema:inDefinedTermSet <${timeFilterModeToTermset[timeFilter.mode]}> ;
-        time:year "${timeFilter.minDate.year}"^^schema:Integer ; ${
+        time:year "${timeFilter.minDate.year}"^^xsd:integer ; ${
           timeFilter.mode === "Month"
-            ? `time:month "${timeFilter.minDate.month}"^^schema:Integer ;`
+            ? `time:month "${timeFilter.minDate.month}"^^xsd:integer ;`
             : ""
         }
         time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
 
     ?toInterval
       schema:inDefinedTermSet <${timeFilterModeToTermset[timeFilter.mode]}> ;
-      time:year "${timeFilter.maxDate.year}"^^schema:Integer ;
+      time:year "${timeFilter.maxDate.year}"^^xsd:integer ;
       ${
-        timeFilter.mode === "Month"
-          ? `time:month "${timeFilter.maxDate.month}"^^schema:Integer ;`
-          : ""
+        timeFilter.mode === "Month" ? `time:month "${timeFilter.maxDate.month}"^^xsd:integer ;` : ""
       }
       time:hasEnd/time:inXSDDateTimeStamp ?toPeriod .
 
