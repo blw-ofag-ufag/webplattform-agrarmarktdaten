@@ -334,8 +334,12 @@ export const queryObservations = ({
       ?observation <${measure.iri}> ?measure .
     }
 
-    ?date time:year ?year.
-    OPTIONAL { ?date time:month ?month. }
+    ?date time:year ?year .
+    FILTER(datatype(?year) = xsd:integer)
+    OPTIONAL {
+      ?date time:month ?month .
+      FILTER(datatype(?month) = xsd:integer)
+    }
 
 
     ${
