@@ -111,12 +111,12 @@ describe("cube queries", () => {
           
             ?fromInterval
               schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
-              time:year "2020"^^schema:Integer ; 
+              time:year "2020"^^xsd:integer ; 
               time:hasBeginning/time:inXSDDateTimeStamp ?fromPeriod .
 
           ?toInterval
             schema:inDefinedTermSet <https://ld.admin.ch/time/year> ;
-            time:year "2023"^^schema:Integer ;
+            time:year "2023"^^xsd:integer ;
             
             time:hasEnd/time:inXSDDateTimeStamp ?toPeriod .
 
