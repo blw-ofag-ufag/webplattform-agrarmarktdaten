@@ -87,7 +87,7 @@ export const sidePanelFiltersOrder: (
   { key: "market", type: "cube" }, // Market
   { key: "measure", type: "cube" }, // Indicator
   { key: "product", type: "dimension" }, // Produkt
-  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe Detail
+  { key: "value-chain", type: "cube" }, // Wertschöpfungsstufe Detail
   { key: "time", type: "time" }, // Datum
   { key: "production-system", type: "dimension" }, // Produktionssystem
 
@@ -96,7 +96,7 @@ export const sidePanelFiltersOrder: (
   { key: "currency", type: "dimension" }, // Währung
   { key: "cost-component", type: "dimension" }, // Kostenkomponente
   { key: "sales-region", type: "dimension" }, // Verkaufsregion
-  { key: "value-chain", type: "cube" }, // Wertschöpfungsstufe
+  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe
   { key: "foreign-trade", type: "dimension" }, // Aussenhandel
   // { key: "market", type: "dimension" },
   { key: "product-origin", type: "dimension" }, // Produktherkunft
