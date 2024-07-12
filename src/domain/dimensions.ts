@@ -3,7 +3,7 @@ import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { DimensionType } from "@/pages/api/data";
 
 /* Data Dimensions */
-export const MEASURES = ["price", "quantity", "index", "contribution"] as const;
+export const MEASURES = ["price", "quantity", "index", "contribution", "percentage"] as const;
 
 export const DIMENSIONS = [
   "cost-component",
@@ -46,6 +46,7 @@ export const tableDimensionsOrder = Object.fromEntries(
     "quantity",
     "index",
     "contribution",
+    "percentage",
 
     "unit",
     "currency",
@@ -139,6 +140,11 @@ export const dataDimensions: {
     type: "measure",
     id: "contribution",
     iri: amdpMeasure("contribution").value,
+  },
+  percentage: {
+    type: "measure",
+    id: "percentage",
+    iri: amdpMeasure("percentage").value,
   },
   ["cost-component"]: {
     type: "property",

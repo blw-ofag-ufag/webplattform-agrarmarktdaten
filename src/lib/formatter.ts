@@ -55,12 +55,12 @@ export const tableFormatter = ({
       thousands: " ",
     } as FormatLocaleDefinition);
 
-    return (value?: string | number) =>
-      !isNumber(value)
-        ? value
-        : dim.dimension === "quantity"
-        ? formatter.format(",.2r")(value)
-        : formatter.format(`.2f`)(value);
+    return (value?: string | number) => {
+      if (!isNumber(value)) return value;
+      const format =
+        dim.dimension === "quantity" ? ".2r" : dim.dimension === "percentage" ? ".2%" : ".2f";
+      return formatter.format(format)(value);
+    };
   }
 
   if (dim && dim.type === "property") {

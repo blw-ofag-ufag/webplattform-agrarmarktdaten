@@ -287,15 +287,16 @@ export const dimensionsSelectionAtom = atom((get) => {
     optionsAtom: productOptionsWithHierarchyAtom,
     hierarchyLevels: productHierarchyLevels,
   });
-  const valueChainFilterAtom = createFilterDimensionAtomWithHierarchy({
+  const valueChainDetailFilterAtom = createFilterDimensionAtomWithHierarchy({
     dataKey: "value-chain-detail",
     hierarchyStatusAtom: valueChainHierarchyStatusAtom,
     optionsAtom: valueChainOptionsWithHierarchyAtom,
     hierarchyLevels: valueChainHierarchyLevels,
   });
   const { hierarchyQuery: productHierarchyQuery, filter: productFilter } = get(productFilterAtom);
-  const { hierarchyQuery: valueChainHierarchyQuery, filter: valueChainFilter } =
-    get(valueChainFilterAtom);
+  const { hierarchyQuery: valueChainDetailHierarchyQuery, filter: valueChainDetailFilter } = get(
+    valueChainDetailFilterAtom
+  );
 
   const dimensionAtoms = {
     "cost-component": createFilterDimensionAtom({
@@ -350,12 +351,12 @@ export const dimensionsSelectionAtom = atom((get) => {
     defaultRange: [defaultTimeRange.min, defaultTimeRange.max],
   });
 
-  const queries = [cubeDimensionsQuery, productHierarchyQuery, valueChainHierarchyQuery];
+  const queries = [cubeDimensionsQuery, productHierarchyQuery, valueChainDetailHierarchyQuery];
 
   return {
     dimensions: {
       product: productFilter,
-      "value-chain-detail": valueChainFilter,
+      "value-chain-detail": valueChainDetailFilter,
       ...mapValues(dimensionAtoms, (a) => get(a)),
     },
     time: {
