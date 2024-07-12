@@ -3,7 +3,7 @@ import { amdpDimension, amdpMeasure } from "@/lib/namespace";
 import { DimensionType } from "@/pages/api/data";
 
 /* Data Dimensions */
-export const MEASURES = ["price", "quantity", "index", "contribution"] as const;
+export const MEASURES = ["price", "quantity", "index", "contribution", "percentage"] as const;
 
 export const DIMENSIONS = [
   "cost-component",
@@ -46,6 +46,7 @@ export const tableDimensionsOrder = Object.fromEntries(
     "quantity",
     "index",
     "contribution",
+    "percentage",
 
     "unit",
     "currency",
@@ -86,7 +87,7 @@ export const sidePanelFiltersOrder: (
   { key: "market", type: "cube" }, // Market
   { key: "measure", type: "cube" }, // Indicator
   { key: "product", type: "dimension" }, // Produkt
-  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe Detail
+  { key: "value-chain", type: "cube" }, // Wertschöpfungsstufe Detail
   { key: "time", type: "time" }, // Datum
   { key: "production-system", type: "dimension" }, // Produktionssystem
 
@@ -95,7 +96,7 @@ export const sidePanelFiltersOrder: (
   { key: "currency", type: "dimension" }, // Währung
   { key: "cost-component", type: "dimension" }, // Kostenkomponente
   { key: "sales-region", type: "dimension" }, // Verkaufsregion
-  { key: "value-chain", type: "cube" }, // Wertschöpfungsstufe
+  { key: "value-chain-detail", type: "dimension" }, // Wertschöpfungsstufe
   { key: "foreign-trade", type: "dimension" }, // Aussenhandel
   // { key: "market", type: "dimension" },
   { key: "product-origin", type: "dimension" }, // Produktherkunft
@@ -139,6 +140,11 @@ export const dataDimensions: {
     type: "measure",
     id: "contribution",
     iri: amdpMeasure("contribution").value,
+  },
+  percentage: {
+    type: "measure",
+    id: "percentage",
+    iri: amdpMeasure("percentage").value,
   },
   ["cost-component"]: {
     type: "property",
