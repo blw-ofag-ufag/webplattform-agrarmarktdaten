@@ -385,6 +385,7 @@ query paginatedGlossaryItems(
     locale: $locale
     first: $first
     skip: $skip
+    orderBy: [title_ASC]
     filter: {
       OR: [
         { description: { matches: { pattern: $matches, caseSensitive: false } } }
