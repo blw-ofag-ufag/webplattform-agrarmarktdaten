@@ -8675,6 +8675,7 @@ export const PaginatedGlossaryItemsDocument = gql`
     locale: $locale
     first: $first
     skip: $skip
+    orderBy: [title_ASC]
     filter: {OR: [{description: {matches: {pattern: $matches, caseSensitive: false}}}, {title: {matches: {pattern: $matches, caseSensitive: false}}}]}
   ) {
     ...GlossaryItem
