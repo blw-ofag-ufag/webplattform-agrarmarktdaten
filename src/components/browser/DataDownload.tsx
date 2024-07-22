@@ -178,7 +178,7 @@ const DownloadMenuItem = ({
     const sorted = sortBy(entries, (x) => tableDimensionsOrder[x.dimension] ?? 1000);
 
     worksheet.columns = sorted.map(({ label, dimension }) => ({
-      header: label,
+      header: dimension === "percentage" ? `${label} (%)` : label,
       key: dimension,
     }));
 
@@ -200,7 +200,7 @@ const DownloadMenuItem = ({
       return mapToObj(Object.entries(observation), ([key, value]) => {
         const dim = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
         if (dim && value) {
-          return [dim.dimension, formatters[key](value)];
+          return [dim.dimension, formatters[key](value, { includePercent: false })];
         } else {
           return [key, value];
         }

@@ -31,7 +31,10 @@ export const tableFormatter = ({
   cubeDimensions: Record<string, Property | Measure>;
   timeView?: TimeView;
   locale?: Locale;
-}): ((value?: string | number) => string | number | undefined) => {
+}): ((
+  value?: string | number,
+  options?: { includePercent: boolean }
+) => string | number | undefined) => {
   const dim = cubeDimensions[dimension];
   if (dim && dim.dimension === "date") {
     if (timeView === "Year") {
@@ -55,18 +58,18 @@ export const tableFormatter = ({
       thousands: " ",
     } as FormatLocaleDefinition);
 
-    return (value?: string | number) => {
+    return (value, options) => {
+      const { includePercent = dim.dimension === "percentage" } = options ?? {};
       if (!isNumber(value)) return value;
-      const format =
-        dim.dimension === "quantity" ? ".2r" : dim.dimension === "percentage" ? ".2%" : ".2f";
-      return formatter.format(format)(value);
+      const format = dim.dimension === "quantity" ? ".2r" : ".2f";
+      const formattedValue = formatter.format(format)(value);
+      return includePercent ? `${formattedValue}%` : formattedValue;
     };
   }
 
   if (dim && dim.type === "property") {
     const byValue = keyBy(dim.values, (x) => x.value);
-    return (value?: string | number) =>
-      value !== undefined ? byValue[value]?.label ?? value : value;
+    return (value) => (value !== undefined ? byValue[value]?.label ?? value : value);
   }
 
   return (v) => v;
