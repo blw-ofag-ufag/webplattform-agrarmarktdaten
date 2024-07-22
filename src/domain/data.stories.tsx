@@ -1,4 +1,4 @@
-import { amdpDimension, amdpMeasure } from "@/lib/namespace";
+import { amdpDimension } from "@/lib/namespace";
 import { Locale, locales } from "@/locales/locales";
 import { CubeSpec, fetchCubeDimensions, fetchHierarchy, fetchObservations } from "@/pages/api/data";
 import {
@@ -86,18 +86,12 @@ export const Observations = () => {
   const cubes = useAtomValue(cubesAtom);
   const [showParsed, setShowParsed] = useState(false);
 
-  const cubeDef = cubes.find((c) => c.cube === cube);
-
   const observations = useQuery({
     queryKey: ["observations", cube],
     queryFn: () =>
       fetchObservations({
         cubeIri: cube,
         filters: {},
-        measure: {
-          iri: amdpMeasure(cubeDef?.measure).value,
-          key: cubeDef?.measure ?? "measure",
-        },
         timeFilter: {
           mode: "Year",
           minDate: { year: "2000" },

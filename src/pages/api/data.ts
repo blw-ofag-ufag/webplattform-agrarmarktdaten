@@ -1,5 +1,5 @@
 import { EnvironmentUrl } from "@/domain/cubes";
-import { DIMENSIONS, Dimension, dataDimensions } from "@/domain/dimensions";
+import { DIMENSIONS, Dimension, MEASURES, dataDimensions } from "@/domain/dimensions";
 import {
   TimeFilter,
   queryBaseMeasureDimensions,
@@ -312,7 +312,6 @@ export const fetchCubeDimensions = async (
 const observationSchema = z
   .object({
     observation: z.string().transform((v) => ns.removeNamespace(v, amdp)),
-    measure: z.string().transform((v) => +v),
     year: z.string().transform((v) => +v),
     month: z
       .string()
@@ -323,6 +322,17 @@ const observationSchema = z
         return [toCamelCase(d), z.string().transform((v) => ns.removeNamespace(v, amdp))];
       })
     ) as Record<Dimension, z.ZodEffects<z.ZodString, string, string>>),
+    ...Object.fromEntries(
+      MEASURES.map((d) => {
+        return [
+          toCamelCase(d),
+          z
+            .string()
+            .optional()
+            .transform((v) => (v ? +v : undefined)),
+        ];
+      })
+    ),
   })
   .transform((v) => ({
     ...v,
@@ -335,13 +345,11 @@ export type Observation = z.infer<typeof observationSchema>;
 export const fetchObservations = async ({
   cubeIri,
   filters = {},
-  measure,
   timeFilter,
   environment,
 }: {
   cubeIri: string;
   filters: Record<string, string[]>;
-  measure: { iri: string; key: string };
   timeFilter: TimeFilter;
   environment: EnvironmentUrl;
 }) => {
@@ -355,7 +363,6 @@ export const fetchObservations = async ({
       toCamelCase(key),
       value.map((v) => ns.addNamespace(v)),
     ]),
-    measure,
     dimensions: DIMENSIONS.map((v) => ({
       iri: dataDimensions[v].iri,
       key: toCamelCase(v),

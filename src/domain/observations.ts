@@ -1,5 +1,5 @@
 import { TimeFilter, queryObservations } from "@/lib/cube-queries";
-import { addNamespace, amdpMeasure } from "@/lib/namespace";
+import { addNamespace } from "@/lib/namespace";
 import { Observation, fetchObservations, getSparqlEditorUrl } from "@/pages/api/data";
 import { toCamelCase } from "@/utils/stringCase";
 
@@ -55,10 +55,6 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
       }
       return fetchObservations({
         cubeIri: cubeDefinition?.cube,
-        measure: {
-          iri: amdpMeasure(cubeDefinition?.measure).value,
-          key: cubeDefinition?.measure,
-        },
         // Filters are done client-side
         filters: {},
         environment: lindas.url,
@@ -196,10 +192,6 @@ export const observationsSparqlQueryAtom = atom((get) => {
       toCamelCase(key),
       value.map((v) => addNamespace(v)),
     ]),
-    measure: {
-      iri: amdpMeasure(cubeDefinition.measure).value,
-      key: cubeDefinition.measure,
-    },
     dimensions: DIMENSIONS.map((v) => ({
       iri: dataDimensions[v].iri,
       key: toCamelCase(v),
