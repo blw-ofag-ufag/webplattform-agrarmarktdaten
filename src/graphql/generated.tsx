@@ -7264,7 +7264,7 @@ export type AllBlogPostsSlugLocalesQuery = { __typename: 'Query', allBlogPosts: 
 export type AllRedirectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllRedirectsQuery = { __typename: 'Query', glossaryPage?: { __typename: 'GlossaryPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, method?: { __typename: 'MethodRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, termsPage?: { __typename: 'TermsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, aboutUsPage?: { __typename: 'AboutUsPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, legalPage?: { __typename: 'LegalPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, infoPage?: { __typename: 'InfoPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, dataPage?: { __typename: 'DataPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, analysisPage?: { __typename: 'AnalysisPageRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, focusModel?: { __typename: 'FocusModelRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, market?: { __typename: 'MarketRecord', _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null };
+export type AllRedirectsQuery = { __typename: 'Query', glossaryPage?: { __typename: 'GlossaryPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, method?: { __typename: 'MethodRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, termsPage?: { __typename: 'TermsPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, aboutUsPage?: { __typename: 'AboutUsPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, legalPage?: { __typename: 'LegalPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, infoPage?: { __typename: 'InfoPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, dataPage?: { __typename: 'DataPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, analysisPage?: { __typename: 'AnalysisPageRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, focusModel?: { __typename: 'FocusModelRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null, market?: { __typename: 'MarketRecord', id: any, _allSlugLocales?: Array<{ __typename: 'StringMultiLocaleField', locale?: SiteLocale | null, value?: string | null }> | null } | null };
 
 export type CookieBannerQueryVariables = Exact<{
   locale: SiteLocale;
@@ -8971,60 +8971,70 @@ export function useAllBlogPostsSlugLocalesQuery(options?: Omit<Urql.UseQueryArgs
 export const AllRedirectsDocument = gql`
     query AllRedirects {
   glossaryPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   method {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   termsPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   aboutUsPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   legalPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   infoPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   dataPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   analysisPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   focusModel {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   market {
+    id
     _allSlugLocales {
       locale
       value

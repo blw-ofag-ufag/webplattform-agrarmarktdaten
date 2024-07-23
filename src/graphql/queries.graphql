@@ -510,60 +510,70 @@ query AllBlogPostsSlugLocales {
 
 query AllRedirects {
   glossaryPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   method {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   termsPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   aboutUsPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   legalPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   infoPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   dataPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   analysisPage {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   focusModel {
+    id
     _allSlugLocales {
       locale
       value
     }
   }
   market {
+    id
     _allSlugLocales {
       locale
       value
