@@ -1029,6 +1029,7 @@ fragment InternalLink on RecordInterface {
   }
   ... on MethodsPageRecord {
     id
+    slug
   }
   ... on TermsPageRecord {
     id

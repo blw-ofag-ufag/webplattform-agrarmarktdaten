@@ -410,7 +410,7 @@ const getUrl = (record: InternalLink, router: NextRouter) => {
       return `/${localeSlugs?.terms}`;
     }
     case "MethodsPageRecord": {
-      return `/${localeSlugs?.methods}`;
+      return `/${localeSlugs?.methods}/${record.slug}`;
     }
     case "MarketArticleRecord": {
       return `/${localeSlugs?.market}/${record.slug}`;
