@@ -50,10 +50,6 @@ describe("cube queries", () => {
         key: toCamelCase(v),
       })),
       filters,
-      measure: {
-        iri: "https://agriculture.ld.admin.ch/foag/measure/price",
-        key: "value",
-      },
       timeFilter: {
         mode: "Year",
         minDate: {
@@ -73,7 +69,7 @@ describe("cube queries", () => {
         PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
         
         SELECT ?observation
-          ?costComponent ?currency ?dataMethod ?dataSource ?foreignTrade ?keyIndicatorType ?market ?productGroup ?productSubgroup ?product ?productProperties ?productionSystem ?productOrigin ?salesRegion ?unit ?usage ?valueChainDetail ?valueChain ?measure
+          ?costComponent ?currency ?dataMethod ?dataSource ?foreignTrade ?keyIndicatorType ?market ?productGroup ?productSubgroup ?product ?productProperties ?productionSystem ?productOrigin ?salesRegion ?unit ?usage ?valueChainDetail ?valueChain ?value
           ?year ?month
         WHERE {
           GRAPH <https://lindas.admin.ch/foag/agricultural-market-data> {
@@ -101,7 +97,7 @@ describe("cube queries", () => {
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/usage> ?usage .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/value-chain-detail> ?valueChainDetail .
               ?observation <https://agriculture.ld.admin.ch/foag/dimension/value-chain> ?valueChain .
-            ?observation <https://agriculture.ld.admin.ch/foag/measure/price> ?measure .
+            ?observation <https://agriculture.ld.admin.ch/foag/measure/price> ?value .
           }
 
           ?date time:year ?year.
@@ -166,10 +162,6 @@ describe("cube queries", () => {
         key: toCamelCase(v),
       })),
       filters: {},
-      measure: {
-        iri: "https://agriculture.ld.admin.ch/foag/measure/price",
-        key: "value",
-      },
       timeFilter: {
         mode: "Year",
         minDate: null,
@@ -187,7 +179,7 @@ describe("cube queries", () => {
         ?foreignTradeLabel ?keyIndicatorTypeLabel ?marketLabel ?productGroupLabel ?productSubgroupLabel
         ?productLabel ?productPropertiesLabel ?productionSystemLabel ?productOriginLabel
         ?salesRegionLabel ?unitLabel ?usageLabel ?valueChainDetailLabel ?valueChainLabel
-        ?measure ?year ?month
+        ?value ?year ?month
       WHERE {
         GRAPH <https://lindas.admin.ch/foag/agricultural-market-data> {
           VALUES (?lang) { ("en") }
@@ -284,7 +276,7 @@ describe("cube queries", () => {
             ?valueChain schema:name ?valueChainLabel .
             FILTER langMatches(lang(?valueChainLabel), ?lang)
           }
-          ?observation <https://agriculture.ld.admin.ch/foag/measure/price> ?measure .
+          ?observation <https://agriculture.ld.admin.ch/foag/measure/price> ?value .
         }
         ?date time:year ?year .
         OPTIONAL {
@@ -306,10 +298,6 @@ test.skip("it should be fast", async () => {
       key: toCamelCase(v),
     })),
     filters: {},
-    measure: {
-      iri: "https://agriculture.ld.admin.ch/foag/measure/price",
-      key: "value",
-    },
     timeFilter: {
       mode: "Year",
       minDate: {

@@ -1,6 +1,7 @@
 import { Locale } from "@/locales/locales";
 import { amdpMeasure, amdpDimension } from "./namespace";
 import { isTruthy, mapKeys } from "remeda";
+import { MEASURES } from "@/domain/dimensions";
 
 const agDataBase = "https://lindas.admin.ch/foag/agricultural-market-data";
 
@@ -178,7 +179,6 @@ type QueryObservationsOptions = {
   cubeIri: string;
   filters?: Record<string, string[]>;
   dimensions: { iri: string; key: string }[];
-  measure: { iri: string; key: string };
   timeFilter: TimeFilter;
   /** If set, IRIs will be translated */
   lang?: "fr" | "de" | "en" | "it";
@@ -263,7 +263,6 @@ export const queryObservations = ({
   cubeIri,
   filters,
   dimensions,
-  measure,
   timeFilter,
   lang,
 }: QueryObservationsOptions) => {
@@ -294,7 +293,7 @@ export const queryObservations = ({
         }
       })
       .filter(isTruthy)
-      .join(" ")} ?measure
+      .join(" ")} ${MEASURES.map((m) => `?${m}`).join(" ")}
     ?year ?month
   WHERE {
     GRAPH <${agDataBase}> {
@@ -331,7 +330,9 @@ export const queryObservations = ({
           }`;
         })
         .join("\n")}
-      ?observation <${measure.iri}> ?measure .
+      ${MEASURES.map((m) => `OPTIONAL { ?observation <${amdpMeasure(m).value}> ?${m} . }`).join(
+        "\n"
+      )}
     }
 
     ?date time:year ?year .

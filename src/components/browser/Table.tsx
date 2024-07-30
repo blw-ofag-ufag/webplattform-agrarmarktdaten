@@ -163,7 +163,7 @@ export const Table = ({
         locale,
       });
       return {
-        field: isMeasure(dimension.dimension) ? "measure" : dimension.dimension,
+        field: dimension.dimension,
         headerName: dimension.label,
         headerAlign:
           isMeasure(dimension.dimension) || dimension.dimension === "date" ? "right" : "left",

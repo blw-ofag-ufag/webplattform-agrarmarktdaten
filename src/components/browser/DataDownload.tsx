@@ -178,18 +178,19 @@ const DownloadMenuItem = ({
     const sorted = sortBy(entries, (x) => tableDimensionsOrder[x.dimension] ?? 1000);
 
     worksheet.columns = sorted.map(({ label, dimension }) => ({
-      header: label,
-      key: isMeasure(dimension) ? "measure" : dimension,
+      header: dimension === "percentage" ? `${label} (%)` : label,
+      key: dimension,
     }));
 
     const formatters = mapToObj(Object.keys(dataset[0]), (key) => {
-      const dimension = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
+      const dims = isMeasure(key) ? dimensions.measures : dimensions.properties;
+      const dimension = dims[key];
       return [
         key,
         dimension?.dimension
           ? tableFormatter({
               dimension: dimension.dimension,
-              cubeDimensions: dimensions.properties,
+              cubeDimensions: dims,
               timeView,
             })
           : (x: string | number | undefined) => x,
@@ -197,12 +198,9 @@ const DownloadMenuItem = ({
     });
     const parsedRows = dataset.map((observation) => {
       return mapToObj(Object.entries(observation), ([key, value]) => {
-        const dimension = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
-        if (dimension && value) {
-          return [
-            isMeasure(key) ? "measure" : dimension.dimension,
-            isMeasure(key) ? value : formatters[key](value),
-          ];
+        const dim = isMeasure(key) ? dimensions.measures[key] : dimensions.properties[key];
+        if (dim && value) {
+          return [dim.dimension, formatters[key](value, { includePercent: false })];
         } else {
           return [key, value];
         }
