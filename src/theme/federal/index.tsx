@@ -4,7 +4,7 @@
 import { b, c } from "@interactivethings/swiss-federal-ci";
 import { Fade, Grow, autocompleteClasses, selectClasses } from "@mui/material";
 import { Theme, createTheme } from "@mui/material/styles";
-import { merge, omit } from "lodash";
+import { merge, omit } from "remeda";
 
 import { IcControlChevronDown } from "@/icons/icons-jsx/control";
 import SvgIcCheckboxActive from "@/theme/federal/icons/IcCheckboxActive";

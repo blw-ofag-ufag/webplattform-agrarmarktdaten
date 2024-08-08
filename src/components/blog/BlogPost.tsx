@@ -1,5 +1,5 @@
 import { Box, Chip, Link, Typography } from "@mui/material";
-import { head } from "lodash";
+import { first } from "remeda";
 import Image from "next/image";
 import NextLink from "next/link";
 import { StructuredText } from "@/components/StructuredText";
@@ -35,7 +35,7 @@ export const BlogPostsGrid = (props: Props) => {
 
 export const BlogPostTile = (props: GQL.SimpleBlogPostFragment) => {
   const { title, cardSummary, image, markets, slug, publishedDate } = props;
-  const mainMarket = head(markets);
+  const mainMarket = first(markets);
   const locale = useLocale();
 
   return (

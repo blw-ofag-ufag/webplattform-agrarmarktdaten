@@ -38,7 +38,7 @@ import { s } from "@interactivethings/swiss-federal-ci";
 import { Trans, plural, t } from "@lingui/macro";
 import { Circle } from "@mui/icons-material";
 import { DevTools } from "jotai-devtools";
-import { isUndefined } from "lodash";
+import { isDefined } from "remeda";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
 import DebugDataPage from "../components/DebugDataPage";
@@ -213,7 +213,7 @@ const DataBrowser = () => {
               {(observationsQueryStatus.isLoading || cubeDimensions.isLoading) && (
                 <Trans id="data.filters.loading">Loading </Trans>
               )}
-              {!isUndefined(resultCount) && (
+              {isDefined.strict(resultCount) && (
                 <>
                   {`${resultCount} ${t({
                     id: "data.filters.results",

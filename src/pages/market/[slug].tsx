@@ -14,7 +14,7 @@ import { isValidLocale } from "@/locales/locales";
 import slugs from "@/generated/slugs.json";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
-import _ from "lodash";
+import _ from "remeda";
 
 function selectTopBlogposts(
   marketBlogPosts: GQL.BlogPostRecord[],

@@ -7,7 +7,7 @@ import { tableFormatter } from "@/lib/formatter";
 import dayjs from "dayjs";
 import { atom } from "jotai";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { isUndefined, mapValues } from "lodash";
+import { isDefined, mapValues } from "remeda";
 import { mapToObj } from "remeda";
 import { cubeDimensionsStatusAtom, cubePathAtom, cubesStatusAtom, lindasAtom } from "./cubes";
 import { DIMENSIONS, dataDimensions } from "./dimensions";
@@ -61,7 +61,7 @@ export const [observationsAtom, observationsQueryAtom] = atomsWithQuery<
         timeFilter: queryTimeFilter,
       });
     },
-    skip: isUndefined(cubeDefinition) || isUndefined(cubePath),
+    skip: !isDefined.strict(cubeDefinition) || !isDefined.strict(cubePath),
   };
 });
 

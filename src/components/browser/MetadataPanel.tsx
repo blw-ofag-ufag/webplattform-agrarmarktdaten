@@ -9,7 +9,7 @@ import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { ContentDrawer, ContentDrawerProps } from "./ContentDrawer";
-import { isEmpty } from "lodash";
+import { isEmpty } from "remeda";
 
 export function MetadataPanel({
   dimensions,

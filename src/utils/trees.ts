@@ -1,5 +1,4 @@
-import orderBy from "lodash/orderBy";
-import sortBy from "lodash/sortBy";
+import { sortBy } from "remeda";
 
 import { bfs } from "@/utils/bfs";
 import { HierarchyValue } from "@/pages/api/data";
@@ -56,10 +55,12 @@ type Value = string;
 
 /** Sorts the tree by default chain of sorters (position -> identifier -> label). */
 export const sortHierarchy = (tree: HierarchyValue[]): HierarchyValue[] => {
-  const sortedTree = orderBy(
+  const sortedTree = sortBy(
     tree,
-    ["depth", "position", "identifier", "label"],
-    ["desc", "asc", "asc", "asc"]
+    [(x) => x.depth, "desc"],
+    [(x) => x.position ?? Infinity, "asc"],
+    [(x) => x.identifier ?? Infinity, "asc"],
+    [(x) => x.label, "asc"]
   ) as HierarchyValue[];
 
   return sortedTree.map((d) => ({

@@ -10,7 +10,7 @@ import localeDE from "d3-format/locale/de-CH";
 import localeFR from "d3-format/locale/fr-FR";
 // @ts-expect-error
 import localeIT from "d3-format/locale/it-IT";
-import { keyBy } from "lodash";
+import { indexBy } from "remeda";
 
 // Decided not to use abbreviations for now, following https://blw-ofag-ufag.atlassian.net/browse/WAM-397?focusedCommentId=12148
 export const units: Record<Locale, string[]> = {
@@ -68,7 +68,7 @@ export const tableFormatter = ({
   }
 
   if (dim && dim.type === "property") {
-    const byValue = keyBy(dim.values, (x) => x.value);
+    const byValue = indexBy(dim.values, (x) => x.value);
     return (value) => (value !== undefined ? byValue[value]?.label ?? value : value);
   }
 

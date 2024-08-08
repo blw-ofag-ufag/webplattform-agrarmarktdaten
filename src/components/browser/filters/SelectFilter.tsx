@@ -23,7 +23,7 @@ import {
   accordionSummaryClasses,
   styled,
 } from "@mui/material";
-import { uniqBy } from "lodash";
+import { uniqBy } from "remeda";
 import { QuickScore, ScoredObject, ScoredResult } from "quick-score";
 import React, { useDeferredValue, useEffect, useMemo, useState } from "react";
 import PreviewFilter from "./PreviewFilter";

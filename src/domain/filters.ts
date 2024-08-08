@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { ExtractAtomValue, atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
-import { isEmpty, maxBy, minBy, snakeCase } from "lodash";
+import { isEmpty, maxBy, minBy } from "remeda";
 import {
   baseDimensionsStatusAtom,
   cubeDimensionsStatusAtom,
@@ -21,6 +21,7 @@ import {
   filterTimeRangeHashAtomFamily,
 } from "./atom-families";
 import { mapValues } from "remeda";
+import { snakeCase } from "../utils/snakeCase";
 
 export type Option<HierarchyLevel extends string | never = never> = {
   label: string;
@@ -181,8 +182,8 @@ const getDefaultTimeRange = (
   min: number;
   max: number;
 } => {
-  const minDate = minBy(observations, (d) => dayjs(d.date))?.date;
-  const maxDate = maxBy(observations, (d) => dayjs(d.date))?.date;
+  const minDate = minBy(observations, (d) => dayjs(d.date).date())?.date;
+  const maxDate = maxBy(observations, (d) => dayjs(d.date).date())?.date;
 
   const min = minDate ? dayjs(minDate).unix() : DEFAULT_TIME_RANGE.min;
   const max = maxDate ? dayjs(maxDate).unix() : DEFAULT_TIME_RANGE.max;

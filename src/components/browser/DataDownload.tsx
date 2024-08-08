@@ -31,9 +31,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { mapToObj } from "remeda";
+import { isDefined, mapToObj } from "remeda";
 import ActionButton from "./ActionButton";
-import { isUndefined, sortBy } from "lodash";
+import { sortBy } from "remeda";
 import { useTheme } from "@mui/material/styles";
 
 const FILE_FORMATS = ["csv", "xlsx", "json"] as const;
@@ -92,7 +92,7 @@ export default function DataDownload() {
                 paddingInline: theme.spacing(4),
               }}
               startIcon={<IcControlDownload />}
-              disabled={isUndefined(filteredObservations) || filteredObservations.length === 0}
+              disabled={!isDefined.strict(filteredObservations) || filteredObservations.length === 0}
               {...bindToggle(popupState)}
             >
               <Trans id="data.actions.download">Data download</Trans>

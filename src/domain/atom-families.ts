@@ -1,6 +1,6 @@
 import { atomWithHash } from "jotai-location";
 import { atomFamily } from "jotai/vanilla/utils";
-import { isEqual } from "lodash";
+import { isDeepEqual } from "remeda";
 import { optionCodec, multiOptionsCodec, timeRangeCodec } from "./codecs";
 import { RangeOptions } from "./filters";
 
@@ -8,7 +8,7 @@ export const filterSingleHashAtomFamily = atomFamily(
   ({ key, options, defaultOption }: { key: string; defaultOption?: string; options: string[] }) => {
     return atomWithHash(key, defaultOption, optionCodec(options));
   },
-  (a, b) => a.key === b.key && isEqual(a.options, b.options)
+  (a, b) => a.key === b.key && isDeepEqual(a.options, b.options)
 );
 
 export const filterMultiHashAtomFamily = atomFamily(
@@ -23,7 +23,7 @@ export const filterMultiHashAtomFamily = atomFamily(
   }) => {
     return atomWithHash(key, defaultOptions ?? options, multiOptionsCodec(options));
   },
-  (a, b) => a.key === b.key && isEqual(a.options, b.options)
+  (a, b) => a.key === b.key && isDeepEqual(a.options, b.options)
 );
 
 export const filterTimeRangeHashAtomFamily = atomFamily(

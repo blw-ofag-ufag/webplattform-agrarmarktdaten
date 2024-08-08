@@ -17,7 +17,6 @@ import {
   Button,
 } from "@mui/material";
 import { WritableAtom, useAtom, useAtomValue, useSetAtom } from "jotai";
-import { xor } from "lodash";
 import { SyntheticEvent, useMemo, useState } from "react";
 import FilterAccordion from "../FilterAccordion";
 import { withStyles } from "../style-utils";
@@ -460,4 +459,9 @@ function orderNA(
 ) {
   const nonNA = items.filter((i) => i.label !== "NA");
   return [...nonNA, ...items.filter((i) => i.label === "NA")];
+}
+
+function xor(values: string[], arg1: string[]) {
+  const set = new Set([...values, ...arg1]);
+  return Array.from(set).filter((value) => values.includes(value) !== arg1.includes(value));
 }

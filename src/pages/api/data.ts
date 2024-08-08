@@ -17,7 +17,7 @@ import { regroupTrees } from "@/utils/trees";
 import { HierarchyNode, getHierarchy } from "@zazuko/cube-hierarchy-query";
 import { AnyPointer } from "clownface";
 import jsonpack from "jsonpack";
-import { groupBy, orderBy, uniqBy } from "lodash";
+import { groupBy, sortBy, uniqBy, uniqueBy } from "remeda";
 import { Source } from "rdf-cube-view-query";
 import rdf from "rdf-ext";
 import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
@@ -176,7 +176,7 @@ export const fetchBaseDimensions = async ({
   ]);
 
   const propertiesRawParsed = z.array(propertyRawSchema).parse(propertiesRaw);
-  const propertiesValuesGroups = groupBy(propertiesRawParsed, "dimension");
+  const propertiesValuesGroups = groupBy(propertiesRawParsed, (x) => x.dimension);
 
   const properties = basePropertiesSchema.parse(
     baseProperties.reduce(
@@ -258,7 +258,7 @@ export const fetchCubeDimensions = async (
     (dim) => dim.type === ns.cube("KeyDimension").value || dim.dimension.includes("dimension")
   );
 
-  const propertiesValues = await fetchSparql(
+  const propertiesValues = (await fetchSparql(
     queryPropertyDimensionAndValues({
       locale,
       cubeIri: fullCubeIri,
@@ -267,9 +267,9 @@ export const fetchCubeDimensions = async (
         .filter((d) => d !== amdpDimension("date").value),
     }),
     environment
-  );
+  )) as { dimension: string; value: string; label: string }[];
 
-  const propertyValuesPerDimension = groupBy(propertiesValues, "dimension");
+  const propertyValuesPerDimension = groupBy(propertiesValues, (x) => x.dimension);
 
   const properties = propertyDim.map((dim) => {
     const values = propertyValuesPerDimension[dim.dimension];
@@ -438,7 +438,7 @@ export const fetchHierarchy = async ({
     return [];
   }
 
-  const hierarchyNodes = uniqBy(
+  const hierarchyNodes = uniqueBy(
     await Promise.all(
       hierarchiesPointers.map(async (h) => {
         const nodes = await getHierarchy(h).execute(sparqlClient, rdf);
@@ -449,7 +449,7 @@ export const fetchHierarchy = async ({
         };
       })
     ),
-    "name"
+    (x) => x.name
   );
 
   const trees = hierarchyNodes.map((h) => {
@@ -488,6 +488,8 @@ export interface HierarchyValue {
   children: HierarchyValue[];
   depth: number;
   dimension: string;
+  position?: number;
+  identifier?: string;
 }
 
 const hierarchyValueSchema: z.ZodType<HierarchyValue> = z.lazy(() =>
@@ -502,7 +504,11 @@ const hierarchyValueSchema: z.ZodType<HierarchyValue> = z.lazy(() =>
 
 const toTree = (results: HierarchyNode[], locale: string) => {
   const sortChildren = (children: HierarchyValue[]) =>
-    orderBy(children, ["position", "identifier"]);
+    sortBy(
+      children,
+      (x) => x.position ?? Infinity,
+      (x) => x.identifier ?? Infinity
+    );
   const serializeNode = (node: HierarchyNode, depth: number) => {
     const name = getName(node.resource, { locale });
 

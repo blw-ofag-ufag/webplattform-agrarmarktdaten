@@ -15,7 +15,7 @@ import {
 } from "@mui/x-data-grid-pro";
 import dayjs from "dayjs";
 import { useAtomValue } from "jotai";
-import { isNumber, isString, isUndefined } from "lodash";
+import { isNumber, isString, isDefined } from "remeda";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "../style-utils";
 import React from "react";
@@ -81,10 +81,10 @@ const sorter = (sortModel: GridSortModel, obs1: Observation, obs2: Observation) 
   if (sortModel[0].field !== "date" && isString(v1) && isString(v2)) {
     compare = v1.localeCompare(v2);
   }
-  if (!isUndefined(v1) && isUndefined(v2)) {
+  if (isDefined.strict(v1) && !isDefined.strict(v2)) {
     compare = 1;
   }
-  if (isUndefined(v1) && !isUndefined(v2)) {
+  if (!isDefined.strict(v1) && isDefined.strict(v2)) {
     compare = -1;
   }
   return sortModel[0].sort === "asc" ? compare : compare * -1;
