@@ -1,16 +1,15 @@
 import { Button, ButtonProps } from "@mui/material";
-import { PropsWithChildren } from "react";
+import { forwardRef, PropsWithChildren } from "react";
 import { withStyles } from "../style-utils";
 
+type Props = PropsWithChildren & ButtonProps & { target?: React.HTMLAttributeAnchorTarget };
+
 const ActionButton = withStyles(
-  ({
-    children,
-    ...props
-  }: PropsWithChildren & ButtonProps & { target?: React.HTMLAttributeAnchorTarget }) => (
-    <Button {...props} size="small">
+  forwardRef<HTMLButtonElement, Props>(({ children, ...props }, ref) => (
+    <Button {...props} ref={ref} size="small">
       {children}
     </Button>
-  ),
+  )),
   () => ({
     root: {
       minHeight: "40px",
