@@ -32,6 +32,7 @@ import { sidePanelFiltersOrder } from "@/domain/dimensions";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { makeStyles } from "../style-utils";
+import React from "react";
 
 const useExclusiveAccordion = (defaultState: string) => {
   const [expanded, setExpanded] = useState<string | undefined>(defaultState);
@@ -130,7 +131,7 @@ const SidePanel = ({
               };
 
               return (
-                <>
+                <React.Fragment key={key}>
                   {filters.cube.isLoading && (
                     <FilterAccordion key={key} {...getAccordionProps(key)}>
                       <AccordionSummary>
@@ -151,7 +152,7 @@ const SidePanel = ({
                       defaultValue={config.default}
                     />
                   )}
-                </>
+                </React.Fragment>
               );
             } else if (type === "dimension") {
               const config = filters.dimensions.dimensions[key];
@@ -163,7 +164,7 @@ const SidePanel = ({
               const sortedOptions = orderNA(config.options);
 
               return (
-                <>
+                <React.Fragment key={key}>
                   {filters.dimensions.isLoading && (
                     <FilterAccordion key={key} {...getAccordionProps(key)}>
                       <AccordionSummary>
@@ -186,7 +187,7 @@ const SidePanel = ({
                       title={config.name}
                     />
                   )}
-                </>
+                </React.Fragment>
               );
             } else if (type === "time") {
               return <TimeAccordion key={key} {...getAccordionProps("time")} />;
