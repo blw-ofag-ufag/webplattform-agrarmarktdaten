@@ -24,6 +24,7 @@ import { indexBy, isTruthy, mapKeys, mapToObj } from "remeda";
 import StreamClient from "sparql-http-client";
 import { z } from "zod";
 import * as ns from "../../lib/namespace";
+import { traceTime } from "@/utils/traceTime";
 
 export const fetchSparql = async (query: string, environment: EnvironmentUrl) => {
   const body = JSON.stringify({ query, environment });
@@ -74,16 +75,12 @@ export type CubeSpec = z.infer<typeof cubeSpecSchema>;
 /**
  * Fetches the list of available cubes.
  */
-export const fetchCubes = async (environment: EnvironmentUrl) => {
-  console.log("> fetchCubes");
-  const start = performance.now();
+export const fetchCubes = traceTime("fetch cubes", async (environment: EnvironmentUrl) => {
   const query = queryCubes();
   const cubesRaw = await fetchSparql(query, environment);
   const cubes = z.array(cubeSpecSchema).parse(cubesRaw);
-  const end = performance.now();
-  console.log(`fetchCubes took ${end - start}ms`);
   return cubes;
-};
+});
 
 const measureSchema = z
   .object({
@@ -153,71 +150,63 @@ const basePropertiesSchema = z.object({
  * Therefore these do not depend on the cube itself.
  * Measure dimensions returned do not include min/max values, as these are cube-specific.
  */
-export const fetchBaseDimensions = async ({
-  locale,
-  environment,
-}: {
-  locale: Locale;
-  environment: EnvironmentUrl;
-}) => {
-  console.log("> fetchBaseDimensions");
-  const start = performance.now();
-  const queryProperties = queryBasePropertyDimensions({
-    locale,
-    propertiesIri: baseProperties,
-  });
-  const queryMeasures = queryBaseMeasureDimensions({
-    locale,
-  });
+export const fetchBaseDimensions = traceTime(
+  "fetch base dimensions",
+  async ({ locale, environment }: { locale: Locale; environment: EnvironmentUrl }) => {
+    const queryProperties = queryBasePropertyDimensions({
+      locale,
+      propertiesIri: baseProperties,
+    });
+    const queryMeasures = queryBaseMeasureDimensions({
+      locale,
+    });
 
-  const [propertiesRaw, measuresRaw] = await Promise.all([
-    fetchSparql(queryProperties, environment),
-    fetchSparql(queryMeasures, environment),
-  ]);
+    const [propertiesRaw, measuresRaw] = await Promise.all([
+      fetchSparql(queryProperties, environment),
+      fetchSparql(queryMeasures, environment),
+    ]);
 
-  const propertiesRawParsed = z.array(propertyRawSchema).parse(propertiesRaw);
-  const propertiesValuesGroups = groupBy(propertiesRawParsed, (x) => x.dimension);
+    const propertiesRawParsed = z.array(propertyRawSchema).parse(propertiesRaw);
+    const propertiesValuesGroups = groupBy(propertiesRawParsed, (x) => x.dimension);
 
-  const properties = basePropertiesSchema.parse(
-    baseProperties.reduce(
-      (acc, dimension) => {
-        const values = propertiesValuesGroups[dimension] ?? [];
-        const dim = propertiesRawParsed.find((property) => property.dimension === dimension);
-        if (baseProperties.includes(dimension)) {
-          return {
-            ...acc,
-            [ns.removeNamespace(dimension, amdpDimension)]: {
-              dimension,
-              label: dim?.label,
-              values: values.map((value) => ({
-                value: value.dimensionValue,
-                label: value.dimensionValueLabel ?? ns.removeNamespace(value.dimensionValue),
-              })),
-            },
-          };
-        }
-        return acc;
-      },
-      {} as Record<string, Property>
-    )
-  );
+    const properties = basePropertiesSchema.parse(
+      baseProperties.reduce(
+        (acc, dimension) => {
+          const values = propertiesValuesGroups[dimension] ?? [];
+          const dim = propertiesRawParsed.find((property) => property.dimension === dimension);
+          if (baseProperties.includes(dimension)) {
+            return {
+              ...acc,
+              [ns.removeNamespace(dimension, amdpDimension)]: {
+                dimension,
+                label: dim?.label,
+                values: values.map((value) => ({
+                  value: value.dimensionValue,
+                  label: value.dimensionValueLabel ?? ns.removeNamespace(value.dimensionValue),
+                })),
+              },
+            };
+          }
+          return acc;
+        },
+        {} as Record<string, Property>
+      )
+    );
 
-  const measuresRawParsed = z.array(measureSchema).parse(measuresRaw);
-  const measure = measuresRawParsed.flatMap((measure) => {
+    const measuresRawParsed = z.array(measureSchema).parse(measuresRaw);
+    const measure = measuresRawParsed.flatMap((measure) => {
+      return {
+        dimension: measure.dimension,
+        label: measure.label,
+      };
+    });
+
     return {
-      dimension: measure.dimension,
-      label: measure.label,
+      properties,
+      measure,
     };
-  });
-
-  const end = performance.now();
-  console.log(`fetchBaseDimensions took ${end - start}ms`);
-
-  return {
-    properties,
-    measure,
-  };
-};
+  }
+);
 
 const dimensionTypeSchema = z.union([z.literal("measure"), z.literal("property")]);
 export type DimensionType = z.infer<typeof dimensionTypeSchema>;
@@ -233,81 +222,75 @@ const dimensionSpecSchema = z.object({
  * Fetches the dimensions of a cube. This includes the min/max values for measure dimensions, and
  * the values for property dimensions.
  */
-export const fetchCubeDimensions = async (
-  locale: Locale,
-  environment: EnvironmentUrl,
-  cubeIri: string
-) => {
-  console.log("> fetchCubeDimensions");
-  const start = performance.now();
-  const fullCubeIri = ns.addNamespace(cubeIri);
-  const queryDimensions = queryCubeDimensions({
-    locale,
-    cubeIri: fullCubeIri,
-  });
-
-  const dimensionsRaw = await fetchSparql(queryDimensions, environment);
-  const dimensionsRawParsed = z.array(dimensionSpecSchema).parse(dimensionsRaw);
-
-  const measureDim = dimensionsRawParsed.filter(
-    // dimension type is not properly set in the cube in INT
-    (dim) => dim.type === ns.cube("MeasureDimension").value || dim.dimension.includes("measure")
-  );
-  const propertyDim = dimensionsRawParsed.filter(
-    // dimension type is not properly set in the cube in INT
-    (dim) => dim.type === ns.cube("KeyDimension").value || dim.dimension.includes("dimension")
-  );
-
-  const propertiesValues = (await fetchSparql(
-    queryPropertyDimensionAndValues({
+export const fetchCubeDimensions = traceTime(
+  "fetch cube dimensions",
+  async (locale: Locale, environment: EnvironmentUrl, cubeIri: string) => {
+    const fullCubeIri = ns.addNamespace(cubeIri);
+    const queryDimensions = queryCubeDimensions({
       locale,
       cubeIri: fullCubeIri,
-      dimensionsIris: propertyDim
-        .map((dim) => dim.dimension)
-        .filter((d) => d !== amdpDimension("date").value),
-    }),
-    environment
-  )) as { dimension: string; value: string; label: string }[];
-
-  const propertyValuesPerDimension = groupBy(propertiesValues, (x) => x.dimension);
-
-  const properties = propertyDim.map((dim) => {
-    const values = propertyValuesPerDimension[dim.dimension];
-    return propertySchema.parse({
-      dimension: dim.dimension,
-      label: dim.label,
-      type: "property" as const,
-      description: dim.description,
-      values: values ? values.map((v) => ({ value: v.value, label: v.label })) : [],
     });
-  });
 
-  const measures = await Promise.all([
-    ...measureDim.map(async (dim) => {
-      const range = await fetchSparql(
-        queryMeasureDimensionRange({ locale, cubeIri: fullCubeIri, dimensionIri: dim.dimension }),
-        environment
-      );
+    const dimensionsRaw = await fetchSparql(queryDimensions, environment);
+    const dimensionsRawParsed = z.array(dimensionSpecSchema).parse(dimensionsRaw);
 
-      return measureSchema.parse({
-        ...dim,
-        type: "measure",
-        range: {
-          min: +range[0].min,
-          max: +range[0].max,
-        },
+    const measureDim = dimensionsRawParsed.filter(
+      // dimension type is not properly set in the cube in INT
+      (dim) => dim.type === ns.cube("MeasureDimension").value || dim.dimension.includes("measure")
+    );
+    const propertyDim = dimensionsRawParsed.filter(
+      // dimension type is not properly set in the cube in INT
+      (dim) => dim.type === ns.cube("KeyDimension").value || dim.dimension.includes("dimension")
+    );
+
+    const propertiesValues = (await fetchSparql(
+      queryPropertyDimensionAndValues({
+        locale,
+        cubeIri: fullCubeIri,
+        dimensionsIris: propertyDim
+          .map((dim) => dim.dimension)
+          .filter((d) => d !== amdpDimension("date").value),
+      }),
+      environment
+    )) as { dimension: string; value: string; label: string }[];
+
+    const propertyValuesPerDimension = groupBy(propertiesValues, (x) => x.dimension);
+
+    const properties = propertyDim.map((dim) => {
+      const values = propertyValuesPerDimension[dim.dimension];
+      return propertySchema.parse({
+        dimension: dim.dimension,
+        label: dim.label,
+        type: "property" as const,
+        description: dim.description,
+        values: values ? values.map((v) => ({ value: v.value, label: v.label })) : [],
       });
-    }),
-  ]);
+    });
 
-  const end = performance.now();
-  console.log(`fetchCubeDimensions took ${end - start}ms`);
+    const measures = await Promise.all([
+      ...measureDim.map(async (dim) => {
+        const range = await fetchSparql(
+          queryMeasureDimensionRange({ locale, cubeIri: fullCubeIri, dimensionIri: dim.dimension }),
+          environment
+        );
 
-  return {
-    measures: indexBy(measures, (m) => m.dimension),
-    properties: indexBy(properties, (p) => p.dimension),
-  };
-};
+        return measureSchema.parse({
+          ...dim,
+          type: "measure",
+          range: {
+            min: +range[0].min,
+            max: +range[0].max,
+          },
+        });
+      }),
+    ]);
+
+    return {
+      measures: indexBy(measures, (m) => m.dimension),
+      properties: indexBy(properties, (p) => p.dimension),
+    };
+  }
+);
 
 const observationSchema = z
   .object({
@@ -342,44 +325,43 @@ const observationSchema = z
 
 export type Observation = z.infer<typeof observationSchema>;
 
-export const fetchObservations = async ({
-  cubeIri,
-  filters = {},
-  timeFilter,
-  environment,
-}: {
-  cubeIri: string;
-  filters: Record<string, string[]>;
-  timeFilter: TimeFilter;
-  environment: EnvironmentUrl;
-}) => {
-  console.log("> fetchObservations");
-  const start = performance.now();
-  const fullCubeIri = ns.addNamespace(cubeIri);
-
-  const query = queryObservations({
-    cubeIri: fullCubeIri,
-    filters: mapToObj(Object.entries(filters), ([key, value]) => [
-      toCamelCase(key),
-      value.map((v) => ns.addNamespace(v)),
-    ]),
-    dimensions: DIMENSIONS.map((v) => ({
-      iri: dataDimensions[v].iri,
-      key: toCamelCase(v),
-    })),
+export const fetchObservations = traceTime(
+  "fetch observations",
+  async ({
+    cubeIri,
+    filters = {},
     timeFilter,
-  });
+    environment,
+  }: {
+    cubeIri: string;
+    filters: Record<string, string[]>;
+    timeFilter: TimeFilter;
+    environment: EnvironmentUrl;
+  }) => {
+    const fullCubeIri = ns.addNamespace(cubeIri);
 
-  const observationsRaw = await fetchSparql(query, environment);
-  const observations = z.array(observationSchema).parse(observationsRaw);
+    const query = queryObservations({
+      cubeIri: fullCubeIri,
+      filters: mapToObj(Object.entries(filters), ([key, value]) => [
+        toCamelCase(key),
+        value.map((v) => ns.addNamespace(v)),
+      ]),
+      dimensions: DIMENSIONS.map((v) => ({
+        iri: dataDimensions[v].iri,
+        key: toCamelCase(v),
+      })),
+      timeFilter,
+    });
 
-  const end = performance.now();
-  console.log(`fetchObservations took ${end - start}ms`);
-  return {
-    observations,
-    query: getSparqlEditorUrl(query, environment),
-  };
-};
+    const observationsRaw = await fetchSparql(query, environment);
+    const observations = z.array(observationSchema).parse(observationsRaw);
+
+    return {
+      observations,
+      query: getSparqlEditorUrl(query, environment),
+    };
+  }
+);
 
 export const getSparqlEditorUrl = (query: string, enviroment: EnvironmentUrl): string => {
   return `${enviroment}/sparql#query=${encodeURIComponent(query)}&requestMethod=POST`;
@@ -390,85 +372,83 @@ export const getSparqlEditorUrl = (query: string, enviroment: EnvironmentUrl): s
  * Fetch the hierarchies for a given dimension.
  * Approach adapted from: https://github.dev/visualize-admin/visualization-tool/blob/main/app/rdf/query-hierarchies.ts
  */
-export const fetchHierarchy = async ({
-  cubeIri,
-  dimensionIri,
-  locale,
-  environment,
-}: {
-  cubeIri: string | undefined;
-  dimensionIri: string;
-  locale: Locale;
-  environment: EnvironmentUrl;
-  asTree?: boolean;
-}) => {
-  if (!cubeIri) {
-    throw new Error(`Error while fetching hierarchy: No iri passed: ${cubeIri}`);
-  }
-
-  console.log("> fetchHierarchy");
-
-  const amdpSource = new Source({
-    endpointUrl: `${environment}/query`,
-    sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
-  });
-
-  const sparqlClient = new StreamClient({
-    endpointUrl: `${environment}/query`,
-  });
-
-  const start = performance.now();
-  const cube = await amdpSource.cube(amdp(cubeIri).value);
-
-  if (!cube) {
-    throw new Error(`Error while fetching hierarchy: Cube not found: ${cubeIri}`);
-  }
-
-  const hierarchiesPointers = uniqBy(
-    cube.ptr
-      .any()
-      .has(ns.sh.path, rdf.namedNode(dimensionIri))
-      .has(ns.cubeMeta.inHierarchy)
-      .out(ns.cubeMeta.inHierarchy)
-      .toArray(),
-    (h) => getName(h, { locale })
-  );
-
-  if (hierarchiesPointers.length === 0) {
-    return [];
-  }
-
-  const hierarchyNodes = uniqueBy(
-    await Promise.all(
-      hierarchiesPointers.map(async (h) => {
-        const nodes = await getHierarchy(h).execute(sparqlClient, rdf);
-        const name = getName(h, { locale });
-        return {
-          nodes,
-          name,
-        };
-      })
-    ),
-    (x) => x.name
-  );
-
-  const trees = hierarchyNodes.map((h) => {
-    const tree: ($FixMe & { hierarchyName?: string })[] = toTree(h.nodes, locale);
-
-    if (tree.length > 0) {
-      // Augment hierarchy value with hierarchyName so that when regrouping
-      // below, we can create the fake nodes
-      tree[0].hierarchyName = h.name;
+export const fetchHierarchy = traceTime(
+  "fetch hierarchy",
+  async ({
+    cubeIri,
+    dimensionIri,
+    locale,
+    environment,
+  }: {
+    cubeIri: string | undefined;
+    dimensionIri: string;
+    locale: Locale;
+    environment: EnvironmentUrl;
+    asTree?: boolean;
+  }) => {
+    if (!cubeIri) {
+      throw new Error(`Error while fetching hierarchy: No iri passed: ${cubeIri}`);
     }
-    return tree;
-  });
 
-  const tree = regroupTrees(trees);
+    const amdpSource = new Source({
+      endpointUrl: `${environment}/query`,
+      sourceGraph: "https://lindas.admin.ch/foag/agricultural-market-data",
+    });
 
-  const end = performance.now();
-  console.log(`fetchHierarchy took ${end - start}ms`);
-  return tree ?? [];
-};
+    const sparqlClient = new StreamClient({
+      endpointUrl: `${environment}/query`,
+    });
+
+    const cube = await amdpSource.cube(amdp(cubeIri).value);
+
+    if (!cube) {
+      throw new Error(`Error while fetching hierarchy: Cube not found: ${cubeIri}`);
+    }
+
+    const hierarchiesPointers = uniqBy(
+      cube.ptr
+        .any()
+        .has(ns.sh.path, rdf.namedNode(dimensionIri))
+        .has(ns.cubeMeta.inHierarchy)
+        .out(ns.cubeMeta.inHierarchy)
+        .toArray(),
+      (h) => getName(h, { locale })
+    );
+
+    if (hierarchiesPointers.length === 0) {
+      return [];
+    }
+
+    const hierarchyNodes = uniqueBy(
+      await Promise.all(
+        hierarchiesPointers.map(async (h) => {
+          const nodes = await getHierarchy(h).execute(sparqlClient, rdf);
+          const name = getName(h, { locale });
+          return {
+            nodes,
+            name,
+          };
+        })
+      ),
+      (x) => x.name
+    );
+
+    const trees = hierarchyNodes.map((h) => {
+      const tree: ($FixMe & { hierarchyName?: string })[] = toTree(h.nodes, locale);
+
+      if (tree.length > 0) {
+        // Augment hierarchy value with hierarchyName so that when regrouping
+        // below, we can create the fake nodes
+        tree[0].hierarchyName = h.name;
+      }
+      return tree;
+    });
+
+    const tree = regroupTrees(trees);
+
+    return tree ?? [];
+  }
+);
 
 export const getName = (pointer: AnyPointer, { locale }: { locale: string }) => {
   const term =
