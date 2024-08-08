@@ -6,7 +6,7 @@ import { atom } from "jotai";
 import { atomWithHash } from "jotai-location";
 import { atomsWithQuery } from "jotai-tanstack-query";
 import { cubeSelectionAtom, filterAtom, timeViewAtom } from "./filters";
-import { omit } from "remeda";
+import { omit, unique } from "remeda";
 
 type EnvironmentDescription = {
   label: string;
@@ -47,25 +47,53 @@ export const [cubesAtom, cubesStatusAtom] = atomsWithQuery((get) => {
 export const defaultCube = "cube/MilkDairyProducts/Production_Price_Year";
 
 export const cubePathAtom = atom((get) => {
-  const { status, data: allCubes } = get(cubesStatusAtom);
+  const cubeStatusQuery = get(cubesStatusAtom);
+  const { status, data: allCubes } = cubeStatusQuery;
   const cubeSelection = get(cubeSelectionAtom);
 
-  if (status !== "success") return defaultCube;
-
-  const cubePath = allCubes.find(
-    (cube) =>
-      cube.measure === cubeSelection.dimensions.measure.value &&
-      cube.market === cubeSelection.dimensions.market.value &&
-      cube.valueChain === cubeSelection.dimensions["value-chain"].value &&
-      cube.timeView === get(timeViewAtom)
-  );
-
-  if (!cubePath?.cube) {
-    console.warn("Could not find cube, see allCubes, and cubeSelection", allCubes, cubeSelection);
+  if (status !== "success") {
     return defaultCube;
   }
 
-  return cubePath?.cube;
+  // Could be done in 1 filter, but it's easier to debug this way
+  const marketFiltered = allCubes.filter(
+    (cube) => cube.market === cubeSelection.dimensions.market.value
+  );
+  const measureFiltered = marketFiltered.filter(
+    (cube) => cube.measure === cubeSelection.dimensions.measure.value
+  );
+
+  const valueChainFiltered = measureFiltered.filter(
+    (cube) => cube.valueChain === cubeSelection.dimensions["value-chain"].value
+  );
+  const timeViewFiltered = valueChainFiltered.filter((cube) => cube.timeView === get(timeViewAtom));
+
+  if (timeViewFiltered.length === 0) {
+    console.warn("Could not find cube, see allCubes, and cubeSelection", allCubes, cubeSelection);
+    return defaultCube;
+  }
+  if (timeViewFiltered.length > 1) {
+    console.warn("Found multiple cubes, see allCubes, and cubeSelection", allCubes, cubeSelection);
+  }
+
+  return timeViewFiltered[0].cube;
+});
+
+export const availableMeasuresPerMarketAtom = atom((get) => {
+  const cubeStatusQuery = get(cubesStatusAtom);
+  const { status, data: allCubes } = cubeStatusQuery;
+
+  if (status !== "success") {
+    return {};
+  }
+
+  const markets = Array.from(new Set(allCubes.map((cube) => cube.market)));
+  const measureFiltered = Object.fromEntries(
+    markets.map((m) => {
+      return [m, unique(allCubes.filter((cube) => cube.market === m).map((cube) => cube.measure))];
+    })
+  );
+  return measureFiltered;
 });
 
 /**
