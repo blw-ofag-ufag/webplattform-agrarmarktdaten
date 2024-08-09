@@ -169,7 +169,6 @@ export const [cubeDimensionsAtom, cubeDimensionsStatusAtom] = atomsWithQuery((ge
       }
       return fetchCubeDimensions(locale, lindas.url, cubePath);
     },
-    placeholderData: (previousData) => previousData,
     skip: !cubePath,
   };
 });
