@@ -14,13 +14,13 @@ import { isValidLocale } from "@/locales/locales";
 import slugs from "@/generated/slugs.json";
 import Head from "next/head";
 import { renderMetaTags } from "react-datocms";
-import _ from "remeda";
+import { uniqueBy } from "remeda";
 
 function selectTopBlogposts(
   marketBlogPosts: GQL.BlogPostRecord[],
   topBlogPosts: GQL.BlogPostRecord[]
 ) {
-  return _.uniqBy([...marketBlogPosts, ...topBlogPosts], (d) => d.id).slice(0, 3);
+  return uniqueBy([...marketBlogPosts, ...topBlogPosts], (d) => d.id).slice(0, 3);
 }
 
 export default function MarketPage(props: GQL.MarketPageQuery & GQL.TopMarketBlogPostsQuery) {

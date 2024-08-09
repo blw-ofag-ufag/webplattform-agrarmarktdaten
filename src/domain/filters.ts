@@ -182,8 +182,8 @@ const getDefaultTimeRange = (
   min: number;
   max: number;
 } => {
-  const minDate = minBy(observations, (d) => dayjs(d.date).date())?.date;
-  const maxDate = maxBy(observations, (d) => dayjs(d.date).date())?.date;
+  const minDate = minBy(observations, (d) => dayjs(d.date).unix())?.date;
+  const maxDate = maxBy(observations, (d) => dayjs(d.date).unix())?.date;
 
   const min = minDate ? dayjs(minDate).unix() : DEFAULT_TIME_RANGE.min;
   const max = maxDate ? dayjs(maxDate).unix() : DEFAULT_TIME_RANGE.max;

@@ -1,4 +1,4 @@
-import { availableBaseDimensionsValuesAtom } from "@/domain/cubes";
+import { availableBaseDimensionsValuesAtom, availableMeasuresPerMarketAtom } from "@/domain/cubes";
 import { DEFAULT_MEASURE, DEFAULT_TIME_VIEW, Option, TimeView, filterAtom } from "@/domain/filters";
 import { IcChevronDoubleLeft, IcRepeat } from "@/icons/icons-jsx/control";
 import useEvent from "@/lib/use-event";
@@ -68,7 +68,9 @@ const SidePanel = ({
   const { classes } = useStyles();
 
   const measureAtom = filters.cube.dimensions.measure.atom;
-  const [_, setMeasure] = useAtom(measureAtom);
+  const [currentMeasure, setMeasure] = useAtom(measureAtom);
+
+  const [availableMeasuresPerMarket] = useAtom(availableMeasuresPerMarketAtom);
 
   const filtersToDisplay = useMemo(() => {
     return showMore ? sidePanelFiltersOrder.slice(0, 6) : sidePanelFiltersOrder;
@@ -125,8 +127,16 @@ const SidePanel = ({
 
               const sortedOptions = orderNA(options);
 
-              const handleMarketChange = () => {
-                setMeasure(DEFAULT_MEASURE);
+              const handleMarketChange = (market: string) => {
+                if (currentMeasure) {
+                  const marketAvailableMeasures = availableMeasuresPerMarket[market];
+
+                  if (!marketAvailableMeasures.includes(currentMeasure)) {
+                    setMeasure(marketAvailableMeasures[0]);
+                  }
+                } else {
+                  setMeasure(DEFAULT_MEASURE);
+                }
               };
 
               return (
@@ -239,7 +249,7 @@ const FilterRadioAccordion = <T extends Option>({
     accordion: Omit<AccordionProps, "children">;
   };
   defaultValue: string;
-  onChange?: () => void;
+  onChange?: (value: string) => void;
 }) => {
   const [value, setValue] = useAtom(filterAtom);
   const isTainted = value !== defaultValue;
@@ -261,7 +271,7 @@ const FilterRadioAccordion = <T extends Option>({
           value={optionValue}
           onChange={(option) => {
             setValue(option.value);
-            onChange?.();
+            onChange?.(option.value);
           }}
           options={options}
         />
