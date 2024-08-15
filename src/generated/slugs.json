@@ -1,0 +1,56 @@
+[
+  {
+    "locale": "de",
+    "slugs": {
+      "glossary": {
+        "locale": "de",
+        "value": "glossar"
+      },
+      "methods": "methoden",
+      "data": "daten",
+      "legal": "auftrag-und-rechtliche-grundlage",
+      "terms": "nutzungsbedingungen",
+      "aboutUs": "uber-uns",
+      "info": "informationen",
+      "analysis": "analysen",
+      "focus": "fokus",
+      "market": "markt"
+    }
+  },
+  {
+    "locale": "fr",
+    "slugs": {
+      "glossary": {
+        "locale": "fr",
+        "value": "glossaire"
+      },
+      "methods": "methodes",
+      "data": "donnees",
+      "legal": "mission-et-bases-legales",
+      "terms": "conditions-utilisations",
+      "aboutUs": "a-propos-de-nous",
+      "info": "informations",
+      "analysis": "analyses",
+      "focus": "focus",
+      "market": "marche"
+    }
+  },
+  {
+    "locale": "it",
+    "slugs": {
+      "glossary": {
+        "locale": "it",
+        "value": "glossario"
+      },
+      "methods": "metodi",
+      "data": "dati",
+      "legal": "compiti-e-basi-legali",
+      "terms": "condizioni-uso",
+      "aboutUs": "chi-siamo",
+      "info": "informazioni",
+      "analysis": "analisi",
+      "focus": "focus",
+      "market": "mercato"
+    }
+  }
+]

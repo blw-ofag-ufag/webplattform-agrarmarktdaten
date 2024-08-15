@@ -1,0 +1,9 @@
+/rollup.config.js
+# Generated files
+/public/**/*
+/src/graphql/resolver-types.ts
+/src/graphql/query-hooks.ts
+
+/**/node_modules/*
+node_modules/
+next.config.js

@@ -1,0 +1,146 @@
+import { Box, Typography, Button, List } from "@mui/material";
+import * as GQL from "@/graphql";
+import { s } from "@interactivethings/swiss-federal-ci";
+import { StructuredText, renderNodeRule, StructuredTextGraphQlResponse } from "react-datocms";
+import { isHeading, isParagraph, isLink, isList } from "datocms-structured-text-utils";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { makeStyles } from "@/components/style-utils";
+import { NamedCallout } from "@/components/NamedCallout";
+import useStructuredTextStyles from "@/components/StructuredText/useStructuredTextStyles";
+import { useStructuredTextDebug } from "@/components/StructuredText/StructuredText";
+import { OpenInNew } from "@mui/icons-material";
+
+const useStyles = makeStyles()(({ palette: c }) => ({
+  button: {
+    backgroundColor: c.cobalt[500],
+    marginRight: s(3),
+    padding: s(2, 3),
+    lineHeight: "18px",
+    minHeight: "auto",
+    borderRadius: "2px",
+  },
+}));
+
+const HighlightSection = (
+  props: {
+    data: Partial<GQL.HighlightSectionRecord>;
+  } & Omit<React.ComponentProps<typeof NamedCallout>, "data">
+) => {
+  const { classes } = useStyles();
+  const { data, ...rest } = props;
+  const { locale } = useRouter();
+  const { debug: structuredTextDebug } = useStructuredTextDebug();
+  const { classes: structuredTextClasses } = useStructuredTextStyles({
+    debug: structuredTextDebug,
+  });
+  return (
+    <NamedCallout title={data.title} {...rest}>
+      {data.content && (
+        <StructuredText
+          data={
+            data.content as unknown as StructuredTextGraphQlResponse /* FIXME: Review this type, it should match*/
+          }
+          customNodeRules={[
+            renderNodeRule(isHeading, ({ children, key }) => (
+              <Typography
+                key={key}
+                variant="h4"
+                component="h4"
+                className={structuredTextClasses.h4}
+              >
+                {children}
+              </Typography>
+            )),
+            renderNodeRule(isParagraph, ({ children, key }) => (
+              <Typography
+                key={key}
+                variant="body1"
+                component="div"
+                className={structuredTextClasses.p}
+              >
+                {children}
+              </Typography>
+            )),
+
+            renderNodeRule(isList, ({ children }) => {
+              return <List className={structuredTextClasses.ul}>{children}</List>;
+            }),
+            renderNodeRule(isLink, ({ node, children, key }) => {
+              const target = node.meta?.find((e) => e.id === "target")?.value;
+              const rel = node.meta?.find((e) => e.id === "rel")?.value;
+              return (
+                <Typography
+                  variant="body1"
+                  component="a"
+                  rel={rel}
+                  target={target}
+                  sx={{
+                    color: "inherit",
+                    textUnderlineOffset: "2px",
+                    ":hover": { color: "#4B5563" },
+                  }}
+                  key={key}
+                  href={node.url}
+                >
+                  {children}
+                  {target === "_blank" ? (
+                    <Box display="inline-block" component="span" fontSize="0.85em" ml="0.25rem">
+                      <OpenInNew fontSize="inherit" />
+                    </Box>
+                  ) : null}
+                </Typography>
+              );
+            }),
+          ]}
+          renderInlineRecord={({ record }) => {
+            switch (record.__typename) {
+              case "HighlightSectionFileRecord":
+                const sectionFile = record as Partial<GQL.HighlightSectionFileRecord>;
+                return (
+                  <Button href={sectionFile.file?.url} className={classes.button}>
+                    Download
+                  </Button>
+                );
+              case "HighlightSectionLinkRecord":
+                const sectionLink = record as Partial<GQL.HighlightSectionLinkRecord>;
+                switch (sectionLink.link?.__typename) {
+                  case "BlogPostRecord":
+                    return (
+                      <NextLink href={`/${locale}/blog/${sectionLink.link.slug}`}>
+                        <Button className={classes.button}>{sectionLink.title}</Button>
+                      </NextLink>
+                    );
+                  case "FocusArticleRecord":
+                    return (
+                      <NextLink href={`/${locale}/focus/${sectionLink.link.slug}`}>
+                        <Button className={classes.button}>{sectionLink.title}</Button>
+                      </NextLink>
+                    );
+                  case "MarketArticleRecord":
+                    return (
+                      <NextLink href={`/${locale}/market/${sectionLink.link.slug}`}>
+                        <Button className={classes.button}>{sectionLink.title}</Button>
+                      </NextLink>
+                    );
+                  case "MethodsPageRecord":
+                    return (
+                      <NextLink href={`/${locale}/methods`}>
+                        <Button className={classes.button}>{sectionLink.title}</Button>
+                      </NextLink>
+                    );
+                  default:
+                    return null;
+                }
+                break;
+              default:
+                return null;
+            }
+          }}
+        />
+      )}
+    </NamedCallout>
+  );
+};
+
+export default HighlightSection;

@@ -1,0 +1,12 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "files.exclude": {
+    "**/.next": true
+  },
+  "search.exclude": {
+    "**/.yarn": true,
+    "yarn.lock": true
+  },
+  "i18n-ally.localesPaths": ["src/locales"]
+}

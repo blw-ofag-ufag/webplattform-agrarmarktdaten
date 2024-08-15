@@ -1,0 +1,18 @@
+{
+  "homepage.section.market": {
+    "defaults": "Märkte",
+    "origin": [["src/pages/index.tsx", 34]]
+  },
+  "homepage.section.latestBlogPosts": {
+    "defaults": "Aktuell",
+    "origin": [["src/pages/index.tsx", 41]]
+  },
+  "button.show.all": {
+    "defaults": "Alle Anzeigen",
+    "origin": [["src/pages/index.tsx", 47]]
+  },
+  "homepage.section.newest.infografic": {
+    "defaults": "Neueste Infografik",
+    "origin": [["src/pages/index.tsx", 51]]
+  }
+}

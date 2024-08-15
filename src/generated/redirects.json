@@ -1,0 +1,82 @@
+[
+  {
+    "url": "/methods/glossary",
+    "alternates": [
+      "/methoden/glossar",
+      "/methodes/glossaire",
+      "/metodi/glossario"
+    ]
+  },
+  {
+    "url": "/methods/[slug]",
+    "alternates": [
+      "/methoden",
+      "/methodes",
+      "/metodi"
+    ]
+  },
+  {
+    "url": "/data",
+    "alternates": [
+      "/daten",
+      "/donnees",
+      "/dati"
+    ]
+  },
+  {
+    "url": "/legal",
+    "alternates": [
+      "/auftrag-und-rechtliche-grundlage",
+      "/mission-et-bases-legales",
+      "/compiti-e-basi-legali"
+    ]
+  },
+  {
+    "url": "/terms-and-conditions",
+    "alternates": [
+      "/nutzungsbedingungen",
+      "/conditions-utilisations",
+      "/condizioni-uso"
+    ]
+  },
+  {
+    "url": "/about-us",
+    "alternates": [
+      "/uber-uns",
+      "/a-propos-de-nous",
+      "/chi-siamo"
+    ]
+  },
+  {
+    "url": "/info",
+    "alternates": [
+      "/informationen",
+      "/informations",
+      "/informazioni"
+    ]
+  },
+  {
+    "url": "/analysis",
+    "alternates": [
+      "/analysen",
+      "/analyses",
+      "/analisi"
+    ]
+  },
+  {
+    "url": "/focus/[slug]",
+    "alternates": [
+      "/fokus",
+      "/focus",
+      "/focus"
+    ]
+  },
+  {
+    "url": "/market/[slug]",
+    "alternates": [
+      "/markt",
+      "/marche",
+      "/mercato"
+    ]
+  }
+]

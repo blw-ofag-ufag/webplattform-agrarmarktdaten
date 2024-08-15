@@ -1,0 +1,582 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: AMDP\n"
+"Language: fr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.addedValue"
+#~ msgstr "Valeur ajoutée"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.markets"
+#~ msgstr "Marchés"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.productionSystems"
+#~ msgstr "Système de production"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.products"
+#~ msgstr "Liste des produits"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.salesRegions"
+#~ msgstr "Région de vente"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+#~ msgid "data.filters.indicator"
+#~ msgstr "Indicateur"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+#~ msgid "search.label"
+#~ msgstr "Recherche"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.actions.showFiler"
+#~ msgstr "Afficher le filtre"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.actions.visualize"
+#~ msgstr "Visualize"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#~ msgid "data.hero.title"
+#~ msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#~ msgid "footer.impressum"
+#~ msgstr "Contact"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+#~ msgid "menu.overview"
+#~ msgstr "Vue d'ensemble"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#~ msgid "footer.legal"
+#~ msgstr "Mission et base légale"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.total"
+msgstr "({0} de {1})"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+#: src/pages/methods/glossary.tsx
+msgid "data.filters.results"
+msgstr "{resultCount, plural, one {résultat} other {résultats}}"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.some"
+msgstr "{0} de {1}"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.filters.count"
+msgstr "{filteredChangedCount, plural, one {filtre appliqué} other {filtres appliqués}}"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/layout.tsx
+msgid "footer.about_us.label"
+msgstr "À propos de nous"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.report"
+msgstr "Rapport Agricole"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Filters.tsx
+#: src/components/BlogpostGrid/internal/Filters.tsx
+msgid "select.all"
+msgstr "Sélectionner tout"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.all"
+msgstr "Tous"
+
+#. js-lingui-explicit-id
+#: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
+msgid "button.show.all"
+msgstr "Afficher tous les posts"
+
+#. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.filename"
+msgstr "Donnees_PDMAA"
+
+#. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-title"
+msgstr "Une erreur s'est produite lors du chargement des données"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.analysis"
+msgstr "Analyses"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
+msgid "filter.apply"
+msgstr "Appliquer"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "controls.metadata-panel.available-values"
+msgstr "Valeurs disponibles"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.shortTitle"
+msgstr "OFAG"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.blw"
+msgstr "L’Office fédéral de l’agriculture"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "header.longTitle"
+msgstr "Office fédéral de l'agriculture OFAG"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.one"
+msgstr "Vérifiez l'orthographe de votre terme de recherche"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.aria.clear"
+msgstr "Réinitialiser les filtres"
+
+#. js-lingui-explicit-id
+#: src/components/InPlaceDialog.tsx
+#: src/components/layout.tsx
+#: src/components/layout.tsx
+msgid "header.close"
+msgstr "Fermer"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MobileIntercept.tsx
+msgid "data.mobile.button"
+msgstr "Continuer à télécharger les données"
+
+#. js-lingui-explicit-id
+#: src/components/StructuredText/internal/AnchorHeader.tsx
+msgid "action.copy"
+msgstr "Copié dans le presse-papiers"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.data"
+msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.data"
+msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.actions.download"
+msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.none"
+msgstr "Déselectionner tout"
+
+#. js-lingui-explicit-id
+#: src/components/browser/DataDownload.tsx
+msgid "data.download.title"
+msgstr "Télécharger des données"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.subtitle"
+msgstr "Erreur 404"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.feedback"
+msgstr "Feedback"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
+msgid "filter.filters"
+msgstr "Filtres"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.heading"
+msgstr "Filtres"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
+msgid "filter.focus"
+msgstr "Focus"
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.theme"
+msgstr "Focus"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.focus"
+msgstr "Focus"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+msgid "contact.follow.us"
+msgstr "Pour rester informés"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.from"
+msgstr "De"
+
+#. js-lingui-explicit-id
+#: src/components/powerbi-report.tsx
+msgid "controls.fullscreen"
+msgstr "Plein écran"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.furtherinformation"
+msgstr "Informations supplémentaires"
+
+#. js-lingui-explicit-id
+#: src/components/back-button.tsx
+#: src/components/browser/MetadataPanel.tsx
+#: src/components/layout.tsx
+msgid "cta.back"
+msgstr "Retour"
+
+#. js-lingui-explicit-id
+#: src/components/GlossaryItem/GlossaryItem.tsx
+msgid "glossaryItem.generic"
+msgstr "Générique"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.hideFilter"
+msgstr "Cacher les filtres"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.info"
+msgstr "À propos du portail"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.priceindex"
+msgstr "Indice suisse des prix à la consommation"
+
+#. js-lingui-explicit-id
+#: src/components/DataPageCard.tsx
+msgid "homepage.section.data.button"
+msgstr "En savoir plus"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.less"
+msgstr "Moins de filtres"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.filters.loading"
+msgstr "Chargement"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.loading.info"
+msgstr "Les données sont en cours de chargement"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Controls.tsx
+#: src/components/BlogpostGrid/internal/MobileFilters.tsx
+msgid "filter.market"
+msgstr "Marché"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.markets"
+msgstr "Marchés"
+
+#. js-lingui-explicit-id
+#: src/pages/index.tsx
+msgid "homepage.section.market"
+msgstr "Marchés"
+
+#. js-lingui-explicit-id
+#: src/domain/filters.ts
+msgid "data.filters.measure"
+msgstr "Indicateur"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "data.metadata.title"
+msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.metadata"
+msgstr "Metadata"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.methods"
+msgstr "Méthodes"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.month"
+msgstr "Mois"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.more"
+msgstr "Plus de filtres"
+
+#. js-lingui-explicit-id
+#: src/components/TopBlogpostsTeaser/TopBlogpostsTeaser.tsx
+msgid "homepage.section.latestBlogPosts"
+msgstr "Analyses"
+
+#. js-lingui-explicit-id
+#: src/components/browser/Table.tsx
+msgid "data.table.empty"
+msgstr "Pas de résultats"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.message"
+msgstr "La recherche de «{searchString}» n'a donné aucun résultat sur le page de glossaire"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "data.metadata.nodata"
+msgstr "Pas de résultats pour les métadonnées"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.noOptions"
+msgstr "Pas d'options"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "data.filters.none"
+msgstr "Aucun"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.title"
+msgstr "Page non trouvée"
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.header"
+msgstr "Attention"
+
+#. js-lingui-explicit-id
+#: src/components/ErrorAlert.tsx
+msgid "data.loading.error-description"
+msgstr "Veuillez réessayer plus tard."
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+#: src/components/Footer/Footer.tsx
+msgid "footer.importpriceindex"
+msgstr "Prix à la production et à l'importation"
+
+#. js-lingui-explicit-id
+#: src/pages/blog/[slug].tsx
+msgid "blogpost.publishedDate"
+msgstr "Publié le"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.control.reset"
+msgstr "Remise à zéro"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "cta.reset-filters"
+msgstr "Réinitialiser des filtres"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.reset"
+msgstr "Réinitialiser les filtres"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.link"
+msgstr "Retour à la page d'accueil"
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.link"
+msgstr "Retour à la page d'accueil"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.search"
+msgstr "Recherche"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Search.tsx
+msgid "search.placeholder"
+msgstr "Recherche d'analyses"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.glossary.placeholder"
+msgstr "recherche dans le glossaire"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips"
+msgstr "Conseils"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/SelectFilter.tsx
+msgid "filters.select.all"
+msgstr "Sélectionner tout"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.showFilter"
+msgstr "Afficher les filtres"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MetadataPanel.tsx
+msgid "cta.show-more"
+msgstr "Voir davantage"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/internal/Sort.tsx
+msgid "sort.labe"
+msgstr "Trier par"
+
+#. js-lingui-explicit-id
+#: src/pages/data.tsx
+msgid "data.actions.query"
+msgstr "Requête SPARQL"
+
+#. js-lingui-explicit-id
+#: src/components/layout.tsx
+msgid "menu.home"
+msgstr "Page d'accueil"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+msgid "footer.newsletter"
+msgstr "S'abonner à la newsletter"
+
+#. js-lingui-explicit-id
+#: src/components/ShareButton/ShareButton.tsx
+msgid "social.share"
+msgstr "Partager"
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.title"
+msgstr "Temporairement indisponible"
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+msgid "footer.terms"
+msgstr "Conditions d’utilisation"
+
+#. js-lingui-explicit-id
+#: src/components/browser/MobileIntercept.tsx
+msgid "data.mobile.message"
+msgstr "Le portail de données sur les marchés agricoles et alimentaires <0>n'est pas encore totalement optimisé pour les petits écrans</0>. Veuillez utiliser un ordinateur de bureau ou modifier la taille de la fenêtre de votre navigateur pour garantir un affichage optimal."
+
+#. js-lingui-explicit-id
+#: src/components/ServerSideError/ServerSideError.tsx
+msgid "error.500.message"
+msgstr "La page ou la fonction souhaitée n'est actuellement pas disponible. Veuillez essayer à nouveau un peu plus tard."
+
+#. js-lingui-explicit-id
+#: src/components/Footer/Footer.tsx
+msgid "footer.id"
+msgstr "L’Office fédéral de l’agriculture OFAG est le centre de compétences pour la politique agricole suisse. L'une des tâches de l'OFAG, est d'assurer l'observervation indépendante du marché (art. 27 de la loi sur l’agriculture, LAgr). Ceci consiste à recenser et publier des indicateurs de marché tels que les prix et les quantités tout au long de la chaîne de création de valeur ajoutée des principaux marchés agricoles et alimentaires de Suisse. L’objectif est d’accroître la transparence du marché et de mettre en évidence les évolutions à long terme."
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.warning.message"
+msgstr "La recherche est actuellement limitée sur le page de glossaire au site"
+
+#. js-lingui-explicit-id
+#: src/components/BlogpostGrid/BlogpostGrid.tsx
+msgid "analysis.noResults"
+msgstr "Il n'y a pas de résultat pour cette sélection"
+
+#. js-lingui-explicit-id
+#: src/components/browser/SidePanel.tsx
+msgid "data.filters.time"
+msgstr "Période"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.to"
+msgstr "Pour"
+
+#. js-lingui-explicit-id
+#: src/components/DataPageCard.tsx
+msgid "homepage.section.data.content"
+msgstr "Sous <0>Télécharger des données</0>, il est possible de sélectionner et de télécharger différentes données, notamment des séries de prix, mais aussi, dans certains cas, des données relatives aux quantités et aux surfaces."
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.two"
+msgstr "Utilisez un terme différent ou plus général"
+
+#. js-lingui-explicit-id
+#: src/pages/methods/glossary.tsx
+msgid "search.results.tips.three"
+msgstr "Utilisez éventuellement moins de termes de recherche"
+
+#. js-lingui-explicit-id
+#: src/components/browser/filters/TimeFilter.tsx
+msgid "data.filters.year"
+msgstr "Année"
+
+#. js-lingui-explicit-id
+#: src/components/NotFoundError/NotFoundError.tsx
+msgid "error.404.message"
+msgstr "La page recherchée est introuvable. Il y a peut-être une erreur d'adresse (URL), la page ou le document n'existe plus ou le nom a changé."

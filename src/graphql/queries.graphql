@@ -1,0 +1,1122 @@
+# Queries
+## Regular
+query HomePage($locale: SiteLocale!) {
+  homePage(locale: $locale) {
+    id
+    title
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    hero {
+      id
+      url
+    }
+    markets {
+      id
+      title
+      slug
+    }
+
+    focusArticles {
+      id
+      title
+      slug
+    }
+    ...SEOMetaTags
+  }
+
+  ...SiteFavIcon
+  ...MenuItems
+  ...TopBlogPosts
+}
+
+query DataPage($locale: SiteLocale!) {
+  dataPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    ...SEOMetaTags
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query LegalPage($locale: SiteLocale!) {
+  legalPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    ...SEOMetaTags
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    content {
+      value
+      blocks {
+        __typename
+        ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
+        ...ImageTeaserBlock
+        ...IframeBlock
+        ...LatexBlock
+        ...TableBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query TermsPage($locale: SiteLocale!) {
+  termsPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    title
+    ...SEOMetaTags
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    content {
+      value
+      blocks {
+        __typename
+        ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
+        ...ImageTeaserBlock
+        ...IframeBlock
+        ...LatexBlock
+        ...TableBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query AboutUsPage($locale: SiteLocale!) {
+  aboutUsPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    title
+    ...SEOMetaTags
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    content {
+      value
+      blocks {
+        __typename
+        ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
+        ...ImageTeaserBlock
+        ...IframeBlock
+        ...LatexBlock
+        ...TableBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+      }
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query MarketPage($locale: SiteLocale!, $slug: String!) {
+  marketArticle(locale: $locale, filter: { slug: { eq: $slug } }) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    ...SEOMetaTags
+    ...FullMarketArticle
+  }
+  ...SiteFavIcon
+  ...MenuItems
+  ...TopBlogPosts
+}
+
+query FocusArticlePage($locale: SiteLocale!, $slug: String!) {
+  focusArticle(locale: $locale, filter: { slug: { eq: $slug } }) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    ...SEOMetaTags
+    ...FullFocusArticle
+  }
+  ...SiteFavIcon
+  ...MenuItems
+  ...TopBlogPosts
+}
+
+query MethodsPage($locale: SiteLocale!, $slug: String!) {
+  methodsPage(locale: $locale, filter: { slug: { eq: $slug } }) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    ...SEOMetaTags
+    content {
+      value
+      blocks {
+        __typename
+        ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
+        ...ImageTeaserBlock
+        ...IframeBlock
+        ...LatexBlock
+        ...TableBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+        ...PowerBI
+      }
+    }
+  }
+  method(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query GlossaryPage($locale: SiteLocale!) {
+  glossaryPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    ...SEOMetaTags
+    items {
+      ...GlossaryItem
+    }
+  }
+  method(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query InfoPage($locale: SiteLocale!) {
+  infoPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    ...SEOMetaTags
+    content {
+      value
+      blocks {
+        __typename
+        ...DataButton
+        ...InternalLinkButton
+        ...ExternalLinkButton
+        ...AssetLinkButton
+        ...ImageTeaserBlock
+        ...IframeBlock
+        ...LatexBlock
+        ...TableBlock
+      }
+      links {
+        __typename
+        ...InternalLink
+        ...FileDownloadSection
+        ...HighlightSection
+        ...PowerBI
+      }
+    }
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query AnalysisPage($locale: SiteLocale!) {
+  analysisPage(locale: $locale) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    id
+    title
+    lead {
+      value
+      links {
+        __typename
+        ...InternalLink
+      }
+    }
+    ...SEOMetaTags
+  }
+  ...SiteFavIcon
+  ...MenuItems
+}
+
+query TopMarketBlogPosts($locale: SiteLocale!, $marketId: ItemId!) {
+  topMarketBlogPosts: allBlogPosts(
+    locale: $locale
+    first: 3
+    orderBy: [publishedDate_DESC]
+    filter: { markets: { eq: [$marketId] } }
+  ) {
+    ...SimpleBlogPost
+  }
+}
+
+query paginatedFilteredBlogposts(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $marketFilter: [ItemId]
+  $focusFilter: [ItemId]
+  $orderBy: [BlogPostModelOrderBy]
+) {
+  blogposts: allBlogPosts(
+    locale: $locale
+    first: $first
+    skip: $skip
+    filter: {
+      OR: [{ markets: { anyIn: $marketFilter } }, { focusArticles: { anyIn: $focusFilter } }]
+    }
+    orderBy: $orderBy
+  ) {
+    ...SimpleBlogPost
+  }
+  blogpostCount: _allBlogPostsMeta(
+    locale: $locale
+    filter: {
+      OR: [{ markets: { anyIn: $marketFilter } }, { focusArticles: { anyIn: $focusFilter } }]
+    }
+  ) {
+    count
+  }
+}
+
+query glossaryItem($id: ItemId!) {
+  glossaryItem(filter: { id: { eq: $id } }) {
+    ...GlossaryItem
+  }
+}
+
+query paginatedGlossaryItems(
+  $locale: SiteLocale!
+  $first: IntType!
+  $skip: IntType!
+  $matches: String!
+) {
+  glossaryItems: allGlossaryItems(
+    locale: $locale
+    first: $first
+    skip: $skip
+    orderBy: [title_ASC]
+    filter: {
+      OR: [
+        { description: { matches: { pattern: $matches, caseSensitive: false } } }
+        { title: { matches: { pattern: $matches, caseSensitive: false } } }
+      ]
+    }
+  ) {
+    ...GlossaryItem
+  }
+  count: _allGlossaryItemsMeta(
+    locale: $locale
+    filter: {
+      OR: [
+        { description: { matches: { pattern: $matches, caseSensitive: false } } }
+        { title: { matches: { pattern: $matches, caseSensitive: false } } }
+      ]
+    }
+  ) {
+    count
+  }
+}
+
+query BlogPost($locale: SiteLocale!, $slug: String!) {
+  blogPost(locale: $locale, filter: { slug: { eq: $slug } }) {
+    _allSlugLocales {
+      locale
+      value
+    }
+    ...SEOMetaTags
+    id
+    ...BlogPost
+  }
+  ...SiteFavIcon
+  ...MenuItems
+  ...TopBlogPosts
+}
+
+query AllPowerBIReports($locale: SiteLocale!) {
+  allPowerBiReports(locale: $locale) {
+    id
+    reportId
+    dataset {
+      datasetId
+    }
+    workspace {
+      workspaceId
+    }
+    pages {
+      name
+      pageId
+    }
+  }
+}
+
+query ErrorPage($locale: SiteLocale!) {
+  ...MenuItems
+}
+
+## Slugs
+query AllMarketArticlesSlugLocales {
+  allMarketArticles {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllFocusArticlesSlugLocales {
+  allFocusArticles {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllMethodsPagesSlugLocales {
+  allMethodsPages {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query SiteMap {
+  allBlogPosts {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  allMarketArticles {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  market {
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllBlogPostsSlugLocales {
+  allBlogPosts {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query AllRedirects {
+  glossaryPage {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  method {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  termsPage {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  aboutUsPage {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  legalPage {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  infoPage {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  dataPage {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  analysisPage {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  focusModel {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+  market {
+    id
+    _allSlugLocales {
+      locale
+      value
+    }
+  }
+}
+
+query CookieBanner($locale: SiteLocale!) {
+  cookieBanner(locale: $locale) {
+    content {
+      value
+    }
+    accept
+    reject
+  }
+}
+
+# Fragments
+fragment SimpleMarketArticle on MarketArticleRecord {
+  id
+  title
+  slug
+}
+
+fragment SimpleFocusArticle on FocusArticleRecord {
+  id
+  title
+  slug
+}
+
+fragment SimpleMethodsPage on MethodsPageRecord {
+  id
+  title
+  slug
+}
+
+fragment SimpleGlossaryPage on GlossaryPageRecord {
+  id
+  title
+  slug
+}
+
+fragment GlossaryItem on GlossaryItemRecord {
+  id
+  title
+  label {
+    ... on MarketArticleRecord {
+      id
+      title
+      slug
+    }
+    ... on FocusArticleRecord {
+      id
+      title
+      slug
+    }
+  }
+  freeStyleLabel
+  description {
+    value
+    blocks {
+      __typename
+      ...InternalLinkButton
+      ...ExternalLinkButton
+    }
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
+}
+
+fragment FullMarketArticle on MarketArticleRecord {
+  id
+  title
+  slug
+  lead {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
+  content {
+    value
+    blocks {
+      __typename
+      ...DataButton
+      ...InternalLinkButton
+      ...ExternalLinkButton
+      ...AssetLinkButton
+      ...ImageTeaserBlock
+      ...IframeBlock
+      ...LatexBlock
+      ...TableBlock
+    }
+    links {
+      __typename
+      ...FileDownloadSection
+      ...HighlightSection
+      ...PowerBI
+      ...InternalLink
+    }
+  }
+}
+
+fragment FullFocusArticle on FocusArticleRecord {
+  id
+  title
+  slug
+  lead {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
+  content {
+    value
+
+    blocks {
+      __typename
+      ...DataButton
+      ...InternalLinkButton
+      ...ExternalLinkButton
+      ...AssetLinkButton
+      ...ImageTeaserBlock
+      ...IframeBlock
+      ...LatexBlock
+      ...TableBlock
+    }
+    links {
+      __typename
+      ...InternalLink
+      ...FileDownloadSection
+      ...HighlightSection
+      ...PowerBI
+    }
+  }
+}
+
+fragment SimpleBlogPost on BlogPostRecord {
+  id
+  title
+  slug
+  cardSummary {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
+  image {
+    id
+    alt
+    url
+    responsiveImage(imgixParams: { fit: fill, w: 1096, h: 556, auto: format }) {
+      sizes
+      src
+      width
+      height
+      alt
+      title
+      base64
+    }
+  }
+  markets {
+    id
+    title
+    slug
+  }
+  focusArticles {
+    id
+    title
+    slug
+  }
+  publishedDate
+}
+
+fragment BlogPost on BlogPostRecord {
+  id
+  publishedDate
+  title
+  leadCard
+  lead {
+    value
+    links {
+      __typename
+      ...InternalLink
+    }
+  }
+  slug
+  authors {
+    id
+    firstName
+    lastName
+    portrait {
+      id
+      url
+    }
+  }
+  markets {
+    id
+    title
+    slug
+  }
+  focusArticles {
+    id
+    title
+    slug
+  }
+  content {
+    value
+    blocks {
+      __typename
+      ...IframeBlock
+      ...DataButton
+      ...InternalLinkButton
+      ...ExternalLinkButton
+      ...AssetLinkButton
+      ...ImageTeaserBlock
+      ...LatexBlock
+      ...TableBlock
+    }
+    links {
+      __typename
+      ...InternalLink
+      ...FileDownloadSection
+      ...HighlightSection
+      ...PowerBI
+    }
+  }
+}
+
+# Blocks
+fragment DownloadTeaserBlock on DownloadTeaserBlockRecord {
+  id
+  markdown
+  description
+  downloadTeaserAssets {
+    id
+    title
+    file {
+      id
+      url
+    }
+  }
+}
+
+fragment ExternalVideoBlock on ExternalVideoBlockRecord {
+  id
+  externalVideo {
+    url
+    title
+  }
+}
+
+fragment GalleryBlock on GalleryBlockRecord {
+  id
+  galleryAssets {
+    id
+    title
+    url
+  }
+}
+
+fragment IframeBlock on IframeBlockRecord {
+  id
+  caption
+  height
+  url
+  caption
+  height
+}
+
+fragment MarkdownBlock on MarkdownBlockRecord {
+  id
+  content
+}
+
+fragment SurveyBlock on SurveyBlockRecord {
+  id
+  formUrl
+  question {
+    id
+    question
+    formFieldId
+    isMultipleChoice
+    possibleAnswers {
+      id
+      answer
+    }
+  }
+}
+
+fragment ImageTeaserBlock on ImageTeaserBlockRecord {
+  id
+  description
+  imageTeaserAsset {
+    customData
+    id
+    url
+    alt
+    width
+    height
+    title
+    # responsiveImage(imgixParams: { fit: fill, w: 1096, h: 556, auto: format }) {
+    responsiveImage(imgixParams: { fit: clip, auto: format }) {
+      sizes
+      src
+      width
+      height
+      alt
+      title
+      base64
+    }
+  }
+}
+
+fragment LatexBlock on LatexRecord {
+  id
+  formula
+  alignment
+}
+
+fragment PowerBI on PowerBiReportRecord {
+  id
+  workspace {
+    id
+    name
+    workspaceId
+  }
+  reportId
+  name
+  dataset {
+    name
+    id
+    datasetId
+    workspace {
+      workspaceId
+      name
+      id
+    }
+  }
+  pages {
+    name
+    id
+    pageId
+  }
+}
+
+fragment FileDownloadSection on FileDownloadSectionRecord {
+  id
+  title
+  fileDownloadItems {
+    id
+    title
+    description
+    date
+    file {
+      url
+      format
+      filename
+    }
+  }
+}
+
+fragment HighlightSection on HighlightSectionRecord {
+  id
+  title
+  content {
+    links {
+      __typename
+      ...HighlightSectionFileRecord
+      ...HighlightSectionLink
+    }
+    value
+  }
+}
+
+fragment HighlightSectionFileRecord on HighlightSectionFileRecord {
+  id
+  title
+  file {
+    url
+  }
+}
+
+fragment HighlightSectionLink on HighlightSectionLinkRecord {
+  id
+  title
+  link {
+    __typename
+    ... on BlogPostRecord {
+      id
+      slug
+    }
+    ... on FocusArticleRecord {
+      id
+      slug
+    }
+    ... on MarketArticleRecord {
+      id
+      slug
+    }
+    ... on MethodsPageRecord {
+      id
+      slug
+    }
+  }
+}
+
+fragment DataButton on DataButtonRecord {
+  id
+  url
+  label
+}
+
+fragment InternalLinkButton on InternalLinkButtonRecord {
+  id
+  page {
+    __typename
+    ...InternalLink
+  }
+  label
+  anchor
+}
+
+fragment ExternalLinkButton on ExternalLinkButtonRecord {
+  id
+  url
+  label
+}
+
+fragment AssetLinkButton on AssetLinkButtonRecord {
+  id
+  asset {
+    url
+  }
+  label
+}
+
+fragment InternalLink on RecordInterface {
+  ... on AboutUsPageRecord {
+    id
+  }
+  ... on HomePageRecord {
+    id
+  }
+  ... on AnalysisPageRecord {
+    id
+  }
+  ... on FocusArticleRecord {
+    id
+    slug
+  }
+  ... on LegalPageRecord {
+    id
+  }
+  ... on MarketArticleRecord {
+    id
+    slug
+  }
+  ... on MethodsPageRecord {
+    id
+    slug
+  }
+  ... on TermsPageRecord {
+    id
+  }
+  ... on BlogPostRecord {
+    id
+    slug
+  }
+  ... on DataPageRecord {
+    id
+  }
+  ... on InfoPageRecord {
+    id
+  }
+  ... on PowerBiPageRecord {
+    id
+  }
+}
+
+fragment InternalEmbed on RecordInterface {
+  ... on PowerBiPageRecord {
+    id
+  }
+  ... on FileDownloadSectionRecord {
+    id
+  }
+  ... on HighlightSectionRecord {
+    id
+  }
+  ... on PowerBiReportRecord {
+    id
+  }
+}
+
+# Query fragments
+
+fragment MenuItems on Query {
+  allMarketArticles(locale: $locale) {
+    ...SimpleMarketArticle
+  }
+  allFocusArticles(locale: $locale) {
+    ...SimpleFocusArticle
+  }
+  allMethodsPages(locale: $locale) {
+    ...SimpleMethodsPage
+  }
+  glossaryPage(locale: $locale) {
+    ...SimpleGlossaryPage
+  }
+}
+
+fragment TopBlogPosts on Query {
+  topBlogPosts: allBlogPosts(locale: $locale, first: 3, orderBy: [publishedDate_DESC]) {
+    ...SimpleBlogPost
+  }
+}
+
+fragment SEOMetaTags on RecordInterface {
+  seo: _seoMetaTags {
+    attributes
+    content
+    tag
+  }
+}
+
+fragment SiteFavIcon on Query {
+  site: _site {
+    favicon: faviconMetaTags {
+      attributes
+      content
+      tag
+    }
+  }
+}
+
+fragment TableBlock on TableRecord {
+  __typename
+  id
+  content
+}

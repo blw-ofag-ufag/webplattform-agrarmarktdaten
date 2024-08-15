@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icons/24dp/ic_Download</title>
+    <g id="Icons/24dp/ic_Download" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Download" transform="translate(5, 4)" fill="#000" fill-rule="nonzero" stroke="#000" stroke-width="0.25">
+            <polygon id="Path" points="14.08805 9.24301 13.71305 8.59401 7.41905 12.22801 7.41905 0 6.66905 0 6.66905 12.22801 0.375 8.59401 0 9.24301 7.04405 13.31001"></polygon>
+            <polygon id="Path" points="0.67469 15.46151 13.44325 15.46151 13.44325 16.21151 0.67469 16.21151"></polygon>
+        </g>
+    </g>
+</svg>
