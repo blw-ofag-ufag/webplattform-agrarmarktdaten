@@ -1,3 +1,4 @@
+import { type Measure as MeasureType } from "@/domain/dimensions";
 import { Locale, defaultLocale } from "@/locales/locales";
 import { Measure, Property, TimeView } from "@/pages/api/data";
 import { FormatLocaleDefinition, formatLocale, timeFormat } from "d3";
@@ -61,7 +62,7 @@ export const tableFormatter = ({
     return (value, options) => {
       const { includePercent = dim.dimension === "percentage" } = options ?? {};
       if (!isNumber(value)) return value;
-      const format = dim.dimension === "quantity" ? ".2r" : ".2f";
+      const format = MEASURE_FORMATTERS[dim.dimension as MeasureType];
       const formattedValue = formatter.format(format)(value);
       return includePercent ? `${formattedValue}%` : formattedValue;
     };
@@ -74,3 +75,13 @@ export const tableFormatter = ({
 
   return (v) => v;
 };
+
+const MEASURE_FORMATTERS: Record<MeasureType, string> = {
+  price: ".2f",
+  quantity: ".2~r",
+  index: ".2f",
+  contribution: ".2f",
+  percentage: ".2f",
+};
+
+MEASURE_FORMATTERS;
