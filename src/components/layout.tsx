@@ -17,7 +17,7 @@ import { useStickyBox } from "react-sticky-box";
 import ScrollToTop from "@/components/ScrollToTop";
 import { GridContainer } from "@/components/Grid";
 import * as GQL from "@/graphql";
-import { locales } from "@/locales/locales";
+import { locales, defaultLocale, homepage, Locale } from "@/locales/locales";
 import { BackButton } from "./back-button";
 import { makeContentWrapperSx } from "@/components/Grid/Grid";
 import { makeStyles } from "@/components/style-utils";
@@ -214,6 +214,7 @@ export const AppLayout = (props: Props) => {
           shortTitle={t({ id: "header.shortTitle", message: "BLW" })}
           longTitle={t({ id: "header.longTitle", message: "Bundesamt für Landwirtschaft" })}
           rootHref="/"
+          titleHref={homepage[(router.locale as Locale) ?? defaultLocale]}
           goBackLabel={t({ id: "cta.back", message: "Geh zurück" })}
           sections={headerSections}
           ContentWrapperProps={{ sx: contentWrapperSx }}

@@ -12,6 +12,12 @@ export type Locale = (typeof locales)[number];
 
 export const defaultLocale = "de" as Locale;
 
+export const homepage: Record<Locale, string> = {
+  de: "https://www.blw.admin.ch/blw/de/home.html",
+  fr: "https://www.blw.admin.ch/blw/fr/home.html",
+  it: "https://www.blw.admin.ch/blw/it/home.html",
+};
+
 export const isValidLocale = (maybeLocale: string | undefined | null): maybeLocale is Locale => {
   if (!maybeLocale) {
     return false;
